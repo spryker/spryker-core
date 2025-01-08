@@ -57,7 +57,7 @@ class StoreContextBusinessTester extends Actor
     /**
      * @var string
      */
-    public const MESSAGE_DEFAULT_CONTEXT_NOT_EXIST = 'Default store context do not exist in the store settings collection.';
+    public const MESSAGE_DEFAULT_CONTEXT_NOT_EXIST = 'The default context is always required. When you want to add an Application-specific configuration, please click `Add store settings` and then change the APPLICATION value to the desired value.';
 
     /**
      * @var string

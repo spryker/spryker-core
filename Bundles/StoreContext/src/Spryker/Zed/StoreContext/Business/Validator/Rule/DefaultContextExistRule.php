@@ -20,7 +20,7 @@ class DefaultContextExistRule implements StoreContextValidatorRuleInterface
     /**
      * @var string
      */
-    protected const ERROR_MESSAGE = 'Default store context do not exist in the store settings collection.';
+    protected const ERROR_MESSAGE = 'The default context is always required. When you want to add an Application-specific configuration, please click `Add store settings` and then change the APPLICATION value to the desired value.';
 
     /**
      * @param \Generated\Shared\Transfer\StoreContextTransfer $storeContextTransfer

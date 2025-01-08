@@ -1,5 +1,5 @@
 "Application %application% is not valid.","Application %application% is not valid."
-"Default store context do not exist in the store context collection.","Default settings do not exist in the store settings collection."
+"The default context is always required. When you want to add an Application-specific configuration, please click `Add store settings` and then change the APPLICATION value to the desired value.","The default context is always required. When you want to add an Application-specific configuration, please click `Add store settings` and then change the APPLICATION value to the desired value."
 "Application %application% is used more than once.","Application %application% is used more than once."
 "Timezone %timezone% is not valid.","Timezone %timezone% is not valid."
 "Store context already exist for id: %id%.","Store settings already exist for id: %id%."
