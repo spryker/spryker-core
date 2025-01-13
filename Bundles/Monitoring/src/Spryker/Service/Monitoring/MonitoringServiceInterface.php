@@ -114,4 +114,17 @@ interface MonitoringServiceInterface
      * @return void
      */
     public function addCustomTracer(string $tracer): void;
+
+    /**
+     * Specification:
+     * - Adds custom event.
+     *
+     * @api
+     *
+     * @param string $name
+     * @param array $attributes
+     *
+     * @return void
+     */
+    public function addCustomEvent(string $name, array $attributes = []): void;
 }

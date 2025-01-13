@@ -7,6 +7,8 @@
 
 namespace Spryker\Service\Monitoring\Model;
 
+use Spryker\Service\MonitoringExtension\Dependency\Plugin\CustomEventsMonitoringExtensionPluginInterface;
+
 class Monitoring implements MonitoringInterface
 {
     /**
@@ -152,6 +154,22 @@ class Monitoring implements MonitoringInterface
         $this->setApplicationName();
         foreach ($this->monitoringExtensionPlugins as $monitoringExtensionPlugin) {
             $monitoringExtensionPlugin->addCustomTracer($tracer);
+        }
+    }
+
+    /**
+     * @param string $name
+     * @param array $attributes
+     *
+     * @return void
+     */
+    public function addCustomEvent(string $name, array $attributes = []): void
+    {
+        $this->setApplicationName();
+        foreach ($this->monitoringExtensionPlugins as $monitoringExtensionPlugin) {
+            if ($monitoringExtensionPlugin instanceof CustomEventsMonitoringExtensionPluginInterface) {
+                $monitoringExtensionPlugin->addEvent($name, $attributes);
+            }
         }
     }
 }

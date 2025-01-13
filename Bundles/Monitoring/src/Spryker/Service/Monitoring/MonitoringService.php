@@ -135,4 +135,19 @@ class MonitoringService extends AbstractService implements MonitoringServiceInte
     {
         $this->getFactory()->createMonitoring()->addCustomTracer($tracer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $name
+     * @param array $attributes
+     *
+     * @return void
+     */
+    public function addCustomEvent(string $name, array $attributes = []): void
+    {
+        $this->getFactory()->createMonitoring()->addCustomEvent($name, $attributes);
+    }
 }
