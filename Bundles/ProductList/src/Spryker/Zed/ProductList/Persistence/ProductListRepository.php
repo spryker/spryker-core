@@ -447,6 +447,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->withColumn(SpyProductListTableMap::COL_TYPE, static::COL_TYPE)
             ->withColumn(SpyProductListCategoryTableMap::COL_FK_PRODUCT_LIST, static::COL_ID_PRODUCT_LIST)
             ->withColumn(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
+            ->distinct()
             ->innerJoinWithSpyCategory()
             ->useSpyCategoryQuery()
                 ->innerJoinWithSpyProductCategory()
@@ -455,11 +456,6 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
                 ->endUse()
             ->endUse()
             ->innerJoinWithSpyProductList()
-            ->groupBy([
-                SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyProductListCategoryTableMap::COL_FK_PRODUCT_LIST,
-                SpyProductListTableMap::COL_TYPE,
-            ])
             ->find()
             ->toArray();
     }
@@ -493,7 +489,6 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->groupBy([
                 SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST,
                 SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyProductListTableMap::COL_TYPE,
             ])
             ->having(sprintf(
                 'COUNT(DISTINCT %s) = COUNT(DISTINCT %s)',
@@ -520,17 +515,13 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->select([
                 SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST,
             ])
+            ->distinct()
             ->useSpyProductQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->endUse()
             ->useSpyProductListQuery(null, Criteria::INNER_JOIN)
                 ->filterByType(SpyProductListTableMap::COL_TYPE_WHITELIST)
             ->endUse()
-            ->groupBy([
-                SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST,
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyProductListTableMap::COL_TYPE,
-            ])
             ->setFormatter(SimpleArrayFormatter::class)
             ->find()
             ->toArray();
