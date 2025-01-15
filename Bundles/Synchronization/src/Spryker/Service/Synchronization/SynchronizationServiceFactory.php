@@ -12,6 +12,9 @@ use Spryker\Service\Synchronization\Model\KeyFilter;
 use Spryker\Service\Synchronization\Model\SynchronizationKeyBuilder;
 use Spryker\Service\Synchronization\Plugin\DefaultKeyGeneratorPlugin;
 
+/**
+ * @method \Spryker\Service\Synchronization\SynchronizationConfig getConfig()
+ */
 class SynchronizationServiceFactory extends AbstractServiceFactory
 {
     /**
@@ -49,6 +52,7 @@ class SynchronizationServiceFactory extends AbstractServiceFactory
     {
         return new DefaultKeyGeneratorPlugin(
             $this->createKeyFilter(),
+            $this->getConfig(),
         );
     }
 

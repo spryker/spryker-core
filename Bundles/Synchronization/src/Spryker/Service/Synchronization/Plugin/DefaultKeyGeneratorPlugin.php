@@ -10,20 +10,16 @@ namespace Spryker\Service\Synchronization\Plugin;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 use Spryker\Service\Synchronization\Model\KeyFilterInterface;
+use Spryker\Service\Synchronization\SynchronizationConfig;
 
 class DefaultKeyGeneratorPlugin extends BaseKeyGenerator implements SynchronizationKeyGeneratorPluginInterface
 {
     /**
-     * @var \Spryker\Service\Synchronization\Model\KeyFilterInterface
-     */
-    protected $keyFilter;
-
-    /**
      * @param \Spryker\Service\Synchronization\Model\KeyFilterInterface $keyFilter
+     * @param \Spryker\Service\Synchronization\SynchronizationConfig $synchronizationConfig
      */
-    public function __construct(KeyFilterInterface $keyFilter)
+    public function __construct(protected KeyFilterInterface $keyFilter, protected SynchronizationConfig $synchronizationConfig)
     {
-        $this->keyFilter = $keyFilter;
     }
 
     /**
@@ -41,6 +37,10 @@ class DefaultKeyGeneratorPlugin extends BaseKeyGenerator implements Synchronizat
         $keySuffix = $reference && $localeAndStore
             ? sprintf('%s:%s', $localeAndStore, $reference)
             : sprintf('%s%s', $localeAndStore, $reference);
+
+        if (!$this->synchronizationConfig->isSingleKeyFormatNormalized()) {
+            return sprintf('%s:%s', $this->getResource(), $keySuffix);
+        }
 
         return sprintf(
             '%s%s%s',

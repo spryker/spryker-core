@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\Synchronization;
 
-class SynchronizationConfig
+use Spryker\Shared\Kernel\AbstractSharedConfig;
+
+class SynchronizationConfig extends AbstractSharedConfig
 {
     /**
      * Specification:

@@ -12,7 +12,8 @@ interface SynchronizationServiceInterface
     /**
      * Specification:
      * - Returns resource KeyBuilder based on given resource name,
-     *  this will provide the key generator class
+     *  this will provide the key generator class.
+     * - The format for single key depends on SynchronizationConfig::isSingleKeyFormatNormalized().
      *
      * @api
      *

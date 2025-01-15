@@ -10,6 +10,9 @@ namespace Spryker\Service\Synchronization;
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 
+/**
+ * @method \Spryker\Service\Synchronization\SynchronizationConfig getConfig()
+ */
 class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
