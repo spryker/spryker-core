@@ -26,6 +26,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\CartReorder\Business\CartReorderFacadeInterface getFacade()
+ * @method \Spryker\Zed\CartReorder\CartReorderConfig getModuleConfig()
  *
  * @SuppressWarnings(PHPMD)
  */

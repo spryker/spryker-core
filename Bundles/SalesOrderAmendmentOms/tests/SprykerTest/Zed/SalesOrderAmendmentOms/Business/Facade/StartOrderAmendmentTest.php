@@ -40,7 +40,7 @@ class StartOrderAmendmentTest extends Unit
     /**
      * @var string
      */
-    protected const ORDER_ITEM_STATE_ORDER_AMENDMENT_LOCK = 'order amendment lock';
+    protected const ORDER_ITEM_STATE_ORDER_AMENDMENT = 'order amendment';
 
     /**
      * @return void
@@ -72,11 +72,11 @@ class StartOrderAmendmentTest extends Unit
 
         // Assert
         $this->assertSame(
-            static::ORDER_ITEM_STATE_ORDER_AMENDMENT_LOCK,
+            static::ORDER_ITEM_STATE_ORDER_AMENDMENT,
             $this->tester->getOrderItemCurrentState($saveOrderTransfer->getOrderItems()->offsetGet(0)->getIdSalesOrderItemOrFail()),
         );
         $this->assertSame(
-            static::ORDER_ITEM_STATE_ORDER_AMENDMENT_LOCK,
+            static::ORDER_ITEM_STATE_ORDER_AMENDMENT,
             $this->tester->getOrderItemCurrentState($saveOrderTransfer->getOrderItems()->offsetGet(1)->getIdSalesOrderItemOrFail()),
         );
     }

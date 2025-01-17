@@ -27,4 +27,37 @@
         <id-method-parameter value="spy_sales_order_amendment_pk_seq"/>
     </table>
 
+    <table name="spy_sales_order_amendment_quote" idMethod="native">
+        <column name="id_sales_order_amendment_quote" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36"/>
+        <column name="store" type="VARCHAR" required="false" size="255"/>
+        <column name="customer_reference" type="VARCHAR" required="true" size="255"/>
+        <column name="amendment_order_reference" type="VARCHAR" required="true" size="255"/>
+        <column name="quote_data" required="true" type="CLOB"/>
+
+        <unique name="spy_sales_order_amendment_quote-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+
+        <index name="spy_sales_order_amendment_quote_o_r">
+            <index-column name="amendment_order_reference"/>
+        </index>
+
+        <index name="spy_sales_order_amendment_quote-store">
+            <index-column name="store"/>
+        </index>
+
+        <index name="spy_sales_order_amendment_quote-customer_reference">
+            <index-column name="customer_reference"/>
+        </index>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_sales_order_amendment_quote"/>
+        </behavior>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_sales_order_amendment_quote_pk_seq"/>
+    </table>
+
 </database>

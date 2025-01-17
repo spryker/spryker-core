@@ -43,6 +43,7 @@
                         <xsd:enumeration value="waiting for export"/>
                         <xsd:enumeration value="cancellable"/>
                         <xsd:enumeration value="amendable"/>
+                        <xsd:enumeration value="amendment in progress"/>
                     </xsd:restriction>
                 </xsd:simpleType>
             </xsd:element>

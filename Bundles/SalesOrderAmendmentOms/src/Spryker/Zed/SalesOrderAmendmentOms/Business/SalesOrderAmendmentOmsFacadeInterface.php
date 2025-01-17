@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesOrderAmendmentOms\Business;
 
 use Generated\Shared\Transfer\CartReorderResponseTransfer;
 use Generated\Shared\Transfer\CartReorderTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentTransfer;
@@ -18,7 +19,7 @@ interface SalesOrderAmendmentOmsFacadeInterface
     /**
      * Specification:
      * - Requires `CartReorderTransfer.quote` to be set.
-     * - Does nothing if `CartReorderTransfer.quote.amendmentOrderReference` is not set.
+     * - Requires `CartReorderTransfer.quote.amendmentOrderReference` to be set.
      * - Validates if all order items are in order item state that has `amendable` flag.
      * - Returns `ErrorCollectionTransfer` with error messages if validation fails.
      *
@@ -90,4 +91,41 @@ interface SalesOrderAmendmentOmsFacadeInterface
     public function validateSalesOrderAmendment(
         SalesOrderAmendmentTransfer $salesOrderAmendmentTransfer
     ): ErrorCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Validates if `QuoteTransfer.amendmentOrderReference` is set.
+     * - Validates if order with provided amendment order reference exists.
+     * - Validates if order is in a state that allows amendment.
+     * - Adds error message to `CheckoutResponseTransfer` if validation fails.
+     * - Returns `true` when `QuoteTransfer.amendmentOrderReference` is not set.
+     * - Returns `true` when order with provided amendment order reference is in a state that allows amendment.
+     * - Returns `false` otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function validateQuotePreCheckout(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool;
+
+    /**
+     * Specification:
+     * - Requires `OrderTransfer.orderReference` to be set for each order in the provided array.
+     * - Iterates through the provided array of `OrderTransfer` objects.
+     * - For each order checks if all order items are in order item state that has a flag defined in {@link \Spryker\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsConfig::getAmendableOmsFlag()}.
+     * - Expands the `OrderTransfer.isAmendable` property.
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\OrderTransfer>
+     */
+    public function expandOrdersWithIsAmendable(array $orderTransfers): array;
 }

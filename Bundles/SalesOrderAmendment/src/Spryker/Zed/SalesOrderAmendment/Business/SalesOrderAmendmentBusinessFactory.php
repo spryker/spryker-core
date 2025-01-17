@@ -10,12 +10,18 @@ namespace Spryker\Zed\SalesOrderAmendment\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesOrderAmendment\Business\Creator\SalesOrderAmendmentCreator;
 use Spryker\Zed\SalesOrderAmendment\Business\Creator\SalesOrderAmendmentCreatorInterface;
+use Spryker\Zed\SalesOrderAmendment\Business\Creator\SalesOrderAmendmentQuoteCreator;
+use Spryker\Zed\SalesOrderAmendment\Business\Creator\SalesOrderAmendmentQuoteCreatorInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Deleter\SalesOrderAmendmentDeleter;
 use Spryker\Zed\SalesOrderAmendment\Business\Deleter\SalesOrderAmendmentDeleterInterface;
+use Spryker\Zed\SalesOrderAmendment\Business\Deleter\SalesOrderAmendmentQuoteDeleter;
+use Spryker\Zed\SalesOrderAmendment\Business\Deleter\SalesOrderAmendmentQuoteDeleterInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Expander\OrderExpander;
 use Spryker\Zed\SalesOrderAmendment\Business\Expander\OrderExpanderInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Mapper\SalesOrderAmendmentMapper;
 use Spryker\Zed\SalesOrderAmendment\Business\Mapper\SalesOrderAmendmentMapperInterface;
+use Spryker\Zed\SalesOrderAmendment\Business\Mapper\SalesOrderAmendmentQuoteCriteriaMapper;
+use Spryker\Zed\SalesOrderAmendment\Business\Mapper\SalesOrderAmendmentQuoteCriteriaMapperInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Reader\SalesOrderAmendmentReader;
 use Spryker\Zed\SalesOrderAmendment\Business\Reader\SalesOrderAmendmentReaderInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Updater\SalesOrderAmendmentUpdater;
@@ -63,6 +69,16 @@ class SalesOrderAmendmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\SalesOrderAmendment\Business\Creator\SalesOrderAmendmentQuoteCreatorInterface
+     */
+    public function createSalesOrderAmendmentQuoteCreator(): SalesOrderAmendmentQuoteCreatorInterface
+    {
+        return new SalesOrderAmendmentQuoteCreator(
+            $this->getEntityManager(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\SalesOrderAmendment\Business\Updater\SalesOrderAmendmentUpdaterInterface
      */
     public function createSalesOrderAmendmentUpdater(): SalesOrderAmendmentUpdaterInterface
@@ -86,6 +102,26 @@ class SalesOrderAmendmentBusinessFactory extends AbstractBusinessFactory
             $this->getSalesOrderAmendmentPreDeletePlugins(),
             $this->getSalesOrderAmendmentPostDeletePlugins(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendment\Business\Deleter\SalesOrderAmendmentQuoteDeleterInterface
+     */
+    public function createSalesOrderAmendmentQuoteDeleter(): SalesOrderAmendmentQuoteDeleterInterface
+    {
+        return new SalesOrderAmendmentQuoteDeleter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->createSalesOrderAmendmentQuoteCriteriaMapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendment\Business\Mapper\SalesOrderAmendmentQuoteCriteriaMapperInterface
+     */
+    public function createSalesOrderAmendmentQuoteCriteriaMapper(): SalesOrderAmendmentQuoteCriteriaMapperInterface
+    {
+        return new SalesOrderAmendmentQuoteCriteriaMapper();
     }
 
     /**

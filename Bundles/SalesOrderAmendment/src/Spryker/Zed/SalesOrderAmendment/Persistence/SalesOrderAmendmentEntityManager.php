@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\SalesOrderAmendment\Persistence;
 
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentTransfer;
 use Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendment;
+use Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuote;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -36,6 +38,31 @@ class SalesOrderAmendmentEntityManager extends AbstractEntityManager implements 
             $salesOrderAmendmentEntity,
             $salesOrderAmendmentTransfer,
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer $salesOrderAmendmentQuoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer
+     */
+    public function createSalesOrderAmendmentQuote(
+        SalesOrderAmendmentQuoteTransfer $salesOrderAmendmentQuoteTransfer
+    ): SalesOrderAmendmentQuoteTransfer {
+        $salesOrderAmendmentQuoteEntity = $this->getFactory()
+            ->createSalesOrderAmendmentQuoteMapper()
+            ->mapSalesOrderAmendmentQuoteTransferToSalesOrderAmendmentQuoteEntity(
+                $salesOrderAmendmentQuoteTransfer,
+                new SpySalesOrderAmendmentQuote(),
+            );
+
+        $salesOrderAmendmentQuoteEntity->save();
+
+        return $this->getFactory()
+            ->createSalesOrderAmendmentQuoteMapper()
+            ->mapSalesOrderAmendmentQuoteEntityToSalesOrderAmendmentQuoteTransfer(
+                $salesOrderAmendmentQuoteEntity,
+                $salesOrderAmendmentQuoteTransfer,
+            );
     }
 
     /**
@@ -79,5 +106,19 @@ class SalesOrderAmendmentEntityManager extends AbstractEntityManager implements 
             ->find();
 
         $salesOrderAmendmentEntities->delete();
+    }
+
+    /**
+     * @param list<int> $salesOrderAmendmentQuoteIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderAmendmentQuotes(
+        array $salesOrderAmendmentQuoteIds
+    ): void {
+        $this->getFactory()
+            ->getSalesOrderAmendmentQuoteQuery()
+            ->filterByIdSalesOrderAmendmentQuote_In($salesOrderAmendmentQuoteIds)
+            ->delete();
     }
 }

@@ -1,5 +1,19 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SalesOrderAmendment\\Business\\Creator\\SalesOrderAmendmentQuoteCreator::executeCreateSalesOrderAmendmentQuoteTransaction expects ArrayObject<int, Generated\\Shared\\Transfer\\SalesOrderAmendmentQuoteTransfer>, but ArrayObject<Generated\\Shared\\Transfer\\SalesOrderAmendmentQuoteTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderAmendment/src/Spryker/Zed/SalesOrderAmendment/Business/Creator/SalesOrderAmendmentQuoteCreator.php",
+            "snippet": "            return $this->executeCreateSalesOrderAmendmentQuoteTransaction($salesOrderAmendmentQuotesTransfers);",
+            "selected_text": "$salesOrderAmendmentQuotesTransfers",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
     "warning": [],
-    "deprecation": []
+    "deprecation": [],
+    "count": 1
 }

@@ -13,26 +13,37 @@ use Generated\Shared\Transfer\CartReorderResponseTransfer;
 use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Spryker\Zed\CartReorder\Business\Resolver\PluginStackResolverInterface;
 use Spryker\Zed\CartReorder\Dependency\Facade\CartReorderToCartFacadeInterface;
 
 class CartItemAdder implements CartItemAdderInterface
 {
+    /**
+     * @var \Spryker\Zed\CartReorder\Business\Resolver\PluginStackResolverInterface
+     */
+    protected PluginStackResolverInterface $pluginStackResolver;
+
     /**
      * @var \Spryker\Zed\CartReorder\Dependency\Facade\CartReorderToCartFacadeInterface
      */
     protected CartReorderToCartFacadeInterface $cartFacade;
 
     /**
-     * @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>
+     * @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>>
      */
     protected array $cartReorderPreAddToCartPlugins;
 
     /**
+     * @param \Spryker\Zed\CartReorder\Business\Resolver\PluginStackResolverInterface $pluginStackResolver
      * @param \Spryker\Zed\CartReorder\Dependency\Facade\CartReorderToCartFacadeInterface $cartFacade
-     * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface> $cartReorderPreAddToCartPlugins
+     * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>> $cartReorderPreAddToCartPlugins
      */
-    public function __construct(CartReorderToCartFacadeInterface $cartFacade, array $cartReorderPreAddToCartPlugins)
-    {
+    public function __construct(
+        PluginStackResolverInterface $pluginStackResolver,
+        CartReorderToCartFacadeInterface $cartFacade,
+        array $cartReorderPreAddToCartPlugins
+    ) {
+        $this->pluginStackResolver = $pluginStackResolver;
         $this->cartFacade = $cartFacade;
         $this->cartReorderPreAddToCartPlugins = $cartReorderPreAddToCartPlugins;
     }
@@ -101,7 +112,13 @@ class CartItemAdder implements CartItemAdderInterface
      */
     protected function executeCartReorderPreAddToCartPlugins(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        foreach ($this->cartReorderPreAddToCartPlugins as $cartReorderPreAddToCartPlugin) {
+        /** @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface> $cartReorderPreAddToCartPlugins */
+        $cartReorderPreAddToCartPlugins = $this->pluginStackResolver->resolvePluginStackByQuoteProcessFlowName(
+            $cartChangeTransfer->getQuoteOrFail(),
+            $this->cartReorderPreAddToCartPlugins,
+        );
+
+        foreach ($cartReorderPreAddToCartPlugins as $cartReorderPreAddToCartPlugin) {
             $cartChangeTransfer = $cartReorderPreAddToCartPlugin->preAddToCart($cartChangeTransfer);
         }
 

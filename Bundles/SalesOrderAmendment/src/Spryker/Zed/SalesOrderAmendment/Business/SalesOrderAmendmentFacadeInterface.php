@@ -13,6 +13,11 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentCollectionTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentCriteriaTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionRequestTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCriteriaTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentResponseTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentTransfer;
@@ -44,6 +49,30 @@ interface SalesOrderAmendmentFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves sales order amendment quote entities filtered by criteria from Persistence.
+     * - Uses `SalesOrderAmendmentQuoteCriteriaTransfer.salesOrderAmendmentQuoteConditions.salesOrderAmendmentQuoteIds` to filter by IDs.
+     * - Uses `SalesOrderAmendmentQuoteCriteriaTransfer.salesOrderAmendmentQuoteConditions.uuids` to filter by UUIDs.
+     * - Uses `SalesOrderAmendmentQuoteCriteriaTransfer.salesOrderAmendmentQuoteConditions.customerReferences` to filter by customer references.
+     * - Uses `SalesOrderAmendmentQuoteCriteriaTransfer.salesOrderAmendmentQuoteConditions.storeNames` to filter by store names.
+     * - Uses `SalesOrderAmendmentQuoteCriteriaTransfer.salesOrderAmendmentQuoteConditions.amendmentOrderReferences` to filter by amendment order references.
+     * - Uses `SalesOrderAmendmentQuoteCriteriaTransfer.sort.field` to set the 'order by' field.
+     * - Uses `SalesOrderAmendmentQuoteCriteriaTransfer.sort.isAscending` to set ascending/descending order.
+     * - Uses `SalesOrderAmendmentQuoteCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.
+     * - Uses `SalesOrderAmendmentQuoteCriteriaTransfer.pagination.{page, maxPerPage}` to paginate results with page and maxPerPage.
+     * - Returns `SalesOrderAmendmentQuoteCollectionTransfer` filled with found sales order amendment quotes.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCriteriaTransfer $salesOrderAmendmentQuoteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionTransfer
+     */
+    public function getSalesOrderAmendmentQuoteCollection(
+        SalesOrderAmendmentQuoteCriteriaTransfer $salesOrderAmendmentQuoteCriteriaTransfer
+    ): SalesOrderAmendmentQuoteCollectionTransfer;
+
+    /**
+     * Specification:
      * - Requires `SalesOrderAmendmentRequestTransfer.originalOrderReference` to be set.
      * - Requires `SalesOrderAmendmentRequestTransfer.amendedOrderReference` to be set.
      * - Executes a stack of {@link \Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentValidatorRulePluginInterface} plugins.
@@ -61,6 +90,27 @@ interface SalesOrderAmendmentFacadeInterface
     public function createSalesOrderAmendment(
         SalesOrderAmendmentRequestTransfer $salesOrderAmendmentRequestTransfer
     ): SalesOrderAmendmentResponseTransfer;
+
+    /**
+     * Specification:
+     * - Creates a sales order amendment quotes.
+     * - Requires `SalesOrderAmendmentQuoteCollectionRequestTransfer.salesOrderAmendmentQuotes` to be set.
+     * - Requires `SalesOrderAmendmentQuoteCollectionRequestTransfer.salesOrderAmendmentQuotes.quote` to be set.
+     * - Requires `SalesOrderAmendmentQuoteCollectionRequestTransfer.salesOrderAmendmentQuotes.store` to be set.
+     * - Requires `SalesOrderAmendmentQuoteCollectionRequestTransfer.salesOrderAmendmentQuotes.customerReference` to be set.
+     * - Requires `SalesOrderAmendmentQuoteCollectionRequestTransfer.salesOrderAmendmentQuotes.amendmentOrderReference` to be set.
+     * - Uses transaction for the operation.
+     * - Returns `SalesOrderAmendmentQuoteCollectionResponseTransfer` with persisted sales order amendment quotes and errors if any occurred.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionRequestTransfer $salesOrderAmendmentQuoteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionResponseTransfer
+     */
+    public function createSalesOrderAmendmentQuoteCollection(
+        SalesOrderAmendmentQuoteCollectionRequestTransfer $salesOrderAmendmentQuoteCollectionRequestTransfer
+    ): SalesOrderAmendmentQuoteCollectionResponseTransfer;
 
     /**
      * Specification:
@@ -102,6 +152,22 @@ interface SalesOrderAmendmentFacadeInterface
 
     /**
      * Specification:
+     * - Deletes sales order amendment quotes based on the provided criteria.
+     * - Expects `SalesOrderAmendmentQuoteCollectionDeleteCriteriaTransfer.salesOrderAmendmentQuoteIds` or `SalesOrderAmendmentQuoteCollectionDeleteCriteriaTransfer.uuids` to be set.
+     * - Returns `SalesOrderAmendmentQuoteResponseTransfer` filled with deleted sales order amendment quotes.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionDeleteCriteriaTransfer $salesOrderAmendmentQuoteCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionResponseTransfer
+     */
+    public function deleteSalesOrderAmendmentQuoteCollection(
+        SalesOrderAmendmentQuoteCollectionDeleteCriteriaTransfer $salesOrderAmendmentQuoteCollectionDeleteCriteriaTransfer
+    ): SalesOrderAmendmentQuoteCollectionResponseTransfer;
+
+    /**
+     * Specification:
      * - Requires `OrderTransfer.orderReference` to be set.
      * - Retrieves sales order amendment entity by order reference from Persistence.
      * - Expands `OrderTransfer.salesOrderAmendment` with found sales order amendment.
@@ -118,8 +184,8 @@ interface SalesOrderAmendmentFacadeInterface
      * Specification:
      * - Requires `CartReorderTransfer.quote` to be set.
      * - Requires `CartReorderTransfer.order` to be set.
+     * - Requires `CartReorderTransfer.quote.amendmentOrderReference` to be set.
      * - Requires `CartReorderTransfer.order.orderReference` to be set.
-     * - Does nothing if `CartReorderTransfer.quote.amendmentOrderReference` is not set.
      * - Validates if `CartReorderTransfer.quote.amendmentOrderReference` matches `CartReorderTransfer.order.orderReference`.
      * - Returns `ErrorCollectionTransfer` with error messages if validation fails.
      *

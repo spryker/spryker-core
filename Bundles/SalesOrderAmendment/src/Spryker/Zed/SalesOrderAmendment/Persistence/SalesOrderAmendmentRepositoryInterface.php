@@ -10,6 +10,8 @@ namespace Spryker\Zed\SalesOrderAmendment\Persistence;
 use Generated\Shared\Transfer\SalesOrderAmendmentCollectionTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentCriteriaTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCriteriaTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentTransfer;
 
 interface SalesOrderAmendmentRepositoryInterface
@@ -31,4 +33,13 @@ interface SalesOrderAmendmentRepositoryInterface
     public function findSalesOrderAmendmentByDeleteCriteria(
         SalesOrderAmendmentDeleteCriteriaTransfer $salesOrderAmendmentDeleteCriteriaTransfer
     ): ?SalesOrderAmendmentTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCriteriaTransfer $salesOrderAmendmentQuoteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionTransfer
+     */
+    public function getSalesOrderAmendmentQuoteCollection(
+        SalesOrderAmendmentQuoteCriteriaTransfer $salesOrderAmendmentQuoteCriteriaTransfer
+    ): SalesOrderAmendmentQuoteCollectionTransfer;
 }

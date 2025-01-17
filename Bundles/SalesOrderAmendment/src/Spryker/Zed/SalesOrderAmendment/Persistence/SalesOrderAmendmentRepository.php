@@ -12,8 +12,11 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentCollectionTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentCriteriaTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCriteriaTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentTransfer;
 use Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuery;
+use Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuoteQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -84,6 +87,80 @@ class SalesOrderAmendmentRepository extends AbstractRepository implements SalesO
                 $salesOrderAmendmentEntity,
                 new SalesOrderAmendmentTransfer(),
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCriteriaTransfer $salesOrderAmendmentQuoteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionTransfer
+     */
+    public function getSalesOrderAmendmentQuoteCollection(
+        SalesOrderAmendmentQuoteCriteriaTransfer $salesOrderAmendmentQuoteCriteriaTransfer
+    ): SalesOrderAmendmentQuoteCollectionTransfer {
+        $salesOrderAmendmentQuoteCollectionTransfer = new SalesOrderAmendmentQuoteCollectionTransfer();
+
+        $salesOrderAmendmentQuoteQuery = $this->getFactory()->getSalesOrderAmendmentQuoteQuery();
+        $salesOrderAmendmentQuoteQuery = $this->applySalesOrderAmendmentQuoteFilters($salesOrderAmendmentQuoteQuery, $salesOrderAmendmentQuoteCriteriaTransfer);
+
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers */
+        $sortTransfers = $salesOrderAmendmentQuoteCriteriaTransfer->getSortCollection();
+        $salesOrderAmendmentQuoteQuery = $this->applySorting($salesOrderAmendmentQuoteQuery, $sortTransfers);
+
+        $paginationTransfer = $salesOrderAmendmentQuoteCriteriaTransfer->getPagination();
+        if ($paginationTransfer) {
+            $salesOrderAmendmentQuoteQuery = $this->applyPagination($salesOrderAmendmentQuoteQuery, $paginationTransfer);
+            $salesOrderAmendmentQuoteCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        $salesOrderAmendmentQuoteEntities = $salesOrderAmendmentQuoteQuery->find();
+        if ($salesOrderAmendmentQuoteEntities->count() === 0) {
+            return $salesOrderAmendmentQuoteCollectionTransfer;
+        }
+
+        return $this->getFactory()
+            ->createSalesOrderAmendmentQuoteMapper()
+            ->mapSalesOrderAmendmentQuoteEntitiesToSalesOrderAmendmentQuoteCollectionTransfer(
+                $salesOrderAmendmentQuoteEntities,
+                $salesOrderAmendmentQuoteCollectionTransfer,
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuoteQuery $salesOrderAmendmentQuoteQuery
+     * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCriteriaTransfer $salesOrderAmendmentQuoteCriteriaTransfer
+     *
+     * @return \Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuoteQuery
+     */
+    protected function applySalesOrderAmendmentQuoteFilters(
+        SpySalesOrderAmendmentQuoteQuery $salesOrderAmendmentQuoteQuery,
+        SalesOrderAmendmentQuoteCriteriaTransfer $salesOrderAmendmentQuoteCriteriaTransfer
+    ): SpySalesOrderAmendmentQuoteQuery {
+        $salesOrderAmendmentQuoteConditionsTransfer = $salesOrderAmendmentQuoteCriteriaTransfer->getSalesOrderAmendmentQuoteConditions();
+        if (!$salesOrderAmendmentQuoteConditionsTransfer) {
+            return $salesOrderAmendmentQuoteQuery;
+        }
+
+        if ($salesOrderAmendmentQuoteConditionsTransfer->getSalesOrderAmendmentQuoteIds() !== []) {
+            $salesOrderAmendmentQuoteQuery->filterByIdSalesOrderAmendmentQuote_In($salesOrderAmendmentQuoteConditionsTransfer->getSalesOrderAmendmentQuoteIds());
+        }
+
+        if ($salesOrderAmendmentQuoteConditionsTransfer->getUuids() !== []) {
+            $salesOrderAmendmentQuoteQuery->filterByUuid_In($salesOrderAmendmentQuoteConditionsTransfer->getUuids());
+        }
+
+        if ($salesOrderAmendmentQuoteConditionsTransfer->getCustomerReferences() !== []) {
+            $salesOrderAmendmentQuoteQuery->filterByCustomerReference_In($salesOrderAmendmentQuoteConditionsTransfer->getCustomerReferences());
+        }
+
+        if ($salesOrderAmendmentQuoteConditionsTransfer->getStoreNames() !== []) {
+            $salesOrderAmendmentQuoteQuery->filterByStore_In($salesOrderAmendmentQuoteConditionsTransfer->getStoreNames());
+        }
+
+        if ($salesOrderAmendmentQuoteConditionsTransfer->getAmendmentOrderReferences() !== []) {
+            $salesOrderAmendmentQuoteQuery->filterByAmendmentOrderReference_In($salesOrderAmendmentQuoteConditionsTransfer->getAmendmentOrderReferences());
+        }
+
+        return $salesOrderAmendmentQuoteQuery;
     }
 
     /**

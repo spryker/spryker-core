@@ -21,7 +21,7 @@ class IsAmendableOrderCartReorderValidatorRulePlugin extends AbstractPlugin impl
     /**
      * {@inheritDoc}
      * - Requires `CartReorderTransfer.quote` to be set.
-     * - Does nothing if `CartReorderTransfer.quote.amendmentOrderReference` is not set.
+     * - Requires `CartReorderTransfer.quote.amendmentOrderReference` to be set.
      * - Validates if all order items are in order item state that has `amendable` flag.
      * - Returns `ErrorCollectionTransfer` with error messages if validation fails.
      *

@@ -53,6 +53,13 @@ class ReorderTest extends Unit
     protected const GLOSSARY_KEY_QUOTE_NOT_PROVIDED = 'cart_reorder.validation.quote_not_provided';
 
     /**
+     * @uses \Spryker\Zed\CartReorder\CartReorderConfig::DEFAULT_QUOTE_PROCESS_FLOW_NAME
+     *
+     * @var string
+     */
+    protected const DEFAULT_QUOTE_PROCESS_FLOW_NAME = 'default';
+
+    /**
      * @var \SprykerTest\Zed\CartReorder\CartReorderBusinessTester
      */
     protected CartReorderBusinessTester $tester;
@@ -222,6 +229,30 @@ class ReorderTest extends Unit
     }
 
     /**
+     * @dataProvider defaultQuoteProcessFlowCartReorderPluginProvider
+     *
+     * @param string $dependencyKey
+     * @param \PHPUnit\Framework\MockObject\MockObject $plugin
+     *
+     * @return void
+     */
+    public function testShouldExecuteDefaultQuoteProcessFlowPluginStack(string $dependencyKey, MockObject $plugin): void
+    {
+        // Assert
+        $this->tester->setDependency($dependencyKey, [static::DEFAULT_QUOTE_PROCESS_FLOW_NAME => [$plugin]]);
+
+        // Arrange
+        $orderTransfer = $this->tester->createOrder();
+        $cartReorderRequestTransfer = (new CartReorderRequestTransfer())
+            ->setCustomerReference($orderTransfer->getCustomerReference())
+            ->setOrderReference($orderTransfer->getOrderReference())
+            ->setQuote(new QuoteTransfer());
+
+        // Act
+        $this->tester->getFacade()->reorder($cartReorderRequestTransfer);
+    }
+
+    /**
      * @return array<string, list<\PHPUnit\Framework\MockObject\MockObject>>
      */
     protected function cartReorderPluginProvider(): array
@@ -230,8 +261,21 @@ class ReorderTest extends Unit
             'request validator plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_REQUEST_VALIDATOR, $this->getCartReorderRequestValidatorPluginMock()],
             'quote provider plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_QUOTE_PROVIDER_STRATEGY, $this->getCartReorderQuoteProviderStrategyPluginMock()],
             'filter order item plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_ORDER_ITEM_FILTER, $this->getCartReorderOrderItemFilterPluginMock()],
-            'validator plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_VALIDATOR, $this->getCartReorderValidatorPluginMock()],
             'pre reorder plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_PRE_REORDER, $this->getCartPreReorderPluginMock()],
+            'validator plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_VALIDATOR, $this->getCartReorderValidatorPluginMock()],
+            'item hydrator plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_ITEM_HYDRATOR, $this->getCartReorderItemHydratorPluginMock()],
+            'pre add to cart plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_PRE_ADD_TO_CART, $this->getCartReorderPreAddToCartPluginMock()],
+            'post reorder plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_POST_REORDER, $this->getCartPostReorderPluginMock()],
+        ];
+    }
+
+    /**
+     * @return array<string, list<\PHPUnit\Framework\MockObject\MockObject>>
+     */
+    protected function defaultQuoteProcessFlowCartReorderPluginProvider(): array
+    {
+        return [
+            'validator plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_VALIDATOR, $this->getCartReorderValidatorPluginMock()],
             'item hydrator plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_ITEM_HYDRATOR, $this->getCartReorderItemHydratorPluginMock()],
             'pre add to cart plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_PRE_ADD_TO_CART, $this->getCartReorderPreAddToCartPluginMock()],
             'post reorder plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_POST_REORDER, $this->getCartPostReorderPluginMock()],

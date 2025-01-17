@@ -17,4 +17,19 @@
         <property name="isAmendment" type="bool"/>
     </transfer>
 
+    <transfer name="RestOrderAmendmentsAttributes" strict="true">
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="salesOrderAmendment" type="SalesOrderAmendment" strict="true"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendment" strict="true">
+        <property name="uuid" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+    </transfer>
+
 </transfers>

@@ -12,6 +12,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SalesOrderAmendmentConfig extends AbstractBundleConfig
 {
     /**
+     * @var string
+     */
+    protected const ORDER_AMENDMENT_QUOTE_PROCESS_FLOW_NAME = 'order-amendment';
+
+    /**
      * Specification:
      * - Defines the format of the quote name for the cart reorder.
      *
@@ -22,5 +27,18 @@ class SalesOrderAmendmentConfig extends AbstractBundleConfig
     public function getCartReorderQuoteNameFormat(): string
     {
         return 'Editing Order %s';
+    }
+
+    /**
+     * Specification:
+     * - Defines the name of quote process flow for order amendment.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getOrderAmendmentQuoteProcessFlowName(): string
+    {
+        return static::ORDER_AMENDMENT_QUOTE_PROCESS_FLOW_NAME;
     }
 }

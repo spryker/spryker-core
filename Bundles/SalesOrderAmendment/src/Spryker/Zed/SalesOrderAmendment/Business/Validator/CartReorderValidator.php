@@ -28,10 +28,7 @@ class CartReorderValidator implements CartReorderValidatorInterface
         CartReorderTransfer $cartReorderTransfer,
         CartReorderResponseTransfer $cartReorderResponseTransfer
     ): CartReorderResponseTransfer {
-        if (
-            $cartReorderTransfer->getQuoteOrFail()->getAmendmentOrderReference() === null
-            || $this->isOrderReferenceMatch($cartReorderTransfer)
-        ) {
+        if ($this->isOrderReferenceMatch($cartReorderTransfer)) {
             return $cartReorderResponseTransfer;
         }
 

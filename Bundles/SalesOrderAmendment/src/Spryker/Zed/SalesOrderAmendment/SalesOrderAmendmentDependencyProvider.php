@@ -9,12 +9,18 @@ namespace Spryker\Zed\SalesOrderAmendment;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SalesOrderAmendment\Dependency\Service\SalesOrderAmendmentToUtilEncodingServiceBridge;
 
 /**
  * @method \Spryker\Zed\SalesOrderAmendment\SalesOrderAmendmentConfig getConfig()
  */
 class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */
@@ -77,6 +83,32 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addSalesOrderAmendmentPostUpdatePlugins($container);
         $container = $this->addSalesOrderAmendmentPreDeletePlugins($container);
         $container = $this->addSalesOrderAmendmentPostDeletePlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new SalesOrderAmendmentToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
+        });
 
         return $container;
     }

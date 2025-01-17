@@ -14,7 +14,9 @@
             <state name="payment pending" reserved="true">
                 <flag>amendable</flag>
             </state>
-            <state name="order amendment lock"/>
+            <state name="order amendment">
+                <flag>amendment in progress</flag>
+            </state>
             <state name="invalid"/>
             <state name="cancelled"/>
             <state name="paid" reserved="true"/>
@@ -39,18 +41,18 @@
 
             <transition>
                 <source>payment pending</source>
-                <target>order amendment lock</target>
+                <target>order amendment</target>
                 <event>start-order-amendment</event>
             </transition>
 
             <transition>
-                <source>order amendment lock</source>
+                <source>order amendment</source>
                 <target>cancelled</target>
                 <event>finish-order-amendment</event>
             </transition>
 
             <transition>
-                <source>order amendment lock</source>
+                <source>order amendment</source>
                 <target>payment pending</target>
                 <event>cancel-order-amendment</event>
             </transition>

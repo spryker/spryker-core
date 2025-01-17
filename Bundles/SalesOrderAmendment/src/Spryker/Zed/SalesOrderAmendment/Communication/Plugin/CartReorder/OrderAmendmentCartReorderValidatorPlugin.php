@@ -22,8 +22,8 @@ class OrderAmendmentCartReorderValidatorPlugin extends AbstractPlugin implements
      * {@inheritDoc}
      * - Requires `CartReorderTransfer.quote` to be set.
      * - Requires `CartReorderTransfer.order` to be set.
+     * - Requires `CartReorderTransfer.quote.orderReference` to be set.
      * - Requires `CartReorderTransfer.order.orderReference` to be set.
-     * - Does nothing if `CartReorderTransfer.quote.amendmentOrderReference` is not set.
      * - Validates if `CartReorderTransfer.quote.amendmentOrderReference` matches `CartReorderTransfer.order.orderReference`.
      * - Returns `ErrorCollectionTransfer` with error messages if validation fails.
      *

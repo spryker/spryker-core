@@ -9,17 +9,18 @@ namespace Spryker\Zed\SalesOrderAmendmentOms\Business\Validator;
 
 use Generated\Shared\Transfer\CartReorderResponseTransfer;
 use Generated\Shared\Transfer\CartReorderTransfer;
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToOmsFacadeInterface;
-use Spryker\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsConfig;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsConfig
+     * @var \Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\OrderValidatorInterface
      */
-    protected SalesOrderAmendmentOmsConfig $salesOrderAmendmentOmsConfig;
+    protected OrderValidatorInterface $orderValidator;
 
     /**
      * @var \Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToOmsFacadeInterface
@@ -32,15 +33,16 @@ class QuoteValidator implements QuoteValidatorInterface
     protected const GLOSSARY_KEY_VALIDATION_ORDER_NOT_AMENDABLE = 'sales_order_amendment_oms.validation.order_not_amendable';
 
     /**
-     * @param \Spryker\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsConfig $salesOrderAmendmentOmsConfig
-     * @param \Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToOmsFacadeInterface $omsFacade
+     * @var string
      */
-    public function __construct(
-        SalesOrderAmendmentOmsConfig $salesOrderAmendmentOmsConfig,
-        SalesOrderAmendmentOmsToOmsFacadeInterface $omsFacade
-    ) {
-        $this->salesOrderAmendmentOmsConfig = $salesOrderAmendmentOmsConfig;
-        $this->omsFacade = $omsFacade;
+    protected const GLOSSARY_KEY_VALIDATION_ORDER_NOT_BEING_AMENDED = 'sales_order_amendment_oms.validation.order_not_being_amended';
+
+    /**
+     * @param \Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\OrderValidatorInterface $orderValidator
+     */
+    public function __construct(OrderValidatorInterface $orderValidator)
+    {
+        $this->orderValidator = $orderValidator;
     }
 
     /**
@@ -49,15 +51,11 @@ class QuoteValidator implements QuoteValidatorInterface
      *
      * @return \Generated\Shared\Transfer\CartReorderResponseTransfer
      */
-    public function validateQuote(
+    public function validateCartReorderQuote(
         CartReorderTransfer $cartReorderTransfer,
         CartReorderResponseTransfer $cartReorderResponseTransfer
     ): CartReorderResponseTransfer {
-        if ($cartReorderTransfer->getQuoteOrFail()->getAmendmentOrderReference() === null) {
-            return $cartReorderResponseTransfer;
-        }
-
-        if ($this->isOrderAmendable($cartReorderTransfer->getQuoteOrFail()->getAmendmentOrderReference())) {
+        if ($this->orderValidator->validateIsOrderAmendable($cartReorderTransfer->getQuoteOrFail()->getAmendmentOrderReferenceOrFail())) {
             return $cartReorderResponseTransfer;
         }
 
@@ -67,17 +65,33 @@ class QuoteValidator implements QuoteValidatorInterface
     }
 
     /**
-     * @param string $orderReference
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return bool
      */
-    protected function isOrderAmendable(string $orderReference): bool
+    public function validateQuotePreCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
-        $orderTransfer = (new OrderTransfer())->setOrderReference($orderReference);
+        if ($quoteTransfer->getAmendmentOrderReference() === null) {
+            return true;
+        }
 
-        return $this->omsFacade->areOrderItemsSatisfiedByFlag(
-            $orderTransfer,
-            $this->salesOrderAmendmentOmsConfig->getAmendableOmsFlag(),
-        );
+        if (!$this->orderValidator->validateIsOrderBeingAmended($quoteTransfer->getAmendmentOrderReferenceOrFail())) {
+            $checkoutResponseTransfer->addError($this->createCheckoutErrorTransfer(static::GLOSSARY_KEY_VALIDATION_ORDER_NOT_BEING_AMENDED));
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
+     */
+    protected function createCheckoutErrorTransfer(string $message): CheckoutErrorTransfer
+    {
+        return (new CheckoutErrorTransfer())->setMessage($message);
     }
 }

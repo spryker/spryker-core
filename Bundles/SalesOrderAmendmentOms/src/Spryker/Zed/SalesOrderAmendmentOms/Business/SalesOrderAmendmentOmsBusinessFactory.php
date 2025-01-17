@@ -8,12 +8,16 @@
 namespace Spryker\Zed\SalesOrderAmendmentOms\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Expander\OrderExpander;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Expander\OrderExpanderInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Processor\OrderAmendmentProcessor;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Processor\OrderAmendmentProcessorInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OrderReader;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OrderReaderInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Triggerer\OmsEventTriggerer;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Triggerer\OmsEventTriggererInterface;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\OrderValidator;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\OrderValidatorInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\QuoteValidator;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\QuoteValidatorInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\SalesOrderAmendmentValidator;
@@ -32,7 +36,15 @@ class SalesOrderAmendmentOmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuoteValidator(): QuoteValidatorInterface
     {
-        return new QuoteValidator(
+        return new QuoteValidator($this->createOrderValidator());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\OrderValidatorInterface
+     */
+    public function createOrderValidator(): OrderValidatorInterface
+    {
+        return new OrderValidator(
             $this->getConfig(),
             $this->getOmsFacade(),
         );
@@ -76,6 +88,14 @@ class SalesOrderAmendmentOmsBusinessFactory extends AbstractBusinessFactory
     public function createOrderReader(): OrderReaderInterface
     {
         return new OrderReader($this->getSalesFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendmentOms\Business\Expander\OrderExpanderInterface
+     */
+    public function createOrderExpander(): OrderExpanderInterface
+    {
+        return new OrderExpander($this->createOrderValidator());
     }
 
     /**

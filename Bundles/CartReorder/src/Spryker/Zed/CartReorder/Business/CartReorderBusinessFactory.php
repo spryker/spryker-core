@@ -15,6 +15,8 @@ use Spryker\Zed\CartReorder\Business\Hydrator\ItemHydrator;
 use Spryker\Zed\CartReorder\Business\Hydrator\ItemHydratorInterface;
 use Spryker\Zed\CartReorder\Business\Reader\OrderReader;
 use Spryker\Zed\CartReorder\Business\Reader\OrderReaderInterface;
+use Spryker\Zed\CartReorder\Business\Resolver\PluginStackResolver;
+use Spryker\Zed\CartReorder\Business\Resolver\PluginStackResolverInterface;
 use Spryker\Zed\CartReorder\Business\Validator\CartReorderValidator;
 use Spryker\Zed\CartReorder\Business\Validator\CartReorderValidatorInterface;
 use Spryker\Zed\CartReorder\CartReorderDependencyProvider;
@@ -37,6 +39,7 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
             $this->createOrderReader(),
             $this->createItemHydrator(),
             $this->createCartItemAdder(),
+            $this->createPluginStackResolver(),
             $this->getCartReorderQuoteProviderStrategyPlugins(),
             $this->getCartReorderOrderItemFilterPlugins(),
             $this->getCartPreReorderPlugins(),
@@ -50,6 +53,7 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
     public function createCartItemAdder(): CartItemAdderInterface
     {
         return new CartItemAdder(
+            $this->createPluginStackResolver(),
             $this->getCartFacade(),
             $this->getCartReorderPreAddToCartPlugins(),
         );
@@ -61,6 +65,7 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
     public function createItemHydrator(): ItemHydratorInterface
     {
         return new ItemHydrator(
+            $this->createPluginStackResolver(),
             $this->getCartReorderItemHydratorPlugins(),
         );
     }
@@ -71,6 +76,7 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
     public function createCartReorderValidator(): CartReorderValidatorInterface
     {
         return new CartReorderValidator(
+            $this->createPluginStackResolver(),
             $this->getCartReorderRequestValidatorPlugins(),
             $this->getCartReorderValidatorPlugins(),
         );
@@ -84,6 +90,14 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
         return new OrderReader(
             $this->getSalesFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CartReorder\Business\Resolver\PluginStackResolverInterface
+     */
+    public function createPluginStackResolver(): PluginStackResolverInterface
+    {
+        return new PluginStackResolver($this->getConfig());
     }
 
     /**
@@ -111,7 +125,7 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>>
      */
     public function getCartReorderValidatorPlugins(): array
     {
@@ -143,7 +157,7 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface>
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface>>
      */
     public function getCartReorderItemHydratorPlugins(): array
     {
@@ -151,7 +165,7 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>>
      */
     public function getCartReorderPreAddToCartPlugins(): array
     {
@@ -159,7 +173,7 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface>
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface>>
      */
     public function getCartPostReorderPlugins(): array
     {

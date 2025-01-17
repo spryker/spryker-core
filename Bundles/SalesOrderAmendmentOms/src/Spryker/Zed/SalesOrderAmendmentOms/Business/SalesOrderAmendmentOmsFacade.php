@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesOrderAmendmentOms\Business;
 
 use Generated\Shared\Transfer\CartReorderResponseTransfer;
 use Generated\Shared\Transfer\CartReorderTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentTransfer;
@@ -35,7 +36,7 @@ class SalesOrderAmendmentOmsFacade extends AbstractFacade implements SalesOrderA
     ): CartReorderResponseTransfer {
         return $this->getFactory()
             ->createQuoteValidator()
-            ->validateQuote($cartReorderTransfer, $cartReorderResponseTransfer);
+            ->validateCartReorderQuote($cartReorderTransfer, $cartReorderResponseTransfer);
     }
 
     /**
@@ -101,5 +102,36 @@ class SalesOrderAmendmentOmsFacade extends AbstractFacade implements SalesOrderA
         return $this->getFactory()
             ->createSalesOrderAmendmentValidator()
             ->validate($salesOrderAmendmentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function validateQuotePreCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteValidator()
+            ->validateQuotePreCheckout($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\OrderTransfer>
+     */
+    public function expandOrdersWithIsAmendable(array $orderTransfers): array
+    {
+        return $this->getFactory()->createOrderExpander()->expandOrdersWithIsAmendable($orderTransfers);
     }
 }

@@ -43,6 +43,9 @@ class OrderChecker implements OrderCheckerInterface
     {
         $orderItemFilterTransfer = $this->createOrderItemFilterTransfer($orderTransfer);
         $itemTransfers = $this->omsRepository->getOrderItems($orderItemFilterTransfer);
+        if ($itemTransfers === []) {
+            return false;
+        }
 
         return $this->flagChecker->hasOrderItemsFlag($itemTransfers, $flag);
     }

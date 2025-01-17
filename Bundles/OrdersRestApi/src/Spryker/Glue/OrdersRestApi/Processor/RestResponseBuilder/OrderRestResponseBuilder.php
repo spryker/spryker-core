@@ -102,6 +102,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
                 $orderTransfer->getOrderReference(),
                 $restOrdersAttributesTransfer,
             );
+            $restResource->setPayload($orderTransfer);
             $restResponse = $restResponse->addResource($restResource);
         }
 

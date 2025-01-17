@@ -32,6 +32,11 @@ class SalesOrderAmendmentOmsConfig extends AbstractBundleConfig
     protected const OMS_FLAG_AMENDABLE = 'amendable';
 
     /**
+     * @var string
+     */
+    protected const OMS_FLAG_AMENDMENT_IN_PROGRESS = 'amendment in progress';
+
+    /**
      * Specification:
      * - Returns a start order amendment event name.
      *
@@ -81,5 +86,18 @@ class SalesOrderAmendmentOmsConfig extends AbstractBundleConfig
     public function getAmendableOmsFlag(): string
     {
         return static::OMS_FLAG_AMENDABLE;
+    }
+
+    /**
+     * Specification:
+     * - Returns a flag name for state when order is being amended.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getAmendmentInProgressOmsFlag(): string
+    {
+        return static::OMS_FLAG_AMENDMENT_IN_PROGRESS;
     }
 }

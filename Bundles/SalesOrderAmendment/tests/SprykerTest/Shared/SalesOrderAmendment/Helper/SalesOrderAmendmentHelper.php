@@ -9,8 +9,11 @@ namespace SprykerTest\Shared\SalesOrderAmendment\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\SalesOrderAmendmentBuilder;
+use Generated\Shared\DataBuilder\SalesOrderAmendmentQuoteBuilder;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentTransfer;
 use Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendment;
+use Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuote;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 class SalesOrderAmendmentHelper extends Module
@@ -35,5 +38,33 @@ class SalesOrderAmendmentHelper extends Module
         });
 
         return $salesOrderAmendmentTransfer->fromArray($salesOrderAmendmentEntity->toArray(), true);
+    }
+
+    /**
+     * @param array<string, mixed> $seedData
+     * @param array<string, mixed> $quoteSeedData
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer
+     */
+    public function haveSalesOrderAmendmentQuote(
+        array $seedData = [],
+        array $quoteSeedData = []
+    ): SalesOrderAmendmentQuoteTransfer {
+        $salesOrderAmendmentQuoteTransfer = (new SalesOrderAmendmentQuoteBuilder($seedData))
+            ->withQuote($quoteSeedData)
+            ->build();
+
+        $quoteData = $salesOrderAmendmentQuoteTransfer->getQuoteOrFail()->toArray();
+
+        $salesOrderAmendmentQuote = new SpySalesOrderAmendmentQuote();
+        $salesOrderAmendmentQuote->fromArray($salesOrderAmendmentQuoteTransfer->toArray());
+        $salesOrderAmendmentQuote->setQuoteData(json_encode($quoteData));
+        $salesOrderAmendmentQuote->save();
+
+        $this->getDataCleanupHelper()->addCleanup(function () use ($salesOrderAmendmentQuote): void {
+            $salesOrderAmendmentQuote->delete();
+        });
+
+        return $salesOrderAmendmentQuoteTransfer->fromArray($salesOrderAmendmentQuote->toArray(), true);
     }
 }

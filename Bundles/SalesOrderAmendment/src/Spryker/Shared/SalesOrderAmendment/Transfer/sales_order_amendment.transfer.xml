@@ -10,15 +10,45 @@
         <property name="updatedAt" type="string"/>
     </transfer>
 
+    <transfer name="SalesOrderAmendmentQuote" strict="true">
+        <property name="idSalesOrderAmendmentQuote" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="store" type="string"/>
+        <property name="amendmentOrderReference" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="quote" type="Quote"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+    </transfer>
+
     <transfer name="SalesOrderAmendmentCriteria" strict="true">
         <property name="salesOrderAmendmentConditions" type="SalesOrderAmendmentConditions"/>
         <property name="sortCollection" type="Sort[]" singular="sort"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 
+    <transfer name="SalesOrderAmendmentQuoteCriteria" strict="true">
+        <property name="salesOrderAmendmentQuoteConditions" type="SalesOrderAmendmentQuoteConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuoteConditions" strict="true">
+        <property name="salesOrderAmendmentQuoteIds" type="int[]" singular="idSalesOrderAmendmentQuote"/>
+        <property name="customerReferences" type="string[]" singular="customerReference"/>
+        <property name="amendmentOrderReferences" type="string[]" singular="amendmentOrderReference"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="storeNames" type="string[]" singular="storeName"/>
+    </transfer>
+
     <transfer name="SalesOrderAmendmentDeleteCriteria" strict="true">
         <property name="idSalesOrderAmendment" type="int"/>
         <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuoteCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderAmendmentQuoteIds" type="int[]" singular="idSalesOrderAmendmentQuote"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
     </transfer>
 
     <transfer name="SalesOrderAmendmentConditions" strict="true">
@@ -32,9 +62,24 @@
         <property name="pagination" type="Pagination"/>
     </transfer>
 
+    <transfer name="SalesOrderAmendmentQuoteCollection" strict="true">
+        <property name="salesOrderAmendmentQuotes" type="SalesOrderAmendmentQuote[]" singular="salesOrderAmendmentQuote"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
     <transfer name="SalesOrderAmendmentRequest" strict="true">
         <property name="originalOrderReference" type="string"/>
         <property name="amendedOrderReference" type="string"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuoteCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="salesOrderAmendmentQuotes" type="SalesOrderAmendmentQuote[]" singular="salesOrderAmendmentQuote"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuoteCollectionResponse" strict="true">
+        <property name="salesOrderAmendmentQuotes" type="SalesOrderAmendmentQuote[]" singular="salesOrderAmendmentQuote"/>
+        <property name="errors" type="Error[]" singular="error"/>
     </transfer>
 
     <transfer name="SalesOrderAmendmentResponse" strict="true">
@@ -85,6 +130,7 @@
         <property name="amendmentOrderReference" type="string" strict="true"/>
         <property name="name" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="quoteProcessFlow" type="QuoteProcessFlow" strict="true"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
@@ -119,6 +165,10 @@
 
     <transfer name="SaveOrder">
         <property name="orderReference" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteProcessFlow" strict="true">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

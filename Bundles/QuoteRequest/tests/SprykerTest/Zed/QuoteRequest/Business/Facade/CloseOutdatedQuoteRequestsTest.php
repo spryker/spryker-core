@@ -66,11 +66,11 @@ class CloseOutdatedQuoteRequestsTest extends Unit
         $quoteRequestTransfer = $this->tester->haveQuoteRequestInReadyStatus(
             $this->companyUserTransfer,
             $this->quoteTransfer,
-            (new DateTime('+1 second'))->format('Y-m-d H:i:s'),
+            (new DateTime('+2 second'))->format('Y-m-d H:i:s'),
         );
 
         // Act
-        sleep(2);
+        sleep(3);
         $this->tester->getFacade()->closeOutdatedQuoteRequests();
         $storedQuoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestTransfer->getQuoteRequestReference());
 
@@ -87,11 +87,11 @@ class CloseOutdatedQuoteRequestsTest extends Unit
         $quoteRequestTransfer = $this->tester->haveQuoteRequestInInProgressStatus(
             $this->companyUserTransfer,
             $this->quoteTransfer,
-            (new DateTime('+1 second'))->format('Y-m-d H:i:s'),
+            (new DateTime('+2 second'))->format('Y-m-d H:i:s'),
         );
 
         // Act
-        sleep(2);
+        sleep(3);
         $this->tester->getFacade()->closeOutdatedQuoteRequests();
         $storedQuoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestTransfer->getQuoteRequestReference());
 

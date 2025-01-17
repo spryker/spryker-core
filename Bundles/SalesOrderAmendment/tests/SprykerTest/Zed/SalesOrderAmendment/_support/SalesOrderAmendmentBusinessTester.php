@@ -10,13 +10,17 @@ namespace SprykerTest\Zed\SalesOrderAmendment;
 use Codeception\Actor;
 use Codeception\Stub;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\DataBuilder\SalesOrderAmendmentQuoteBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentTransfer;
+use Orm\Zed\SalesOrderAmendment\Persistence\Base\SpySalesOrderAmendmentQuote;
 use Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendment;
 use Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuery;
+use Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuoteQuery;
 use PHPUnit\Framework\MockObject\Rule\InvokedCount;
 use Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentValidatorRulePluginInterface;
 
@@ -102,11 +106,31 @@ class SalesOrderAmendmentBusinessTester extends Actor
     }
 
     /**
+     * @param string $salesOrderAmendmentQuoteUuid
+     *
+     * @return \Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuote|null
+     */
+    public function findSalesOrderAmendmentQuoteByUuid(string $salesOrderAmendmentQuoteUuid): ?SpySalesOrderAmendmentQuote
+    {
+        return $this->getSalesOrderAmendmentQuoteQuery()
+            ->filterByUuid($salesOrderAmendmentQuoteUuid)
+            ->findOne();
+    }
+
+    /**
      * @return void
      */
     public function ensureSalesOrderAmendmentTableIsEmpty(): void
     {
         $this->ensureDatabaseTableIsEmpty($this->getSalesOrderAmendmentQuery());
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureSalesOrderAmendmentQuoteTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getSalesOrderAmendmentQuoteQuery());
     }
 
     /**
@@ -142,10 +166,36 @@ class SalesOrderAmendmentBusinessTester extends Actor
     }
 
     /**
+     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionRequestTransfer
+     */
+    public function createSalesOrderAmendmentQuoteCollectionRequestTransfer(): SalesOrderAmendmentQuoteCollectionRequestTransfer
+    {
+        $salesOrderAmendmentQuoteTransferOne = (new SalesOrderAmendmentQuoteBuilder())
+            ->withQuote()
+            ->build();
+
+        $salesOrderAmendmentQuoteTransferTwo = (new SalesOrderAmendmentQuoteBuilder())
+            ->withQuote()
+            ->build();
+
+        return (new SalesOrderAmendmentQuoteCollectionRequestTransfer())
+            ->addSalesOrderAmendmentQuote($salesOrderAmendmentQuoteTransferOne)
+            ->addSalesOrderAmendmentQuote($salesOrderAmendmentQuoteTransferTwo);
+    }
+
+    /**
      * @return \Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuery
      */
     protected function getSalesOrderAmendmentQuery(): SpySalesOrderAmendmentQuery
     {
         return SpySalesOrderAmendmentQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuoteQuery
+     */
+    protected function getSalesOrderAmendmentQuoteQuery(): SpySalesOrderAmendmentQuoteQuery
+    {
+        return SpySalesOrderAmendmentQuoteQuery::create();
     }
 }

@@ -13,6 +13,11 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentCollectionTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentCriteriaTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionRequestTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCriteriaTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentResponseTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentTransfer;
@@ -47,6 +52,21 @@ class SalesOrderAmendmentFacade extends AbstractFacade implements SalesOrderAmen
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCriteriaTransfer $salesOrderAmendmentQuoteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionTransfer
+     */
+    public function getSalesOrderAmendmentQuoteCollection(
+        SalesOrderAmendmentQuoteCriteriaTransfer $salesOrderAmendmentQuoteCriteriaTransfer
+    ): SalesOrderAmendmentQuoteCollectionTransfer {
+        return $this->getRepository()->getSalesOrderAmendmentQuoteCollection($salesOrderAmendmentQuoteCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\SalesOrderAmendmentRequestTransfer $salesOrderAmendmentRequestTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderAmendmentResponseTransfer
@@ -57,6 +77,23 @@ class SalesOrderAmendmentFacade extends AbstractFacade implements SalesOrderAmen
         return $this->getFactory()
             ->createSalesOrderAmendmentCreator()
             ->createSalesOrderAmendment($salesOrderAmendmentRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionRequestTransfer $salesOrderAmendmentQuoteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionResponseTransfer
+     */
+    public function createSalesOrderAmendmentQuoteCollection(
+        SalesOrderAmendmentQuoteCollectionRequestTransfer $salesOrderAmendmentQuoteCollectionRequestTransfer
+    ): SalesOrderAmendmentQuoteCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSalesOrderAmendmentQuoteCreator()
+            ->createSalesOrderAmendmentQuoteCollection($salesOrderAmendmentQuoteCollectionRequestTransfer);
     }
 
     /**
@@ -91,6 +128,23 @@ class SalesOrderAmendmentFacade extends AbstractFacade implements SalesOrderAmen
         return $this->getFactory()
             ->createSalesOrderAmendmentDeleter()
             ->deleteSalesOrderAmendment($salesOrderAmendmentDeleteCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionDeleteCriteriaTransfer $salesOrderAmendmentQuoteCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionResponseTransfer
+     */
+    public function deleteSalesOrderAmendmentQuoteCollection(
+        SalesOrderAmendmentQuoteCollectionDeleteCriteriaTransfer $salesOrderAmendmentQuoteCollectionDeleteCriteriaTransfer
+    ): SalesOrderAmendmentQuoteCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSalesOrderAmendmentQuoteDeleter()
+            ->deleteSalesOrderAmendmentQuoteCollection($salesOrderAmendmentQuoteCollectionDeleteCriteriaTransfer);
     }
 
     /**

@@ -12,7 +12,7 @@ use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartReorderResponseTransfer;
 use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsDependencyProvider;
+use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use SprykerTest\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsBusinessTester;
 
 /**
@@ -23,10 +23,10 @@ use SprykerTest\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsBusinessTester;
  * @group SalesOrderAmendmentOms
  * @group Business
  * @group Facade
- * @group ValidateQuoteTest
+ * @group ValidateCartReorderTest
  * Add your own group annotations below this line
  */
-class ValidateQuoteTest extends Unit
+class ValidateCartReorderTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsBusinessTester
@@ -119,25 +119,41 @@ class ValidateQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testShouldDoNothingWhenAmendableOrderReferenceIsNotProvided(): void
+    public function testShouldThrowNullValueExceptionWhenQuoteIsNotProvided(): void
     {
         // Arrange
-        $this->tester->setDependency(
-            SalesOrderAmendmentOmsDependencyProvider::FACADE_OMS,
-            $this->tester->getSalesOrderAmendmentOmsOmsFacadeMock(),
-        );
+        $cartReorderTransfer = new CartReorderTransfer();
+        $cartReorderResponseTransfer = new CartReorderResponseTransfer();
 
+        // Assert
+        $this->expectException(NullValueException::class);
+        $this->expectExceptionMessage('Property "quote" of transfer `Generated\Shared\Transfer\CartReorderTransfer` is null.');
+
+        // Act
+        $this->tester->getFacade()->validateCartReorder(
+            $cartReorderTransfer,
+            $cartReorderResponseTransfer,
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldThrowNullValueExceptionWhenOrderReferenceIsNotProvided(): void
+    {
+        // Arrange
         $quoteTransfer = (new QuoteBuilder([QuoteTransfer::AMENDMENT_ORDER_REFERENCE => null]))->build();
         $cartReorderTransfer = (new CartReorderTransfer())->setQuote($quoteTransfer);
         $cartReorderResponseTransfer = new CartReorderResponseTransfer();
 
+        // Assert
+        $this->expectException(NullValueException::class);
+        $this->expectExceptionMessage('Property "amendmentOrderReference" of transfer `Generated\Shared\Transfer\QuoteTransfer` is null.');
+
         // Act
-        $cartReorderResponseTransfer = $this->tester->getFacade()->validateCartReorder(
+        $this->tester->getFacade()->validateCartReorder(
             $cartReorderTransfer,
             $cartReorderResponseTransfer,
         );
-
-        // Assert
-        $this->assertCount(0, $cartReorderResponseTransfer->getErrors());
     }
 }

@@ -261,7 +261,7 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>>
      */
     protected function getCartReorderValidatorPlugins(): array
     {
@@ -277,7 +277,7 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface>
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface>>
      */
     protected function getCartReorderItemHydratorPlugins(): array
     {
@@ -285,7 +285,7 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>>
      */
     protected function getCartReorderPreAddToCartPlugins(): array
     {
@@ -293,7 +293,7 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface>
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface>>
      */
     protected function getCartPostReorderPlugins(): array
     {

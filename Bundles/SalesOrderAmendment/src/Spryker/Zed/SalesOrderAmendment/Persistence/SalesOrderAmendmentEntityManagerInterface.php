@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesOrderAmendment\Persistence;
 
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentTransfer;
 
 interface SalesOrderAmendmentEntityManagerInterface
@@ -19,6 +20,15 @@ interface SalesOrderAmendmentEntityManagerInterface
     public function createSalesOrderAmendment(
         SalesOrderAmendmentTransfer $salesOrderAmendmentTransfer
     ): SalesOrderAmendmentTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer $salesOrderAmendmentQuoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer
+     */
+    public function createSalesOrderAmendmentQuote(
+        SalesOrderAmendmentQuoteTransfer $salesOrderAmendmentQuoteTransfer
+    ): SalesOrderAmendmentQuoteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\SalesOrderAmendmentTransfer $salesOrderAmendmentTransfer
@@ -35,4 +45,13 @@ interface SalesOrderAmendmentEntityManagerInterface
      * @return void
      */
     public function deleteSalesOrderAmendment(SalesOrderAmendmentTransfer $salesOrderAmendmentTransfer): void;
+
+    /**
+     * @param list<int> $salesOrderAmendmentQuoteIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderAmendmentQuotes(
+        array $salesOrderAmendmentQuoteIds
+    ): void;
 }

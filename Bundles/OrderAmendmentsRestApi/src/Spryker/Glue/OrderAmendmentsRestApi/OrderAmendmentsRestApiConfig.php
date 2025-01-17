@@ -11,4 +11,10 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class OrderAmendmentsRestApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @api
+     *
+     * @var string
+     */
+    public const RESOURCE_ORDER_AMENDMENTS = 'order-amendments';
 }

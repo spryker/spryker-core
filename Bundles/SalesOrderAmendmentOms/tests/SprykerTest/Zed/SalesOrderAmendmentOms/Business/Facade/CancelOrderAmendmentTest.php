@@ -39,7 +39,7 @@ class CancelOrderAmendmentTest extends Unit
     /**
      * @var string
      */
-    protected const ORDER_ITEM_STATE_ORDER_AMENDMENT_LOCK = 'order amendment lock';
+    protected const ORDER_ITEM_STATE_ORDER_AMENDMENT = 'order amendment';
 
     /**
      * @return void
@@ -58,8 +58,8 @@ class CancelOrderAmendmentTest extends Unit
     {
         // Arrange
         $saveOrderTransfer = $this->tester->haveOrderWithTwoItems();
-        $this->tester->setItemState($saveOrderTransfer->getOrderItems()->offsetGet(0)->getIdSalesOrderItemOrFail(), static::ORDER_ITEM_STATE_ORDER_AMENDMENT_LOCK);
-        $this->tester->setItemState($saveOrderTransfer->getOrderItems()->offsetGet(1)->getIdSalesOrderItemOrFail(), static::ORDER_ITEM_STATE_ORDER_AMENDMENT_LOCK);
+        $this->tester->setItemState($saveOrderTransfer->getOrderItems()->offsetGet(0)->getIdSalesOrderItemOrFail(), static::ORDER_ITEM_STATE_ORDER_AMENDMENT);
+        $this->tester->setItemState($saveOrderTransfer->getOrderItems()->offsetGet(1)->getIdSalesOrderItemOrFail(), static::ORDER_ITEM_STATE_ORDER_AMENDMENT);
 
         $quoteTransfer = (new QuoteBuilder([
             QuoteTransfer::AMENDMENT_ORDER_REFERENCE => $saveOrderTransfer->getOrderReferenceOrFail(),
