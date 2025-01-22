@@ -43,4 +43,20 @@ interface KernelAppFacadeInterface
      * @return void
      */
     public function writeAppConfig(AppConfigTransfer $appConfigTransfer): void;
+
+    /**
+     * Specification:
+     * - Utilizes the grace period for App configuration from {@link \Spryker\Zed\KernelApp\KernelAppConfig::getAppConfigGracePeriod()}.
+     * - The grace period delays immediate deactivation of the App configuration.
+     * - An active App is that has either `active` status or `inactive` during the grace period.
+     * - Queries the message channels for each active App from the database.
+     * - Filters the message channels based on the obtained channel list.
+     *
+     * @api
+     *
+     * @param array $messageChannels
+     *
+     * @return array
+     */
+    public function filterMessageChannels(array $messageChannels): array;
 }

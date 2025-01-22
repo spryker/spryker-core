@@ -288,6 +288,19 @@ class MessageBrokerConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     * - Returns system worker channels used to retrieve service messages.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getSystemWorkerChannels(): array
+    {
+        return [];
+    }
+
+    /**
+     * Specification:
      * - Global on/off toggle for sending and receiving messages through the MessageBroker.
      *
      * @api

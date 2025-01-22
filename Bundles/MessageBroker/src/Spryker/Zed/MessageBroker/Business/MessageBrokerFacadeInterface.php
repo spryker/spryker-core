@@ -9,6 +9,7 @@ namespace Spryker\Zed\MessageBroker\Business;
 
 use Generated\Shared\Transfer\MessageBrokerWorkerConfigTransfer;
 use Generated\Shared\Transfer\MessageResponseTransfer;
+use Generated\Shared\Transfer\MessageSendingContextTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -75,4 +76,21 @@ interface MessageBrokerFacadeInterface
      * @return bool
      */
     public function canHandleMessage(TransferInterface $message): bool;
+
+    /**
+     * Specification:
+     * - Checks if the message can be sent.
+     * - Requires `MessageSendingContext.messageName` to be set.
+     * - Returns `false` if message broker is disabled.
+     * - Returns `false` if the message name is not found in message to channel mapping.
+     * - Returns `false` if the channel found by message name was filtered out by a stack of `FilterMessageChannelPluginInterface`.
+     * - Returns `true` otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MessageSendingContextTransfer $messageSendingContextTransfer
+     *
+     * @return bool
+     */
+    public function isMessageSendable(MessageSendingContextTransfer $messageSendingContextTransfer): bool;
 }

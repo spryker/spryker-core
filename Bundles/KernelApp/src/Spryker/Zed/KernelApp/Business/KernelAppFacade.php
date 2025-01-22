@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\KernelApp\Business\KernelAppBusinessFactory getFactory()
  * @method \Spryker\Zed\KernelApp\Persistence\KernelAppEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\KernelApp\Persistence\KernelAppRepositoryInterface getRepository()
  */
 class KernelAppFacade extends AbstractFacade implements KernelAppFacadeInterface
 {
@@ -44,5 +45,20 @@ class KernelAppFacade extends AbstractFacade implements KernelAppFacadeInterface
     public function writeAppConfig(AppConfigTransfer $appConfigTransfer): void
     {
         $this->getEntityManager()->writeAppConfig($appConfigTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $messageChannels
+     *
+     * @return array
+     */
+    public function filterMessageChannels(array $messageChannels): array
+    {
+        return $this->getFactory()->createMessageChannelFilter()
+            ->filterMessageChannels($messageChannels);
     }
 }

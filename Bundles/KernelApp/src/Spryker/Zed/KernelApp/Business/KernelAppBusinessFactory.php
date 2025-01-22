@@ -9,12 +9,15 @@ namespace Spryker\Zed\KernelApp\Business;
 
 use Spryker\Client\KernelApp\KernelAppClientInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\KernelApp\Business\Filter\MessageChannelFilter;
+use Spryker\Zed\KernelApp\Business\Filter\MessageChannelFilterInterface;
 use Spryker\Zed\KernelApp\Business\Request\Request;
 use Spryker\Zed\KernelApp\KernelAppDependencyProvider;
 
 /**
  * @method \Spryker\Zed\KernelApp\Persistence\KernelAppEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\KernelApp\KernelAppConfig getConfig()
+ * @method \Spryker\Zed\KernelApp\Persistence\KernelAppRepositoryInterface getRepository()
  */
 class KernelAppBusinessFactory extends AbstractBusinessFactory
 {
@@ -28,6 +31,14 @@ class KernelAppBusinessFactory extends AbstractBusinessFactory
             $this->getKernelAppClient(),
             $this->getRequestExpanderPlugins(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\KernelApp\Business\Filter\MessageChannelFilterInterface
+     */
+    public function createMessageChannelFilter(): MessageChannelFilterInterface
+    {
+        return new MessageChannelFilter($this->getRepository(), $this->getConfig());
     }
 
     /**

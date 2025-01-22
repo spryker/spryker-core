@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Business\Publisher;
 
 use Generated\Shared\Transfer\MessageAttributesTransfer;
+use Generated\Shared\Transfer\MessageSendingContextTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductCreatedTransfer;
 use Generated\Shared\Transfer\ProductDeletedTransfer;
@@ -20,7 +21,7 @@ use Spryker\Zed\Product\Business\Exception\ProductPublisherEventNameMismatchExce
 use Spryker\Zed\Product\Business\Exception\ProductPublisherWrongChunkSizeException;
 use Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\Product\Business\Reader\ProductConcreteReaderInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace;
+use Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterface;
 use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 use Spryker\Zed\Product\ProductConfig;
 use Throwable;
@@ -50,7 +51,7 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
     protected $productConcreteReader;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterface
      */
     protected $messageBrokerFacade;
 
@@ -71,14 +72,14 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
 
     /**
      * @param \Spryker\Zed\Product\Business\Reader\ProductConcreteReaderInterface $productConcreteReader
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace $messageBrokerFacade
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterface $messageBrokerFacade
      * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
      * @param \Spryker\Zed\Product\ProductConfig $productConfig
      * @param \Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface $productEventTrigger
      */
     public function __construct(
         ProductConcreteReaderInterface $productConcreteReader,
-        ProductToMessageBrokerInterfrace $messageBrokerFacade,
+        ProductToMessageBrokerInterface $messageBrokerFacade,
         ProductRepositoryInterface $productRepository,
         ProductConfig $productConfig,
         ProductEventTriggerInterface $productEventTrigger
@@ -88,6 +89,20 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
         $this->productRepository = $productRepository;
         $this->productConfig = $productConfig;
         $this->productEventTrigger = $productEventTrigger;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageSendingContextTransfer $messageSendingContextTransfer
+     *
+     * @return bool
+     */
+    public function canPublishMessage(MessageSendingContextTransfer $messageSendingContextTransfer): bool
+    {
+        if (!$this->productConfig->isPublishingToMessageBrokerEnabled()) {
+            return false;
+        }
+
+        return $this->messageBrokerFacade->isMessageSendable($messageSendingContextTransfer);
     }
 
     /**

@@ -15,9 +15,11 @@ use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageBrokerWorkerConfigTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Psr\Log\NullLogger;
+use ReflectionClass;
 use Spryker\Shared\MessageBroker\MessageBrokerConstants;
 use Spryker\Zed\MessageBroker\Business\MessageBrokerBusinessFactory;
 use Spryker\Zed\MessageBroker\Business\MessageBrokerFacadeInterface;
+use Spryker\Zed\MessageBroker\Business\MessageChannelProvider\MessageChannelProvider;
 use Spryker\Zed\MessageBroker\Business\Worker\Worker;
 use Spryker\Zed\MessageBroker\MessageBrokerDependencyProvider;
 use Spryker\Zed\MessageBrokerAws\Communication\Plugin\MessageBroker\Receiver\AwsSqsMessageReceiverPlugin;
@@ -121,6 +123,7 @@ class MessageBrokerHelper extends Module
         $constructorArguments = [
             $receiverPlugins,
             $messageBus,
+            $factory->createMessageChannelProvider(),
             $eventDispatcher,
             $factory->getConfig(),
             new NullLogger(),
@@ -468,6 +471,17 @@ class MessageBrokerHelper extends Module
         }
 
         return $messageBrokerWorkerConfigTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    public function clearMessageChannelCache(): void
+    {
+        $reflectionClass = new ReflectionClass(MessageChannelProvider::class);
+        $reflectionProperty = $reflectionClass->getProperty('messageToChannelMapCache');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue([]);
     }
 
     /**

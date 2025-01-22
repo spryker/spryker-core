@@ -28,6 +28,7 @@ use Codeception\Actor;
  * @SuppressWarnings(PHPMD)
  *
  * @method \Spryker\Zed\KernelApp\Business\KernelAppFacadeInterface getFacade(?string $moduleName = NULL)
+ * @method \Spryker\Zed\KernelApp\KernelAppConfig getModuleConfig()
  */
 class KernelAppBusinessTester extends Actor
 {

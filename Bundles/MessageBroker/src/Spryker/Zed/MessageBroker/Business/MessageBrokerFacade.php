@@ -9,6 +9,7 @@ namespace Spryker\Zed\MessageBroker\Business;
 
 use Generated\Shared\Transfer\MessageBrokerWorkerConfigTransfer;
 use Generated\Shared\Transfer\MessageResponseTransfer;
+use Generated\Shared\Transfer\MessageSendingContextTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -73,5 +74,20 @@ class MessageBrokerFacade extends AbstractFacade implements MessageBrokerFacadeI
     public function canHandleMessage(TransferInterface $message): bool
     {
         return $this->getFactory()->createMessageValidatorStack()->isValidMessage($message);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MessageSendingContextTransfer $messageSendingContextTransfer
+     *
+     * @return bool
+     */
+    public function isMessageSendable(MessageSendingContextTransfer $messageSendingContextTransfer): bool
+    {
+        return $this->getFactory()->createMessageValidator()
+            ->isMessageSendable($messageSendingContextTransfer);
     }
 }

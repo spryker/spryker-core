@@ -9,6 +9,7 @@ namespace Spryker\Zed\MessageBroker\Business\Worker;
 
 use Generated\Shared\Transfer\MessageBrokerWorkerConfigTransfer;
 use Psr\Log\LoggerInterface;
+use Spryker\Zed\MessageBroker\Business\MessageChannelProvider\MessageChannelProviderInterface;
 use Spryker\Zed\MessageBroker\MessageBrokerConfig;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageReceiverPluginInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -32,6 +33,11 @@ class Worker implements WorkerInterface
     protected MessageBusInterface $bus;
 
     /**
+     * @var \Spryker\Zed\MessageBroker\Business\MessageChannelProvider\MessageChannelProviderInterface
+     */
+    protected MessageChannelProviderInterface $messageChannelProvider;
+
+    /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
     protected EventDispatcherInterface $eventDispatcher;
@@ -49,6 +55,7 @@ class Worker implements WorkerInterface
     /**
      * @param list<\Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageReceiverPluginInterface> $messageReceiverPlugins
      * @param \Symfony\Component\Messenger\MessageBusInterface $bus
+     * @param \Spryker\Zed\MessageBroker\Business\MessageChannelProvider\MessageChannelProviderInterface $messageChannelProvider
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Spryker\Zed\MessageBroker\MessageBrokerConfig $config
      * @param \Psr\Log\LoggerInterface $logger
@@ -56,12 +63,14 @@ class Worker implements WorkerInterface
     public function __construct(
         array $messageReceiverPlugins,
         MessageBusInterface $bus,
+        MessageChannelProviderInterface $messageChannelProvider,
         EventDispatcherInterface $eventDispatcher,
         MessageBrokerConfig $config,
         LoggerInterface $logger
     ) {
         $this->messageReceiverPlugins = $messageReceiverPlugins;
         $this->bus = $bus;
+        $this->messageChannelProvider = $messageChannelProvider;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
         $this->config = $config;
@@ -96,10 +105,7 @@ class Worker implements WorkerInterface
             $this->eventDispatcher->addSubscriber(new StopWorkerOnTimeLimitListener($messageBrokerWorkerConfigTransfer->getTimeLimit(), $this->logger));
         }
 
-        $channels = $messageBrokerWorkerConfigTransfer->getChannels();
-        if (!$channels) {
-            $channels = $this->config->getDefaultWorkerChannels();
-        }
+        $channels = $this->messageChannelProvider->getChannelsForConsuming($messageBrokerWorkerConfigTransfer);
 
         $options = [
             'queues' => $channels,

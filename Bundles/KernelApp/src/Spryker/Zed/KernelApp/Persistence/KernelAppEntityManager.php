@@ -25,12 +25,9 @@ class KernelAppEntityManager extends AbstractEntityManager implements KernelAppE
         $appConfigTransfer->getAppIdentifierOrFail();
         $appConfigTransfer->getStatusOrFail();
 
-        $appConfigData = $appConfigTransfer->modifiedToArray();
-        $appConfigData[AppConfigTransfer::CONFIG] = $this->getFactory()->getUtilEncodingService()->encodeJson($appConfigData[AppConfigTransfer::CONFIG]);
-
         $appConfigPropelQuery = $this->getFactory()->createAppConfigPropelQuery();
         $appConfigEntity = $appConfigPropelQuery->filterByAppIdentifier($appConfigTransfer->getAppIdentifier())->findOneOrCreate();
-        $appConfigEntity->fromArray($appConfigData);
+        $appConfigEntity = $this->getFactory()->createAppConfigMapper()->mapAppConfigTransferToAppConfigEntity($appConfigTransfer, $appConfigEntity);
         $appConfigEntity->save();
     }
 }

@@ -118,7 +118,6 @@ class FactoryHelper extends Module
     {
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
-        $factoryClassNameCandidate = sprintf(static::FACTORY_CLASS_NAME_PATTERN, 'Spryker', $moduleName);
 
         return sprintf(static::FACTORY_CLASS_NAME_PATTERN, $this->removeTestSuffix($namespaceParts[0]), $moduleName);
     }

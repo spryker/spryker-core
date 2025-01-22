@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product\Business;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\MessageSendingContextTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
@@ -1214,6 +1215,21 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function emitPublishProductToMessageBroker(ProductPublisherConfigTransfer $productPublisherConfigTransfer): void
     {
         $this->getFactory()->createProductMessageBrokerPublisher()->publish($productPublisherConfigTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MessageSendingContextTransfer $messageSendingContextTransfer
+     *
+     * @return bool
+     */
+    public function canPublishMessage(MessageSendingContextTransfer $messageSendingContextTransfer): bool
+    {
+        return $this->getFactory()->createProductMessageBrokerPublisher()
+            ->canPublishMessage($messageSendingContextTransfer);
     }
 
     /**

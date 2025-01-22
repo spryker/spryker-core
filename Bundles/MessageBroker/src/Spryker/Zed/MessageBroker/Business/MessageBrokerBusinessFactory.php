@@ -26,6 +26,8 @@ use Spryker\Zed\MessageBroker\Business\MessageChannelProvider\MessageChannelProv
 use Spryker\Zed\MessageBroker\Business\MessageChannelProvider\MessageChannelProviderInterface;
 use Spryker\Zed\MessageBroker\Business\MessageHandler\MessageHandlerLocator;
 use Spryker\Zed\MessageBroker\Business\MessageSender\MessageSenderLocator;
+use Spryker\Zed\MessageBroker\Business\MessageValidator\MessageValidator;
+use Spryker\Zed\MessageBroker\Business\MessageValidator\MessageValidatorInterface;
 use Spryker\Zed\MessageBroker\Business\MessageValidator\MessageValidatorStack;
 use Spryker\Zed\MessageBroker\Business\MessageValidator\MessageValidatorStackInterface;
 use Spryker\Zed\MessageBroker\Business\Middleware\AddChannelNameStampMiddleware;
@@ -163,6 +165,7 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
         return new MessageChannelProvider(
             $this->getConfig(),
             $this->createConfigFormatter(),
+            $this->getMessageChannelPlugins(),
         );
     }
 
@@ -249,6 +252,7 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
         return new Worker(
             $this->getMessageReceiverPlugins(),
             $this->createMessageBus(),
+            $this->createMessageChannelProvider(),
             $this->getEventDispatcher(),
             $this->getConfig(),
             $this->createLogger(),
@@ -295,6 +299,14 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MessageBroker\Business\MessageValidator\MessageValidatorInterface
+     */
+    public function createMessageValidator(): MessageValidatorInterface
+    {
+        return new MessageValidator($this->createMessageChannelProvider(), $this->getConfig());
+    }
+
+    /**
      * @return \Spryker\Zed\MessageBroker\Business\MessageValidator\MessageValidatorStackInterface
      */
     public function createMessageValidatorStack(): MessageValidatorStackInterface
@@ -316,6 +328,14 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
     public function getExternalValidatorPlugins(): array
     {
         return $this->getProvidedDependency(MessageBrokerDependencyProvider::PLUGINS_EXTERNAL_VALIDATOR);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\FilterMessageChannelPluginInterface>
+     */
+    public function getMessageChannelPlugins(): array
+    {
+        return $this->getProvidedDependency(MessageBrokerDependencyProvider::PLUGINS_FILTER_MESSAGE_CHANNEL);
     }
 
     /**

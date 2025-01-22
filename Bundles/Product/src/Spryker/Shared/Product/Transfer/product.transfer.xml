@@ -275,4 +275,8 @@
         <property name="permissionMask" type="int"/>
     </transfer>
 
+    <transfer name="MessageSendingContext">
+        <property name="messageName" type="string"/>
+    </transfer>
+
 </transfers>

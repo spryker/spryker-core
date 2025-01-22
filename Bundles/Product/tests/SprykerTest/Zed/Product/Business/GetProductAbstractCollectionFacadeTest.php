@@ -73,7 +73,7 @@ class GetProductAbstractCollectionFacadeTest extends Unit
     protected const UNEXISTING_STORE_REFERENCE = 'store-doesnt-exists';
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterface
      */
     protected $messageBrokerFacade;
 

@@ -70,7 +70,7 @@ use Spryker\Zed\Product\Business\Reader\ProductConcreteReaderInterface;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\Business\Writer\ProductConcreteWriter;
 use Spryker\Zed\Product\Business\Writer\ProductConcreteWriterInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace;
+use Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterface;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
@@ -713,9 +713,9 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterface
      */
-    public function getMessageBrokerFacade(): ProductToMessageBrokerInterfrace
+    public function getMessageBrokerFacade(): ProductToMessageBrokerInterface
     {
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_MESSAGE_BROKER);
     }

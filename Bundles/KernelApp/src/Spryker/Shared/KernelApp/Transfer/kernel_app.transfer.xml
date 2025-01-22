@@ -7,11 +7,13 @@
         <property name="isActive" type="bool"/>
         <property name="config" type="array" singular="config"/>
         <property name="appIdentifier" type="string" description="The identifier of an App"/>
+        <property name="messageChannels" type="array" singular="messageChannel" description="The message channels that are used by an App"/>
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
     <transfer name="AppConfig" strict="true">
         <property name="appIdentifier" type="string" description="The identifier of an App"/>
+        <property name="messageChannels" type="array" singular="messageChannel" description="The message channels that are used by an App"/>
         <property name="status" type="string"/>
         <property name="isActive" type="bool"/>
         <property name="config" type="array" singular="config"/>
@@ -32,7 +34,5 @@
 
     <transfer name="MessageAttributes">
     </transfer>
-
-
 
 </transfers>

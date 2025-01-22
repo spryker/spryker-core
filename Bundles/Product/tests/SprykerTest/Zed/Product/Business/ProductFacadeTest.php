@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\MessageSendingContextTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -28,7 +29,7 @@ use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
 use Spryker\Zed\Product\Business\Exception\ProductPublisherEventNameMismatchException;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace;
+use Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterface;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\Product\ProductDependencyProvider;
 use Spryker\Zed\Store\StoreDependencyProvider;
@@ -95,7 +96,7 @@ class ProductFacadeTest extends Unit
     protected const UNEXISTING_STORE_REFERENCE = 'store-doesnt-exists';
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterface
      */
     protected $messageBrokerFacade;
 
@@ -113,7 +114,7 @@ class ProductFacadeTest extends Unit
 
         $this->tester->setUpDatabase();
 
-        $this->messageBrokerFacade = $this->createMock(ProductToMessageBrokerInterfrace::class);
+        $this->messageBrokerFacade = $this->createMock(ProductToMessageBrokerInterface::class);
 
         $this->tester->setDependency(
             ProductDependencyProvider::FACADE_MESSAGE_BROKER,
@@ -897,5 +898,58 @@ class ProductFacadeTest extends Unit
 
         // Act
         $this->tester->getProductFacade()->publishProductToMessageBrokerByProductAbstractEvents($eventEntityTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanPublishMessageReturnsFalseWhenPublishingToMessageBrokerIsDisabled(): void
+    {
+        // Arrange
+        $messageSendingContextTransfer = (new MessageSendingContextTransfer());
+        $this->tester->setConfig(ProductConstants::PUBLISHING_TO_MESSAGE_BROKER_ENABLED, false);
+
+        // Act
+        $canPublishMessage = $this->tester->getProductFacade()
+            ->canPublishMessage($messageSendingContextTransfer);
+
+        // Assert
+        $this->assertFalse($canPublishMessage);
+    }
+
+    /**
+     * @dataProvider canPublishMessageDataProvider
+     *
+     * @param bool $expectedCanPublishMessage
+     *
+     * @return void
+     */
+    public function testCanPublishMessageReturnsCorrectValueWhenPublishingToMessageBrokerIsEnabledAndMessageBrokerAllowsMessagePublishing(
+        bool $expectedCanPublishMessage
+    ): void {
+        // Arrange
+        $messageSendingContextTransfer = (new MessageSendingContextTransfer());
+        $this->tester->setConfig(ProductConstants::PUBLISHING_TO_MESSAGE_BROKER_ENABLED, true);
+        $messageBrokerFacadeMock = $this->createMock(ProductToMessageBrokerInterface::class);
+        $messageBrokerFacadeMock->method('isMessageSendable')->willReturn($expectedCanPublishMessage);
+        $this->tester->setDependency(ProductDependencyProvider::FACADE_MESSAGE_BROKER, $messageBrokerFacadeMock);
+
+        // Act
+        $canPublishMessage = $this->tester->getProductFacade()
+            ->canPublishMessage($messageSendingContextTransfer);
+
+        // Assert
+        $this->assertSame($expectedCanPublishMessage, $canPublishMessage);
+    }
+
+    /**
+     * @return array<string, list<bool>>
+     */
+    public static function canPublishMessageDataProvider(): array
+    {
+        return [
+            'can publish message' => [true],
+            'cannot publish message' => [false],
+        ];
     }
 }

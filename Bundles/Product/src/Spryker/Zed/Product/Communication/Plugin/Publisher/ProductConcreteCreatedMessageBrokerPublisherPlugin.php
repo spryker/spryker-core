@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Product\Communication\Plugin\Publisher;
 
+use Generated\Shared\Transfer\MessageSendingContextTransfer;
 use Generated\Shared\Transfer\ProductCreatedTransfer;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 
@@ -49,7 +50,10 @@ class ProductConcreteCreatedMessageBrokerPublisherPlugin extends AbstractProduct
      */
     public function getSubscribedEvents(): array
     {
-        if (!$this->getConfig()->isPublishingToMessageBrokerEnabled()) {
+        $messageSendingContextTransfer = (new MessageSendingContextTransfer())
+            ->setMessageName(ProductCreatedTransfer::class);
+
+        if (!$this->getFacade()->canPublishMessage($messageSendingContextTransfer)) {
             return [];
         }
 

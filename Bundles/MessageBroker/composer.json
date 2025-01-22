@@ -7,7 +7,7 @@
         "php": ">=8.2",
         "spryker/kernel": "^3.30.0",
         "spryker/log": "^3.0.0",
-        "spryker/message-broker-extension": "^1.2.0",
+        "spryker/message-broker-extension": "^1.3.0",
         "spryker/monolog": "^2.0.0",
         "spryker/symfony": "^3.10.0",
         "spryker/transfer": "^3.25.0",

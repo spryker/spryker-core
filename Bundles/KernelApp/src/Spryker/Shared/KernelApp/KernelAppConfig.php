@@ -7,10 +7,10 @@
 
 namespace Spryker\Shared\KernelApp;
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 use Symfony\Component\HttpFoundation\Request;
 
-class KernelAppConfig extends AbstractBundleConfig
+class KernelAppConfig extends AbstractSharedConfig
 {
     /**
      * @var string

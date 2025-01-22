@@ -87,6 +87,8 @@ class ProductConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return bool
      */
     public function isPublishingToMessageBrokerEnabled(): bool

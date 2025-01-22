@@ -58,6 +58,11 @@ class MessageBrokerDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_EXTERNAL_VALIDATOR = 'PLUGINS_EXTERNAL_VALIDATOR';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_FILTER_MESSAGE_CHANNEL = 'PLUGINS_FILTER_MESSAGE_CHANNEL';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -72,6 +77,7 @@ class MessageBrokerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->provideMessageHandlerPlugins($container);
         $container = $this->provideMessageAttributeProviderPlugins($container);
         $container = $this->provideExternalValidatorPlugins($container);
+        $container = $this->provideFilterMessageChannelPlugins($container);
         $container = $this->provideMiddlewarePlugins($container);
         $container = $this->addUtilEncodingService($container);
 
@@ -239,6 +245,28 @@ class MessageBrokerDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageValidatorPluginInterface>
      */
     public function getExternalValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function provideFilterMessageChannelPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_FILTER_MESSAGE_CHANNEL, function () {
+            return $this->getFilterMessageChannelPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\FilterMessageChannelPluginInterface>
+     */
+    public function getFilterMessageChannelPlugins(): array
     {
         return [];
     }

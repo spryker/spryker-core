@@ -13,6 +13,8 @@
         </unique>
 
         <id-method-parameter value="spy_app_config_pk_seq"/>
+
+        <behavior name="timestampable"/>
     </table>
 
 </database>

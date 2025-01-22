@@ -9,8 +9,10 @@ namespace SprykerTest\Zed\KernelApp\Business;
 
 use Codeception\Stub;
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\Transfer\AcpHttpRequestTransfer;
 use Generated\Shared\Transfer\AcpHttpResponseTransfer;
+use Generated\Shared\Transfer\AppConfigTransfer;
 use GuzzleHttp\Client;
 use GuzzleHttp\Stream\StreamInterface;
 use Psr\Http\Message\RequestInterface;
@@ -119,6 +121,122 @@ class KernelAppFacadeTest extends Unit
 
         // Assert
         $this->assertInstanceOf(AcpHttpResponseTransfer::class, $acpHttpResponseTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterMessageChannelsFiltersGivenMessageChannelsWhenAppSpecificMessageChannelsExistAndAppIsActive(): void
+    {
+        // Arrange
+        $kernelAppFacade = $this->tester->getFacade();
+        $messageChannels = ['foo', 'bar'];
+        $this->tester->emptyAppConfigTable();
+        $appConfigTransfer = $this->tester->haveAppConfigPersisted([
+            AppConfigTransfer::IS_ACTIVE => true,
+            AppConfigTransfer::APP_IDENTIFIER => 'app-identifier',
+            AppConfigTransfer::MESSAGE_CHANNELS => ['foo'],
+        ]);
+
+        $expectedFilteredMessageChannels = array_intersect($messageChannels, $appConfigTransfer->getMessageChannels());
+
+        // Act
+        $filteredMessageChannels = $kernelAppFacade->filterMessageChannels($messageChannels);
+
+        // Assert
+        $this->assertSame($expectedFilteredMessageChannels, $filteredMessageChannels);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterMessageChannelsDoesNothingWithGivenMessageChannelsWhenAppSpecificMessageChannelsExistButNotForAllAppConfigs(): void
+    {
+        // Arrange
+        $kernelAppFacade = $this->tester->getFacade();
+        $messageChannels = ['foo', 'bar'];
+        $this->tester->emptyAppConfigTable();
+        $this->tester->haveAppConfigPersisted([
+            AppConfigTransfer::APP_IDENTIFIER => 'app-identifier-1',
+            AppConfigTransfer::MESSAGE_CHANNELS => ['foo'],
+        ]);
+        $this->tester->haveAppConfigPersisted([
+            AppConfigTransfer::APP_IDENTIFIER => 'app-identifier-2',
+        ]);
+
+        // Act
+        $filteredMessageChannels = $kernelAppFacade->filterMessageChannels($messageChannels);
+
+        // Assert
+        $this->assertSame($messageChannels, $filteredMessageChannels);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterMessageChannelsFiltersGivenMessageChannelsWhenAppIsNotActiveButGracePeriodHasNotBeenExpired(): void
+    {
+        // Arrange
+        $kernelAppFacade = $this->tester->getFacade();
+        $gracePeriod = $this->tester->getModuleConfig()->getAppConfigGracePeriod();
+        $appConfigUpdatedAt = $gracePeriod > 0
+            ? (new DateTime())->modify(sprintf('-%s seconds', $gracePeriod - 5))->format('Y-m-d H:i:s')
+            : null;
+
+        $messageChannels = ['foo', 'bar'];
+        $this->tester->emptyAppConfigTable();
+        $appConfigTransfer = $this->tester->haveAppConfigPersisted([
+            AppConfigTransfer::IS_ACTIVE => false,
+            AppConfigTransfer::APP_IDENTIFIER => 'app-identifier-1',
+            AppConfigTransfer::MESSAGE_CHANNELS => ['foo'],
+        ], $appConfigUpdatedAt);
+
+        $expectedFilteredMessageChannels = array_intersect($messageChannels, $appConfigTransfer->getMessageChannels());
+
+        // Act
+        $filteredMessageChannels = $kernelAppFacade->filterMessageChannels($messageChannels);
+
+        // Assert
+        $this->assertSame($expectedFilteredMessageChannels, $filteredMessageChannels);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterMessageChannelsReturnsNoGivenMessageChannelsWhenAppIsNotActiveAndGracePeriodHasAlreadyBeenExpired(): void
+    {
+        // Arrange
+        $kernelAppFacade = $this->tester->getFacade();
+        $gracePeriod = $this->tester->getModuleConfig()->getAppConfigGracePeriod();
+        $messageChannels = ['foo', 'bar'];
+        $this->tester->emptyAppConfigTable();
+        $this->tester->haveAppConfigPersisted([
+            AppConfigTransfer::IS_ACTIVE => false,
+            AppConfigTransfer::APP_IDENTIFIER => 'app-identifier-1',
+            AppConfigTransfer::MESSAGE_CHANNELS => ['foo'],
+        ], (new DateTime())->modify(sprintf('-%s seconds', $gracePeriod + 1))->format('Y-m-d H:i:s'));
+
+        // Act
+        $filteredMessageChannels = $kernelAppFacade->filterMessageChannels($messageChannels);
+
+        // Assert
+        $this->assertSame([], $filteredMessageChannels);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterMessageChannelsReturnsNoGivenMessageChannelsWhenThereAreNoAppSpecificMessageChannels(): void
+    {
+        // Arrange
+        $kernelAppFacade = $this->tester->getFacade();
+        $messageChannels = ['foo', 'bar'];
+
+        // Act
+        $filteredMessageChannels = $kernelAppFacade->filterMessageChannels($messageChannels);
+
+        // Assert
+        $this->assertSame([], $filteredMessageChannels);
     }
 
     /**

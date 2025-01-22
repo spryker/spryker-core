@@ -11,6 +11,32 @@ coverage:
         include:
             - '../../../../src/Spryker/*/MerchantApp/*'
 suites:
+    AsyncApi:
+        path: AsyncApi
+        actor: MerchantAppAsyncApiTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\MerchantApp\Helper\MerchantAppHelper
+                - \SprykerTest\Shared\KernelApp\Helper\KernelAppHelper
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper:
+                      projectNamespaces:
+                          - Spryker
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Zed\MessageBroker\Helper\InMemoryMessageBrokerHelper
+                - \SprykerTest\Zed\Testify\Helper\Persistence\FactoryHelper
+                - \Spryker\Zed\TestifyAsyncApi\Business\Codeception\Helper\AsyncApiHelper:
+                      asyncapi: resources/api/asyncapi.yml
+                      handlers:
+                          - \Spryker\Zed\MerchantApp\Communication\Plugin\MessageBroker\MerchantAppOnboardingMessageHandlerPlugin
+
     Business:
         path: Business
         actor: MerchantAppBusinessTester
@@ -31,6 +57,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Zed\Testify\Helper\Persistence\FactoryHelper
 
     Communication:
         path: Communication

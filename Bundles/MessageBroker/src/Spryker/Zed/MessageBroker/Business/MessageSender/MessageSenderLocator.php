@@ -127,7 +127,11 @@ class MessageSenderLocator implements SendersLocatorInterface
      */
     protected function getSenderClientNamesForMessage(Envelope $envelope): iterable
     {
-        $channel = $this->messageChannelProvider->getChannelForMessage($envelope);
+        $channel = $this->messageChannelProvider->findChannelForMessage($envelope);
+
+        if (!$channel) {
+            return [];
+        }
 
         $channelToSenderClientMap = $this->config->getChannelToTransportMap();
 

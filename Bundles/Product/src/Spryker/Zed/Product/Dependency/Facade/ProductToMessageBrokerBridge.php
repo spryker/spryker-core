@@ -8,9 +8,10 @@
 namespace Spryker\Zed\Product\Dependency\Facade;
 
 use Generated\Shared\Transfer\MessageResponseTransfer;
+use Generated\Shared\Transfer\MessageSendingContextTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
-class ProductToMessageBrokerBridge implements ProductToMessageBrokerInterfrace
+class ProductToMessageBrokerBridge implements ProductToMessageBrokerInterface
 {
     /**
      * @var \Spryker\Zed\MessageBroker\Business\MessageBrokerFacadeInterface
@@ -33,5 +34,15 @@ class ProductToMessageBrokerBridge implements ProductToMessageBrokerInterfrace
     public function sendMessage(TransferInterface $messageTransfer): MessageResponseTransfer
     {
         return $this->messageBrokerFacade->sendMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageSendingContextTransfer $messageSendingContextTransfer
+     *
+     * @return bool
+     */
+    public function isMessageSendable(MessageSendingContextTransfer $messageSendingContextTransfer): bool
+    {
+        return $this->messageBrokerFacade->isMessageSendable($messageSendingContextTransfer);
     }
 }

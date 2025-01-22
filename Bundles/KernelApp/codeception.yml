@@ -1,7 +1,6 @@
 namespace: SprykerTest
 
 include:
-    - tests/SprykerTest/AsyncApi/KernelApp/
     - tests/SprykerTest/Client/
     - tests/SprykerTest/Zed/KernelApp/
 

@@ -27,7 +27,7 @@ use PHPUnit\Framework\Constraint\Callback;
 use PHPUnit\Framework\MockObject\Rule\InvokedCount as InvokedCountMatcher;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace;
+use Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 /**
@@ -393,14 +393,14 @@ class ProductBusinessTester extends Actor
     }
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace|\PHPUnit\Framework\MockObject\MockObject $messageBrokerFacade
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterface|\PHPUnit\Framework\MockObject\MockObject $messageBrokerFacade
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param string $messageType
      *
      * @return void
      */
     public function assertProductSuccessfullyPublishedViaMessageBroker(
-        ProductToMessageBrokerInterfrace $messageBrokerFacade,
+        ProductToMessageBrokerInterface $messageBrokerFacade,
         ProductConcreteTransfer $productConcreteTransfer,
         string $messageType
     ): void {
@@ -440,14 +440,14 @@ class ProductBusinessTester extends Actor
     }
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace|\PHPUnit\Framework\MockObject\MockObject $messageBrokerFacade
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterface|\PHPUnit\Framework\MockObject\MockObject $messageBrokerFacade
      * @param string $productConcreteSku
      * @param string $messageType
      *
      * @return void
      */
     public function assertProductSuccessfullyUnpublishedViaMessageBroker(
-        ProductToMessageBrokerInterfrace $messageBrokerFacade,
+        ProductToMessageBrokerInterface $messageBrokerFacade,
         string $productConcreteSku,
         string $messageType
     ): void {

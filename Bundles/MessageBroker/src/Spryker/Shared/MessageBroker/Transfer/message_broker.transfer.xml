@@ -50,4 +50,8 @@
     <transfer name="MessageResponse">
         <property name="body" type="object"/>
     </transfer>
+
+    <transfer name="MessageSendingContext">
+        <property name="messageName" type="string"/>
+    </transfer>
 </transfers>

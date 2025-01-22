@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\AsyncApi\MerchantApp\MerchantAppTests\AppEvents;
+namespace SprykerTest\Zed\MerchantApp\AppEvents;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AppConfigTransfer;
@@ -13,15 +13,14 @@ use Generated\Shared\Transfer\MerchantAppOnboardingTransfer;
 use Generated\Shared\Transfer\MerchantOnboardingStateTransfer;
 use Generated\Shared\Transfer\ReadyForMerchantAppOnboardingTransfer;
 use Ramsey\Uuid\Uuid;
-use SprykerTest\AsyncApi\MerchantApp\MerchantAppAsyncApiTester;
+use SprykerTest\Zed\MerchantApp\MerchantAppAsyncApiTester;
 
 /**
  * Auto-generated group annotations
  *
  * @group SprykerTest
- * @group AsyncApi
+ * @group Zed
  * @group MerchantApp
- * @group MerchantAppTests
  * @group AppEvents
  * @group ReadyForMerchantAppOnboardingTest
  * Add your own group annotations below this line
@@ -29,7 +28,7 @@ use SprykerTest\AsyncApi\MerchantApp\MerchantAppAsyncApiTester;
 class ReadyForMerchantAppOnboardingTest extends Unit
 {
     /**
-     * @var \SprykerTest\AsyncApi\MerchantApp\MerchantAppAsyncApiTester
+     * @var \SprykerTest\Zed\MerchantApp\MerchantAppAsyncApiTester
      */
     protected MerchantAppAsyncApiTester $tester;
 

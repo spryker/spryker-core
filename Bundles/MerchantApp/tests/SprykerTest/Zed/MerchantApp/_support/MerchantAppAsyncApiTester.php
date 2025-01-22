@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace SprykerTest\AsyncApi\KernelApp;
+namespace SprykerTest\Zed\MerchantApp;
 
 use Codeception\Actor;
 
@@ -27,7 +27,11 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class KernelAppAsyncApiTester extends Actor
+class MerchantAppAsyncApiTester extends Actor
 {
-    use _generated\KernelAppAsyncApiTesterActions;
+    use _generated\MerchantAppAsyncApiTesterActions;
+
+    /**
+     * Define custom actions here
+     */
 }

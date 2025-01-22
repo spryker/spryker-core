@@ -11,10 +11,11 @@ use Orm\Zed\KernelApp\Persistence\SpyAppConfigQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\KernelApp\Dependency\Service\KernelAppToUtilEncodingServiceInterface;
 use Spryker\Zed\KernelApp\KernelAppDependencyProvider;
+use Spryker\Zed\KernelApp\Persistence\Mapper\AppConfigMapper;
 
 /**
  * @method \Spryker\Zed\KernelApp\KernelAppConfig getConfig()
- * @method \Spryker\Zed\Locale\Persistence\LocaleRepositoryInterface getRepository()
+ * @method \Spryker\Zed\KernelApp\Persistence\KernelAppRepositoryInterface getRepository()
  * @method \Spryker\Zed\KernelApp\Persistence\KernelAppEntityManagerInterface getEntityManager()
  */
 class KernelAppPersistenceFactory extends AbstractPersistenceFactory
@@ -25,6 +26,14 @@ class KernelAppPersistenceFactory extends AbstractPersistenceFactory
     public function createAppConfigPropelQuery(): SpyAppConfigQuery
     {
         return SpyAppConfigQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\KernelApp\Persistence\Mapper\AppConfigMapper
+     */
+    public function createAppConfigMapper(): AppConfigMapper
+    {
+        return new AppConfigMapper($this->getUtilEncodingService());
     }
 
     /**

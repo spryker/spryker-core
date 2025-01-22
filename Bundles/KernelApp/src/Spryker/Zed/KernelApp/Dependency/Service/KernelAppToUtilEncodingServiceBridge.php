@@ -33,4 +33,17 @@ class KernelAppToUtilEncodingServiceBridge implements KernelAppToUtilEncodingSer
     {
         return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
+
+    /**
+     * @param string $jsonValue
+     * @param bool $assoc
+     * @param int|null $depth
+     * @param int|null $options
+     *
+     * @return mixed|null
+     */
+    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null): mixed
+    {
+        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
+    }
 }

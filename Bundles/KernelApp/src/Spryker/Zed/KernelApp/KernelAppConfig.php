@@ -30,4 +30,19 @@ class KernelAppConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getDefaultHeaders();
     }
+
+    /**
+     * Specification:
+     * - Returns the grace period in seconds for the App configuration.
+     * - The grace period is used to prevent the App configuration from being deactivated immediately.
+     * - By default, the grace period is set to 1800 seconds (30 minutes).
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getAppConfigGracePeriod(): int
+    {
+        return 1800;
+    }
 }

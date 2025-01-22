@@ -35,6 +35,8 @@ use Symfony\Component\Messenger\Middleware\StackInterface;
  * @method void pause()
  *
  * @SuppressWarnings(\SprykerTest\Zed\MessageBroker\PHPMD)
+ *
+ * @method \Spryker\Zed\MessageBroker\Business\MessageBrokerFacadeInterface getFacade()
  */
 class MessageBrokerCommunicationTester extends Actor
 {

@@ -10,12 +10,16 @@ namespace SprykerTest\Zed\MessageBroker\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MessageBrokerTestMessageTransfer;
 use Generated\Shared\Transfer\MessageBrokerWorkerConfigTransfer;
+use Generated\Shared\Transfer\MessageSendingContextTransfer;
+use Spryker\Shared\MessageBroker\MessageBrokerConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBroker\Business\Exception\CouldNotMapMessageToChannelNameException;
 use Spryker\Zed\MessageBroker\Business\Exception\MissingMessageSenderException;
 use Spryker\Zed\MessageBroker\Business\MessageAttributeProvider\MessageAttributeProviderInterface;
 use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\CorrelationIdMessageAttributeProviderPlugin;
 use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\TimestampMessageAttributeProviderPlugin;
+use Spryker\Zed\MessageBroker\MessageBrokerDependencyProvider;
+use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\FilterMessageChannelPluginInterface;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageReceiverPluginInterface;
 use SprykerTest\Shared\Propel\Helper\InstancePoolingHelperTrait;
@@ -57,6 +61,14 @@ class MessageBrokerFacadeTest extends Unit
      * @var string|null
      */
     protected ?string $correlationId = null;
+
+    /**
+     * @return void
+     */
+    protected function _before(): void
+    {
+        $this->tester->clearMessageChannelCache();
+    }
 
     /**
      * @return void
@@ -279,5 +291,96 @@ class MessageBrokerFacadeTest extends Unit
         $this->tester->getFacade()->startWorker($messageBrokerWorkerConfigTransfer);
 
         $this->tester->assertTrue($this->isInstancePoolingEnabled(), 'Instance pooling should be enabled');
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsMessageSendableReturnsFalseWhenMessageBrokerIsDisabled(): void
+    {
+        // Arrange
+        $messageSendingContextTransfer = (new MessageSendingContextTransfer());
+        $this->tester->setConfig(MessageBrokerConstants::IS_ENABLED, false);
+
+        // Act
+        $isMessageSendable = $this->tester->getFacade()
+            ->isMessageSendable($messageSendingContextTransfer);
+
+        // Assert
+        $this->assertFalse($isMessageSendable);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsMessageSendableReturnsTrueValueWhenPublishingToMessageBrokerIsEnabledAndChannelsAreNotFiltered(): void
+    {
+        // Arrange
+        $this->tester->setMessageToSenderChannelNameMap(MessageBrokerTestMessageTransfer::class, static::CHANNEL_NAME);
+        $this->tester->setChannelToTransportMap(static::CHANNEL_NAME, static::TRANSPORT);
+
+        $messageSendingContextTransfer = (new MessageSendingContextTransfer())
+            ->setMessageName(MessageBrokerTestMessageTransfer::class);
+        $this->tester->setConfig(MessageBrokerConstants::IS_ENABLED, true);
+        $filterMessageChannelPluginMock = $this->createMock(FilterMessageChannelPluginInterface::class);
+        $filterMessageChannelPluginMock->expects($this->once())->method('filter')
+            ->willReturnCallback(function (array $messageChannels) {
+                return $messageChannels;
+            });
+        $this->tester->setDependency(MessageBrokerDependencyProvider::PLUGINS_FILTER_MESSAGE_CHANNEL, [$filterMessageChannelPluginMock]);
+
+        // Act
+        $isMessageSendable = $this->tester->getFacade()
+            ->isMessageSendable($messageSendingContextTransfer);
+
+        // Assert
+        $this->assertTrue($isMessageSendable);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsMessageSendableReturnsTrueValueWhenPublishingToMessageBrokerIsEnabledAndThereAreNoChannelFilters(): void
+    {
+        // Arrange
+        $this->tester->setMessageToSenderChannelNameMap(MessageBrokerTestMessageTransfer::class, static::CHANNEL_NAME);
+        $this->tester->setChannelToTransportMap(static::CHANNEL_NAME, static::TRANSPORT);
+
+        $messageSendingContextTransfer = (new MessageSendingContextTransfer())
+            ->setMessageName(MessageBrokerTestMessageTransfer::class);
+        $this->tester->setConfig(MessageBrokerConstants::IS_ENABLED, true);
+        $this->tester->setDependency(MessageBrokerDependencyProvider::PLUGINS_FILTER_MESSAGE_CHANNEL, []);
+
+        // Act
+        $isMessageSendable = $this->tester->getFacade()
+            ->isMessageSendable($messageSendingContextTransfer);
+
+        // Assert
+        $this->assertTrue($isMessageSendable);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsMessageSendableReturnsFalseValueWhenPublishingToMessageBrokerIsEnabledAndChannelsAreFiltered(): void
+    {
+        // Arrange
+        $this->tester->setMessageToSenderChannelNameMap(MessageBrokerTestMessageTransfer::class, static::CHANNEL_NAME);
+        $this->tester->setChannelToTransportMap(static::CHANNEL_NAME, static::TRANSPORT);
+
+        $messageSendingContextTransfer = (new MessageSendingContextTransfer())
+            ->setMessageName(MessageBrokerTestMessageTransfer::class);
+
+        $this->tester->setConfig(MessageBrokerConstants::IS_ENABLED, true);
+        $filterMessageChannelPluginMock = $this->createMock(FilterMessageChannelPluginInterface::class);
+        $filterMessageChannelPluginMock->expects($this->once())->method('filter')->willReturn([]);
+        $this->tester->setDependency(MessageBrokerDependencyProvider::PLUGINS_FILTER_MESSAGE_CHANNEL, [$filterMessageChannelPluginMock]);
+
+        // Act
+        $isMessageSendable = $this->tester->getFacade()
+            ->isMessageSendable($messageSendingContextTransfer);
+
+        // Assert
+        $this->assertFalse($isMessageSendable);
     }
 }

@@ -11,8 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AppConfigTransfer;
 use Generated\Shared\Transfer\AppConfigUpdatedTransfer;
 use Ramsey\Uuid\Uuid;
-use SprykerTest\AsyncApi\KernelApp\KernelAppAsyncApiTester;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
+use SprykerTest\Zed\KernelApp\KernelAppAsyncApiTester;
 
 /**
  * Auto-generated group annotations
@@ -30,7 +30,7 @@ class AppConfigUpdatedTest extends Unit
     use DataCleanupHelperTrait;
 
     /**
-     * @var \SprykerTest\AsyncApi\KernelApp\KernelAppAsyncApiTester
+     * @var \SprykerTest\Zed\KernelApp\KernelAppAsyncApiTester
      */
     protected KernelAppAsyncApiTester $tester;
 

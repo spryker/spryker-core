@@ -26,3 +26,31 @@ suites:
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Shared\KernelApp\Helper\KernelAppHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\Testify\Helper\Persistence\FactoryHelper
+    AsyncApi:
+        path: AsyncApi
+        actor: KernelAppAsyncApiTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\KernelApp\Helper\KernelAppHelper
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper:
+                      projectNamespaces:
+                          - Spryker
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Zed\MessageBroker\Helper\InMemoryMessageBrokerHelper
+                - \SprykerTest\Zed\Testify\Helper\Persistence\FactoryHelper
+                - \Spryker\Zed\TestifyAsyncApi\Business\Codeception\Helper\AsyncApiHelper:
+                      asyncapi: resources/api/asyncapi.yml
+                      handlers:
+                          - \Spryker\Zed\KernelApp\Communication\Plugin\MessageBroker\AppConfigMessageHandlerPlugin

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product\Business;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\MessageSendingContextTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
@@ -1064,6 +1065,19 @@ interface ProductFacadeInterface
      * @return void
      */
     public function emitPublishProductToMessageBroker(ProductPublisherConfigTransfer $productPublisherConfigTransfer): void;
+
+    /**
+     * Specification:
+     * - Validates whether `ProductConfig::isPublishingToMessageBrokerEnabled()` is `true`; returns `false` otherwise.
+     * - Returns `true` if the message is eligible for publishing via the message broker.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MessageSendingContextTransfer $messageSendingContextTransfer
+     *
+     * @return bool
+     */
+    public function canPublishMessage(MessageSendingContextTransfer $messageSendingContextTransfer): bool;
 
     /**
      * Specification:
