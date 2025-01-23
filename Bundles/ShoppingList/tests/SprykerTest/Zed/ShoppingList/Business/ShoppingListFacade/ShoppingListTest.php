@@ -557,6 +557,12 @@ class ShoppingListTest extends Unit
         /** @var \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface $shoppingListFacade */
         $shoppingListFacade = $this->tester->getFacade();
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $this->tester->haveShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::SKU => $this->product->getSku(),
+        ]);
         $shoppingListOverviewRequestTransfer = (new ShoppingListOverviewRequestTransfer())
             ->setShoppingList($shoppingListTransfer)
             ->setCurrencyIsoCode(static::FAKE_CURRENCY)
@@ -570,6 +576,10 @@ class ShoppingListTest extends Unit
         $this->assertSame(
             $shoppingListOverviewRequestTransfer->getShoppingList()->getIdShoppingList(),
             $shoppingListOverviewResponseTransfer->getShoppingLists()->getShoppingLists()[0]->getIdShoppingList(),
+        );
+        $this->assertSame(
+            1,
+            $shoppingListOverviewResponseTransfer->getShoppingLists()->getShoppingLists()[0]->getNumberOfItems(),
         );
     }
 

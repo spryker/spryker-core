@@ -427,9 +427,11 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     {
         $shoppingListsQuery = $this->getFactory()
             ->createShoppingListQuery()
+            ->groupByIdShoppingList()
             ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
             ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
             ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
+            ->withColumn(sprintf('SUM(%s)', SpyShoppingListItemTableMap::COL_QUANTITY), ShoppingListMapper::FIELD_NUMBER_OF_ITEMS)
             ->leftJoinWithSpyShoppingListItem()
             ->useSpyShoppingListCompanyUserQuery()
                 ->filterByFkCompanyUser($idCompanyUser)
@@ -453,9 +455,11 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     {
         $shoppingListQuery = $this->getFactory()
             ->createShoppingListQuery()
+            ->groupByIdShoppingList()
             ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
             ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
             ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
+            ->withColumn(sprintf('SUM(%s)', SpyShoppingListItemTableMap::COL_QUANTITY), ShoppingListMapper::FIELD_NUMBER_OF_ITEMS)
             ->leftJoinWithSpyShoppingListItem()
             ->useSpyShoppingListCompanyBusinessUnitQuery()
                 ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
