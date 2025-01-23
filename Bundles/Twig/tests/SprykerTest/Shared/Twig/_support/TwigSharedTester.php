@@ -8,6 +8,8 @@
 namespace SprykerTest\Shared\Twig;
 
 use Codeception\Actor;
+use Twig\Environment;
+use Twig\Loader\LoaderInterface;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +28,19 @@ use Codeception\Actor;
 class TwigSharedTester extends Actor
 {
     use _generated\TwigSharedTesterActions;
+
+    /**
+     * @var array
+     */
+    public const ENVIRONMENT_FILTERS = ['sort', 'filter', 'map', 'reduce', 'find'];
+
+    /**
+     * @param \Twig\Loader\LoaderInterface|null $loader
+     *
+     * @return \Twig\Environment
+     */
+    public function createTwigEnvironment(?LoaderInterface $loader = null): Environment
+    {
+        return new Environment($loader);
+    }
 }

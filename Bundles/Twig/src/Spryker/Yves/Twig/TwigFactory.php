@@ -12,6 +12,8 @@ use Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader;
 use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
 use Spryker\Shared\Twig\Extender\FilterExtender;
 use Spryker\Shared\Twig\Extender\FilterExtenderInterface;
+use Spryker\Shared\Twig\Extension\EnvironmentCoreExtension;
+use Spryker\Shared\Twig\Extension\EnvironmentCoreExtensionInterface;
 use Spryker\Shared\Twig\Filter\FilterFactory;
 use Spryker\Shared\Twig\Filter\FilterFactoryInterface;
 use Spryker\Shared\Twig\Loader\FilesystemLoader;
@@ -118,6 +120,7 @@ class TwigFactory extends AbstractFactory
     {
         return new FilterExtender(
             $this->createFilterFactory(),
+            $this->createEnvironmentCoreExtension(),
         );
     }
 
@@ -127,6 +130,14 @@ class TwigFactory extends AbstractFactory
     public function createFilterFactory(): FilterFactoryInterface
     {
         return new FilterFactory();
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Extension\EnvironmentCoreExtensionInterface
+     */
+    public function createEnvironmentCoreExtension(): EnvironmentCoreExtensionInterface
+    {
+        return new EnvironmentCoreExtension();
     }
 
     /**

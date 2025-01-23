@@ -7,22 +7,18 @@
 
 namespace Spryker\Shared\Twig\Extender;
 
+use Spryker\Shared\Twig\Extension\EnvironmentCoreExtensionInterface;
 use Spryker\Shared\Twig\Filter\FilterFactoryInterface;
 use Twig\Environment;
 
 class FilterExtender implements FilterExtenderInterface
 {
     /**
-     * @var \Spryker\Shared\Twig\Filter\FilterFactoryInterface
-     */
-    protected FilterFactoryInterface $filterFactory;
-
-    /**
      * @param \Spryker\Shared\Twig\Filter\FilterFactoryInterface $filterFactory
+     * @param \Spryker\Shared\Twig\Extension\EnvironmentCoreExtensionInterface $environmentCoreExtension
      */
-    public function __construct(FilterFactoryInterface $filterFactory)
+    public function __construct(protected FilterFactoryInterface $filterFactory, protected EnvironmentCoreExtensionInterface $environmentCoreExtension)
     {
-        $this->filterFactory = $filterFactory;
     }
 
     /**
@@ -32,6 +28,7 @@ class FilterExtender implements FilterExtenderInterface
      */
     public function extend(Environment $twig): Environment
     {
+        $this->environmentCoreExtension->extend($twig);
         $twig->addFilter($this->filterFactory->createExecuteFilterIfExistsFilter($twig));
 
         return $twig;

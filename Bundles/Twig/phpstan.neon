@@ -11,4 +11,6 @@ parameters:
         - '#Call to an undefined method Silex\\Application::render\(\).#'
         - '#Comparison operation "<" between [1-9] and 3 is always (true|false).#'
         - '#Else branch is unreachable because previous condition is always true#'
+        - '#Call to function method_exists\(\) with .Twig\\\\Extension.* and .* will always evaluate to false.#'
+        - '#Call to an undefined static method Twig\\Extension\\CoreExtension\:\:.+\(\).#'
     reportUnmatchedIgnoredErrors: false
