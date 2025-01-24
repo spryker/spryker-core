@@ -21,3 +21,9 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+    Communication:
+        path: Communication
+        actor: DummyMarketplacePaymentCommunicationTester
+        modules:
+            enabled:
+                - Asserts

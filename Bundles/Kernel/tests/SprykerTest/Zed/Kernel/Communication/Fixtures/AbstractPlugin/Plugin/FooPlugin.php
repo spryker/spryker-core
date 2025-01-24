@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin;
 
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -20,6 +21,14 @@ class FooPlugin extends AbstractPlugin
     public function getFactory(): AbstractCommunicationFactory
     {
         return parent::getFactory();
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     */
+    public function getBusinessFactory(): AbstractBusinessFactory
+    {
+        return parent::getBusinessFactory();
     }
 
     /**

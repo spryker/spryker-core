@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Kernel\Communication;
 use Codeception\Test\Unit;
 use ReflectionClass;
 use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
@@ -45,6 +46,24 @@ class AbstractPluginTest extends Unit
         $communicationFactory = $plugin->getFactory();
 
         $this->assertInstanceOf(AbstractCommunicationFactory::class, $communicationFactory);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetBusinessFactoryShouldReturnInstanceIfExists(): void
+    {
+        $plugin = new FooPlugin();
+
+        $pluginReflection = new ReflectionClass($plugin);
+        $communicationBusinessFactoryProperty = $pluginReflection->getParentClass()->getProperty('businessFactory');
+        $communicationBusinessFactoryProperty->setAccessible(true);
+        $abstractBusinessFactoryMock = $this->getMockBuilder(AbstractBusinessFactory::class)->disableOriginalConstructor()->getMock();
+        $communicationBusinessFactoryProperty->setValue($plugin, $abstractBusinessFactoryMock);
+
+        $businessFactory = $plugin->getBusinessFactory();
+
+        $this->assertInstanceOf(AbstractBusinessFactory::class, $businessFactory);
     }
 
     /**

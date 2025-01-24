@@ -21,6 +21,8 @@ class DummyMarketplacePaymentFacade extends AbstractFacade implements DummyMarke
      *
      * @api
      *
+     * @deprecated Will be removed without replacment. `MerchantProductItemPaymentMethodFilterPlugin` directly accesses models, eliminating the need to expose business logic that was intedned to remain internal.
+     *
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

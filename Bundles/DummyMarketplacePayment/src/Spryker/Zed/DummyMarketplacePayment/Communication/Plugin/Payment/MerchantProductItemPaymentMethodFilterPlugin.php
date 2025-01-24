@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentMethodFilterPluginInterface;
 
 /**
+ * @method \Spryker\Zed\DummyMarketplacePayment\Business\DummyMarketplacePaymentBusinessFactory getBusinessFactory()
  * @method \Spryker\Zed\DummyMarketplacePayment\Business\DummyMarketplacePaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\DummyMarketplacePayment\DummyMarketplacePaymentConfig getConfig()
  */
@@ -33,6 +34,8 @@ class MerchantProductItemPaymentMethodFilterPlugin extends AbstractPlugin implem
         PaymentMethodsTransfer $paymentMethodsTransfer,
         QuoteTransfer $quoteTransfer
     ): PaymentMethodsTransfer {
-        return $this->getFacade()->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
+        return $this->getBusinessFactory()
+            ->createPaymentMethodFilter()
+            ->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
     }
 }

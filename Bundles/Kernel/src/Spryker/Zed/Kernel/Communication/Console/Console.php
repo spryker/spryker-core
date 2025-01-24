@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\Communication\CommunicationFactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Communication\BusinessFactoryResolverAwareTrait;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Kernel\RepositoryResolverAwareTrait;
@@ -32,6 +33,7 @@ use Symfony\Component\Console\Terminal;
 class Console extends SymfonyCommand
 {
     use RepositoryResolverAwareTrait;
+    use BusinessFactoryResolverAwareTrait;
 
     /**
      * @var int

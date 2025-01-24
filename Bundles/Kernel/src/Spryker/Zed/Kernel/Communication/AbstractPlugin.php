@@ -18,4 +18,5 @@ abstract class AbstractPlugin
     use FacadeResolverAwareTrait;
     use BundleConfigResolverAwareTrait;
     use QueryContainerResolverAwareTrait;
+    use BusinessFactoryResolverAwareTrait;
 }
