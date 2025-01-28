@@ -17,9 +17,12 @@ use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface;
 use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReaderInterface;
 use Spryker\Zed\DynamicEntity\Business\Transaction\Propel\TransactionProcessorInterface;
 use Spryker\Zed\DynamicEntity\Business\Writer\DynamicEntityWriterInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 
 class DynamicEntityUpdater implements DynamicEntityUpdaterInterface
 {
+    use InstancePoolingTrait;
+
     /**
      * @var string
      */
@@ -88,6 +91,10 @@ class DynamicEntityUpdater implements DynamicEntityUpdaterInterface
      */
     public function update(DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer): DynamicEntityCollectionResponseTransfer
     {
+        $isInstancePoolingEnabled = $this->isInstancePoolingEnabled();
+        if ($isInstancePoolingEnabled === true) {
+            $this->disableInstancePooling();
+        }
         $dynamicEntityConfigurationResponse = $this->dynamicEntityReader->getDynamicEntityConfigurationTransferTree(
             $dynamicEntityCollectionRequestTransfer,
         );
@@ -123,6 +130,10 @@ class DynamicEntityUpdater implements DynamicEntityUpdaterInterface
         );
 
         $this->transactionProcessor->endAtomicTransaction($dynamicEntityCollectionRequestTransfer, $dynamicEntityCollectionResponseTransfer);
+
+        if ($isInstancePoolingEnabled === true) {
+            $this->enableInstancePooling();
+        }
 
         return $dynamicEntityCollectionResponseTransfer;
     }

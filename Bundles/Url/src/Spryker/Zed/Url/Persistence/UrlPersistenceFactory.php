@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Url\Persistence;
 
+use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Orm\Zed\Url\Persistence\SpyUrlRedirectQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -16,6 +17,7 @@ use Spryker\Zed\Url\Persistence\Propel\Mapper\UrlMapper;
  * @method \Spryker\Zed\Url\UrlConfig getConfig()
  * @method \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Url\Persistence\UrlRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Url\Persistence\UrlEntityManagerInterface getEntityManager()
  */
 class UrlPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -41,5 +43,13 @@ class UrlPersistenceFactory extends AbstractPersistenceFactory
     public function createUrlMapper(): UrlMapper
     {
         return new UrlMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\Url\Persistence\SpyUrl
+     */
+    public function createSpyUrlEntity(): SpyUrl
+    {
+        return new SpyUrl();
     }
 }

@@ -46,4 +46,14 @@ class ProductDynamicEntityConnectorToProductFacadeBridge implements ProductDynam
     {
         return $this->productFacade->getProductAbstractCollection($productAbstractCriteriaTransfer);
     }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
+     */
+    public function updateProductsUrl(array $productAbstractTransfers): array
+    {
+        return $this->productFacade->updateProductsUrl($productAbstractTransfers);
+    }
 }

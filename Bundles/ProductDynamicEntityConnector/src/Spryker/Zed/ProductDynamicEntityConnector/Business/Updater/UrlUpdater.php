@@ -75,11 +75,11 @@ class UrlUpdater implements UrlUpdaterInterface
      */
     protected function updateProductUrls(array $rawDynamicEntities, array $productAbstracts): void
     {
+        $productAbstractTransfers = [];
         foreach ($rawDynamicEntities as $rawDynamicEntity) {
-            $productAbstractTransfer = $productAbstracts[$rawDynamicEntity->getFields()[static::FK_PRODUCT_ABSTRACT]];
-
-            $this->productFacade->updateProductUrl($productAbstractTransfer);
+            $productAbstractTransfers[$rawDynamicEntity->getFields()[static::FK_PRODUCT_ABSTRACT]] = $productAbstracts[$rawDynamicEntity->getFields()[static::FK_PRODUCT_ABSTRACT]];
         }
+        $this->productFacade->updateProductsUrl($productAbstractTransfers);
     }
 
     /**

@@ -181,6 +181,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createProductUrlGenerator(),
             $this->createProductEventTrigger(),
+            $this->getRepository(),
         );
     }
 

@@ -26,6 +26,13 @@ interface ProductUrlManagerInterface
     public function updateProductUrl(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
+     * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers
+     *
+     * @return array<string, \Generated\Shared\Transfer\UrlTransfer>
+     */
+    public function updateProductUrls(array $productAbstractTransfers): array;
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductUrlTransfer

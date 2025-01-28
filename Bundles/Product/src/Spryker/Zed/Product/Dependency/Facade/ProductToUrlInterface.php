@@ -49,4 +49,11 @@ interface ProductToUrlInterface
      * @return void
      */
     public function deactivateUrl(UrlTransfer $urlTransfer);
+
+    /**
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $urlTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
+     */
+    public function saveUrlCollection(array $urlTransfers): array;
 }

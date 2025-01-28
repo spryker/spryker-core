@@ -7,7 +7,7 @@
         "php": ">=8.2",
         "spryker/dynamic-entity-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/product": "^6.40.0",
+        "spryker/product": "^6.47.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {

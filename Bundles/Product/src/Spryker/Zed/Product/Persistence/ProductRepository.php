@@ -1061,6 +1061,31 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
+     * @param array<int> $productAbstractIds
+     * @param callable $indexGenerator
+     *
+     * @return array<string, \Generated\Shared\Transfer\UrlTransfer>
+     */
+    public function getUrlsByProductAbstractIds(array $productAbstractIds, callable $indexGenerator): array
+    {
+        $urlEntities = $this->getFactory()
+            ->createUrlQuery()
+            ->filterByFkResourceProductAbstract_In($productAbstractIds)
+            ->find();
+
+        $indexedTransfers = [];
+
+        foreach ($urlEntities as $urlEntity) {
+            $urlTransfer = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
+            /** @var string $index */
+            $index = $indexGenerator($urlTransfer->getFkResourceProductAbstract(), $urlTransfer->getFkLocale());
+            $indexedTransfers[$index] = $urlTransfer;
+        }
+
+        return $indexedTransfers;
+    }
+
+    /**
      * @module Locale
      *
      * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery

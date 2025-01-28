@@ -53,4 +53,14 @@ class AvailabilityToProductFacadeBridge implements AvailabilityToProductFacadeIn
     {
         return $this->productFacade->findProductConcreteById($idProduct);
     }
+
+    /**
+     * @param array<int> $productIds
+     *
+     * @return array<mixed>
+     */
+    public function getProductConcreteSkusByConcreteIds(array $productIds): array
+    {
+        return $this->productFacade->getProductConcreteSkusByConcreteIds($productIds);
+    }
 }

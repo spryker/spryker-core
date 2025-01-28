@@ -8,6 +8,12 @@
 namespace Spryker\Zed\Url\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Url\Business\BulkCreator\UrlBulkCreator;
+use Spryker\Zed\Url\Business\BulkCreator\UrlBulkCreatorInterface;
+use Spryker\Zed\Url\Business\BulkSaver\UrlBulkSaver;
+use Spryker\Zed\Url\Business\BulkSaver\UrlBulkSaverInterface;
+use Spryker\Zed\Url\Business\BulkUpdater\UrlBulkUpdater;
+use Spryker\Zed\Url\Business\BulkUpdater\UrlBulkUpdaterInterface;
 use Spryker\Zed\Url\Business\Deletion\AbstractUrlDeleterSubject;
 use Spryker\Zed\Url\Business\Deletion\Observer\UrlDeletePluginObserver;
 use Spryker\Zed\Url\Business\Deletion\UrlDeleter;
@@ -35,6 +41,7 @@ use Spryker\Zed\Url\UrlDependencyProvider;
  * @method \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Url\UrlConfig getConfig()
  * @method \Spryker\Zed\Url\Persistence\UrlRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Url\Persistence\UrlEntityManagerInterface getEntityManager()
  */
 class UrlBusinessFactory extends AbstractBusinessFactory
 {
@@ -160,6 +167,42 @@ class UrlBusinessFactory extends AbstractBusinessFactory
             $this->createUrlManager(),
             $this->getTouchFacade(),
             $this->getProvidedDependency(UrlDependencyProvider::PLUGIN_PROPEL_CONNECTION),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Business\BulkSaver\UrlBulkSaverInterface
+     */
+    public function createUrlBulkSaver(): UrlBulkSaverInterface
+    {
+        return new UrlBulkSaver(
+            $this->createUrlBulkCreator(),
+            $this->createUrlBulkUpdater(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Business\BulkCreator\UrlBulkCreatorInterface
+     */
+    public function createUrlBulkCreator(): UrlBulkCreatorInterface
+    {
+        return new UrlBulkCreator(
+            $this->createUrlCreatorBeforeSaveObservers(),
+            $this->createUrlCreatorAfterSaveObservers(),
+            $this->getEntityManager(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Business\BulkUpdater\UrlBulkUpdaterInterface
+     */
+    public function createUrlBulkUpdater(): UrlBulkUpdaterInterface
+    {
+        return new UrlBulkUpdater(
+            $this->createUrlReader(),
+            $this->createUrlUpdaterBeforeSaveObservers(),
+            $this->createUrlUpdaterAfterSaveObservers(),
+            $this->getEntityManager(),
         );
     }
 

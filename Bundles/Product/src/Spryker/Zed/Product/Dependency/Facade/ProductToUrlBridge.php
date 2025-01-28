@@ -77,4 +77,14 @@ class ProductToUrlBridge implements ProductToUrlInterface
     {
         $this->urlFacade->deactivateUrl($urlTransfer);
     }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $urlTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
+     */
+    public function saveUrlCollection(array $urlTransfers): array
+    {
+        return $this->urlFacade->saveUrlCollection($urlTransfers);
+    }
 }

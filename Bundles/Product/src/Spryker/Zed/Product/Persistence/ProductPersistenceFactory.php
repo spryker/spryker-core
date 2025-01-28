@@ -13,6 +13,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
 use Spryker\Zed\Product\Persistence\Mapper\LocalizedAttributesMapper;
@@ -127,5 +128,13 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAttributeKeyMapper(): ProductAttributeKeyMapper
     {
         return new ProductAttributeKeyMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function createUrlQuery(): SpyUrlQuery
+    {
+        return SpyUrlQuery::create();
     }
 }

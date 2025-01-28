@@ -17,9 +17,12 @@ use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface;
 use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReaderInterface;
 use Spryker\Zed\DynamicEntity\Business\Transaction\Propel\TransactionProcessorInterface;
 use Spryker\Zed\DynamicEntity\Business\Writer\DynamicEntityWriterInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 
 class DynamicEntityCreator implements DynamicEntityCreatorInterface
 {
+    use InstancePoolingTrait;
+
     /**
      * @var \Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReaderInterface
      */
@@ -73,6 +76,10 @@ class DynamicEntityCreator implements DynamicEntityCreatorInterface
      */
     public function create(DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer): DynamicEntityCollectionResponseTransfer
     {
+        $isInstancePoolingEnabled = $this->isInstancePoolingEnabled();
+        if ($isInstancePoolingEnabled === true) {
+            $this->disableInstancePooling();
+        }
         $dynamicEntityConfigurationResponse = $this->dynamicEntityReader->getDynamicEntityConfigurationTransferTree(
             $dynamicEntityCollectionRequestTransfer,
         );
@@ -108,6 +115,10 @@ class DynamicEntityCreator implements DynamicEntityCreatorInterface
         );
 
         $this->transactionProcessor->endAtomicTransaction($dynamicEntityCollectionRequestTransfer, $dynamicEntityCollectionResponseTransfer);
+
+        if ($isInstancePoolingEnabled === true) {
+            $this->enableInstancePooling();
+        }
 
         return $dynamicEntityCollectionResponseTransfer;
     }

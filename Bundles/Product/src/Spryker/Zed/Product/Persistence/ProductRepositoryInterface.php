@@ -266,4 +266,12 @@ interface ProductRepositoryInterface
     public function getProductAttributeKeyCollection(
         ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
     ): ProductAttributeKeyCollectionTransfer;
+
+    /**
+     * @param array<int> $productAbstractIds
+     * @param callable $indexGenerator
+     *
+     * @return array<string, \Generated\Shared\Transfer\UrlTransfer>
+     */
+    public function getUrlsByProductAbstractIds(array $productAbstractIds, callable $indexGenerator): array;
 }

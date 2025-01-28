@@ -592,6 +592,22 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
+     * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
+     */
+    public function updateProductsUrl(array $productAbstractTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductUrlManager()
+            ->updateProductUrls($productAbstractTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductUrlTransfer

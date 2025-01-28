@@ -282,14 +282,28 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             return $this->createDynamicEntityPostEditResponseTransfer();
         }
 
-        foreach ($dynamicEntityPostEditRequestTransfer->getRawDynamicEntities() as $rawDynamicEntity) {
-            $productConcreteTransfer = $this->productFacade->findProductConcreteById($rawDynamicEntity->getFields()[static::FK_PRODUCT]);
-            if ($productConcreteTransfer !== null) {
-                $this->updateAvailability($productConcreteTransfer->getSkuOrFail());
-            }
+        $productIds = $this->getProductIdsFromDynamicEntityRequest($dynamicEntityPostEditRequestTransfer);
+        $productConcreteSkus = $this->productFacade->getProductConcreteSkusByConcreteIds($productIds);
+        foreach (array_keys($productConcreteSkus) as $sku) {
+            $this->updateAvailability($sku);
         }
 
         return $this->createDynamicEntityPostEditResponseTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer
+     *
+     * @return array<int>
+     */
+    protected function getProductIdsFromDynamicEntityRequest(DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer): array
+    {
+        $productIds = [];
+        foreach ($dynamicEntityPostEditRequestTransfer->getRawDynamicEntities() as $rawDynamicEntity) {
+            $productIds[] = $rawDynamicEntity->getFields()[static::FK_PRODUCT];
+        }
+
+        return $productIds;
     }
 
     /**

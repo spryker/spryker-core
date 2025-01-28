@@ -31,4 +31,11 @@ interface AvailabilityToProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
     public function findProductConcreteById(int $idProduct): ?ProductConcreteTransfer;
+
+    /**
+     * @param array<int> $productIds
+     *
+     * @return array<mixed>
+     */
+    public function getProductConcreteSkusByConcreteIds(array $productIds): array;
 }

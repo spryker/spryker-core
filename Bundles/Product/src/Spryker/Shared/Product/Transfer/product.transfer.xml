@@ -118,6 +118,7 @@
         <property name="idUrl" type="int"/>
         <property name="fkResourceProductAbstract" type="int"/>
         <property name="fkLocale" type="int"/>
+        <property name="originalUrl" type="string"/>
     </transfer>
 
     <transfer name="ProductCriteria">

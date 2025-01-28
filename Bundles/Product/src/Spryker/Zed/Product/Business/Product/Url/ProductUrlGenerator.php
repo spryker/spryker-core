@@ -92,6 +92,35 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
     }
 
     /**
+     * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductUrlTransfer>
+     */
+    public function generateProductsUrl(array $productAbstractTransfers): array
+    {
+        $availableLocales = $this->localeFacade->getLocaleCollection();
+        $productUrlTransfers = [];
+
+        foreach ($productAbstractTransfers as $productAbstractTransfer) {
+            $productUrlTransfer = new ProductUrlTransfer();
+            $productUrlTransfer->setAbstractSku($productAbstractTransfer->getSku());
+
+            foreach ($availableLocales as $localeTransfer) {
+                $url = $this->generateUrlByLocale($productAbstractTransfer, $localeTransfer);
+
+                $localizedUrl = new LocalizedUrlTransfer();
+                $localizedUrl->setLocale($localeTransfer);
+                $localizedUrl->setUrl($url);
+
+                $productUrlTransfer->addUrl($localizedUrl);
+            }
+            $productUrlTransfers[] = $productUrlTransfer;
+        }
+
+        return $productUrlTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *

@@ -502,6 +502,20 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Updates localized abstract product URLs based on abstract products localized attributes name.
+     * - Executes touch logic for abstract products URL update.
+     * - Not following Bulk Facade methods flow due to the necessity to be as fast as possible.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
+     */
+    public function updateProductsUrl(array $productAbstractTransfers): array;
+
+    /**
+     * Specification:
      * - Returns localized abstract product URLs for all available locales.
      *
      * @api

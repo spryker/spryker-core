@@ -27,4 +27,11 @@ interface ProductDynamicEntityConnectorToProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
      */
     public function getProductAbstractCollection(ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer): ProductAbstractCollectionTransfer;
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
+     */
+    public function updateProductsUrl(array $productAbstractTransfers): array;
 }

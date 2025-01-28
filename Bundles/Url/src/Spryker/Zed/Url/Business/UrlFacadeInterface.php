@@ -600,4 +600,17 @@ interface UrlFacadeInterface
      * @return \Generated\Shared\Transfer\UrlCollectionTransfer
      */
     public function getUrlCollection(UrlCriteriaTransfer $urlCriteriaTransfer): UrlCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Persists a collection of URL entities to the database.
+     * - Not following Bulk Facade methods flow due to the necessity to be as fast as possible.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $urlTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
+     */
+    public function saveUrlCollection(array $urlTransfers): array;
 }

@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @method \Spryker\Zed\Url\Business\UrlBusinessFactory getFactory()
  * @method \Spryker\Zed\Url\Persistence\UrlRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Url\Persistence\UrlEntityManagerInterface getEntityManager()
  */
 class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 {
@@ -754,5 +755,19 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     public function getUrlCollection(UrlCriteriaTransfer $urlCriteriaTransfer): UrlCollectionTransfer
     {
         return $this->getRepository()->getUrlCollection($urlCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $urlTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
+     */
+    public function saveUrlCollection(array $urlTransfers): array
+    {
+        return $this->getFactory()->createUrlBulkSaver()->save($urlTransfers);
     }
 }

@@ -17,4 +17,11 @@ interface ProductUrlGeneratorInterface
      * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
     public function generateProductUrl(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductUrlTransfer>
+     */
+    public function generateProductsUrl(array $productAbstractTransfers): array;
 }
