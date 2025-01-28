@@ -889,15 +889,12 @@ class ProductBundleFacadeTest extends Unit
 
         $itemTransfers = new ArrayObject([
             (new ItemTransfer())
-                ->setBundleItemIdentifier(ProductBundleBusinessTester::FAKE_BUNDLE_ITEM_IDENTIFIER_1)
                 ->setSku($bundleProductTransfer->getSkuOrFail())
                 ->setQuantity(1),
             (new ItemTransfer())
-                ->setBundleItemIdentifier(ProductBundleBusinessTester::FAKE_BUNDLE_ITEM_IDENTIFIER_2)
                 ->setSku($secondBundleProductTransfer->getSkuOrFail())
                 ->setQuantity(2),
             (new ItemTransfer())
-                ->setBundleItemIdentifier(ProductBundleBusinessTester::FAKE_BUNDLE_ITEM_IDENTIFIER_1)
                 ->setSku($bundleProductTransfer->getSkuOrFail()),
         ]);
 

@@ -226,6 +226,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleCartPriceChecker(
             $this->getRepository(),
             $this->getPriceProductFacade(),
+            $this->createProductBundleReader(),
         );
     }
 

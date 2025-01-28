@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductBundle\Communication\Plugin\Cart;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\TerminationAwareCartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -18,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
  * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
  */
-class CartBundlePricesPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface
+class CartBundlePricesPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface, TerminationAwareCartPreCheckPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -34,5 +35,17 @@ class CartBundlePricesPreCheckPlugin extends AbstractPlugin implements CartPreCh
     public function check(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         return $this->getFacade()->preCheckBundledProductPrices($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function terminateOnFailure(): bool
+    {
+        return true;
     }
 }
