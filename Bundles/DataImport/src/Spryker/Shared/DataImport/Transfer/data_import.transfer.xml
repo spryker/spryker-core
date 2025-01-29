@@ -89,4 +89,11 @@
         <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
     </transfer>
 
+    <transfer name="DataImporterDataSourceConfiguration">
+        <property name="fileName" type="string"/>
+        <property name="directory" type="string"/>
+        <property name="importType" type="string"/>
+        <property name="moduleName" type="string"/>
+    </transfer>
+
 </transfers>

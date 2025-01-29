@@ -241,6 +241,8 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     }
 
     /**
+     * DataImportFactoryTrait::createTransactionAwareDataSetStepBroker is preferable for usage.
+     *
      * @phpstan-return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface&\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface&\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface&\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
@@ -331,6 +333,8 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     }
 
     /**
+     * DataImportFactoryTrait::createTransactionAwareDataSetStepBroker is preferable for usage.
+     *
      * @phpstan-return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface&\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAwareInterface
      *
      * @param int|null $bulkSize
