@@ -29,6 +29,8 @@ class MonitoringCommunicationFactory extends AbstractCommunicationFactory
     {
         return new GatewayControllerListener(
             $this->getMonitoringService(),
+            $this->getUtilNetworkService(),
+            $this->getLocaleFacade(),
         );
     }
 
