@@ -72,7 +72,7 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
             );
         }
 
-        return $this->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
+        return $this->applyOrderTransferHydrators($orderEntity);
     }
 
     /**

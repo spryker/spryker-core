@@ -290,7 +290,9 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
             $salesOrderItemIds[] = $orderItemEntity->getIdSalesOrderItem();
         }
 
-        $orderItemStateHistoryEntities = $this->getFactory()->createOmsOrderItemStateHistoryQuery()
+        $orderItemStateHistoryEntities = $this->getFactory()
+            ->createOmsOrderItemStateHistoryQuery()
+            ->orderByIdOmsOrderItemStateHistory(Criteria::DESC)
             ->joinWithState()
             ->useOrderItemQuery()
                 ->filterByIdSalesOrderItem_In($salesOrderItemIds)
@@ -305,7 +307,11 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 
         foreach ($salesOrderItems as $orderItemEntity) {
             $orderItemStateHistoryEntities = $orderItemStateHistoryEntitiesGroupedByIdSalesOrderItem[$orderItemEntity->getIdSalesOrderItem()] ?? [];
-            $orderItemEntity->setStateHistories(new ObjectCollection($orderItemStateHistoryEntities));
+
+            foreach ($orderItemStateHistoryEntities as $orderItemStateHistoryEntity) {
+                $orderItemEntity->addStateHistory($orderItemStateHistoryEntity);
+            }
+
             $orderItemEntity->resetPartialStateHistories(false);
         }
     }

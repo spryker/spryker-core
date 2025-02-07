@@ -31,7 +31,7 @@ class OrderReader extends OrderReaderWithoutMultiShippingAddress
         }
 
         $orderTransfer = $this->orderHydrator
-            ->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
+            ->applyOrderTransferHydrators($orderEntity);
 
         $orderTransfer = $this->expandWithLocale($orderTransfer, $orderEntity);
 

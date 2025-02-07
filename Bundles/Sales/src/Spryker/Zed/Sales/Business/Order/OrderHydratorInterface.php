@@ -34,13 +34,6 @@ interface OrderHydratorInterface
     public function hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function hydrateOrderTransferFromPersistenceBySalesOrder(SpySalesOrder $orderEntity): OrderTransfer;
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
@@ -61,4 +54,11 @@ interface OrderHydratorInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateBaseOrderTransfer(SpySalesOrder $orderEntity);
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function applyOrderTransferHydrators(SpySalesOrder $orderEntity);
 }
