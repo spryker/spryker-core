@@ -19,6 +19,7 @@ use Generated\Shared\DataBuilder\TaxAppConfigBuilder;
 use Generated\Shared\DataBuilder\TaxAppConfigConditionsBuilder;
 use Generated\Shared\DataBuilder\TaxAppConfigCriteriaBuilder;
 use Generated\Shared\DataBuilder\TaxAppSaleBuilder;
+use Generated\Shared\DataBuilder\TaxAppValidationRequestBuilder;
 use Generated\Shared\DataBuilder\TaxCalculationRequestBuilder;
 use Generated\Shared\DataBuilder\TaxCalculationResponseBuilder;
 use Generated\Shared\DataBuilder\TaxRefundRequestBuilder;
@@ -30,6 +31,7 @@ use Generated\Shared\Transfer\TaxAppConfigConditionsTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
 use Generated\Shared\Transfer\TaxAppSaleTransfer;
+use Generated\Shared\Transfer\TaxAppValidationRequestTransfer;
 use Generated\Shared\Transfer\TaxCalculationRequestTransfer;
 use Generated\Shared\Transfer\TaxCalculationResponseTransfer;
 use Generated\Shared\Transfer\TaxRefundRequestTransfer;
@@ -56,6 +58,16 @@ class TaxAppDataHelper extends Module
     public function createTaxAppConfigTransfer(array $seed = []): TaxAppConfigTransfer
     {
         return (new TaxAppConfigBuilder())->seed($seed)->withApiUrls()->build();
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\TaxAppValidationRequestTransfer
+     */
+    public function createTaxAppValidationRequestTransfer(array $seed = []): TaxAppValidationRequestTransfer
+    {
+        return (new TaxAppValidationRequestBuilder())->seed($seed)->build();
     }
 
     /**

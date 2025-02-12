@@ -13,4 +13,17 @@
         <behavior name="timestampable"/>
     </table>
 
+    <table name="spy_tax_id_validation_history" identifierQuoting="true">
+        <column name="id_tax_id_validation_history" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <id-method-parameter value="spy_tax_id_validation_history_pk_seq"/>
+        <column name="tax_id" required="true" type="VARCHAR" size="255"/>
+        <column name="is_valid" required="true" type="BOOLEAN" default="TRUE"/>
+        <column name="country_code" type="VARCHAR" size="3" required="false"/>
+        <column name="response_data" required="false" type="LONGVARCHAR"/>
+
+        <behavior name="timestampable">
+            <parameter name="disable_updated_at" value="true"/>
+        </behavior>
+    </table>
+
 </database>

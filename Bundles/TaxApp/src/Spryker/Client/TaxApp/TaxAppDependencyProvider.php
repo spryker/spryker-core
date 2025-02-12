@@ -11,6 +11,8 @@ use GuzzleHttp\Client as GuzzleHttpClient;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\TaxApp\Dependency\Client\TaxAppToStoreClientBridge;
+use Spryker\Client\TaxApp\Dependency\Client\TaxAppToZedRequestClientBridge;
+use Spryker\Client\TaxApp\Dependency\Client\TaxAppToZedRequestClientInterface;
 use Spryker\Client\TaxApp\Dependency\External\TaxAppToGuzzleHttpClientAdapter;
 use Spryker\Shared\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceBridge;
 
@@ -35,6 +37,11 @@ class TaxAppDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**
+     * @var string
+     */
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -45,6 +52,7 @@ class TaxAppDependencyProvider extends AbstractDependencyProvider
         $container = $this->addUtilEncodingService($container);
         $container = $this->addHttpClient($container);
         $container = $this->addStoreClient($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -90,6 +98,22 @@ class TaxAppDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new TaxAppToStoreClientBridge($container->getLocator()->store()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addZedRequestClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container): TaxAppToZedRequestClientInterface {
+            return new TaxAppToZedRequestClientBridge(
+                $container->getLocator()->zedRequest()->client(),
+            );
         });
 
         return $container;

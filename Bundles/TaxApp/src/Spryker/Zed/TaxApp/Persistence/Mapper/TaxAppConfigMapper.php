@@ -10,7 +10,9 @@ namespace Spryker\Zed\TaxApp\Persistence\Mapper;
 use Generated\Shared\Transfer\TaxAppApiUrlsTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCollectionTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
+use Generated\Shared\Transfer\TaxIdValidationHistoryTransfer;
 use Orm\Zed\TaxApp\Persistence\SpyTaxAppConfig;
+use Orm\Zed\TaxApp\Persistence\SpyTaxIdValidationHistory;
 use Propel\Runtime\Collection\Collection;
 use Spryker\Shared\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceInterface;
 
@@ -88,5 +90,18 @@ class TaxAppConfigMapper
         }
 
         return $taxAppConfigCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TaxIdValidationHistoryTransfer $taxIdValidationHistoryTransfer
+     * @param \Orm\Zed\TaxApp\Persistence\SpyTaxIdValidationHistory $taxIdValidationHistoryEntity
+     *
+     * @return \Orm\Zed\TaxApp\Persistence\SpyTaxIdValidationHistory
+     */
+    public function mapTaxIdValidationHistoryTransferToTaxIdValidationHistoryEntity(
+        TaxIdValidationHistoryTransfer $taxIdValidationHistoryTransfer,
+        SpyTaxIdValidationHistory $taxIdValidationHistoryEntity
+    ): SpyTaxIdValidationHistory {
+        return $taxIdValidationHistoryEntity->fromArray($taxIdValidationHistoryTransfer->toArray());
     }
 }

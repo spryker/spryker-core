@@ -29,4 +29,11 @@ interface TaxAppToStoreFacadeInterface
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores(): array;
+
+    /**
+     * @param bool $fallbackToDefault
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getCurrentStore(bool $fallbackToDefault = false): StoreTransfer;
 }

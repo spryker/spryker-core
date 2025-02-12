@@ -13,7 +13,10 @@ use Spryker\Client\TaxApp\Api\Builder\TaxAppHeaderBuilderInterface;
 use Spryker\Client\TaxApp\Api\Sender\TaxAppRequestSender;
 use Spryker\Client\TaxApp\Api\Sender\TaxAppRequestSenderInterface;
 use Spryker\Client\TaxApp\Dependency\Client\TaxAppToStoreClientInterface;
+use Spryker\Client\TaxApp\Dependency\Client\TaxAppToZedRequestClientInterface;
 use Spryker\Client\TaxApp\Dependency\External\TaxAppToHttpClientAdapterInterface;
+use Spryker\Client\TaxApp\Zed\TaxAppStub;
+use Spryker\Client\TaxApp\Zed\TaxAppStubInterface;
 use Spryker\Shared\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceInterface;
 
 /**
@@ -43,6 +46,16 @@ class TaxAppFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\TaxApp\Zed\TaxAppStubInterface
+     */
+    public function createZedStub(): TaxAppStubInterface
+    {
+        return new TaxAppStub(
+            $this->getZedRequestClient(),
+        );
+    }
+
+    /**
      * @return \Spryker\Shared\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceInterface
      */
     public function getUtilEncodingService(): TaxAppToUtilEncodingServiceInterface
@@ -64,5 +77,13 @@ class TaxAppFactory extends AbstractFactory
     public function getStoreClient(): TaxAppToStoreClientInterface
     {
         return $this->getProvidedDependency(TaxAppDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Client\TaxApp\Dependency\Client\TaxAppToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): TaxAppToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(TaxAppDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }

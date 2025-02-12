@@ -1061,6 +1061,7 @@
         "spryker/tax": "*",
         "spryker/tax-app": "*",
         "spryker/tax-app-extension": "*",
+        "spryker/tax-app-rest-api": "*",
         "spryker/tax-merchant-portal-gui": "*",
         "spryker/tax-product-connector": "*",
         "spryker/tax-product-connector-extension": "*",

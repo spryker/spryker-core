@@ -11,21 +11,19 @@ use Generated\Shared\Transfer\SortTransfer;
 use Generated\Shared\Transfer\TaxAppConfigConditionsTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
+use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToStoreFacadeInterface;
 use Spryker\Zed\TaxApp\Persistence\TaxAppRepositoryInterface;
 
 class ConfigReader implements ConfigReaderInterface
 {
     /**
-     * @var \Spryker\Zed\TaxApp\Persistence\TaxAppRepositoryInterface
-     */
-    protected TaxAppRepositoryInterface $taxAppRepository;
-
-    /**
      * @param \Spryker\Zed\TaxApp\Persistence\TaxAppRepositoryInterface $taxAppRepository
+     * @param \Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToStoreFacadeInterface $storeFacade
      */
-    public function __construct(TaxAppRepositoryInterface $taxAppRepository)
-    {
-        $this->taxAppRepository = $taxAppRepository;
+    public function __construct(
+        protected TaxAppRepositoryInterface $taxAppRepository,
+        protected TaxAppToStoreFacadeInterface $storeFacade
+    ) {
     }
 
     /**
@@ -37,6 +35,31 @@ class ConfigReader implements ConfigReaderInterface
     {
         $taxAppConfigConditionsTransfer = new TaxAppConfigConditionsTransfer();
         $taxAppConfigConditionsTransfer->addFkStore($idStore);
+
+        $taxAppConfigCriteriaTransfer = (new TaxAppConfigCriteriaTransfer())
+            ->setTaxAppConfigConditions($taxAppConfigConditionsTransfer)
+            ->addSort(
+                (new SortTransfer())
+                    ->setField(TaxAppConfigTransfer::IS_ACTIVE)
+                    ->setIsAscending(false),
+            );
+
+        $taxAppConfigCollectionTransfer = $this->taxAppRepository->getTaxAppConfigCollection($taxAppConfigCriteriaTransfer);
+
+        if (!$taxAppConfigCollectionTransfer->getTaxAppConfigs()->count()) {
+            return null;
+        }
+
+        return $taxAppConfigCollectionTransfer->getTaxAppConfigs()->offsetGet(0);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\TaxAppConfigTransfer|null
+     */
+    public function findTaxAppConfigForCurrentStore(): ?TaxAppConfigTransfer
+    {
+        $taxAppConfigConditionsTransfer = new TaxAppConfigConditionsTransfer();
+        $taxAppConfigConditionsTransfer->addFkStore((int)$this->storeFacade->getCurrentStore()->getIdStore());
 
         $taxAppConfigCriteriaTransfer = (new TaxAppConfigCriteriaTransfer())
             ->setTaxAppConfigConditions($taxAppConfigConditionsTransfer)

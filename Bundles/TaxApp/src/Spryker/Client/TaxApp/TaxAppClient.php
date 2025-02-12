@@ -9,6 +9,8 @@ namespace Spryker\Client\TaxApp;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
+use Generated\Shared\Transfer\TaxAppValidationRequestTransfer;
+use Generated\Shared\Transfer\TaxAppValidationResponseTransfer;
 use Generated\Shared\Transfer\TaxCalculationRequestTransfer;
 use Generated\Shared\Transfer\TaxCalculationResponseTransfer;
 use Generated\Shared\Transfer\TaxRefundRequestTransfer;
@@ -55,5 +57,21 @@ class TaxAppClient extends AbstractClient implements TaxAppClientInterface
         StoreTransfer $storeTransfer
     ): TaxCalculationResponseTransfer {
         return $this->getFactory()->createTaxAppRequestSender()->requestTaxRefund($taxRefundRequest, $taxAppConfigTransfer, $storeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\TaxAppValidationRequestTransfer $taxAppValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\TaxAppValidationResponseTransfer
+     */
+    public function validateTaxId(TaxAppValidationRequestTransfer $taxAppValidationRequestTransfer): TaxAppValidationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedStub()
+            ->validateTaxId($taxAppValidationRequestTransfer);
     }
 }

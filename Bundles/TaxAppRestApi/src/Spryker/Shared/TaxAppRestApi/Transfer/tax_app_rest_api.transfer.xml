@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="RestTaxAppValidationAttributes" strict="true">
+        <property name="countryCode" type="string"/>
+        <property name="taxId" type="string"/>
+    </transfer>
+
+    <transfer name="TaxAppValidationRequest" strict="true">
+        <property name="countryCode" type="string"/>
+        <property name="taxId" type="string"/>
+    </transfer>
+
+    <transfer name="TaxAppValidationResponse" strict="true">
+        <property name="isValid" type="bool"/>
+        <property name="message" type="string"/>
+        <property name="additionalInfo" type="string"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int"/>
+        <property name="detail" type="string"/>
+    </transfer>
+</transfers>

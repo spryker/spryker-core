@@ -9,9 +9,17 @@ namespace Spryker\Zed\TaxApp\Persistence;
 
 use Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
+use Generated\Shared\Transfer\TaxIdValidationHistoryTransfer;
 
 interface TaxAppEntityManagerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\TaxIdValidationHistoryTransfer $taxIdValidationHistoryTransfer
+     *
+     * @return void
+     */
+    public function saveTaxIdValidationHistory(TaxIdValidationHistoryTransfer $taxIdValidationHistoryTransfer): void;
+
     /**
      * @param \Generated\Shared\Transfer\TaxAppConfigTransfer $taxAppConfigTransfer
      * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers

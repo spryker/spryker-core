@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
+use Generated\Shared\Transfer\TaxAppValidationRequestTransfer;
+use Generated\Shared\Transfer\TaxAppValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -89,5 +91,19 @@ class TaxAppFacade extends AbstractFacade implements TaxAppFacadeInterface
     public function processOrderRefund(array $orderItemIds, int $idSalesOrder): void
     {
         $this->getFactory()->createRefundProcessor()->processOrderRefund($orderItemIds, $idSalesOrder);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\TaxAppValidationRequestTransfer $taxAppValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\TaxAppValidationResponseTransfer
+     */
+    public function validateTaxId(TaxAppValidationRequestTransfer $taxAppValidationRequestTransfer): TaxAppValidationResponseTransfer
+    {
+        return $this->getFactory()->createTaxIdValidator()->validate($taxAppValidationRequestTransfer);
     }
 }

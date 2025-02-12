@@ -89,6 +89,7 @@
     <transfer name="TaxAppApiUrls" strict="true">
         <property name="quotationUrl" type="string"/>
         <property name="refundsUrl" type="string"/>
+        <property name="taxIdValidationUrl" type="string"/>
     </transfer>
 
     <transfer name="TaxAppConfigCriteria" strict="true">
@@ -302,5 +303,35 @@
         <property name="idEvent" type="string"/>
         <property name="orderItemIds" type="array" singular="idOrderItem"/>
         <property name="idSalesOrder" type="int"/>
+    </transfer>
+
+    <transfer name="TaxAppValidationRequest" strict="true">
+        <property name="countryCode" type="string"/>
+        <property name="taxId" type="string"/>
+    </transfer>
+
+    <transfer name="TaxAppValidationResponse" strict="true">
+        <property name="isValid" type="bool"/>
+        <property name="message" type="string"/>
+        <property name="additionalInfo" type="string"/>
+    </transfer>
+
+    <transfer name="TaxIdValidationHistory" strict="true">
+        <property name="taxId" type="string"/>
+        <property name="isValid" type="bool"/>
+        <property name="countryCode" type="string"/>
+        <property name="responseData" type="string"/>
+    </transfer>
+
+    <transfer name="AcpHttpRequest" strict="true">
+        <property name="uri" type="string"/>
+        <property name="method" type="string"/>
+        <property name="body" type="string"/>
+        <property name="headers" type="array" associative="true" singular="header"/>
+    </transfer>
+
+    <transfer name="AcpHttpResponse" strict="true">
+        <property name="content" type="string"/>
+        <property name="httpStatusCode" type="int"/>
     </transfer>
 </transfers>

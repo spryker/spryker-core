@@ -10,7 +10,9 @@ namespace Spryker\Zed\TaxApp\Persistence;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
+use Generated\Shared\Transfer\TaxIdValidationHistoryTransfer;
 use Orm\Zed\TaxApp\Persistence\SpyTaxAppConfig;
+use Orm\Zed\TaxApp\Persistence\SpyTaxIdValidationHistory;
 use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
@@ -21,6 +23,21 @@ use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrai
 class TaxAppEntityManager extends AbstractEntityManager implements TaxAppEntityManagerInterface
 {
     use ActiveRecordBatchProcessorTrait;
+
+    /**
+     * @param \Generated\Shared\Transfer\TaxIdValidationHistoryTransfer $taxIdValidationHistoryTransfer
+     *
+     * @return void
+     */
+    public function saveTaxIdValidationHistory(TaxIdValidationHistoryTransfer $taxIdValidationHistoryTransfer): void
+    {
+        $taxIdValidationHistoryEntity = new SpyTaxIdValidationHistory();
+        $this->getFactory()
+            ->createTaxAppConfigMapper()
+            ->mapTaxIdValidationHistoryTransferToTaxIdValidationHistoryEntity($taxIdValidationHistoryTransfer, $taxIdValidationHistoryEntity);
+
+        $taxIdValidationHistoryEntity->save();
+    }
 
     /**
      * @param \Generated\Shared\Transfer\TaxAppConfigTransfer $taxAppConfigTransfer

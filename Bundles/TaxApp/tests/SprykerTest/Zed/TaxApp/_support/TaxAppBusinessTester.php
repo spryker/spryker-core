@@ -21,6 +21,7 @@ use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\DataBuilder\StockAddressBuilder;
 use Generated\Shared\Transfer\AccessTokenResponseTransfer;
+use Generated\Shared\Transfer\AcpHttpResponseTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -35,6 +36,8 @@ use Generated\Shared\Transfer\TaxAppConfigTransfer;
 use Generated\Shared\Transfer\TaxCalculationResponseTransfer;
 use Orm\Zed\TaxApp\Persistence\SpyTaxAppConfig;
 use Orm\Zed\TaxApp\Persistence\SpyTaxAppConfigQuery;
+use Orm\Zed\TaxApp\Persistence\SpyTaxIdValidationHistoryQuery;
+use PHPUnit\Framework\Constraint\Callback;
 use ReflectionProperty;
 use Spryker\Client\TaxApp\TaxAppClient;
 use Spryker\Shared\Oms\OmsConstants;
@@ -43,8 +46,10 @@ use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
 use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextBridge;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\KernelApp\Business\KernelAppFacadeInterface;
 use Spryker\Zed\MerchantProfile\Communication\Plugin\TaxApp\MerchantProfileAddressCalculableObjectTaxAppExpanderPlugin;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
+use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToKernelAppFacadeBridge;
 use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToOauthClientFacadeBridge;
 use Spryker\Zed\TaxApp\TaxAppDependencyProvider;
 use SprykerTest\Shared\TaxApp\Plugins\CalculableObjectTaxAppExpanderPlugin;
@@ -70,6 +75,49 @@ use SprykerTest\Shared\TaxApp\Plugins\CalculableObjectTaxAppExpanderPlugin;
 class TaxAppBusinessTester extends Actor
 {
     use _generated\TaxAppBusinessTesterActions;
+
+    /**
+     * @param \Generated\Shared\Transfer\AcpHttpResponseTransfer $acpHttpResponseTransfer
+     * @param \PHPUnit\Framework\Constraint\Callback|null $with
+     *
+     * @return void
+     */
+    public function mockKernelAppFacade(AcpHttpResponseTransfer $acpHttpResponseTransfer, ?Callback $with = null): void
+    {
+        $mockKernelAppFacade = Stub::makeEmpty(KernelAppFacadeInterface::class);
+        $mockKernelAppFacade
+            ->method('makeRequest')
+            ->willReturn($acpHttpResponseTransfer);
+
+        if ($with !== null) {
+            $mockKernelAppFacade
+                ->method('makeRequest')
+                ->with($with);
+        }
+
+        $this->setDependency(
+            TaxAppDependencyProvider::FACADE_KERNEL_APP,
+            new TaxAppToKernelAppFacadeBridge($mockKernelAppFacade),
+        );
+    }
+
+    /**
+     * @param string $taxId
+     * @param string $countryCode
+     * @param string $responseData
+     *
+     * @return void
+     */
+    public function assertTaxIdValidationHistoryEntryDoesNotExist(string $taxId, string $countryCode, string $responseData): void
+    {
+        $taxIdValidationHistoryEntity = $this->getTaxIdValidationHistoryQuery()
+            ->filterByTaxId($taxId)
+            ->filterByCountryCode($countryCode)
+            ->findOne();
+
+        $this->assertNotNull($taxIdValidationHistoryEntity);
+        $this->assertSame($responseData, $taxIdValidationHistoryEntity->getResponseData());
+    }
 
     /**
      * @return void
@@ -193,6 +241,14 @@ class TaxAppBusinessTester extends Actor
     /**
      * @return void
      */
+    public function ensureTaxIdValidationHistoryTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getTaxIdValidationHistoryQuery());
+    }
+
+    /**
+     * @return void
+     */
     public function ensureTaxAppConfigTableIsEmpty(): void
     {
         $this->ensureDatabaseTableIsEmpty($this->getTaxAppConfigQuery());
@@ -204,6 +260,14 @@ class TaxAppBusinessTester extends Actor
     protected function getTaxAppConfigQuery(): SpyTaxAppConfigQuery
     {
         return SpyTaxAppConfigQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxApp\Persistence\Propel\SpyTaxIdValidationHistoryQuery
+     */
+    protected function getTaxIdValidationHistoryQuery(): SpyTaxIdValidationHistoryQuery
+    {
+        return SpyTaxIdValidationHistoryQuery::create();
     }
 
     /**

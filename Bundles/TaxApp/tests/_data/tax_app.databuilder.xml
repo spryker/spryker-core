@@ -5,6 +5,11 @@
     xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
 >
 
+    <transfer name="TaxAppValidationRequest" strict="true">
+        <property name="countryCode" dataBuilderRule="lexify('??')"/>
+        <property name="taxId" dataBuilderRule="lexify('??????????')"/>
+    </transfer>
+
     <transfer name="TaxAppConfig" strict="true">
         <property name="applicationId" dataBuilderRule="lexify('??????????')"/>
         <property name="apiUrls" dataBuilderRule="TaxAppApiUrls"/>
@@ -16,6 +21,7 @@
     <transfer name="TaxAppApiUrls" strict="true">
         <property name="quotationUrl" dataBuilderRule="lexify('??????????')"/>
         <property name="refundsUrl" dataBuilderRule="lexify('??????????')"/>
+        <property name="taxIdValidationUrl" dataBuilderRule="lexify('??????????')"/>
     </transfer>
 
     <transfer name="TaxAppConfigCriteria" strict="true">

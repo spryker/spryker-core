@@ -10,6 +10,8 @@ namespace Spryker\Zed\TaxApp;
 use Spryker\Shared\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToKernelAppFacadeBridge;
+use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToKernelAppFacadeInterface;
 use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToMessageBrokerFacadeBridge;
 use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToOauthClientFacadeBridge;
 use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToSalesFacadeBridge;
@@ -24,6 +26,11 @@ class TaxAppDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
+
+    /**
+     * @var string
+     */
+    public const FACADE_KERNEL_APP = 'FACADE_KERNEL_APP';
 
     /**
      * @var string
@@ -92,6 +99,7 @@ class TaxAppDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilEncodingService($container);
         $container = $this->addFallbackQuoteCalculationPlugins($container);
         $container = $this->addFallbackOrderCalculationPlugins($container);
+        $container = $this->provideKernelAppFacade($container);
 
         return $container;
     }
@@ -105,6 +113,20 @@ class TaxAppDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function provideKernelAppFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_KERNEL_APP, function (Container $container): TaxAppToKernelAppFacadeInterface {
+            return new TaxAppToKernelAppFacadeBridge($container->getLocator()->kernelApp()->facade());
+        });
 
         return $container;
     }

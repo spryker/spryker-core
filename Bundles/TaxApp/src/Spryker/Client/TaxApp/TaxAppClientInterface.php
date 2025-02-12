@@ -9,6 +9,8 @@ namespace Spryker\Client\TaxApp;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
+use Generated\Shared\Transfer\TaxAppValidationRequestTransfer;
+use Generated\Shared\Transfer\TaxAppValidationResponseTransfer;
 use Generated\Shared\Transfer\TaxCalculationRequestTransfer;
 use Generated\Shared\Transfer\TaxCalculationResponseTransfer;
 use Generated\Shared\Transfer\TaxRefundRequestTransfer;
@@ -50,4 +52,16 @@ interface TaxAppClientInterface
         TaxAppConfigTransfer $taxAppConfigTransfer,
         StoreTransfer $storeTransfer
     ): TaxCalculationResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Validates Tax id for specific country.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\TaxAppValidationRequestTransfer $taxAppValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\TaxAppValidationResponseTransfer
+     */
+    public function validateTaxId(TaxAppValidationRequestTransfer $taxAppValidationRequestTransfer): TaxAppValidationResponseTransfer;
 }

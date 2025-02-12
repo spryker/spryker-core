@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
+use Generated\Shared\Transfer\TaxAppValidationRequestTransfer;
+use Generated\Shared\Transfer\TaxAppValidationResponseTransfer;
 
 interface TaxAppFacadeInterface
 {
@@ -98,4 +100,17 @@ interface TaxAppFacadeInterface
      * @return void
      */
     public function processOrderRefund(array $orderItemIds, int $idSalesOrder): void;
+
+    /**
+     * Specification:
+     *  - Validates Tax id for specific country.
+     *  - TaxAppValidationRequestTransfer.taxId, TaxAppValidationRequestTransfer.countryCode are required.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\TaxAppValidationRequestTransfer $taxAppValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\TaxAppValidationResponseTransfer
+     */
+    public function validateTaxId(TaxAppValidationRequestTransfer $taxAppValidationRequestTransfer): TaxAppValidationResponseTransfer;
 }

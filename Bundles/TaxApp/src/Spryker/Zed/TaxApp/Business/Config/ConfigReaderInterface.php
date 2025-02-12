@@ -17,4 +17,9 @@ interface ConfigReaderInterface
      * @return \Generated\Shared\Transfer\TaxAppConfigTransfer|null
      */
     public function getTaxAppConfigByIdStore(int $idStore): ?TaxAppConfigTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\TaxAppConfigTransfer|null
+     */
+    public function findTaxAppConfigForCurrentStore(): ?TaxAppConfigTransfer;
 }
