@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Customer">
+        <property name="changeRequest" type="CustomerDataChangeRequest" strict="true"/>
+        <property name="locale" type="Locale"/>
+        <property name="storeName" type="string"/>
+        <property name="idCustomer" type="int"/>
+        <property name="email" type="string"/>
+        <property name="message" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+    </transfer>
+
+    <transfer name="CustomerDataChangeRequestCollection" strict="true">
+        <property name="customerDataChangeRequests" type="CustomerDataChangeRequest[]" singular="customerDataChangeRequest"/>
+    </transfer>
+
+    <transfer name="CustomerDataChangeRequest" strict="true">
+        <property name="idCustomerDataChangeRequest" type="int"/>
+        <property name="type" type="string"/>
+        <property name="status" type="string"/>
+        <property name="data" type="string"/>
+        <property name="verificationToken" type="string"/>
+        <property name="idCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="CustomerDataChangeResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="VerificationTokenCustomerChangeDataResponse" strict="true">
+        <property name="isSent" type="bool"/>
+    </transfer>
+
+    <transfer name="Mail">
+        <property name="verificationLink" type="string"/>
+        <property name="type" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="locale" type="Locale"/>
+        <property name="storeName" type="string"/>
+        <property name="subject" type="string"/>
+        <property name="templates" type="MailTemplate[]" singular="template"/>
+        <property name="recipients" type="MailRecipient[]" singular="recipient"/>
+    </transfer>
+
+    <transfer name="CustomerDataChangeRequestCriteria" strict="true">
+        <property name="customerDataChangeRequestConditions" type="CustomerDataChangeRequestConditions"/>
+    </transfer>
+
+    <transfer name="CustomerDataChangeRequestConditions" strict="true">
+        <property name="idCustomers" type="int[]" singular="idCustomer"/>
+        <property name="isExpired" type="bool"/>
+        <property name="statuses" type="string[]" singular="status"/>
+        <property name="types" type="string[]" singular="type"/>
+        <property name="verificationToken" type="string"/>
+    </transfer>
+
+    <transfer name="CustomerCriteria">
+        <property name="idCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="customerTransfer" type="Customer"/>
+    </transfer>
+
+    <transfer name="MailTemplate">
+        <property name="name" type="string"/>
+        <property name="isHtml" type="bool"/>
+    </transfer>
+
+    <transfer name="MailRecipient">
+        <property name="email" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="AuditLoggerConfigCriteria" strict="true">
+        <property name="channelName" type="string"/>
+    </transfer>
+
+</transfers>

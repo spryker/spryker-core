@@ -124,6 +124,11 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_CUSTOMER_PRE_UPDATE = 'PLUGINS_CUSTOMER_PRE_UPDATE';
+
+    /**
+     * @var string
+     */
     public const SUB_REQUEST_HANDLER = 'SUB_REQUEST_HANDLER';
 
     /**
@@ -145,6 +150,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPostCustomerRegistrationPlugins($container);
         $container = $this->addCustomerService($container);
         $container = $this->addCustomerPostDeletePlugins($container);
+        $container = $this->addCustomerPreUpdatePlugins($container);
 
         return $container;
     }
@@ -461,5 +467,27 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerPreUpdatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CUSTOMER_PRE_UPDATE, function () {
+            return $this->getCustomerPreUpdatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPreUpdatePluginInterface>
+     */
+    protected function getCustomerPreUpdatePlugins(): array
+    {
+        return [];
     }
 }

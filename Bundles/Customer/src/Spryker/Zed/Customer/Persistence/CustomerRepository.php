@@ -275,6 +275,10 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
             $customerQuery->filterByCustomerReference($customerCriteriaTransfer->getCustomerReference());
         }
 
+        if ($customerCriteriaTransfer->getIdCustomer()) {
+            $customerQuery->filterByIdCustomer($customerCriteriaTransfer->getIdCustomer());
+        }
+
         $customerEntity = $customerQuery->findOne();
 
         if ($customerEntity === null) {

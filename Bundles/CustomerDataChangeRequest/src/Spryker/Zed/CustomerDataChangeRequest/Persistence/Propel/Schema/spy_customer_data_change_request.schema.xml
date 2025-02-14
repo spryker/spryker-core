@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CustomerDataChangeRequest\Persistence" package="src.Orm.Zed.CustomerDataChangeRequest.Persistence">
+
+    <table name="spy_customer_data_change_request" idMethod="native">
+        <column name="id_customer_data_change_request" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_customer" required="true" type="INTEGER"/>
+        <column name="data" size="255" type="VARCHAR" required="true"/>
+        <column name="type" type="VARCHAR" size="255" required="true"/>
+        <column name="status" type="VARCHAR" size="255" required="true"/>
+        <column name="verification_token" required="true" size="150" type="VARCHAR"/>\
+
+        <foreign-key name="spy_cus_dat_cha_req-fk_customer" foreignTable="spy_customer" phpName="Customer" refPhpName="CustomerDataChangeRequest" onDelete="CASCADE">
+            <reference foreign="id_customer" local="fk_customer"/>
+        </foreign-key>
+
+        <index name="spy_cus_dat_cha_req-fk_customer">
+            <index-column name="fk_customer"/>
+        </index>
+        <index name="spy_cus_dat_cha_req-verification_token">
+            <index-column name="verification_token"/>
+        </index>
+
+        <behavior name="timestampable"/>
+        <id-method-parameter value="id_customer_data_change_request_pk_seq"/>
+    </table>
+
+</database>

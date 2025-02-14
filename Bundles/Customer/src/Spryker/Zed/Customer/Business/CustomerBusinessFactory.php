@@ -72,6 +72,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->createCustomerPasswordPolicyValidator(),
             $this->createPasswordResetExpirationChecker(),
             $this->createCustomerPluginExecutor(),
+            $this->getCustomerPreUpdatePlugins(),
         );
 
         return $customer;
@@ -343,6 +344,14 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     public function getCustomerPostDeletePlugins(): array
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_POST_DELETE);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPreUpdatePluginInterface>
+     */
+    public function getCustomerPreUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_PRE_UPDATE);
     }
 
     /**

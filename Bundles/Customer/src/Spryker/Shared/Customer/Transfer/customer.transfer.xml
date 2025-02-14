@@ -98,6 +98,7 @@
         <property name="customerTransfer" type="Customer"/>
         <property name="isSuccess" type="bool"/>
         <property name="message" type="Message"/>
+        <property name="messages" type="Message[]" singular="message"/>
         <property name="errors" type="CustomerError[]" singular="error"/>
     </transfer>
 
@@ -201,6 +202,7 @@
 
     <transfer name="CustomerCriteria">
         <property name="customerReference" type="string"/>
+        <property name="idCustomer" type="int"/>
         <property name="withExpanders" type="bool"/>
     </transfer>
 

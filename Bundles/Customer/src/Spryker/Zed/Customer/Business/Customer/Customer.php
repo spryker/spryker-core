@@ -65,61 +65,6 @@ class Customer implements CustomerInterface
     protected const GLOSSARY_KEY_CUSTOMER_REGISTRATION_SUCCESS = 'customer.registration.success';
 
     /**
-     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
-     */
-    protected $queryContainer;
-
-    /**
-     * @var \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface
-     */
-    protected $customerReferenceGenerator;
-
-    /**
-     * @var \Spryker\Zed\Customer\CustomerConfig
-     */
-    protected $customerConfig;
-
-    /**
-     * @var \Spryker\Zed\Customer\Business\Customer\EmailValidatorInterface
-     */
-    protected $emailValidator;
-
-    /**
-     * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface
-     */
-    protected $mailFacade;
-
-    /**
-     * @var \Orm\Zed\Locale\Persistence\SpyLocaleQuery
-     */
-    protected $localePropelQuery;
-
-    /**
-     * @var \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface
-     */
-    protected $customerExpander;
-
-    /**
-     * @var \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface;
-     */
-    protected $customerPasswordPolicyValidator;
-
-    /**
-     * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
-     */
-    protected $localeFacade;
-
-    /**
-     * @var \Spryker\Zed\Customer\Business\Customer\Checker\PasswordResetExpirationCheckerInterface
-     */
-    protected PasswordResetExpirationCheckerInterface $passwordResetExpirationChecker;
-
-    /**
-     * @var \Spryker\Zed\Customer\Business\Executor\CustomerPluginExecutorInterface
-     */
-    protected CustomerPluginExecutorInterface $customerPluginExecutor;
-
-    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
@@ -131,31 +76,22 @@ class Customer implements CustomerInterface
      * @param \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface $customerPasswordPolicyValidator
      * @param \Spryker\Zed\Customer\Business\Customer\Checker\PasswordResetExpirationCheckerInterface $passwordResetExpirationChecker
      * @param \Spryker\Zed\Customer\Business\Executor\CustomerPluginExecutorInterface $customerPluginExecutor
+     * @param array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPreUpdatePluginInterface> $customerPreUpdatePlugins
      */
     public function __construct(
-        CustomerQueryContainerInterface $queryContainer,
-        CustomerReferenceGeneratorInterface $customerReferenceGenerator,
-        CustomerConfig $customerConfig,
-        EmailValidatorInterface $emailValidator,
-        CustomerToMailInterface $mailFacade,
-        SpyLocaleQuery $localePropelQuery,
-        CustomerToLocaleInterface $localeFacade,
-        CustomerExpanderInterface $customerExpander,
-        CustomerPasswordPolicyValidatorInterface $customerPasswordPolicyValidator,
-        PasswordResetExpirationCheckerInterface $passwordResetExpirationChecker,
-        CustomerPluginExecutorInterface $customerPluginExecutor
+        protected CustomerQueryContainerInterface $queryContainer,
+        protected CustomerReferenceGeneratorInterface $customerReferenceGenerator,
+        protected CustomerConfig $customerConfig,
+        protected EmailValidatorInterface $emailValidator,
+        protected CustomerToMailInterface $mailFacade,
+        protected SpyLocaleQuery $localePropelQuery,
+        protected CustomerToLocaleInterface $localeFacade,
+        protected CustomerExpanderInterface $customerExpander,
+        protected CustomerPasswordPolicyValidatorInterface $customerPasswordPolicyValidator,
+        protected PasswordResetExpirationCheckerInterface $passwordResetExpirationChecker,
+        protected CustomerPluginExecutorInterface $customerPluginExecutor,
+        protected array $customerPreUpdatePlugins
     ) {
-        $this->queryContainer = $queryContainer;
-        $this->customerReferenceGenerator = $customerReferenceGenerator;
-        $this->customerConfig = $customerConfig;
-        $this->emailValidator = $emailValidator;
-        $this->mailFacade = $mailFacade;
-        $this->localePropelQuery = $localePropelQuery;
-        $this->customerExpander = $customerExpander;
-        $this->customerPasswordPolicyValidator = $customerPasswordPolicyValidator;
-        $this->localeFacade = $localeFacade;
-        $this->passwordResetExpirationChecker = $passwordResetExpirationChecker;
-        $this->customerPluginExecutor = $customerPluginExecutor;
     }
 
     /**
@@ -556,6 +492,12 @@ class Customer implements CustomerInterface
      */
     public function update(CustomerTransfer $customerTransfer)
     {
+        $customerResponseTransfer = $this->createCustomerResponseTransfer();
+        if ($this->preValidateCustomerEmail($customerTransfer, $customerResponseTransfer)->getIsSuccess() === false) {
+            return $customerResponseTransfer;
+        }
+        $customerTransfer = $this->executePreUpdatePlugins($customerTransfer, $customerResponseTransfer);
+
         if ($customerTransfer->getNewPassword()) {
             $customerResponseTransfer = $this->updatePassword(clone $customerTransfer);
 
@@ -568,7 +510,6 @@ class Customer implements CustomerInterface
                 ->setPassword($updatedPasswordCustomerTransfer->getPassword());
         }
 
-        $customerResponseTransfer = $this->createCustomerResponseTransfer();
         $customerResponseTransfer->setCustomerTransfer($customerTransfer);
 
         $customerEntity = $this->getCustomer($customerTransfer);
@@ -592,6 +533,26 @@ class Customer implements CustomerInterface
         }
 
         $customerEntity->save();
+
+        return $customerResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    protected function preValidateCustomerEmail(
+        CustomerTransfer $customerTransfer,
+        CustomerResponseTransfer $customerResponseTransfer
+    ): CustomerResponseTransfer {
+        if (!$this->emailValidator->isEmailAvailableForCustomer($customerTransfer->getEmailOrFail(), $customerTransfer->getIdCustomerOrFail())) {
+            return $this->addErrorToCustomerResponseTransfer(
+                $customerResponseTransfer,
+                Messages::CUSTOMER_EMAIL_ALREADY_USED,
+            );
+        }
 
         return $customerResponseTransfer;
     }
@@ -1063,5 +1024,32 @@ class Customer implements CustomerInterface
     protected function isSymfonyVersion5(): bool
     {
         return class_exists(AuthenticationProviderManager::class);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function executePreUpdatePlugins(CustomerTransfer $customerTransfer, CustomerResponseTransfer $customerResponseTransfer): CustomerTransfer
+    {
+        if ($customerTransfer->getAnonymizedAt() !== null) {
+            return $customerTransfer;
+        }
+
+        foreach ($this->customerPreUpdatePlugins as $customerPreUpdatePlugin) {
+            $customerTransfer = $customerPreUpdatePlugin->preUpdate($customerTransfer);
+
+            if ($customerTransfer->getMessage() === null) {
+                continue;
+            }
+
+            $customerResponseTransfer->addMessage(
+                (new MessageTransfer())->setValue($customerTransfer->getMessage()),
+            );
+        }
+
+        return $customerTransfer;
     }
 }

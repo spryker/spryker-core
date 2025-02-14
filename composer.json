@@ -303,6 +303,7 @@
         "spryker/customer-access-storage": "*",
         "spryker/customer-api": "*",
         "spryker/customer-catalog": "*",
+        "spryker/customer-data-change-request": "*",
         "spryker/customer-extension": "*",
         "spryker/customer-group": "*",
         "spryker/customer-group-discount-connector": "*",

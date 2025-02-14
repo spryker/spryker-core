@@ -1,0 +1,22 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isChangeRequestActive: _widget.isChangeRequestActive,
+    email: _widget.email,
+} %}
+
+{% block template %}
+    {% if data.isChangeRequestActive %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="box text-warning">
+        <p>
+            {{ 'customer.data_change_request.email_change.requested' | trans({
+                '%newEmail%': data.email,
+            }) }}
+        </p>
+    </div>
+{% endblock %}
