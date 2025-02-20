@@ -197,6 +197,13 @@ class TransferDefinitionMerger implements MergerInterface
                         break;
                     }
                 default:
+                    if (
+                        $this->transferConfig->isProjectTransferOverrideActive() &&
+                        in_array($propertyName, $this->transferConfig->getTransferPropertyAttributesAvailableForProjectOverride())
+                    ) {
+                        break;
+                    }
+
                     if ($propertyValue !== $property[$propertyName]) {
                         throw new Exception(sprintf(
                             static::ERROR_MESSAGE_PROPERTY_ATTRIBUTES_NOT_IDENTICAL,

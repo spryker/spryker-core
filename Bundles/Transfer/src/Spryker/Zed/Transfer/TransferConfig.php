@@ -58,7 +58,7 @@ class TransferConfig extends AbstractBundleConfig
         $globPatterns = $this->getSourceDirectories();
 
         $globPatterns[] = rtrim(APPLICATION_ROOT_DIR, DIRECTORY_SEPARATOR) . '/tests/_data';
-        $globPatterns[] = rtrim(APPLICATION_VENDOR_DIR, DIRECTORY_SEPARATOR) . '/*/*/tests/_data/';
+        $globPatterns[] = rtrim($this->getApplicationVendorDirectory(), DIRECTORY_SEPARATOR) . '/*/*/tests/_data/';
 
         return $globPatterns;
     }
@@ -100,7 +100,22 @@ class TransferConfig extends AbstractBundleConfig
      */
     protected function getSprykerCoreSourceDirectoryGlobPattern()
     {
-        return rtrim(APPLICATION_VENDOR_DIR, DIRECTORY_SEPARATOR) . '/*/*/src/*/Shared/*/Transfer/';
+        return rtrim($this->getApplicationVendorDirectory(), DIRECTORY_SEPARATOR) . '/*/*/src/*/Shared/*/Transfer/';
+    }
+
+    /**
+     * Specification:
+     * - Returns application vendor directory path.
+     *
+     * @api
+     *
+     * @internal Only for core level introspection.
+     *
+     * @return string
+     */
+    public function getApplicationVendorDirectory(): string
+    {
+        return APPLICATION_VENDOR_DIR;
     }
 
     /**
@@ -310,5 +325,34 @@ class TransferConfig extends AbstractBundleConfig
     public function getPropertyDescriptionMergeStrategy(): string
     {
         return TransferConstants::PROPERTY_DESCRIPTION_MERGE_STRATEGY_DEFAULT;
+    }
+
+    /**
+     * Specification:
+     * - Disable validation and overwrite project transfer properies attributes for transfers.
+     * - Uses TransferConfig::getTransferPropertyAttributesAvailableForProjectOverride() setting.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isProjectTransferOverrideActive(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Specification:
+     * - List of transfer propery attributes that can be overwrited on project level.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getTransferPropertyAttributesAvailableForProjectOverride(): array
+    {
+        return [
+            'dataBuilderRule',
+        ];
     }
 }

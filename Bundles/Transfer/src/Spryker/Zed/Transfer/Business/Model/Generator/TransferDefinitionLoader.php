@@ -14,18 +14,8 @@ use Laminas\Filter\Word\CamelCaseToUnderscore;
 use Laminas\Filter\Word\DashToCamelCase;
 use Laminas\Filter\Word\UnderscoreToCamelCase;
 
-class TransferDefinitionLoader implements LoaderInterface
+class TransferDefinitionLoader extends AbstractTransferDefinitionLoader
 {
-    /**
-     * @var string
-     */
-    public const KEY_BUNDLE = 'bundle';
-
-    /**
-     * @var string
-     */
-    public const KEY_CONTAINING_BUNDLE = 'containing bundle';
-
     /**
      * @var string
      */
@@ -37,47 +27,14 @@ class TransferDefinitionLoader implements LoaderInterface
     public const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
 
     /**
-     * @var \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface
+     * @var string
      */
-    protected $finder;
-
-    /**
-     * @var \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizerInterface
-     */
-    protected $definitionNormalizer;
-
-    /**
-     * @var array
-     */
-    protected $transferDefinitions = [];
+    protected const KEY_IS_CORE = 'is_core';
 
     /**
      * @var \Laminas\Filter\FilterChain
      */
     protected static $filter;
-
-    /**
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface $finder
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizerInterface $normalizer
-     */
-    public function __construct(FinderInterface $finder, DefinitionNormalizerInterface $normalizer)
-    {
-        $this->finder = $finder;
-        $this->definitionNormalizer = $normalizer;
-    }
-
-    /**
-     * @return array
-     */
-    public function getDefinitions(): array
-    {
-        $this->loadDefinitions();
-        $this->transferDefinitions = $this->definitionNormalizer->normalizeDefinitions(
-            $this->transferDefinitions,
-        );
-
-        return $this->transferDefinitions;
-    }
 
     /**
      * @return void
@@ -91,8 +48,14 @@ class TransferDefinitionLoader implements LoaderInterface
             /** @var \Laminas\Config\Config $configObject */
             $configObject = Factory::fromFile($xmlTransferDefinition->getPathname(), true);
             $definition = $configObject->toArray();
-            $this->addDefinition($definition, $bundle, $containingBundle);
+            $isCore = str_starts_with($xmlTransferDefinition->getPathname(), $this->transferConfig->getApplicationVendorDirectory());
+
+            $this->addDefinition($definition, $bundle, $containingBundle, $isCore);
         }
+
+        usort($this->transferDefinitions, function ($a, $b) {
+            return $a[static::KEY_IS_CORE] <=> $b[static::KEY_IS_CORE];
+        });
     }
 
     /**
@@ -111,34 +74,21 @@ class TransferDefinitionLoader implements LoaderInterface
     }
 
     /**
-     * @param string $filePath
-     *
-     * @return string
-     */
-    protected function getContainingBundleFromPathName(string $filePath): string
-    {
-        $pathParts = explode(DIRECTORY_SEPARATOR, $filePath);
-        $sharedDirectoryPosition = array_search('Shared', array_values($pathParts));
-
-        $containingBundle = $pathParts[$sharedDirectoryPosition + 1];
-
-        return $containingBundle;
-    }
-
-    /**
      * @param array<string, mixed> $definition
      * @param string $module
      * @param string $containingModule
+     * @param bool $isCore
      *
      * @return void
      */
-    protected function addDefinition(array $definition, string $module, string $containingModule): void
+    protected function addDefinition(array $definition, string $module, string $containingModule, bool $isCore): void
     {
         if (isset($definition[static::KEY_TRANSFER][0])) {
             foreach ($definition[static::KEY_TRANSFER] as $transfer) {
                 $this->assertCasing($transfer, $module);
 
                 $transfer[static::KEY_BUNDLE] = $module;
+                $transfer[static::KEY_IS_CORE] = $isCore;
                 $transfer[static::KEY_CONTAINING_BUNDLE] = $containingModule;
 
                 $transfer = $this->normalize($transfer);
@@ -149,6 +99,7 @@ class TransferDefinitionLoader implements LoaderInterface
             $this->assertCasing($transfer, $module);
 
             $transfer[static::KEY_BUNDLE] = $module;
+            $transfer[static::KEY_IS_CORE] = $isCore;
             $transfer[static::KEY_CONTAINING_BUNDLE] = $containingModule;
 
             $transfer = $this->normalize($transfer);

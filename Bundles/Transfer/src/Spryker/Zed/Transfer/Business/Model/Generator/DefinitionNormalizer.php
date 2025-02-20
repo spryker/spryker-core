@@ -45,6 +45,11 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
     public const KEY_STRICT_MODE = 'strict';
 
     /**
+     * @var string
+     */
+    protected const KEY_IS_CORE = 'is_core';
+
+    /**
      * @param array<array> $transferDefinitions
      *
      * @return array<array>
@@ -60,6 +65,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
                 static::KEY_DEPRECATED => $transferDefinition[static::KEY_DEPRECATED] ?? null,
                 static::KEY_PROPERTY => $this->normalizeAttributes($transferDefinition[static::KEY_PROPERTY] ?? [], $transferDefinition[static::KEY_BUNDLE]),
                 static::KEY_STRICT_MODE => $transferDefinition[static::KEY_STRICT_MODE] ?? null,
+                static::KEY_IS_CORE => $transferDefinition[static::KEY_STRICT_MODE] ?? null,
             ];
 
             $normalizedDefinitions[] = $this->normalizeStrictMode($normalizedDefinition);

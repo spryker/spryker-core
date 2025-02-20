@@ -24,6 +24,7 @@ class TransferDefinitionMergerHelper
                     'bundles' => [
                         'Bundle1',
                     ],
+                    'dataBuilderRule' => 'shuffle(array("test"))',
                 ],
             ],
         ];
@@ -44,6 +45,7 @@ class TransferDefinitionMergerHelper
                     'bundles' => [
                         'Bundle2',
                     ],
+                    'dataBuilderRule' => 'shuffle(array("test"))',
                 ],
                 [
                     'name' => 'propertyB',
@@ -73,6 +75,7 @@ class TransferDefinitionMergerHelper
                         'Bundle1',
                         'Bundle2',
                     ],
+                    'dataBuilderRule' => 'shuffle(array("test"))',
                 ],
                 'propertyB' => [
                     'name' => 'propertyB',

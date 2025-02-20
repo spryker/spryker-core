@@ -866,13 +866,14 @@ class GeneratedTransferTest extends Unit
      */
     protected function getDefinitionBuilder(array $sourceDirectories): DefinitionBuilderInterface
     {
+        $config = new TransferConfig();
         $finder = new TransferDefinitionFinder($sourceDirectories);
         $normalizer = new DefinitionNormalizer();
-        $loader = new TransferDefinitionLoader($finder, $normalizer);
+        $loader = new TransferDefinitionLoader($finder, $normalizer, $config);
         $definitionBuilder = new TransferDefinitionBuilder(
             $loader,
-            new TransferDefinitionMerger(new TransferConfig(), $this->getMessengerMock()),
-            new ClassDefinition(new TransferConfig()),
+            new TransferDefinitionMerger($config, $this->getMessengerMock()),
+            new ClassDefinition($config),
         );
 
         return $definitionBuilder;

@@ -54,6 +54,41 @@ class TransferDefinitionMergerTest extends Unit
     /**
      * @return void
      */
+    public function testMergeShouldMergeWithSameNameDefineDifferentAttributesWhenOverrideIsActiveForDataBuilderRuleAttribute(): void
+    {
+        // Arrange
+        $helper = new TransferDefinitionMergerHelper();
+        $property1 = $helper->getTransferDefinition1();
+
+        $property1['property'] = [
+            [
+                'name' => 'propertyA',
+                'dataBuilderRule' => 'shuffle(array("new"))',
+            ],
+        ];
+
+        $transferDefinitions = [
+            $property1,
+            $helper->getTransferDefinition2(),
+        ];
+
+        $expected = [];
+        $expected['Transfer'] = $helper->getExpectedTransfer();
+        $transferConfigMock = $this->getMockBuilder(TransferConfig::class)->onlyMethods(['isProjectTransferOverrideActive'])->getMock();
+        $transferConfigMock->method('isProjectTransferOverrideActive')->willReturn(true);
+
+        $merger = new TransferDefinitionMerger($transferConfigMock, $this->getMessengerMock());
+
+        // Act
+        $transferDefinition = $merger->merge($transferDefinitions);
+
+        // Assert
+        $this->assertSame('shuffle(array("new"))', $transferDefinition['Transfer']['property']['propertyA']['dataBuilderRule']);
+    }
+
+    /**
+     * @return void
+     */
     public function testMergeShouldThrowExceptionIfTwoPropertiesWithSameNameDefineDifferentAttributes(): void
     {
         $this->expectException('Exception');

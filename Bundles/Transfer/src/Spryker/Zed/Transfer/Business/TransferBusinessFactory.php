@@ -159,6 +159,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new TransferDefinitionLoader(
             $this->createFinder(),
             $this->createDefinitionNormalizer(),
+            $this->getConfig(),
         );
     }
 
@@ -170,6 +171,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new EntityTransferDefinitionLoader(
             $this->createEntityFinder(),
             $this->createEntityDefinitionNormalizer(),
+            $this->getConfig(),
         );
     }
 
@@ -181,6 +183,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new TransferDefinitionLoader(
             $this->createDataBuilderFinder(),
             $this->createDefinitionNormalizer(),
+            $this->getConfig(),
         );
     }
 
