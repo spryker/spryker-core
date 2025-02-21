@@ -10,6 +10,9 @@ namespace Spryker\Zed\CustomerDataChangeRequest;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\CustomerDataChangeRequest\CustomerDataChangeRequestConfig getSharedConfig()
+ */
 class CustomerDataChangeRequestConfig extends AbstractBundleConfig
 {
     /**
@@ -43,21 +46,18 @@ class CustomerDataChangeRequestConfig extends AbstractBundleConfig
     protected const EMAIL_CHANGE_TOKEN_URL_WITHOUT_STORE = '/customer-data-change-request/change-email?verification_token=%s';
 
     /**
-     * @var int
-     */
-    protected const DEFAULT_EMAIL_CHANGE_VERIFICATION_EXPIRATION_MINUTES = 30;
-
-    /**
      * Specification:
      * - Returns the expiration time in minutes for the email change verification token.
      *
      * @api
      *
+     * @uses \Spryker\Shared\CustomerDataChangeRequest\CustomerDataChangeRequestConfig::getEmailChangeVerificationExpirationMinutes()
+     *
      * @return int
      */
     public function getEmailChangeVerificationExpirationMinutes(): int
     {
-        return static::DEFAULT_EMAIL_CHANGE_VERIFICATION_EXPIRATION_MINUTES;
+        return $this->getSharedConfig()->getEmailChangeVerificationExpirationMinutes();
     }
 
     /**

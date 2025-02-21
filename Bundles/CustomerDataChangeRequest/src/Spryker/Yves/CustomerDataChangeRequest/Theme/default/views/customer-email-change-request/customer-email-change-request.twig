@@ -3,6 +3,7 @@
 {% define data = {
     isChangeRequestActive: _widget.isChangeRequestActive,
     email: _widget.email,
+    minutes: _widget.minutes,
 } %}
 
 {% block template %}
@@ -16,6 +17,7 @@
         <p>
             {{ 'customer.data_change_request.email_change.requested' | trans({
                 '%newEmail%': data.email,
+                '%minutes%': data.minutes,
             }) }}
         </p>
     </div>

@@ -15,6 +15,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \Spryker\Yves\CustomerDataChangeRequest\CustomerDataChangeRequestFactory getFactory()
+ * @method \Spryker\Yves\CustomerDataChangeRequest\CustomerDataChangeRequestConfig getConfig()
  * @method \Spryker\Client\CustomerDataChangeRequest\CustomerDataChangeRequestClientInterface getClient()
  */
 class CustomerEmailChangeRequestWidget extends AbstractWidget
@@ -29,10 +30,16 @@ class CustomerEmailChangeRequestWidget extends AbstractWidget
      */
     protected const PARAMETER_EMAIL_NAME = 'email';
 
+    /**
+     * @var string
+     */
+    protected const PARAMETER_MINUTES_NAME = 'minutes';
+
     public function __construct()
     {
         $this->addIsChangeRequestActiveParameter();
         $this->addEmailParameter();
+        $this->addMinutesParameter();
     }
 
     /**
@@ -74,6 +81,17 @@ class CustomerEmailChangeRequestWidget extends AbstractWidget
         $this->addParameter(
             static::PARAMETER_EMAIL_NAME,
             $pendingCustomerDataChangeRequestData ?? null,
+        );
+    }
+
+    /**
+     * @return void
+     */
+    protected function addMinutesParameter(): void
+    {
+        $this->addParameter(
+            static::PARAMETER_MINUTES_NAME,
+            $this->getConfig()->getEmailChangeVerificationExpirationMinutes(),
         );
     }
 
