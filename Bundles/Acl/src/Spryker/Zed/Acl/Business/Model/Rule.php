@@ -64,6 +64,11 @@ class Rule implements RuleInterface
     protected array $aclAccessCheckerStrategyPlugins;
 
     /**
+     * @var array<mixed>
+     */
+    protected static array $cache = [];
+
+    /**
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
      * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $facadeUser
@@ -308,6 +313,15 @@ class Rule implements RuleInterface
         }
     }
 
+    public function isAllowed(UserTransfer $userTransfer, $bundle, $controller, $action): bool
+    {
+        if (!isset(static::$cache[$userTransfer->getIdUser()][$bundle][$controller][$action])) {
+            static::$cache[$userTransfer->getIdUser()][$bundle][$controller][$action] = $this->executeIsAllowed($userTransfer, $bundle, $controller, $action);
+        }
+
+        return static::$cache[$userTransfer->getIdUser()][$bundle][$controller][$action];
+    }
+
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      * @param string $bundle
@@ -316,7 +330,7 @@ class Rule implements RuleInterface
      *
      * @return bool
      */
-    public function isAllowed(UserTransfer $userTransfer, $bundle, $controller, $action)
+    protected function executeIsAllowed(UserTransfer $userTransfer, $bundle, $controller, $action)
     {
         if ($this->userFacade->isSystemUser($userTransfer)) {
             $this->registerSystemUserRules($userTransfer);
