@@ -47,6 +47,7 @@ use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToMoneyClientInterface
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToProductStorageClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStorageClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface;
+use Spryker\Client\SearchHttp\Dependency\Service\SearchHttpToSynchronizationServiceInterface;
 use Spryker\Client\SearchHttp\Dependency\Service\SearchHttpToUtilEncodingServiceInterface;
 use Spryker\Client\SearchHttp\Formatter\ProductConcreteCatalogSearchHttpResultFormatter;
 use Spryker\Client\SearchHttp\Formatter\ProductConcreteCatalogSearchHttpResultFormatterInterface;
@@ -71,6 +72,7 @@ class SearchHttpFactory extends AbstractFactory
     {
         return new ConfigReader(
             $this->getStorageClient(),
+            $this->getSynchronizationService(),
             $this->createConfigMapper(),
         );
     }
@@ -369,5 +371,13 @@ class SearchHttpFactory extends AbstractFactory
     public function getCustomerClient(): SearchHttpToCustomerClientInterface
     {
         return $this->getProvidedDependency(SearchHttpDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Client\SearchHttp\Dependency\Service\SearchHttpToSynchronizationServiceInterface
+     */
+    public function getSynchronizationService(): SearchHttpToSynchronizationServiceInterface
+    {
+        return $this->getProvidedDependency(SearchHttpDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
 }

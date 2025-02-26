@@ -19,6 +19,7 @@
         "spryker/search-extension": "^1.3.0",
         "spryker/storage": "^3.4.0",
         "spryker/store": "^1.19.0",
+        "spryker/synchronization": "^1.18.0",
         "spryker/synchronization-behavior": "^1.0.0",
         "spryker/synchronization-extension": "^1.0.0",
         "spryker/transfer": "^3.27.0",

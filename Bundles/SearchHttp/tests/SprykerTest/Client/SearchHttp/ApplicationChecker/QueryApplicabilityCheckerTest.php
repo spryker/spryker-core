@@ -33,6 +33,7 @@ class QueryApplicabilityCheckerTest extends Unit
     {
         // Arrange
         $this->tester->mockStoreClientDependency();
+        $this->tester->mockSynchronizationServiceDependency();
         $this->tester->mockStorageClientDependency('{"search_http_configs":[{"application_id":"app_id","url":"url"}]}');
         $queryApplicabilityChecker = $this->tester->getFactory()->createQueryApplicabilityChecker();
 
@@ -50,6 +51,7 @@ class QueryApplicabilityCheckerTest extends Unit
     {
         // Arrange
         $this->tester->mockStoreClientDependency();
+        $this->tester->mockSynchronizationServiceDependency();
         $this->tester->mockStorageClientDependency('{"search_http_configs":[]}');
         $queryApplicabilityChecker = $this->tester->getFactory()->createQueryApplicabilityChecker();
 

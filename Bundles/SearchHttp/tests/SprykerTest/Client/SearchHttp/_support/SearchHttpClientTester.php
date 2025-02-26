@@ -47,11 +47,14 @@ use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToMoneyClientInterface
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToProductStorageClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStorageClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface;
+use Spryker\Client\SearchHttp\Dependency\Service\SearchHttpToSynchronizationServiceBridge;
 use Spryker\Client\SearchHttp\Dependency\Service\SearchHttpToUtilEncodingServiceInterface;
 use Spryker\Client\SearchHttp\Mapper\ResultProductMapper;
 use Spryker\Client\SearchHttp\Plugin\Catalog\Query\SearchHttpQueryPlugin;
 use Spryker\Client\SearchHttp\SearchHttpConfig as ClientSearchHttpConfig;
 use Spryker\Client\SearchHttp\SearchHttpDependencyProvider;
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
+use Spryker\Service\Synchronization\SynchronizationService;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
 
 /**
@@ -170,6 +173,25 @@ class SearchHttpClientTester extends Actor
 
         $this->mockFactoryMethod('getStorageClient', $storageClient);
         $this->setDependency(SearchHttpDependencyProvider::CLIENT_STORE, $storageClient);
+    }
+
+    /**
+     * @return void
+     */
+    public function mockSynchronizationServiceDependency(): void
+    {
+        $synchronizationKeyGeneratorMock = Stub::makeEmpty(SynchronizationKeyGeneratorPluginInterface::class);
+        $synchronizationKeyGeneratorMock->method('generateKey')
+            ->willReturn('search_http_config');
+        $synchronizationService = Stub::makeEmpty(SynchronizationService::class);
+        $synchronizationService
+            ->method('getStorageKeyBuilder')
+            ->with('search_http_config')
+            ->willReturn($synchronizationKeyGeneratorMock);
+        $synchronizationServiceBridge = new SearchHttpToSynchronizationServiceBridge($synchronizationService);
+
+        $this->mockFactoryMethod('getSynchronizationService', $synchronizationServiceBridge);
+        $this->setDependency(SearchHttpDependencyProvider::SERVICE_SYNCHRONIZATION, $synchronizationServiceBridge);
     }
 
     /**

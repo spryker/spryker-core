@@ -49,6 +49,7 @@ class SearchHttpApiClientTest extends Unit
         $searchQuery = $this->tester->getSearchHttpQueryPlugin();
         $searchQuery = $this->tester->extendWithTestData($searchQuery);
         $this->tester->mockStoreClientDependency();
+        $this->tester->mockSynchronizationServiceDependency();
         $this->tester->mockStorageClientDependency(static::SEARCH_HTTP_CONFIG_DATA);
         $this->tester->mockUtilEncodingServiceDependency();
         $responseData = [['responseData']];
@@ -77,6 +78,7 @@ class SearchHttpApiClientTest extends Unit
         $searchQuery = $this->tester->getSearchHttpQueryPlugin();
         $searchQuery = $this->tester->extendWithTestData($searchQuery);
         $this->tester->mockStoreClientDependency();
+        $this->tester->mockSynchronizationServiceDependency();
         $this->tester->mockStorageClientDependency(static::SEARCH_HTTP_CONFIG_DATA);
         $this->tester->mockUtilEncodingServiceDependency();
         $responseData = ['wrong_response'];

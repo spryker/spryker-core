@@ -22,6 +22,7 @@ use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToProductStorageClient
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToProductStorageClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStorageClientBridge;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientBridge;
+use Spryker\Client\SearchHttp\Dependency\Service\SearchHttpToSynchronizationServiceBridge;
 use Spryker\Client\SearchHttp\Dependency\Service\SearchHttpToUtilEncodingServiceBridge;
 use Spryker\Client\SearchHttp\Dependency\Service\SearchHttpToUtilEncodingServiceInterface;
 
@@ -96,6 +97,11 @@ class SearchHttpDependencyProvider extends AbstractDependencyProvider
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
+     * @var string
+     */
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -115,6 +121,7 @@ class SearchHttpDependencyProvider extends AbstractDependencyProvider
         $container = $this->addFacetConfigTransferBuilders($container);
         $container = $this->addSortConfigTransferBuilders($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addSynchronizationService($container);
 
         return $container;
     }
@@ -341,6 +348,22 @@ class SearchHttpDependencyProvider extends AbstractDependencyProvider
         $container->set(static::CLIENT_CUSTOMER, function (Container $container): SearchHttpToCustomerClientInterface {
             return new SearchHttpToCustomerClientBridge(
                 $container->getLocator()->customer()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addSynchronizationService(Container $container): Container
+    {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
+            return new SearchHttpToSynchronizationServiceBridge(
+                $container->getLocator()->synchronization()->service(),
             );
         });
 
