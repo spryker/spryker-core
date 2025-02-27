@@ -24,6 +24,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\QuoteProcessFlowTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -32,9 +33,15 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Spryker\Shared\CheckoutExtension\CheckoutExtensionContextsInterface;
+use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPreConditionPlugin;
 use Spryker\Zed\Checkout\CheckoutConfig;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
+use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface;
+use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPostSaveInterface;
+use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface;
+use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface;
 use Spryker\Zed\Customer\Communication\Plugin\Checkout\CustomerOrderSavePlugin;
 use Spryker\Zed\Customer\Communication\Plugin\CustomerPreConditionCheckerPlugin;
 use Spryker\Zed\Oms\OmsConfig;
@@ -388,6 +395,32 @@ class CheckoutFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider placeOrderExecutesPluginStack
+     *
+     * @param array<string, list<string>> $dependencyMap
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function testPlaceOrderExecutesPluginStack(
+        array $dependencyMap,
+        QuoteTransfer $quoteTransfer
+    ): void {
+        // Arrange, Assert
+        foreach ($dependencyMap as $dependencyKey => $createDependencyMethodNames) {
+            $dependency = [];
+            foreach ($createDependencyMethodNames as $createDependencyMethodName) {
+                $dependency[] = $this->$createDependencyMethodName();
+            }
+
+            $this->tester->setDependency($dependencyKey, $dependency);
+        }
+
+        // Act
+        $this->tester->getFacade()->placeOrder($quoteTransfer);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function getBaseQuoteTransfer(): QuoteTransfer
@@ -675,5 +708,315 @@ class CheckoutFacadeTest extends Unit
         }
 
         return $orderItemsSkuList;
+    }
+
+    /**
+     * @return array<string, list<mixed>>
+     */
+    protected function placeOrderExecutesPluginStack(): array
+    {
+        $checkoutContext = CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT;
+        $orderAmendmentContext = SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT;
+        $wrongContext = 'something-else-context';
+
+        return [
+            'Executes CheckoutPreConditionPluginInterface stack when flow name is not set' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => ['getCheckoutPreConditionPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                new QuoteTransfer(),
+            ],
+            'Executes CheckoutPreConditionPluginInterface stack when flow name is set' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => ['getCheckoutPreConditionPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($checkoutContext)),
+            ],
+            'Executes CheckoutPreSavePluginInterface stack when flow name is not set' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => ['getCheckoutPreSavePluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                new QuoteTransfer(),
+            ],
+            'Executes CheckoutPreSavePluginInterface stack when flow name is set' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => ['getCheckoutPreSavePluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($checkoutContext)),
+            ],
+            'Executes CheckoutDoSaveOrderInterface stack when flow name is not set' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => ['getCheckoutDoSaveOrderPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                new QuoteTransfer(),
+            ],
+            'Executes CheckoutDoSaveOrderInterface stack when flow name is set' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => ['getCheckoutDoSaveOrderPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($checkoutContext)),
+            ],
+            'Executes CheckoutPostSaveInterface stack when flow name is not set' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => ['getCheckoutPostSavePluginMock'],
+                ],
+                new QuoteTransfer(),
+            ],
+            'Executes CheckoutPostSaveInterface stack when flow name is set' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => ['getCheckoutPostSavePluginMock'],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($checkoutContext)),
+            ],
+            'Executes default CheckoutPreConditionPluginInterface plugins when flow name is not set' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => ['getCheckoutPreConditionPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS_FOR_ORDER_AMENDMENT => ['getNeverCalledCheckoutPreConditionPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                new QuoteTransfer(),
+            ],
+            'Executes default CheckoutPreConditionPluginInterface plugins when flow is not found by name' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => ['getCheckoutPreConditionPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS_FOR_ORDER_AMENDMENT => ['getNeverCalledCheckoutPreConditionPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($wrongContext)),
+            ],
+            'Executes CheckoutPreConditionPluginInterface plugins found by flow name' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => ['getNeverCalledCheckoutPreConditionPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS_FOR_ORDER_AMENDMENT => ['getCheckoutPreConditionPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($orderAmendmentContext)),
+            ],
+            'Executes default CheckoutPreSavePluginInterface plugins when flow name is not set' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => ['getCheckoutPreSavePluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS_FOR_ORDER_AMENDMENT => ['getNeverCalledCheckoutPreSavePluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                new QuoteTransfer(),
+            ],
+            'Executes default CheckoutPreSavePluginInterface plugins when flow is not found by name' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => ['getCheckoutPreSavePluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS_FOR_ORDER_AMENDMENT => ['getNeverCalledCheckoutPreSavePluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($wrongContext)),
+            ],
+            'Executes CheckoutPreSavePluginInterface plugins found by flow name' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => ['getNeverCalledCheckoutPreSavePluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS_FOR_ORDER_AMENDMENT => ['getCheckoutPreSavePluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($orderAmendmentContext)),
+            ],
+            'Executes default CheckoutDoSaveOrderInterface plugins when flow name is not set' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => ['getCheckoutDoSaveOrderPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS_FOR_ORDER_AMENDMENT => ['getNeverCalledCheckoutDoSaveOrderPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                new QuoteTransfer(),
+            ],
+            'Executes default CheckoutDoSaveOrderInterface plugins when flow is not found by name' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => ['getCheckoutDoSaveOrderPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS_FOR_ORDER_AMENDMENT => ['getNeverCalledCheckoutDoSaveOrderPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($wrongContext)),
+            ],
+            'Executes CheckoutDoSaveOrderInterface plugins found by flow name' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => ['getNeverCalledCheckoutDoSaveOrderPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS_FOR_ORDER_AMENDMENT => ['getCheckoutDoSaveOrderPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($orderAmendmentContext)),
+            ],
+            'Executes default CheckoutPostSaveInterface plugins when flow name is not set' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => ['getCheckoutPostSavePluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS_FOR_ORDER_AMENDMENT => ['getNeverCalledCheckoutPostSavePluginMock'],
+                ],
+                new QuoteTransfer(),
+            ],
+            'Executes default CheckoutPostSaveInterface plugins when flow is not found by name' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => ['getCheckoutPostSavePluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS_FOR_ORDER_AMENDMENT => ['getNeverCalledCheckoutPostSavePluginMock'],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($wrongContext)),
+            ],
+            'Executes CheckoutPostSaveInterface plugins found by flow name' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => ['getNeverCalledCheckoutPostSavePluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS_FOR_ORDER_AMENDMENT => ['getCheckoutPostSavePluginMock'],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($orderAmendmentContext)),
+            ],
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface
+     */
+    protected function getCheckoutPreConditionPluginMock(): CheckoutPreConditionPluginInterface
+    {
+        $checkoutPreConditionPluginMock = $this
+            ->getMockBuilder(CheckoutPreConditionPluginInterface::class)
+            ->getMock();
+        $checkoutPreConditionPluginMock->expects($this->once())->method('checkCondition');
+
+        return $checkoutPreConditionPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface
+     */
+    protected function getNeverCalledCheckoutPreConditionPluginMock(): CheckoutPreConditionPluginInterface
+    {
+        $checkoutPreConditionPluginMock = $this
+            ->getMockBuilder(CheckoutPreConditionPluginInterface::class)
+            ->getMock();
+        $checkoutPreConditionPluginMock->expects($this->never())->method('checkCondition');
+
+        return $checkoutPreConditionPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface
+     */
+    protected function getCheckoutPreSavePluginMock(): CheckoutPreSavePluginInterface
+    {
+        $checkoutPreSavePluginMock = $this
+            ->getMockBuilder(CheckoutPreSavePluginInterface::class)
+            ->getMock();
+        $checkoutPreSavePluginMock->method('preSave')->willReturn(new QuoteTransfer());
+        $checkoutPreSavePluginMock->expects($this->once())->method('preSave');
+
+        return $checkoutPreSavePluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface
+     */
+    protected function getNeverCalledCheckoutPreSavePluginMock(): CheckoutPreSavePluginInterface
+    {
+        $checkoutPreSavePluginMock = $this
+            ->getMockBuilder(CheckoutPreSavePluginInterface::class)
+            ->getMock();
+        $checkoutPreSavePluginMock->expects($this->never())->method('preSave');
+
+        return $checkoutPreSavePluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface
+     */
+    protected function getCheckoutDoSaveOrderPluginMock(): CheckoutDoSaveOrderInterface
+    {
+        $checkoutDoSaveOrderPluginMock = $this
+            ->getMockBuilder(CheckoutDoSaveOrderInterface::class)
+            ->getMock();
+        $checkoutDoSaveOrderPluginMock->expects($this->once())->method('saveOrder');
+
+        return $checkoutDoSaveOrderPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface
+     */
+    protected function getNeverCalledCheckoutDoSaveOrderPluginMock(): CheckoutDoSaveOrderInterface
+    {
+        $checkoutDoSaveOrderPluginMock = $this
+            ->getMockBuilder(CheckoutDoSaveOrderInterface::class)
+            ->getMock();
+        $checkoutDoSaveOrderPluginMock->expects($this->never())->method('saveOrder');
+
+        return $checkoutDoSaveOrderPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPostSaveInterface
+     */
+    protected function getCheckoutPostSavePluginMock(): CheckoutPostSaveInterface
+    {
+        $checkoutPostSavePluginMock = $this
+            ->getMockBuilder(CheckoutPostSaveInterface::class)
+            ->getMock();
+        $checkoutPostSavePluginMock->expects($this->once())->method('executeHook');
+
+        return $checkoutPostSavePluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPostSaveInterface
+     */
+    protected function getNeverCalledCheckoutPostSavePluginMock(): CheckoutPostSaveInterface
+    {
+        $checkoutPostSavePluginMock = $this
+            ->getMockBuilder(CheckoutPostSaveInterface::class)
+            ->getMock();
+        $checkoutPostSavePluginMock->expects($this->never())->method('executeHook');
+
+        return $checkoutPostSavePluginMock;
     }
 }

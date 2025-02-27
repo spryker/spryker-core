@@ -101,8 +101,14 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
         SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
         SpySalesOrderItem $salesOrderItemEntity
     ): SpySalesOrderItem {
+        $originalLastStateChange = $salesOrderItemEntity->getLastStateChange();
+
         $salesOrderItemEntity->fromArray($salesOrderItemEntityTransfer->toArray());
         $salesOrderItemEntity->setFkOmsOrderProcess($salesOrderItemEntityTransfer->getProcess()->getIdOmsOrderProcess());
+
+        if ($originalLastStateChange !== null && $salesOrderItemEntityTransfer->getLastStateChange() === null) {
+            $salesOrderItemEntity->setLastStateChange($originalLastStateChange);
+        }
 
         return $salesOrderItemEntity;
     }

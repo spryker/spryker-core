@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesConfigurableBundle\Business\Writer;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
 
 interface SalesOrderConfiguredBundleWriterInterface
 {
@@ -17,4 +18,13 @@ interface SalesOrderConfiguredBundleWriterInterface
      * @return void
      */
     public function saveSalesOrderConfiguredBundlesFromQuote(QuoteTransfer $quoteTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer $salesOrderItemCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function updateSalesOrderConfiguredBundles(
+        SalesOrderItemCollectionResponseTransfer $salesOrderItemCollectionResponseTransfer
+    ): SalesOrderItemCollectionResponseTransfer;
 }

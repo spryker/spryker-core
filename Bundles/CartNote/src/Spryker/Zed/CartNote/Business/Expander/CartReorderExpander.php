@@ -18,12 +18,8 @@ class CartReorderExpander implements CartReorderExpanderInterface
      */
     public function expandCartReorderQuoteWithCartNote(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer
     {
-        if ($cartReorderTransfer->getOrderOrFail()->getCartNote() === null) {
-            return $cartReorderTransfer;
-        }
-
         $cartReorderTransfer->getQuoteOrFail()->setCartNote(
-            $cartReorderTransfer->getOrderOrFail()->getCartNoteOrFail(),
+            $cartReorderTransfer->getOrderOrFail()->getCartNote(),
         );
 
         return $cartReorderTransfer;

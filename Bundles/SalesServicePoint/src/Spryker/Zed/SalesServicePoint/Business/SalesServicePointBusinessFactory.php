@@ -8,6 +8,10 @@
 namespace Spryker\Zed\SalesServicePoint\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SalesServicePoint\Business\Collector\SalesServicePointSalesOrderItemCollector;
+use Spryker\Zed\SalesServicePoint\Business\Collector\SalesServicePointSalesOrderItemCollectorInterface;
+use Spryker\Zed\SalesServicePoint\Business\Deleter\SalesOrderItemServicePointDeleter;
+use Spryker\Zed\SalesServicePoint\Business\Deleter\SalesOrderItemServicePointDeleterInterface;
 use Spryker\Zed\SalesServicePoint\Business\Expander\ServicePointExpander;
 use Spryker\Zed\SalesServicePoint\Business\Expander\ServicePointExpanderInterface;
 use Spryker\Zed\SalesServicePoint\Business\Saver\SalesOrderItemServicePointsSaver;
@@ -32,6 +36,25 @@ class SalesServicePointBusinessFactory extends AbstractBusinessFactory
      */
     public function createSalesOrderItemServicePointsSaver(): SalesOrderItemServicePointsSaverInterface
     {
-        return new SalesOrderItemServicePointsSaver($this->getEntityManager());
+        return new SalesOrderItemServicePointsSaver(
+            $this->getEntityManager(),
+            $this->createSalesOrderItemServicePointDeleter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesServicePoint\Business\Deleter\SalesOrderItemServicePointDeleterInterface
+     */
+    public function createSalesOrderItemServicePointDeleter(): SalesOrderItemServicePointDeleterInterface
+    {
+        return new SalesOrderItemServicePointDeleter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesServicePoint\Business\Collector\SalesServicePointSalesOrderItemCollectorInterface
+     */
+    public function createSalesServicePointSalesOrderItemCollector(): SalesServicePointSalesOrderItemCollectorInterface
+    {
+        return new SalesServicePointSalesOrderItemCollector();
     }
 }

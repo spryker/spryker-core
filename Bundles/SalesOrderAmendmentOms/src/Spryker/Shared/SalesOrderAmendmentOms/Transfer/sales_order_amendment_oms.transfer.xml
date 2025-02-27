@@ -65,4 +65,10 @@
         <property name="orderReferences" type="string[]" singular="orderReference"/>
     </transfer>
 
+    <transfer name="OmsOrderItemState" strict="true">
+    </transfer>
+
+    <transfer name="SaveOrder">
+    </transfer>
+
 </transfers>

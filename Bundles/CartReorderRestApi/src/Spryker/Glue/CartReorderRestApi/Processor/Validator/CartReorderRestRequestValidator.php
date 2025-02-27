@@ -12,16 +12,10 @@ use Generated\Shared\Transfer\RestCartReorderRequestAttributesTransfer;
 class CartReorderRestRequestValidator implements CartReorderRestRequestValidatorInterface
 {
     /**
-     * @var list<\Spryker\Glue\CartReorderRestApiExtension\Dependency\Plugin\RestCartReorderAttributesValidatorPluginInterface>
-     */
-    protected array $restCartReorderAttributesValidatorPlugins;
-
-    /**
      * @param list<\Spryker\Glue\CartReorderRestApiExtension\Dependency\Plugin\RestCartReorderAttributesValidatorPluginInterface> $restCartReorderAttributesValidatorPlugins
      */
-    public function __construct(array $restCartReorderAttributesValidatorPlugins)
+    public function __construct(protected array $restCartReorderAttributesValidatorPlugins)
     {
-        $this->restCartReorderAttributesValidatorPlugins = $restCartReorderAttributesValidatorPlugins;
     }
 
     /**

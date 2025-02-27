@@ -10,6 +10,7 @@ namespace Spryker\Zed\Checkout\Business\Workflow;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Spryker\Shared\Kernel\StrategyResolverInterface;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface as ObsoleteCheckoutSaveOrderInterface;
@@ -25,44 +26,44 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected $omsFacade;
 
     /**
-     * @var array<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface>
+     * @var \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface>>
      */
-    protected $preConditionStack;
+    protected $preConditionPluginStrategyResolver;
 
     /**
-     * @var array<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface>
+     * @var \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface>>
      */
-    protected $saveOrderStack;
+    protected $saveOrderPluginStrategyResolver;
 
     /**
-     * @var array<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface>
+     * @var \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPostSaveInterface>>
      */
-    protected $postSaveHookStack;
+    protected $postSavePluginStrategyResolver;
 
     /**
-     * @var array<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface>
+     * @var \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface>>
      */
-    protected $preSaveStack;
+    protected $preSavePluginStrategyResolver;
 
     /**
      * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface $omsFacade
-     * @param array<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface> $preConditionStack
-     * @param array<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface> $saveOrderStack
-     * @param array<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface> $postSaveHookStack
-     * @param array<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface> $preSave
+     * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface>> $preConditionPluginStrategyResolver
+     * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface>> $saveOrderPluginStrategyResolver
+     * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPostSaveInterface>> $postSavePluginStrategyResolver
+     * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface>> $preSavePluginStrategyResolver
      */
     public function __construct(
         CheckoutToOmsFacadeInterface $omsFacade,
-        array $preConditionStack,
-        array $saveOrderStack,
-        array $postSaveHookStack,
-        array $preSave = []
+        StrategyResolverInterface $preConditionPluginStrategyResolver,
+        StrategyResolverInterface $saveOrderPluginStrategyResolver,
+        StrategyResolverInterface $postSavePluginStrategyResolver,
+        StrategyResolverInterface $preSavePluginStrategyResolver
     ) {
         $this->omsFacade = $omsFacade;
-        $this->preConditionStack = $preConditionStack;
-        $this->postSaveHookStack = $postSaveHookStack;
-        $this->saveOrderStack = $saveOrderStack;
-        $this->preSaveStack = $preSave;
+        $this->preConditionPluginStrategyResolver = $preConditionPluginStrategyResolver;
+        $this->postSavePluginStrategyResolver = $postSavePluginStrategyResolver;
+        $this->saveOrderPluginStrategyResolver = $saveOrderPluginStrategyResolver;
+        $this->preSavePluginStrategyResolver = $preSavePluginStrategyResolver;
     }
 
     /**
@@ -127,8 +128,11 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     {
         $isPassed = true;
 
-        foreach ($this->preConditionStack as $preCondition) {
-            $isPassed &= $preCondition->checkCondition($quoteTransfer, $checkoutResponse);
+        $quoteProcessFlowName = $quoteTransfer->getQuoteProcessFlow()?->getNameOrFail();
+        $preConditionPlugins = $this->preConditionPluginStrategyResolver->get($quoteProcessFlowName);
+
+        foreach ($preConditionPlugins as $preConditionPlugin) {
+            $isPassed &= $preConditionPlugin->checkCondition($quoteTransfer, $checkoutResponse);
         }
 
         return (bool)$isPassed;
@@ -157,14 +161,17 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      */
     protected function doSaveOrderTransaction(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        foreach ($this->saveOrderStack as $orderSaver) {
-            if ($orderSaver instanceof ObsoleteCheckoutSaveOrderInterface) {
-                $orderSaver->saveOrder($quoteTransfer, $checkoutResponse);
+        $quoteProcessFlowName = $quoteTransfer->getQuoteProcessFlow()?->getNameOrFail();
+        $saveOrderPlugins = $this->saveOrderPluginStrategyResolver->get($quoteProcessFlowName);
+
+        foreach ($saveOrderPlugins as $saveOrderPlugin) {
+            if ($saveOrderPlugin instanceof ObsoleteCheckoutSaveOrderInterface) {
+                $saveOrderPlugin->saveOrder($quoteTransfer, $checkoutResponse);
 
                 continue;
             }
 
-            $orderSaver->saveOrder($quoteTransfer, $checkoutResponse->getSaveOrder());
+            $saveOrderPlugin->saveOrder($quoteTransfer, $checkoutResponse->getSaveOrder());
         }
     }
 
@@ -176,8 +183,11 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      */
     protected function doPostSave(QuoteTransfer $quoteTransfer, $checkoutResponse)
     {
-        foreach ($this->postSaveHookStack as $postSaveHook) {
-            $postSaveHook->executeHook($quoteTransfer, $checkoutResponse);
+        $quoteProcessFlowName = $quoteTransfer->getQuoteProcessFlow()?->getNameOrFail();
+        $postSavePlugins = $this->postSavePluginStrategyResolver->get($quoteProcessFlowName);
+
+        foreach ($postSavePlugins as $postSavePlugin) {
+            $postSavePlugin->executeHook($quoteTransfer, $checkoutResponse);
         }
     }
 
@@ -199,7 +209,10 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      */
     protected function doPreSave(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        foreach ($this->preSaveStack as $preSavePlugin) {
+        $quoteProcessFlowName = $quoteTransfer->getQuoteProcessFlow()?->getNameOrFail();
+        $preSavePlugins = $this->preSavePluginStrategyResolver->get($quoteProcessFlowName);
+
+        foreach ($preSavePlugins as $preSavePlugin) {
             $quoteTransfer = $this->doPreSaveExecutePlugin($preSavePlugin, $quoteTransfer, $checkoutResponseTransfer);
         }
 

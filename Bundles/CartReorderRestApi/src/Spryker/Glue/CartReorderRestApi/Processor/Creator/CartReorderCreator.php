@@ -19,41 +19,17 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 class CartReorderCreator implements CartReorderCreatorInterface
 {
     /**
-     * @var \Spryker\Glue\CartReorderRestApi\Dependency\Client\CartReorderRestApiToCartReorderClientInterface
-     */
-    protected CartReorderRestApiToCartReorderClientInterface $cartReorderClient;
-
-    /**
-     * @var \Spryker\Glue\CartReorderRestApi\Processor\ResponseBuilder\CartReorderRestResponseBuilderInterface
-     */
-    protected CartReorderRestResponseBuilderInterface $cartReorderRestResponseBuilder;
-
-    /**
-     * @var \Spryker\Glue\CartReorderRestApi\Processor\Validator\CartReorderRestRequestValidatorInterface
-     */
-    protected CartReorderRestRequestValidatorInterface $cartReorderRestRequestValidator;
-
-    /**
-     * @var \Spryker\Glue\CartReorderRestApi\Processor\Mapper\CartReorderRestRequestMapperInterface
-     */
-    protected CartReorderRestRequestMapperInterface $cartReorderRestRequestMapper;
-
-    /**
      * @param \Spryker\Glue\CartReorderRestApi\Dependency\Client\CartReorderRestApiToCartReorderClientInterface $cartReorderClient
      * @param \Spryker\Glue\CartReorderRestApi\Processor\ResponseBuilder\CartReorderRestResponseBuilderInterface $cartReorderRestResponseBuilder
      * @param \Spryker\Glue\CartReorderRestApi\Processor\Validator\CartReorderRestRequestValidatorInterface $cartReorderRestRequestValidator
      * @param \Spryker\Glue\CartReorderRestApi\Processor\Mapper\CartReorderRestRequestMapperInterface $cartReorderRestRequestMapper
      */
     public function __construct(
-        CartReorderRestApiToCartReorderClientInterface $cartReorderClient,
-        CartReorderRestResponseBuilderInterface $cartReorderRestResponseBuilder,
-        CartReorderRestRequestValidatorInterface $cartReorderRestRequestValidator,
-        CartReorderRestRequestMapperInterface $cartReorderRestRequestMapper
+        protected CartReorderRestApiToCartReorderClientInterface $cartReorderClient,
+        protected CartReorderRestResponseBuilderInterface $cartReorderRestResponseBuilder,
+        protected CartReorderRestRequestValidatorInterface $cartReorderRestRequestValidator,
+        protected CartReorderRestRequestMapperInterface $cartReorderRestRequestMapper
     ) {
-        $this->cartReorderClient = $cartReorderClient;
-        $this->cartReorderRestResponseBuilder = $cartReorderRestResponseBuilder;
-        $this->cartReorderRestRequestValidator = $cartReorderRestRequestValidator;
-        $this->cartReorderRestRequestMapper = $cartReorderRestRequestMapper;
     }
 
     /**

@@ -8,17 +8,23 @@
 namespace Spryker\Zed\ProductOptionCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductOptionCartConnector\Business\Filter\InactiveProductOptionItemsFilter;
+use Spryker\Zed\ProductOptionCartConnector\Business\Filter\InactiveProductOptionItemsFilterInterface;
+use Spryker\Zed\ProductOptionCartConnector\Business\Messenger\ProductOptionMessenger;
+use Spryker\Zed\ProductOptionCartConnector\Business\Messenger\ProductOptionMessengerInterface;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionCartQuantity;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionValidator;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionValidatorInterface;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionValueExpander;
 use Spryker\Zed\ProductOptionCartConnector\Business\Validator\ProductOptionValuePriceValidator;
+use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToMessengerFacadeInterface;
 use Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorBusinessFactory getFactory()
  * @method \Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorConfig getConfig()
+ * @method \Spryker\Zed\ProductOptionCartConnector\Persistence\ProductOptionCartConnectorRepositoryInterface getRepository()
  */
 class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
@@ -82,5 +88,32 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getProductOptionFacade(),
             $this->getPriceFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Filter\InactiveProductOptionItemsFilterInterface
+     */
+    public function createInactiveProductOptionItemsFilter(): InactiveProductOptionItemsFilterInterface
+    {
+        return new InactiveProductOptionItemsFilter(
+            $this->getRepository(),
+            $this->createProductOptionMessenger(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Messenger\ProductOptionMessengerInterface
+     */
+    public function createProductOptionMessenger(): ProductOptionMessengerInterface
+    {
+        return new ProductOptionMessenger($this->getMessengerFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToMessengerFacadeInterface
+     */
+    public function getMessengerFacade(): ProductOptionCartConnectorToMessengerFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOptionCartConnectorDependencyProvider::FACADE_MESSENGER);
     }
 }

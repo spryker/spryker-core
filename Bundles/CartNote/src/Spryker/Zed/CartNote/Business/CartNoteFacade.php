@@ -28,14 +28,15 @@ class CartNoteFacade extends AbstractFacade implements CartNoteFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param bool|null $forceUpdate
      *
      * @return void
      */
-    public function saveOrderCartNote(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    public function saveOrderCartNote(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer, ?bool $forceUpdate = false): void
     {
         $this->getFactory()
             ->createCartNoteSaver()
-            ->saveCartNoteToOrder($quoteTransfer, $saveOrderTransfer);
+            ->saveCartNoteToOrder($quoteTransfer, $saveOrderTransfer, $forceUpdate);
     }
 
     /**

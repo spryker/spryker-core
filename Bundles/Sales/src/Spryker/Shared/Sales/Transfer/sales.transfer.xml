@@ -45,6 +45,8 @@
         <property name="orderReference" type="string"/>
         <property name="isOrderPlacedSuccessfully" type="bool"/>
         <property name="payment" type="Payment" deprecated="Use payments property instead."/>
+        <property name="quoteProcessFlow" type="QuoteProcessFlow" strict="true"/>
+        <property name="originalOrder" type="Order" strict="true"/>
     </transfer>
 
     <transfer name="Totals">
@@ -198,6 +200,7 @@
         <property name="salesOrderConfiguredBundle" type="SalesOrderConfiguredBundle"/>
         <property name="metadata" type="ItemMetadata"/>
         <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem"/>
+        <property name="originalSalesOrderItemGroupKey" type="string" strict="true"/>
     </transfer>
 
     <transfer name="ItemCollection">
@@ -332,6 +335,10 @@
     <transfer name="Customer">
         <property name="customerReference" type="string"/>
         <property name="idCustomer" type="int"/>
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="salutation" type="string"/>
     </transfer>
 
     <transfer name="Currency">
@@ -516,6 +523,51 @@
     <transfer name="Sort">
         <property name="field" type="string"/>
         <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="QuoteProcessFlow" strict="true">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="SalesExpenseCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderIds" type="int[]" singular="idSalesOrder"/>
+        <property name="types" type="string[]" singular="type"/>
+    </transfer>
+
+    <transfer name="SalesExpenseCollectionResponse" strict="true">
+        <property name="salesExpenses" type="Expense[]" singular="salesExpense"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemCollectionRequest" strict="true">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemCollectionResponse" strict="true">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="entityIdentifier" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
+    </transfer>
+
+    <transfer name="SalesExpenseCollection" strict="true">
+        <property name="expenses" type="Expense[]" singular="expense"/>
+    </transfer>
+
+    <transfer name="OmsOrderItemState" strict="true">
+    </transfer>
+
+    <transfer name="ErrorCollection" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
     </transfer>
 
 </transfers>

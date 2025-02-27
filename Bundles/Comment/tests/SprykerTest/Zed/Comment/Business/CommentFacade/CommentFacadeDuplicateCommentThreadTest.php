@@ -249,6 +249,33 @@ class CommentFacadeDuplicateCommentThreadTest extends Unit
     /**
      * @return void
      */
+    public function testShouldDeleteExistingCommentThreadDuringDuplication(): void
+    {
+        // Arrange
+        $firstCommentTransfer = (new CommentBuilder())->build()->setCustomer($this->customerTransfer);
+        $secondCommentTransfer = (new CommentBuilder())->build()->setCustomer($this->customerTransfer);
+
+        $firstCommentRequestTransfer = (new CommentRequestBuilder())->build()->setComment($firstCommentTransfer);
+        $secondCommentRequestTransfer = (new CommentRequestBuilder())->build()->setComment($secondCommentTransfer);
+
+        $this->tester->createComment($firstCommentRequestTransfer);
+        $this->tester->createComment($secondCommentRequestTransfer);
+
+        $commentFilterTransfer = (new CommentFilterTransfer())
+            ->setOwnerId($secondCommentRequestTransfer->getOwnerId())
+            ->setOwnerType($secondCommentRequestTransfer->getOwnerType());
+
+        // Act
+        $commentThreadResponseTransfer = $this->tester->getFacade()
+            ->duplicateCommentThread($commentFilterTransfer, $secondCommentRequestTransfer, true);
+
+        // Assert
+        $this->assertTrue($commentThreadResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
     public function testDuplicateCommentThreadCopyCommentsWithTagToNewOne(): void
     {
         // Arrange

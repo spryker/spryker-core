@@ -19,6 +19,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
+use Spryker\Shared\Kernel\StrategyResolverInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Sales\Business\StateMachineResolver\OrderStateMachineResolverInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
@@ -76,9 +77,9 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $salesOrderItemMapper;
 
     /**
-     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>
+     * @var \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>>
      */
-    protected $orderPostSavePlugins;
+    protected $orderPostSavePluginStrategyResolver;
 
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface
@@ -104,7 +105,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface> $orderExpanderPreSavePlugins
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
      * @param \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface $salesOrderItemMapper
-     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface> $orderPostSavePlugins
+     * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>> $orderPostSavePluginStrategyResolver
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface $storeFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Sales\Business\StateMachineResolver\OrderStateMachineResolverInterface $orderStateMachineResolver
@@ -118,7 +119,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $orderExpanderPreSavePlugins,
         SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
         SalesOrderItemMapperInterface $salesOrderItemMapper,
-        array $orderPostSavePlugins,
+        StrategyResolverInterface $orderPostSavePluginStrategyResolver,
         SalesToStoreInterface $storeFacade,
         SalesToLocaleInterface $localeFacade,
         OrderStateMachineResolverInterface $orderStateMachineResolver
@@ -131,7 +132,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $this->orderExpanderPreSavePlugins = $orderExpanderPreSavePlugins;
         $this->salesOrderSaverPluginExecutor = $salesOrderSaverPluginExecutor;
         $this->salesOrderItemMapper = $salesOrderItemMapper;
-        $this->orderPostSavePlugins = $orderPostSavePlugins;
+        $this->orderPostSavePluginStrategyResolver = $orderPostSavePluginStrategyResolver;
         $this->storeFacade = $storeFacade;
         $this->localeFacade = $localeFacade;
         $this->orderStateMachineResolver = $orderStateMachineResolver;
@@ -181,7 +182,10 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      */
     protected function executeOrderPostSavePlugins(SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer): SaveOrderTransfer
     {
-        foreach ($this->orderPostSavePlugins as $orderPostSavePlugin) {
+        $quoteProcessFlowName = $quoteTransfer->getQuoteProcessFlow()?->getNameOrFail();
+        $orderPostSavePlugins = $this->orderPostSavePluginStrategyResolver->get($quoteProcessFlowName);
+
+        foreach ($orderPostSavePlugins as $orderPostSavePlugin) {
             $saveOrderTransfer = $orderPostSavePlugin->execute($saveOrderTransfer, $quoteTransfer);
         }
 

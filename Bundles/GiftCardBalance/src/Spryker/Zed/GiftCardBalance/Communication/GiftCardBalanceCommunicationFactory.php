@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  * @method \Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GiftCardBalance\GiftCardBalanceConfig getConfig()
  * @method \Spryker\Zed\GiftCardBalance\Business\GiftCardBalanceFacadeInterface getFacade()
+ * @method \Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceEntityManagerInterface getEntityManager()
  */
 class GiftCardBalanceCommunicationFactory extends AbstractCommunicationFactory
 {

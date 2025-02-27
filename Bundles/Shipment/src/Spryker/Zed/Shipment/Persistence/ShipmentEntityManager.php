@@ -97,6 +97,19 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
      */
     public function updateFkShipmentForOrderItems(iterable $itemTransfers, ShipmentTransfer $shipmentTransfer): void
     {
+        $idSalesShipment = $shipmentTransfer->getIdSalesShipmentOrFail();
+
+        $this->updateFkSalesShipmentForSalesOrderItems($itemTransfers, $idSalesShipment);
+    }
+
+    /**
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param int|null $idSalesShipment
+     *
+     * @return void
+     */
+    public function updateFkSalesShipmentForSalesOrderItems(iterable $itemTransfers, ?int $idSalesShipment): void
+    {
         $salesOrderItemIds = [];
 
         foreach ($itemTransfers as $itemTransfer) {
@@ -110,7 +123,7 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
         $this->getFactory()
             ->createSalesOrderItemQuery()
             ->filterByIdSalesOrderItem_In($salesOrderItemIds)
-            ->update([static::COL_FK_SALES_SHIPMENT => $shipmentTransfer->getIdSalesShipmentOrFail()]);
+            ->update([static::COL_FK_SALES_SHIPMENT => $idSalesShipment]);
     }
 
     /**
@@ -255,5 +268,15 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
                 ->setFkShipmentMethod($idShipmentMethod)
                 ->save();
         }
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    public function deleteSalesShipmentsByIdSalesOrder(int $idSalesOrder): void
+    {
+        $this->getFactory()->createSalesShipmentQuery()->filterByFkSalesOrder($idSalesOrder)->delete();
     }
 }

@@ -63,4 +63,58 @@ class SalesConfigurableBundleEntityManager extends AbstractEntityManager impleme
 
         return $salesOrderConfiguredBundleItemTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer $salesOrderConfiguredBundleItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer
+     */
+    public function saveSalesOrderConfiguredBundleItemByFkSalesOrderItem(
+        SalesOrderConfiguredBundleItemTransfer $salesOrderConfiguredBundleItemTransfer
+    ): SalesOrderConfiguredBundleItemTransfer {
+        $salesOrderConfiguredBundleMapper = $this->getFactory()->createSalesOrderConfiguredBundleMapper();
+        $salesOrderConfiguredBundleItemEntity = $this->getFactory()
+            ->getSalesOrderConfiguredBundleItemPropelQuery()
+            ->filterByFkSalesOrderItem($salesOrderConfiguredBundleItemTransfer->getIdSalesOrderItemOrFail())
+            ->findOneOrCreate();
+
+        $salesOrderConfiguredBundleItemEntity = $salesOrderConfiguredBundleMapper
+            ->mapBundleItemTransferToBundleItemEntity(
+                $salesOrderConfiguredBundleItemTransfer,
+                $salesOrderConfiguredBundleItemEntity,
+            );
+
+        $salesOrderConfiguredBundleItemEntity->save();
+
+        return $salesOrderConfiguredBundleMapper->mapBundleItemEntityToBundleItemTransfer(
+            $salesOrderConfiguredBundleItemEntity,
+            $salesOrderConfiguredBundleItemTransfer,
+        );
+    }
+
+    /**
+     * @param list<int> $salesOrderConfiguredBundleIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderConfiguredBundlesByIds(array $salesOrderConfiguredBundleIds): void
+    {
+        $this->getFactory()
+            ->getSalesOrderConfiguredBundlePropelQuery()
+            ->filterByIdSalesOrderConfiguredBundle_In($salesOrderConfiguredBundleIds)
+            ->delete();
+    }
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderConfiguredBundleItemsBySalesOrderItemIds(array $salesOrderItemIds): void
+    {
+        $this->getFactory()
+            ->getSalesOrderConfiguredBundleItemPropelQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->delete();
+    }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesProductConnector\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
 
 interface ItemMetadataSaverInterface
 {
@@ -16,5 +17,14 @@ interface ItemMetadataSaverInterface
      *
      * @return void
      */
-    public function saveItemsMetadata(QuoteTransfer $quoteTransfer);
+    public function saveItemsMetadata(QuoteTransfer $quoteTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer $salesOrderItemCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function updateOrderItemMetadata(
+        SalesOrderItemCollectionResponseTransfer $salesOrderItemCollectionResponseTransfer
+    ): SalesOrderItemCollectionResponseTransfer;
 }

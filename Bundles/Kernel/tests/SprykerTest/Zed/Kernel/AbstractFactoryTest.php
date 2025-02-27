@@ -67,12 +67,35 @@ class AbstractFactoryTest extends Unit
      */
     public function testGetProvidedDependency(): void
     {
+        // Assign
         $container = new Container();
         $container->set(static::CONTAINER_KEY, static::CONTAINER_VALUE);
         $factory = new Factory();
-
         $factory->setContainer($container);
-        $this->assertSame(static::CONTAINER_VALUE, $factory->getProvidedDependency(static::CONTAINER_KEY));
+
+        // Act
+        $dependency = $factory->getProvidedDependency(static::CONTAINER_KEY);
+
+        // Assert
+        $this->assertSame(static::CONTAINER_VALUE, $dependency);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProvidedDependencyWithLazyFetch(): void
+    {
+        // Assign
+        $container = new Container();
+        $container->set(static::CONTAINER_KEY, static::CONTAINER_VALUE);
+        $factory = new Factory();
+        $factory->setContainer($container);
+
+        // Act
+        $wrappedDependency = $factory->getProvidedDependency(static::CONTAINER_KEY, $factory::LOADING_LAZY);
+
+        // Assert
+        $this->assertSame(static::CONTAINER_VALUE, $wrappedDependency());
     }
 
     /**

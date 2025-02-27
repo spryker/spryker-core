@@ -226,6 +226,7 @@
     <transfer name="Expense">
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
         <property name="idSalesExpense" type="int"/>
+        <property name="fkSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="CheckoutError">
@@ -311,6 +312,19 @@
         <property name="entity" type="string"/>
         <property name="scope" type="string"/>
         <property name="permissionMask" type="int"/>
+    </transfer>
+
+    <transfer name="SalesExpenseCollection" strict="true">
+        <property name="expenses" type="Expense[]" singular="expense"/>
+    </transfer>
+
+    <transfer name="SalesDiscountCollectionDeleteCriteria" strict="true">
+        <property name="salesExpenseIds" type="int[]" singular="idSalesExpense"/>
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
     </transfer>
 
 </transfers>

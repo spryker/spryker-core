@@ -10,6 +10,8 @@ namespace Spryker\Zed\SalesReclamation\Business;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
+use Generated\Shared\Transfer\SalesReclamationItemCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesReclamationItemCollectionResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -84,5 +86,22 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
     public function getReclamationById(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {
         return $this->getFactory()->createReclamationReader()->getReclamationById($reclamationTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesReclamationItemCollectionDeleteCriteriaTransfer $salesReclamationItemCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesReclamationItemCollectionResponseTransfer
+     */
+    public function deleteSalesReclamationItemCollection(
+        SalesReclamationItemCollectionDeleteCriteriaTransfer $salesReclamationItemCollectionDeleteCriteriaTransfer
+    ): SalesReclamationItemCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSalesReclamationItemDeleter()
+            ->deleteSalesReclamationItemCollection($salesReclamationItemCollectionDeleteCriteriaTransfer);
     }
 }

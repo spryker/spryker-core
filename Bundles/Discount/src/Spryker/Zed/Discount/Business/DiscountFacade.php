@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesDiscountCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -810,5 +811,60 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function updateDiscountWithValidation(DiscountConfiguratorTransfer $discountConfigurator): DiscountConfiguratorResponseTransfer
     {
         return $this->getFactory()->createDiscountUpdateAggregator()->updateDiscountWithValidation($discountConfigurator);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function replaceSalesOrderDiscountsByQuote(
+        QuoteTransfer $quoteTransfer,
+        SaveOrderTransfer $saveOrderTransfer
+    ): void {
+        $this->getFactory()
+            ->createSalesOrderDiscountUpdater()
+            ->replaceSalesOrderDiscountsByQuote($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesDiscountCollectionDeleteCriteriaTransfer $salesDiscountCollectionDeleteCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deleteSalesDiscounts(
+        SalesDiscountCollectionDeleteCriteriaTransfer $salesDiscountCollectionDeleteCriteriaTransfer
+    ): void {
+        $this->getFactory()
+            ->createSalesDiscountDeleter()
+            ->deleteSalesDiscounts($salesDiscountCollectionDeleteCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function releaseSalesOrderDiscountCodesByQuote(
+        QuoteTransfer $quoteTransfer,
+        SaveOrderTransfer $saveOrderTransfer
+    ): void {
+        $this->getFactory()
+            ->createSalesOrderDiscountCodeUpdater()
+            ->releaseSalesOrderDiscountCodesByQuote($quoteTransfer, $saveOrderTransfer);
     }
 }

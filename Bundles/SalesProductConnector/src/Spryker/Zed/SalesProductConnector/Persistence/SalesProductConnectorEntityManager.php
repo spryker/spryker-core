@@ -20,7 +20,7 @@ class SalesProductConnectorEntityManager extends AbstractEntityManager implement
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $supperAttributesGroupedByIdItem
+     * @param array<int, array<string, mixed>> $supperAttributesGroupedByIdItem
      *
      * @return void
      */
@@ -38,5 +38,47 @@ class SalesProductConnectorEntityManager extends AbstractEntityManager implement
         }
 
         $this->commit();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array<int, array<string, mixed>> $supperAttributesGroupedByIdItem
+     *
+     * @return void
+     */
+    public function saveItemsMetadataByFkSalesOrderItem(QuoteTransfer $quoteTransfer, array $supperAttributesGroupedByIdItem): void
+    {
+        $salesOrderItemMetadataMapper = $this->getFactory()->createSalesOrderItemMetadataMapper();
+
+        foreach ($quoteTransfer->getItems() as $item) {
+            $salesOrderItemMetadataEntity = $this->getFactory()
+                ->createProductMetadataQuery()
+                ->filterByFkSalesOrderItem($item->getIdSalesOrderItemOrFail())
+                ->findOneOrCreate();
+
+            $salesOrderItemMetadataEntity = $salesOrderItemMetadataMapper->mapItemTransferToSalesOrderItemMetadataEntity(
+                $item,
+                $supperAttributesGroupedByIdItem[$item->getIdSalesOrderItemOrFail()],
+                $salesOrderItemMetadataEntity,
+            );
+
+            $this->persist($salesOrderItemMetadataEntity);
+        }
+
+        $this->commit();
+    }
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderItemMetadataCollectionBySalesOrderItemIds(
+        array $salesOrderItemIds
+    ): void {
+        $this->getFactory()
+            ->createProductMetadataQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->delete();
     }
 }

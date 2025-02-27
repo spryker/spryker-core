@@ -318,4 +318,35 @@
         <property name="orderMatrices" type="OrderMatrix[]" singular="orderMatrix"/>
     </transfer>
 
+    <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="OmsOrderItemStateHistoryCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="OmsOrderItemStateHistoryCollectionResponse" strict="true">
+    </transfer>
+
+    <transfer name="OmsTransitionLogCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="OmsTransitionLogCollectionResponse" strict="true">
+    </transfer>
+
+    <transfer name="OmsEventTimeoutCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="OmsEventTimeoutCollectionResponse" strict="true">
+    </transfer>
+
+    <transfer name="OmsOrderItemState" strict="true">
+        <property name="idOmsOrderItemState" type="int"/>
+        <property name="name" type="string"/>
+        <property name="description" type="string"/>
+    </transfer>
+
 </transfers>

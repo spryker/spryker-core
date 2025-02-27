@@ -9,31 +9,22 @@ namespace Spryker\Client\CartReorder\Creator;
 
 use Generated\Shared\Transfer\CartReorderRequestTransfer;
 use Generated\Shared\Transfer\CartReorderResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartReorder\Dependency\Client\CartReorderToQuoteClientInterface;
 use Spryker\Client\CartReorder\Zed\CartReorderStubInterface;
 
 class CartReorderCreator implements CartReorderCreatorInterface
 {
     /**
-     * @var \Spryker\Client\CartReorder\Zed\CartReorderStubInterface
-     */
-    protected CartReorderStubInterface $cartReorderStub;
-
-    /**
-     * @var \Spryker\Client\CartReorder\Dependency\Client\CartReorderToQuoteClientInterface
-     */
-    protected CartReorderToQuoteClientInterface $quoteClient;
-
-    /**
      * @param \Spryker\Client\CartReorder\Zed\CartReorderStubInterface $cartReorderStub
      * @param \Spryker\Client\CartReorder\Dependency\Client\CartReorderToQuoteClientInterface $quoteClient
+     * @param list<\Spryker\Client\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderStrategyPluginInterface> $cartReorderQuoteProviderStrategyPlugins
      */
     public function __construct(
-        CartReorderStubInterface $cartReorderStub,
-        CartReorderToQuoteClientInterface $quoteClient
+        protected CartReorderStubInterface $cartReorderStub,
+        protected CartReorderToQuoteClientInterface $quoteClient,
+        protected array $cartReorderQuoteProviderStrategyPlugins
     ) {
-        $this->cartReorderStub = $cartReorderStub;
-        $this->quoteClient = $quoteClient;
     }
 
     /**
@@ -43,9 +34,9 @@ class CartReorderCreator implements CartReorderCreatorInterface
      */
     public function reorder(CartReorderRequestTransfer $cartReorderRequestTransfer): CartReorderResponseTransfer
     {
-        $quoteTransfer = $this->quoteClient->getQuote();
-
+        $quoteTransfer = $this->executeCartReorderQuoteProviderStrategyPlugins($cartReorderRequestTransfer);
         $cartReorderRequestTransfer->setQuote($quoteTransfer);
+
         $cartReorderResponseTransfer = $this->cartReorderStub->reorder($cartReorderRequestTransfer);
 
         if (!$cartReorderResponseTransfer->getErrors()->count()) {
@@ -53,5 +44,26 @@ class CartReorderCreator implements CartReorderCreatorInterface
         }
 
         return $cartReorderResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    protected function executeCartReorderQuoteProviderStrategyPlugins(
+        CartReorderRequestTransfer $cartReorderRequestTransfer
+    ): ?QuoteTransfer {
+        if ($cartReorderRequestTransfer->getQuote()) {
+            return $cartReorderRequestTransfer->getQuoteOrFail();
+        }
+
+        foreach ($this->cartReorderQuoteProviderStrategyPlugins as $cartReorderQuoteProviderStrategyPlugin) {
+            if ($cartReorderQuoteProviderStrategyPlugin->isApplicable($cartReorderRequestTransfer)) {
+                return $cartReorderQuoteProviderStrategyPlugin->execute($cartReorderRequestTransfer);
+            }
+        }
+
+        return null;
     }
 }

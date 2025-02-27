@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesReclamation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SalesReclamation\Business\Deleter\SalesReclamationItemDeleter;
+use Spryker\Zed\SalesReclamation\Business\Deleter\SalesReclamationItemDeleterInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationMapper;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationMapperInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationReader;
@@ -54,5 +56,13 @@ class SalesReclamationBusinessFactory extends AbstractBusinessFactory
     public function createReclamationMapper(): ReclamationMapperInterface
     {
         return new ReclamationMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReclamation\Business\Deleter\SalesReclamationItemDeleterInterface
+     */
+    public function createSalesReclamationItemDeleter(): SalesReclamationItemDeleterInterface
+    {
+        return new SalesReclamationItemDeleter($this->getEntityManager());
     }
 }

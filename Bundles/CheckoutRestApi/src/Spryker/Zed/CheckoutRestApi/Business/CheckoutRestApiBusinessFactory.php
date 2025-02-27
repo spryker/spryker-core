@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Business;
 
+use Spryker\Shared\CheckoutExtension\CheckoutExtensionContextsInterface;
+use Spryker\Shared\Kernel\StrategyResolver;
+use Spryker\Shared\Kernel\StrategyResolverInterface;
+use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReader;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\CheckoutDataReader;
@@ -72,8 +76,22 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
         return new CheckoutValidator(
             $this->createQuoteReader(),
             $this->getCartFacade(),
-            $this->getCheckoutDataValidatorPlugins(),
+            $this->createCheckoutDataValidatorPluginStrategyResolver(),
             $this->getReadCheckoutDataValidatorPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface>>
+     */
+    public function createCheckoutDataValidatorPluginStrategyResolver(): StrategyResolverInterface
+    {
+        return new StrategyResolver(
+            [
+                CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT => $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_DATA_VALIDATOR, static::LOADING_LAZY),
+                SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT => $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_DATA_VALIDATOR_FOR_ORDER_AMENDMENT, static::LOADING_LAZY),
+            ],
+            CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT,
         );
     }
 
@@ -176,14 +194,6 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     public function getQuoteMapperPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_QUOTE_MAPPER);
-    }
-
-    /**
-     * @return array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface>
-     */
-    public function getCheckoutDataValidatorPlugins(): array
-    {
-        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_DATA_VALIDATOR);
     }
 
     /**

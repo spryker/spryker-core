@@ -13,7 +13,7 @@ use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToGloss
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToLocaleFacadeBridge;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToMessengerFacadeBridge;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToMoneyFacadeBridge;
-use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToSalesFacadeBridge;
+use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToSalesFacadeAdapter;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToStoreFacadeBridge;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToTaxFacadeBridge;
 
@@ -217,7 +217,7 @@ class SalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProv
     protected function addSalesFacade(Container $container): Container
     {
         $container->set(static::FACADE_SALES, function (Container $container) {
-            return new SalesOrderThresholdToSalesFacadeBridge($container->getLocator()->sales()->facade());
+            return new SalesOrderThresholdToSalesFacadeAdapter($container->getLocator()->sales()->facade());
         });
 
         return $container;

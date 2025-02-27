@@ -22,6 +22,10 @@ use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeRemover;
 use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeRemoverInterface;
 use Spryker\Zed\GiftCard\Business\Checker\GiftCardItemsChecker;
 use Spryker\Zed\GiftCard\Business\Checker\GiftCardItemsCheckerInterface;
+use Spryker\Zed\GiftCard\Business\Deleter\PaymentGiftCardDeleter;
+use Spryker\Zed\GiftCard\Business\Deleter\PaymentGiftCardDeleterInterface;
+use Spryker\Zed\GiftCard\Business\Deleter\SalesOrderItemGiftCardDeleter;
+use Spryker\Zed\GiftCard\Business\Deleter\SalesOrderItemGiftCardDeleterInterface;
 use Spryker\Zed\GiftCard\Business\Discount\GiftCardDiscountableItemFilter;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGenerator;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCreator;
@@ -57,6 +61,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  * @method \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GiftCard\GiftCardConfig getConfig()
  * @method \Spryker\Zed\GiftCard\Persistence\GiftCardRepositoryInterface getRepository()
+ * @method \Spryker\Zed\GiftCard\Persistence\GiftCardEntityManagerInterface getEntityManager()
  */
 class GiftCardBusinessFactory extends AbstractBusinessFactory
 {
@@ -109,6 +114,8 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\GiftCard\Business\Writer\OrderGiftCardsRelationshipWriterInterface
      */
     public function createOrderGiftCardsRelationshipWriter(): OrderGiftCardsRelationshipWriterInterface
@@ -157,6 +164,24 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     public function createPaymentMapKeyBuilder(): PaymentMapKeyBuilderInterface
     {
         return new PaymentMapKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\Deleter\PaymentGiftCardDeleterInterface
+     */
+    public function createPaymentGiftCardDeleter(): PaymentGiftCardDeleterInterface
+    {
+        return new PaymentGiftCardDeleter(
+            $this->getEntityManager(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\Deleter\SalesOrderItemGiftCardDeleterInterface
+     */
+    public function createSalesOrderItemGiftCardDeleter(): SalesOrderItemGiftCardDeleterInterface
+    {
+        return new SalesOrderItemGiftCardDeleter($this->getEntityManager());
     }
 
     /**

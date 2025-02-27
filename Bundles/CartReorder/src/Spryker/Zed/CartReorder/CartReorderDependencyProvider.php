@@ -57,6 +57,11 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_CART_REORDER_VALIDATOR_FOR_ORDER_AMENDMENT = 'PLUGINS_CART_REORDER_VALIDATOR_FOR_ORDER_AMENDMENT';
+
+    /**
+     * @var string
+     */
     public const PLUGINS_CART_PRE_REORDER = 'PLUGINS_CART_PRE_REORDER';
 
     /**
@@ -88,6 +93,7 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartReorderQuoteProviderStrategyPlugins($container);
         $container = $this->addCartReorderOrderItemFilterPlugins($container);
         $container = $this->addCartReorderValidatorPlugins($container);
+        $container = $this->addCartReorderValidatorPluginsForOrderAmendment($container);
         $container = $this->addCartPreReorderPlugins($container);
         $container = $this->addCartReorderItemHydratorPlugins($container);
         $container = $this->addCartReorderPreAddToCartPlugins($container);
@@ -185,6 +191,20 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addCartReorderValidatorPluginsForOrderAmendment(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CART_REORDER_VALIDATOR_FOR_ORDER_AMENDMENT, function () {
+            return $this->getCartReorderValidatorPluginsForOrderAmendment();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addCartPreReorderPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_CART_PRE_REORDER, function () {
@@ -261,9 +281,17 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>>
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>
      */
     protected function getCartReorderValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>
+     */
+    protected function getCartReorderValidatorPluginsForOrderAmendment(): array
     {
         return [];
     }

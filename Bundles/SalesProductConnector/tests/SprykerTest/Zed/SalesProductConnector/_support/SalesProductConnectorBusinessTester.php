@@ -16,7 +16,10 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadataQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\SalesProductConnector\Communication\Plugin\Checkout\ItemMetadataSaverPlugin;
 
 /**
@@ -89,6 +92,41 @@ class SalesProductConnectorBusinessTester extends Actor
     public function createSaveOrder(QuoteTransfer $quoteTransfer, string $stateMachineProcessName): SaveOrderTransfer
     {
         return $this->haveOrderFromQuote($quoteTransfer, $stateMachineProcessName, [new ItemMetadataSaverPlugin()]);
+    }
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata>
+     */
+    public function getSalesOrderItemMetadataEntities(array $salesOrderItemIds): ObjectCollection
+    {
+        return $this->getSalesOrderItemMetadataQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->find();
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return int
+     */
+    public function haveSalesOrderItemMetaData(int $idSalesOrderItem): int
+    {
+        $salesOrderItemMetadataEntity = (new SpySalesOrderItemMetadata())
+            ->setFkSalesOrderItem($idSalesOrderItem)
+            ->setSuperAttributes('[]');
+        $salesOrderItemMetadataEntity->save();
+
+        return $salesOrderItemMetadataEntity->getIdSalesOrderItemMetadata();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadataQuery
+     */
+    public function getSalesOrderItemMetadataQuery(): SpySalesOrderItemMetadataQuery
+    {
+        return SpySalesOrderItemMetadataQuery::create();
     }
 
     /**

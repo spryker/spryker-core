@@ -21,7 +21,7 @@ class CartNoteCartPreReorderPlugin extends AbstractPlugin implements CartPreReor
      * {@inheritDoc}
      * - Requires `CartReorderTransfer.order` to be set.
      * - Requires `CartReorderTransfer.quote` to be set.
-     * - Sets `CartReorderTransfer.order.cartNote` to `CartReorderTransfer.quote.cartNote` if it is provided.
+     * - Sets `CartReorderTransfer.order.cartNote` to `CartReorderTransfer.quote.cartNote`.
      * - Returns `CartReorderTransfer` with updated quote.
      *
      * @api

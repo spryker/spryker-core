@@ -49,17 +49,19 @@ class SalesOrderItemMetadataMapper
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array $superAttributes
+     * @param array<string, mixed> $superAttributes
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata|null $salesOrderItemMetadataEntity
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata
      */
     public function mapItemTransferToSalesOrderItemMetadataEntity(
         ItemTransfer $itemTransfer,
-        array $superAttributes
+        array $superAttributes,
+        ?SpySalesOrderItemMetadata $salesOrderItemMetadataEntity = null
     ): SpySalesOrderItemMetadata {
         $image = $this->determineImage($itemTransfer);
 
-        $entity = new SpySalesOrderItemMetadata();
+        $entity = $salesOrderItemMetadataEntity ?? new SpySalesOrderItemMetadata();
         $entity->setSuperAttributes($this->utilEncodingService->encodeJson($superAttributes));
         $entity->setImage($image);
         $entity->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());

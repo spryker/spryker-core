@@ -28,6 +28,7 @@ class CartReorderFactory extends AbstractFactory
         return new CartReorderCreator(
             $this->createCartReorderStub(),
             $this->getQuoteClient(),
+            $this->getCartReorderQuoteProviderStrategyPlugins(),
         );
     }
 
@@ -55,5 +56,13 @@ class CartReorderFactory extends AbstractFactory
     public function getZedRequestClient(): CartReorderToZedRequestClientInterface
     {
         return $this->getProvidedDependency(CartReorderDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return list<\Spryker\Client\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderStrategyPluginInterface>
+     */
+    public function getCartReorderQuoteProviderStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(CartReorderDependencyProvider::PLUGINS_CART_REORDER_QUOTE_PROVIDER_STRATEGY);
     }
 }

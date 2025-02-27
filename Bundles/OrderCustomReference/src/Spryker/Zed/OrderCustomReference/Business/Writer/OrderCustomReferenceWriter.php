@@ -52,16 +52,20 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param bool|null $forceUpdate
      *
      * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
      */
-    public function saveOrderCustomReferenceFromQuote(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): OrderCustomReferenceResponseTransfer
-    {
-        if ($quoteTransfer->getOrderCustomReference() && $saveOrderTransfer->getIdSalesOrder()) {
+    public function saveOrderCustomReferenceFromQuote(
+        QuoteTransfer $quoteTransfer,
+        SaveOrderTransfer $saveOrderTransfer,
+        ?bool $forceUpdate = false
+    ): OrderCustomReferenceResponseTransfer {
+        if (($quoteTransfer->getOrderCustomReference() || $forceUpdate) && $saveOrderTransfer->getIdSalesOrder()) {
             return $this->orderCustomReferenceEntityManager
                 ->saveOrderCustomReference(
                     $saveOrderTransfer->getIdSalesOrder(),
-                    $quoteTransfer->getOrderCustomReference(),
+                    (string)$quoteTransfer->getOrderCustomReference(),
                 );
         }
 

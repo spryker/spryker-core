@@ -27,7 +27,11 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\Sales\Persistence\SpySalesShipment;
+use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Price\PriceConfig;
@@ -405,11 +409,82 @@ class ShipmentBusinessTester extends Actor
     }
 
     /**
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    public function setShipmentToSalesOrder(int $idSalesOrder): void
+    {
+        $shipmentTransfer = $this->haveShipment($idSalesOrder);
+        $this->updateSalesOrderItemsWithIdSalesShipmentForOrder(
+            $idSalesOrder,
+            $shipmentTransfer->getIdSalesShipmentOrFail(),
+        );
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem|null
+     */
+    public function findSalesOrderItemEntity(int $idSalesOrder): ?SpySalesOrderItem
+    {
+        return $this->getSalesOrderItemQuery()->filterByFkSalesOrder($idSalesOrder)->findOne();
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipment|null
+     */
+    public function findSalesShipmentEntity(int $idSalesOrder): ?SpySalesShipment
+    {
+        return $this->getSalesShipmentQuery()->filterByFkSalesOrder($idSalesOrder)->findOne();
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return array<string, \Generated\Shared\Transfer\ExpenseTransfer>
+     */
+    public function getOrderSalesExpensesIndexedByType(int $idSalesOrder): array
+    {
+        $expenseTransfers = [];
+        $salesExpenseEntities = $this->getSalesExpenseQuery()->filterByFkSalesOrder($idSalesOrder)->find();
+
+        foreach ($salesExpenseEntities as $salesExpenseEntity) {
+            $expenseTransfer = (new ExpenseTransfer())->fromArray($salesExpenseEntity->toArray(), true);
+            $expenseTransfer->setSumPrice($salesExpenseEntity->getPrice());
+            $expenseTransfer->setSumGrossPrice($salesExpenseEntity->getGrossPrice());
+
+            $expenseTransfers[$expenseTransfer->getTypeOrFail()] = $expenseTransfer;
+        }
+
+        return $expenseTransfers;
+    }
+
+    /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     protected function getSalesOrderItemQuery(): SpySalesOrderItemQuery
     {
         return SpySalesOrderItemQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
+     */
+    protected function getSalesShipmentQuery(): SpySalesShipmentQuery
+    {
+        return SpySalesShipmentQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
+     */
+    protected function getSalesExpenseQuery(): SpySalesExpenseQuery
+    {
+        return SpySalesExpenseQuery::create();
     }
 
     /**

@@ -10,6 +10,9 @@ namespace Spryker\Zed\GiftCard\Business\Writer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface OrderGiftCardsRelationshipWriterInterface
 {
     /**

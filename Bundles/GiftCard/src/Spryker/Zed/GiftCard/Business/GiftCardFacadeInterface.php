@@ -14,9 +14,12 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\PaymentGiftCardCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemGiftCardCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderItemGiftCardCollectionResponseTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
@@ -134,6 +137,8 @@ interface GiftCardFacadeInterface
      * - Executes GiftCardPaymentSaverPluginInterface plugin stack.
      *
      * @api
+     *
+     * @deprecated Partially replaced by {@link \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface::createGiftCardPaymentsFromQuote()}.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
@@ -341,4 +346,54 @@ interface GiftCardFacadeInterface
      * @return string
      */
     public function buildPaymentMapKey(PaymentTransfer $paymentTransfer): string;
+
+    /**
+     * Specification:
+     * - Iterates over `QuoteTransfer.payments` and saves gift card related payments into the `spy_payment_gift_card` DB table.
+     * - Does not save a payment when `PaymentTransfer.giftCard` is not set.
+     * - Does not save a payment when `PaymentTransfer.amount` is not set.
+     * - Executes a stack of {@link \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface} plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function createGiftCardPaymentsFromQuote(
+        QuoteTransfer $quoteTransfer,
+        SaveOrderTransfer $saveOrderTransfer
+    ): void;
+
+    /**
+     * Specification:
+     * - Expects `PaymentGiftCardCollectionDeleteCriteriaTransfer.salesPaymentIds` to be provided.
+     * - Removes payment gift card entities.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentGiftCardCollectionDeleteCriteriaTransfer $paymentGiftCardCollectionDeleteCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deletePaymentGiftCardCollection(
+        PaymentGiftCardCollectionDeleteCriteriaTransfer $paymentGiftCardCollectionDeleteCriteriaTransfer
+    ): void;
+
+    /**
+     * Specification:
+     * - Uses `SalesOrderItemGiftCardCollectionDeleteCriteriaTransfer.salesOrderItemIds` to filter sales order item gift card entities by the sales order item IDs.
+     * - Deletes found by criteria sales order item gift card entities.
+     * - Does nothing if no criteria properties are set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemGiftCardCollectionDeleteCriteriaTransfer $salesOrderItemGiftCardCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemGiftCardCollectionResponseTransfer
+     */
+    public function deleteSalesOrderItemGiftCardCollection(
+        SalesOrderItemGiftCardCollectionDeleteCriteriaTransfer $salesOrderItemGiftCardCollectionDeleteCriteriaTransfer
+    ): SalesOrderItemGiftCardCollectionResponseTransfer;
 }

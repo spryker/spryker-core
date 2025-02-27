@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesProductConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SalesProductConnector\Business\Deleter\SalesOrderItemMetadataDeleter;
+use Spryker\Zed\SalesProductConnector\Business\Deleter\SalesOrderItemMetadataDeleterInterface;
 use Spryker\Zed\SalesProductConnector\Business\Expander\ItemMetadataExpander;
 use Spryker\Zed\SalesProductConnector\Business\Expander\ItemMetadataExpanderInterface;
 use Spryker\Zed\SalesProductConnector\Business\Expander\OrderExpander;
@@ -18,6 +20,7 @@ use Spryker\Zed\SalesProductConnector\Business\Expander\ProductIdExpander;
 use Spryker\Zed\SalesProductConnector\Business\Expander\ProductIdExpanderInterface;
 use Spryker\Zed\SalesProductConnector\Business\Model\ItemMetadataHydrator;
 use Spryker\Zed\SalesProductConnector\Business\Model\ItemMetadataSaver;
+use Spryker\Zed\SalesProductConnector\Business\Model\ItemMetadataSaverInterface;
 use Spryker\Zed\SalesProductConnector\Business\Model\ProductIdHydrator;
 use Spryker\Zed\SalesProductConnector\Business\Reader\ProductAbstractIdsRefreshReader;
 use Spryker\Zed\SalesProductConnector\Business\Reader\ProductAbstractIdsRefreshReaderInterface;
@@ -34,10 +37,9 @@ class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SalesProductConnector\Business\Model\ItemMetadataSaverInterface
      */
-    public function createItemMetadataSaver()
+    public function createItemMetadataSaver(): ItemMetadataSaverInterface
     {
         return new ItemMetadataSaver(
-            $this->getUtilEncodingService(),
             $this->getEntityManager(),
             $this->getRepository(),
         );
@@ -116,6 +118,14 @@ class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getConfig(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesProductConnector\Business\Deleter\SalesOrderItemMetadataDeleterInterface
+     */
+    public function createSalesOrderItemMetadataDeleter(): SalesOrderItemMetadataDeleterInterface
+    {
+        return new SalesOrderItemMetadataDeleter($this->getEntityManager());
     }
 
     /**

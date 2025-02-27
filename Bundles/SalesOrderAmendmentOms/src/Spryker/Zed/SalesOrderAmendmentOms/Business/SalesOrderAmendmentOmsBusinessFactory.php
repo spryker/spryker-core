@@ -12,6 +12,8 @@ use Spryker\Zed\SalesOrderAmendmentOms\Business\Expander\OrderExpander;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Expander\OrderExpanderInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Processor\OrderAmendmentProcessor;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Processor\OrderAmendmentProcessorInterface;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OmsOrderItemStateReader;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OmsOrderItemStateReaderInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OrderReader;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OrderReaderInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Triggerer\OmsEventTriggerer;
@@ -96,6 +98,17 @@ class SalesOrderAmendmentOmsBusinessFactory extends AbstractBusinessFactory
     public function createOrderExpander(): OrderExpanderInterface
     {
         return new OrderExpander($this->createOrderValidator());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OmsOrderItemStateReaderInterface
+     */
+    public function createOmsOrderItemStateReader(): OmsOrderItemStateReaderInterface
+    {
+        return new OmsOrderItemStateReader(
+            $this->getOmsFacade(),
+            $this->getConfig(),
+        );
     }
 
     /**

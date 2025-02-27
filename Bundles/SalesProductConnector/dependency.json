@@ -1,5 +1,5 @@
 {
     "include": {
-        "spryker/transfer": "Provides transfer objects decimal property type functionality."
+        "spryker/transfer": "Provides transfer objects definition with strict types."
     }
 }

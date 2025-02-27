@@ -8,15 +8,20 @@
         "spryker/cart-note-extension": "^1.0.0",
         "spryker/cart-reorder-extension": "^1.0.0",
         "spryker/checkout-extension": "^1.0.0",
-        "spryker/kernel": "^3.33.0",
+        "spryker/kernel": "^3.76.0",
         "spryker/quote": "^2.0.0",
         "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0",
+        "spryker/sales-order-amendment-extension": "^1.1.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.27.0",
         "spryker/zed-request": "^3.0.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
+        "spryker/oms": "*",
+        "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

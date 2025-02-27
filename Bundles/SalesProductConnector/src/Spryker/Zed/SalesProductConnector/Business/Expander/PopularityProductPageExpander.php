@@ -44,7 +44,11 @@ class PopularityProductPageExpander implements PopularityProductPageExpanderInte
     public function expandProductPageLoadTransferWithPopularityData(
         ProductPageLoadTransfer $productPageLoadTransfer
     ): ProductPageLoadTransfer {
-        $productAbstractIds = $productPageLoadTransfer->getProductAbstractIds();
+        $productAbstractIds = array_filter($productPageLoadTransfer->getProductAbstractIds());
+        if (!$productAbstractIds) {
+            return $productPageLoadTransfer;
+        }
+
         $interval = $this->salesProductConnectorConfig->getPopularityDaysInterval();
 
         $popularityByIdProductAbstractAndInterval = $this->salesProductConnectorRepository

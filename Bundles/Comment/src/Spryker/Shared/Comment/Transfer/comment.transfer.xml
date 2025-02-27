@@ -94,4 +94,17 @@
         <property name="customerIds" type="int[]" singular="idCustomer" strict="true"/>
     </transfer>
 
+    <transfer name="CartReorderRequest" strict="true">
+        <property name="isAmendment" type="bool"/>
+    </transfer>
+
+    <transfer name="CartReorder" strict="true">
+        <property name="order" type="Order"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="commentThread" type="CommentThread"/>
+    </transfer>
+
 </transfers>

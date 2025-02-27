@@ -10,6 +10,7 @@ namespace Spryker\Zed\SalesOrderAmendment\Business;
 use Generated\Shared\Transfer\CartReorderResponseTransfer;
 use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentCollectionTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentCriteriaTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentDeleteCriteriaTransfer;
@@ -21,6 +22,7 @@ use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCriteriaTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentResponseTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 
 interface SalesOrderAmendmentFacadeInterface
 {
@@ -100,6 +102,8 @@ interface SalesOrderAmendmentFacadeInterface
      * - Requires `SalesOrderAmendmentQuoteCollectionRequestTransfer.salesOrderAmendmentQuotes.customerReference` to be set.
      * - Requires `SalesOrderAmendmentQuoteCollectionRequestTransfer.salesOrderAmendmentQuotes.amendmentOrderReference` to be set.
      * - Uses transaction for the operation.
+     * - Filters quote fields based on the `SalesOrderAmendmentConfig::getQuoteFieldsAllowedForSaving()` configuration.
+     * - Filters quote item fields based on the `SalesOrderAmendmentConfig::getQuoteItemFieldsAllowedForSaving()` configuration.
      * - Returns `SalesOrderAmendmentQuoteCollectionResponseTransfer` with persisted sales order amendment quotes and errors if any occurred.
      *
      * @api
@@ -169,7 +173,7 @@ interface SalesOrderAmendmentFacadeInterface
     /**
      * Specification:
      * - Requires `OrderTransfer.orderReference` to be set.
-     * - Retrieves sales order amendment entity by order reference from Persistence.
+     * - Retrieves the most recent sales order amendment entity by order reference from Persistence, sorted in descending order by the `created_at` column.
      * - Expands `OrderTransfer.salesOrderAmendment` with found sales order amendment.
      *
      * @api
@@ -200,4 +204,39 @@ interface SalesOrderAmendmentFacadeInterface
         CartReorderTransfer $cartReorderTransfer,
         CartReorderResponseTransfer $cartReorderResponseTransfer
     ): CartReorderResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `QuoteTransfer.amendmentOrderReference` to be set.
+     * - Requires `QuoteTransfer.customerReference` to be set.
+     * - Retrieves order entity by `QuoteTransfer.amendmentOrderReference` from Persistence.
+     * - Sets `QuoteTransfer.originalOrder` with found order entity.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithOriginalOrder(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Requires `QuoteTransfer.originalOrder` to be set.
+     * - Obtains order from `QuoteTransfer.originalOrder`, compares the items with the provided quote items and replaces the items if they differ.
+     * - Executes a stack of {@link \Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentItemCollectorStrategyPluginInterface} plugins
+     * to identify a strategy to divide order items into groups to create/update/delete/skip.
+     * - Uses default strategy if no applicable strategy is found.
+     * - Uses {@link \Spryker\Zed\Sales\Business\SalesFacadeInterface::createSalesOrderItemCollectionByQuote()} to create new order items.
+     * - Uses {@link \Spryker\Zed\Sales\Business\SalesFacadeInterface::updateSalesOrderItemCollectionByQuote()} to update existing order items.
+     * - Uses {@link \Spryker\Zed\Sales\Business\SalesFacadeInterface::deleteSalesOrderItemCollection()} to delete order items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function replaceSalesOrderItems(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
 }

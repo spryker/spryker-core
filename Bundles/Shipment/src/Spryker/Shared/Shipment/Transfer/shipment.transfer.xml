@@ -336,4 +336,17 @@
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
     </transfer>
 
+    <transfer name="SalesExpenseCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderIds" type="int[]" singular="idSalesOrder"/>
+        <property name="types" type="string[]" singular="type"/>
+    </transfer>
+
+    <transfer name="SalesExpenseCollectionResponse" strict="true">
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentItemCollection" strict="true">
+        <property name="itemsToUpdate" type="Item[]" singular="itemToUpdate"/>
+        <property name="itemsToSkip" type="Item[]" singular="itemToSkip"/>
+    </transfer>
+
 </transfers>

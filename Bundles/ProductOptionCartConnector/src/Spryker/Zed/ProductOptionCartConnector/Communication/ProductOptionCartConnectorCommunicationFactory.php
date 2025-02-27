@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 /**
  * @method \Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorConfig getConfig()
  * @method \Spryker\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductOptionCartConnector\Persistence\ProductOptionCartConnectorRepositoryInterface getRepository()
  */
 class ProductOptionCartConnectorCommunicationFactory extends AbstractCommunicationFactory
 {

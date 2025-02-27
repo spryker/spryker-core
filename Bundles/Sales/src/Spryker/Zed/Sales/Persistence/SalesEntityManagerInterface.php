@@ -76,4 +76,25 @@ interface SalesEntityManagerInterface
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
     public function saveSalesOrderItems(SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer): SpySalesOrderItemEntityTransfer;
+
+    /**
+     * @param int $idSalesOrderAddress
+     *
+     * @return void
+     */
+    public function unsetSalesOrderShippingAddress(int $idSalesOrderAddress): void;
+
+    /**
+     * @param list<int> $salesExpenseIds
+     *
+     * @return void
+     */
+    public function deleteSalesExpensesBySalesExpenseIds(array $salesExpenseIds): void;
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderItemsBySalesOrderItemIds(array $salesOrderItemIds): void;
 }

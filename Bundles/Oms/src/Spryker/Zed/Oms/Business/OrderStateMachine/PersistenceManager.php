@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use Generated\Shared\Transfer\OmsOrderItemStateTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
@@ -40,6 +41,18 @@ class PersistenceManager implements PersistenceManagerInterface
     public function __construct(OmsConfig $omsConfig)
     {
         $this->omsConfig = $omsConfig;
+    }
+
+    /**
+     * @param string $stateName
+     *
+     * @return \Generated\Shared\Transfer\OmsOrderItemStateTransfer
+     */
+    public function getOmsOrderItemState(string $stateName): OmsOrderItemStateTransfer
+    {
+        $stateEntity = $this->getStateEntity($stateName);
+
+        return (new OmsOrderItemStateTransfer())->fromArray($stateEntity->toArray(), true);
     }
 
     /**

@@ -178,6 +178,32 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
     }
 
     /**
+     * @param list<int> $salesDiscountIds
+     *
+     * @return void
+     */
+    public function deleteSalesDiscountsBySalesDiscountIds(array $salesDiscountIds): void
+    {
+        $this->getFactory()
+            ->createSalesDiscountQuery()
+            ->filterByIdSalesDiscount_In($salesDiscountIds)
+            ->delete();
+    }
+
+    /**
+     * @param list<int> $salesDiscountIds
+     *
+     * @return void
+     */
+    public function deleteSalesDiscountCodesBySalesDiscountIds(array $salesDiscountIds): void
+    {
+        $this->getFactory()
+            ->createSalesDiscountCodeQuery()
+            ->filterByFkSalesDiscount_In($salesDiscountIds)
+            ->delete();
+    }
+
+    /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *

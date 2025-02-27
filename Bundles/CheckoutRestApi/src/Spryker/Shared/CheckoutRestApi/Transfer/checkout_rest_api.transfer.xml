@@ -208,6 +208,11 @@
         <property name="customerReference" type="string"/>
         <property name="store" type="Store"/>
         <property name="skipRecalculation" type="bool" strict="true"/>
+        <property name="quoteProcessFlow" type="QuoteProcessFlow" strict="true"/>
+    </transfer>
+
+    <transfer name="QuoteProcessFlow" strict="true">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Item">

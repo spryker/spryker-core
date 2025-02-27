@@ -106,6 +106,7 @@ interface CommentFacadeInterface
     /**
      * Specification:
      * - Expects owner id and type to be provided.
+     * - Removes found comment thread when `$forceDelete` is true.
      * - Creates and returns a copy of the provided comment thread.
      * - Keeps only those comments which match the provided CommentFilter criteria.
      * - Returns 'isSuccessful=true' with the up to date comment thread.
@@ -115,12 +116,14 @@ interface CommentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CommentFilterTransfer $commentFilterTransfer
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     * @param bool|null $forceDelete
      *
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
     public function duplicateCommentThread(
         CommentFilterTransfer $commentFilterTransfer,
-        CommentRequestTransfer $commentRequestTransfer
+        CommentRequestTransfer $commentRequestTransfer,
+        ?bool $forceDelete = false
     ): CommentThreadResponseTransfer;
 
     /**

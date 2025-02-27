@@ -23,9 +23,12 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemOptionQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductOption\Communication\Plugin\Checkout\ProductOptionOrderSaverPlugin;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeBridge;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
@@ -226,6 +229,40 @@ class ProductOptionBusinessTester extends Actor
     }
 
     /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption
+     */
+    public function createSalesOrderItemOption(int $idSalesOrderItem): SpySalesOrderItemOption
+    {
+        $salesOrderItemOptionEntity = (new SpySalesOrderItemOption())
+            ->setFkSalesOrderItem($idSalesOrderItem)
+            ->setGroupName('test group name')
+            ->setSku('test sku')
+            ->setTaxRate(0)
+            ->setValue('test value');
+        $salesOrderItemOptionEntity->save();
+
+        return $salesOrderItemOptionEntity;
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureSalesOrderItemOptionTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getSalesOrderItemOptionQuery());
+    }
+
+    /**
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItemOption>
+     */
+    public function getSalesOrderItemOptionEntities(): ObjectCollection
+    {
+        return $this->getSalesOrderItemOptionQuery()->find();
+    }
+
+    /**
      * @param string $stateMachineProcessName
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -263,7 +300,6 @@ class ProductOptionBusinessTester extends Actor
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * ˝
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
@@ -293,5 +329,13 @@ class ProductOptionBusinessTester extends Actor
             ->setTaxRate(19.0);
 
         return $productOptionTransfer;
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemOptionQuery
+     */
+    protected function getSalesOrderItemOptionQuery(): SpySalesOrderItemOptionQuery
+    {
+        return SpySalesOrderItemOptionQuery::create();
     }
 }

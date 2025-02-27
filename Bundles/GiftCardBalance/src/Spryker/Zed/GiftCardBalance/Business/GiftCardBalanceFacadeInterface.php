@@ -8,6 +8,7 @@
 namespace Spryker\Zed\GiftCardBalance\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\GiftCardBalanceLogCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 
@@ -52,4 +53,19 @@ interface GiftCardBalanceFacadeInterface
      * @return void
      */
     public function saveTransactionLog(PaymentTransfer $paymentTransfer, CheckoutResponseTransfer $checkoutResponse);
+
+    /**
+     * Specification:
+     * - Expects `GiftCardBalanceLogCollectionDeleteCriteriaTransfer.salesOrderIds` to be provided.
+     * - Removes gift card balance log entities.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\GiftCardBalanceLogCollectionDeleteCriteriaTransfer $giftCardBalanceLogCollectionDeleteCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deleteGiftCardBalanceLogCollection(
+        GiftCardBalanceLogCollectionDeleteCriteriaTransfer $giftCardBalanceLogCollectionDeleteCriteriaTransfer
+    ): void;
 }

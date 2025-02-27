@@ -13,8 +13,11 @@ use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\OrderListRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
@@ -26,8 +29,14 @@ use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Oms\Persistence\Base\SpyOmsOrderItemState;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Spryker\Shared\Price\PriceMode;
@@ -227,10 +236,173 @@ class SalesBusinessTester extends Actor
     }
 
     /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrderByIdSalesOrder(int $idSalesOrder): OrderTransfer
+    {
+        $salesOrderEntity = $this->getSalesOrderQuery()
+            ->setModelAlias('order')
+            ->innerJoinWith('order.BillingAddress billingAddress')
+            ->leftJoinWith('order.ShippingAddress shippingAddress')
+            ->filterByIdSalesOrder($idSalesOrder)
+            ->findOne();
+
+        $orderTransfer = (new OrderTransfer())->fromArray($salesOrderEntity->toArray(), true);
+        $orderTransfer->setBillingAddress(
+            (new AddressTransfer())->fromArray($salesOrderEntity->getBillingAddress()->toArray(), true),
+        );
+        if ($salesOrderEntity->getShippingAddress() !== null) {
+            $orderTransfer->setShippingAddress(
+                (new AddressTransfer())->fromArray($salesOrderEntity->getShippingAddress()->toArray(), true),
+            );
+        }
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param int $idSalesOrderAddress
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress|null
+     */
+    public function findSalesOrderAddressEntityById(int $idSalesOrderAddress): ?SpySalesOrderAddress
+    {
+        return $this->getSalesOrderAddressQuery()
+            ->filterByIdSalesOrderAddress($idSalesOrderAddress)
+            ->findOne();
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem|null
+     */
+    public function findSalesOrderItemEntityById(int $idSalesOrderItem): ?SpySalesOrderItem
+    {
+        return $this->getSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem($idSalesOrderItem)
+            ->findOne();
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem|null
+     */
+    public function findSalesOrderEntityById(int $idSalesOrder): ?SpySalesOrder
+    {
+        return $this->getSalesOrderQuery()
+            ->filterByIdSalesOrder($idSalesOrder)
+            ->findOne();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureSalesExpenseTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getSalesExpenseQuery());
+    }
+
+    /**
+     * @return list<\Generated\Shared\Transfer\ExpenseTransfer>
+     */
+    public function getSalesExpenses(): array
+    {
+        $expenseTransfers = [];
+        $salesExpenseEntities = $this->getSalesExpenseQuery()->orderByIdSalesExpense()->find();
+
+        foreach ($salesExpenseEntities as $salesExpenseEntity) {
+            $expenseTransfers[] = (new ExpenseTransfer())->fromArray($salesExpenseEntity->toArray(), true);
+        }
+
+        return $expenseTransfers;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
+     *
+     * @return list<int>
+     */
+    public function extractSalesExpenseIds(array $expenseTransfers): array
+    {
+        $salesExpenseIds = [];
+        foreach ($expenseTransfers as $expenseTransfer) {
+            $salesExpenseIds[] = $expenseTransfer->getIdSalesExpenseOrFail();
+        }
+
+        return $salesExpenseIds;
+    }
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return list<\Generated\Shared\Transfer\ItemTransfer>
+     */
+    public function getSalesOrderItems(array $salesOrderItemIds): array
+    {
+        $salesOrderItemEntities = $this->getSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem_In($salesOrderItemIds)
+            ->find();
+
+        $itemTransfers = [];
+
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
+            $itemTransfers[] = (new ItemTransfer())->fromArray($salesOrderItemEntity->toArray(), true);
+        }
+
+        return $itemTransfers;
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return void
+     */
+    public function clearSalesOrderItemOmsHistory(int $idSalesOrderItem): void
+    {
+        $this->getOmsOrderItemStateHistoryQuery()->findByFkSalesOrderItem($idSalesOrderItem)->delete();
+    }
+
+    /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     protected function getSalesOrderQuery(): SpySalesOrderQuery
     {
         return SpySalesOrderQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery
+     */
+    protected function getSalesOrderAddressQuery(): SpySalesOrderAddressQuery
+    {
+        return SpySalesOrderAddressQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function getSalesOrderItemQuery(): SpySalesOrderItemQuery
+    {
+        return SpySalesOrderItemQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
+     */
+    protected function getSalesExpenseQuery(): SpySalesExpenseQuery
+    {
+        return SpySalesExpenseQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery
+     */
+    protected function getOmsOrderItemStateHistoryQuery(): SpyOmsOrderItemStateHistoryQuery
+    {
+        return SpyOmsOrderItemStateHistoryQuery::create();
     }
 }

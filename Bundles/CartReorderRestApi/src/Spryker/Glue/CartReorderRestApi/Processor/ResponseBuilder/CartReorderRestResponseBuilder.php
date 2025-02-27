@@ -18,33 +18,15 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 class CartReorderRestResponseBuilder implements CartReorderRestResponseBuilderInterface
 {
     /**
-     * @var \Spryker\Glue\CartReorderRestApi\Dependency\Glue\CartReorderRestApiToCartsRestApiResourceInterface
-     */
-    protected CartReorderRestApiToCartsRestApiResourceInterface $cartsRestApiResource;
-
-    /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected RestResourceBuilderInterface $restResourceBuilder;
-
-    /**
-     * @var \Spryker\Glue\CartReorderRestApi\Processor\Mapper\CartReorderRestErrorMapperInterface
-     */
-    protected CartReorderRestErrorMapperInterface $cartReorderRestErrorMapper;
-
-    /**
      * @param \Spryker\Glue\CartReorderRestApi\Dependency\Glue\CartReorderRestApiToCartsRestApiResourceInterface $cartsRestApiResource
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CartReorderRestApi\Processor\Mapper\CartReorderRestErrorMapperInterface $cartReorderRestErrorMapper
      */
     public function __construct(
-        CartReorderRestApiToCartsRestApiResourceInterface $cartsRestApiResource,
-        RestResourceBuilderInterface $restResourceBuilder,
-        CartReorderRestErrorMapperInterface $cartReorderRestErrorMapper
+        protected CartReorderRestApiToCartsRestApiResourceInterface $cartsRestApiResource,
+        protected RestResourceBuilderInterface $restResourceBuilder,
+        protected CartReorderRestErrorMapperInterface $cartReorderRestErrorMapper
     ) {
-        $this->cartsRestApiResource = $cartsRestApiResource;
-        $this->restResourceBuilder = $restResourceBuilder;
-        $this->cartReorderRestErrorMapper = $cartReorderRestErrorMapper;
     }
 
     /**

@@ -14,25 +14,13 @@ use Spryker\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsConfig;
 class OrderValidator implements OrderValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsConfig
-     */
-    protected SalesOrderAmendmentOmsConfig $salesOrderAmendmentOmsConfig;
-
-    /**
-     * @var \Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToOmsFacadeInterface
-     */
-    protected SalesOrderAmendmentOmsToOmsFacadeInterface $omsFacade;
-
-    /**
      * @param \Spryker\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsConfig $salesOrderAmendmentOmsConfig
      * @param \Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToOmsFacadeInterface $omsFacade
      */
     public function __construct(
-        SalesOrderAmendmentOmsConfig $salesOrderAmendmentOmsConfig,
-        SalesOrderAmendmentOmsToOmsFacadeInterface $omsFacade
+        protected SalesOrderAmendmentOmsConfig $salesOrderAmendmentOmsConfig,
+        protected SalesOrderAmendmentOmsToOmsFacadeInterface $omsFacade
     ) {
-        $this->salesOrderAmendmentOmsConfig = $salesOrderAmendmentOmsConfig;
-        $this->omsFacade = $omsFacade;
     }
 
     /**

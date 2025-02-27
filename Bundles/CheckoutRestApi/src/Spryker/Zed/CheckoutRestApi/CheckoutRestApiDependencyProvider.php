@@ -76,6 +76,11 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_CHECKOUT_DATA_VALIDATOR_FOR_ORDER_AMENDMENT = 'PLUGINS_CHECKOUT_DATA_VALIDATOR_FOR_ORDER_AMENDMENT';
+
+    /**
+     * @var string
+     */
     public const PLUGINS_READ_CHECKOUT_DATA_VALIDATOR = 'PLUGINS_READ_CHECKOUT_DATA_VALIDATOR';
 
     /**
@@ -101,6 +106,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCalculationFacade($container);
         $container = $this->addQuoteMapperPlugins($container);
         $container = $this->addCheckoutDataValidatorPlugins($container);
+        $container = $this->addCheckoutDataValidatorPluginsForOrderAmendment($container);
         $container = $this->addReadCheckoutDataValidatorPlugins($container);
         $container = $this->addCheckoutDataExpanderPlugins($container);
 
@@ -252,6 +258,20 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addCheckoutDataValidatorPluginsForOrderAmendment(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_DATA_VALIDATOR_FOR_ORDER_AMENDMENT, function () {
+            return $this->getCheckoutDataValidatorPluginsForOrderAmendment();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addReadCheckoutDataValidatorPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_READ_CHECKOUT_DATA_VALIDATOR, function () {
@@ -284,9 +304,17 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface>
+     * @return list<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface>
      */
     protected function getCheckoutDataValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface>
+     */
+    protected function getCheckoutDataValidatorPluginsForOrderAmendment(): array
     {
         return [];
     }

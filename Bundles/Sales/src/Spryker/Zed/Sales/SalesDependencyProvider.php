@@ -114,6 +114,11 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT = 'PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT';
+
+    /**
+     * @var string
+     */
     public const PLUGINS_ITEM_PRE_TRANSFORMER = 'PLUGINS_ITEM_PRE_TRANSFORMER';
 
     /**
@@ -162,6 +167,46 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_ORDER_POST_CANCEL = 'PLUGINS_ORDER_POST_CANCEL';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_ORDER_ITEMS_PRE_CREATE = 'PLUGINS_ORDER_ITEMS_PRE_CREATE';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_ORDER_ITEMS_PRE_UPDATE = 'PLUGINS_ORDER_ITEMS_PRE_UPDATE';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_SALES_EXPENSE_PRE_DELETE = 'PLUGINS_SALES_EXPENSE_PRE_DELETE';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_SALES_ORDER_ITEM_COLLECTION_PRE_DELETE = 'PLUGINS_SALES_ORDER_ITEM_COLLECTION_PRE_DELETE';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_ORDER_ITEM_COLLECTION_POST_CREATE = 'PLUGINS_ORDER_ITEM_COLLECTION_POST_CREATE';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_ORDER_ITEM_COLLECTION_POST_UPDATE = 'PLUGINS_ORDER_ITEM_COLLECTION_POST_UPDATE';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER = 'PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER_FOR_ORDER_AMENDMENT = 'PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER_FOR_ORDER_AMENDMENT';
+
+    /**
      * @deprecated Will be removed in the next major version.
      *
      * @var string
@@ -196,6 +241,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOrderItemExpanderPreSavePlugins($container);
         $container = $this->addItemTransformerStrategyPlugins($container);
         $container = $this->addOrderPostSavePlugins($container);
+        $container = $this->addOrderPostSavePluginsForOrderAmendment($container);
         $container = $this->addItemPreTransformerPlugins($container);
         $container = $this->addUniqueOrderItemsExpanderPlugins($container);
         $container = $this->addOrderItemExpanderPlugins($container);
@@ -205,6 +251,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOrderItemsPostSavePlugins($container);
         $container = $this->addOrderPostUpdatePlugins($container);
         $container = $this->addOrderPostCancelPlugins($container);
+        $container = $this->addSalesExpensePreDeletePlugins($container);
+        $container = $this->addOrderItemPreCreatePlugins($container);
+        $container = $this->addOrderItemPreUpdatePlugins($container);
+        $container = $this->addSalesOrderItemCollectionPreDeletePlugins($container);
+        $container = $this->addOrderItemCollectionPostCreatePlugins($container);
+        $container = $this->addOrderItemCollectionPostUpdatePlugins($container);
+        $container = $this->addOrderItemInitialStateProviderPlugins($container);
+        $container = $this->addOrderItemInitialStateProviderPluginsForOrderAmendment($container);
 
         return $container;
     }
@@ -488,6 +542,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addOrderPostSavePluginsForOrderAmendment(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT, function () {
+            return $this->getOrderPostSavePluginsForOrderAmendment();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addItemPreTransformerPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_ITEM_PRE_TRANSFORMER, function () {
@@ -628,10 +696,122 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addSalesExpensePreDeletePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SALES_EXPENSE_PRE_DELETE, function () {
+            return $this->getSalesExpensePreDeletePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesOrderItemCollectionPreDeletePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SALES_ORDER_ITEM_COLLECTION_PRE_DELETE, function () {
+            return $this->getSalesOrderItemCollectionPreDeletePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addCsrfProviderService(Container $container): Container
     {
         $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_FORM_CSRF_PROVIDER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderItemPreCreatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_ITEMS_PRE_CREATE, function () {
+            return $this->getOrderItemsPreCreatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderItemPreUpdatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_ITEMS_PRE_UPDATE, function () {
+            return $this->getOrderItemsPreUpdatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderItemCollectionPostCreatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_ITEM_COLLECTION_POST_CREATE, function () {
+            return $this->getOrderItemCollectionPostCreatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderItemCollectionPostUpdatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_ITEM_COLLECTION_POST_UPDATE, function () {
+            return $this->getOrderItemCollectionPostUpdatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderItemInitialStateProviderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER, function () {
+            return $this->getOrderItemInitialStateProviderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderItemInitialStateProviderPluginsForOrderAmendment(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER_FOR_ORDER_AMENDMENT, function () {
+            return $this->getOrderItemInitialStateProviderPluginsForOrderAmendment();
         });
 
         return $container;
@@ -678,9 +858,17 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>
      */
     protected function getOrderPostSavePlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>
+     */
+    protected function getOrderPostSavePluginsForOrderAmendment()
     {
         return [];
     }
@@ -761,6 +949,70 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostCancelPluginInterface>
      */
     protected function getOrderPostCancelPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesExpensePreDeletePluginInterface>
+     */
+    protected function getSalesExpensePreDeletePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemsPreCreatePluginInterface>
+     */
+    protected function getOrderItemsPreCreatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemCollectionPreDeletePluginInterface>
+     */
+    protected function getSalesOrderItemCollectionPreDeletePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemsPreUpdatePluginInterface>
+     */
+    protected function getOrderItemsPreUpdatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemCollectionPostCreatePluginInterface>
+     */
+    protected function getOrderItemCollectionPostCreatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemCollectionPostUpdatePluginInterface>
+     */
+    protected function getOrderItemCollectionPostUpdatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemInitialStateProviderPluginInterface>
+     */
+    protected function getOrderItemInitialStateProviderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemInitialStateProviderPluginInterface>
+     */
+    protected function getOrderItemInitialStateProviderPluginsForOrderAmendment(): array
     {
         return [];
     }

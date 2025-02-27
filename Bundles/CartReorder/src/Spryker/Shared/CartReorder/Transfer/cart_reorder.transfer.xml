@@ -25,6 +25,10 @@
         <property name="quoteProcessFlow" type="QuoteProcessFlow" strict="true"/>
     </transfer>
 
+    <transfer name="QuoteUpdateRequestAttributes">
+        <property name="quoteProcessFlow" type="QuoteProcessFlow" strict="true"/>
+    </transfer>
+
     <transfer name="QuoteProcessFlow" strict="true">
         <property name="name" type="string"/>
     </transfer>

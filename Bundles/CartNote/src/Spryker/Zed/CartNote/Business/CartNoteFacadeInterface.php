@@ -24,10 +24,11 @@ interface CartNoteFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param bool|null $forceUpdate
      *
      * @return void
      */
-    public function saveOrderCartNote(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
+    public function saveOrderCartNote(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer, ?bool $forceUpdate = false): void;
 
     /**
      * Specification:
@@ -80,7 +81,7 @@ interface CartNoteFacadeInterface
      * Specification:
      * - Requires `CartReorderTransfer.order` to be set.
      * - Requires `CartReorderTransfer.quote` to be set.
-     * - Sets `CartReorderTransfer.order.cartNote` to `CartReorderTransfer.quote.cartNote` if it is provided.
+     * - Sets `CartReorderTransfer.order.cartNote` to `CartReorderTransfer.quote.cartNote`.
      * - Returns `CartReorderTransfer` with updated quote.
      *
      * @api

@@ -32,11 +32,15 @@ class CommentThreadWriter implements CommentThreadWriterInterface
     /**
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param bool|null $forceDelete
      *
      * @return void
      */
-    public function attachCommentThreadToOrder(SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer): void
-    {
+    public function attachCommentThreadToOrder(
+        SaveOrderTransfer $saveOrderTransfer,
+        QuoteTransfer $quoteTransfer,
+        ?bool $forceDelete = false
+    ): void {
         $quoteTransfer
             ->requireCommentThread()
             ->getCommentThread()
@@ -53,6 +57,6 @@ class CommentThreadWriter implements CommentThreadWriterInterface
             ->setOwnerId($saveOrderTransfer->getIdSalesOrder())
             ->setOwnerType(CommentSalesConnectorConfig::COMMENT_THREAD_SALES_ORDER_OWNER_TYPE);
 
-        $this->commentFacade->duplicateCommentThread($commentFilterTransfer, $commentRequestTransfer);
+        $this->commentFacade->duplicateCommentThread($commentFilterTransfer, $commentRequestTransfer, $forceDelete);
     }
 }

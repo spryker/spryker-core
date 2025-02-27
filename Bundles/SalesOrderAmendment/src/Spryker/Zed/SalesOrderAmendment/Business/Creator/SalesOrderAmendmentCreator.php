@@ -20,31 +20,6 @@ class SalesOrderAmendmentCreator implements SalesOrderAmendmentCreatorInterface
     use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Business\Validator\SalesOrderAmendmentValidatorInterface
-     */
-    protected SalesOrderAmendmentValidatorInterface $salesOrderAmendmentValidator;
-
-    /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentEntityManagerInterface
-     */
-    protected SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager;
-
-    /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Business\Mapper\SalesOrderAmendmentMapperInterface
-     */
-    protected SalesOrderAmendmentMapperInterface $salesOrderAmendmentMapper;
-
-    /**
-     * @var list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentPreCreatePluginInterface>
-     */
-    protected array $salesOrderAmendmentPreCreatePlugins;
-
-    /**
-     * @var list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentPostCreatePluginInterface>
-     */
-    protected array $salesOrderAmendmentPostCreatePlugins;
-
-    /**
      * @param \Spryker\Zed\SalesOrderAmendment\Business\Validator\SalesOrderAmendmentValidatorInterface $salesOrderAmendmentValidator
      * @param \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager
      * @param \Spryker\Zed\SalesOrderAmendment\Business\Mapper\SalesOrderAmendmentMapperInterface $salesOrderAmendmentMapper
@@ -52,17 +27,12 @@ class SalesOrderAmendmentCreator implements SalesOrderAmendmentCreatorInterface
      * @param list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentPostCreatePluginInterface> $salesOrderAmendmentPostCreatePlugins
      */
     public function __construct(
-        SalesOrderAmendmentValidatorInterface $salesOrderAmendmentValidator,
-        SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager,
-        SalesOrderAmendmentMapperInterface $salesOrderAmendmentMapper,
-        array $salesOrderAmendmentPreCreatePlugins,
-        array $salesOrderAmendmentPostCreatePlugins
+        protected SalesOrderAmendmentValidatorInterface $salesOrderAmendmentValidator,
+        protected SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager,
+        protected SalesOrderAmendmentMapperInterface $salesOrderAmendmentMapper,
+        protected array $salesOrderAmendmentPreCreatePlugins,
+        protected array $salesOrderAmendmentPostCreatePlugins
     ) {
-        $this->salesOrderAmendmentValidator = $salesOrderAmendmentValidator;
-        $this->salesOrderAmendmentEntityManager = $salesOrderAmendmentEntityManager;
-        $this->salesOrderAmendmentMapper = $salesOrderAmendmentMapper;
-        $this->salesOrderAmendmentPreCreatePlugins = $salesOrderAmendmentPreCreatePlugins;
-        $this->salesOrderAmendmentPostCreatePlugins = $salesOrderAmendmentPostCreatePlugins;
     }
 
     /**

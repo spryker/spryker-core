@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PersistentCart\Business;
 
+use Generated\Shared\Transfer\CartReorderRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
@@ -327,4 +328,20 @@ interface PersistentCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function replaceItem(PersistentItemReplaceTransfer $persistentItemReplaceTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CartReorderRequestTransfer.customerReference` to be set.
+     * - Finds customer quote by `CartReorderRequestTransfer.customerReference`.
+     * - Creates quote if it's not exists.
+     * - Removes items from the found quote.
+     * - Returns the found quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuoteForCartReorder(CartReorderRequestTransfer $cartReorderRequestTransfer): QuoteTransfer;
 }

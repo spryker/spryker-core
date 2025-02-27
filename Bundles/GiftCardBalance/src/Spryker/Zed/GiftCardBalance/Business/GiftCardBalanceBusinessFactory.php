@@ -8,12 +8,15 @@
 namespace Spryker\Zed\GiftCardBalance\Business;
 
 use Spryker\Zed\GiftCardBalance\Business\Checker\GiftCardBalanceChecker;
+use Spryker\Zed\GiftCardBalance\Business\Deleter\GiftCardBalanceLogDeleter;
+use Spryker\Zed\GiftCardBalance\Business\Deleter\GiftCardBalanceLogDeleterInterface;
 use Spryker\Zed\GiftCardBalance\Business\Saver\GiftCardBalanceSaver;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\GiftCardBalance\GiftCardBalanceConfig getConfig()
  * @method \Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceEntityManagerInterface getEntityManager()
  */
 class GiftCardBalanceBusinessFactory extends AbstractBusinessFactory
 {
@@ -33,5 +36,15 @@ class GiftCardBalanceBusinessFactory extends AbstractBusinessFactory
     public function createGiftCardBalanceSaver()
     {
         return new GiftCardBalanceSaver();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCardBalance\Business\Deleter\GiftCardBalanceLogDeleterInterface
+     */
+    public function createGiftCardBalanceLogDeleter(): GiftCardBalanceLogDeleterInterface
+    {
+        return new GiftCardBalanceLogDeleter(
+            $this->getEntityManager(),
+        );
     }
 }

@@ -95,7 +95,8 @@ class ProductPageDataTransferExpander implements ProductPageDataTransferExpander
      */
     protected function getProductLabelCollection(ProductPageLoadTransfer $productPageLoadTransfer): ProductLabelCollectionTransfer
     {
-        if (!$productPageLoadTransfer->getProductAbstractIds()) {
+        $productAbstractIds = array_filter($productPageLoadTransfer->getProductAbstractIds());
+        if (!$productAbstractIds) {
             return new ProductLabelCollectionTransfer();
         }
 
@@ -103,7 +104,7 @@ class ProductPageDataTransferExpander implements ProductPageDataTransferExpander
             ->setProductLabelConditions(
                 (new ProductLabelConditionsTransfer())
                     ->setIsActive(true)
-                    ->setProductAbstractIds($productPageLoadTransfer->getProductAbstractIds()),
+                    ->setProductAbstractIds($productAbstractIds),
             )
             ->setSortCollection(new ArrayObject([
                 (new SortTransfer())->setField(ProductLabelTransfer::IS_EXCLUSIVE)->setIsAscending(false),

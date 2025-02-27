@@ -29,6 +29,7 @@ use Symfony\Component\Form\FormInterface;
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionEntityManagerInterface getEntityManager()
  */
 class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
 {

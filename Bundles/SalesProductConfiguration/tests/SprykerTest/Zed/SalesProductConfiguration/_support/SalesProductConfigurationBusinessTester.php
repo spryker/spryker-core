@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\SalesProductConfiguration;
 
 use Codeception\Actor;
+use Orm\Zed\SalesProductConfiguration\Persistence\SpySalesOrderItemConfiguration;
+use Orm\Zed\SalesProductConfiguration\Persistence\SpySalesOrderItemConfigurationQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 
 /**
  * Inherited Methods
@@ -30,7 +33,44 @@ class SalesProductConfigurationBusinessTester extends Actor
 {
     use _generated\SalesProductConfigurationBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @return void
+     */
+    public function ensureSalesOrderItemConfigurationDatabaseTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty(
+            $this->getSpySalesOrderItemConfigurationQuery(),
+        );
+    }
+
+    /**
+     * @return \Orm\Zed\SalesProductConfiguration\Persistence\SpySalesOrderItemConfigurationQuery
+     */
+    public function getSpySalesOrderItemConfigurationQuery(): SpySalesOrderItemConfigurationQuery
+    {
+        return SpySalesOrderItemConfigurationQuery::create();
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Orm\Zed\SalesProductConfiguration\Persistence\SpySalesOrderItemConfiguration
+     */
+    public function createSalesOrderItemConfiguration(int $idSalesOrderItem): SpySalesOrderItemConfiguration
+    {
+        $salesOrderItemConfigurationEntity = (new SpySalesOrderItemConfiguration())
+            ->setFkSalesOrderItem($idSalesOrderItem)
+            ->setConfiguratorKey('test-configurator-key');
+        $salesOrderItemConfigurationEntity->save();
+
+        return $salesOrderItemConfigurationEntity;
+    }
+
+    /**
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SalesProductConfiguration\Persistence\SpySalesOrderItemConfiguration>
+     */
+    public function getSalesOrderItemConfigurationEntities(): ObjectCollection
+    {
+        return $this->getSpySalesOrderItemConfigurationQuery()->find();
+    }
 }

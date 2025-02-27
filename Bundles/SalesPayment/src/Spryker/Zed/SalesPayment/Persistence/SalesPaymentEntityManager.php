@@ -41,6 +41,19 @@ class SalesPaymentEntityManager extends AbstractEntityManager implements SalesPa
     }
 
     /**
+     * @param list<int> $salesPaymentIds
+     *
+     * @return void
+     */
+    public function deleteSalesPayments(array $salesPaymentIds): void
+    {
+        $this->getFactory()
+            ->createSalesPaymentQuery()
+            ->filterByIdSalesPayment_In($salesPaymentIds)
+            ->delete();
+    }
+
+    /**
      * @param string $paymentProvider
      * @param string $paymentMethod
      *

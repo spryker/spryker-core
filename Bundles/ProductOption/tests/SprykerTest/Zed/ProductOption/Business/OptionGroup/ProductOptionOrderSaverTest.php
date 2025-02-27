@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface;
 use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
 /**
@@ -87,8 +88,10 @@ class ProductOptionOrderSaverTest extends MockProvider
             $glossaryFacadeMock = $this->createGlossaryFacadeMock();
         }
 
+        $productOptionRepositoryMock = $this->getMockBuilder(ProductOptionRepositoryInterface::class)->getMock();
+
         return $this->getMockBuilder(ProductOptionOrderSaver::class)
-            ->setConstructorArgs([$glossaryFacadeMock])
+            ->setConstructorArgs([$glossaryFacadeMock, $productOptionRepositoryMock])
             ->onlyMethods(['createSalesOrderItemOptionEntity'])
             ->getMock();
     }

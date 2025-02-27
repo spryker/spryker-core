@@ -43,10 +43,15 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
      */
     public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer)
     {
+        $productAbstractIds = array_filter($productPageLoadTransfer->getProductAbstractIds());
+        if (!$productAbstractIds) {
+            return $productPageLoadTransfer;
+        }
+
         $productAbstractMerchantCriteriaTransfer = (new ProductAbstractMerchantCriteriaTransfer())
             ->setProductAbstractMerchantConditions(
                 (new ProductAbstractMerchantConditionsTransfer())
-                    ->setProductAbstractIds($productPageLoadTransfer->getProductAbstractIds())
+                    ->setProductAbstractIds($productAbstractIds)
                     ->setIsProductOfferActive(true)
                     ->addProductOfferApprovalStatus(static::PRODUCT_OFFER_STATUS_APPROVED),
             );

@@ -25,12 +25,12 @@ interface CartReorderFacadeInterface
      * - Executes {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPreReorderPluginInterface} plugins to perform any necessary actions before reordering items.
      * - Resolves a stack of {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface} according to the quote process flow.
      * - Validates the reorder request by executing {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface} plugins.
-     * - Resolves a stack of {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface} according to the quote process flow.
+     * - Resolves a stack of {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface}.
      * - Executes {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface} plugins to hydrate the items in the reorder request.
-     * - Resolves a stack of {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface} according to the quote process flow.
+     * - Resolves a stack of {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface}.
      * - Executes {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface} plugins before adding reorder items to cart.
      * - Adds the hydrated items to the cart.
-     * - Resolves a stack of {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface} according to the quote process flow.
+     * - Resolves a stack of {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface}.
      * - Executes {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface} plugins to perform any necessary actions after reordering items.
      * - Returns a `CartReorderResponseTransfer` containing the updated `QuoteTransfer` with the reordered items.
      *

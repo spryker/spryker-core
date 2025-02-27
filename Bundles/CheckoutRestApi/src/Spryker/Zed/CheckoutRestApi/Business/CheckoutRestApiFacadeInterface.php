@@ -34,7 +34,7 @@ interface CheckoutRestApiFacadeInterface
     /**
      * Specification:
      * - Looks up the customer quote by uuid.
-     * - Validates quote.
+     * - Validates quote using checkout data validator plugins based on quote process flow (`QuoteTransfer.quoteProcessFlow.name`).
      * - Executes plugins that maps request data into QuoteTransfer.
      * - Uses {@link \Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig::isRecalculationEnabledForQuoteMapperPlugins()} method to determine if quote recalculation in a stack of quote mapper plugins should be enabled.
      * - Recalculates quote.

@@ -15,16 +15,10 @@ use Spryker\Zed\CartReorder\Dependency\Facade\CartReorderToSalesFacadeInterface;
 class OrderReader implements OrderReaderInterface
 {
     /**
-     * @var \Spryker\Zed\CartReorder\Dependency\Facade\CartReorderToSalesFacadeInterface
-     */
-    protected CartReorderToSalesFacadeInterface $salesFacade;
-
-    /**
      * @param \Spryker\Zed\CartReorder\Dependency\Facade\CartReorderToSalesFacadeInterface $salesFacade
      */
-    public function __construct(CartReorderToSalesFacadeInterface $salesFacade)
+    public function __construct(protected CartReorderToSalesFacadeInterface $salesFacade)
     {
-        $this->salesFacade = $salesFacade;
     }
 
     /**

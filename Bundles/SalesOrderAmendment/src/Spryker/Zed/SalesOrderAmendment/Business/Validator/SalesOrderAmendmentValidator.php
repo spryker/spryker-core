@@ -16,23 +16,11 @@ use Spryker\Zed\SalesOrderAmendment\Business\Validator\Rules\TerminationAwareVal
 class SalesOrderAmendmentValidator implements SalesOrderAmendmentValidatorInterface
 {
     /**
-     * @var list<\Spryker\Zed\SalesOrderAmendment\Business\Validator\Rules\SalesOrderAmendment\SalesOrderAmendmentValidatorRuleInterface>
-     */
-    protected array $salesOrderAmendmentValidatorRules;
-
-    /**
-     * @var list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentValidatorRulePluginInterface>
-     */
-    protected array $salesOrderAmendmentValidatorRulePlugins;
-
-    /**
      * @param list<\Spryker\Zed\SalesOrderAmendment\Business\Validator\Rules\SalesOrderAmendment\SalesOrderAmendmentValidatorRuleInterface> $salesOrderAmendmentValidatorRules
      * @param list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentValidatorRulePluginInterface> $salesOrderAmendmentValidatorRulePlugins
      */
-    public function __construct(array $salesOrderAmendmentValidatorRules, array $salesOrderAmendmentValidatorRulePlugins)
+    public function __construct(protected array $salesOrderAmendmentValidatorRules, protected array $salesOrderAmendmentValidatorRulePlugins)
     {
-        $this->salesOrderAmendmentValidatorRules = $salesOrderAmendmentValidatorRules;
-        $this->salesOrderAmendmentValidatorRulePlugins = $salesOrderAmendmentValidatorRulePlugins;
     }
 
     /**

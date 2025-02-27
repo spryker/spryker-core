@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
@@ -174,7 +173,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $salesOrderAddressEntity = $this->createSalesOrderAddress();
         $salesOrderEntity = $this->createSalesOrder($salesOrderAddressEntity, $orderReference);
         $omsStateEntity = $this->createOmsOrderItemState($stateName);
-        $orderProcess = $this->createOmsOrderProcess($processName);
+        $orderProcess = $this->tester->createOmsOrderProcess($processName);
 
         for ($i = 0; $i < 5; $i++) {
             $this->createSalesOrderItem($salesOrderEntity, $orderProcess, $omsStateEntity);
@@ -265,22 +264,6 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $omsStateEntity->save();
 
         return $omsStateEntity;
-    }
-
-    /**
-     * @param string $processName
-     *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
-     */
-    protected function createOmsOrderProcess(string $processName): SpyOmsOrderProcess
-    {
-        $orderProcessEntity = (new SpyOmsOrderProcessQuery())
-            ->filterByName($processName)
-            ->findOneOrCreate();
-
-        $orderProcessEntity->save();
-
-        return $orderProcessEntity;
     }
 
     /**

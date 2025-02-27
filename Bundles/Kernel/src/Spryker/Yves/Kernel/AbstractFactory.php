@@ -22,6 +22,24 @@ abstract class AbstractFactory implements FactoryInterface
     use ContainerMocker;
 
     /**
+     * Specification:
+     * - Defines the default behavior of service loading.
+     * - The service is resolved immediately as part of fetching.
+     *
+     * @var string
+     */
+    public const LOADING_EAGER = 'LOADING_EAGER';
+
+    /**
+     * Specification:
+     * - Defines the optional behavior of service loading.
+     * - The service is resolved later, when it is actually needed.
+     *
+     * @var string
+     */
+    public const LOADING_LAZY = 'LOADING_LAZY';
+
+    /**
      * @var \Spryker\Client\Kernel\AbstractClient
      */
     protected $client;
@@ -92,17 +110,22 @@ abstract class AbstractFactory implements FactoryInterface
 
     /**
      * @param string $key
+     * @param string $fetch The `LOADING_LAZY` behavior returns the service as closure for later resolving.
      *
      * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return mixed
      */
-    protected function getProvidedDependency($key)
+    protected function getProvidedDependency($key, $fetch = self::LOADING_EAGER)
     {
         $container = $this->getContainer();
 
         if ($container->has($key) === false) {
             throw new ContainerKeyNotFoundException($this, $key);
+        }
+
+        if ($fetch === static::LOADING_LAZY) {
+            return fn () => $container->get($key);
         }
 
         return $container->get($key);

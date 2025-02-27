@@ -42,4 +42,16 @@
 
     <transfer name="SaveOrder">
     </transfer>
+
+    <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="SalesReclamationItemCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="SalesReclamationItemCollectionResponse" strict="true">
+    </transfer>
+
 </transfers>

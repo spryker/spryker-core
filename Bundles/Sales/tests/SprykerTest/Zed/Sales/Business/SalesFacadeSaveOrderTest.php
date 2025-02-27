@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteProcessFlowTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -26,6 +27,8 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotalsQuery;
+use Spryker\Shared\CheckoutExtension\CheckoutExtensionContextsInterface;
+use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Oms\OmsConfig;
@@ -40,6 +43,7 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToStoreBridge;
 use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\Sales\SalesDependencyProvider;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 use Spryker\Zed\Store\Business\StoreFacade;
 use SprykerTest\Zed\Sales\SalesBusinessTester;
@@ -66,6 +70,11 @@ class SalesFacadeSaveOrderTest extends Unit
      * @var \SprykerTest\Zed\Sales\SalesBusinessTester
      */
     protected SalesBusinessTester $tester;
+
+    /**
+     * @var \Spryker\Zed\Kernel\Container
+     */
+    protected $businessFactoryContainer;
 
     /**
      * @return void
@@ -115,30 +124,112 @@ class SalesFacadeSaveOrderTest extends Unit
 
         $sequenceNumberFacade = new SequenceNumberFacade();
 
-        $container = new Container();
-        $container[SalesDependencyProvider::FACADE_COUNTRY] = new SalesToCountryBridge($countryFacadeMock);
-        $container[SalesDependencyProvider::FACADE_OMS] = new SalesToOmsBridge($omsFacadeMock);
-        $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = new SalesToSequenceNumberBridge($sequenceNumberFacade);
-        $container[SalesDependencyProvider::PROPEL_QUERY_LOCALE] = new SpyLocaleQuery();
-        $container[SalesDependencyProvider::FACADE_STORE] = new SalesToStoreBridge(new StoreFacade());
-        $container[SalesDependencyProvider::FACADE_LOCALE] = new SalesToLocaleBridge(new LocaleFacade());
-        $container[SalesDependencyProvider::ORDER_EXPANDER_PRE_SAVE_PLUGINS] = [];
-        $container[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE] = [];
-        $container[SalesDependencyProvider::PLUGINS_ORDER_ITEM_EXPANDER] = [];
-        $container[SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
+        $this->businessFactoryContainer = new Container();
+        $this->businessFactoryContainer[SalesDependencyProvider::FACADE_COUNTRY] = new SalesToCountryBridge($countryFacadeMock);
+        $this->businessFactoryContainer[SalesDependencyProvider::FACADE_OMS] = new SalesToOmsBridge($omsFacadeMock);
+        $this->businessFactoryContainer[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = new SalesToSequenceNumberBridge($sequenceNumberFacade);
+        $this->businessFactoryContainer[SalesDependencyProvider::PROPEL_QUERY_LOCALE] = new SpyLocaleQuery();
+        $this->businessFactoryContainer[SalesDependencyProvider::FACADE_STORE] = new SalesToStoreBridge(new StoreFacade());
+        $this->businessFactoryContainer[SalesDependencyProvider::FACADE_LOCALE] = new SalesToLocaleBridge(new LocaleFacade());
+        $this->businessFactoryContainer[SalesDependencyProvider::ORDER_EXPANDER_PRE_SAVE_PLUGINS] = [];
+        $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE] = [];
+        $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT] = [];
+        $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_ITEM_EXPANDER] = [];
+        $this->businessFactoryContainer[SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
             return [];
         };
-        $container[SalesDependencyProvider::PLUGINS_ORDER_ITEMS_POST_SAVE] = function () {
+        $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_ITEMS_POST_SAVE] = function () {
             return [];
         };
+        $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER] = [];
+        $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER_FOR_ORDER_AMENDMENT] = [];
 
         $this->salesFacade = new SalesFacade();
         $businessFactory = new SalesBusinessFactory();
         $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->onlyMethods(['determineProcessForOrderItem'])->getMock();
         $salesConfigMock->method('determineProcessForOrderItem')->willReturn('');
         $businessFactory->setConfig($salesConfigMock);
-        $businessFactory->setContainer($container);
+        $businessFactory->setContainer($this->businessFactoryContainer);
         $this->salesFacade->setFactory($businessFactory);
+    }
+
+    /**
+     * @dataProvider saveSalesOrderSelectsContextCorrectlyDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteProcessFlowTransfer|null $quoteProcessFlowTransfer
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface $checkoutContextPluginMock
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface $orderAmendmentContextPluginMock
+     *
+     * @return void
+     */
+    public function testSaveSalesOrderSelectsContextCorrectly($quoteProcessFlowTransfer, $checkoutContextPluginMock, $orderAmendmentContextPluginMock): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
+        $quoteTransfer->setQuoteProcessFlow($quoteProcessFlowTransfer);
+        $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
+
+        // Assert
+        $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE] = [$checkoutContextPluginMock];
+        $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT] = [$orderAmendmentContextPluginMock];
+
+        // Act
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $checkoutResponseTransfer->getSaveOrder());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface
+     */
+    protected function getNeverCalledOrderPostSavePluginMock(): OrderPostSavePluginInterface
+    {
+        $orderPostSavePluginMock = $this
+            ->getMockBuilder(OrderPostSavePluginInterface::class)
+            ->getMock();
+        $orderPostSavePluginMock->expects($this->never())->method('execute');
+
+        return $orderPostSavePluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface
+     */
+    protected function getOnceCalledOrderPostSavePluginMock(): OrderPostSavePluginInterface
+    {
+        $orderPostSavePluginMock = $this
+            ->getMockBuilder(OrderPostSavePluginInterface::class)
+            ->getMock();
+        $orderPostSavePluginMock->expects($this->once())->method('execute');
+
+        return $orderPostSavePluginMock;
+    }
+
+    /**
+     * @return array<array>
+     */
+    protected function saveSalesOrderSelectsContextCorrectlyDataProvider(): array
+    {
+        return [
+            'Calls default context when default context is set' => [
+                (new QuoteProcessFlowTransfer())->setName(CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT),
+                $this->getOnceCalledOrderPostSavePluginMock(),
+                $this->getNeverCalledOrderPostSavePluginMock(),
+            ],
+            'Calls default context when quote process flow is not set' => [
+                null,
+                $this->getOnceCalledOrderPostSavePluginMock(),
+                $this->getNeverCalledOrderPostSavePluginMock(),
+            ],
+            'Calls default context when context is not defined' => [
+                (new QuoteProcessFlowTransfer())->setName('wrong-context'),
+                $this->getOnceCalledOrderPostSavePluginMock(),
+                $this->getNeverCalledOrderPostSavePluginMock(),
+            ],
+            'Calls order amendment context when order amendment context is set' => [
+                (new QuoteProcessFlowTransfer())->setName(SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT),
+                $this->getNeverCalledOrderPostSavePluginMock(),
+                $this->getOnceCalledOrderPostSavePluginMock(),
+            ],
+        ];
     }
 
     /**
@@ -438,6 +529,30 @@ class SalesFacadeSaveOrderTest extends Unit
         $this->assertSame($quoteTransfer->getCustomer()->getEmail(), $orderEntity->getEmail());
         $this->assertSame($quoteTransfer->getCustomer()->getFirstName(), $orderEntity->getFirstName());
         $this->assertSame($quoteTransfer->getCustomer()->getLastName(), $orderEntity->getLastName());
+    }
+
+    /**
+     * @dataProvider saveSalesOrderSelectsContextCorrectlyDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteProcessFlowTransfer|null $quoteProcessFlowTransfer
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface $checkoutContextPluginMock
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface $orderAmendmentContextPluginMock
+     *
+     * @return void
+     */
+    public function testSaveOrderRawSelectsContextCorrectly($quoteProcessFlowTransfer, $checkoutContextPluginMock, $orderAmendmentContextPluginMock): void
+    {
+        //Arrange
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
+        $quoteTransfer->setQuoteProcessFlow($quoteProcessFlowTransfer);
+        $saveOrderTransfer = $this->createSaveOrderTransfer();
+
+        //Assert
+        $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE] = [$checkoutContextPluginMock];
+        $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT] = [$orderAmendmentContextPluginMock];
+
+        //Act
+        $this->salesFacade->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
     }
 
     /**

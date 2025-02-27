@@ -13,16 +13,10 @@ use Generated\Shared\Transfer\RestCartReorderRequestAttributesTransfer;
 class CartReorderRestRequestMapper implements CartReorderRestRequestMapperInterface
 {
     /**
-     * @var list<\Spryker\Glue\CartReorderRestApiExtension\Dependency\Plugin\RestCartReorderAttributesMapperPluginInterface>
-     */
-    protected array $restCartReorderAttributesMapperPlugins;
-
-    /**
      * @param list<\Spryker\Glue\CartReorderRestApiExtension\Dependency\Plugin\RestCartReorderAttributesMapperPluginInterface> $restCartReorderAttributesMapperPlugins
      */
-    public function __construct(array $restCartReorderAttributesMapperPlugins)
+    public function __construct(protected array $restCartReorderAttributesMapperPlugins)
     {
-        $this->restCartReorderAttributesMapperPlugins = $restCartReorderAttributesMapperPlugins;
     }
 
     /**

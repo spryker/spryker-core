@@ -26,4 +26,16 @@
     <transfer name="Money">
     </transfer>
 
+    <transfer name="SalesPaymentCollection">
+        <property name="salesPayments" type="SalesPayment[]" singular="salesPayment"/>
+    </transfer>
+
+    <transfer name="SalesPayment">
+        <property name="fkSalesOrder" type="int"/>
+    </transfer>
+
+    <transfer name="GiftCardBalanceLogCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderIds" type="int[]" singular="idSalesOrder"/>
+    </transfer>
+
 </transfers>

@@ -36,6 +36,11 @@ use Spryker\Zed\Sales\SalesConfig;
 class ShippingAddressSaveTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const DEFAULT_OMS_PROCESS_NAME = 'DummyPayment01';
+
+    /**
      * @var \SprykerTest\Zed\Sales\SalesBusinessTester
      */
     protected $tester;
@@ -49,6 +54,7 @@ class ShippingAddressSaveTest extends Unit
 
         $productTransfer = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
+        $this->tester->configureTestStateMachine([static::DEFAULT_OMS_PROCESS_NAME]);
     }
 
     /**

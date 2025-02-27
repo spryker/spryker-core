@@ -18,6 +18,7 @@
 
     <transfer name="Order">
         <property name="cartNote" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="QuoteResponse">
@@ -58,6 +59,11 @@
 
     <transfer name="QuoteUpdateRequestAttributes">
         <property name="cartNote" type="string" strict="true"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentItemCollection" strict="true">
+        <property name="itemsToUpdate" type="Item[]" singular="itemToUpdate"/>
+        <property name="itemsToSkip" type="Item[]" singular="itemToSkip"/>
     </transfer>
 
 </transfers>

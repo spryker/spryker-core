@@ -13,6 +13,13 @@ use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
 interface SalesConfigurableBundleRepositoryInterface
 {
     /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return list<int>
+     */
+    public function getSalesOrderConfiguredBundleIdsBySalesOrderItemIds(array $salesOrderItemIds): array;
+
+    /**
      * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer $salesOrderConfiguredBundleFilterTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer

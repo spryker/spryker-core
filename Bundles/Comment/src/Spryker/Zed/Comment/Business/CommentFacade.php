@@ -110,16 +110,18 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CommentFilterTransfer $commentFilterTransfer
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     * @param bool|null $forceDelete
      *
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
     public function duplicateCommentThread(
         CommentFilterTransfer $commentFilterTransfer,
-        CommentRequestTransfer $commentRequestTransfer
+        CommentRequestTransfer $commentRequestTransfer,
+        ?bool $forceDelete = false
     ): CommentThreadResponseTransfer {
         return $this->getFactory()
             ->createCommentThreadWriter()
-            ->duplicateCommentThread($commentFilterTransfer, $commentRequestTransfer);
+            ->duplicateCommentThread($commentFilterTransfer, $commentRequestTransfer, $forceDelete);
     }
 
     /**

@@ -7,15 +7,11 @@
 
 namespace Spryker\Zed\SalesOrderAmendment;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SalesOrderAmendmentConfig extends AbstractBundleConfig
 {
-    /**
-     * @var string
-     */
-    protected const ORDER_AMENDMENT_QUOTE_PROCESS_FLOW_NAME = 'order-amendment';
-
     /**
      * Specification:
      * - Defines the format of the quote name for the cart reorder.
@@ -31,14 +27,36 @@ class SalesOrderAmendmentConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Defines the name of quote process flow for order amendment.
+     * - Returns item properties that should be stored in the quote table.
+     * - If it would be an empty array, quote will not be stored.
      *
      * @api
      *
-     * @return string
+     * @return array<string>
      */
-    public function getOrderAmendmentQuoteProcessFlowName(): string
+    public function getQuoteFieldsAllowedForSaving(): array
     {
-        return static::ORDER_AMENDMENT_QUOTE_PROCESS_FLOW_NAME;
+        return [
+            QuoteTransfer::ITEMS,
+            QuoteTransfer::TOTALS,
+            QuoteTransfer::CURRENCY,
+            QuoteTransfer::PRICE_MODE,
+            QuoteTransfer::AMENDMENT_ORDER_REFERENCE,
+            QuoteTransfer::QUOTE_PROCESS_FLOW,
+        ];
+    }
+
+    /**
+     * Specification:
+     * - Returns item properties that should be stored in the quote table.
+     * - Leave an empty array if you want to store all the Item transfer properties.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getQuoteItemFieldsAllowedForSaving(): array
+    {
+        return [];
     }
 }

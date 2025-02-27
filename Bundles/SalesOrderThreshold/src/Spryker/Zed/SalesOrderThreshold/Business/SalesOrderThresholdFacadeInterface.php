@@ -253,4 +253,22 @@ interface SalesOrderThresholdFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function expandQuoteWithSalesOrderThresholdValues(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Requires `SaveOrderTransfer.idSalesOrder` to be set.
+     * - Deletes expenses associated with the `SaveOrderTransfer.idSalesOrder` order ID and the type specified by {@link \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::THRESHOLD_EXPENSE_TYPE} from the database.
+     * - Iterates over `QuoteTransfer.expenses` and stores expenses of the type defined by {@link \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::THRESHOLD_EXPENSE_TYPE} in the database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function replaceSalesOrderThresholdExpenses(
+        QuoteTransfer $quoteTransfer,
+        SaveOrderTransfer $saveOrderTransfer
+    ): void;
 }

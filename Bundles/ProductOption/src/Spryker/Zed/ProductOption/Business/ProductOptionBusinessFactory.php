@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateWithItemShipmentTaxRateCalculator;
+use Spryker\Zed\ProductOption\Business\Deleter\SalesOrderItemOptionDeleter;
+use Spryker\Zed\ProductOption\Business\Deleter\SalesOrderItemOptionDeleterInterface;
 use Spryker\Zed\ProductOption\Business\Expander\ProductOptionExpander;
 use Spryker\Zed\ProductOption\Business\Expander\ProductOptionExpanderInterface;
 use Spryker\Zed\ProductOption\Business\Hydrator\CartReorderItemHydrator;
@@ -29,6 +31,9 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
 use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaver;
+use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaverInterface;
+use Spryker\Zed\ProductOption\Business\Replacer\SalesOrderItemOptionReplacer;
+use Spryker\Zed\ProductOption\Business\Replacer\SalesOrderItemOptionReplacerInterface;
 use Spryker\Zed\ProductOption\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
 use Spryker\Zed\ProductOption\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
@@ -37,6 +42,7 @@ use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionEntityManagerInterface getEntityManager()
  */
 class ProductOptionBusinessFactory extends AbstractBusinessFactory
 {
@@ -116,10 +122,21 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaverInterface
      */
-    public function createPlaceOrderProductOptionOrderSaver()
+    public function createPlaceOrderProductOptionOrderSaver(): ProductOptionOrderSaverInterface
     {
         return new ProductOptionOrderSaver(
             $this->getGlossaryFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\Replacer\SalesOrderItemOptionReplacerInterface
+     */
+    public function createSalesOrderItemOptionReplacer(): SalesOrderItemOptionReplacerInterface
+    {
+        return new SalesOrderItemOptionReplacer(
+            $this->getEntityManager(),
+            $this->createPlaceOrderProductOptionOrderSaver(),
         );
     }
 
@@ -290,6 +307,14 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getPriceFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\Deleter\SalesOrderItemOptionDeleterInterface
+     */
+    public function createSalesOrderItemOptionDeleter(): SalesOrderItemOptionDeleterInterface
+    {
+        return new SalesOrderItemOptionDeleter($this->getEntityManager());
     }
 
     /**

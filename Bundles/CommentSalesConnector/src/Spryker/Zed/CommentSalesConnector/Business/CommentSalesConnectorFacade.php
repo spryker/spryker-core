@@ -25,14 +25,18 @@ class CommentSalesConnectorFacade extends AbstractFacade implements CommentSales
      *
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param bool|null $forceDelete
      *
      * @return void
      */
-    public function attachCommentThreadToOrder(SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer): void
-    {
+    public function attachCommentThreadToOrder(
+        SaveOrderTransfer $saveOrderTransfer,
+        QuoteTransfer $quoteTransfer,
+        ?bool $forceDelete = false
+    ): void {
         $this->getFactory()
             ->createCommentThreadWriter()
-            ->attachCommentThreadToOrder($saveOrderTransfer, $quoteTransfer);
+            ->attachCommentThreadToOrder($saveOrderTransfer, $quoteTransfer, $forceDelete);
     }
 
     /**

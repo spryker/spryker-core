@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesProductConfiguration\Business\Writer;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
 use Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\SalesProductConfiguration\Persistence\SalesProductConfigurationEntityManagerInterface;
@@ -18,16 +19,10 @@ class SalesOrderItemConfigurationWriter implements SalesOrderItemConfigurationWr
     use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\SalesProductConfiguration\Persistence\SalesProductConfigurationEntityManagerInterface
-     */
-    protected $salesProductConfigurationEntityManager;
-
-    /**
      * @param \Spryker\Zed\SalesProductConfiguration\Persistence\SalesProductConfigurationEntityManagerInterface $salesProductConfigurationEntityManager
      */
-    public function __construct(SalesProductConfigurationEntityManagerInterface $salesProductConfigurationEntityManager)
+    public function __construct(protected SalesProductConfigurationEntityManagerInterface $salesProductConfigurationEntityManager)
     {
-        $this->salesProductConfigurationEntityManager = $salesProductConfigurationEntityManager;
     }
 
     /**
@@ -39,9 +34,35 @@ class SalesOrderItemConfigurationWriter implements SalesOrderItemConfigurationWr
     {
         $salesOrderItemConfigurationTransfers = $this->mapSalesOrderItemConfigurations($quoteTransfer);
 
+        if (!count($salesOrderItemConfigurationTransfers)) {
+            return;
+        }
+
         $this->getTransactionHandler()->handleTransaction(function () use ($salesOrderItemConfigurationTransfers): void {
             $this->executeSaveSalesOrderItemConfigurationsFromQuoteTransaction($salesOrderItemConfigurationTransfers);
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer $salesOrderItemCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function updateSalesOrderItemConfigurations(
+        SalesOrderItemCollectionResponseTransfer $salesOrderItemCollectionResponseTransfer
+    ): SalesOrderItemCollectionResponseTransfer {
+        $salesOrderItemConfigurationTransfers = $this->mapSalesOrderItemConfigurations(
+            (new QuoteTransfer())->setItems($salesOrderItemCollectionResponseTransfer->getItems()),
+        );
+
+        if (count($salesOrderItemConfigurationTransfers)) {
+            $this->getTransactionHandler()
+                ->handleTransaction(function () use ($salesOrderItemConfigurationTransfers) {
+                    return $this->executeUpdateSalesOrderItemConfigurationsTransaction($salesOrderItemConfigurationTransfers);
+                });
+        }
+
+        return $salesOrderItemCollectionResponseTransfer;
     }
 
     /**
@@ -55,6 +76,23 @@ class SalesOrderItemConfigurationWriter implements SalesOrderItemConfigurationWr
         foreach ($salesOrderItemConfigurationTransfers as $salesOrderItemConfigurationTransfer) {
             $this->salesProductConfigurationEntityManager->saveSalesOrderItemConfiguration($salesOrderItemConfigurationTransfer);
         }
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer> $salesOrderItemConfigurationTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer>
+     */
+    protected function executeUpdateSalesOrderItemConfigurationsTransaction(
+        array $salesOrderItemConfigurationTransfers
+    ): array {
+        $persistedSalesOrderItemConfigurations = [];
+        foreach ($salesOrderItemConfigurationTransfers as $salesOrderItemConfigurationTransfer) {
+            $persistedSalesOrderItemConfigurations[] = $this->salesProductConfigurationEntityManager
+                ->saveSalesOrderItemConfigurationByFkSalesOrderItem($salesOrderItemConfigurationTransfer);
+        }
+
+        return $persistedSalesOrderItemConfigurations;
     }
 
     /**

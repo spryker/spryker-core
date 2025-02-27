@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesConfigurableBundle\Persistence;
 
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
+use Orm\Zed\SalesConfigurableBundle\Persistence\Map\SpySalesOrderConfiguredBundleTableMap;
 use Orm\Zed\SalesConfigurableBundle\Persistence\SpySalesOrderConfiguredBundleQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -37,6 +38,25 @@ class SalesConfigurableBundleRepository extends AbstractRepository implements Sa
         return $this->getFactory()
             ->createSalesOrderConfiguredBundleMapper()
             ->mapBundleEntityCollectionToBundleTransferCollection($salesOrderConfiguredBundleQuery->find());
+    }
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return list<int>
+     */
+    public function getSalesOrderConfiguredBundleIdsBySalesOrderItemIds(array $salesOrderItemIds): array
+    {
+        /** @var \Propel\Runtime\Collection\ArrayCollection $salesOrderConfiguredBundleCollection */
+        $salesOrderConfiguredBundleCollection = $this->getFactory()
+            ->getSalesOrderConfiguredBundlePropelQuery()
+            ->useSpySalesOrderConfiguredBundleItemQuery()
+                ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->endUse()
+            ->select([SpySalesOrderConfiguredBundleTableMap::COL_ID_SALES_ORDER_CONFIGURED_BUNDLE])
+            ->find();
+
+        return $salesOrderConfiguredBundleCollection->toArray();
     }
 
     /**

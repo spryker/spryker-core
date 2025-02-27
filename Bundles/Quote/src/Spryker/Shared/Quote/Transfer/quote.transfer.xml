@@ -90,4 +90,7 @@
         <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
+    <transfer name="CartReorderRequest" strict="true">
+    </transfer>
+
 </transfers>

@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleItemCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleItemCollectionResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -137,5 +139,24 @@ class SalesConfigurableBundleFacade extends AbstractFacade implements SalesConfi
         return $this->getFactory()
             ->createCartReorderItemHydrator()
             ->hydrate($cartReorderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemCollectionDeleteCriteriaTransfer $salesOrderConfiguredBundleItemCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemCollectionResponseTransfer
+     */
+    public function deleteSalesOrderConfiguredBundleItemCollection(
+        SalesOrderConfiguredBundleItemCollectionDeleteCriteriaTransfer $salesOrderConfiguredBundleItemCollectionDeleteCriteriaTransfer
+    ): SalesOrderConfiguredBundleItemCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSalesOrderConfiguredBundleItemDeleter()
+            ->deleteSalesOrderConfiguredBundleItemCollection(
+                $salesOrderConfiguredBundleItemCollectionDeleteCriteriaTransfer,
+            );
     }
 }

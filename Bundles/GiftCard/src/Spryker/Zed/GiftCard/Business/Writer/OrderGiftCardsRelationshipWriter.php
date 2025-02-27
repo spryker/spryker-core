@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\GiftCard\Business\Payment\SalesOrderPaymentSaverInterface;
 use Spryker\Zed\GiftCard\Business\Sales\SalesOrderItemSaverInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class OrderGiftCardsRelationshipWriter implements OrderGiftCardsRelationshipWriterInterface
 {
     /**

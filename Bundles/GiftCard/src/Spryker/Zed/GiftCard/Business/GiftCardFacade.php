@@ -14,9 +14,12 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\PaymentGiftCardCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemGiftCardCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderItemGiftCardCollectionResponseTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -24,6 +27,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\GiftCard\Business\GiftCardBusinessFactory getFactory()
  * @method \Spryker\Zed\GiftCard\Persistence\GiftCardRepositoryInterface getRepository()
+ * @method \Spryker\Zed\GiftCard\Persistence\GiftCardEntityManagerInterface getEntityManager()
  */
 class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
 {
@@ -167,6 +171,8 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Partially replaced by {@link \Spryker\Zed\GiftCard\Business\GiftCardFacade::createGiftCardPaymentsFromQuote()}.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
@@ -423,5 +429,58 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     public function buildPaymentMapKey(PaymentTransfer $paymentTransfer): string
     {
         return $this->getFactory()->createPaymentMapKeyBuilder()->buildMapKey($paymentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function createGiftCardPaymentsFromQuote(
+        QuoteTransfer $quoteTransfer,
+        SaveOrderTransfer $saveOrderTransfer
+    ): void {
+        $this->getFactory()
+            ->createSalesOrderPaymentSaver()
+            ->saveGiftCardOrderPayments($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentGiftCardCollectionDeleteCriteriaTransfer $paymentGiftCardCollectionDeleteCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deletePaymentGiftCardCollection(
+        PaymentGiftCardCollectionDeleteCriteriaTransfer $paymentGiftCardCollectionDeleteCriteriaTransfer
+    ): void {
+        $this->getFactory()
+            ->createPaymentGiftCardDeleter()
+            ->deletePaymentGiftCardCollection($paymentGiftCardCollectionDeleteCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemGiftCardCollectionDeleteCriteriaTransfer $salesOrderItemGiftCardCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemGiftCardCollectionResponseTransfer
+     */
+    public function deleteSalesOrderItemGiftCardCollection(
+        SalesOrderItemGiftCardCollectionDeleteCriteriaTransfer $salesOrderItemGiftCardCollectionDeleteCriteriaTransfer
+    ): SalesOrderItemGiftCardCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSalesOrderItemGiftCardDeleter()
+            ->deleteSalesOrderItemGiftCardCollection($salesOrderItemGiftCardCollectionDeleteCriteriaTransfer);
     }
 }

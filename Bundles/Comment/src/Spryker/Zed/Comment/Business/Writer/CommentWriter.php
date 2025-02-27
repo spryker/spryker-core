@@ -81,7 +81,7 @@ class CommentWriter implements CommentWriterInterface
             ->requireOwnerType()
             ->requireComment()
             ->getComment()
-                ->requireMessage();
+            ->requireMessage();
 
         $commentValidationResponseTransfer = $this->commentValidator->validateCommentAuthor($commentRequestTransfer);
         if (!$commentValidationResponseTransfer->getIsSuccessfulOrFail()) {
@@ -108,8 +108,8 @@ class CommentWriter implements CommentWriterInterface
         $commentRequestTransfer
             ->requireComment()
             ->getComment()
-                ->requireUuid()
-                ->requireMessage();
+            ->requireUuid()
+            ->requireMessage();
 
         $commentValidationResponseTransfer = $this->commentValidator->validateCommentAuthor($commentRequestTransfer);
         if (!$commentValidationResponseTransfer->getIsSuccessfulOrFail()) {
@@ -138,7 +138,7 @@ class CommentWriter implements CommentWriterInterface
         $commentRequestTransfer
             ->requireComment()
             ->getComment()
-                ->requireUuid();
+            ->requireUuid();
 
         $commentValidationResponseTransfer = $this->commentValidator->validateCommentAuthor($commentRequestTransfer);
         if (!$commentValidationResponseTransfer->getIsSuccessfulOrFail()) {

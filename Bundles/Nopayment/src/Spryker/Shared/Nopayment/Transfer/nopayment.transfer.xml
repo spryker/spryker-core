@@ -49,4 +49,16 @@
         <property name="quote" type="Quote"/>
         <property name="isSuccessful" type="bool"/>
     </transfer>
+
+    <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="NopaymentPaidCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="NopaymentPaidCollectionResponse" strict="true">
+    </transfer>
+
 </transfers>

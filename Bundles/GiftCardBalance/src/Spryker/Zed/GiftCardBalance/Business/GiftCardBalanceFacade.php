@@ -8,12 +8,14 @@
 namespace Spryker\Zed\GiftCardBalance\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\GiftCardBalanceLogCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\GiftCardBalance\Business\GiftCardBalanceBusinessFactory getFactory()
+ * @method \Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceEntityManagerInterface getEntityManager()
  */
 class GiftCardBalanceFacade extends AbstractFacade implements GiftCardBalanceFacadeInterface
 {
@@ -64,5 +66,22 @@ class GiftCardBalanceFacade extends AbstractFacade implements GiftCardBalanceFac
         $this->getFactory()
             ->createGiftCardBalanceSaver()
             ->saveTransactionLog($paymentTransfer, $checkoutResponse);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\GiftCardBalanceLogCollectionDeleteCriteriaTransfer $giftCardBalanceLogCollectionDeleteCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deleteGiftCardBalanceLogCollection(
+        GiftCardBalanceLogCollectionDeleteCriteriaTransfer $giftCardBalanceLogCollectionDeleteCriteriaTransfer
+    ): void {
+        $this->getFactory()
+            ->createGiftCardBalanceLogDeleter()
+            ->deleteGiftCardBalanceLogCollection($giftCardBalanceLogCollectionDeleteCriteriaTransfer);
     }
 }

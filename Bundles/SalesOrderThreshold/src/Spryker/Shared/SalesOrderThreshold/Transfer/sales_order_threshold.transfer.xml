@@ -165,4 +165,12 @@
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
     </transfer>
 
+    <transfer name="SalesExpenseCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderIds" type="int[]" singular="idSalesOrder"/>
+        <property name="types" type="string[]" singular="type"/>
+    </transfer>
+
+    <transfer name="SalesExpenseCollectionResponse" strict="true">
+    </transfer>
+
 </transfers>

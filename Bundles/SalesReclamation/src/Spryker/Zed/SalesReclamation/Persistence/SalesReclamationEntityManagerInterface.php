@@ -35,4 +35,11 @@ interface SalesReclamationEntityManagerInterface
      * @return array<\Generated\Shared\Transfer\ReclamationItemTransfer>
      */
     public function saveReclamationItems(ReclamationTransfer $reclamationTransfer): array;
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteSalesReclamationItemsBySalesOrderItemIds(array $salesOrderItemIds): void;
 }

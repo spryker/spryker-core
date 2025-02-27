@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemMetadataCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderItemMetadataCollectionResponseTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -163,5 +165,22 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
     public function getProductPageLoadTransferForRefresh(): ProductPageLoadTransfer
     {
         return $this->getFactory()->createProductAbstractIdsRefreshReader()->getProductProductPageLoadTransferForRefresh();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemMetadataCollectionDeleteCriteriaTransfer $salesOrderItemMetadataCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemMetadataCollectionResponseTransfer
+     */
+    public function deleteSalesOrderItemMetadataCollection(
+        SalesOrderItemMetadataCollectionDeleteCriteriaTransfer $salesOrderItemMetadataCollectionDeleteCriteriaTransfer
+    ): SalesOrderItemMetadataCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSalesOrderItemMetadataDeleter()
+            ->deleteSalesOrderItemMetadataCollection($salesOrderItemMetadataCollectionDeleteCriteriaTransfer);
     }
 }

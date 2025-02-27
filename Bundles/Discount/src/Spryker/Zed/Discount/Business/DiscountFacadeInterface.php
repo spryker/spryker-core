@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesDiscountCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
@@ -684,4 +685,59 @@ interface DiscountFacadeInterface
      * @return \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer
      */
     public function updateDiscountWithValidation(DiscountConfiguratorTransfer $discountConfigurator): DiscountConfiguratorResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `SaveOrderTransfer.idSalesOrder` to be set.
+     * - Deletes sales discount and sales discount code entities related to provided sales order ID.
+     * - Iterates over `SaveOrderTransfer.orderItems` and creates sales discount entities for each item.
+     * - Iterates over `SaveOrderTransfer.orderExpenses` and creates sales discount entities for each expense.
+     * - If voucher code is used, increases the number of uses of each of used discount codes by 1.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function replaceSalesOrderDiscountsByQuote(
+        QuoteTransfer $quoteTransfer,
+        SaveOrderTransfer $saveOrderTransfer
+    ): void;
+
+    /**
+     * Specification:
+     * - If `SalesDiscountCollectionDeleteCriteriaTransfer.salesExpenseIds` is not empty deletes sales discounts and sales discount codes by provided IDs.
+     * - If `SalesDiscountCollectionDeleteCriteriaTransfer.salesOrderItemIds` is not empty deletes sales discounts and sales discount codes by provided IDs.
+     * - Does nothing if no conditions are set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesDiscountCollectionDeleteCriteriaTransfer $salesDiscountCollectionDeleteCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deleteSalesDiscounts(
+        SalesDiscountCollectionDeleteCriteriaTransfer $salesDiscountCollectionDeleteCriteriaTransfer
+    ): void;
+
+    /**
+     * Specification:
+     * - Requires `SaveOrderTransfer.idSalesOrder` to be set.
+     * - Retrieves sales discount codes by provided sales order ID.
+     * - Does nothing if no discount codes are found.
+     * - Otherwise decreases the number of uses of each of found discount codes by 1.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function releaseSalesOrderDiscountCodesByQuote(
+        QuoteTransfer $quoteTransfer,
+        SaveOrderTransfer $saveOrderTransfer
+    ): void;
 }

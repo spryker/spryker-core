@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CartNote\Business;
 
+use Spryker\Zed\CartNote\Business\Collector\CartNoteSalesOrderItemCollector;
+use Spryker\Zed\CartNote\Business\Collector\CartNoteSalesOrderItemCollectorInterface;
 use Spryker\Zed\CartNote\Business\Expander\CartReorderExpander;
 use Spryker\Zed\CartNote\Business\Expander\CartReorderExpanderInterface;
 use Spryker\Zed\CartNote\Business\Hydrator\CartReorderItemHydrator;
@@ -55,6 +57,14 @@ class CartNoteBusinessFactory extends AbstractBusinessFactory
     public function createCartReorderExpander(): CartReorderExpanderInterface
     {
         return new CartReorderExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\CartNote\Business\Collector\CartNoteSalesOrderItemCollectorInterface
+     */
+    public function createCartNoteSalesOrderItemCollector(): CartNoteSalesOrderItemCollectorInterface
+    {
+        return new CartNoteSalesOrderItemCollector();
     }
 
     /**

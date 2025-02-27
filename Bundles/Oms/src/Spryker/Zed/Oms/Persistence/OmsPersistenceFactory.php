@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
+use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
@@ -103,6 +104,14 @@ class OmsPersistenceFactory extends AbstractPersistenceFactory
     public function createOmsOrderItemStateHistoryQuery(): SpyOmsOrderItemStateHistoryQuery
     {
         return SpyOmsOrderItemStateHistoryQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery
+     */
+    public function createOmsEventTimeoutQuery(): SpyOmsEventTimeoutQuery
+    {
+        return SpyOmsEventTimeoutQuery::create();
     }
 
     /**

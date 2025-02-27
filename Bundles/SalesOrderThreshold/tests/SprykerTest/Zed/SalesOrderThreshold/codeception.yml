@@ -28,6 +28,8 @@ suites:
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper
     Persistence:
         path: Persistence
         actor: SalesOrderThresholdPersistenceTester

@@ -26,6 +26,7 @@ use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
+use Generated\Shared\Transfer\QuoteProcessFlowTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
@@ -231,12 +232,14 @@ class CheckoutRestApiBusinessTester extends Actor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteProcessFlowTransfer|null $quoteProcessFlowTransfer
+     *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createQuoteResponseTransfer(): AbstractTransfer
+    public function createQuoteResponseTransfer(?QuoteProcessFlowTransfer $quoteProcessFlowTransfer = null): AbstractTransfer
     {
         return (new QuoteResponseBuilder(['isSuccessful' => true]))
-            ->withQuoteTransfer($this->createQuoteTransfer()->toArray())
+            ->withQuoteTransfer($this->createQuoteTransfer($quoteProcessFlowTransfer)->toArray())
             ->build();
     }
 
@@ -288,9 +291,11 @@ class CheckoutRestApiBusinessTester extends Actor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteProcessFlowTransfer|null $quoteProcessFlowTransfer
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function createQuoteTransfer(): QuoteTransfer
+    public function createQuoteTransfer(?QuoteProcessFlowTransfer $quoteProcessFlowTransfer = null): QuoteTransfer
     {
         $product = $this->haveProduct();
         $this->haveProductInStock([StockProductTransfer::SKU => $product->getSku()]);
@@ -306,6 +311,8 @@ class CheckoutRestApiBusinessTester extends Actor
             ->withBillingAddress()
             ->withShipment()
             ->build();
+
+        $quoteTransfer->setQuoteProcessFlow($quoteProcessFlowTransfer);
 
         return $quoteTransfer->setPayment($this->getPaymentTransfer());
     }

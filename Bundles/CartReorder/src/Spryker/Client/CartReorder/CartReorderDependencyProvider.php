@@ -28,6 +28,11 @@ class CartReorderDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_CART_REORDER_QUOTE_PROVIDER_STRATEGY = 'PLUGINS_CART_REORDER_QUOTE_PROVIDER_STRATEGY';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -37,6 +42,7 @@ class CartReorderDependencyProvider extends AbstractDependencyProvider
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addQuoteClient($container);
+        $container = $this->addCartReorderQuoteProviderStrategyPlugins($container);
 
         return $container;
     }
@@ -67,5 +73,27 @@ class CartReorderDependencyProvider extends AbstractDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCartReorderQuoteProviderStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CART_REORDER_QUOTE_PROVIDER_STRATEGY, function () {
+            return $this->getCartReorderQuoteProviderStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Client\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderStrategyPluginInterface>
+     */
+    protected function getCartReorderQuoteProviderStrategyPlugins(): array
+    {
+        return [];
     }
 }

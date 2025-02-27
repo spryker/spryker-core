@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemMetadataCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderItemMetadataCollectionResponseTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
 interface SalesProductConnectorFacadeInterface
@@ -132,4 +134,20 @@ interface SalesProductConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
     public function getProductPageLoadTransferForRefresh(): ProductPageLoadTransfer;
+
+    /**
+     * Specification:
+     * - Uses `SalesOrderItemMetadataCollectionDeleteCriteriaTransfer.salesOrderItemIds` to filter sales order item metadata entities by the sales order item IDs.
+     * - Deletes found by criteria sales order item metadata entities.
+     * - Does nothing if no criteria properties are set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemMetadataCollectionDeleteCriteriaTransfer $salesOrderItemMetadataCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemMetadataCollectionResponseTransfer
+     */
+    public function deleteSalesOrderItemMetadataCollection(
+        SalesOrderItemMetadataCollectionDeleteCriteriaTransfer $salesOrderItemMetadataCollectionDeleteCriteriaTransfer
+    ): SalesOrderItemMetadataCollectionResponseTransfer;
 }

@@ -12,16 +12,10 @@ use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\OrderValidatorInterfac
 class OrderExpander implements OrderExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\OrderValidatorInterface
-     */
-    protected OrderValidatorInterface $orderValidator;
-
-    /**
      * @param \Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\OrderValidatorInterface $orderValidator
      */
-    public function __construct(OrderValidatorInterface $orderValidator)
+    public function __construct(protected OrderValidatorInterface $orderValidator)
     {
-        $this->orderValidator = $orderValidator;
     }
 
     /**

@@ -16,6 +16,8 @@ use Spryker\Zed\Shipment\Business\Calculator\ShipmentTotalCalculatorInterface;
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
+use Spryker\Zed\Shipment\Business\Collector\ShipmentSalesOrderItemCollector;
+use Spryker\Zed\Shipment\Business\Collector\ShipmentSalesOrderItemCollectorInterface;
 use Spryker\Zed\Shipment\Business\Event\ShipmentEventGrouper;
 use Spryker\Zed\Shipment\Business\Event\ShipmentEventGrouperInterface;
 use Spryker\Zed\Shipment\Business\Expander\OrderItemShipmentExpander;
@@ -39,6 +41,8 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
 use Spryker\Zed\Shipment\Business\OrderItem\ShipmentSalesOrderItemReader;
 use Spryker\Zed\Shipment\Business\OrderItem\ShipmentSalesOrderItemReaderInterface;
+use Spryker\Zed\Shipment\Business\Replacer\SalesOrderShipmentReplacer;
+use Spryker\Zed\Shipment\Business\Replacer\SalesOrderShipmentReplacerInterface;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizer;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrate as MultipleShipmentOrderHydrate;
@@ -577,7 +581,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
+     * @return array<string, array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface|\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface|\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface>>
      */
     public function getShipmentMethodPlugins(): array
     {
@@ -694,6 +698,27 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentMethodExpander(): ShipmentMethodExpanderInterface
     {
         return new ShipmentMethodExpander($this->getShipmentMethodCollectionExpanderPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Replacer\SalesOrderShipmentReplacerInterface
+     */
+    public function createSalesOrderShipmentReplacer(): SalesOrderShipmentReplacerInterface
+    {
+        return new SalesOrderShipmentReplacer(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->getSalesFacade(),
+            $this->createCheckoutMultiShipmentOrderSaver(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Collector\ShipmentSalesOrderItemCollectorInterface
+     */
+    public function createShipmentSalesOrderItemCollector(): ShipmentSalesOrderItemCollectorInterface
+    {
+        return new ShipmentSalesOrderItemCollector();
     }
 
     /**

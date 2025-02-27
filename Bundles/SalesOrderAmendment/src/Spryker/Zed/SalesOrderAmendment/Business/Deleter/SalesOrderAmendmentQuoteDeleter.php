@@ -21,33 +21,15 @@ class SalesOrderAmendmentQuoteDeleter implements SalesOrderAmendmentQuoteDeleter
     use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentRepositoryInterface
-     */
-    protected SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository;
-
-    /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentEntityManagerInterface
-     */
-    protected SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager;
-
-    /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Business\Mapper\SalesOrderAmendmentQuoteCriteriaMapperInterface
-     */
-    protected SalesOrderAmendmentQuoteCriteriaMapperInterface $salesOrderAmendmentQuoteCriteriaMapper;
-
-    /**
      * @param \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository
      * @param \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager
      * @param \Spryker\Zed\SalesOrderAmendment\Business\Mapper\SalesOrderAmendmentQuoteCriteriaMapperInterface $salesOrderAmendmentQuoteCriteriaMapper
      */
     public function __construct(
-        SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository,
-        SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager,
-        SalesOrderAmendmentQuoteCriteriaMapperInterface $salesOrderAmendmentQuoteCriteriaMapper
+        protected SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository,
+        protected SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager,
+        protected SalesOrderAmendmentQuoteCriteriaMapperInterface $salesOrderAmendmentQuoteCriteriaMapper
     ) {
-        $this->salesOrderAmendmentRepository = $salesOrderAmendmentRepository;
-        $this->salesOrderAmendmentEntityManager = $salesOrderAmendmentEntityManager;
-        $this->salesOrderAmendmentQuoteCriteriaMapper = $salesOrderAmendmentQuoteCriteriaMapper;
     }
 
     /**

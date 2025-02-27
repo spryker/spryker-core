@@ -18,12 +18,15 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemOptionCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderItemOptionCollectionResponseTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionBusinessFactory getFactory()
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionEntityManagerInterface getEntityManager()
  */
 class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeInterface
 {
@@ -390,5 +393,22 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     public function hydrateCartReorderItemWithProductOptions(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer
     {
         return $this->getFactory()->createCartReorderItemHydrator()->hydrate($cartReorderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemOptionCollectionDeleteCriteriaTransfer $salesOrderItemOptionCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemOptionCollectionResponseTransfer
+     */
+    public function deleteSalesOrderItemOptionCollection(
+        SalesOrderItemOptionCollectionDeleteCriteriaTransfer $salesOrderItemOptionCollectionDeleteCriteriaTransfer
+    ): SalesOrderItemOptionCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSalesOrderItemOptionDeleter()
+            ->deleteSalesOrderItemOptionCollection($salesOrderItemOptionCollectionDeleteCriteriaTransfer);
     }
 }

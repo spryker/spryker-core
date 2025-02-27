@@ -22,4 +22,16 @@
     <transfer name="Customer">
     </transfer>
 
+    <transfer name="SalesExpenseCollection" strict="true">
+    </transfer>
+
+    <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
+    </transfer>
+
+    <transfer name="OmsOrderItemState" strict="true">
+    </transfer>
+
+    <transfer name="SalesOrderItemCollectionResponse" strict="true">
+    </transfer>
+
 </transfers>

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesOrderThreshold\Dependency\Facade;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesExpenseCollectionResponseTransfer;
 
 interface SalesOrderThresholdToSalesFacadeInterface
 {
@@ -17,4 +19,13 @@ interface SalesOrderThresholdToSalesFacadeInterface
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     public function createSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesExpenseCollectionResponseTransfer
+     */
+    public function deleteSalesExpenseCollection(
+        SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
+    ): SalesExpenseCollectionResponseTransfer;
 }

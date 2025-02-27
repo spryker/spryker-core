@@ -22,6 +22,11 @@ use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesExpenseCollectionResponseTransfer;
+use Generated\Shared\Transfer\SalesOrderItemCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer;
+use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -573,5 +578,90 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createSalesOrderReader()
             ->getOrderCollection($orderCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    public function updateOrderByQuote(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): SaveOrderTransfer
+    {
+        return $this->getFactory()
+            ->createSalesOrderUpdater()
+            ->updateOrderByQuote($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesExpenseCollectionResponseTransfer
+     */
+    public function deleteSalesExpenseCollection(
+        SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
+    ): SalesExpenseCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSalesExpenseDeleter()
+            ->deleteSalesExpenseCollection($salesExpenseCollectionDeleteCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function createSalesOrderItemCollectionByQuote(
+        SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+    ): SalesOrderItemCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSalesOrderItemCreator()
+            ->createSalesOrderItemCollectionByQuote($salesOrderItemCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function updateSalesOrderItemCollectionByQuote(
+        SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+    ): SalesOrderItemCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSalesOrderItemUpdater()
+            ->updateSalesOrderItemCollectionByQuote($salesOrderItemCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionDeleteCriteriaTransfer $salesOrderItemCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function deleteSalesOrderItemCollection(
+        SalesOrderItemCollectionDeleteCriteriaTransfer $salesOrderItemCollectionDeleteCriteriaTransfer
+    ): SalesOrderItemCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSalesOrderItemDeleter()
+            ->deleteSalesOrderItemCollection($salesOrderItemCollectionDeleteCriteriaTransfer);
     }
 }

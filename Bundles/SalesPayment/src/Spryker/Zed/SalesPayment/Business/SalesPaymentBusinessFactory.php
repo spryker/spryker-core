@@ -12,12 +12,16 @@ use Spryker\Zed\SalesPayment\Business\Calculator\CaptureAmountCalculator;
 use Spryker\Zed\SalesPayment\Business\Calculator\CaptureAmountCalculatorInterface;
 use Spryker\Zed\SalesPayment\Business\Calculator\RefundAmountCalculator;
 use Spryker\Zed\SalesPayment\Business\Calculator\RefundAmountCalculatorInterface;
+use Spryker\Zed\SalesPayment\Business\Deleter\SalesPaymentDeleter;
+use Spryker\Zed\SalesPayment\Business\Deleter\SalesPaymentDeleterInterface;
 use Spryker\Zed\SalesPayment\Business\Expander\SalesOrderExpander;
 use Spryker\Zed\SalesPayment\Business\Expander\SalesOrderExpanderInterface;
 use Spryker\Zed\SalesPayment\Business\MessageEmitter\MessageEmitter;
 use Spryker\Zed\SalesPayment\Business\MessageEmitter\MessageEmitterInterface;
 use Spryker\Zed\SalesPayment\Business\Reader\SalesPaymentReader;
 use Spryker\Zed\SalesPayment\Business\Reader\SalesPaymentReaderInterface;
+use Spryker\Zed\SalesPayment\Business\Replacer\SalesPaymentReplacer;
+use Spryker\Zed\SalesPayment\Business\Replacer\SalesPaymentReplacerInterface;
 use Spryker\Zed\SalesPayment\Business\Writer\SalesPaymentWriter;
 use Spryker\Zed\SalesPayment\Business\Writer\SalesPaymentWriterInterface;
 use Spryker\Zed\SalesPayment\Dependency\Facade\SalesPaymentToMessageBrokerFacadeInterface;
@@ -84,6 +88,29 @@ class SalesPaymentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\SalesPayment\Business\Replacer\SalesPaymentReplacerInterface
+     */
+    public function createSalesPaymentReplacer(): SalesPaymentReplacerInterface
+    {
+        return new SalesPaymentReplacer(
+            $this->createSalesPaymentReader(),
+            $this->createSalesPaymentWriter(),
+            $this->createSalesPaymentDeleter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesPayment\Business\Deleter\SalesPaymentDeleterInterface
+     */
+    public function createSalesPaymentDeleter(): SalesPaymentDeleterInterface
+    {
+        return new SalesPaymentDeleter(
+            $this->getEntityManager(),
+            $this->getSalesPaymentPreDeletePlugins(),
+        );
+    }
+
+    /**
      * @return array<\Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\OrderPaymentExpanderPluginInterface>
      */
     public function getOrderPaymentExpanderPlugins(): array
@@ -123,5 +150,13 @@ class SalesPaymentBusinessFactory extends AbstractBusinessFactory
         return new SalesPaymentReader(
             $this->getRepository(),
         );
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\SalesPaymentPreDeletePluginInterface>
+     */
+    public function getSalesPaymentPreDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(SalesPaymentDependencyProvider::PLUGINS_SALES_PAYMENT_PRE_DELETE);
     }
 }

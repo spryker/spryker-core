@@ -10,6 +10,7 @@ namespace Spryker\Zed\SalesOrderAmendment\Communication\Plugin\CartReorder;
 use Generated\Shared\Transfer\CartReorderRequestTransfer;
 use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\QuoteProcessFlowTransfer;
+use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPreReorderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -23,7 +24,6 @@ class OrderAmendmentQuoteProcessFlowExpanderCartPreReorderPlugin extends Abstrac
      * {@inheritDoc}
      * - Does nothing if `CartReorderRequestTransfer.isAmendment` flag is not set.
      * - Requires `CartReorderTransfer.quote` to be set.
-     * - Uses {@link \Spryker\Zed\SalesOrderAmendment\SalesOrderAmendmentConfig::getOrderAmendmentQuoteProcessFlowName()} to get the name of the quote process flow.
      * - Expands `CartReorderTransfer.quote.quoteProcessFlow` with the quote process flow name.
      *
      * @api
@@ -42,7 +42,7 @@ class OrderAmendmentQuoteProcessFlowExpanderCartPreReorderPlugin extends Abstrac
         }
 
         $cartReorderTransfer->getQuoteOrFail()->setQuoteProcessFlow(
-            (new QuoteProcessFlowTransfer())->setName($this->getConfig()->getOrderAmendmentQuoteProcessFlowName()),
+            (new QuoteProcessFlowTransfer())->setName(SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT),
         );
 
         return $cartReorderTransfer;

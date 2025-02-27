@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PersistentCart\Communication\Plugin\CartReorder;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CartReorderRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderStrategyPluginInterface;
@@ -21,10 +20,15 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class PersistentCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin implements CartReorderQuoteProviderStrategyPluginInterface
 {
     /**
+     * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
+     *
+     * @var string
+     */
+    protected const STORAGE_STRATEGY_DATABASE = 'database';
+
+    /**
      * {@inheritDoc}
-     * - Checks if the quote is present in the `CartReorderRequestTransfer`.
-     * - Checks if the quote has an ID.
-     * - Checks if the quote has a customer.
+     * - Checks if the storage strategy is database.
      *
      * @api
      *
@@ -34,14 +38,18 @@ class PersistentCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin im
      */
     public function isApplicable(CartReorderRequestTransfer $cartReorderRequestTransfer): bool
     {
-        return $cartReorderRequestTransfer->getQuote()
-            && $cartReorderRequestTransfer->getQuoteOrFail()->getIdQuote()
-            && $cartReorderRequestTransfer->getQuoteOrFail()->getCustomer();
+        $storageStrategy = $this->getFactory()
+            ->getQuoteFacade()
+            ->getStorageStrategy();
+
+        return $storageStrategy === static::STORAGE_STRATEGY_DATABASE;
     }
 
     /**
      * {@inheritDoc}
-     * - Finds the quote by the provided quote ID and customer.
+     * - Requires `CartReorderRequestTransfer.customerReference` to be set.
+     * - Finds customer quote by `CartReorderRequestTransfer.customerReference`.
+     * - Creates quote if it's not exists.
      * - Removes items from the found quote.
      * - Returns the found quote.
      *
@@ -53,15 +61,6 @@ class PersistentCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin im
      */
     public function execute(CartReorderRequestTransfer $cartReorderRequestTransfer): QuoteTransfer
     {
-        $quoteTransfer = $this->getFacade()
-            ->findQuote(
-                $cartReorderRequestTransfer->getQuoteOrFail()->getIdQuoteOrFail(),
-                $cartReorderRequestTransfer->getQuoteOrFail()->getCustomerOrFail(),
-            )
-            ->getQuoteTransferOrFail();
-
-        $quoteTransfer->setItems(new ArrayObject());
-
-        return $quoteTransfer;
+        return $this->getFacade()->getQuoteForCartReorder($cartReorderRequestTransfer);
     }
 }

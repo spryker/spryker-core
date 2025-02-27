@@ -29,4 +29,27 @@ interface SalesConfigurableBundleEntityManagerInterface
     public function createSalesOrderConfiguredBundleItem(
         SalesOrderConfiguredBundleItemTransfer $salesOrderConfiguredBundleItemTransfer
     ): SalesOrderConfiguredBundleItemTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer $salesOrderConfiguredBundleItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer
+     */
+    public function saveSalesOrderConfiguredBundleItemByFkSalesOrderItem(
+        SalesOrderConfiguredBundleItemTransfer $salesOrderConfiguredBundleItemTransfer
+    ): SalesOrderConfiguredBundleItemTransfer;
+
+    /**
+     * @param list<int> $salesOrderConfiguredBundleIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderConfiguredBundlesByIds(array $salesOrderConfiguredBundleIds): void;
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderConfiguredBundleItemsBySalesOrderItemIds(array $salesOrderItemIds): void;
 }

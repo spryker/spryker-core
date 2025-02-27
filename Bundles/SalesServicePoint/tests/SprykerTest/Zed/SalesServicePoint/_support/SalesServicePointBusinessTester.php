@@ -11,6 +11,7 @@ namespace SprykerTest\Zed\SalesServicePoint;
 
 use Codeception\Actor;
 use Orm\Zed\SalesServicePoint\Persistence\SpySalesOrderItemServicePointQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 
 /**
  * Inherited Methods
@@ -25,6 +26,7 @@ use Orm\Zed\SalesServicePoint\Persistence\SpySalesOrderItemServicePointQuery;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause($vars = [])
+ * @method \Spryker\Zed\SalesServicePoint\Business\SalesServicePointFacadeInterface getFacade()
  *
  * @SuppressWarnings(\SprykerTest\Zed\SalesServicePoint\PHPMD)
  */
@@ -48,5 +50,13 @@ class SalesServicePointBusinessTester extends Actor
     public function getSalesOrderItemServicePointQuery(): SpySalesOrderItemServicePointQuery
     {
         return SpySalesOrderItemServicePointQuery::create();
+    }
+
+    /**
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SalesServicePoint\Persistence\SpySalesOrderItemServicePoint>
+     */
+    public function getSalesOrderItemServicePointEntities(): ObjectCollection
+    {
+        return $this->getSalesOrderItemServicePointQuery()->find();
     }
 }

@@ -1,5 +1,6 @@
 namespace: CartReorder
 include:
+    - tests/SprykerTest/Client/CartReorder
     - tests/SprykerTest/Zed/CartReorder
 paths:
     tests: tests

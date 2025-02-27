@@ -8,10 +8,18 @@
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use Spryker\Zed\Sales\SalesConfig;
+use Spryker\Zed\Sales\SalesDependencyProvider;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemInitialStateProviderPluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 use SprykerTest\Zed\Sales\SalesBusinessTester;
 
@@ -100,6 +108,108 @@ class SaveSalesOrderItemsTest extends Unit
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $this->assertNull($itemTransfer->getTaxRate());
         }
+    }
+
+    /**
+     * @dataProvider saveSalesOrderItemsPluginProvider
+     *
+     * @param string $dependencyKey
+     * @param \PHPUnit\Framework\MockObject\MockObject $plugin
+     *
+     * @return void
+     */
+    public function testShouldExecute(string $dependencyKey, MockObject $plugin): void
+    {
+        // Assert
+        $this->tester->setDependency($dependencyKey, [$plugin]);
+
+        // Arrange
+        $this->tester->createInitialState();
+        $saveOrderTransfer = new SaveOrderTransfer();
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
+        $this->salesFacade->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
+
+        // Act
+        $this->salesFacade->saveSalesOrderItems($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * @return array<string, array<string, \PHPUnit\Framework\MockObject\MockObject>>
+     */
+    public function saveSalesOrderItemsPluginProvider(): array
+    {
+        return [
+            'order item initial state provider plugin stack' => [
+                SalesDependencyProvider::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER,
+                $this->getOrderItemInitialStateProviderPluginMock(),
+            ],
+            'order item expander pre save plugin stack' => [
+                SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS,
+                $this->getOrderItemExpanderPreSavePluginMock(),
+            ],
+            'order items post save plugin stack' => [
+                SalesDependencyProvider::PLUGINS_ORDER_ITEMS_POST_SAVE,
+                $this->getOrderItemsPostSavePluginMock(),
+            ],
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemInitialStateProviderPluginInterface
+     */
+    protected function getOrderItemInitialStateProviderPluginMock(): OrderItemInitialStateProviderPluginInterface
+    {
+        $orderItemInitialStateProviderPluginMock = $this
+            ->getMockBuilder(OrderItemInitialStateProviderPluginInterface::class)
+            ->getMock();
+
+        $orderItemInitialStateProviderPluginMock
+            ->expects($this->once())
+            ->method('getInitialItemState');
+
+        return $orderItemInitialStateProviderPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface
+     */
+    protected function getOrderItemExpanderPreSavePluginMock(): OrderItemExpanderPreSavePluginInterface
+    {
+        $orderItemExpanderPreSavePluginMock = $this
+            ->getMockBuilder(OrderItemExpanderPreSavePluginInterface::class)
+            ->getMock();
+
+        $orderItemExpanderPreSavePluginMock
+            ->expects($this->once())
+            ->method('expandOrderItem')
+            ->willReturnCallback(function (
+                QuoteTransfer $quoteTransfer,
+                ItemTransfer $itemTransfer,
+                SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+            ) {
+                return $salesOrderItemEntityTransfer;
+            });
+
+        return $orderItemExpanderPreSavePluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface
+     */
+    protected function getOrderItemsPostSavePluginMock(): OrderItemsPostSavePluginInterface
+    {
+        $orderItemsPostSavePluginMock = $this
+            ->getMockBuilder(OrderItemsPostSavePluginInterface::class)
+            ->getMock();
+
+        $orderItemsPostSavePluginMock
+            ->expects($this->once())
+            ->method('execute')
+            ->willReturnCallback(function (SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer) {
+                return $saveOrderTransfer;
+            });
+
+        return $orderItemsPostSavePluginMock;
     }
 
     /**

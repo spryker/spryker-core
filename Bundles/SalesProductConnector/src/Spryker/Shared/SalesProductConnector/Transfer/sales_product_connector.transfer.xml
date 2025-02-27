@@ -76,4 +76,19 @@
     <transfer name="PageMap">
     </transfer>
 
+    <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemMetadataCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemMetadataCollectionResponse" strict="true">
+    </transfer>
+
+    <transfer name="SalesOrderItemCollectionResponse" strict="true">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
 </transfers>

@@ -11,9 +11,12 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartReorderRequestTransfer;
 use Generated\Shared\Transfer\CartReorderTransfer;
+use Generated\Shared\Transfer\QuoteProcessFlowTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Shared\CheckoutExtension\CheckoutExtensionContextsInterface;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use Spryker\Zed\CartReorder\CartReorderDependencyProvider;
 use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface;
 use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPreReorderPluginInterface;
@@ -51,13 +54,6 @@ class ReorderTest extends Unit
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_NOT_PROVIDED = 'cart_reorder.validation.quote_not_provided';
-
-    /**
-     * @uses \Spryker\Zed\CartReorder\CartReorderConfig::DEFAULT_QUOTE_PROCESS_FLOW_NAME
-     *
-     * @var string
-     */
-    protected const DEFAULT_QUOTE_PROCESS_FLOW_NAME = 'default';
 
     /**
      * @var \SprykerTest\Zed\CartReorder\CartReorderBusinessTester
@@ -229,30 +225,6 @@ class ReorderTest extends Unit
     }
 
     /**
-     * @dataProvider defaultQuoteProcessFlowCartReorderPluginProvider
-     *
-     * @param string $dependencyKey
-     * @param \PHPUnit\Framework\MockObject\MockObject $plugin
-     *
-     * @return void
-     */
-    public function testShouldExecuteDefaultQuoteProcessFlowPluginStack(string $dependencyKey, MockObject $plugin): void
-    {
-        // Assert
-        $this->tester->setDependency($dependencyKey, [static::DEFAULT_QUOTE_PROCESS_FLOW_NAME => [$plugin]]);
-
-        // Arrange
-        $orderTransfer = $this->tester->createOrder();
-        $cartReorderRequestTransfer = (new CartReorderRequestTransfer())
-            ->setCustomerReference($orderTransfer->getCustomerReference())
-            ->setOrderReference($orderTransfer->getOrderReference())
-            ->setQuote(new QuoteTransfer());
-
-        // Act
-        $this->tester->getFacade()->reorder($cartReorderRequestTransfer);
-    }
-
-    /**
      * @return array<string, list<\PHPUnit\Framework\MockObject\MockObject>>
      */
     protected function cartReorderPluginProvider(): array
@@ -270,16 +242,54 @@ class ReorderTest extends Unit
     }
 
     /**
-     * @return array<string, list<\PHPUnit\Framework\MockObject\MockObject>>
+     * @dataProvider cartReorderPluginProvider
+     *
+     * @param string $dependencyKey
+     * @param \PHPUnit\Framework\MockObject\MockObject $plugin
+     *
+     * @return void
      */
-    protected function defaultQuoteProcessFlowCartReorderPluginProvider(): array
+    public function testCheckoutContextIsCalled(string $dependencyKey, MockObject $plugin): void
     {
-        return [
-            'validator plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_VALIDATOR, $this->getCartReorderValidatorPluginMock()],
-            'item hydrator plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_ITEM_HYDRATOR, $this->getCartReorderItemHydratorPluginMock()],
-            'pre add to cart plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_PRE_ADD_TO_CART, $this->getCartReorderPreAddToCartPluginMock()],
-            'post reorder plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_POST_REORDER, $this->getCartPostReorderPluginMock()],
-        ];
+        // Assert
+        $this->tester->setDependency($dependencyKey, [$plugin]);
+
+        // Arrange
+        $orderTransfer = $this->tester->createOrder();
+        $quoteProcessFlowTransfer = (new QuoteProcessFlowTransfer())
+            ->setName(CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT);
+        $quoteTransfer = (new QuoteTransfer())
+            ->setQuoteProcessFlow($quoteProcessFlowTransfer);
+        $cartReorderRequestTransfer = (new CartReorderRequestTransfer())
+            ->setCustomerReference($orderTransfer->getCustomerReference())
+            ->setOrderReference($orderTransfer->getOrderReference())
+            ->setQuote($quoteTransfer);
+
+        // Act
+        $this->tester->getFacade()->reorder($cartReorderRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testOrderAmendmentContextIsCalled(): void
+    {
+        // Assert
+        $this->tester->setDependency(CartReorderDependencyProvider::PLUGINS_CART_REORDER_VALIDATOR_FOR_ORDER_AMENDMENT, [$this->getCartReorderValidatorPluginMock()]);
+
+        // Arrange
+        $orderTransfer = $this->tester->createOrder();
+        $quoteProcessFlowTransfer = (new QuoteProcessFlowTransfer())
+            ->setName(SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT);
+        $quoteTransfer = (new QuoteTransfer())
+            ->setQuoteProcessFlow($quoteProcessFlowTransfer);
+        $cartReorderRequestTransfer = (new CartReorderRequestTransfer())
+            ->setCustomerReference($orderTransfer->getCustomerReference())
+            ->setOrderReference($orderTransfer->getOrderReference())
+            ->setQuote($quoteTransfer);
+
+        // Act
+        $this->tester->getFacade()->reorder($cartReorderRequestTransfer);
     }
 
     /**

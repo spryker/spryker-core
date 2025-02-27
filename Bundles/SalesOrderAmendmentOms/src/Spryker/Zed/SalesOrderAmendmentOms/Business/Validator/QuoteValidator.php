@@ -18,11 +18,6 @@ use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsT
 class QuoteValidator implements QuoteValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\OrderValidatorInterface
-     */
-    protected OrderValidatorInterface $orderValidator;
-
-    /**
      * @var \Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToOmsFacadeInterface
      */
     protected SalesOrderAmendmentOmsToOmsFacadeInterface $omsFacade;
@@ -40,9 +35,8 @@ class QuoteValidator implements QuoteValidatorInterface
     /**
      * @param \Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\OrderValidatorInterface $orderValidator
      */
-    public function __construct(OrderValidatorInterface $orderValidator)
+    public function __construct(protected OrderValidatorInterface $orderValidator)
     {
-        $this->orderValidator = $orderValidator;
     }
 
     /**

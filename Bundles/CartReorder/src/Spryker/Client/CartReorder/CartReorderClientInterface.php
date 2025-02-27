@@ -14,7 +14,7 @@ interface CartReorderClientInterface
 {
     /**
      * Specification:
-     * - Gets current quote and sets it to the `CartReorderRequestTransfer.quote`.
+     * - Determines the `QuoteTransfer` to use by executing {@link \Spryker\Client\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderStrategyPluginInterface} plugins.
      * - Makes Zed request.
      * - Requires `CartReorderRequestTransfer.customerReference` to be set.
      * - Requires `CartReorderRequestTransfer.orderReference` to be set.

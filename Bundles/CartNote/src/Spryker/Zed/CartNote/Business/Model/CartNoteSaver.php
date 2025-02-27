@@ -29,16 +29,18 @@ class CartNoteSaver implements CartNoteSaverInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param bool|null $forceUpdate
      *
      * @return void
      */
-    public function saveCartNoteToOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    public function saveCartNoteToOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer, ?bool $forceUpdate = false): void
     {
-        if (!$quoteTransfer->getCartNote()) {
+        if (!$quoteTransfer->getCartNote() && !$forceUpdate) {
             return;
         }
 
-        $this->saveOrderNote($saveOrderTransfer->getIdSalesOrder(), $quoteTransfer->getCartNote());
+        $idSalesOrder = $forceUpdate ? $saveOrderTransfer->getIdSalesOrderOrFail() : $saveOrderTransfer->getIdSalesOrder();
+        $this->saveOrderNote($idSalesOrder, (string)$quoteTransfer->getCartNote());
     }
 
     /**

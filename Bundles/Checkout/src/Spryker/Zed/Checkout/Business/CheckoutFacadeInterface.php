@@ -17,11 +17,11 @@ interface CheckoutFacadeInterface
 {
     /**
      * Specification:
-     * - Run checkout pre-condition plugins (rises errors)
-     * - Run checkout pre-save plugins
-     * - Run checkout order saver plugins (in a transaction)
+     * - Run checkout pre-condition plugins (rises errors) based on quote process flow (`QuoteTransfer.quoteProcessFlow.name`).
+     * - Run checkout pre-save plugins based on quote process flow (`QuoteTransfer.quoteProcessFlow.name`).
+     * - Run checkout order saver plugins (in a transaction) based on quote process flow (`QuoteTransfer.quoteProcessFlow.name`).
      * - Trigger state machine for all items of the new order (Oms)
-     * - Run checkout post-save plugins
+     * - Run checkout post-save plugins based on quote process flow (`QuoteTransfer.quoteProcessFlow.name`).
      * - Return response with boolean isSuccess and an array of errors
      *
      * @api
@@ -36,7 +36,7 @@ interface CheckoutFacadeInterface
 
     /**
      * Specification:
-     * - Runs checkout pre-condition CheckoutPreConditionPluginInterface plugins.
+     * - Runs checkout pre-condition CheckoutPreConditionPluginInterface plugins based on quote process flow (`QuoteTransfer.quoteProcessFlow.name`).
      * - Returns response with boolean isSuccess and an array of errors.
      *
      * @api

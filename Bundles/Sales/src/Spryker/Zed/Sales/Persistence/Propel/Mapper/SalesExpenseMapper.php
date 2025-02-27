@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
+use Propel\Runtime\Collection\Collection;
 
 class SalesExpenseMapper implements SalesExpenseMapperInterface
 {
@@ -51,6 +52,23 @@ class SalesExpenseMapper implements SalesExpenseMapperInterface
         $expenseTransfer = $this->mapExpenseUnitPrices($expenseTransfer);
 
         return $expenseTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\SpySalesExpense> $salesExpenseEntities
+     * @param list<\Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\ExpenseTransfer>
+     */
+    public function mapSalesExpenseEntitiesToExpenseTransfers(
+        Collection $salesExpenseEntities,
+        array $expenseTransfers
+    ): array {
+        foreach ($salesExpenseEntities as $salesExpenseEntity) {
+            $expenseTransfers[] = $this->mapExpenseEntityToSalesExpenseTransfer(new ExpenseTransfer(), $salesExpenseEntity);
+        }
+
+        return $expenseTransfers;
     }
 
     /**

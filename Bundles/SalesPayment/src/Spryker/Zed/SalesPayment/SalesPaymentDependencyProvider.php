@@ -38,16 +38,22 @@ class SalesPaymentDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_SALES = 'FACADE_SALES';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_SALES_PAYMENT_PRE_DELETE = 'PLUGINS_SALES_PAYMENT_PRE_DELETE';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $this->addSalesPaymentExpanderPlugins($container);
-        $this->addPaymentMapKeyBuilderStrategyPlugins($container);
-        $this->addMessageBrokerFacade($container);
-        $this->addSalesFacade($container);
+        $container = $this->addMessageBrokerFacade($container);
+        $container = $this->addSalesFacade($container);
+        $container = $this->addSalesPaymentExpanderPlugins($container);
+        $container = $this->addPaymentMapKeyBuilderStrategyPlugins($container);
+        $container = $this->addSalesPaymentPreDeletePlugins($container);
 
         return $container;
     }
@@ -126,5 +132,27 @@ class SalesPaymentDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesPaymentPreDeletePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SALES_PAYMENT_PRE_DELETE, function () {
+            return $this->getSalesPaymentPreDeletePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\SalesPaymentPreDeletePluginInterface>
+     */
+    protected function getSalesPaymentPreDeletePlugins(): array
+    {
+        return [];
     }
 }

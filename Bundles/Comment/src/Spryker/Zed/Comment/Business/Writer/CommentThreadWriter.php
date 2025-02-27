@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Comment\Persistence\CommentEntityManagerInterface;
 use Spryker\Zed\Comment\Persistence\CommentRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -25,6 +27,13 @@ class CommentThreadWriter implements CommentThreadWriterInterface
      * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS = 'comment.validation.error.comment_thread_already_exists';
+
+    /**
+     * @uses \Spryker\Zed\Comment\Communication\Plugin\Quote\CommentThreadQuoteExpanderPlugin::COMMENT_THREAD_QUOTE_OWNER_TYPE
+     *
+     * @var string
+     */
+    protected const COMMENT_THREAD_QUOTE_OWNER_TYPE = 'quote';
 
     /**
      * @var \Spryker\Zed\Comment\Persistence\CommentEntityManagerInterface
@@ -77,12 +86,14 @@ class CommentThreadWriter implements CommentThreadWriterInterface
     /**
      * @param \Generated\Shared\Transfer\CommentFilterTransfer $commentFilterTransfer
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     * @param bool|null $forceDelete
      *
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
     public function duplicateCommentThread(
         CommentFilterTransfer $commentFilterTransfer,
-        CommentRequestTransfer $commentRequestTransfer
+        CommentRequestTransfer $commentRequestTransfer,
+        ?bool $forceDelete = false
     ): CommentThreadResponseTransfer {
         $commentFilterTransfer
             ->requireOwnerId()
@@ -92,23 +103,59 @@ class CommentThreadWriter implements CommentThreadWriterInterface
             ->requireOwnerId()
             ->requireOwnerType();
 
-        return $this->getTransactionHandler()->handleTransaction(function () use ($commentFilterTransfer, $commentRequestTransfer) {
-            return $this->executeDuplicateCommentThreadTransaction($commentFilterTransfer, $commentRequestTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($commentFilterTransfer, $commentRequestTransfer, $forceDelete) {
+            return $this->executeDuplicateCommentThreadTransaction($commentFilterTransfer, $commentRequestTransfer, $forceDelete);
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     */
+    public function copyCommentThreadFromOrderToQuote(
+        OrderTransfer $orderTransfer,
+        QuoteTransfer $quoteTransfer
+    ): CommentThreadResponseTransfer {
+        $commentThreadTransfer = $orderTransfer->getCommentThread();
+        $commentThreadResponseTransfer = (new CommentThreadResponseTransfer())
+            ->setIsSuccessful(false);
+
+        if (!$commentThreadTransfer || !$commentThreadTransfer->getComments()->count()) {
+            return $commentThreadResponseTransfer;
+        }
+
+        $commentFilterTransfer = (new CommentFilterTransfer())
+            ->setOwnerId($commentThreadTransfer->getOwnerIdOrFail())
+            ->setOwnerType($commentThreadTransfer->getOwnerTypeOrFail());
+
+        $commentRequestTransfer = (new CommentRequestTransfer())
+            ->setOwnerId($quoteTransfer->getIdQuoteOrFail())
+            ->setOwnerType(static::COMMENT_THREAD_QUOTE_OWNER_TYPE);
+
+        return $this->duplicateCommentThread($commentFilterTransfer, $commentRequestTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CommentFilterTransfer $commentFilterTransfer
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     * @param bool|null $forceDelete
      *
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
     protected function executeDuplicateCommentThreadTransaction(
         CommentFilterTransfer $commentFilterTransfer,
-        CommentRequestTransfer $commentRequestTransfer
+        CommentRequestTransfer $commentRequestTransfer,
+        ?bool $forceDelete = false
     ): CommentThreadResponseTransfer {
-        if ($this->commentRepository->findCommentThread($commentRequestTransfer)) {
+        $persistedCommentThread = $this->commentRepository->findCommentThread($commentRequestTransfer);
+        if ($persistedCommentThread && !$forceDelete) {
             return $this->createErrorResponse(static::GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS);
+        }
+
+        if ($persistedCommentThread) {
+            $this->commentEntityManager->removeCommentThread($persistedCommentThread->getIdCommentThreadOrFail());
         }
 
         $commentThreadTransfer = $this->createCommentThread($commentRequestTransfer);

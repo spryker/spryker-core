@@ -28,6 +28,8 @@ use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizer;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriter;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface;
+use Spryker\Zed\PersistentCart\Business\Provider\CartReorderProvider;
+use Spryker\Zed\PersistentCart\Business\Provider\CartReorderProviderInterface;
 use Spryker\Zed\PersistentCart\Business\Replacer\CartItemReplacer;
 use Spryker\Zed\PersistentCart\Business\Replacer\CartItemReplacerInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface;
@@ -173,6 +175,17 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteResolver(),
             $this->getQuoteFacade(),
             $this->createQuoteResponseExpander(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Business\Provider\CartReorderProviderInterface
+     */
+    public function createCartReorderProvider(): CartReorderProviderInterface
+    {
+        return new CartReorderProvider(
+            $this->getQuoteFacade(),
+            $this->createQuoteWriter(),
         );
     }
 

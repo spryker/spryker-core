@@ -55,7 +55,7 @@ class SalesOrderItemConfigurationMapper
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer
      */
-    protected function mapSalesOrderItemConfigurationEntityToSalesOrderItemConfigurationTransfer(
+    public function mapSalesOrderItemConfigurationEntityToSalesOrderItemConfigurationTransfer(
         SpySalesOrderItemConfiguration $salesOrderItemConfigurationEntity,
         SalesOrderItemConfigurationTransfer $salesOrderItemConfigurationTransfer
     ): SalesOrderItemConfigurationTransfer {

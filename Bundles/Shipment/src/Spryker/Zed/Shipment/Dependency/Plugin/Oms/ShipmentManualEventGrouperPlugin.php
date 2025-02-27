@@ -16,15 +16,15 @@ use Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterf
 class ShipmentManualEventGrouperPlugin extends AbstractPlugin implements OmsManualEventGrouperPluginInterface
 {
     /**
-     * Specification:
+     * {@ingheritDoc}
      *  - Groups manual events by sales shipment id.
      *
      * @api
      *
-     * @param array $events
+     * @param array<array<string>> $events
      * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $orderItemTransfers
      *
-     * @return array
+     * @return array<array<string>>
      */
     public function group(array $events, iterable $orderItemTransfers): array
     {

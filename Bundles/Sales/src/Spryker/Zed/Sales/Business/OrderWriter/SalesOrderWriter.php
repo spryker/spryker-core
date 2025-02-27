@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\SpySalesOrderAddressEntityTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
+use Spryker\Shared\Kernel\StrategyResolverInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
@@ -51,14 +52,14 @@ class SalesOrderWriter implements SalesOrderWriterInterface
     protected $localeFacade;
 
     /**
-     * @var array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface>
+     * @var list<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface>>
      */
     protected $orderExpanderPreSavePlugins;
 
     /**
-     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>
+     * @var \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>>
      */
-    protected $orderPostSavePlugins;
+    protected $orderPostSavePluginStrategyResolver;
 
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface
@@ -76,8 +77,8 @@ class SalesOrderWriter implements SalesOrderWriterInterface
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface $orderReferenceGenerator
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToLocaleInterface $localeFacade
-     * @param array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface> $orderExpanderPreSavePlugins
-     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface> $orderPostSavePlugins
+     * @param list<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface> $orderExpanderPreSavePlugins
+     * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>> $orderPostSavePluginStrategyResolver
      * @param \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface $entityManager
      */
     public function __construct(
@@ -87,7 +88,7 @@ class SalesOrderWriter implements SalesOrderWriterInterface
         SalesConfig $salesConfiguration,
         SalesToLocaleInterface $localeFacade,
         $orderExpanderPreSavePlugins,
-        array $orderPostSavePlugins,
+        StrategyResolverInterface $orderPostSavePluginStrategyResolver,
         SalesEntityManagerInterface $entityManager
     ) {
         $this->countryFacade = $countryFacade;
@@ -96,7 +97,7 @@ class SalesOrderWriter implements SalesOrderWriterInterface
         $this->salesConfiguration = $salesConfiguration;
         $this->localeFacade = $localeFacade;
         $this->orderExpanderPreSavePlugins = $orderExpanderPreSavePlugins;
-        $this->orderPostSavePlugins = $orderPostSavePlugins;
+        $this->orderPostSavePluginStrategyResolver = $orderPostSavePluginStrategyResolver;
         $this->entityManager = $entityManager;
     }
 
@@ -140,7 +141,10 @@ class SalesOrderWriter implements SalesOrderWriterInterface
         SaveOrderTransfer $saveOrderTransfer,
         QuoteTransfer $quoteTransfer
     ): void {
-        foreach ($this->orderPostSavePlugins as $orderPostSavePlugin) {
+        $quoteProcessFlowName = $quoteTransfer->getQuoteProcessFlow()?->getNameOrFail();
+        $orderPostSavePlugins = $this->orderPostSavePluginStrategyResolver->get($quoteProcessFlowName);
+
+        foreach ($orderPostSavePlugins as $orderPostSavePlugin) {
             $orderPostSavePlugin->execute($saveOrderTransfer, $quoteTransfer);
         }
     }

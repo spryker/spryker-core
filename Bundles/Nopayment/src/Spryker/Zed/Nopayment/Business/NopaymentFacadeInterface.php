@@ -10,6 +10,8 @@ namespace Spryker\Zed\Nopayment\Business;
 use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\NopaymentPaidCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\NopaymentPaidCollectionResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -83,4 +85,20 @@ interface NopaymentFacadeInterface
      * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
     public function updateCartCodeQuotePayment(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
+
+    /**
+     * Specification:
+     * - Uses `NopaymentPaidCollectionDeleteCriteriaTransfer.salesOrderItemIds` to filter nopayment paid entities by the sales order item IDs.
+     * - Deletes found by criteria nopayment paid entities.
+     * - Does nothing if no criteria properties are set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NopaymentPaidCollectionDeleteCriteriaTransfer $nopaymentPaidCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NopaymentPaidCollectionResponseTransfer
+     */
+    public function deleteNopaymentPaidCollection(
+        NopaymentPaidCollectionDeleteCriteriaTransfer $nopaymentPaidCollectionDeleteCriteriaTransfer
+    ): NopaymentPaidCollectionResponseTransfer;
 }

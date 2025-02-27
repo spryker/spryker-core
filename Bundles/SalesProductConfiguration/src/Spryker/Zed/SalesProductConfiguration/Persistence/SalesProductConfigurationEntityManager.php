@@ -34,4 +34,45 @@ class SalesProductConfigurationEntityManager extends AbstractEntityManager imple
 
         $salesOrderItemConfigurationEntity->save();
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer $salesOrderItemConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer
+     */
+    public function saveSalesOrderItemConfigurationByFkSalesOrderItem(
+        SalesOrderItemConfigurationTransfer $salesOrderItemConfigurationTransfer
+    ): SalesOrderItemConfigurationTransfer {
+        $salesOrderItemConfigurationEntity = $this->getFactory()
+            ->getSalesOrderItemConfigurationPropelQuery()
+            ->filterByFkSalesOrderItem($salesOrderItemConfigurationTransfer->getIdSalesOrderItemOrFail())
+            ->findOneOrCreate();
+
+        $salesOrderItemConfigurationMapper = $this->getFactory()->createSalesOrderItemConfigurationMapper();
+        $salesOrderItemConfigurationEntity = $salesOrderItemConfigurationMapper
+            ->mapSalesOrderItemConfigurationTransferToSalesOrderItemConfigurationEntity(
+                $salesOrderItemConfigurationTransfer,
+                $salesOrderItemConfigurationEntity,
+            );
+
+        $salesOrderItemConfigurationEntity->save();
+
+        return $salesOrderItemConfigurationMapper->mapSalesOrderItemConfigurationEntityToSalesOrderItemConfigurationTransfer(
+            $salesOrderItemConfigurationEntity,
+            $salesOrderItemConfigurationTransfer,
+        );
+    }
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderItemConfigurationsBySalesOrderItemIds(array $salesOrderItemIds): void
+    {
+        $this->getFactory()
+            ->getSalesOrderItemConfigurationPropelQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->delete();
+    }
 }

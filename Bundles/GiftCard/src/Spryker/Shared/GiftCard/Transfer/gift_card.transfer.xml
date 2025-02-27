@@ -33,6 +33,10 @@
         <property name="paymentMethod" type="string"/>
     </transfer>
 
+    <transfer name="PaymentGiftCard" strict="true">
+        <property name="idPaymentGiftCard" type="int"/>
+    </transfer>
+
     <transfer name="CalculableObject">
         <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
         <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode"/>
@@ -156,6 +160,29 @@
 
     <transfer name="AclEntityMetadataCollection">
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+    <transfer name="PaymentGiftCardCollectionDeleteCriteria" strict="true">
+        <property name="salesPaymentIds" type="int[]" singular="idSalesPayment"/>
+    </transfer>
+
+    <transfer name="SalesPaymentCollection">
+        <property name="salesPayments" type="SalesPayment[]" singular="salesPayment"/>
+    </transfer>
+
+    <transfer name="SalesPayment">
+        <property name="idSalesPayment" type="int" strict="true"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemGiftCardCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemGiftCardCollectionResponse" strict="true">
     </transfer>
 
 </transfers>

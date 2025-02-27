@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesOrderAmendment\Communication\Plugin\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 
@@ -20,8 +21,8 @@ class ResetAmendmentOrderReferenceBeforeQuoteSavePlugin extends AbstractPlugin i
     /**
      * {@inheritDoc}
      * - Does nothing if `QuoteTransfer.items` is not empty.
-     * - Does nothing if `QuoteTransfer.amendmentOrderReference` is not set.
-     * - Sets `QuoteTransfer.amendmentOrderReference` to null.
+     * - Sets `QuoteTransfer.amendmentOrderReference` to null if `QuoteTransfer.amendmentOrderReference` is not null.
+     * - Sets `QuoteTransfer.quoteProcessFlow` to null if `QuoteTransfer.quoteProcessFlow.name` is equal to `SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT`.
      *
      * @api
      *
@@ -31,8 +32,19 @@ class ResetAmendmentOrderReferenceBeforeQuoteSavePlugin extends AbstractPlugin i
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($quoteTransfer->getItems()->count() === 0 && $quoteTransfer->getAmendmentOrderReference()) {
-            return $quoteTransfer->setAmendmentOrderReference(null);
+        if ($quoteTransfer->getItems()->count() !== 0) {
+            return $quoteTransfer;
+        }
+
+        if ($quoteTransfer->getAmendmentOrderReference()) {
+            $quoteTransfer->setAmendmentOrderReference(null);
+        }
+
+        if (
+            $quoteTransfer->getQuoteProcessFlow()
+            && $quoteTransfer->getQuoteProcessFlowOrFail()->getName() === SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT
+        ) {
+            $quoteTransfer->setQuoteProcessFlow(null);
         }
 
         return $quoteTransfer;

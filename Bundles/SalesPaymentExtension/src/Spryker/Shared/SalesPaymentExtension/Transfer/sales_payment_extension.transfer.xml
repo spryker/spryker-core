@@ -7,4 +7,7 @@
     <transfer name="Payment">
     </transfer>
 
+    <transfer name="SalesPaymentCollection">
+    </transfer>
+
 </transfers>

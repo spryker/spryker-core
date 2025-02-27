@@ -24,4 +24,25 @@ interface OmsEntityManagerInterface
      * @return void
      */
     public function updateReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteOmsOrderItemStateHistoryBySalesOrderItemIds(array $salesOrderItemIds): void;
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteOmsTransitionLogsBySalesOrderItemIds(array $salesOrderItemIds): void;
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteOmsEventTimeoutsBySalesOrderItemIds(array $salesOrderItemIds): void;
 }

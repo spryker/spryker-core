@@ -23,3 +23,9 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+    Communication:
+        path: Communication
+        actor: ConfigurableBundleNoteCommunicationTester
+        modules:
+            enabled:
+                - Asserts

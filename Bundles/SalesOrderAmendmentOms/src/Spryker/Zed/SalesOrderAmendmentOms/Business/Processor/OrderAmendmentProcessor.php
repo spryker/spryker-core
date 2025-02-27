@@ -14,16 +14,10 @@ use Spryker\Zed\SalesOrderAmendmentOms\Business\Triggerer\OmsEventTriggererInter
 class OrderAmendmentProcessor implements OrderAmendmentProcessorInterface
 {
     /**
-     * @var \Spryker\Zed\SalesOrderAmendmentOms\Business\Triggerer\OmsEventTriggererInterface
-     */
-    protected OmsEventTriggererInterface $omsEventTriggerer;
-
-    /**
      * @param \Spryker\Zed\SalesOrderAmendmentOms\Business\Triggerer\OmsEventTriggererInterface $omsEventTriggerer
      */
-    public function __construct(OmsEventTriggererInterface $omsEventTriggerer)
+    public function __construct(protected OmsEventTriggererInterface $omsEventTriggerer)
     {
-        $this->omsEventTriggerer = $omsEventTriggerer;
     }
 
     /**

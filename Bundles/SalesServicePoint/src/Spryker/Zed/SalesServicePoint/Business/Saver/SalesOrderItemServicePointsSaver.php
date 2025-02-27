@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\SalesServicePoint\Business\Saver;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
+use Generated\Shared\Transfer\SalesOrderItemServicePointCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\SalesOrderItemServicePointCollectionTransfer;
 use Generated\Shared\Transfer\SalesOrderItemServicePointTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\SalesServicePoint\Business\Deleter\SalesOrderItemServicePointDeleterInterface;
 use Spryker\Zed\SalesServicePoint\Persistence\SalesServicePointEntityManagerInterface;
 
 class SalesOrderItemServicePointsSaver implements SalesOrderItemServicePointsSaverInterface
@@ -19,16 +23,13 @@ class SalesOrderItemServicePointsSaver implements SalesOrderItemServicePointsSav
     use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\SalesServicePoint\Persistence\SalesServicePointEntityManagerInterface
-     */
-    protected SalesServicePointEntityManagerInterface $salesServicePointEntityManager;
-
-    /**
      * @param \Spryker\Zed\SalesServicePoint\Persistence\SalesServicePointEntityManagerInterface $salesServicePointEntityManager
+     * @param \Spryker\Zed\SalesServicePoint\Business\Deleter\SalesOrderItemServicePointDeleterInterface $salesOrderItemServicePointDeleter
      */
-    public function __construct(SalesServicePointEntityManagerInterface $salesServicePointEntityManager)
-    {
-        $this->salesServicePointEntityManager = $salesServicePointEntityManager;
+    public function __construct(
+        protected SalesServicePointEntityManagerInterface $salesServicePointEntityManager,
+        protected SalesOrderItemServicePointDeleterInterface $salesOrderItemServicePointDeleter
+    ) {
     }
 
     /**
@@ -41,11 +42,43 @@ class SalesOrderItemServicePointsSaver implements SalesOrderItemServicePointsSav
         $salesOrderItemServicePointCollectionTransfer = $this->createSalesOrderItemServicePointCollectionTransfer($quoteTransfer);
 
         if ($salesOrderItemServicePointCollectionTransfer->getSalesOrderItemServicePoints()->count()) {
-            $salesOrderItemServicePointTransfers = $this->getTransactionHandler()
-                ->handleTransaction(function () use ($salesOrderItemServicePointCollectionTransfer) {
-                    return $this->executeCreateSalesOrderItemServicePointCollectionTransaction($salesOrderItemServicePointCollectionTransfer);
-                });
+            $this->getTransactionHandler()->handleTransaction(function () use ($salesOrderItemServicePointCollectionTransfer) {
+                return $this->executeCreateSalesOrderItemServicePointCollectionTransaction($salesOrderItemServicePointCollectionTransfer);
+            });
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer $salesOrderItemCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function updateSalesOrderItemServicePoints(
+        SalesOrderItemCollectionResponseTransfer $salesOrderItemCollectionResponseTransfer
+    ): SalesOrderItemCollectionResponseTransfer {
+        $itemTransfers = $salesOrderItemCollectionResponseTransfer->getItems();
+        $salesOrderItemServicePointCollectionTransfer = $this->createSalesOrderItemServicePointCollectionTransfer(
+            (new QuoteTransfer())->setItems(new ArrayObject($itemTransfers)),
+        );
+        $salesOrderItemIdsToDelete = $this->getSalesOrderItemIdsToDelete(new ArrayObject($itemTransfers));
+
+        if (!$salesOrderItemServicePointCollectionTransfer->getSalesOrderItemServicePoints()->count() && !$salesOrderItemIdsToDelete) {
+            return $salesOrderItemCollectionResponseTransfer;
+        }
+
+        $this->getTransactionHandler()->handleTransaction(function () use ($salesOrderItemServicePointCollectionTransfer, $salesOrderItemIdsToDelete): void {
+            if ($salesOrderItemServicePointCollectionTransfer->getSalesOrderItemServicePoints()->count()) {
+                $this->executeUpdateSalesOrderItemServicePointsTransaction($salesOrderItemServicePointCollectionTransfer);
+            }
+
+            if ($salesOrderItemIdsToDelete) {
+                $this->salesOrderItemServicePointDeleter->deleteSalesOrderItemServicePointCollection(
+                    (new SalesOrderItemServicePointCollectionDeleteCriteriaTransfer())->setSalesOrderItemIds($salesOrderItemIdsToDelete),
+                );
+            }
+        });
+
+        return $salesOrderItemCollectionResponseTransfer;
     }
 
     /**
@@ -63,6 +96,25 @@ class SalesOrderItemServicePointsSaver implements SalesOrderItemServicePointsSav
         }
 
         return $salesOrderItemServicePointTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemServicePointCollectionTransfer $salesOrderItemServicePointCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemServicePointCollectionTransfer
+     */
+    protected function executeUpdateSalesOrderItemServicePointsTransaction(
+        SalesOrderItemServicePointCollectionTransfer $salesOrderItemServicePointCollectionTransfer
+    ): SalesOrderItemServicePointCollectionTransfer {
+        $salesOrderItemServicePointTransfers = [];
+        foreach ($salesOrderItemServicePointCollectionTransfer->getSalesOrderItemServicePoints() as $salesOrderItemServicePointTransfer) {
+            $salesOrderItemServicePointTransfers[] = $this->salesServicePointEntityManager
+                ->saveSalesOrderItemServicePointByFkSalesOrderItem($salesOrderItemServicePointTransfer);
+        }
+
+        return $salesOrderItemServicePointCollectionTransfer->setSalesOrderItemServicePoints(
+            new ArrayObject($salesOrderItemServicePointTransfers),
+        );
     }
 
     /**
@@ -101,5 +153,22 @@ class SalesOrderItemServicePointsSaver implements SalesOrderItemServicePointsSav
             ->setName($servicePointTransfer->getNameOrFail())
             ->setKey($servicePointTransfer->getKeyOrFail())
             ->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItemOrFail());
+    }
+
+    /**
+     * @param \ArrayObject<int,\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
+     * @return list<int>
+     */
+    protected function getSalesOrderItemIdsToDelete(ArrayObject $itemTransfers): array
+    {
+        $salesOrderItemIdsToDelete = [];
+        foreach ($itemTransfers as $itemTransfer) {
+            if (!$itemTransfer->getServicePoint()) {
+                $salesOrderItemIdsToDelete[] = $itemTransfer->getIdSalesOrderItemOrFail();
+            }
+        }
+
+        return $salesOrderItemIdsToDelete;
     }
 }

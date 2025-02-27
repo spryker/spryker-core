@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer;
 
 interface SalesRepositoryInterface
 {
@@ -102,4 +103,13 @@ interface SalesRepositoryInterface
      * @return \Generated\Shared\Transfer\OrderCollectionTransfer
      */
     public function getOrderCollection(OrderCriteriaTransfer $orderCriteriaTransfer): OrderCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
+     *
+     * @return list<\Generated\Shared\Transfer\ExpenseTransfer>
+     */
+    public function getSalesExpensesBySalesExpenseCollectionDeleteCriteria(
+        SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
+    ): array;
 }

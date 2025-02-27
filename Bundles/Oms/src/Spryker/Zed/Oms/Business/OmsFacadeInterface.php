@@ -10,7 +10,14 @@ namespace Spryker\Zed\Oms\Business;
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
 use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsEventTimeoutCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\OmsEventTimeoutCollectionResponseTransfer;
+use Generated\Shared\Transfer\OmsOrderItemStateHistoryCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\OmsOrderItemStateHistoryCollectionResponseTransfer;
+use Generated\Shared\Transfer\OmsOrderItemStateTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\OmsTransitionLogCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\OmsTransitionLogCollectionResponseTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderMatrixCollectionTransfer;
 use Generated\Shared\Transfer\OrderMatrixCriteriaTransfer;
@@ -821,4 +828,65 @@ interface OmsFacadeInterface
      * @return bool
      */
     public function areOrderItemsSatisfiedByFlag(OrderTransfer $orderTransfer, string $flag): bool;
+
+    /**
+     * Specification:
+     * - Uses `OmsOrderItemStateHistoryCollectionDeleteCriteriaTransfer.salesOrderItemIds` to filter OMS order item state history entities by the sales order item IDs.
+     * - Deletes found by criteria OMS order item state history entities.
+     * - Does nothing if no criteria properties are set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OmsOrderItemStateHistoryCollectionDeleteCriteriaTransfer $omsOrderItemStateHistoryCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OmsOrderItemStateHistoryCollectionResponseTransfer
+     */
+    public function deleteOmsOrderItemStateHistoryCollection(
+        OmsOrderItemStateHistoryCollectionDeleteCriteriaTransfer $omsOrderItemStateHistoryCollectionDeleteCriteriaTransfer
+    ): OmsOrderItemStateHistoryCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Uses `OmsTransitionLogCollectionDeleteCriteriaTransfer.salesOrderItemIds` to filter OMS transition log entities by the sales order item IDs.
+     * - Deletes found by criteria OMS transition log entities.
+     * - Does nothing if no criteria properties are set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OmsTransitionLogCollectionDeleteCriteriaTransfer $omsTransitionLogCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OmsTransitionLogCollectionResponseTransfer
+     */
+    public function deleteOmsTransitionLogCollection(
+        OmsTransitionLogCollectionDeleteCriteriaTransfer $omsTransitionLogCollectionDeleteCriteriaTransfer
+    ): OmsTransitionLogCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Uses `OmsEventTimeoutCollectionDeleteCriteriaTransfer.salesOrderItemIds` to filter OMS event timeout entities by the sales order item IDs.
+     * - Deletes found by criteria OMS event timeout entities.
+     * - Does nothing if no criteria properties are set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OmsEventTimeoutCollectionDeleteCriteriaTransfer $omsEventTimeoutCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OmsEventTimeoutCollectionResponseTransfer
+     */
+    public function deleteOmsEventTimeoutCollection(
+        OmsEventTimeoutCollectionDeleteCriteriaTransfer $omsEventTimeoutCollectionDeleteCriteriaTransfer
+    ): OmsEventTimeoutCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Gets oms order item state by state name from persistence.
+     * - Creates a new entity if it does not exist.
+     *
+     * @api
+     *
+     * @param string $stateName
+     *
+     * @return \Generated\Shared\Transfer\OmsOrderItemStateTransfer
+     */
+    public function getOmsOrderItemState(string $stateName): OmsOrderItemStateTransfer;
 }

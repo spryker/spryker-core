@@ -8,10 +8,16 @@
 namespace SprykerTest\Zed\ProductOption;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemOptionQuery;
 use Spryker\Zed\Money\Communication\Plugin\Form\MoneyCollectionFormTypePlugin as MoneyCollectionFormTypePluginWithoutLocale;
 use Spryker\Zed\MoneyGui\Communication\Plugin\Form\MoneyCollectionFormTypePlugin;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
+use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
 
 /**
  * @method void wantToTest($text)
@@ -24,6 +30,7 @@ use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -83,5 +90,66 @@ class ProductOptionCommunicationTester extends Actor
         $this->setDependency(ProductOptionDependencyProvider::MONEY_COLLECTION_FORM_TYPE_PLUGIN, function () {
             return new MoneyCollectionFormTypePluginWithoutLocale();
         });
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureSalesOrderItemOptionDatabaseTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty(
+            $this->getSalesOrderItemOptionQuery(),
+        );
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption
+     */
+    public function findSalesOrderItemOption(int $idSalesOrderItem): SpySalesOrderItemOption
+    {
+        return $this->getSalesOrderItemOptionQuery()
+            ->filterByFkSalesOrderItem($idSalesOrderItem)
+            ->findOne();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemOptionQuery
+     */
+    public function getSalesOrderItemOptionQuery(): SpySalesOrderItemOptionQuery
+    {
+        return SpySalesOrderItemOptionQuery::create();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
+     */
+    public function createProductOption(StoreTransfer $storeTransfer): ProductOptionTransfer
+    {
+        $productOptionGroupTransfer = $this->haveProductOptionGroupWithValues(
+            [],
+            [
+                [
+                    [],
+                    [
+                        [
+                            ProductOptionGroupDataHelper::STORE_NAME => $storeTransfer->getName(),
+                            MoneyValueTransfer::GROSS_AMOUNT => 123,
+                            MoneyValueTransfer::NET_AMOUNT => 123,
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        return (new ProductOptionTransfer())
+            ->fromArray($productOptionGroupTransfer->getProductOptionValues()[0]->toArray(), true)
+            ->setGroupName($productOptionGroupTransfer->getName())
+            ->setQuantity(1)
+            ->setUnitGrossPrice(123)
+            ->setTaxRate(19.0);
     }
 }

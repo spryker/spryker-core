@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartReorder\Business\Adder\CartItemAdderInterface;
 use Spryker\Zed\CartReorder\Business\Hydrator\ItemHydratorInterface;
 use Spryker\Zed\CartReorder\Business\Reader\OrderReaderInterface;
-use Spryker\Zed\CartReorder\Business\Resolver\PluginStackResolverInterface;
 use Spryker\Zed\CartReorder\Business\Validator\CartReorderValidatorInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
@@ -37,81 +36,25 @@ class CartReorderCreator implements CartReorderCreatorInterface
     protected const GLOSSARY_KEY_QUOTE_NOT_PROVIDED = 'cart_reorder.validation.quote_not_provided';
 
     /**
-     * @var \Spryker\Zed\CartReorder\Business\Validator\CartReorderValidatorInterface
-     */
-    protected CartReorderValidatorInterface $cartReorderValidator;
-
-    /**
-     * @var \Spryker\Zed\CartReorder\Business\Reader\OrderReaderInterface
-     */
-    protected OrderReaderInterface $orderReader;
-
-    /**
-     * @var \Spryker\Zed\CartReorder\Business\Hydrator\ItemHydratorInterface
-     */
-    protected ItemHydratorInterface $itemHydrator;
-
-    /**
-     * @var \Spryker\Zed\CartReorder\Business\Adder\CartItemAdderInterface
-     */
-    protected CartItemAdderInterface $cartItemAdder;
-
-    /**
-     * @var \Spryker\Zed\CartReorder\Business\Resolver\PluginStackResolverInterface
-     */
-    protected PluginStackResolverInterface $pluginStackResolver;
-
-    /**
-     * @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderStrategyPluginInterface>
-     */
-    protected array $cartReorderQuoteProviderStrategyPlugins;
-
-    /**
-     * @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderOrderItemFilterPluginInterface>
-     */
-    protected array $cartReorderOrderItemFilterPlugins;
-
-    /**
-     * @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPreReorderPluginInterface>
-     */
-    protected array $cartPreReorderPlugins;
-
-    /**
-     * @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface>>
-     */
-    protected array $cartPostReorderPlugins;
-
-    /**
      * @param \Spryker\Zed\CartReorder\Business\Validator\CartReorderValidatorInterface $cartReorderValidator
      * @param \Spryker\Zed\CartReorder\Business\Reader\OrderReaderInterface $orderReader
      * @param \Spryker\Zed\CartReorder\Business\Hydrator\ItemHydratorInterface $itemHydrator
      * @param \Spryker\Zed\CartReorder\Business\Adder\CartItemAdderInterface $cartItemAdder
-     * @param \Spryker\Zed\CartReorder\Business\Resolver\PluginStackResolverInterface $pluginStackResolver
      * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderStrategyPluginInterface> $cartReorderQuoteProviderStrategyPlugins
      * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderOrderItemFilterPluginInterface> $cartReorderOrderItemFilterPlugins
      * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPreReorderPluginInterface> $cartPreReorderPlugins
-     * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface>> $cartPostReorderPlugins
+     * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface> $cartPostReorderPlugins
      */
     public function __construct(
-        CartReorderValidatorInterface $cartReorderValidator,
-        OrderReaderInterface $orderReader,
-        ItemHydratorInterface $itemHydrator,
-        CartItemAdderInterface $cartItemAdder,
-        PluginStackResolverInterface $pluginStackResolver,
-        array $cartReorderQuoteProviderStrategyPlugins,
-        array $cartReorderOrderItemFilterPlugins,
-        array $cartPreReorderPlugins,
-        array $cartPostReorderPlugins
+        protected CartReorderValidatorInterface $cartReorderValidator,
+        protected OrderReaderInterface $orderReader,
+        protected ItemHydratorInterface $itemHydrator,
+        protected CartItemAdderInterface $cartItemAdder,
+        protected array $cartReorderQuoteProviderStrategyPlugins,
+        protected array $cartReorderOrderItemFilterPlugins,
+        protected array $cartPreReorderPlugins,
+        protected array $cartPostReorderPlugins
     ) {
-        $this->cartReorderValidator = $cartReorderValidator;
-        $this->orderReader = $orderReader;
-        $this->itemHydrator = $itemHydrator;
-        $this->cartItemAdder = $cartItemAdder;
-        $this->pluginStackResolver = $pluginStackResolver;
-        $this->cartReorderQuoteProviderStrategyPlugins = $cartReorderQuoteProviderStrategyPlugins;
-        $this->cartReorderOrderItemFilterPlugins = $cartReorderOrderItemFilterPlugins;
-        $this->cartPreReorderPlugins = $cartPreReorderPlugins;
-        $this->cartPostReorderPlugins = $cartPostReorderPlugins;
     }
 
     /**
@@ -136,30 +79,33 @@ class CartReorderCreator implements CartReorderCreatorInterface
             return $cartReorderResponseTransfer;
         }
 
-        return $this->getTransactionHandler()->handleTransaction(function () use ($cartReorderRequestTransfer, $orderTransfer) {
-            return $this->executeReorderTransaction($cartReorderRequestTransfer, $orderTransfer);
-        });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartReorderResponseTransfer
-     */
-    protected function executeReorderTransaction(
-        CartReorderRequestTransfer $cartReorderRequestTransfer,
-        OrderTransfer $orderTransfer
-    ): CartReorderResponseTransfer {
         $quoteTransfer = $this->executeCartReorderQuoteProviderStrategyPlugins($cartReorderRequestTransfer);
         if (!$quoteTransfer) {
             return (new CartReorderResponseTransfer())
                 ->addError($this->createErrorTransfer(static::GLOSSARY_KEY_QUOTE_NOT_PROVIDED));
         }
 
+        return $this->getTransactionHandler()->handleTransaction(function () use ($cartReorderRequestTransfer, $orderTransfer, $quoteTransfer) {
+            return $this->executeReorderTransaction($cartReorderRequestTransfer, $orderTransfer, $quoteTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderResponseTransfer
+     */
+    protected function executeReorderTransaction(
+        CartReorderRequestTransfer $cartReorderRequestTransfer,
+        OrderTransfer $orderTransfer,
+        QuoteTransfer $quoteTransfer
+    ): CartReorderResponseTransfer {
         $cartReorderTransfer = (new CartReorderTransfer())
             ->setOrder($orderTransfer)
             ->setQuote($quoteTransfer);
+
         $cartReorderTransfer = $this->addOrderItemsToCartReorder(
             $this->filterOrderItems($cartReorderRequestTransfer),
             $cartReorderTransfer,
@@ -238,13 +184,17 @@ class CartReorderCreator implements CartReorderCreatorInterface
     protected function executeCartReorderQuoteProviderStrategyPlugins(
         CartReorderRequestTransfer $cartReorderRequestTransfer
     ): ?QuoteTransfer {
+        if ($cartReorderRequestTransfer->getQuote()) {
+            return $cartReorderRequestTransfer->getQuoteOrFail();
+        }
+
         foreach ($this->cartReorderQuoteProviderStrategyPlugins as $cartReorderQuoteProviderStrategyPlugin) {
             if ($cartReorderQuoteProviderStrategyPlugin->isApplicable($cartReorderRequestTransfer)) {
                 return $cartReorderQuoteProviderStrategyPlugin->execute($cartReorderRequestTransfer);
             }
         }
 
-        return $cartReorderRequestTransfer->getQuote();
+        return null;
     }
 
     /**
@@ -271,13 +221,7 @@ class CartReorderCreator implements CartReorderCreatorInterface
      */
     protected function executeCartPostReorderPlugins(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer
     {
-        /** @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface> $cartPostReorderPlugins */
-        $cartPostReorderPlugins = $this->pluginStackResolver->resolvePluginStackByQuoteProcessFlowName(
-            $cartReorderTransfer->getQuoteOrFail(),
-            $this->cartPostReorderPlugins,
-        );
-
-        foreach ($cartPostReorderPlugins as $cartPostReorderPlugin) {
+        foreach ($this->cartPostReorderPlugins as $cartPostReorderPlugin) {
             $cartReorderTransfer = $cartPostReorderPlugin->postReorder($cartReorderTransfer);
         }
 

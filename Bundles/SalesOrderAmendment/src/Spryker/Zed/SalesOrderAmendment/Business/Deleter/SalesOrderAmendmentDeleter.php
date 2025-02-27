@@ -25,41 +25,17 @@ class SalesOrderAmendmentDeleter implements SalesOrderAmendmentDeleterInterface
     protected const ERROR_MESSAGE_SALES_ORDER_AMENDMENT_NOT_FOUND = 'sales_order_amendment.error.not_found';
 
     /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentEntityManagerInterface
-     */
-    protected SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager;
-
-    /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentRepositoryInterface
-     */
-    protected SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository;
-
-    /**
-     * @var list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentPreDeletePluginInterface>
-     */
-    protected array $salesOrderAmendmentPreDeletePlugins;
-
-    /**
-     * @var list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentPostDeletePluginInterface>
-     */
-    protected array $salesOrderAmendmentPostDeletePlugins;
-
-    /**
      * @param \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager
      * @param \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository
      * @param list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentPreDeletePluginInterface> $salesOrderAmendmentPreDeletePlugins
      * @param list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentPostDeletePluginInterface> $salesOrderAmendmentPostDeletePlugins
      */
     public function __construct(
-        SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager,
-        SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository,
-        array $salesOrderAmendmentPreDeletePlugins,
-        array $salesOrderAmendmentPostDeletePlugins
+        protected SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager,
+        protected SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository,
+        protected array $salesOrderAmendmentPreDeletePlugins,
+        protected array $salesOrderAmendmentPostDeletePlugins
     ) {
-        $this->salesOrderAmendmentEntityManager = $salesOrderAmendmentEntityManager;
-        $this->salesOrderAmendmentRepository = $salesOrderAmendmentRepository;
-        $this->salesOrderAmendmentPreDeletePlugins = $salesOrderAmendmentPreDeletePlugins;
-        $this->salesOrderAmendmentPostDeletePlugins = $salesOrderAmendmentPostDeletePlugins;
     }
 
     /**

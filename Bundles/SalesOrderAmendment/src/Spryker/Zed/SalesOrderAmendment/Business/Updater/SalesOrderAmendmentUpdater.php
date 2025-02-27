@@ -18,41 +18,17 @@ class SalesOrderAmendmentUpdater implements SalesOrderAmendmentUpdaterInterface
     use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Business\Validator\SalesOrderAmendmentValidatorInterface
-     */
-    protected SalesOrderAmendmentValidatorInterface $salesOrderAmendmentValidator;
-
-    /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentEntityManagerInterface
-     */
-    protected SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager;
-
-    /**
-     * @var list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentPreUpdatePluginInterface>
-     */
-    protected array $salesOrderAmendmentPreUpdatePlugins;
-
-    /**
-     * @var list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentPostUpdatePluginInterface>
-     */
-    protected array $salesOrderAmendmentPostUpdatePlugins;
-
-    /**
      * @param \Spryker\Zed\SalesOrderAmendment\Business\Validator\SalesOrderAmendmentValidatorInterface $salesOrderAmendmentValidator
      * @param \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager
      * @param list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentPreUpdatePluginInterface> $salesOrderAmendmentPreUpdatePlugins
      * @param list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentPostUpdatePluginInterface> $salesOrderAmendmentPostUpdatePlugins
      */
     public function __construct(
-        SalesOrderAmendmentValidatorInterface $salesOrderAmendmentValidator,
-        SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager,
-        array $salesOrderAmendmentPreUpdatePlugins,
-        array $salesOrderAmendmentPostUpdatePlugins
+        protected SalesOrderAmendmentValidatorInterface $salesOrderAmendmentValidator,
+        protected SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager,
+        protected array $salesOrderAmendmentPreUpdatePlugins,
+        protected array $salesOrderAmendmentPostUpdatePlugins
     ) {
-        $this->salesOrderAmendmentValidator = $salesOrderAmendmentValidator;
-        $this->salesOrderAmendmentEntityManager = $salesOrderAmendmentEntityManager;
-        $this->salesOrderAmendmentPreUpdatePlugins = $salesOrderAmendmentPreUpdatePlugins;
-        $this->salesOrderAmendmentPostUpdatePlugins = $salesOrderAmendmentPostUpdatePlugins;
     }
 
     /**

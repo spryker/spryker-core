@@ -90,17 +90,13 @@ class TriggerLocker implements LockerInterface
      */
     public function release($identifiers)
     {
-        if (is_array($identifiers)) {
+        // To avoid deadlocks in concurrent requests removing is done one by one,
+        // see https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html#innodb-gap-locks
+        foreach ((array)$identifiers as $identifier) {
             $this->queryContainer
-                ->queryLockItemsByIdentifiers($identifiers)
+                ->queryLockItemsByIdentifier($identifier)
                 ->delete();
-
-            return;
         }
-
-        $this->queryContainer
-            ->queryLockItemsByIdentifier($identifiers)
-            ->delete();
     }
 
     /**

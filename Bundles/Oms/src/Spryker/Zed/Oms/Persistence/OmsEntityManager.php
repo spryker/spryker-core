@@ -57,4 +57,43 @@ class OmsEntityManager extends AbstractEntityManager implements OmsEntityManager
         $omsProductReservationEntity->setReservationQuantity($reservationRequestTransfer->getReservationQuantity());
         $omsProductReservationEntity->save();
     }
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteOmsOrderItemStateHistoryBySalesOrderItemIds(array $salesOrderItemIds): void
+    {
+        $this->getFactory()
+            ->createOmsOrderItemStateHistoryQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->delete();
+    }
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteOmsTransitionLogsBySalesOrderItemIds(array $salesOrderItemIds): void
+    {
+        $this->getFactory()
+            ->createOmsTransitionLogQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->delete();
+    }
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteOmsEventTimeoutsBySalesOrderItemIds(array $salesOrderItemIds): void
+    {
+        $this->getFactory()
+            ->createOmsEventTimeoutQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->delete();
+    }
 }

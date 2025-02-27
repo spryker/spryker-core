@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesOrderAmendment;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SalesOrderAmendment\Dependency\Facade\SalesOrderAmendmentToSalesFacadeBridge;
 use Spryker\Zed\SalesOrderAmendment\Dependency\Service\SalesOrderAmendmentToUtilEncodingServiceBridge;
 
 /**
@@ -67,6 +68,21 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
     public const PLUGINS_SALES_ORDER_AMENDMENT_POST_DELETE = 'PLUGINS_SALES_ORDER_AMENDMENT_POST_DELETE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_SALES_ORDER_AMENDMENT_ITEM_COLLECTOR_STRATEGY = 'PLUGINS_SALES_ORDER_AMENDMENT_ITEM_COLLECTOR_STRATEGY';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_SALES_ORDER_ITEM_COLLECTOR_PLUGIN = 'PLUGINS_SALES_ORDER_ITEM_COLLECTOR_PLUGIN';
+
+    /**
+     * @var string
+     */
+    public const FACADE_SALES = 'FACADE_SALES';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -74,6 +90,7 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addSalesFacade($container);
         $container = $this->addSalesOrderAmendmentExpanderPlugins($container);
         $container = $this->addSalesOrderAmendmentCreateValidationRulePlugins($container);
         $container = $this->addSalesOrderAmendmentPreCreatePlugins($container);
@@ -83,6 +100,8 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addSalesOrderAmendmentPostUpdatePlugins($container);
         $container = $this->addSalesOrderAmendmentPreDeletePlugins($container);
         $container = $this->addSalesOrderAmendmentPostDeletePlugins($container);
+        $container = $this->addSalesOrderAmendmentItemCollectorStrategyPlugins($container);
+        $container = $this->addSalesOrderItemCollectorPlugins($container);
 
         return $container;
     }
@@ -108,6 +127,20 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new SalesOrderAmendmentToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_SALES, function (Container $container) {
+            return new SalesOrderAmendmentToSalesFacadeBridge($container->getLocator()->sales()->facade());
         });
 
         return $container;
@@ -240,6 +273,34 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesOrderAmendmentItemCollectorStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SALES_ORDER_AMENDMENT_ITEM_COLLECTOR_STRATEGY, function () {
+            return $this->getSalesOrderAmendmentItemCollectorStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesOrderItemCollectorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SALES_ORDER_ITEM_COLLECTOR_PLUGIN, function () {
+            return $this->getSalesOrderItemCollectorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentExpanderPluginInterface>
      */
     protected function getSalesOrderAmendmentExpanderPlugins(): array
@@ -307,6 +368,22 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
      * @return list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentPostDeletePluginInterface>
      */
     protected function getSalesOrderAmendmentPostDeletePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentItemCollectorStrategyPluginInterface>
+     */
+    protected function getSalesOrderAmendmentItemCollectorStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderItemCollectorPluginInterface>
+     */
+    protected function getSalesOrderItemCollectorPlugins(): array
     {
         return [];
     }

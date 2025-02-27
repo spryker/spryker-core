@@ -14,16 +14,10 @@ use Spryker\Client\CartReorder\Dependency\Client\CartReorderToZedRequestClientIn
 class CartReorderStub implements CartReorderStubInterface
 {
     /**
-     * @var \Spryker\Client\CartReorder\Dependency\Client\CartReorderToZedRequestClientInterface
-     */
-    protected CartReorderToZedRequestClientInterface $zedRequestClient;
-
-    /**
      * @param \Spryker\Client\CartReorder\Dependency\Client\CartReorderToZedRequestClientInterface $zedRequestClient
      */
-    public function __construct(CartReorderToZedRequestClientInterface $zedRequestClient)
+    public function __construct(protected CartReorderToZedRequestClientInterface $zedRequestClient)
     {
-        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**

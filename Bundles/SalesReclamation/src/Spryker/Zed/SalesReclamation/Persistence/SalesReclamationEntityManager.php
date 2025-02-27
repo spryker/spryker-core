@@ -77,6 +77,19 @@ class SalesReclamationEntityManager extends AbstractEntityManager implements Sal
     }
 
     /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteSalesReclamationItemsBySalesOrderItemIds(array $salesOrderItemIds): void
+    {
+        $this->getFactory()
+            ->createSalesReclamationItemQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->delete();
+    }
+
+    /**
      * @return \Spryker\Zed\SalesReclamation\Persistence\Propel\Mapper\SalesReclamationMapperInterface
      */
     protected function getMapper(): SalesReclamationMapperInterface

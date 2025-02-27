@@ -25,16 +25,10 @@ class SalesOrderAmendmentValidator implements SalesOrderAmendmentValidatorInterf
     protected const GLOSSARY_KEY_PARAMETER_ORDER_REFERENCE = '%order_reference%';
 
     /**
-     * @var \Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OrderReaderInterface
-     */
-    protected OrderReaderInterface $orderReader;
-
-    /**
      * @param \Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OrderReaderInterface $orderReader
      */
-    public function __construct(OrderReaderInterface $orderReader)
+    public function __construct(protected OrderReaderInterface $orderReader)
     {
-        $this->orderReader = $orderReader;
     }
 
     /**

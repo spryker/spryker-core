@@ -7,25 +7,28 @@
 
 namespace Spryker\Zed\SalesConfigurableBundle\Business\Writer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer;
+use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleEntityManagerInterface;
+use Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface;
 
 class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWriterInterface
 {
-    /**
-     * @var \Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleEntityManagerInterface
-     */
-    protected $salesConfigurableBundleEntityManager;
+    use TransactionTrait;
 
     /**
      * @param \Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleEntityManagerInterface $salesConfigurableBundleEntityManager
+     * @param \Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository
      */
-    public function __construct(SalesConfigurableBundleEntityManagerInterface $salesConfigurableBundleEntityManager)
-    {
-        $this->salesConfigurableBundleEntityManager = $salesConfigurableBundleEntityManager;
+    public function __construct(
+        protected SalesConfigurableBundleEntityManagerInterface $salesConfigurableBundleEntityManager,
+        protected SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository
+    ) {
     }
 
     /**
@@ -37,12 +40,76 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
     {
         $salesOrderConfiguredBundleTransfers = $this->mapSalesOrderConfiguredBundles($quoteTransfer);
 
+        if (count($salesOrderConfiguredBundleTransfers)) {
+            $this->getTransactionHandler()->handleTransaction(function () use ($salesOrderConfiguredBundleTransfers): void {
+                $this->executeSaveSalesOrderConfiguredBundlesFromQuoteTransaction($salesOrderConfiguredBundleTransfers);
+            });
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer $salesOrderItemCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function updateSalesOrderConfiguredBundles(
+        SalesOrderItemCollectionResponseTransfer $salesOrderItemCollectionResponseTransfer
+    ): SalesOrderItemCollectionResponseTransfer {
+        $quoteTransfer = (new QuoteTransfer())->setItems($salesOrderItemCollectionResponseTransfer->getItems());
+        $salesOrderItemIds = $this->extractSalesOrderItemIds($quoteTransfer);
+        $salesOrderConfiguredBundleTransfers = $this->mapSalesOrderConfiguredBundles($quoteTransfer);
+
+        if (count($salesOrderConfiguredBundleTransfers)) {
+            $this->getTransactionHandler()->handleTransaction(function () use ($salesOrderConfiguredBundleTransfers, $salesOrderItemIds): void {
+                $this->executeUpdateSalesOrderConfiguredBundlesTransaction($salesOrderConfiguredBundleTransfers, $salesOrderItemIds);
+            });
+        }
+
+        return $salesOrderItemCollectionResponseTransfer;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer> $salesOrderConfiguredBundleTransfers
+     *
+     * @return void
+     */
+    protected function executeSaveSalesOrderConfiguredBundlesFromQuoteTransaction(
+        array $salesOrderConfiguredBundleTransfers
+    ): void {
         foreach ($salesOrderConfiguredBundleTransfers as $salesOrderConfiguredBundleTransfer) {
             $salesOrderConfiguredBundleTransfer = $this->salesConfigurableBundleEntityManager
                 ->createSalesOrderConfiguredBundle($salesOrderConfiguredBundleTransfer);
 
             $this->saveSalesOrderConfiguredBundleItems($salesOrderConfiguredBundleTransfer);
         }
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer> $salesOrderConfiguredBundleTransfers
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return list<\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer>
+     */
+    protected function executeUpdateSalesOrderConfiguredBundlesTransaction(
+        array $salesOrderConfiguredBundleTransfers,
+        array $salesOrderItemIds
+    ): array {
+        $updatedSalesOrderConfiguredBundles = [];
+        $salesOrderConfiguredBundleIdsToDelete = $this->salesConfigurableBundleRepository
+            ->getSalesOrderConfiguredBundleIdsBySalesOrderItemIds($salesOrderItemIds);
+
+        foreach ($salesOrderConfiguredBundleTransfers as $salesOrderConfiguredBundleTransfer) {
+            $salesOrderConfiguredBundleTransfer = $this->salesConfigurableBundleEntityManager
+                ->createSalesOrderConfiguredBundle($salesOrderConfiguredBundleTransfer);
+
+            $updatedSalesOrderConfiguredBundles[] = $this->updateSalesOrderConfiguredBundleItems(
+                $salesOrderConfiguredBundleTransfer,
+            );
+        }
+
+        $this->salesConfigurableBundleEntityManager->deleteSalesOrderConfiguredBundlesByIds($salesOrderConfiguredBundleIdsToDelete);
+
+        return $updatedSalesOrderConfiguredBundles;
     }
 
     /**
@@ -56,6 +123,29 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
             $salesOrderConfiguredBundleItemTransfer->setIdSalesOrderConfiguredBundle($salesOrderConfiguredBundleTransfer->getIdSalesOrderConfiguredBundle());
             $this->salesConfigurableBundleEntityManager->createSalesOrderConfiguredBundleItem($salesOrderConfiguredBundleItemTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer
+     */
+    protected function updateSalesOrderConfiguredBundleItems(
+        SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer
+    ): SalesOrderConfiguredBundleTransfer {
+        $persistedSalesOrderConfiguredBundleItemTransfers = [];
+        foreach ($salesOrderConfiguredBundleTransfer->getSalesOrderConfiguredBundleItems() as $salesOrderConfiguredBundleItemTransfer) {
+            $salesOrderConfiguredBundleItemTransfer->setIdSalesOrderConfiguredBundle(
+                $salesOrderConfiguredBundleTransfer->getIdSalesOrderConfiguredBundleOrFail(),
+            );
+
+            $persistedSalesOrderConfiguredBundleItemTransfers[] = $this->salesConfigurableBundleEntityManager
+                ->saveSalesOrderConfiguredBundleItemByFkSalesOrderItem($salesOrderConfiguredBundleItemTransfer);
+        }
+
+        return $salesOrderConfiguredBundleTransfer->setSalesOrderConfiguredBundleItems(
+            new ArrayObject($persistedSalesOrderConfiguredBundleItemTransfers),
+        );
     }
 
     /**
@@ -77,6 +167,21 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
         }
 
         return $salesOrderConfiguredBundleTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return list<int>
+     */
+    protected function extractSalesOrderItemIds(QuoteTransfer $quoteTransfer): array
+    {
+        $salesOrderItemIds = [];
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $salesOrderItemIds[] = $itemTransfer->getIdSalesOrderItemOrFail();
+        }
+
+        return array_unique($salesOrderItemIds);
     }
 
     /**

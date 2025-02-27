@@ -458,10 +458,10 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
-     * @param array $events
+     * @param array<array<string>> $events
      * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $orderItemTransfers
      *
-     * @return array
+     * @return array<array<string>>
      */
     public function groupEventsByShipment(array $events, iterable $orderItemTransfers): array
     {
@@ -604,5 +604,22 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
         return $this->getFactory()
             ->createShipmentMethodReader()
             ->getShipmentMethodCollection($shipmentMethodCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function replaceSalesOrderShipment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    {
+        $this->getFactory()
+            ->createSalesOrderShipmentReplacer()
+            ->replaceSalesOrderShipment($quoteTransfer, $saveOrderTransfer);
     }
 }

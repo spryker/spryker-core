@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesServicePoint\Business;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemServicePointCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderItemServicePointCollectionResponseTransfer;
 
 interface SalesServicePointFacadeInterface
 {
@@ -36,4 +38,20 @@ interface SalesServicePointFacadeInterface
      * @return list<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithServicePoint(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Uses `SalesOrderItemServicePointCollectionDeleteCriteriaTransfer.salesOrderItemIds` to filter sales order item service point entities by the sales order item IDs.
+     * - Deletes found by criteria sales order item service point entities.
+     * - Does nothing if no criteria properties are set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemServicePointCollectionDeleteCriteriaTransfer $salesOrderItemServicePointCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemServicePointCollectionResponseTransfer
+     */
+    public function deleteSalesOrderItemServicePointCollection(
+        SalesOrderItemServicePointCollectionDeleteCriteriaTransfer $salesOrderItemServicePointCollectionDeleteCriteriaTransfer
+    ): SalesOrderItemServicePointCollectionResponseTransfer;
 }

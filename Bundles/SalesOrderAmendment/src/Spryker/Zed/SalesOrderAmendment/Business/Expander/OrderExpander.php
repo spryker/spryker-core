@@ -10,21 +10,23 @@ namespace Spryker\Zed\SalesOrderAmendment\Business\Expander;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentConditionsTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentCriteriaTransfer;
+use Generated\Shared\Transfer\SortTransfer;
 use Spryker\Zed\SalesOrderAmendment\Business\Reader\SalesOrderAmendmentReaderInterface;
 
 class OrderExpander implements OrderExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Business\Reader\SalesOrderAmendmentReaderInterface
+     * @uses \Orm\Zed\SalesOrderAmendment\Persistence\Map\SpySalesOrderAmendmentTableMap::COL_CREATED_AT
+     *
+     * @var string
      */
-    protected SalesOrderAmendmentReaderInterface $salesOrderAmendmentReader;
+    protected const COL_CREATED_AT = 'spy_sales_order_amendment.created_at';
 
     /**
      * @param \Spryker\Zed\SalesOrderAmendment\Business\Reader\SalesOrderAmendmentReaderInterface $salesOrderAmendmentReader
      */
-    public function __construct(SalesOrderAmendmentReaderInterface $salesOrderAmendmentReader)
+    public function __construct(protected SalesOrderAmendmentReaderInterface $salesOrderAmendmentReader)
     {
-        $this->salesOrderAmendmentReader = $salesOrderAmendmentReader;
     }
 
     /**
@@ -36,8 +38,12 @@ class OrderExpander implements OrderExpanderInterface
     {
         $salesOrderAmendmentConditionsTransfer = (new SalesOrderAmendmentConditionsTransfer())
             ->addOriginalOrderReference($orderTransfer->getOrderReferenceOrFail());
+        $sortTransfer = (new SortTransfer())
+            ->setField(static::COL_CREATED_AT)
+            ->setIsAscending(false);
         $salesOrderAmendmentCriteriaTransfer = (new SalesOrderAmendmentCriteriaTransfer())
-            ->setSalesOrderAmendmentConditions($salesOrderAmendmentConditionsTransfer);
+            ->setSalesOrderAmendmentConditions($salesOrderAmendmentConditionsTransfer)
+            ->addSort($sortTransfer);
 
         $salesOrderAmendmentCollectionTransfer = $this->salesOrderAmendmentReader->getSalesOrderAmendmentCollection($salesOrderAmendmentCriteriaTransfer);
 

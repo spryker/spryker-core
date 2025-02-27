@@ -107,4 +107,19 @@ interface ShipmentEntityManagerInterface
      * @return void
      */
     public function updateFkShipmentForOrderItems(iterable $itemTransfers, ShipmentTransfer $shipmentTransfer): void;
+
+    /**
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param int|null $idSalesShipment
+     *
+     * @return void
+     */
+    public function updateFkSalesShipmentForSalesOrderItems(iterable $itemTransfers, ?int $idSalesShipment): void;
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    public function deleteSalesShipmentsByIdSalesOrder(int $idSalesOrder): void;
 }

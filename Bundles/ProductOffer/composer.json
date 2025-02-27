@@ -12,7 +12,7 @@
         "spryker/cart-reorder-extension": "^1.0.0",
         "spryker/checkout-extension": "^1.2.0",
         "spryker/event": "^1.0.0 || ^2.0.0",
-        "spryker/kernel": "^3.33.0",
+        "spryker/kernel": "^3.76.0",
         "spryker/messenger": "^3.0.0",
         "spryker/product": "^6.0.0",
         "spryker/product-offer-extension": "^1.0.0",

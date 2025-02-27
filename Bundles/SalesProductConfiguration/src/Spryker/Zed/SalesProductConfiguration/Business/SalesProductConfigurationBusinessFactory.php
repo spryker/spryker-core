@@ -8,6 +8,10 @@
 namespace Spryker\Zed\SalesProductConfiguration\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SalesProductConfiguration\Business\Collector\SalesProductConfigurationSalesOrderItemCollector;
+use Spryker\Zed\SalesProductConfiguration\Business\Collector\SalesProductConfigurationSalesOrderItemCollectorInterface;
+use Spryker\Zed\SalesProductConfiguration\Business\Deleter\SalesOrderItemConfigurationDeleter;
+use Spryker\Zed\SalesProductConfiguration\Business\Deleter\SalesOrderItemConfigurationDeleterInterface;
 use Spryker\Zed\SalesProductConfiguration\Business\Expander\OrderItemExpander;
 use Spryker\Zed\SalesProductConfiguration\Business\Expander\OrderItemExpanderInterface;
 use Spryker\Zed\SalesProductConfiguration\Business\Hydrator\CartReorderItemHydrator;
@@ -48,5 +52,21 @@ class SalesProductConfigurationBusinessFactory extends AbstractBusinessFactory
     public function createCartReorderItemHydrator(): CartReorderItemHydratorInterface
     {
         return new CartReorderItemHydrator();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesProductConfiguration\Business\Deleter\SalesOrderItemConfigurationDeleterInterface
+     */
+    public function createSalesOrderItemConfigurationDeleter(): SalesOrderItemConfigurationDeleterInterface
+    {
+        return new SalesOrderItemConfigurationDeleter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesProductConfiguration\Business\Collector\SalesProductConfigurationSalesOrderItemCollectorInterface
+     */
+    public function createSalesProductConfigurationSalesOrderItemCollector(): SalesProductConfigurationSalesOrderItemCollectorInterface
+    {
+        return new SalesProductConfigurationSalesOrderItemCollector();
     }
 }

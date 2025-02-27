@@ -44,4 +44,15 @@ class Factory extends AbstractFactory
 
         return $container;
     }
+
+    /**
+     * @param string $key
+     * @param string $fetch
+     *
+     * @return mixed
+     */
+    public function getProvidedDependency($key, $fetch = self::LOADING_EAGER)
+    {
+        return parent::getProvidedDependency($key, $fetch);
+    }
 }

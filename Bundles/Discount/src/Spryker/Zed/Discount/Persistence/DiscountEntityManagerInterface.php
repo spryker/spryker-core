@@ -78,4 +78,18 @@ interface DiscountEntityManagerInterface
      * @return void
      */
     public function deleteDiscountStoreRelations(int $idDiscount, array $storeIds): void;
+
+    /**
+     * @param list<int> $salesDiscountIds
+     *
+     * @return void
+     */
+    public function deleteSalesDiscountsBySalesDiscountIds(array $salesDiscountIds): void;
+
+    /**
+     * @param list<int> $salesDiscountIds
+     *
+     * @return void
+     */
+    public function deleteSalesDiscountCodesBySalesDiscountIds(array $salesDiscountIds): void;
 }

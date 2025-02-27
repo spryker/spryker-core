@@ -8,11 +8,21 @@
 namespace Spryker\Zed\Sales\Business;
 
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
+use Spryker\Shared\CheckoutExtension\CheckoutExtensionContextsInterface;
+use Spryker\Shared\Kernel\StrategyResolver;
+use Spryker\Shared\Kernel\StrategyResolverInterface;
+use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
 use Spryker\Zed\Sales\Business\Checker\DuplicateOrderChecker;
 use Spryker\Zed\Sales\Business\Checker\DuplicateOrderCheckerInterface;
+use Spryker\Zed\Sales\Business\Creator\SalesOrderItemCreator;
+use Spryker\Zed\Sales\Business\Creator\SalesOrderItemCreatorInterface;
+use Spryker\Zed\Sales\Business\Deleter\SalesExpenseDeleter;
+use Spryker\Zed\Sales\Business\Deleter\SalesExpenseDeleterInterface;
+use Spryker\Zed\Sales\Business\Deleter\SalesOrderItemDeleter;
+use Spryker\Zed\Sales\Business\Deleter\SalesOrderItemDeleterInterface;
 use Spryker\Zed\Sales\Business\Expander\ItemCurrencyExpander;
 use Spryker\Zed\Sales\Business\Expander\ItemCurrencyExpanderInterface;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpander;
@@ -23,6 +33,8 @@ use Spryker\Zed\Sales\Business\Expense\ExpenseWriter;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface;
 use Spryker\Zed\Sales\Business\ItemSaver\OrderItemsSaver;
 use Spryker\Zed\Sales\Business\ItemSaver\OrderItemsSaverInterface;
+use Spryker\Zed\Sales\Business\Mapper\SalesOrderMapper;
+use Spryker\Zed\Sales\Business\Mapper\SalesOrderMapperInterface;
 use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
@@ -66,6 +78,20 @@ use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
 use Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggerer;
 use Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggererInterface;
+use Spryker\Zed\Sales\Business\Updater\SalesOrderAddressUpdater;
+use Spryker\Zed\Sales\Business\Updater\SalesOrderAddressUpdaterInterface;
+use Spryker\Zed\Sales\Business\Updater\SalesOrderItemUpdater;
+use Spryker\Zed\Sales\Business\Updater\SalesOrderItemUpdaterInterface;
+use Spryker\Zed\Sales\Business\Updater\SalesOrderUpdater;
+use Spryker\Zed\Sales\Business\Updater\SalesOrderUpdaterInterface;
+use Spryker\Zed\Sales\Business\Validator\Rule\SalesOrderItem\DuplicationSalesOrderItemValidatorRule;
+use Spryker\Zed\Sales\Business\Validator\Rule\SalesOrderItem\ExistenceSalesOrderItemValidatorRule;
+use Spryker\Zed\Sales\Business\Validator\Rule\SalesOrderItem\SalesOrderItemRelationValidatorRule;
+use Spryker\Zed\Sales\Business\Validator\Rule\SalesOrderItem\SalesOrderItemValidatorRuleInterface;
+use Spryker\Zed\Sales\Business\Validator\SalesOrderItemValidator;
+use Spryker\Zed\Sales\Business\Validator\SalesOrderItemValidatorInterface;
+use Spryker\Zed\Sales\Business\Validator\Util\ErrorAdder;
+use Spryker\Zed\Sales\Business\Validator\Util\ErrorAdderInterface;
 use Spryker\Zed\Sales\Business\Writer\OrderWriter;
 use Spryker\Zed\Sales\Business\Writer\OrderWriterInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
@@ -160,7 +186,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
             $this->createSalesOrderItemMapper(),
-            $this->getOrderPostSavePlugins(),
+            $this->createOrderPostSavePluginStrategyResolver(),
             $this->getStoreFacade(),
             $this->getLocaleFacade(),
             $this->createOrderStateMachineResolver(),
@@ -181,7 +207,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
             $this->createSalesOrderItemMapper(),
-            $this->getOrderPostSavePlugins(),
+            $this->createOrderPostSavePluginStrategyResolver(),
             $this->getStoreFacade(),
             $this->getLocaleFacade(),
             $this->createOrderStateMachineResolver(),
@@ -200,7 +226,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getLocaleFacade(),
             $this->getOrderExpanderPreSavePlugins(),
-            $this->getOrderPostSavePlugins(),
+            $this->createOrderPostSavePluginStrategyResolver(),
             $this->getEntityManager(),
         );
     }
@@ -216,6 +242,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getOrderItemsPostSavePlugins(),
             $this->createOrderStateMachineResolver(),
+            $this->createOrderItemInitialStateProviderPluginStrategyResolver(),
         );
     }
 
@@ -229,6 +256,30 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getOrderPostUpdatePlugins(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Updater\SalesOrderUpdaterInterface
+     */
+    public function createSalesOrderUpdater(): SalesOrderUpdaterInterface
+    {
+        return new SalesOrderUpdater(
+            $this->getEntityManager(),
+            $this->createSalesOrderMapper(),
+            $this->createSalesOrderAddressUpdater(),
+            $this->getConfig(),
+            $this->getOrderExpanderPreSavePlugins(),
+            $this->createOrderPostSavePluginStrategyResolver(),
+            $this->getLocaleFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Updater\SalesOrderAddressUpdaterInterface
+     */
+    public function createSalesOrderAddressUpdater(): SalesOrderAddressUpdaterInterface
+    {
+        return new SalesOrderAddressUpdater($this->getEntityManager(), $this->getCountryFacade());
     }
 
     /**
@@ -407,6 +458,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Sales\Business\Mapper\SalesOrderMapperInterface
+     */
+    public function createSalesOrderMapper(): SalesOrderMapperInterface
+    {
+        return new SalesOrderMapper();
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface
      */
     public function createExpenseWriter(): ExpenseWriterInterface
@@ -463,7 +522,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface
      */
-    protected function getCalculationFacade()
+    public function getCalculationFacade()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_CALCULATION);
     }
@@ -471,7 +530,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface
      */
-    protected function getSequenceNumberFacade()
+    public function getSequenceNumberFacade()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_SEQUENCE_NUMBER);
     }
@@ -487,7 +546,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
      */
-    protected function getCountryFacade()
+    public function getCountryFacade()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_COUNTRY);
     }
@@ -549,11 +608,31 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>
+     * @return \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>>
      */
-    public function getOrderPostSavePlugins(): array
+    public function createOrderPostSavePluginStrategyResolver(): StrategyResolverInterface
     {
-        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE);
+        return new StrategyResolver(
+            [
+                CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT => $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE, static::LOADING_LAZY),
+                SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT => $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT, static::LOADING_LAZY),
+            ],
+            CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT,
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemInitialStateProviderPluginInterface>>
+     */
+    public function createOrderItemInitialStateProviderPluginStrategyResolver(): StrategyResolverInterface
+    {
+        return new StrategyResolver(
+            [
+                CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT => $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER, static::LOADING_LAZY),
+                SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT => $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER_FOR_ORDER_AMENDMENT, static::LOADING_LAZY),
+            ],
+            CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT,
+        );
     }
 
     /**
@@ -616,6 +695,139 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new DuplicateOrderChecker(
             $this->getRepository(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Deleter\SalesExpenseDeleterInterface
+     */
+    public function createSalesExpenseDeleter(): SalesExpenseDeleterInterface
+    {
+        return new SalesExpenseDeleter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->getSalesExpensePreDeletePlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Creator\SalesOrderItemCreatorInterface
+     */
+    public function createSalesOrderItemCreator(): SalesOrderItemCreatorInterface
+    {
+        return new SalesOrderItemCreator(
+            $this->getEntityManager(),
+            $this->createSalesOrderItemCreateValidator(),
+            $this->createOrderItemsSaver(),
+            $this->getsalesOrderItemsPreCreatePlugins(),
+            $this->getSalesOrderItemCollectionPostCreatePlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Updater\SalesOrderItemUpdaterInterface
+     */
+    public function createSalesOrderItemUpdater(): SalesOrderItemUpdaterInterface
+    {
+        return new SalesOrderItemUpdater(
+            $this->getEntityManager(),
+            $this->createSalesOrderItemUpdateValidator(),
+            $this->createOrderItemsSaver(),
+            $this->getsalesOrderItemsPreUpdatePlugins(),
+            $this->getSalesOrderItemCollectionPostUpdatePlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Validator\SalesOrderItemValidatorInterface
+     */
+    public function createSalesOrderItemCreateValidator(): SalesOrderItemValidatorInterface
+    {
+        return new SalesOrderItemValidator(
+            $this->getSalesOrderItemCreateValidatorRule(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Validator\SalesOrderItemValidatorInterface
+     */
+    public function createSalesOrderItemUpdateValidator(): SalesOrderItemValidatorInterface
+    {
+        return new SalesOrderItemValidator(
+            $this->getSalesOrderItemUpdateValidatorRule(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Deleter\SalesOrderItemDeleterInterface
+     */
+    public function createSalesOrderItemDeleter(): SalesOrderItemDeleterInterface
+    {
+        return new SalesOrderItemDeleter(
+            $this->getEntityManager(),
+            $this->getSalesOrderItemCollectionPreDeletePlugins(),
+        );
+    }
+
+    /**
+     * @return list<\Spryker\Zed\Sales\Business\Validator\Rule\SalesOrderItem\SalesOrderItemValidatorRuleInterface>
+     */
+    public function getSalesOrderItemCreateValidatorRule(): array
+    {
+        return [
+            $this->createSalesOrderItemRelationValidatorRule(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\Sales\Business\Validator\Rule\SalesOrderItem\SalesOrderItemValidatorRuleInterface>
+     */
+    public function getSalesOrderItemUpdateValidatorRule(): array
+    {
+        return [
+            $this->createSalesOrderItemRelationValidatorRule(),
+            $this->createExistenceSalesOrderItemValidatorRule(),
+            $this->createDuplicationSalesOrderItemValidatorRule(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Validator\Rule\SalesOrderItem\SalesOrderItemValidatorRuleInterface
+     */
+    public function createSalesOrderItemRelationValidatorRule(): SalesOrderItemValidatorRuleInterface
+    {
+        return new SalesOrderItemRelationValidatorRule(
+            $this->createErrorAdder(),
+            $this->getRepository(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Validator\Rule\SalesOrderItem\SalesOrderItemValidatorRuleInterface
+     */
+    public function createExistenceSalesOrderItemValidatorRule(): SalesOrderItemValidatorRuleInterface
+    {
+        return new ExistenceSalesOrderItemValidatorRule(
+            $this->createErrorAdder(),
+            $this->getRepository(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Validator\Rule\SalesOrderItem\SalesOrderItemValidatorRuleInterface
+     */
+    public function createDuplicationSalesOrderItemValidatorRule(): SalesOrderItemValidatorRuleInterface
+    {
+        return new DuplicationSalesOrderItemValidatorRule(
+            $this->createErrorAdder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Validator\Util\ErrorAdderInterface
+     */
+    public function createErrorAdder(): ErrorAdderInterface
+    {
+        return new ErrorAdder();
     }
 
     /**
@@ -704,5 +916,53 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getOrderPostCancelPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_POST_CANCEL);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesExpensePreDeletePluginInterface>
+     */
+    public function getSalesExpensePreDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_SALES_EXPENSE_PRE_DELETE);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemCollectionPreDeletePluginInterface>
+     */
+    public function getSalesOrderItemCollectionPreDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_SALES_ORDER_ITEM_COLLECTION_PRE_DELETE);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemsPreCreatePluginInterface>
+     */
+    public function getSalesOrderItemsPreCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEMS_PRE_CREATE);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemCollectionPostCreatePluginInterface>
+     */
+    public function getSalesOrderItemCollectionPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEM_COLLECTION_POST_CREATE);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemsPreUpdatePluginInterface>
+     */
+    public function getSalesOrderItemsPreUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEMS_PRE_UPDATE);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemCollectionPostUpdatePluginInterface>
+     */
+    public function getSalesOrderItemCollectionPostUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEM_COLLECTION_POST_UPDATE);
     }
 }

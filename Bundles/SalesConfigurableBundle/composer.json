@@ -8,11 +8,11 @@
         "spryker/cart-reorder-extension": "^1.0.0",
         "spryker/configurable-bundle": "^1.1.0 || ^2.5.0",
         "spryker/glossary": "^3.0.0",
-        "spryker/kernel": "^3.33.0",
+        "spryker/kernel": "^3.76.0",
         "spryker/messenger": "^3.0.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/sales": "^10.3.2 || ^11.2.1",
-        "spryker/sales-extension": "^1.9.0",
+        "spryker/sales-extension": "^1.12.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {

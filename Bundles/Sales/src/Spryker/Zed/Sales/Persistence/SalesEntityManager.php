@@ -26,6 +26,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class SalesEntityManager extends AbstractEntityManager implements SalesEntityManagerInterface
 {
     /**
+     * @var string
+     */
+    protected const COLUMN_FK_SALES_ORDER_ADDRESS_SHIPPING = 'FkSalesOrderAddressShipping';
+
+    /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
@@ -92,7 +97,7 @@ class SalesEntityManager extends AbstractEntityManager implements SalesEntityMan
     {
         $salesOrderAddressEntity = $this->getFactory()
             ->createSalesOrderAddressQuery()
-            ->filterByIdSalesOrderAddress($addressTransfer->getIdSalesOrderAddress())
+            ->filterByIdSalesOrderAddress($addressTransfer->getIdSalesOrderAddressOrFail())
             ->findOne();
 
         $salesOrderAddressEntity->fromArray($addressTransfer->toArray());
@@ -125,9 +130,20 @@ class SalesEntityManager extends AbstractEntityManager implements SalesEntityMan
      */
     public function saveOrderEntity(SpySalesOrderEntityTransfer $salesOrderEntityTransfer): SpySalesOrderEntityTransfer
     {
+        $salesOrderEntity = null;
+        if ($salesOrderEntityTransfer->getIdSalesOrder() !== null) {
+            $salesOrderEntity = $this->getFactory()
+                ->createSalesOrderQuery()
+                ->filterByIdSalesOrder($salesOrderEntityTransfer->getIdSalesOrderOrFail())
+                ->findOne();
+        }
+
         $salesOrderEntity = $this->getFactory()
             ->createSalesOrderMapper()
-            ->mapSalesOrderEntityTransferToSalesOrderEntity($salesOrderEntityTransfer, new SpySalesOrder());
+            ->mapSalesOrderEntityTransferToSalesOrderEntity(
+                $salesOrderEntityTransfer,
+                $salesOrderEntity ?? new SpySalesOrder(),
+            );
         $salesOrderEntity->save();
 
         return $this->getFactory()
@@ -142,14 +158,38 @@ class SalesEntityManager extends AbstractEntityManager implements SalesEntityMan
      */
     public function saveSalesOrderItems(SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer): SpySalesOrderItemEntityTransfer
     {
+        $salesOrderItemEntity = null;
+        if ($salesOrderItemEntityTransfer->getIdSalesOrderItem()) {
+            $salesOrderItemEntity = $this->getFactory()
+                ->createSalesOrderItemQuery()
+                ->filterByIdSalesOrderItem($salesOrderItemEntityTransfer->getIdSalesOrderItem())
+                ->findOne();
+        }
+
         $salesOrderItemEntity = $this->getFactory()
             ->createSalesOrderItemMapper()
-            ->mapSalesOrderItemEntityTransferToSalesOrderItemEntity($salesOrderItemEntityTransfer, new SpySalesOrderItem());
+            ->mapSalesOrderItemEntityTransferToSalesOrderItemEntity(
+                $salesOrderItemEntityTransfer,
+                $salesOrderItemEntity ?? new SpySalesOrderItem(),
+            );
         $salesOrderItemEntity->save();
 
         return $this->getFactory()
             ->createSalesOrderItemMapper()
             ->mapSalesOrderItemEntityToSalesOrderItemEntityTransfer($salesOrderItemEntityTransfer, $salesOrderItemEntity);
+    }
+
+    /**
+     * @param list<int> $salesExpenseIds
+     *
+     * @return void
+     */
+    public function deleteSalesExpensesBySalesExpenseIds(array $salesExpenseIds): void
+    {
+        $this->getFactory()
+            ->createSalesExpenseQuery()
+            ->filterByIdSalesExpense_In($salesExpenseIds)
+            ->delete();
     }
 
     /**
@@ -167,5 +207,31 @@ class SalesEntityManager extends AbstractEntityManager implements SalesEntityMan
         return $this->getFactory()
             ->createSalesOrderMapper()
             ->mapSalesOrderAddressEntityToSalesOrderAddressEntityTransfer($salesOrderAddressEntityTransfer, $salesOrderAddressEntity);
+    }
+
+    /**
+     * @param int $idSalesOrderAddress
+     *
+     * @return void
+     */
+    public function unsetSalesOrderShippingAddress(int $idSalesOrderAddress): void
+    {
+        $this->getFactory()
+            ->createSalesOrderQuery()
+            ->filterByFkSalesOrderAddressShipping($idSalesOrderAddress)
+            ->update([static::COLUMN_FK_SALES_ORDER_ADDRESS_SHIPPING => null]);
+    }
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderItemsBySalesOrderItemIds(array $salesOrderItemIds): void
+    {
+        $this->getFactory()
+            ->createSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem_In($salesOrderItemIds)
+            ->delete();
     }
 }

@@ -12,6 +12,7 @@ use DateInterval;
 use Generated\Shared\DataBuilder\OmsEventTriggerResponseBuilder;
 use Generated\Shared\DataBuilder\OmsProductReservationBuilder;
 use Generated\Shared\Transfer\OmsEventTriggerResponseTransfer;
+use Generated\Shared\Transfer\OmsOrderItemStateTransfer;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
@@ -76,6 +77,29 @@ class OmsHelper extends Module
 
         $salesOrderItemEntity->setState($orderItemStateEntity);
         $salesOrderItemEntity->save();
+    }
+
+    /**
+     * @param array<string, string|int> $seed
+     *
+     * @return \Generated\Shared\Transfer\OmsOrderItemStateTransfer
+     */
+    public function haveOmsOrderItemState(array $seed): OmsOrderItemStateTransfer
+    {
+        $omsOrderItemStateTransfer = new OmsOrderItemStateTransfer();
+        $omsOrderItemStateTransfer->fromArray($seed);
+
+        $omsOrderItemStateEntity = (new SpyOmsOrderItemState());
+        $omsOrderItemStateEntity->fromArray($omsOrderItemStateTransfer->toArray());
+        $omsOrderItemStateEntity->save();
+
+        $omsOrderItemStateTransfer->fromArray($omsOrderItemStateEntity->toArray(), true);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($omsOrderItemStateEntity): void {
+            $omsOrderItemStateEntity->delete();
+        });
+
+        return $omsOrderItemStateTransfer;
     }
 
     /**

@@ -9,6 +9,8 @@ namespace Spryker\Zed\SalesProductConfiguration\Business;
 
 use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemConfigurationCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderItemConfigurationCollectionResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -64,5 +66,22 @@ class SalesProductConfigurationFacade extends AbstractFacade implements SalesPro
         return $this->getFactory()
             ->createCartReorderItemHydrator()
             ->hydrate($cartReorderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemConfigurationCollectionDeleteCriteriaTransfer $salesOrderItemConfigurationCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemConfigurationCollectionResponseTransfer
+     */
+    public function deleteSalesOrderItemConfigurationCollection(
+        SalesOrderItemConfigurationCollectionDeleteCriteriaTransfer $salesOrderItemConfigurationCollectionDeleteCriteriaTransfer
+    ): SalesOrderItemConfigurationCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSalesOrderItemConfigurationDeleter()
+            ->deleteSalesOrderItemConfigurationCollection($salesOrderItemConfigurationCollectionDeleteCriteriaTransfer);
     }
 }

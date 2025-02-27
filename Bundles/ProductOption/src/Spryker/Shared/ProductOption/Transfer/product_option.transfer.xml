@@ -276,4 +276,19 @@
         <property name="reorderItems" type="Item[]" singular="reorderItem"/>
     </transfer>
 
+    <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemOptionCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemOptionCollectionResponse" strict="true">
+    </transfer>
+
+    <transfer name="SalesOrderItemCollectionResponse" strict="true">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
 </transfers>

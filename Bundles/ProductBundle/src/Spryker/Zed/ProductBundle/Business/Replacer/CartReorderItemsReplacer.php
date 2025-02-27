@@ -46,9 +46,11 @@ class CartReorderItemsReplacer implements CartReorderItemsReplacerInterface
 
         foreach ($productBundleItemsIndexedByProductBundleIdentifier as $bundleItemIdentifier => $productBundleItemTransfer) {
             $firstBundledItemIndex = array_key_first($bundledItemTransfersGroupedByProductBundleIdentifier[$bundleItemIdentifier]);
-            $productBundleItemTransfer->setIdSalesOrderItem(
-                $bundledItemTransfersGroupedByProductBundleIdentifier[$bundleItemIdentifier][$firstBundledItemIndex]->getIdSalesOrderItemOrFail(),
-            );
+            $firstItemInBundle = $bundledItemTransfersGroupedByProductBundleIdentifier[$bundleItemIdentifier][$firstBundledItemIndex];
+
+            $productBundleItemTransfer
+                ->setIdSalesOrderItem($firstItemInBundle->getIdSalesOrderItemOrFail())
+                ->setGroupKey($firstItemInBundle->getGroupKeyOrFail());
 
             $cartReorderTransfer = $this->removeRelatedBundledItems($cartReorderTransfer, $bundleItemIdentifier);
             $cartReorderTransfer->getOrderItems()->offsetSet($firstBundledItemIndex, $productBundleItemTransfer);

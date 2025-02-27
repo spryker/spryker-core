@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionResponseTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\SalesOrderAmendment\Business\Filter\QuoteFieldsFilterInterface;
 use Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentEntityManagerInterface;
 
 class SalesOrderAmendmentQuoteCreator implements SalesOrderAmendmentQuoteCreatorInterface
@@ -18,17 +19,13 @@ class SalesOrderAmendmentQuoteCreator implements SalesOrderAmendmentQuoteCreator
     use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentEntityManagerInterface
-     */
-    protected SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager;
-
-    /**
      * @param \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager
+     * @param \Spryker\Zed\SalesOrderAmendment\Business\Filter\QuoteFieldsFilterInterface $quoteFieldsFilter
      */
     public function __construct(
-        SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager
+        protected SalesOrderAmendmentEntityManagerInterface $salesOrderAmendmentEntityManager,
+        protected QuoteFieldsFilterInterface $quoteFieldsFilter
     ) {
-        $this->salesOrderAmendmentEntityManager = $salesOrderAmendmentEntityManager;
     }
 
     /**
@@ -58,7 +55,12 @@ class SalesOrderAmendmentQuoteCreator implements SalesOrderAmendmentQuoteCreator
     {
         $persistedSalesOrderAmendmentQuoteTransfers = new ArrayObject();
         foreach ($salesOrderAmendmentQuoteTransfers as $entityIdentifier => $salesOrderAmendmentQuoteTransfer) {
-            $persistedSalesOrderAmendmentQuoteTransfer = $this->salesOrderAmendmentEntityManager->createSalesOrderAmendmentQuote($salesOrderAmendmentQuoteTransfer);
+            $quoteFieldsAllowedForSaving = $this->quoteFieldsFilter->filterQuoteFieldsAllowedForSaving(
+                $salesOrderAmendmentQuoteTransfer->getQuoteOrFail(),
+            );
+
+            $persistedSalesOrderAmendmentQuoteTransfer = $this->salesOrderAmendmentEntityManager
+                ->createSalesOrderAmendmentQuote($salesOrderAmendmentQuoteTransfer, $quoteFieldsAllowedForSaving);
 
             $persistedSalesOrderAmendmentQuoteTransfers->offsetSet($entityIdentifier, $persistedSalesOrderAmendmentQuoteTransfer);
         }

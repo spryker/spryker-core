@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleItemCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleItemCollectionResponseTransfer;
 
 interface SalesConfigurableBundleFacadeInterface
 {
@@ -139,4 +141,20 @@ interface SalesConfigurableBundleFacadeInterface
     public function hydrateCartReorderItemsWithConfigurableBundle(
         CartReorderTransfer $cartReorderTransfer
     ): CartReorderTransfer;
+
+    /**
+     * Specification:
+     * - Uses `SalesOrderConfiguredBundleItemCollectionDeleteCriteriaTransfer.salesOrderItemIds` to filter sales order configured bundle item entities by the sales order item IDs.
+     * - Deletes found by criteria sales order configured bundle item entities.
+     * - Does nothing if no criteria properties are set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemCollectionDeleteCriteriaTransfer $salesOrderConfiguredBundleItemCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemCollectionResponseTransfer
+     */
+    public function deleteSalesOrderConfiguredBundleItemCollection(
+        SalesOrderConfiguredBundleItemCollectionDeleteCriteriaTransfer $salesOrderConfiguredBundleItemCollectionDeleteCriteriaTransfer
+    ): SalesOrderConfiguredBundleItemCollectionResponseTransfer;
 }

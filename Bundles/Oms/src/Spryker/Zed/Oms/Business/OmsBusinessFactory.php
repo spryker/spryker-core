@@ -12,6 +12,12 @@ use Spryker\Zed\Oms\Business\Checker\FlagChecker;
 use Spryker\Zed\Oms\Business\Checker\FlagCheckerInterface;
 use Spryker\Zed\Oms\Business\Checker\OrderChecker;
 use Spryker\Zed\Oms\Business\Checker\OrderCheckerInterface;
+use Spryker\Zed\Oms\Business\Deleter\OmsEventTimeoutDeleter;
+use Spryker\Zed\Oms\Business\Deleter\OmsEventTimeoutDeleterInterface;
+use Spryker\Zed\Oms\Business\Deleter\OmsOrderItemStateHistoryDeleter;
+use Spryker\Zed\Oms\Business\Deleter\OmsOrderItemStateHistoryDeleterInterface;
+use Spryker\Zed\Oms\Business\Deleter\OmsTransitionLogDeleter;
+use Spryker\Zed\Oms\Business\Deleter\OmsTransitionLogDeleterInterface;
 use Spryker\Zed\Oms\Business\Expander\OrderAggregatedItemStateExpander;
 use Spryker\Zed\Oms\Business\Expander\OrderAggregatedItemStateExpanderInterface;
 use Spryker\Zed\Oms\Business\Expander\OrderExpander;
@@ -513,6 +519,30 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new OrderItemManualEventReader(
             $this->createOrderStateMachineBuilder(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Deleter\OmsEventTimeoutDeleterInterface
+     */
+    public function createOmsEventTimeoutDeleter(): OmsEventTimeoutDeleterInterface
+    {
+        return new OmsEventTimeoutDeleter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Deleter\OmsOrderItemStateHistoryDeleterInterface
+     */
+    public function createOmsOrderItemStateHistoryDeleter(): OmsOrderItemStateHistoryDeleterInterface
+    {
+        return new OmsOrderItemStateHistoryDeleter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Deleter\OmsTransitionLogDeleterInterface
+     */
+    public function createOmsTransitionLogDeleter(): OmsTransitionLogDeleterInterface
+    {
+        return new OmsTransitionLogDeleter($this->getEntityManager());
     }
 
     /**

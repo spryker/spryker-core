@@ -12,24 +12,19 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
-    /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface
-     */
-    protected $glossaryFacade;
+    use TransactionTrait;
 
     /**
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface $glossaryFacade
      */
-    public function __construct(ProductOptionToGlossaryFacadeInterface $glossaryFacade)
-    {
-        $this->glossaryFacade = $glossaryFacade;
+    public function __construct(
+        protected ProductOptionToGlossaryFacadeInterface $glossaryFacade
+    ) {
     }
 
     /**
@@ -40,8 +35,20 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
      */
     public function saveOrderProductOptions(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
-        $this->handleDatabaseTransaction(function () use ($saveOrderTransfer) {
+        $this->getTransactionHandler()->handleTransaction(function () use ($saveOrderTransfer): void {
             $this->saveOrderProductOptionsTransaction($saveOrderTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function createSalesOrderItemOptions(QuoteTransfer $quoteTransfer): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer): void {
+            $this->executeSaveOrderItemOptionsTransaction($quoteTransfer);
         });
     }
 
@@ -50,10 +57,25 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
      *
      * @return void
      */
-    public function saveOrderProductOptionsTransaction(SaveOrderTransfer $saveOrderTransfer)
+    protected function saveOrderProductOptionsTransaction(SaveOrderTransfer $saveOrderTransfer)
     {
         foreach ($saveOrderTransfer->getOrderItems() as $itemTransfer) {
             $this->saveOptions($itemTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array<int, array<int, \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption>>|null $salesOrderItemOptionEntitiesGroupedByIdSalesOrderItem
+     *
+     * @return void
+     */
+    protected function executeSaveOrderItemOptionsTransaction(
+        QuoteTransfer $quoteTransfer,
+        ?array $salesOrderItemOptionEntitiesGroupedByIdSalesOrderItem = []
+    ): void {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $this->saveOptions($itemTransfer, $salesOrderItemOptionEntitiesGroupedByIdSalesOrderItem);
         }
     }
 
@@ -100,16 +122,20 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
     }
 
     /**
+     * .
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array<int, array<int, \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption>>|null $salesOrderItemOptionEntitiesGroupedByIdSalesOrderItem
      *
      * @return void
      */
-    protected function saveOptions(ItemTransfer $itemTransfer)
+    protected function saveOptions(ItemTransfer $itemTransfer, ?array $salesOrderItemOptionEntitiesGroupedByIdSalesOrderItem = [])
     {
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
             $this->translateOption($productOptionTransfer);
 
-            $salesOrderItemOptionEntity = $this->createSalesOrderItemOptionEntity();
+            $salesOrderItemOptionEntity = $salesOrderItemOptionEntitiesGroupedByIdSalesOrderItem[$itemTransfer->getIdSalesOrderItem()][$productOptionTransfer->getIdSalesOrderItemOption()]
+                ?? $this->createSalesOrderItemOptionEntity();
 
             $this->hydrateSalesOrderItemOptionEntity(
                 $salesOrderItemOptionEntity,

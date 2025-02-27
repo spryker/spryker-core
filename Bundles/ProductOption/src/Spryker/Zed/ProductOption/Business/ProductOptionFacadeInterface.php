@@ -18,6 +18,8 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemOptionCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderItemOptionCollectionResponseTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
@@ -345,4 +347,20 @@ interface ProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\CartReorderTransfer
      */
     public function hydrateCartReorderItemWithProductOptions(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer;
+
+    /**
+     * Specification:
+     * - Uses `SalesOrderItemOptionCollectionDeleteCriteriaTransfer.salesOrderItemIds` to filter sales order item option entities by the sales order item IDs.
+     * - Deletes found by criteria sales order item option entities.
+     * - Does nothing if no criteria properties are set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemOptionCollectionDeleteCriteriaTransfer $salesOrderItemOptionCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemOptionCollectionResponseTransfer
+     */
+    public function deleteSalesOrderItemOptionCollection(
+        SalesOrderItemOptionCollectionDeleteCriteriaTransfer $salesOrderItemOptionCollectionDeleteCriteriaTransfer
+    ): SalesOrderItemOptionCollectionResponseTransfer;
 }

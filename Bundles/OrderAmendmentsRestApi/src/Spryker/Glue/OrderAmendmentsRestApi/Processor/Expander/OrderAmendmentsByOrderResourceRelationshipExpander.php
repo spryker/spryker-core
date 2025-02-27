@@ -14,16 +14,10 @@ use Spryker\Glue\OrderAmendmentsRestApi\Processor\RestResponseBuilder\OrderAmend
 class OrderAmendmentsByOrderResourceRelationshipExpander implements OrderAmendmentsByOrderResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\OrderAmendmentsRestApi\Processor\RestResponseBuilder\OrderAmendmentsRestResponseBuilderInterface
-     */
-    protected OrderAmendmentsRestResponseBuilderInterface $orderAmendmentsRestResponseBuilder;
-
-    /**
      * @param \Spryker\Glue\OrderAmendmentsRestApi\Processor\RestResponseBuilder\OrderAmendmentsRestResponseBuilderInterface $orderAmendmentsRestResponseBuilder
      */
-    public function __construct(OrderAmendmentsRestResponseBuilderInterface $orderAmendmentsRestResponseBuilder)
+    public function __construct(protected OrderAmendmentsRestResponseBuilderInterface $orderAmendmentsRestResponseBuilder)
     {
-        $this->orderAmendmentsRestResponseBuilder = $orderAmendmentsRestResponseBuilder;
     }
 
     /**

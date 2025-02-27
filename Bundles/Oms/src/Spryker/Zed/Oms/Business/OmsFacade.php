@@ -10,7 +10,14 @@ namespace Spryker\Zed\Oms\Business;
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
 use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsEventTimeoutCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\OmsEventTimeoutCollectionResponseTransfer;
+use Generated\Shared\Transfer\OmsOrderItemStateHistoryCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\OmsOrderItemStateHistoryCollectionResponseTransfer;
+use Generated\Shared\Transfer\OmsOrderItemStateTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\OmsTransitionLogCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\OmsTransitionLogCollectionResponseTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderMatrixCollectionTransfer;
 use Generated\Shared\Transfer\OrderMatrixCriteriaTransfer;
@@ -891,5 +898,72 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
         return $this->getFactory()
             ->createOrderChecker()
             ->areOrderItemsSatisfiedByFlag($orderTransfer, $flag);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OmsOrderItemStateHistoryCollectionDeleteCriteriaTransfer $omsOrderItemStateHistoryCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OmsOrderItemStateHistoryCollectionResponseTransfer
+     */
+    public function deleteOmsOrderItemStateHistoryCollection(
+        OmsOrderItemStateHistoryCollectionDeleteCriteriaTransfer $omsOrderItemStateHistoryCollectionDeleteCriteriaTransfer
+    ): OmsOrderItemStateHistoryCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createOmsOrderItemStateHistoryDeleter()
+            ->deleteOmsOrderItemStateHistoryCollection($omsOrderItemStateHistoryCollectionDeleteCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OmsTransitionLogCollectionDeleteCriteriaTransfer $omsTransitionLogCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OmsTransitionLogCollectionResponseTransfer
+     */
+    public function deleteOmsTransitionLogCollection(
+        OmsTransitionLogCollectionDeleteCriteriaTransfer $omsTransitionLogCollectionDeleteCriteriaTransfer
+    ): OmsTransitionLogCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createOmsTransitionLogDeleter()
+            ->deleteOmsTransitionLogCollection($omsTransitionLogCollectionDeleteCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OmsEventTimeoutCollectionDeleteCriteriaTransfer $omsEventTimeoutCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OmsEventTimeoutCollectionResponseTransfer
+     */
+    public function deleteOmsEventTimeoutCollection(
+        OmsEventTimeoutCollectionDeleteCriteriaTransfer $omsEventTimeoutCollectionDeleteCriteriaTransfer
+    ): OmsEventTimeoutCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createOmsEventTimeoutDeleter()
+            ->deleteOmsEventTimeoutCollection($omsEventTimeoutCollectionDeleteCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $stateName
+     *
+     * @return \Generated\Shared\Transfer\OmsOrderItemStateTransfer
+     */
+    public function getOmsOrderItemState(string $stateName): OmsOrderItemStateTransfer
+    {
+        return $this->getFactory()
+            ->createOrderStateMachinePersistenceManager()
+            ->getOmsOrderItemState($stateName);
     }
 }

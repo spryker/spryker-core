@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CartReorderBuilder;
 use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use SprykerTest\Zed\CartNote\CartNoteBusinessTester;
 
@@ -61,11 +62,11 @@ class ExpandCartReorderQuoteWithCartNoteTest extends Unit
     /**
      * @return void
      */
-    public function testDoesNothingWhenOrderCartNoteIsNotProvided(): void
+    public function testSetsNullWhenOrderCartNoteIsNotProvided(): void
     {
         // Arrange
         $cartReorderTransfer = (new CartReorderBuilder())
-            ->withQuote()
+            ->withQuote([QuoteTransfer::CART_NOTE => static::TEST_CART_NOTE])
             ->withOrder([OrderTransfer::CART_NOTE => null])
             ->build();
 

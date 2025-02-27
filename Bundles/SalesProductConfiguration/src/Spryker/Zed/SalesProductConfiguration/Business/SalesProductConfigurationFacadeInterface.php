@@ -9,6 +9,8 @@ namespace Spryker\Zed\SalesProductConfiguration\Business;
 
 use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemConfigurationCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderItemConfigurationCollectionResponseTransfer;
 
 interface SalesProductConfigurationFacadeInterface
 {
@@ -59,4 +61,20 @@ interface SalesProductConfigurationFacadeInterface
      * @return \Generated\Shared\Transfer\CartReorderTransfer
      */
     public function hydrateCartReorderItemsWithProductConfiguration(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer;
+
+    /**
+     * Specification:
+     * - Uses `SalesOrderItemConfigurationCollectionDeleteCriteriaTransfer.salesOrderItemIds` to filter sales order item configuration entities by the sales order item IDs.
+     * - Deletes found by criteria sales order item configuration entities.
+     * - Does nothing if no criteria properties are set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemConfigurationCollectionDeleteCriteriaTransfer $salesOrderItemConfigurationCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemConfigurationCollectionResponseTransfer
+     */
+    public function deleteSalesOrderItemConfigurationCollection(
+        SalesOrderItemConfigurationCollectionDeleteCriteriaTransfer $salesOrderItemConfigurationCollectionDeleteCriteriaTransfer
+    ): SalesOrderItemConfigurationCollectionResponseTransfer;
 }

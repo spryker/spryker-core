@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ProductOffer\ProductOfferConfig;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToMessengerFacadeInterface;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeInterface;
@@ -65,10 +68,42 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
      */
     public function filterInactiveProductOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $productOfferReferences = $this->getProductOfferReferencesFromQuoteTransfer($quoteTransfer);
+        $filteredItemTransfers = $this->getFilteredProductOfferItems(
+            $quoteTransfer->getItems(),
+            $quoteTransfer->getStore(),
+        );
+
+        return $quoteTransfer->setItems($filteredItemTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function filterOutInactiveCartChangeProductOfferItems(
+        CartChangeTransfer $cartChangeTransfer
+    ): CartChangeTransfer {
+        $filteredItemTransfers = $this->getFilteredProductOfferItems(
+            $cartChangeTransfer->getItems(),
+            $cartChangeTransfer->getQuoteOrFail()->getStoreOrFail(),
+        );
+
+        return $cartChangeTransfer->setItems($filteredItemTransfers);
+    }
+
+    /**
+     * @param \ArrayObject<int,\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \ArrayObject<int,\Generated\Shared\Transfer\ItemTransfer>
+     */
+    protected function getFilteredProductOfferItems(ArrayObject $itemTransfers, StoreTransfer $storeTransfer): ArrayObject
+    {
+        $productOfferReferences = $this->getProductOfferReferencesFromItems($itemTransfers);
 
         if (!$productOfferReferences) {
-            return $quoteTransfer;
+            return $itemTransfers;
         }
 
         $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
@@ -76,51 +111,63 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
             ->setIsActive(true)
             ->setApprovalStatuses([ProductOfferConfig::STATUS_APPROVED])
             ->setIdStore(
-                $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore(),
+                $this->storeFacade->getStoreByName($storeTransfer->getName())->getIdStore(),
             );
         $productOfferCollectionTransfer = $this->productOfferRepository->get($productOfferCriteriaTransfer);
 
         $indexedProductConcreteTransfers = $this->indexByProductOfferReferences($productOfferCollectionTransfer);
+        $filteredItemTransfers = new ArrayObject();
+        $messageTransfersIndexedBySku = [];
 
-        foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
+        foreach ($itemTransfers as $key => $itemTransfer) {
             if (
                 $itemTransfer->getProductOfferReference() !== null &&
                 !isset($indexedProductConcreteTransfers[$itemTransfer->getProductOfferReference()])
             ) {
-                $quoteTransfer->getItems()->offsetUnset($key);
-                $this->addFilterMessage($itemTransfer->getSku());
+                $messageTransfersIndexedBySku = $this->addFilterMessage($itemTransfer->getSku(), $messageTransfersIndexedBySku);
+
+                continue;
             }
+
+            $filteredItemTransfers->offsetSet($key, $itemTransfer);
         }
 
-        return $quoteTransfer;
+        return $filteredItemTransfers;
     }
 
     /**
      * @param string $sku
+     * @param array<string, \Generated\Shared\Transfer\MessageTransfer> $messageTransfersIndexedBySku
      *
-     * @return void
+     * @return array<string, \Generated\Shared\Transfer\MessageTransfer>
      */
-    protected function addFilterMessage(string $sku): void
+    protected function addFilterMessage(string $sku, array $messageTransfersIndexedBySku): array
     {
-        $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue(static::MESSAGE_INFO_OFFER_INACTIVE_PRODUCT_REMOVED);
-        $messageTransfer->setParameters([
-            static::MESSAGE_PARAM_SKU => $sku,
-        ]);
+        if (isset($messageTransfersIndexedBySku[$sku])) {
+            return $messageTransfersIndexedBySku;
+        }
 
-        $this->messengerFacade->addInfoMessage($messageTransfer);
+        $messageTransfersIndexedBySku[$sku] = (new MessageTransfer())
+            ->setValue(static::MESSAGE_INFO_OFFER_INACTIVE_PRODUCT_REMOVED)
+            ->setParameters([
+                static::MESSAGE_PARAM_SKU => $sku,
+            ]);
+
+        $this->messengerFacade->addInfoMessage($messageTransfersIndexedBySku[$sku]);
+
+        return $messageTransfersIndexedBySku;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \ArrayObject<int,\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array<string>
+     * @return list<string>
      */
-    protected function getProductOfferReferencesFromQuoteTransfer(QuoteTransfer $quoteTransfer): array
+    protected function getProductOfferReferencesFromItems(ArrayObject $itemTransfers): array
     {
         $productOfferReferences = [];
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             if ($itemTransfer->getProductOfferReference()) {
                 $productOfferReferences[] = $itemTransfer->getProductOfferReference();
             }

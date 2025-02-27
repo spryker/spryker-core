@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\SalesOrderAmendment\Business\Facade;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\OrderBuilder;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentTransfer;
 use SprykerTest\Zed\SalesOrderAmendment\SalesOrderAmendmentBusinessTester;
 
 /**
@@ -43,10 +44,17 @@ class ExpandOrderWithSalesOrderAmendmentTest extends Unit
     /**
      * @return void
      */
-    public function testShouldExpandOrderWithExistingSalesOrderAmendment(): void
+    public function testShouldExpandOrderWithTheLatestSalesOrderAmendment(): void
     {
         // Arrange
-        $salesOrderAmendment = $this->tester->createSalesOrderAmendment();
+        $this->tester->createSalesOrderAmendment([
+            SalesOrderAmendmentTransfer::ORIGINAL_ORDER_REFERENCE => 'test1',
+            SalesOrderAmendmentTransfer::CREATED_AT => '2024-01-01 00:00:00',
+        ]);
+        $salesOrderAmendment = $this->tester->createSalesOrderAmendment([
+            SalesOrderAmendmentTransfer::ORIGINAL_ORDER_REFERENCE => 'test1',
+            SalesOrderAmendmentTransfer::CREATED_AT => '2025-01-01 00:00:00',
+        ]);
         $orderTransfer = (new OrderBuilder([
             OrderTransfer::ORDER_REFERENCE => $salesOrderAmendment->getOriginalOrderReferenceOrFail(),
         ]))->build();

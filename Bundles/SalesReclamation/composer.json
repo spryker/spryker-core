@@ -6,21 +6,34 @@
     "require": {
         "php": ">=8.2",
         "spryker/kernel": "^3.30.0",
-        "spryker/sales": "^8.3.0 || ^10.0.0 || ^11.0.0"
+        "spryker/sales": "^8.3.0 || ^10.0.0 || ^11.0.0",
+        "spryker/sales-extension": "^1.12.0",
+        "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
-        "spryker/code-sniffer": "*"
+        "spryker/code-sniffer": "*",
+        "spryker/container": "*",
+        "spryker/oms": "*",
+        "spryker/propel": "*",
+        "spryker/propel-orm": "*",
+        "spryker/store": "*",
+        "spryker/testify": "*"
     },
     "autoload": {
         "psr-4": {
             "Spryker\\": "src/Spryker/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
     },
     "extra": {
         "branch-alias": {

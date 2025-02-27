@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\RestCheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
 use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig;
+use Spryker\Shared\Kernel\StrategyResolverInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface;
 
@@ -33,30 +34,30 @@ class CheckoutValidator implements CheckoutValidatorInterface
     protected $cartFacade;
 
     /**
-     * @var array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface>
+     * @var \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface>>
      */
-    protected $checkoutDataValidatorPlugins;
+    protected $checkoutDataValidatorPluginStrategyResolver;
 
     /**
-     * @var array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\ReadCheckoutDataValidatorPluginInterface>
+     * @var list<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\ReadCheckoutDataValidatorPluginInterface>
      */
     protected $readCheckoutDataValidatorPlugins;
 
     /**
      * @param \Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface $cartFacade
-     * @param array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface> $checkoutDataValidatorPlugins
-     * @param array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\ReadCheckoutDataValidatorPluginInterface> $readCheckoutDataValidatorPlugins
+     * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface>> $checkoutDataValidatorPluginStrategyResolver
+     * @param list<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\ReadCheckoutDataValidatorPluginInterface> $readCheckoutDataValidatorPlugins
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
         CheckoutRestApiToCartFacadeInterface $cartFacade,
-        array $checkoutDataValidatorPlugins,
+        StrategyResolverInterface $checkoutDataValidatorPluginStrategyResolver,
         array $readCheckoutDataValidatorPlugins
     ) {
         $this->quoteReader = $quoteReader;
         $this->cartFacade = $cartFacade;
-        $this->checkoutDataValidatorPlugins = $checkoutDataValidatorPlugins;
+        $this->checkoutDataValidatorPluginStrategyResolver = $checkoutDataValidatorPluginStrategyResolver;
         $this->readCheckoutDataValidatorPlugins = $readCheckoutDataValidatorPlugins;
     }
 
@@ -210,7 +211,10 @@ class CheckoutValidator implements CheckoutValidatorInterface
         CheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutResponseTransfer $restCheckoutResponseTransfer
     ): RestCheckoutResponseTransfer {
-        foreach ($this->checkoutDataValidatorPlugins as $checkoutDataValidatorPlugin) {
+        $quoteProcessFlowName = $checkoutDataTransfer->getQuoteOrFail()->getQuoteProcessFlow()?->getNameOrFail();
+        $checkoutDataValidatorPlugins = $this->checkoutDataValidatorPluginStrategyResolver->get($quoteProcessFlowName);
+
+        foreach ($checkoutDataValidatorPlugins as $checkoutDataValidatorPlugin) {
             $checkoutResponseTransfer = $checkoutDataValidatorPlugin->validateCheckoutData($checkoutDataTransfer);
 
             if (!$checkoutResponseTransfer->getIsSuccess()) {

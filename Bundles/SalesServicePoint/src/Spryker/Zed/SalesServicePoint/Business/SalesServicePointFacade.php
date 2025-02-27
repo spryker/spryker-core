@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesServicePoint\Business;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemServicePointCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderItemServicePointCollectionResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -47,5 +49,22 @@ class SalesServicePointFacade extends AbstractFacade implements SalesServicePoin
         return $this->getFactory()
             ->createServicePointExpander()
             ->expandOrderItemsWithServicePoint($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemServicePointCollectionDeleteCriteriaTransfer $salesOrderItemServicePointCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemServicePointCollectionResponseTransfer
+     */
+    public function deleteSalesOrderItemServicePointCollection(
+        SalesOrderItemServicePointCollectionDeleteCriteriaTransfer $salesOrderItemServicePointCollectionDeleteCriteriaTransfer
+    ): SalesOrderItemServicePointCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSalesOrderItemServicePointDeleter()
+            ->deleteSalesOrderItemServicePointCollection($salesOrderItemServicePointCollectionDeleteCriteriaTransfer);
     }
 }

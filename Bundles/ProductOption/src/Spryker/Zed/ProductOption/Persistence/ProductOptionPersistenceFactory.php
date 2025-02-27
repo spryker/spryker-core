@@ -13,6 +13,7 @@ use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemOptionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductOption\Persistence\Expander\ProductOptionGroupQueryExpander;
 use Spryker\Zed\ProductOption\Persistence\Expander\ProductOptionGroupQueryExpanderInterface;
@@ -23,6 +24,7 @@ use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionEntityManagerInterface getEntityManager()
  */
 class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -64,6 +66,14 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractProductOptionGroupQuery()
     {
         return SpyProductAbstractProductOptionGroupQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemOptionQuery
+     */
+    public function createSalesOrderItemOptionQuery(): SpySalesOrderItemOptionQuery
+    {
+        return SpySalesOrderItemOptionQuery::create();
     }
 
     /**

@@ -28,25 +28,11 @@ class SalesOrderAmendmentExistsSalesOrderAmendmentValidatorRule implements Sales
     protected const GLOSSARY_KEY_PARAMETER_UUID = '%uuid%';
 
     /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentRepositoryInterface
-     */
-    protected SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository;
-
-    /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Business\Validator\Util\ErrorAdderInterface
-     */
-    protected ErrorAdderInterface $errorAdder;
-
-    /**
      * @param \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository
      * @param \Spryker\Zed\SalesOrderAmendment\Business\Validator\Util\ErrorAdderInterface $errorAdder
      */
-    public function __construct(
-        SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository,
-        ErrorAdderInterface $errorAdder
-    ) {
-        $this->salesOrderAmendmentRepository = $salesOrderAmendmentRepository;
-        $this->errorAdder = $errorAdder;
+    public function __construct(protected SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository, protected ErrorAdderInterface $errorAdder)
+    {
     }
 
     /**

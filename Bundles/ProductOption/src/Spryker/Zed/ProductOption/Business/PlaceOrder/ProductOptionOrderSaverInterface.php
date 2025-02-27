@@ -19,4 +19,11 @@ interface ProductOptionOrderSaverInterface
      * @return void
      */
     public function saveOrderProductOptions(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function createSalesOrderItemOptions(QuoteTransfer $quoteTransfer): void;
 }

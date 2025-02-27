@@ -11,4 +11,14 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class KernelFactory extends AbstractFactory
 {
+    /**
+     * @param string $key
+     * @param string $fetch
+     *
+     * @return mixed
+     */
+    public function getProvidedDependency($key, $fetch = self::LOADING_EAGER)
+    {
+        return parent::getProvidedDependency($key, $fetch);
+    }
 }

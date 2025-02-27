@@ -53,8 +53,13 @@ class ProductCategoryReader implements ProductCategoryReaderInterface
         $productAbstractIds = $this->extractProductAbstractIdsFromQuote($quoteTransfer);
         $productAbstractIds = array_diff($productAbstractIds, array_keys(static::$productCategoryTransfersGroupedByIdProductAbstract));
         if (!$productAbstractIds) {
-            return static::$productCategoryTransfersGroupedByIdProductAbstract;
+            return array_filter(static::$productCategoryTransfersGroupedByIdProductAbstract);
         }
+
+        static::$productCategoryTransfersGroupedByIdProductAbstract = array_replace(
+            array_fill_keys($productAbstractIds, []),
+            static::$productCategoryTransfersGroupedByIdProductAbstract,
+        );
 
         $productCategoryCollectionTransfer = $this->getProductCategoryCollectionForCurrentLocale($productAbstractIds);
 
@@ -62,7 +67,7 @@ class ProductCategoryReader implements ProductCategoryReaderInterface
             static::$productCategoryTransfersGroupedByIdProductAbstract[$productCategoryTransfer->getFkProductAbstractOrFail()][] = $productCategoryTransfer;
         }
 
-        return static::$productCategoryTransfersGroupedByIdProductAbstract;
+        return array_filter(static::$productCategoryTransfersGroupedByIdProductAbstract);
     }
 
     /**

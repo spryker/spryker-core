@@ -11,6 +11,7 @@ use Codeception\Actor;
 use Generated\Shared\DataBuilder\OrderBuilder;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\SalesPaymentTransfer;
 use Orm\Zed\Payment\Persistence\SpySalesPaymentQuery;
 
 /**
@@ -77,5 +78,37 @@ class SalesPaymentBusinessTester extends Actor
     public function getOrderTransfer(array $seedData): OrderTransfer
     {
         return (new OrderBuilder($seedData))->build();
+    }
+
+    /**
+     * @param list<int> $salesOrderIds
+     *
+     * @return array<int, \Generated\Shared\Transfer\SalesPaymentTransfer>
+     */
+    public function getSalesPaymentsIndexedByIdSalesOrder(array $salesOrderIds): array
+    {
+        $salesPaymentTransfers = [];
+        $salesPaymentEntities = $this->getSalesPaymentQuery()
+            ->joinWithSalesPaymentMethodType()
+            ->filterByFkSalesOrder_In($salesOrderIds)->find();
+
+        foreach ($salesPaymentEntities as $salesPaymentEntity) {
+            $salesPaymentTransfer = (new SalesPaymentTransfer())
+                ->setAmount($salesPaymentEntity->getAmount())
+                ->setPaymentMethod($salesPaymentEntity->getSalesPaymentMethodType()->getPaymentMethod())
+                ->setPaymentProvider($salesPaymentEntity->getSalesPaymentMethodType()->getPaymentProvider());
+
+            $salesPaymentTransfers[$salesPaymentEntity->getFkSalesOrder()] = $salesPaymentTransfer;
+        }
+
+        return $salesPaymentTransfers;
+    }
+
+    /**
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentQuery
+     */
+    protected function getSalesPaymentQuery(): SpySalesPaymentQuery
+    {
+        return SpySalesPaymentQuery::create();
     }
 }

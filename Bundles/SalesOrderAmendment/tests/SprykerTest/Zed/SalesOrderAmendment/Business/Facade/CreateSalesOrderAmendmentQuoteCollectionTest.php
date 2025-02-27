@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\SalesOrderAmendment\Business\Facade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -124,5 +126,74 @@ class CreateSalesOrderAmendmentQuoteCollectionTest extends Unit
         // Act
         $this->tester->getFacade()
             ->createSalesOrderAmendmentQuoteCollection($salesOrderAmendmentQuoteCollectionRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldFilterQuoteFieldsDuringCreation(): void
+    {
+        // Arrange
+        $this->tester->mockConfigMethod('getQuoteFieldsAllowedForSaving', [QuoteTransfer::ITEMS]);
+
+        $salesOrderAmendmentQuoteCollectionRequestTransfer = $this->tester
+            ->createSalesOrderAmendmentQuoteCollectionRequestTransfer([
+                QuoteTransfer::PRICE_MODE => 'GROSS_MODE',
+                QuoteTransfer::ITEMS => [
+                    [
+                        ItemTransfer::SKU => 'sku1',
+                        ItemTransfer::QUANTITY => 1,
+                    ],
+                    [
+                        ItemTransfer::SKU => 'sku2',
+                        ItemTransfer::QUANTITY => 2,
+                    ],
+                ],
+            ]);
+
+        // Act
+        $salesOrderAmendmentQuoteCollectionResponseTransfer = $this->tester->getFacade()
+            ->createSalesOrderAmendmentQuoteCollection($salesOrderAmendmentQuoteCollectionRequestTransfer);
+
+        // Assert
+        $persistedQuoteData = $this->tester->findSalesOrderAmendmentQuoteByUuid(
+            $salesOrderAmendmentQuoteCollectionResponseTransfer->getSalesOrderAmendmentQuotes()->offsetGet(0)->getUuid(),
+        )->getQuoteData();
+
+        $this->assertSame('{"items":[{"sku":"sku1","quantity":1},{"sku":"sku2","quantity":2}]}', $persistedQuoteData);
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldFilterQuoteItemFieldsDuringCreation(): void
+    {
+        // Arrange
+        $this->tester->mockConfigMethod('getQuoteFieldsAllowedForSaving', [QuoteTransfer::ITEMS]);
+        $this->tester->mockConfigMethod('getQuoteItemFieldsAllowedForSaving', [ItemTransfer::SKU]);
+
+        $salesOrderAmendmentQuoteCollectionRequestTransfer = $this->tester
+            ->createSalesOrderAmendmentQuoteCollectionRequestTransfer([QuoteTransfer::ITEMS => [
+                    [
+                        ItemTransfer::SKU => 'sku1',
+                        ItemTransfer::QUANTITY => 1,
+                    ],
+                    [
+                        ItemTransfer::SKU => 'sku2',
+                        ItemTransfer::QUANTITY => 2,
+                    ],
+                ],
+            ]);
+
+        // Act
+        $salesOrderAmendmentQuoteCollectionResponseTransfer = $this->tester->getFacade()
+            ->createSalesOrderAmendmentQuoteCollection($salesOrderAmendmentQuoteCollectionRequestTransfer);
+
+        // Assert
+        $persistedQuoteData = $this->tester->findSalesOrderAmendmentQuoteByUuid(
+            $salesOrderAmendmentQuoteCollectionResponseTransfer->getSalesOrderAmendmentQuotes()->offsetGet(0)->getUuid(),
+        )->getQuoteData();
+
+        $this->assertSame('{"items":[{"sku":"sku1"},{"sku":"sku2"}]}', $persistedQuoteData);
     }
 }

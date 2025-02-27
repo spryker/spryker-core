@@ -9,12 +9,14 @@ namespace SprykerTest\Zed\SalesOrderThreshold;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Communication\Plugin\SalesOrderThreshold\MerchantRelationshipSalesOrderThresholdDataSourceStrategyPlugin;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\SalesOrderThresholdExtension\GlobalSalesOrderThresholdDataSourceStrategyPlugin;
@@ -122,6 +124,55 @@ class SalesOrderThresholdBusinessTester extends Actor
             ->currency()
             ->facade()
             ->findCurrencyByIsoCode(static::CURRENCY_EUR);
+    }
+
+    /**
+     * @param int $idOrder
+     *
+     * @return array<string, \Generated\Shared\Transfer\ExpenseTransfer>
+     */
+    public function getOrderSalesExpensesIndexedByType(int $idOrder): array
+    {
+        $expenseTransfers = [];
+        $salesExpenseEntities = $this->getSalesExpenseQuery()->filterByFkSalesOrder($idOrder)->find();
+
+        foreach ($salesExpenseEntities as $salesExpenseEntity) {
+            $expenseTransfer = (new ExpenseTransfer())->fromArray($salesExpenseEntity->toArray(), true);
+            $expenseTransfer->setSumPrice($salesExpenseEntity->getPrice());
+            $expenseTransfer->setSumGrossPrice($salesExpenseEntity->getGrossPrice());
+
+            $expenseTransfers[$expenseTransfer->getTypeOrFail()] = $expenseTransfer;
+        }
+
+        return $expenseTransfers;
+    }
+
+    /**
+     * @param string $expenseType
+     * @param int $expenseSumPrice
+     * @param int $expenseSumGrossPrice
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createQuoteTransferWithExpense(
+        string $expenseType,
+        int $expenseSumPrice,
+        int $expenseSumGrossPrice
+    ): QuoteTransfer {
+        return (new QuoteTransfer())->addExpense(
+            (new ExpenseTransfer())
+                ->setType($expenseType)
+                ->setSumPrice($expenseSumPrice)
+                ->setSumGrossPrice($expenseSumGrossPrice),
+        );
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
+     */
+    protected function getSalesExpenseQuery(): SpySalesExpenseQuery
+    {
+        return SpySalesExpenseQuery::create();
     }
 
     /**

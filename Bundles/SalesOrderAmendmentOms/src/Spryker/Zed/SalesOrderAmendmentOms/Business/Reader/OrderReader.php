@@ -15,16 +15,10 @@ use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsT
 class OrderReader implements OrderReaderInterface
 {
     /**
-     * @var \Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToSalesFacadeInterface
-     */
-    protected SalesOrderAmendmentOmsToSalesFacadeInterface $salesFacade;
-
-    /**
      * @param \Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToSalesFacadeInterface $salesFacade
      */
-    public function __construct(SalesOrderAmendmentOmsToSalesFacadeInterface $salesFacade)
+    public function __construct(protected SalesOrderAmendmentOmsToSalesFacadeInterface $salesFacade)
     {
-        $this->salesFacade = $salesFacade;
     }
 
     /**

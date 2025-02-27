@@ -36,6 +36,14 @@ suites:
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+
+    Communication:
+        path: Communication
+        actor: ShipmentCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+
     Persistence:
         path: Persistence
         actor: ShipmentPersistenceTester

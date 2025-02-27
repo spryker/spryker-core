@@ -24,6 +24,8 @@ use Spryker\Zed\SalesOrderThreshold\Business\HardThresholdCheck\HardThresholdChe
 use Spryker\Zed\SalesOrderThreshold\Business\HardThresholdCheck\HardThresholdCheckerInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\Installer\SalesOrderThresholdTypeInstaller;
 use Spryker\Zed\SalesOrderThreshold\Business\Installer\SalesOrderThresholdTypeInstallerInterface;
+use Spryker\Zed\SalesOrderThreshold\Business\Replacer\SalesOrderThresholdExpensesReplacer;
+use Spryker\Zed\SalesOrderThreshold\Business\Replacer\SalesOrderThresholdExpensesReplacerInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\Reader\SalesOrderThresholdReader;
 use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\SalesOrderThresholdReaderInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\SalesOrderThresholdWriter;
@@ -270,6 +272,14 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getMoneyFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderThreshold\Business\Replacer\SalesOrderThresholdExpensesReplacerInterface
+     */
+    public function createSalesOrderThresholdExpensesReplacer(): SalesOrderThresholdExpensesReplacerInterface
+    {
+        return new SalesOrderThresholdExpensesReplacer($this->createExpenseSaver(), $this->getSalesFacade());
     }
 
     /**

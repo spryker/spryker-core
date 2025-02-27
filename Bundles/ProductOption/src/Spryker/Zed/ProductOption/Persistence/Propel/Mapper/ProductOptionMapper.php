@@ -18,7 +18,7 @@ use Propel\Runtime\Collection\Collection;
 class ProductOptionMapper
 {
     /**
-     * @param array $productAbstractOptionGroupStatuses
+     * @param array<int, array<string, int|bool|string>> $productAbstractOptionGroupStatuses
      *
      * @return array<\Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer>
      */
@@ -76,6 +76,26 @@ class ProductOptionMapper
     }
 
     /**
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\SpySalesOrderItemOption> $salesOrderItemOptionEntities
+     *
+     * @return array<int, array<int, \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption>>
+     */
+    public function mapSalesOrderItemOptionEntitiesToSalesOrderItemOptionEntitiesGroupedByIdSalesOrderItem(
+        Collection $salesOrderItemOptionEntities
+    ): array {
+        $salesOrderItemOptionEntitiesGroupedByIdSalesOrderItem = [];
+
+        foreach ($salesOrderItemOptionEntities as $salesOrderItemOptionEntity) {
+            $idSalesOrderItem = $salesOrderItemOptionEntity->getFkSalesOrderItem();
+            $idSalesOrderItemOption = $salesOrderItemOptionEntity->getIdSalesOrderItemOption();
+            $salesOrderItemOptionEntitiesGroupedByIdSalesOrderItem[$idSalesOrderItem][$idSalesOrderItemOption]
+                = $salesOrderItemOptionEntity;
+        }
+
+        return $salesOrderItemOptionEntitiesGroupedByIdSalesOrderItem;
+    }
+
+    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
      *
      * @return array<\Generated\Shared\Transfer\ProductOptionTransfer>
@@ -99,7 +119,7 @@ class ProductOptionMapper
     }
 
     /**
-     * @param array $productAbstractOptionGroupStatus
+     * @param array<string, int|bool|string> $productAbstractOptionGroupStatus
      *
      * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer
      */

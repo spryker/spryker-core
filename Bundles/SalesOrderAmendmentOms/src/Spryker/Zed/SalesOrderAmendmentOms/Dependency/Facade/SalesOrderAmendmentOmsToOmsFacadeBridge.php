@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade;
 
+use Generated\Shared\Transfer\OmsOrderItemStateTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
 class SalesOrderAmendmentOmsToOmsFacadeBridge implements SalesOrderAmendmentOmsToOmsFacadeInterface
@@ -45,5 +46,15 @@ class SalesOrderAmendmentOmsToOmsFacadeBridge implements SalesOrderAmendmentOmsT
     public function areOrderItemsSatisfiedByFlag(OrderTransfer $orderTransfer, string $flag): bool
     {
         return $this->omsFacade->areOrderItemsSatisfiedByFlag($orderTransfer, $flag);
+    }
+
+    /**
+     * @param string $stateName
+     *
+     * @return \Generated\Shared\Transfer\OmsOrderItemStateTransfer
+     */
+    public function getOmsOrderItemState(string $stateName): OmsOrderItemStateTransfer
+    {
+        return $this->omsFacade->getOmsOrderItemState($stateName);
     }
 }

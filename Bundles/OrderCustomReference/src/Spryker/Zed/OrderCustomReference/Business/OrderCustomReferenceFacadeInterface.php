@@ -18,6 +18,7 @@ interface OrderCustomReferenceFacadeInterface
     /**
      * Specification:
      * - Persists `QuoteTransfer::orderCustomReference` transfer property in `spy_sales_order` schema.
+     * - Does not update with empty order custom reference if `$forceUpdate` is set to false.
      * - Expects `SaveOrderTransfer::idSalesOrder` transfer property to identify target sales order.
      * - Returns with `isSuccessful=false` if order custom reference was not persisted.
      *
@@ -25,10 +26,15 @@ interface OrderCustomReferenceFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param bool|null $forceUpdate
      *
      * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
      */
-    public function saveOrderCustomReferenceFromQuote(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): OrderCustomReferenceResponseTransfer;
+    public function saveOrderCustomReferenceFromQuote(
+        QuoteTransfer $quoteTransfer,
+        SaveOrderTransfer $saveOrderTransfer,
+        ?bool $forceUpdate = false
+    ): OrderCustomReferenceResponseTransfer;
 
     /**
      * Specification:

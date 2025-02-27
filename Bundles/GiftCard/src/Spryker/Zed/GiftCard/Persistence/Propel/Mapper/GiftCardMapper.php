@@ -11,8 +11,11 @@ use Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbst
 use Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer;
 use Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer;
 use Generated\Shared\Transfer\GiftCardProductConfigurationTransfer;
+use Generated\Shared\Transfer\PaymentGiftCardTransfer;
 use Orm\Zed\GiftCard\Persistence\SpyGiftCardProductAbstractConfiguration;
 use Orm\Zed\GiftCard\Persistence\SpyGiftCardProductConfiguration;
+use Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class GiftCardMapper
@@ -106,5 +109,33 @@ class GiftCardMapper
         }
 
         return $giftCardProductConfigurationForProductTransfers;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection<array-key, \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard> $paymentGiftCardEntities
+     * @param list<\Generated\Shared\Transfer\PaymentGiftCardTransfer> $paymentGiftCardTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\PaymentGiftCardTransfer>
+     */
+    public function mapPaymentGiftCardEntitiesToPaymentGiftCardTransfers(Collection $paymentGiftCardEntities, array $paymentGiftCardTransfers): array
+    {
+        foreach ($paymentGiftCardEntities as $paymentGiftCardEntity) {
+            $paymentGiftCardTransfers[] = $this->mapPaymentGiftCardEntityToPaymentGiftCardTransfer($paymentGiftCardEntity, new PaymentGiftCardTransfer());
+        }
+
+        return $paymentGiftCardTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard $paymentGiftCardEntity
+     * @param \Generated\Shared\Transfer\PaymentGiftCardTransfer $paymentGiftCardTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentGiftCardTransfer
+     */
+    protected function mapPaymentGiftCardEntityToPaymentGiftCardTransfer(
+        SpyPaymentGiftCard $paymentGiftCardEntity,
+        PaymentGiftCardTransfer $paymentGiftCardTransfer
+    ): PaymentGiftCardTransfer {
+        return $paymentGiftCardTransfer->fromArray($paymentGiftCardEntity->toArray(), true);
     }
 }

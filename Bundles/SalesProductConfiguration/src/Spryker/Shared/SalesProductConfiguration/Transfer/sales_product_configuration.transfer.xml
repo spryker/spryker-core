@@ -45,4 +45,24 @@
         <property name="reorderItems" type="Item[]" singular="reorderItem"/>
     </transfer>
 
+    <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemConfigurationCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemConfigurationCollectionResponse" strict="true">
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentItemCollection" strict="true">
+        <property name="itemsToUpdate" type="Item[]" singular="itemToUpdate"/>
+        <property name="itemsToSkip" type="Item[]" singular="itemToSkip"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemCollectionResponse" strict="true">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
 </transfers>

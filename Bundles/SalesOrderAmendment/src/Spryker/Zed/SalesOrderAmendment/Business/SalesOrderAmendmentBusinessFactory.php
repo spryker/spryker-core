@@ -18,12 +18,24 @@ use Spryker\Zed\SalesOrderAmendment\Business\Deleter\SalesOrderAmendmentQuoteDel
 use Spryker\Zed\SalesOrderAmendment\Business\Deleter\SalesOrderAmendmentQuoteDeleterInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Expander\OrderExpander;
 use Spryker\Zed\SalesOrderAmendment\Business\Expander\OrderExpanderInterface;
+use Spryker\Zed\SalesOrderAmendment\Business\Expander\QuoteExpander;
+use Spryker\Zed\SalesOrderAmendment\Business\Expander\QuoteExpanderInterface;
+use Spryker\Zed\SalesOrderAmendment\Business\Filter\QuoteFieldsFilter;
+use Spryker\Zed\SalesOrderAmendment\Business\Filter\QuoteFieldsFilterInterface;
+use Spryker\Zed\SalesOrderAmendment\Business\Hydrator\CartReorderItemHydrator;
+use Spryker\Zed\SalesOrderAmendment\Business\Hydrator\CartReorderItemHydratorInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Mapper\SalesOrderAmendmentMapper;
 use Spryker\Zed\SalesOrderAmendment\Business\Mapper\SalesOrderAmendmentMapperInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Mapper\SalesOrderAmendmentQuoteCriteriaMapper;
 use Spryker\Zed\SalesOrderAmendment\Business\Mapper\SalesOrderAmendmentQuoteCriteriaMapperInterface;
+use Spryker\Zed\SalesOrderAmendment\Business\Reader\OrderReader;
+use Spryker\Zed\SalesOrderAmendment\Business\Reader\OrderReaderInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Reader\SalesOrderAmendmentReader;
 use Spryker\Zed\SalesOrderAmendment\Business\Reader\SalesOrderAmendmentReaderInterface;
+use Spryker\Zed\SalesOrderAmendment\Business\Replacer\SalesOrderItemReplacer;
+use Spryker\Zed\SalesOrderAmendment\Business\Replacer\SalesOrderItemReplacerInterface;
+use Spryker\Zed\SalesOrderAmendment\Business\Strategy\GroupKeyQuantitySalesOrderAmendmentItemCollectorStrategy;
+use Spryker\Zed\SalesOrderAmendment\Business\Strategy\SalesOrderAmendmentItemCollectorStrategyInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Updater\SalesOrderAmendmentUpdater;
 use Spryker\Zed\SalesOrderAmendment\Business\Updater\SalesOrderAmendmentUpdaterInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\CartReorderValidator;
@@ -34,6 +46,7 @@ use Spryker\Zed\SalesOrderAmendment\Business\Validator\SalesOrderAmendmentValida
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\SalesOrderAmendmentValidatorInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\Util\ErrorAdder;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\Util\ErrorAdderInterface;
+use Spryker\Zed\SalesOrderAmendment\Dependency\Facade\SalesOrderAmendmentToSalesFacadeInterface;
 use Spryker\Zed\SalesOrderAmendment\SalesOrderAmendmentDependencyProvider;
 
 /**
@@ -52,6 +65,14 @@ class SalesOrderAmendmentBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getSalesOrderAmendmentExpanderPlugins(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendment\Business\Reader\OrderReaderInterface
+     */
+    public function createOrderReader(): OrderReaderInterface
+    {
+        return new OrderReader($this->getSalesFacade());
     }
 
     /**
@@ -75,6 +96,7 @@ class SalesOrderAmendmentBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderAmendmentQuoteCreator(
             $this->getEntityManager(),
+            $this->createQuoteFieldsFilter(),
         );
     }
 
@@ -130,6 +152,14 @@ class SalesOrderAmendmentBusinessFactory extends AbstractBusinessFactory
     public function createOrderExpander(): OrderExpanderInterface
     {
         return new OrderExpander($this->createSalesOrderAmendmentReader());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendment\Business\Expander\QuoteExpanderInterface
+     */
+    public function createQuoteExpander(): QuoteExpanderInterface
+    {
+        return new QuoteExpander($this->createOrderReader());
     }
 
     /**
@@ -208,6 +238,51 @@ class SalesOrderAmendmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\SalesOrderAmendment\Business\Filter\QuoteFieldsFilterInterface
+     */
+    public function createQuoteFieldsFilter(): QuoteFieldsFilterInterface
+    {
+        return new QuoteFieldsFilter($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendment\Business\Hydrator\CartReorderItemHydratorInterface
+     */
+    public function createCartReorderItemHydrator(): CartReorderItemHydratorInterface
+    {
+        return new CartReorderItemHydrator();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendment\Business\Replacer\SalesOrderItemReplacerInterface
+     */
+    public function createSalesOrderItemReplacer(): SalesOrderItemReplacerInterface
+    {
+        return new SalesOrderItemReplacer(
+            $this->createGroupKeyQuantitySalesOrderAmendmentItemCollectorStrategy(),
+            $this->getSalesFacade(),
+            $this->getSalesOrderAmendmentItemCollectorStrategyPlugins(),
+            $this->getSalesOrderItemCollectorPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendment\Business\Strategy\SalesOrderAmendmentItemCollectorStrategyInterface
+     */
+    public function createGroupKeyQuantitySalesOrderAmendmentItemCollectorStrategy(): SalesOrderAmendmentItemCollectorStrategyInterface
+    {
+        return new GroupKeyQuantitySalesOrderAmendmentItemCollectorStrategy();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendment\Dependency\Facade\SalesOrderAmendmentToSalesFacadeInterface
+     */
+    public function getSalesFacade(): SalesOrderAmendmentToSalesFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesOrderAmendmentDependencyProvider::FACADE_SALES);
+    }
+
+    /**
      * @return list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentExpanderPluginInterface>
      */
     public function getSalesOrderAmendmentExpanderPlugins(): array
@@ -277,5 +352,21 @@ class SalesOrderAmendmentBusinessFactory extends AbstractBusinessFactory
     public function getSalesOrderAmendmentPostDeletePlugins(): array
     {
         return $this->getProvidedDependency(SalesOrderAmendmentDependencyProvider::PLUGINS_SALES_ORDER_AMENDMENT_POST_DELETE);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentItemCollectorStrategyPluginInterface>
+     */
+    public function getSalesOrderAmendmentItemCollectorStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesOrderAmendmentDependencyProvider::PLUGINS_SALES_ORDER_AMENDMENT_ITEM_COLLECTOR_STRATEGY);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderItemCollectorPluginInterface>
+     */
+    public function getSalesOrderItemCollectorPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesOrderAmendmentDependencyProvider::PLUGINS_SALES_ORDER_ITEM_COLLECTOR_PLUGIN);
     }
 }

@@ -61,4 +61,11 @@ interface CommentEntityManagerInterface
      * @return \Generated\Shared\Transfer\CommentTagTransfer
      */
     public function createCommentTag(CommentTagTransfer $commentTagTransfer): CommentTagTransfer;
+
+    /**
+     * @param int $idCommentThread
+     *
+     * @return void
+     */
+    public function removeCommentThread(int $idCommentThread): void;
 }

@@ -8,40 +8,23 @@
 namespace Spryker\Zed\SalesProductConnector\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface;
+use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorEntityManagerInterface;
 use Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorRepositoryInterface;
 
 class ItemMetadataSaver implements ItemMetadataSaverInterface
 {
-    /**
-     * @var \Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface
-     */
-    protected $utilEncodingService;
+    use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorEntityManagerInterface
-     */
-    protected $entityManager;
-
-    /**
-     * @var \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorRepositoryInterface
-     */
-    protected $repository;
-
-    /**
-     * @param \Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorRepositoryInterface $repository
+     * @param \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorEntityManagerInterface $salesProductConnectorEntityManager
+     * @param \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorRepositoryInterface $salesProductConnectorRepository
      */
     public function __construct(
-        SalesProductConnectorToUtilEncodingInterface $utilEncodingService,
-        SalesProductConnectorEntityManagerInterface $entityManager,
-        SalesProductConnectorRepositoryInterface $repository
+        protected SalesProductConnectorEntityManagerInterface $salesProductConnectorEntityManager,
+        protected SalesProductConnectorRepositoryInterface $salesProductConnectorRepository
     ) {
-        $this->utilEncodingService = $utilEncodingService;
-        $this->entityManager = $entityManager;
-        $this->repository = $repository;
     }
 
     /**
@@ -49,11 +32,53 @@ class ItemMetadataSaver implements ItemMetadataSaverInterface
      *
      * @return void
      */
-    public function saveItemsMetadata(QuoteTransfer $quoteTransfer)
+    public function saveItemsMetadata(QuoteTransfer $quoteTransfer): void
     {
-        $this->entityManager->saveItemsMetadata(
+        $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer): void {
+            $this->executeSaveItemsMetadataTransaction($quoteTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer $salesOrderItemCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function updateOrderItemMetadata(
+        SalesOrderItemCollectionResponseTransfer $salesOrderItemCollectionResponseTransfer
+    ): SalesOrderItemCollectionResponseTransfer {
+        $quoteTransfer = (new QuoteTransfer())->setItems($salesOrderItemCollectionResponseTransfer->getItems());
+
+        $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer): void {
+            $this->executeUpdateItemsMetadataTransaction($quoteTransfer);
+        });
+
+        return $salesOrderItemCollectionResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function executeSaveItemsMetadataTransaction(QuoteTransfer $quoteTransfer): void
+    {
+        $this->salesProductConnectorEntityManager->saveItemsMetadata(
             $quoteTransfer,
-            $this->repository->getSupperAttributesGroupedByIdItem($quoteTransfer),
+            $this->salesProductConnectorRepository->getSupperAttributesGroupedByIdItem($quoteTransfer),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function executeUpdateItemsMetadataTransaction(QuoteTransfer $quoteTransfer): void
+    {
+        $this->salesProductConnectorEntityManager->saveItemsMetadataByFkSalesOrderItem(
+            $quoteTransfer,
+            $this->salesProductConnectorRepository->getSupperAttributesGroupedByIdItem($quoteTransfer),
         );
     }
 }

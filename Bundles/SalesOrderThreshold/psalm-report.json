@@ -2,6 +2,30 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\QuoteTransfer::setSalesOrderThresholdValues expects ArrayObject<Generated\\Shared\\Transfer\\SalesOrderThresholdValueTransfer>, but ArrayObject<array-key, Generated\\Shared\\Transfer\\SalesOrderThresholdValueTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/Expander/QuoteExpander.php",
+            "snippet": "        return $quoteTransfer->setSalesOrderThresholdValues(new ArrayObject($salesOrderThresholdValueTransfers));",
+            "selected_text": "new ArrayObject($salesOrderThresholdValueTransfers)",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of array_filter expects array<array-key, mixed>, but array<Generated\\Shared\\Transfer\\ExpenseTransfer, mixed> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/ExpenseRemover/ExpenseRemover.php",
+            "snippet": "                $calculableObjectTransfer->getExpenses()->getArrayCopy(),",
+            "selected_text": "$calculableObjectTransfer->getExpenses()->getArrayCopy()",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
             "line_from": 186,
             "line_to": 186,
             "type": "InvalidReturnType",
@@ -88,8 +112,8 @@
         },
         {
             "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
+            "line_from": 87,
+            "line_to": 87,
             "type": "PossiblyNullReference",
             "message": "Cannot call method toArray on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/ExpenseCalculator/ExpenseCalculator.php",
@@ -100,20 +124,8 @@
         },
         {
             "severity": "info",
-            "line_from": 87,
-            "line_to": 87,
-            "type": "PossiblyInvalidClone",
-            "message": "Cannot clone array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/ExpenseCalculator/ExpenseCalculator.php",
-            "snippet": "            ->setItems(clone $calculableObjectTransfer->getItems())",
-            "selected_text": "clone $calculableObjectTransfer->getItems()",
-            "error_level": 3,
-            "shortcode": 226
-        },
-        {
-            "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
+            "line_from": 89,
+            "line_to": 89,
             "type": "PossiblyInvalidClone",
             "message": "Cannot clone null",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/ExpenseCalculator/ExpenseCalculator.php",
@@ -124,8 +136,8 @@
         },
         {
             "severity": "info",
-            "line_from": 101,
-            "line_to": 101,
+            "line_from": 102,
+            "line_to": 102,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\SalesOrderThreshold\\Business\\Strategy\\Resolver\\SalesOrderThresholdStrategyResolverInterface::resolveSalesOrderThresholdStrategy cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/ExpenseCalculator/ExpenseCalculator.php",
@@ -136,8 +148,8 @@
         },
         {
             "severity": "info",
-            "line_from": 101,
-            "line_to": 101,
+            "line_from": 102,
+            "line_to": 102,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getKey on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/ExpenseCalculator/ExpenseCalculator.php",
@@ -148,8 +160,8 @@
         },
         {
             "severity": "info",
-            "line_from": 125,
-            "line_to": 125,
+            "line_from": 126,
+            "line_to": 126,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getThresholdGroup on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/ExpenseCalculator/ExpenseCalculator.php",
@@ -160,8 +172,8 @@
         },
         {
             "severity": "info",
-            "line_from": 142,
-            "line_to": 142,
+            "line_from": 143,
+            "line_to": 143,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireKey on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/ExpenseCalculator/ExpenseCalculator.php",
@@ -172,20 +184,20 @@
         },
         {
             "severity": "info",
-            "line_from": 158,
-            "line_to": 158,
+            "line_from": 159,
+            "line_to": 159,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of Spryker\\Zed\\SalesOrderThreshold\\Business\\ExpenseCalculator\\ExpenseCalculator::createExpenseByPriceMode cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/ExpenseCalculator/ExpenseCalculator.php",
-            "snippet": "            $this->createExpenseByPriceMode($salesOrderThresholdValueTransfer, $fee, $calculableObjectTransfer->getPriceMode()),",
+            "snippet": "            $this->createExpenseByPriceMode($salesOrderThresholdValueTransfer, $fee, $calculableObjectTransfer->getPriceMode(), $calculableObjectTransfer->getStore()),",
             "selected_text": "$calculableObjectTransfer->getPriceMode()",
             "error_level": 3,
             "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 177,
-            "line_to": 177,
+            "line_from": 180,
+            "line_to": 180,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/ExpenseCalculator/ExpenseCalculator.php",
@@ -196,8 +208,8 @@
         },
         {
             "severity": "info",
-            "line_from": 177,
-            "line_to": 177,
+            "line_from": 180,
+            "line_to": 180,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getKey on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/ExpenseCalculator/ExpenseCalculator.php",
@@ -205,30 +217,6 @@
             "selected_text": "getKey",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ExpenseTransfer> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/ExpenseRemover/ExpenseRemover.php",
-            "snippet": "        $calculableObjectTransfer->getExpenses()->exchangeArray(",
-            "selected_text": "exchangeArray",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 25,
-            "line_to": 25,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ExpenseTransfer> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/ExpenseRemover/ExpenseRemover.php",
-            "snippet": "                $calculableObjectTransfer->getExpenses()->getArrayCopy(),",
-            "selected_text": "getArrayCopy",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -241,18 +229,6 @@
             "selected_text": "$quoteTransfer->getCurrency()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CheckoutErrorTransfer> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/HardThresholdCheck/HardThresholdChecker.php",
-            "snippet": "        if ($checkoutResponseTransfer->getErrors()->count() > 0) {",
-            "selected_text": "count",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -467,6 +443,18 @@
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/SalesOrderThresholdType/SalesOrderThresholdTypeReader.php",
             "snippet": "            ->resolveSalesOrderThresholdStrategy($salesOrderThresholdTypeTransfer->getKey());",
             "selected_text": "$salesOrderThresholdTypeTransfer->getKey()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SalesOrderThreshold\\Dependency\\Facade\\SalesOrderThresholdToStoreFacadeInterface::getStoreByName cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/TaxRateReader/TaxRateReader.php",
+            "snippet": "            $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());",
+            "selected_text": "$storeTransfer->getName()",
             "error_level": 3,
             "shortcode": 78
         },
@@ -724,18 +712,6 @@
         },
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\SalesOrderThresholdTranslationWriter::createTranslationsLocaleMap expects Traversable<mixed, Generated\\Shared\\Transfer\\SalesOrderThresholdLocalizedMessageTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\SalesOrderThresholdLocalizedMessageTransfer> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/Translation/SalesOrderThresholdTranslationWriter.php",
-            "snippet": "            $this->createTranslationsLocaleMap($salesOrderThresholdTransfer->getLocalizedMessages()),",
-            "selected_text": "$salesOrderThresholdTransfer->getLocalizedMessages()",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
             "line_from": 62,
             "line_to": 62,
             "type": "PossiblyNullArgument",
@@ -769,18 +745,6 @@
             "selected_text": "$translationsByLocale",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CheckoutErrorTransfer> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/Validator/SalesOrderThresholdValidator.php",
-            "snippet": "        if ($checkoutResponseTransfer->getErrors()->count() > 0) {",
-            "selected_text": "count",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -1182,8 +1146,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 121,
-            "line_to": 121,
+            "line_from": 123,
+            "line_to": 123,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\SalesOrderThresholdTranslationReaderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/SalesOrderThresholdBusinessFactory.php",
@@ -1194,8 +1158,8 @@
         },
         {
             "severity": "info",
-            "line_from": 123,
-            "line_to": 123,
+            "line_from": 125,
+            "line_to": 125,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\SalesOrderThresholdTranslationReaderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/SalesOrderThresholdBusinessFactory.php",
@@ -1206,8 +1170,8 @@
         },
         {
             "severity": "info",
-            "line_from": 125,
-            "line_to": 128,
+            "line_from": 127,
+            "line_to": 130,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\SalesOrderThresholdTranslationReader is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/SalesOrderThresholdBusinessFactory.php",
@@ -1215,18 +1179,6 @@
             "selected_text": "new SalesOrderThresholdTranslationReader(\n            $this->getGlossaryFacade(),\n            $this->getStoreFacade(),\n        )",
             "error_level": 2,
             "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 127,
-            "line_to": 127,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\SalesOrderThreshold\\Business\\SalesOrderThresholdBusinessFactory::getStoreFacade has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/SalesOrderThresholdBusinessFactory.php",
-            "snippet": "            $this->getStoreFacade(),",
-            "selected_text": "getStoreFacade",
-            "error_level": 2,
-            "shortcode": 1
         },
         {
             "severity": "info",
@@ -1242,16 +1194,28 @@
         },
         {
             "severity": "info",
-            "line_from": 82,
-            "line_to": 82,
+            "line_from": 17,
+            "line_to": 17,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Installer\\Dependency\\Plugin\\InstallerPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Communication/Plugin/Installer/SalesOrderThresholdTypeInstallerPlugin.php",
+            "snippet": "class SalesOrderThresholdTypeInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface",
+            "selected_text": "SalesOrderThresholdTypeInstallerPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
             "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\SalesOrderThreshold\\SalesOrderThresholdDependencyProvider::addStoreFacade has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/SalesOrderThresholdDependencyProvider.php",
-            "snippet": "        $container = $this->addStoreFacade($container);",
-            "selected_text": "addStoreFacade",
+            "message": "The method Spryker\\Zed\\Tax\\Business\\TaxFacadeInterface::getDefaultTaxCountryIso2Code has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToTaxFacadeBridge.php",
+            "snippet": "        return $this->taxFacade->getDefaultTaxCountryIso2Code();",
+            "selected_text": "getDefaultTaxCountryIso2Code",
             "error_level": 2,
             "shortcode": 1
         }
     ],
-    "count": 104
+    "count": 101
 }

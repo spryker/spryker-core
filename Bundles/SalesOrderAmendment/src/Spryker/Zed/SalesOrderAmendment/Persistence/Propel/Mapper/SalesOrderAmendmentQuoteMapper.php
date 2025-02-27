@@ -17,16 +17,10 @@ use Spryker\Zed\SalesOrderAmendment\Dependency\Service\SalesOrderAmendmentToUtil
 class SalesOrderAmendmentQuoteMapper
 {
     /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Dependency\Service\SalesOrderAmendmentToUtilEncodingServiceInterface
-     */
-    protected SalesOrderAmendmentToUtilEncodingServiceInterface $utilEncodingService;
-
-    /**
      * @param \Spryker\Zed\SalesOrderAmendment\Dependency\Service\SalesOrderAmendmentToUtilEncodingServiceInterface $utilEncodingService
      */
-    public function __construct(SalesOrderAmendmentToUtilEncodingServiceInterface $utilEncodingService)
+    public function __construct(protected SalesOrderAmendmentToUtilEncodingServiceInterface $utilEncodingService)
     {
-        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -71,14 +65,16 @@ class SalesOrderAmendmentQuoteMapper
     /**
      * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer $salesOrderAmendmentQuoteTransfer
      * @param \Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuote $salesOrderAmendmentQuoteEntity
+     * @param array<string|array<string>> $quoteFieldsAllowedForSaving
      *
      * @return \Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuote
      */
     public function mapSalesOrderAmendmentQuoteTransferToSalesOrderAmendmentQuoteEntity(
         SalesOrderAmendmentQuoteTransfer $salesOrderAmendmentQuoteTransfer,
-        SpySalesOrderAmendmentQuote $salesOrderAmendmentQuoteEntity
+        SpySalesOrderAmendmentQuote $salesOrderAmendmentQuoteEntity,
+        array $quoteFieldsAllowedForSaving
     ): SpySalesOrderAmendmentQuote {
-        $quoteData = $this->encodeQuoteData($salesOrderAmendmentQuoteTransfer->getQuoteOrFail());
+        $quoteData = $this->encodeQuoteData($salesOrderAmendmentQuoteTransfer->getQuoteOrFail(), $quoteFieldsAllowedForSaving);
         $salesOrderAmendmentQuoteEntity->fromArray($salesOrderAmendmentQuoteTransfer->modifiedToArray());
         $salesOrderAmendmentQuoteEntity->setQuoteData($quoteData);
 
@@ -87,12 +83,18 @@ class SalesOrderAmendmentQuoteMapper
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array<string|array<string>> $quoteFieldsAllowedForSaving
      *
      * @return string
      */
-    protected function encodeQuoteData(QuoteTransfer $quoteTransfer): string
+    protected function encodeQuoteData(QuoteTransfer $quoteTransfer, array $quoteFieldsAllowedForSaving): string
     {
-        return $this->utilEncodingService->encodeJson($quoteTransfer->toArray()) ?? '';
+        $quoteData = $this->filterDisallowedQuoteData(
+            $quoteTransfer->modifiedToArray(true, true),
+            $quoteFieldsAllowedForSaving,
+        );
+
+        return $this->utilEncodingService->encodeJson($quoteData, JSON_OBJECT_AS_ARRAY) ?? '';
     }
 
     /**
@@ -103,5 +105,31 @@ class SalesOrderAmendmentQuoteMapper
     protected function decodeQuoteData(SpySalesOrderAmendmentQuote $salesOrderAmendmentQuoteEntity): array
     {
         return $this->utilEncodingService->decodeJson($salesOrderAmendmentQuoteEntity->getQuoteData(), true) ?? [];
+    }
+
+    /**
+     * @param array<string, mixed> $quoteData
+     * @param array<string|array<string>> $quoteFieldsAllowedForSaving
+     *
+     * @return array<string, mixed>
+     */
+    protected function filterDisallowedQuoteData(array $quoteData, array $quoteFieldsAllowedForSaving): array
+    {
+        $data = [];
+        foreach ($quoteFieldsAllowedForSaving as $fieldKey => $fieldData) {
+            if (is_string($fieldData) && isset($quoteData[$fieldData])) {
+                $data[$fieldData] = $quoteData[$fieldData];
+
+                continue;
+            }
+
+            if (is_array($fieldData) && isset($quoteData[$fieldKey])) {
+                foreach ($quoteData[$fieldKey] as $itemData) {
+                    $data[$fieldKey][] = $this->filterDisallowedQuoteData($itemData, $fieldData);
+                }
+            }
+        }
+
+        return $data;
     }
 }

@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesExpenseCollectionResponseTransfer;
 
 interface ShipmentToSalesFacadeInterface
 {
@@ -57,4 +59,13 @@ interface ShipmentToSalesFacadeInterface
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): AddressTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesExpenseCollectionResponseTransfer
+     */
+    public function deleteSalesExpenseCollection(
+        SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
+    ): SalesExpenseCollectionResponseTransfer;
 }

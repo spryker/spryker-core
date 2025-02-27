@@ -23,11 +23,13 @@ interface SalesOrderAmendmentEntityManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer $salesOrderAmendmentQuoteTransfer
+     * @param array<string|array<string>> $quoteFieldsAllowedForSaving
      *
      * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer
      */
     public function createSalesOrderAmendmentQuote(
-        SalesOrderAmendmentQuoteTransfer $salesOrderAmendmentQuoteTransfer
+        SalesOrderAmendmentQuoteTransfer $salesOrderAmendmentQuoteTransfer,
+        array $quoteFieldsAllowedForSaving
     ): SalesOrderAmendmentQuoteTransfer;
 
     /**

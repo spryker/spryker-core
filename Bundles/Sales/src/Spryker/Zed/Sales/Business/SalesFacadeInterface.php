@@ -22,6 +22,11 @@ use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesExpenseCollectionResponseTransfer;
+use Generated\Shared\Transfer\SalesOrderItemCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer;
+use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
@@ -72,7 +77,7 @@ interface SalesFacadeInterface
      * - Sets "is test" flag.
      * - Updates checkout response with saved order data.
      * - Sets initial state for state machine.
-     * - Executes `OrderPostSavePluginInterface` stack of plugins.
+     * - Executes `OrderPostSavePluginInterface` stack of plugins according to the quote process flow.
      *
      * @api
      *
@@ -91,7 +96,7 @@ interface SalesFacadeInterface
      * - Sets "is test" flag.
      * - Updates checkout response with saved order data.
      * - Sets initial state for state machine.
-     * - Executes `OrderPostSavePluginInterface` stack of plugins.
+     * - Executes `OrderPostSavePluginInterface` stack of plugins according to the quote process flow.
      *
      * @api
      *
@@ -124,6 +129,7 @@ interface SalesFacadeInterface
     /**
      * Specification:
      * - Saves order items to Persistence.
+     * - Executes {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemInitialStateProviderPluginInterface} plugin stack.
      * - Executes {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface} plugin stack.
      * - Executes {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface} plugin stack.
      *
@@ -528,4 +534,122 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderCollectionTransfer
      */
     public function getOrderCollection(OrderCriteriaTransfer $orderCriteriaTransfer): OrderCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `QuoteTransfer.originalOrder` to be set.
+     * - Requires `QuoteTransfer.customer` to be set.
+     * - Requires `QuoteTransfer.customer.customerReference` to be set.
+     * - Requires `QuoteTransfer.currency` to be set.
+     * - Requires `QuoteTransfer.currency.code` to be set.
+     * - Requires `QuoteTransfer.priceMode` to be set.
+     * - Requires `QuoteTransfer.store` to be set.
+     * - Requires `QuoteTransfer.store.name` to be set.
+     * - Requires `QuoteTransfer.billingAddress` to be set.
+     * - Requires `QuoteTransfer.billingAddress.iso2Code` to be set.
+     * - Requires `QuoteTransfer.originalOrder.billingAddress` to be set.
+     * - Requires `QuoteTransfer.originalOrder.billingAddress.idSalesOrderAddress` to be set.
+     * - Updates order billing address with billing address data from quote.
+     * - BC: Updates order shipping address with shipping address data from quote.
+     * - BC: Hydrates quote items with shipping address.
+     * - Resolves a stack of {@link \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface}.
+     * - Executes a stack of {@link \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface}.
+     * - Updates order data with data from quote.
+     * - Sets the current locale ID to the order.
+     * - Resolves a stack of {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface} according to the quote process flow.
+     * - Executes a stack of {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface} according to the quote process flow.
+     * - Maps updated `OrderTransfer` to `SaveOrderTransfer`.
+     * - Returns `SaveOrderTransfer` with updated order data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    public function updateOrderByQuote(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): SaveOrderTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves sales expense entities by provided criteria from Persistence.
+     * - Executes {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesExpensePreDeletePluginInterface} plugin stack.
+     * - Deletes found sales expense entities.
+     * - Uses `SalesExpenseCollectionDeleteCriteriaTransfer.salesOrderIds` to filter sales expenses by the sales order IDs.
+     * - Uses `SalesExpenseCollectionDeleteCriteriaTransfer.types` to filter sales expenses by the sales expenses types.
+     * - Deletes all the existing entities when no criteria properties are set.
+     * - Returns `SalesExpenseCollectionResponseTransfer.salesExpenses[]` filled with deleted sales expenses.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesExpenseCollectionResponseTransfer
+     */
+    public function deleteSalesExpenseCollection(
+        SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
+    ): SalesExpenseCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `SalesOrderItemCollectionRequestTransfer.quote` to be set.
+     * - Requires `SalesOrderItemCollectionRequestTransfer.items.fkSalesOrder` to be set.
+     * - Validates that all items belong to the same sales order.
+     * - Executes a stack of {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemsPreCreatePluginInterface}.
+     * - Reuses `SalesFacade::saveSalesOrderItems()` to save order items.
+     * - Executes a stack of {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemCollectionPostCreatePluginInterface}.
+     * - Returns `SalesOrderItemCollectionResponseTransfer` with created order items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function createSalesOrderItemCollectionByQuote(
+        SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+    ): SalesOrderItemCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `SalesOrderItemCollectionRequestTransfer.quote` to be set.
+     * - Requires `SalesOrderItemCollectionRequestTransfer.items.fkSalesOrder` to be set.
+     * - Requires `SalesOrderItemCollectionRequestTransfer.items.idSalesOrderItem` to be set.
+     * - Validates that all items belong to the same sales order.
+     * - Validates that there no duplicated items in the collection.
+     * - Validates that order items exist in the database.
+     * - Executes a stack of {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemsPreUpdatePluginInterface}.
+     * - Reuses `SalesFacade::saveSalesOrderItems()` to save order items.
+     * - Executes a stack of {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemCollectionPostUpdatePluginInterface}.
+     * - Returns `SalesOrderItemCollectionResponseTransfer` with updated order items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function updateSalesOrderItemCollectionByQuote(
+        SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+    ): SalesOrderItemCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `ItemTransfer.idSalesOrderItem` to be set for each item in `SalesOrderItemCollectionDeleteCriteriaTransfer.items`.
+     * - Expands `SalesOrderItemCollectionDeleteCriteriaTransfer.salesOrderItemIds` with sales order item IDs from `SalesOrderItemCollectionDeleteCriteriaTransfer.items`.
+     * - Executes a stack of {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemCollectionPreDeletePluginInterface} plugins.
+     * - Uses `SalesOrderItemCollectionDeleteCriteriaTransfer.items.idSalesOrderItem` to filter sales order items by the sales order item IDs.
+     * - Deletes found by criteria sales order items from DB.
+     * - The plugin stack and sales order items deletion are executed within a database transaction.
+     * - Does nothing if no criteria properties are set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionDeleteCriteriaTransfer $salesOrderItemCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function deleteSalesOrderItemCollection(
+        SalesOrderItemCollectionDeleteCriteriaTransfer $salesOrderItemCollectionDeleteCriteriaTransfer
+    ): SalesOrderItemCollectionResponseTransfer;
 }

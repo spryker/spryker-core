@@ -19,9 +19,11 @@ use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
@@ -492,6 +494,31 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
+     *
+     * @return list<\Generated\Shared\Transfer\ExpenseTransfer>
+     */
+    public function getSalesExpensesBySalesExpenseCollectionDeleteCriteria(
+        SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
+    ): array {
+        $salesExpenseQuery = $this->getFactory()->createSalesExpenseQuery();
+        $salesExpenseQuery = $this->appySalesExpenseCollectionDeleteCriteriaFilters(
+            $salesExpenseQuery,
+            $salesExpenseCollectionDeleteCriteriaTransfer,
+        );
+
+        $salesExpenseEntities = $salesExpenseQuery->find();
+
+        if ($salesExpenseEntities->count() === 0) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createSalesExpenseMapper()
+            ->mapSalesExpenseEntitiesToExpenseTransfers($salesExpenseEntities, []);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer
      *
      * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
@@ -792,5 +819,26 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         }
 
         return $salesOrderEntitiesIndexedByIdSalesOrder;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery $salesExpenseQuery
+     * @param \Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
+     */
+    protected function appySalesExpenseCollectionDeleteCriteriaFilters(
+        SpySalesExpenseQuery $salesExpenseQuery,
+        SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
+    ): SpySalesExpenseQuery {
+        if ($salesExpenseCollectionDeleteCriteriaTransfer->getSalesOrderIds()) {
+            $salesExpenseQuery->filterByFkSalesOrder_In($salesExpenseCollectionDeleteCriteriaTransfer->getSalesOrderIds());
+        }
+
+        if ($salesExpenseCollectionDeleteCriteriaTransfer->getTypes()) {
+            $salesExpenseQuery->filterByType_In($salesExpenseCollectionDeleteCriteriaTransfer->getTypes());
+        }
+
+        return $salesExpenseQuery;
     }
 }

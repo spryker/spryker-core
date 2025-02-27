@@ -38,6 +38,19 @@ class SalesOrderAmendmentOmsConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     * - It should return the name of the state the order was in before the amendment started: the grace period started.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getOrderAmendmentOrderItemInitialState(): string
+    {
+        return 'new';
+    }
+
+    /**
+     * Specification:
      * - Returns a start order amendment event name.
      *
      * @api

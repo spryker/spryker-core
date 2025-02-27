@@ -166,4 +166,21 @@ class SalesPaymentFacade extends AbstractFacade implements SalesPaymentFacadeInt
             ->createSalesPaymentReader()
             ->getSalesPaymentCollection($salesPaymentCriteriaTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function replaceSalesPayments(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    {
+        $this->getFactory()
+            ->createSalesPaymentReplacer()
+            ->replaceSalesPayments($quoteTransfer, $saveOrderTransfer);
+    }
 }

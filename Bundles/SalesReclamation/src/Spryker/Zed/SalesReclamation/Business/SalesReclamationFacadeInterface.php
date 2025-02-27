@@ -10,6 +10,8 @@ namespace Spryker\Zed\SalesReclamation\Business;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
+use Generated\Shared\Transfer\SalesReclamationItemCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\SalesReclamationItemCollectionResponseTransfer;
 
 interface SalesReclamationFacadeInterface
 {
@@ -70,4 +72,20 @@ interface SalesReclamationFacadeInterface
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
     public function getReclamationById(ReclamationTransfer $reclamationTransfer): ReclamationTransfer;
+
+    /**
+     * Specification:
+     * - Uses `SalesReclamationItemCollectionDeleteCriteriaTransfer.salesOrderItemIds` to filter sales reclamation item entities by the sales order item IDs.
+     * - Deletes found by criteria sales reclamation item entities.
+     * - Does nothing if no criteria properties are set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesReclamationItemCollectionDeleteCriteriaTransfer $salesReclamationItemCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesReclamationItemCollectionResponseTransfer
+     */
+    public function deleteSalesReclamationItemCollection(
+        SalesReclamationItemCollectionDeleteCriteriaTransfer $salesReclamationItemCollectionDeleteCriteriaTransfer
+    ): SalesReclamationItemCollectionResponseTransfer;
 }

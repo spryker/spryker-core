@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CartReorderRequestTransfer;
 use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
+use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\CartReorder\AmendmentOrderReferenceCartPreReorderPlugin;
 use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\CartReorder\OrderAmendmentQuoteProcessFlowExpanderCartPreReorderPlugin;
 use SprykerTest\Zed\SalesOrderAmendment\SalesOrderAmendmentCommunicationTester;
@@ -30,13 +31,6 @@ use SprykerTest\Zed\SalesOrderAmendment\SalesOrderAmendmentCommunicationTester;
  */
 class OrderAmendmentQuoteProcessFlowCartPreReorderPluginTest extends Unit
 {
-    /**
-     * @uses \Spryker\Zed\SalesOrderAmendment\SalesOrderAmendmentConfig::ORDER_AMENDMENT_QUOTE_PROCESS_FLOW_NAME
-     *
-     * @var string
-     */
-    protected const ORDER_AMENDMENT_QUOTE_PROCESS_FLOW_NAME = 'order-amendment';
-
     /**
      * @var \SprykerTest\Zed\SalesOrderAmendment\SalesOrderAmendmentCommunicationTester
      */
@@ -58,7 +52,7 @@ class OrderAmendmentQuoteProcessFlowCartPreReorderPluginTest extends Unit
         // Assert
         $this->assertNotNull($cartReorderTransfer->getQuoteOrFail()->getQuoteProcessFlow());
         $this->assertSame(
-            static::ORDER_AMENDMENT_QUOTE_PROCESS_FLOW_NAME,
+            SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT,
             $cartReorderTransfer->getQuoteOrFail()->getQuoteProcessFlowOrFail()->getName(),
         );
     }

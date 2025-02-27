@@ -21,7 +21,15 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsStateMachineLockTableMap;
+use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
+use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
@@ -531,5 +539,151 @@ class OmsBusinessTester extends Actor
         $property = $reflection->getProperty('processBuffer');
         $property->setAccessible(true);
         $property->setValue(null, []);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog
+     */
+    public function createOmsTransitionLog(int $idSalesOrder, int $idSalesOrderItem): SpyOmsTransitionLog
+    {
+        $omsOrderProcessEntity = $this->createOmsOrderProcess(static::DEFAULT_OMS_PROCESS_NAME);
+        $omsTransitionLogEntity = (new SpyOmsTransitionLog())
+            ->setFkOmsOrderProcess($omsOrderProcessEntity->getIdOmsOrderProcess())
+            ->setFkSalesOrder($idSalesOrder)
+            ->setFkSalesOrderItem($idSalesOrderItem)
+            ->setHostname('test')
+            ->setEvent('test')
+            ->setCommand('test')
+            ->setCondition('test');
+        $omsTransitionLogEntity->save();
+
+        return $omsTransitionLogEntity;
+    }
+
+    /**
+     * @param int $idOmsOrderItemState
+     * @param int $idSalesOrderItem
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory
+     */
+    public function createOmsOrderItemStateHistory(
+        int $idOmsOrderItemState,
+        int $idSalesOrderItem
+    ): SpyOmsOrderItemStateHistory {
+        $omsOrderItemStateHistoryEntity = (new SpyOmsOrderItemStateHistory())
+            ->setFkOmsOrderItemState($idOmsOrderItemState)
+            ->setFkSalesOrderItem($idSalesOrderItem);
+        $omsOrderItemStateHistoryEntity->save();
+
+        return $omsOrderItemStateHistoryEntity;
+    }
+
+    /**
+     * @param string $processName
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
+     */
+    public function createOmsOrderProcess(string $processName): SpyOmsOrderProcess
+    {
+        $orderProcessEntity = (new SpyOmsOrderProcessQuery())
+            ->filterByName($processName)
+            ->findOneOrCreate();
+
+        $orderProcessEntity->save();
+
+        return $orderProcessEntity;
+    }
+
+    /**
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsEventTimeout>
+     */
+    public function getOmsEventTimeoutEntities(): ObjectCollection
+    {
+        return $this->getOmsEventTimeoutQuery()->find();
+    }
+
+    /**
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory>
+     */
+    public function getOmsOrderItemStateHistoryEntities(): ObjectCollection
+    {
+        return $this->getOmsOrderItemStateHistoryQuery()->find();
+    }
+
+    /**
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsTransitionLog>
+     */
+    public function getOmsTransitionLogEntities(): ObjectCollection
+    {
+        return $this->getOmsTransitionLogQuery()->find();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureOmsEventTimeoutTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getOmsEventTimeoutQuery());
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureOmsOrderItemStateHistoryTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getOmsOrderItemStateHistoryQuery());
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureOmsTransitionLogTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getOmsTransitionLogQuery());
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureOmsOrderItemStateDatabaseTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty(
+            $this->getOmsOrderItemStateQuery(),
+        );
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery
+     */
+    protected function getOmsEventTimeoutQuery(): SpyOmsEventTimeoutQuery
+    {
+        return SpyOmsEventTimeoutQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery
+     */
+    protected function getOmsOrderItemStateHistoryQuery(): SpyOmsOrderItemStateHistoryQuery
+    {
+        return SpyOmsOrderItemStateHistoryQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery
+     */
+    protected function getOmsTransitionLogQuery(): SpyOmsTransitionLogQuery
+    {
+        return SpyOmsTransitionLogQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery
+     */
+    protected function getOmsOrderItemStateQuery(): SpyOmsOrderItemStateQuery
+    {
+        return SpyOmsOrderItemStateQuery::create();
     }
 }

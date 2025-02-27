@@ -20,7 +20,6 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SalesPaymentTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -253,7 +252,7 @@ class GiftCardFacadeTest extends Unit
     public function testSaveOrderGiftCardsShouldCreatePaymentGiftCardEntity(): void
     {
         // Arrange
-        $idSalesPayment = $this->createSalesPaymentEntity();
+        $idSalesPayment = $this->tester->createSalesPaymentEntity();
 
         $anotherPaymentTransfer = new PaymentTransfer();
         $giftCardTransfer = new GiftCardTransfer();
@@ -324,7 +323,7 @@ class GiftCardFacadeTest extends Unit
     public function testSaveOrderGiftCardsWithZeroGiftCardAmountShouldNotCreatePaymentGiftCardEntity(): void
     {
         // Arrange
-        $idSalesPayment = $this->createSalesPaymentEntity();
+        $idSalesPayment = $this->tester->createSalesPaymentEntity();
 
         $anotherPaymentTransfer = new PaymentTransfer();
         $giftCardTransfer = new GiftCardTransfer();
@@ -352,7 +351,7 @@ class GiftCardFacadeTest extends Unit
     public function testSaveOrderGiftCardsWithoutGiftCardShouldNotCreatePaymentGiftCardEntity(): void
     {
         // Arrange
-        $idSalesPayment = $this->createSalesPaymentEntity();
+        $idSalesPayment = $this->tester->createSalesPaymentEntity();
 
         $anotherPaymentTransfer = new PaymentTransfer();
         $giftCardPaymentTransfer = (new PaymentTransfer())
@@ -384,7 +383,7 @@ class GiftCardFacadeTest extends Unit
             ->setPaymentProvider(GiftCardConfig::PROVIDER_NAME)
             ->setGiftCard($giftCardTransfer)
             ->setAmount(100)
-            ->setIdSalesPayment($this->createSalesPaymentEntity());
+            ->setIdSalesPayment($this->tester->createSalesPaymentEntity());
 
         $quoteTransfer = (new QuoteTransfer())
             ->addPayment($anotherPaymentTransfer)
@@ -511,23 +510,6 @@ class GiftCardFacadeTest extends Unit
                 PaymentTransfer::class,
             ),
         ];
-    }
-
-    /**
-     * @return int
-     */
-    protected function createSalesPaymentEntity(): int
-    {
-        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
-        $salesOrderTransfer = $this->tester->haveOrder([], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
-        $salesPaymentTransfer = (new SalesPaymentTransfer())
-            ->setPaymentProvider('Test provider')
-            ->setPaymentMethod('Test method')
-            ->setAmount(100)
-            ->setFkSalesOrder($salesOrderTransfer->getIdSalesOrder());
-        $salesPaymentEntity = $this->tester->haveSalesPaymentEntity($salesPaymentTransfer);
-
-        return $salesPaymentEntity->getIdSalesPayment();
     }
 
     /**

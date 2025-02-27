@@ -43,6 +43,47 @@ class SalesServicePointEntityManager extends AbstractEntityManager implements Sa
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemServicePointTransfer $salesOrderItemServicePointTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemServicePointTransfer
+     */
+    public function saveSalesOrderItemServicePointByFkSalesOrderItem(
+        SalesOrderItemServicePointTransfer $salesOrderItemServicePointTransfer
+    ): SalesOrderItemServicePointTransfer {
+        $salesOrderItemServicePointEntity = $this->getFactory()
+            ->getSalesOrderItemServicePointQuery()
+            ->filterByFkSalesOrderItem($salesOrderItemServicePointTransfer->getIdSalesOrderItemOrFail())
+            ->findOneOrCreate();
+
+        $salesServicePointMapper = $this->getFactory()->createSalesServicePointMapper();
+        $salesOrderItemServicePointEntity = $salesServicePointMapper
+            ->mapSalesOrderItemServicePointTransferToSalesOrderItemServicePointEntity(
+                $salesOrderItemServicePointTransfer,
+                $salesOrderItemServicePointEntity,
+            );
+
+        $salesOrderItemServicePointEntity->save();
+
+        return $salesServicePointMapper->mapSalesOrderItemServicePointEntityToSalesOrderItemServicePointTransfer(
+            $salesOrderItemServicePointEntity,
+            $salesOrderItemServicePointTransfer,
+        );
+    }
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderItemServicePointsBySalesOrderItemIds(array $salesOrderItemIds): void
+    {
+        $this->getFactory()
+            ->getSalesOrderItemServicePointQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->delete();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemServicePointTransfer

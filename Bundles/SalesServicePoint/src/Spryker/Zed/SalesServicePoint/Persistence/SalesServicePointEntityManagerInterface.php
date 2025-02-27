@@ -19,4 +19,20 @@ interface SalesServicePointEntityManagerInterface
     public function createSalesOrderItemServicePoint(
         SalesOrderItemServicePointTransfer $salesOrderItemServicePointTransfer
     ): SalesOrderItemServicePointTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemServicePointTransfer $salesOrderItemServicePointTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemServicePointTransfer
+     */
+    public function saveSalesOrderItemServicePointByFkSalesOrderItem(
+        SalesOrderItemServicePointTransfer $salesOrderItemServicePointTransfer
+    ): SalesOrderItemServicePointTransfer;
+
+    /**
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderItemServicePointsBySalesOrderItemIds(array $salesOrderItemIds): void;
 }

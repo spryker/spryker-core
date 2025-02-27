@@ -292,4 +292,23 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
             ->createQuoteExpander()
             ->expandQuoteWithSalesOrderThresholdValues($quoteTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function replaceSalesOrderThresholdExpenses(
+        QuoteTransfer $quoteTransfer,
+        SaveOrderTransfer $saveOrderTransfer
+    ): void {
+        $this->getFactory()
+            ->createSalesOrderThresholdExpensesReplacer()
+            ->replaceSalesOrderThresholdExpenses($quoteTransfer, $saveOrderTransfer);
+    }
 }

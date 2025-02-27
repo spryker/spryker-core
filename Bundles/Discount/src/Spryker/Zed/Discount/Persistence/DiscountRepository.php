@@ -10,6 +10,8 @@ namespace Spryker\Zed\Discount\Persistence;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Orm\Zed\Sales\Persistence\Map\SpySalesDiscountCodeTableMap;
+use Orm\Zed\Sales\Persistence\Map\SpySalesDiscountTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -114,5 +116,60 @@ class DiscountRepository extends AbstractRepository implements DiscountRepositor
             ->filterByIdDiscount($idDiscount)
             ->filterByFkDiscountVoucherPool(null, Criteria::ISNOTNULL)
             ->exists();
+    }
+
+    /**
+     * @param list<int> $salesOrderIds
+     *
+     * @return list<string>
+     */
+    public function getUsedSalesDiscountCodesBySalesOrderIds(array $salesOrderIds): array
+    {
+        return $this->getFactory()
+            ->createSalesDiscountCodeQuery()
+            ->useDiscountQuery()
+                ->filterByFkSalesOrder_In($salesOrderIds)
+            ->endUse()
+            ->addJoin(
+                SpySalesDiscountCodeTableMap::COL_CODE,
+                SpyDiscountVoucherTableMap::COL_CODE,
+                Criteria::LEFT_JOIN,
+            )
+            ->where(sprintf('%s > 0', SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES))
+            ->select([SpySalesDiscountCodeTableMap::COL_CODE])
+            ->distinct()
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param list<int> $salesOrderIds
+     * @param list<int> $salesExpenseIds
+     * @param list<int> $salesOrderItemIds
+     *
+     * @return list<int>
+     */
+    public function getSalesDiscountIds(
+        array $salesOrderIds = [],
+        array $salesExpenseIds = [],
+        array $salesOrderItemIds = []
+    ): array {
+        $salesDiscountQuery = $this->getFactory()->createSalesDiscountQuery();
+
+        if ($salesOrderIds !== []) {
+            $salesDiscountQuery->filterByFkSalesOrder_In($salesOrderIds);
+        }
+
+        if ($salesExpenseIds !== []) {
+            $salesDiscountQuery->filterByFkSalesExpense_In($salesExpenseIds);
+        }
+
+        if ($salesOrderItemIds !== []) {
+            $salesDiscountQuery->filterByFkSalesOrderItem_In($salesOrderItemIds);
+        }
+
+        return $salesDiscountQuery->select([SpySalesDiscountTableMap::COL_ID_SALES_DISCOUNT])
+            ->find()
+            ->getData();
     }
 }

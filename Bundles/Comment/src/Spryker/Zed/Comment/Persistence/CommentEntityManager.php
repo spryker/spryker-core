@@ -178,4 +178,35 @@ class CommentEntityManager extends AbstractEntityManager implements CommentEntit
 
         return $commentTagTransfer;
     }
+
+    /**
+     * @param int $idCommentThread
+     *
+     * @return void
+     */
+    public function removeCommentThread(int $idCommentThread): void
+    {
+        $commentToCommentTagEntities = $this->getFactory()
+            ->getCommentToCommentTagPropelQuery()
+            ->joinWithSpyComment()
+            ->useSpyCommentQuery()
+            ->joinWithSpyCommentThread()
+                ->filterByFkCommentThread($idCommentThread)
+            ->endUse()
+            ->find();
+
+        foreach ($commentToCommentTagEntities as $entity) {
+            $entity->delete();
+        }
+
+        $this->getFactory()
+            ->getCommentPropelQuery()
+            ->filterByFkCommentThread($idCommentThread)
+            ->delete();
+
+        $this->getFactory()
+            ->getCommentThreadPropelQuery()
+            ->filterByIdCommentThread($idCommentThread)
+            ->delete();
+    }
 }

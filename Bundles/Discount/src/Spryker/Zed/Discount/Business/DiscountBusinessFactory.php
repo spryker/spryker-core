@@ -46,6 +46,8 @@ use Spryker\Zed\Discount\Business\DecisionRule\PriceModeDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TimeDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TotalQuantityDecisionRule;
+use Spryker\Zed\Discount\Business\Deleter\SalesDiscountDeleter;
+use Spryker\Zed\Discount\Business\Deleter\SalesDiscountDeleterInterface;
 use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformer;
 use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
@@ -88,6 +90,10 @@ use Spryker\Zed\Discount\Business\Updater\DiscountUpdater;
 use Spryker\Zed\Discount\Business\Updater\DiscountUpdaterInterface;
 use Spryker\Zed\Discount\Business\Updater\DiscountVoucherPoolUpdater;
 use Spryker\Zed\Discount\Business\Updater\DiscountVoucherPoolUpdaterInterface;
+use Spryker\Zed\Discount\Business\Updater\SalesOrderDiscountCodeUpdater;
+use Spryker\Zed\Discount\Business\Updater\SalesOrderDiscountCodeUpdaterInterface;
+use Spryker\Zed\Discount\Business\Updater\SalesOrderDiscountUpdater;
+use Spryker\Zed\Discount\Business\Updater\SalesOrderDiscountUpdaterInterface;
 use Spryker\Zed\Discount\Business\Validator\ConstraintProvider\DiscountConfiguratorConstraintProviderInterface;
 use Spryker\Zed\Discount\Business\Validator\ConstraintProvider\DiscountConfiguratorPeriodConstraintProvider;
 use Spryker\Zed\Discount\Business\Validator\DiscountConfiguratorDiscountExistsValidator;
@@ -530,6 +536,36 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createDiscountOrderHydrate()
     {
         return new DiscountOrderHydrate($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Updater\SalesOrderDiscountUpdaterInterface
+     */
+    public function createSalesOrderDiscountUpdater(): SalesOrderDiscountUpdaterInterface
+    {
+        return new SalesOrderDiscountUpdater(
+            $this->createSalesDiscountDeleter(),
+            $this->createCheckoutDiscountOrderSaver(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Updater\SalesOrderDiscountCodeUpdaterInterface
+     */
+    public function createSalesOrderDiscountCodeUpdater(): SalesOrderDiscountCodeUpdaterInterface
+    {
+        return new SalesOrderDiscountCodeUpdater(
+            $this->getRepository(),
+            $this->createVoucherCode(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Deleter\SalesDiscountDeleterInterface
+     */
+    public function createSalesDiscountDeleter(): SalesDiscountDeleterInterface
+    {
+        return new SalesDiscountDeleter($this->getEntityManager(), $this->getRepository());
     }
 
     /**

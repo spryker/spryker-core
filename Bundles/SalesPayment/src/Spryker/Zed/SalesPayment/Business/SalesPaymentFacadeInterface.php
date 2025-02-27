@@ -151,4 +151,21 @@ interface SalesPaymentFacadeInterface
      * @return \Generated\Shared\Transfer\SalesPaymentCollectionTransfer
      */
     public function getSalesPaymentCollection(SalesPaymentCriteriaTransfer $salesPaymentCriteriaTransfer): SalesPaymentCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `SaveOrderTransfer.idSalesOrder` to be set.
+     * - Deletes all sales payment entities related to the provided order.
+     * - Executes {@link \Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\SalesPaymentPreDeletePluginInterface} plugin stack before the sales payment entities deletion.
+     * - Saves order payments from `QuoteTransfer`.
+     * - Executes {@link \Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\PaymentMapKeyBuilderStrategyPluginInterface} plugin stack.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function replaceSalesPayments(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
 }

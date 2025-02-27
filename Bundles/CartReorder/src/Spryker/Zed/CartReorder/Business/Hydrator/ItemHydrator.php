@@ -9,28 +9,14 @@ namespace Spryker\Zed\CartReorder\Business\Hydrator;
 
 use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\CartReorder\Business\Resolver\PluginStackResolverInterface;
 
 class ItemHydrator implements ItemHydratorInterface
 {
     /**
-     * @var \Spryker\Zed\CartReorder\Business\Resolver\PluginStackResolverInterface
+     * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface> $cartReorderItemHydratorPlugins
      */
-    protected PluginStackResolverInterface $pluginStackResolver;
-
-    /**
-     * @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface>>
-     */
-    protected array $cartReorderItemHydratorPlugins;
-
-    /**
-     * @param \Spryker\Zed\CartReorder\Business\Resolver\PluginStackResolverInterface $pluginStackResolver
-     * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface>> $cartReorderItemHydratorPlugins
-     */
-    public function __construct(PluginStackResolverInterface $pluginStackResolver, array $cartReorderItemHydratorPlugins)
+    public function __construct(protected array $cartReorderItemHydratorPlugins)
     {
-        $this->pluginStackResolver = $pluginStackResolver;
-        $this->cartReorderItemHydratorPlugins = $cartReorderItemHydratorPlugins;
     }
 
     /**
@@ -95,13 +81,7 @@ class ItemHydrator implements ItemHydratorInterface
      */
     protected function executeCartReorderItemHydratorPlugins(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer
     {
-        /** @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface> $cartReorderItemHydratorPlugins */
-        $cartReorderItemHydratorPlugins = $this->pluginStackResolver->resolvePluginStackByQuoteProcessFlowName(
-            $cartReorderTransfer->getQuoteOrFail(),
-            $this->cartReorderItemHydratorPlugins,
-        );
-
-        foreach ($cartReorderItemHydratorPlugins as $cartReorderItemHydratorPlugin) {
+        foreach ($this->cartReorderItemHydratorPlugins as $cartReorderItemHydratorPlugin) {
             $cartReorderTransfer = $cartReorderItemHydratorPlugin->hydrate($cartReorderTransfer);
         }
 

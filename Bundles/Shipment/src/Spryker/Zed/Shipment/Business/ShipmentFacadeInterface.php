@@ -438,10 +438,10 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
-     * @param array $events
+     * @param array<array<string>> $events
      * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $orderItemTransfers
      *
-     * @return array
+     * @return array<array<string>>
      */
     public function groupEventsByShipment(array $events, iterable $orderItemTransfers): array;
 
@@ -546,4 +546,24 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer
      */
     public function getShipmentMethodCollection(ShipmentMethodCriteriaTransfer $shipmentMethodCriteriaTransfer): ShipmentMethodCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `SaveOrderTransfer.idSalesOrder` to be set.
+     * - Sets `spy_sales_order_item.fk_sales_shipment` to null for all items related to the provided sales order.
+     * - Deletes sales shipments related to the provided sales order.
+     * - Deletes sales shipment expenses related to the provided sales order.
+     * - Recreates new sales shipment expenses for each item level shipment.
+     * - Executes a stack of {@link \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface} plugins before the expense saving.
+     * - Creates new sales order addresses for each item level shipment.
+     * - Recreates new sales shipments for the provided sales order.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function replaceSalesOrderShipment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
 }

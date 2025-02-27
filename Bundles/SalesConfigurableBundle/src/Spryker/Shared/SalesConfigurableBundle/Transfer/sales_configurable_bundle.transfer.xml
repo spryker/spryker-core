@@ -99,4 +99,19 @@
         <property name="salesOrderItemIds" type="array" singular="idSalesOrderItem"/>
     </transfer>
 
+    <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundleItemCollectionDeleteCriteria" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundleItemCollectionResponse" strict="true">
+    </transfer>
+
+    <transfer name="SalesOrderItemCollectionResponse" strict="true">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
 </transfers>

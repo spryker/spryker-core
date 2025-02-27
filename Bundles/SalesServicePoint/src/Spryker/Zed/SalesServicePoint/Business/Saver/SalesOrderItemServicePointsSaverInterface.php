@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesServicePoint\Business\Saver;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
 
 interface SalesOrderItemServicePointsSaverInterface
 {
@@ -17,4 +18,13 @@ interface SalesOrderItemServicePointsSaverInterface
      * @return void
      */
     public function saveSalesOrderItemServicePointsFromQuote(QuoteTransfer $quoteTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer $salesOrderItemCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function updateSalesOrderItemServicePoints(
+        SalesOrderItemCollectionResponseTransfer $salesOrderItemCollectionResponseTransfer
+    ): SalesOrderItemCollectionResponseTransfer;
 }

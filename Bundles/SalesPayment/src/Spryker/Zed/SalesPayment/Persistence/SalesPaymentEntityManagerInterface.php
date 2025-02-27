@@ -17,4 +17,11 @@ interface SalesPaymentEntityManagerInterface
      * @return \Generated\Shared\Transfer\SalesPaymentTransfer
      */
     public function createSalesPayment(SalesPaymentTransfer $salesPaymentTransfer): SalesPaymentTransfer;
+
+    /**
+     * @param list<int> $salesPaymentIds
+     *
+     * @return void
+     */
+    public function deleteSalesPayments(array $salesPaymentIds): void;
 }

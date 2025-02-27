@@ -17,13 +17,21 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DiscountVoucherTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
+use Orm\Zed\Sales\Persistence\SpySalesDiscount;
+use Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery;
+use Orm\Zed\Sales\Persistence\SpySalesDiscountQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Discount\Persistence\DiscountRepository;
@@ -72,6 +80,16 @@ class DiscountBusinessTester extends Actor
      * @var int
      */
     protected const DISCOUNT_VOUCHER_POOL_NAME_LENGTH = 10;
+
+    /**
+     * @var string
+     */
+    protected const FIELD_NAME_FK_SALES_ORDER = 'fk_sales_order';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_NAME_NAME = 'name';
 
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -210,6 +228,127 @@ class DiscountBusinessTester extends Actor
     }
 
     /**
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer|null
+     */
+    public function findDiscountVoucher(string $code): ?DiscountVoucherTransfer
+    {
+        $discountVoucherEntity = $this->getDiscountVoucherQuery()->findOneByCode($code);
+
+        if ($discountVoucherEntity === null) {
+            return null;
+        }
+
+        return (new DiscountVoucherTransfer())->fromArray($discountVoucherEntity->toArray(), true);
+    }
+
+    /**
+     * @param int $idSalesDiscount
+     * @param string $code
+     * @param string $codepoolName
+     *
+     * @return void
+     */
+    public function haveSalesDiscountCode(
+        int $idSalesDiscount,
+        string $code,
+        string $codepoolName
+    ): void {
+        $salesDiscountCodeEntity = SpySalesDiscountCodeQuery::create()
+            ->filterByFkSalesDiscount($idSalesDiscount)
+            ->findOneOrCreate();
+        $salesDiscountCodeEntity->setCode($code)
+            ->setCodepoolName($codepoolName)
+            ->save();
+    }
+
+    /**
+     * @param array<string, mixed> $override
+     *
+     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer
+     */
+    public function createDiscountVoucher(array $override = []): DiscountVoucherTransfer
+    {
+        $discountGeneralTransfer = $this->haveDiscount([
+            DiscountTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_VOUCHER,
+        ]);
+        $override[DiscountTransfer::ID_DISCOUNT] = $discountGeneralTransfer->getIdDiscount();
+        $discountVoucherTransfer = $this->haveGeneratedVoucherCodes($override);
+
+        return $discountVoucherTransfer;
+    }
+
+    /**
+     * @return \Propel\Runtime\Collection\ObjectCollection
+     */
+    public function getSalesDiscountEntities(): ObjectCollection
+    {
+        return $this->getSalesDiscountQuery()->find();
+    }
+
+    /**
+     * @return \Propel\Runtime\Collection\ObjectCollection
+     */
+    public function getSalesDiscountCodeEntities(): ObjectCollection
+    {
+        return $this->getSalesDiscountCodeQuery()->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer|null $expenseTransfer
+     * @param int|null $idSalesOrderItem
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount
+     */
+    public function createSalesDiscountEntities(
+        SaveOrderTransfer $saveOrderTransfer,
+        DiscountVoucherTransfer $discountVoucherTransfer,
+        ?ExpenseTransfer $expenseTransfer = null,
+        ?int $idSalesOrderItem = null
+    ): SpySalesDiscount {
+        $salesDiscountData = [
+            static::FIELD_NAME_FK_SALES_ORDER => $saveOrderTransfer->getIdSalesOrderOrFail(),
+            static::FIELD_NAME_NAME => 'test discount',
+        ];
+
+        if ($expenseTransfer) {
+            $salesDiscountData['fk_sales_expense'] = $expenseTransfer->getIdSalesExpenseOrFail();
+        }
+
+        if ($idSalesOrderItem) {
+            $salesDiscountData['fk_sales_order_item'] = $idSalesOrderItem;
+        }
+
+        $salesDiscountEntity = $this->haveSalesDiscount($salesDiscountData);
+        $this->haveSalesDiscountCode(
+            $salesDiscountEntity->getIdSalesDiscount(),
+            $discountVoucherTransfer->getCodeOrFail(),
+            '',
+        );
+
+        return $salesDiscountEntity;
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureSalesDiscountTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getSalesDiscountQuery());
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureSalesDiscountCodeTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getSalesDiscountCodeQuery());
+    }
+
+    /**
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     protected function getDiscountQuery(): SpyDiscountQuery
@@ -223,5 +362,29 @@ class DiscountBusinessTester extends Actor
     protected function getDiscountStoreQuery(): SpyDiscountStoreQuery
     {
         return SpyDiscountStoreQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
+     */
+    protected function getDiscountVoucherQuery(): SpyDiscountVoucherQuery
+    {
+        return SpyDiscountVoucherQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountQuery
+     */
+    protected function getSalesDiscountQuery(): SpySalesDiscountQuery
+    {
+        return SpySalesDiscountQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery
+     */
+    protected function getSalesDiscountCodeQuery(): SpySalesDiscountCodeQuery
+    {
+        return SpySalesDiscountCodeQuery::create();
     }
 }

@@ -14,25 +14,13 @@ use Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentRepositoryInt
 class SalesOrderAmendmentReader implements SalesOrderAmendmentReaderInterface
 {
     /**
-     * @var \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentRepositoryInterface
-     */
-    protected SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository;
-
-    /**
-     * @var list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentExpanderPluginInterface>
-     */
-    protected array $salesOrderAmendmentExpanderPlugins;
-
-    /**
      * @param \Spryker\Zed\SalesOrderAmendment\Persistence\SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository
      * @param list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentExpanderPluginInterface> $salesOrderAmendmentExpanderPlugins
      */
     public function __construct(
-        SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository,
-        array $salesOrderAmendmentExpanderPlugins
+        protected SalesOrderAmendmentRepositoryInterface $salesOrderAmendmentRepository,
+        protected array $salesOrderAmendmentExpanderPlugins
     ) {
-        $this->salesOrderAmendmentRepository = $salesOrderAmendmentRepository;
-        $this->salesOrderAmendmentExpanderPlugins = $salesOrderAmendmentExpanderPlugins;
     }
 
     /**

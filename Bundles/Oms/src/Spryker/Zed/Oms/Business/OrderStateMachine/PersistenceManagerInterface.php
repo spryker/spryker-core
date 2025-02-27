@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use Generated\Shared\Transfer\OmsOrderItemStateTransfer;
+
 interface PersistenceManagerInterface
 {
     /**
@@ -20,4 +22,11 @@ interface PersistenceManagerInterface
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     public function getInitialStateEntity();
+
+    /**
+     * @param string $stateName
+     *
+     * @return \Generated\Shared\Transfer\OmsOrderItemStateTransfer
+     */
+    public function getOmsOrderItemState(string $stateName): OmsOrderItemStateTransfer;
 }

@@ -109,6 +109,28 @@ class OrderCustomReferenceFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testSavesEmptyOrderCustomReferenceWhenForceUpdateIsTrue(): void
+    {
+        // Arrange
+        $this->tester->updateOrderCustomReference($this->saveOrderTransfer->getIdSalesOrderOrFail(), static::ORDER_CUSTOM_REFERENCE);
+
+        // Act
+        $this->tester->getFacade()
+            ->saveOrderCustomReferenceFromQuote(
+                (new QuoteTransfer()),
+                $this->saveOrderTransfer,
+                true,
+            );
+
+        $orderTransfer = $this->findOrder($this->saveOrderTransfer);
+
+        // Assert
+        $this->assertSame('', $orderTransfer->getOrderCustomReference());
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateOrderCustomReferenceWithoutIdSalesOrder(): void
     {
         // Act

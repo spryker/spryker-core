@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade;
 
+use Generated\Shared\Transfer\OmsOrderItemStateTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
 interface SalesOrderAmendmentOmsToOmsFacadeInterface
@@ -27,4 +28,11 @@ interface SalesOrderAmendmentOmsToOmsFacadeInterface
      * @return bool
      */
     public function areOrderItemsSatisfiedByFlag(OrderTransfer $orderTransfer, string $flag): bool;
+
+    /**
+     * @param string $stateName
+     *
+     * @return \Generated\Shared\Transfer\OmsOrderItemStateTransfer
+     */
+    public function getOmsOrderItemState(string $stateName): OmsOrderItemStateTransfer;
 }

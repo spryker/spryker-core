@@ -10,38 +10,18 @@ namespace Spryker\Zed\CartReorder\Business\Validator;
 use Generated\Shared\Transfer\CartReorderRequestTransfer;
 use Generated\Shared\Transfer\CartReorderResponseTransfer;
 use Generated\Shared\Transfer\CartReorderTransfer;
-use Spryker\Zed\CartReorder\Business\Resolver\PluginStackResolverInterface;
+use Spryker\Shared\Kernel\StrategyResolverInterface;
 
 class CartReorderValidator implements CartReorderValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\CartReorder\Business\Resolver\PluginStackResolverInterface
-     */
-    protected PluginStackResolverInterface $pluginStackResolver;
-
-    /**
-     * @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderRequestValidatorPluginInterface>
-     */
-    protected array $cartReorderRequestValidatorPlugins;
-
-    /**
-     * @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>>
-     */
-    protected array $cartReorderValidatorPlugins;
-
-    /**
-     * @param \Spryker\Zed\CartReorder\Business\Resolver\PluginStackResolverInterface $pluginStackResolver
      * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderRequestValidatorPluginInterface> $cartReorderRequestValidatorPlugins
-     * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>> $cartReorderValidatorPlugins
+     * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>> $cartReorderValidatorPluginStrategyResolver
      */
     public function __construct(
-        PluginStackResolverInterface $pluginStackResolver,
-        array $cartReorderRequestValidatorPlugins,
-        array $cartReorderValidatorPlugins
+        protected array $cartReorderRequestValidatorPlugins,
+        protected StrategyResolverInterface $cartReorderValidatorPluginStrategyResolver
     ) {
-        $this->pluginStackResolver = $pluginStackResolver;
-        $this->cartReorderRequestValidatorPlugins = $cartReorderRequestValidatorPlugins;
-        $this->cartReorderValidatorPlugins = $cartReorderValidatorPlugins;
     }
 
     /**
@@ -97,11 +77,8 @@ class CartReorderValidator implements CartReorderValidatorInterface
         CartReorderTransfer $cartReorderTransfer,
         CartReorderResponseTransfer $cartReorderResponseTransfer
     ): CartReorderResponseTransfer {
-        /** @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface> $cartReorderValidatorPlugins */
-        $cartReorderValidatorPlugins = $this->pluginStackResolver->resolvePluginStackByQuoteProcessFlowName(
-            $cartReorderTransfer->getQuoteOrFail(),
-            $this->cartReorderValidatorPlugins,
-        );
+        $quoteProcessFlowName = $cartReorderTransfer->getQuoteOrFail()->getQuoteProcessFlow()?->getNameOrFail();
+        $cartReorderValidatorPlugins = $this->cartReorderValidatorPluginStrategyResolver->get($quoteProcessFlowName);
 
         foreach ($cartReorderValidatorPlugins as $cartReorderValidatorPlugin) {
             $cartReorderResponseTransfer = $cartReorderValidatorPlugin->validate($cartReorderTransfer, $cartReorderResponseTransfer);

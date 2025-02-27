@@ -166,16 +166,18 @@ class SalesOrderAmendmentBusinessTester extends Actor
     }
 
     /**
+     * @param array<string, string|array<string, string>> $quoteData
+     *
      * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionRequestTransfer
      */
-    public function createSalesOrderAmendmentQuoteCollectionRequestTransfer(): SalesOrderAmendmentQuoteCollectionRequestTransfer
+    public function createSalesOrderAmendmentQuoteCollectionRequestTransfer(array $quoteData = []): SalesOrderAmendmentQuoteCollectionRequestTransfer
     {
         $salesOrderAmendmentQuoteTransferOne = (new SalesOrderAmendmentQuoteBuilder())
-            ->withQuote()
+            ->withQuote($quoteData)
             ->build();
 
         $salesOrderAmendmentQuoteTransferTwo = (new SalesOrderAmendmentQuoteBuilder())
-            ->withQuote()
+            ->withQuote($quoteData)
             ->build();
 
         return (new SalesOrderAmendmentQuoteCollectionRequestTransfer())

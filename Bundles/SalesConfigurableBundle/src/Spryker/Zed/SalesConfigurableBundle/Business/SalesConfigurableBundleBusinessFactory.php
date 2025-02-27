@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesConfigurableBundle\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SalesConfigurableBundle\Business\Deleter\SalesOrderConfiguredBundleItemDeleter;
+use Spryker\Zed\SalesConfigurableBundle\Business\Deleter\SalesOrderConfiguredBundleItemDeleterInterface;
 use Spryker\Zed\SalesConfigurableBundle\Business\Expander\OrderItemExpander;
 use Spryker\Zed\SalesConfigurableBundle\Business\Expander\OrderItemExpanderInterface;
 use Spryker\Zed\SalesConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpander;
@@ -40,6 +42,7 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderConfiguredBundleWriter(
             $this->getEntityManager(),
+            $this->getRepository(),
         );
     }
 
@@ -98,6 +101,17 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function createConfigurableBundleItemExtractor(): ConfigurableBundleItemExtractorInterface
     {
         return new ConfigurableBundleItemExtractor();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesConfigurableBundle\Business\Deleter\SalesOrderConfiguredBundleItemDeleterInterface
+     */
+    public function createSalesOrderConfiguredBundleItemDeleter(): SalesOrderConfiguredBundleItemDeleterInterface
+    {
+        return new SalesOrderConfiguredBundleItemDeleter(
+            $this->getEntityManager(),
+            $this->getRepository(),
+        );
     }
 
     /**

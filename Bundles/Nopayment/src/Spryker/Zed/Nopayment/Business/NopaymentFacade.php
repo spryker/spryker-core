@@ -10,6 +10,8 @@ namespace Spryker\Zed\Nopayment\Business;
 use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\NopaymentPaidCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\NopaymentPaidCollectionResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -17,6 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Nopayment\Business\NopaymentBusinessFactory getFactory()
+ * @method \Spryker\Zed\Nopayment\Persistence\NopaymentEntityManagerInterface getEntityManager()
  */
 class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
 {
@@ -96,5 +99,22 @@ class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
         return $this->getFactory()
             ->createQuotePaymentUpdater()
             ->update($cartCodeRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NopaymentPaidCollectionDeleteCriteriaTransfer $nopaymentPaidCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NopaymentPaidCollectionResponseTransfer
+     */
+    public function deleteNopaymentPaidCollection(
+        NopaymentPaidCollectionDeleteCriteriaTransfer $nopaymentPaidCollectionDeleteCriteriaTransfer
+    ): NopaymentPaidCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createNopaymentPaidDeleter()
+            ->deleteNopaymentPaidCollection($nopaymentPaidCollectionDeleteCriteriaTransfer);
     }
 }

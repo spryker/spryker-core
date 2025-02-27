@@ -17,25 +17,11 @@ use Spryker\Glue\OrderAmendmentsRestApi\Processor\Mapper\OrderAmendmentsMapperIn
 class OrderAmendmentsRestResponseBuilder implements OrderAmendmentsRestResponseBuilderInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected RestResourceBuilderInterface $restResourceBuilder;
-
-    /**
-     * @var \Spryker\Glue\OrderAmendmentsRestApi\Processor\Mapper\OrderAmendmentsMapperInterface
-     */
-    protected OrderAmendmentsMapperInterface $orderAmendmentsMapper;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\OrderAmendmentsRestApi\Processor\Mapper\OrderAmendmentsMapperInterface $orderAmendmentsMapper
      */
-    public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        OrderAmendmentsMapperInterface $orderAmendmentsMapper
-    ) {
-        $this->restResourceBuilder = $restResourceBuilder;
-        $this->orderAmendmentsMapper = $orderAmendmentsMapper;
+    public function __construct(protected RestResourceBuilderInterface $restResourceBuilder, protected OrderAmendmentsMapperInterface $orderAmendmentsMapper)
+    {
     }
 
     /**

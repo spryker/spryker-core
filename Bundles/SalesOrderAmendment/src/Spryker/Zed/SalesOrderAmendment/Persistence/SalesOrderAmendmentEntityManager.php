@@ -42,17 +42,20 @@ class SalesOrderAmendmentEntityManager extends AbstractEntityManager implements 
 
     /**
      * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer $salesOrderAmendmentQuoteTransfer
+     * @param array<string|array<string>> $quoteFieldsAllowedForSaving
      *
      * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer
      */
     public function createSalesOrderAmendmentQuote(
-        SalesOrderAmendmentQuoteTransfer $salesOrderAmendmentQuoteTransfer
+        SalesOrderAmendmentQuoteTransfer $salesOrderAmendmentQuoteTransfer,
+        array $quoteFieldsAllowedForSaving
     ): SalesOrderAmendmentQuoteTransfer {
         $salesOrderAmendmentQuoteEntity = $this->getFactory()
             ->createSalesOrderAmendmentQuoteMapper()
             ->mapSalesOrderAmendmentQuoteTransferToSalesOrderAmendmentQuoteEntity(
                 $salesOrderAmendmentQuoteTransfer,
                 new SpySalesOrderAmendmentQuote(),
+                $quoteFieldsAllowedForSaving,
             );
 
         $salesOrderAmendmentQuoteEntity->save();
