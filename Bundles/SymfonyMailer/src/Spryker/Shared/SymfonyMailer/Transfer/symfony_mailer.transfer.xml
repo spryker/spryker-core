@@ -19,6 +19,7 @@
         <property name="fileName" type="string"/>
         <property name="displayName" type="string"/>
         <property name="attachmentUrl" type="string"/>
+        <property name="mimeType" type="string"/>
     </transfer>
 
     <transfer name="MailRecipient">

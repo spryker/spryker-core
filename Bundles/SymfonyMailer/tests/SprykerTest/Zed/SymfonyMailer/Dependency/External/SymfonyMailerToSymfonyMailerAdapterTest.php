@@ -103,6 +103,11 @@ class SymfonyMailerToSymfonyMailerAdapterTest extends Unit
     /**
      * @var string
      */
+    protected const MAIL_ATTACHMENT_MIME_TYPE = 'text/plain';
+
+    /**
+     * @var string
+     */
     protected const EMAIL = 'email';
 
     /**
@@ -321,7 +326,10 @@ class SymfonyMailerToSymfonyMailerAdapterTest extends Unit
         //Assert
         $this->assertCount(count($mailAttachmentTransfers), $symfonyEmail->getAttachments());
         foreach ($mailAttachmentTransfers as $key => $mailAttachmentTransfer) {
-            $this->assertEquals($mailAttachmentTransfer->getAttachmentUrl(), $symfonyEmail->getAttachments()[$key]->getBody());
+            $this->assertEquals(
+                $mailAttachmentTransfer->getAttachmentUrl() ?? file_get_contents($mailAttachmentTransfer->getFileName()),
+                $symfonyEmail->getAttachments()[$key]->getBody(),
+            );
         }
     }
 
@@ -352,6 +360,13 @@ class SymfonyMailerToSymfonyMailerAdapterTest extends Unit
                 [
                     (new MailAttachmentTransfer())
                         ->setAttachmentUrl(static::MAIL_ATTACHMENT_URL),
+                ],
+            ],
+            [ // file Attachment
+                [
+                    (new MailAttachmentTransfer())
+                    ->setFileName(codecept_data_dir('Fixtures/attachment.txt'))
+                    ->setMimeType(static::MAIL_ATTACHMENT_MIME_TYPE),
                 ],
             ],
         ];

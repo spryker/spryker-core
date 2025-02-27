@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SymfonyMailer\Dependency\External;
 
+use Generated\Shared\Transfer\MailAttachmentTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\SymfonyMailer\Business\Renderer\RendererInterface;
 use Spryker\Zed\SymfonyMailer\Business\Translator\TranslatorInterface;
@@ -225,8 +226,36 @@ class SymfonyMailerToSymfonyMailerAdapter implements SymfonyMailerToMailerInterf
      */
     protected function addAttachments(MailTransfer $mailTransfer): void
     {
-        foreach ($mailTransfer->getAttachments() as $attachment) {
-            $this->email->attach($attachment->getAttachmentUrlOrFail());
+        foreach ($mailTransfer->getAttachments() as $mailAttachmentTransfer) {
+            if ($mailAttachmentTransfer->getFileName()) {
+                $this->processLocalFile($mailAttachmentTransfer);
+
+                continue;
+            }
+
+            $this->email->attach($mailAttachmentTransfer->getAttachmentUrlOrFail());
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MailAttachmentTransfer $mailAttachmentTransfer
+     *
+     * @return void
+     */
+    protected function processLocalFile(MailAttachmentTransfer $mailAttachmentTransfer): void
+    {
+        $resource = fopen($mailAttachmentTransfer->getFileNameOrFail(), 'r');
+        if ($resource === false) {
+            return;
+        }
+
+        $content = stream_get_contents($resource);
+        fclose($resource);
+
+        if ($content === false) {
+            return;
+        }
+
+        $this->email->attach($content, basename($mailAttachmentTransfer->getFileNameOrFail()), $mailAttachmentTransfer->getMimeType());
     }
 }
