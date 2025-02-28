@@ -17,6 +17,7 @@
         "spryker/symfony": "^3.5.0",
         "spryker/transfer": "^3.27.0",
         "spryker/user-merchant-portal-gui-extension": "^1.0.0",
+        "spryker/validator": "^1.6.0",
         "spryker/zed-ui": "^3.0.0"
     },
     "require-dev": {
@@ -32,8 +33,7 @@
         "spryker/router": "*",
         "spryker/session": "*",
         "spryker/testify": "*",
-        "spryker/user": "*",
-        "spryker/validator": "*"
+        "spryker/user": "*"
     },
     "autoload": {
         "psr-4": {

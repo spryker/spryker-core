@@ -15,7 +15,8 @@
         "spryker/symfony": "^3.5.0",
         "spryker/transfer": "^3.27.0",
         "spryker/user": "^3.17.0",
-        "spryker/user-password-reset": "^1.0.0"
+        "spryker/user-password-reset": "^1.0.0",
+        "spryker/validator": "^1.6.0"
     },
     "require-dev": {
         "spryker/application": "*",
@@ -27,8 +28,7 @@
         "spryker/propel": "*",
         "spryker/router": "*",
         "spryker/session": "*",
-        "spryker/testify": "*",
-        "spryker/validator": "*"
+        "spryker/testify": "*"
     },
     "suggest": {
         "spryker/router": "You need to install this module when you want to use the RouterExtension interfaces."

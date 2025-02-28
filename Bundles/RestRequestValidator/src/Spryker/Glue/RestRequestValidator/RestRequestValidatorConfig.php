@@ -27,6 +27,11 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     /**
      * @var string
      */
+    protected const CONSTRAINTS_NAMESPACE_VALIDATOR_COMPONENT_VALIDATOR = 'Spryker\\Shared\\Validator\\Constraints\\';
+
+    /**
+     * @var string
+     */
     protected const CONSTRAINTS_NAMESPACE_PROJECT_STORE_REST_REQUEST_VALIDATOR = '\\Glue\\RestRequestValidator%s\\Constraints\\';
 
     /**
@@ -102,6 +107,7 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
         foreach ($this->get(KernelConstants::CORE_NAMESPACES) as $coreNamespace) {
             $coreConstraintNamespaces[] = $coreNamespace . static::CONSTRAINTS_NAMESPACE_REST_REQUEST_VALIDATOR;
         }
+        $coreConstraintNamespaces[] = static::CONSTRAINTS_NAMESPACE_VALIDATOR_COMPONENT_VALIDATOR;
         $coreConstraintNamespaces[] = static::CONSTRAINTS_NAMESPACE_SYMFONY_COMPONENT_VALIDATOR;
 
         return $coreConstraintNamespaces;
