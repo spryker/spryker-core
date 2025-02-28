@@ -32,6 +32,11 @@ class TwigDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_TWIG_LOADER = 'PLUGINS_TWIG_LOADER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_TWIG_GATEWAY = 'PLUGINS_TWIG_GATEWAY';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -41,6 +46,7 @@ class TwigDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilTextService($container);
         $container = $this->addTwigPlugins($container);
         $container = $this->addTwigLoaderPlugins($container);
+        $container = $this->addTwigGatewayPlugins($container);
 
         return $container;
     }
@@ -77,6 +83,28 @@ class TwigDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface>
      */
     protected function getTwigPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTwigGatewayPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_TWIG_GATEWAY, function (Container $container) {
+            return $this->getTwigGatewayPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface>
+     */
+    protected function getTwigGatewayPlugins(): array
     {
         return [];
     }

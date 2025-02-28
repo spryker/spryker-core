@@ -56,6 +56,14 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return array<\Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface>
+     */
+    public function getTwigGatewayPlugins(): array
+    {
+        return $this->getProvidedDependency(TwigDependencyProvider::PLUGINS_TWIG_GATEWAY);
+    }
+
+    /**
      * @return \Twig\Loader\ChainLoader
      */
     public function createChainLoader(): ChainLoader

@@ -24,67 +24,36 @@ use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 class Rule implements RuleInterface
 {
     /**
-     * @var \Spryker\Zed\Acl\Business\Model\GroupInterface
+     * @var array<array<array<array<bool>>>>
      */
-    protected $group;
-
-    /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
-     */
-    protected $queryContainer;
-
-    /**
-     * @var \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface
-     */
-    protected $userFacade;
-
-    /**
-     * @var \Spryker\Zed\Acl\Business\Model\RuleValidatorInterface
-     */
-    protected $rulesValidator;
-
-    /**
-     * @var \Spryker\Zed\Acl\AclConfig
-     */
-    protected $config;
+    protected static array $cache = [];
 
     /**
      * @var array<\Generated\Shared\Transfer\GroupsTransfer>
      */
-    protected $groupsTransferCache = [];
+    protected static array $groupsTransferCache = [];
 
     /**
      * @var array<\Generated\Shared\Transfer\RulesTransfer>
      */
-    protected $rulesTransferCache = [];
-
-    /**
-     * @var array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclAccessCheckerStrategyPluginInterface>
-     */
-    protected array $aclAccessCheckerStrategyPlugins;
+    protected static array $rulesTransferCache = [];
 
     /**
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
      * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $facadeUser
+     * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $userFacade
      * @param \Spryker\Zed\Acl\Business\Model\RuleValidatorInterface $rulesValidator
      * @param \Spryker\Zed\Acl\AclConfig $config
      * @param array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclAccessCheckerStrategyPluginInterface> $aclAccessCheckerStrategyPlugins
      */
     public function __construct(
-        GroupInterface $group,
-        AclQueryContainerInterface $queryContainer,
-        AclToUserInterface $facadeUser,
-        RuleValidatorInterface $rulesValidator,
-        AclConfig $config,
-        array $aclAccessCheckerStrategyPlugins
+        protected GroupInterface $group,
+        protected AclQueryContainerInterface $queryContainer,
+        protected AclToUserInterface $userFacade,
+        protected RuleValidatorInterface $rulesValidator,
+        protected AclConfig $config,
+        protected array $aclAccessCheckerStrategyPlugins
     ) {
-        $this->group = $group;
-        $this->queryContainer = $queryContainer;
-        $this->userFacade = $facadeUser;
-        $this->rulesValidator = $rulesValidator;
-        $this->config = $config;
-        $this->aclAccessCheckerStrategyPlugins = $aclAccessCheckerStrategyPlugins;
     }
 
     /**
@@ -316,7 +285,24 @@ class Rule implements RuleInterface
      *
      * @return bool
      */
-    public function isAllowed(UserTransfer $userTransfer, $bundle, $controller, $action)
+    public function isAllowed(UserTransfer $userTransfer, $bundle, $controller, $action): bool
+    {
+        if (!isset(static::$cache[$userTransfer->getIdUser()][$bundle][$controller][$action])) {
+            static::$cache[$userTransfer->getIdUser()][$bundle][$controller][$action] = $this->executeIsAllowed($userTransfer, $bundle, $controller, $action);
+        }
+
+        return static::$cache[$userTransfer->getIdUser()][$bundle][$controller][$action];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param string $bundle
+     * @param string $controller
+     * @param string $action
+     *
+     * @return bool
+     */
+    protected function executeIsAllowed(UserTransfer $userTransfer, $bundle, $controller, $action)
     {
         if ($this->userFacade->isSystemUser($userTransfer)) {
             $this->registerSystemUserRules($userTransfer);
@@ -367,12 +353,12 @@ class Rule implements RuleInterface
      */
     protected function getGroupsTransferByIdUser(int $idUser): GroupsTransfer
     {
-        if (isset($this->groupsTransferCache[$idUser])) {
-            return $this->groupsTransferCache[$idUser];
+        if (isset(static::$groupsTransferCache[$idUser])) {
+            return static::$groupsTransferCache[$idUser];
         }
 
         $groupsTransfer = $this->group->getUserGroups($idUser);
-        $this->groupsTransferCache[$idUser] = $groupsTransfer;
+        static::$groupsTransferCache[$idUser] = $groupsTransfer;
 
         return $this->group->getUserGroups($idUser);
     }
@@ -384,12 +370,12 @@ class Rule implements RuleInterface
      */
     protected function getRulesTransferByIdGroup(int $idGroup): RulesTransfer
     {
-        if (isset($this->rulesTransferCache[$idGroup])) {
-            return $this->rulesTransferCache[$idGroup];
+        if (isset(static::$rulesTransferCache[$idGroup])) {
+            return static::$rulesTransferCache[$idGroup];
         }
 
         $rulesTransfer = $this->getRulesForGroupId($idGroup);
-        $this->rulesTransferCache[$idGroup] = $rulesTransfer;
+        static::$rulesTransferCache[$idGroup] = $rulesTransfer;
 
         return $rulesTransfer;
     }

@@ -12,32 +12,34 @@ use Spryker\Zed\AclEntity\Persistence\AclEntityRepositoryInterface;
 
 class AclEntityRuleProvider implements AclEntityRuleProviderInterface
 {
-    /**
-     * @var \Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclRoleProviderInterface
-     */
-    protected $aclRoleProvider;
-
-    /**
-     * @var \Spryker\Zed\AclEntity\Persistence\AclEntityRepositoryInterface
-     */
-    protected $aclEntityRepository;
+    protected static ?AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer = null;
 
     /**
      * @param \Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclRoleProviderInterface $aclRoleProvider
      * @param \Spryker\Zed\AclEntity\Persistence\AclEntityRepositoryInterface $aclEntityRepository
      */
     public function __construct(
-        AclRoleProviderInterface $aclRoleProvider,
-        AclEntityRepositoryInterface $aclEntityRepository
+        protected AclRoleProviderInterface $aclRoleProvider,
+        protected AclEntityRepositoryInterface $aclEntityRepository
     ) {
-        $this->aclRoleProvider = $aclRoleProvider;
-        $this->aclEntityRepository = $aclEntityRepository;
     }
 
     /**
      * @return \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer
      */
     public function getCurrentUserAclEntityRules(): AclEntityRuleCollectionTransfer
+    {
+        if (static::$aclEntityRuleCollectionTransfer === null) {
+            static::$aclEntityRuleCollectionTransfer = $this->executeGetCurrentUserAclEntityRules();
+        }
+
+        return static::$aclEntityRuleCollectionTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer
+     */
+    protected function executeGetCurrentUserAclEntityRules(): AclEntityRuleCollectionTransfer
     {
         return $this->aclEntityRepository->getAclEntityRulesByRoles(
             $this->aclRoleProvider->getCurrentUserAclRoles(),

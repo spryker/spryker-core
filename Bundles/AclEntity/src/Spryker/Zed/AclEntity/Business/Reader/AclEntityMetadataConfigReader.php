@@ -16,19 +16,9 @@ use Spryker\Zed\AclEntity\Business\Validator\AclEntityMetadataConfigValidatorInt
 class AclEntityMetadataConfigReader implements AclEntityMetadataConfigReaderInterface
 {
     /**
-     * @var array<\Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityMetadataConfigExpanderPluginInterface>
+     * @var array<\Generated\Shared\Transfer\AclEntityMetadataConfigTransfer>
      */
-    protected $aclEntityMetadataCollectionExpandPlugins;
-
-    /**
-     * @var \Spryker\Zed\AclEntity\Business\Validator\AclEntityMetadataConfigValidatorInterface
-     */
-    protected $aclEntityMetadataConfigValidator;
-
-    /**
-     * @var \Spryker\Zed\AclEntity\Business\Filter\AclEntityMetadataConfigFilterInterface
-     */
-    protected $aclEntityMetadataConfigFilter;
+    protected static array $cache = [];
 
     /**
      * @param array<\Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityMetadataConfigExpanderPluginInterface> $aclEntityMetadataCollectionExpandPlugins
@@ -36,13 +26,10 @@ class AclEntityMetadataConfigReader implements AclEntityMetadataConfigReaderInte
      * @param \Spryker\Zed\AclEntity\Business\Filter\AclEntityMetadataConfigFilterInterface $aclEntityMetadataConfigFilter
      */
     public function __construct(
-        array $aclEntityMetadataCollectionExpandPlugins,
-        AclEntityMetadataConfigValidatorInterface $aclEntityMetadataConfigValidator,
-        AclEntityMetadataConfigFilterInterface $aclEntityMetadataConfigFilter
+        protected array $aclEntityMetadataCollectionExpandPlugins,
+        protected AclEntityMetadataConfigValidatorInterface $aclEntityMetadataConfigValidator,
+        protected AclEntityMetadataConfigFilterInterface $aclEntityMetadataConfigFilter
     ) {
-        $this->aclEntityMetadataCollectionExpandPlugins = $aclEntityMetadataCollectionExpandPlugins;
-        $this->aclEntityMetadataConfigValidator = $aclEntityMetadataConfigValidator;
-        $this->aclEntityMetadataConfigFilter = $aclEntityMetadataConfigFilter;
     }
 
     /**
@@ -52,6 +39,27 @@ class AclEntityMetadataConfigReader implements AclEntityMetadataConfigReaderInte
      * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
     public function getAclEntityMetadataConfig(
+        bool $runValidation = true,
+        ?AclEntityMetadataConfigRequestTransfer $aclEntityMetadataConfigRequestTransfer = null
+    ): AclEntityMetadataConfigTransfer {
+        if (!$aclEntityMetadataConfigRequestTransfer) {
+            return $this->executeAclEntityMetadataConfig($runValidation);
+        }
+
+        if (!isset(static::$cache[$aclEntityMetadataConfigRequestTransfer->getModelName()])) {
+            static::$cache[$aclEntityMetadataConfigRequestTransfer->getModelName()] = $this->executeAclEntityMetadataConfig($runValidation, $aclEntityMetadataConfigRequestTransfer);
+        }
+
+        return static::$cache[$aclEntityMetadataConfigRequestTransfer->getModelName()];
+    }
+
+    /**
+     * @param bool $runValidation
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigRequestTransfer|null $aclEntityMetadataConfigRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
+     */
+    protected function executeAclEntityMetadataConfig(
         bool $runValidation = true,
         ?AclEntityMetadataConfigRequestTransfer $aclEntityMetadataConfigRequestTransfer = null
     ): AclEntityMetadataConfigTransfer {
