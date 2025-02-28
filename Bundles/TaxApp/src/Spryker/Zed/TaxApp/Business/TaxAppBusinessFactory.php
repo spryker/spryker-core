@@ -38,6 +38,8 @@ use Spryker\Zed\TaxApp\Business\Sender\PaymentSubmitTaxInvoiceSender;
 use Spryker\Zed\TaxApp\Business\Sender\PaymentSubmitTaxInvoiceSenderInterface;
 use Spryker\Zed\TaxApp\Business\Validator\TaxIdValidator;
 use Spryker\Zed\TaxApp\Business\Validator\TaxIdValidatorInterface;
+use Spryker\Zed\TaxApp\Business\Writer\TaxAppStoreRelationWriter;
+use Spryker\Zed\TaxApp\Business\Writer\TaxAppStoreRelationWriterInterface;
 use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToKernelAppFacadeInterface;
 use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToMessageBrokerFacadeInterface;
 use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToOauthClientFacadeInterface;
@@ -74,6 +76,14 @@ class TaxAppBusinessFactory extends AbstractBusinessFactory
     public function createConfigReader(): ConfigReaderInterface
     {
         return new ConfigReader($this->getRepository(), $this->getStoreFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxApp\Business\Writer\TaxAppStoreRelationWriterInterface
+     */
+    public function createTaxAppStoreRelationWriter(): TaxAppStoreRelationWriterInterface
+    {
+        return new TaxAppStoreRelationWriter($this->getRepository(), $this->createConfigWriter());
     }
 
     /**

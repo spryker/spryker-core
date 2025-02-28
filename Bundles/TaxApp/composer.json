@@ -16,6 +16,7 @@
         "spryker/oauth-client": "^1.4.0",
         "spryker/oms-extension": "^1.4.0",
         "spryker/propel-orm": "^1.18.0",
+        "spryker/publisher-extension": "^1.0.0",
         "spryker/ramsey-uuid": "^2.0.0",
         "spryker/sales": "^11.0.0",
         "spryker/store": "^1.16.0",

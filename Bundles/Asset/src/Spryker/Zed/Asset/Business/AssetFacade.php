@@ -153,4 +153,18 @@ class AssetFacade extends AbstractFacade implements AssetFacadeInterface
     {
         return $this->getRepository()->getAssetCollection($assetCriteriaTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function refreshAllAssetStoreRelations(): void
+    {
+        $this->getFactory()
+            ->createAssetStoreRelationWriter()
+            ->refreshAllAssetStoreRelations();
+    }
 }

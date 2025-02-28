@@ -157,4 +157,15 @@ interface AssetFacadeInterface
      * @return \Generated\Shared\Transfer\AssetCollectionTransfer
      */
     public function getAssetCollection(AssetCriteriaTransfer $assetCriteriaTransfer): AssetCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Fetches a collection of assets from the Persistence.
+     * - Iterates over the collection and triggers an update for each asset, causing store relation recreation.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function refreshAllAssetStoreRelations(): void;
 }

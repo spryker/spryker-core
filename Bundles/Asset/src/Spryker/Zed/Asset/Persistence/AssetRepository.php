@@ -123,6 +123,13 @@ class AssetRepository extends AbstractRepository implements AssetRepositoryInter
             $assetQuery->filterByIdAsset_In($assetConditionsTransfer->getAssetIds());
         }
 
+        if ($assetConditionsTransfer->getWithStores()) {
+            $assetQuery->leftJoinWithSpyAssetStore()
+                ->useSpyAssetStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->leftJoinWithSpyStore()
+                ->endUse();
+        }
+
         return $assetQuery;
     }
 }

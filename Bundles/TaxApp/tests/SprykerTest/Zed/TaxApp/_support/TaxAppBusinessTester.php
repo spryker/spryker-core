@@ -516,6 +516,32 @@ class TaxAppBusinessTester extends Actor
     }
 
     /**
+     * @param string $applicationId
+     * @param int $idStore
+     *
+     * @return void
+     */
+    public function assertTaxAppConfigStoreRelationExists(string $applicationId, int $idStore): void
+    {
+        $this->assertTrue(
+            SpyTaxAppConfigQuery::create()->filterByApplicationId($applicationId)->filterByFkStore($idStore)->exists(),
+        );
+    }
+
+    /**
+     * @param string $applicationId
+     * @param int $idStore
+     *
+     * @return void
+     */
+    public function assertTaxAppConfigStoreRelationDoesNotExist(string $applicationId, int $idStore): void
+    {
+        $this->assertFalse(
+            SpyTaxAppConfigQuery::create()->filterByApplicationId($applicationId)->filterByFkStore($idStore)->exists(),
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

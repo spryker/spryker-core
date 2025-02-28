@@ -43,6 +43,7 @@
 
     <transfer name="AssetConditions" strict="true">
         <property name="assetIds" type="int[]" singular="idAsset"/>
+        <property name="withStores" type="bool"/>
     </transfer>
 
     <transfer name="AssetCollection" strict="true">

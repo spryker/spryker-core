@@ -31,6 +31,17 @@ interface AssetEntityManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\AssetTransfer $assetTransfer
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
+     *
+     * @return \Generated\Shared\Transfer\AssetTransfer
+     */
+    public function saveAssetStoreRelationsByAsset(
+        AssetTransfer $assetTransfer,
+        array $storeTransfers
+    ): AssetTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\AssetTransfer $assetTransfer
      *
      * @return void
      */

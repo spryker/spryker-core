@@ -29,7 +29,7 @@ class AssetEntityManager extends AbstractEntityManager implements AssetEntityMan
     ): AssetTransfer {
         $assetTransfer = $this->saveAsset($assetTransfer);
 
-        return $this->saveAssetStoreByAssetTransfer($assetTransfer, $storeTransfers);
+        return $this->saveAssetStoreRelationsByAsset($assetTransfer, $storeTransfers);
     }
 
     /**
@@ -64,7 +64,7 @@ class AssetEntityManager extends AbstractEntityManager implements AssetEntityMan
      *
      * @return \Generated\Shared\Transfer\AssetTransfer
      */
-    protected function saveAssetStoreByAssetTransfer(
+    public function saveAssetStoreRelationsByAsset(
         AssetTransfer $assetTransfer,
         array $storeTransfers
     ): AssetTransfer {

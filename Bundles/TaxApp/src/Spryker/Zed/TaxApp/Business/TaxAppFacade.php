@@ -106,4 +106,17 @@ class TaxAppFacade extends AbstractFacade implements TaxAppFacadeInterface
     {
         return $this->getFactory()->createTaxIdValidator()->validate($taxAppValidationRequestTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function refreshTaxAppStoreRelations(): void
+    {
+        $this->getFactory()->createTaxAppStoreRelationWriter()
+            ->refreshTaxAppStoreRelations();
+    }
 }

@@ -20,6 +20,8 @@ use Spryker\Zed\Asset\Business\TimeStamp\AssetTimeStamp;
 use Spryker\Zed\Asset\Business\TimeStamp\AssetTimeStampInterface;
 use Spryker\Zed\Asset\Business\Updater\AssetUpdater;
 use Spryker\Zed\Asset\Business\Updater\AssetUpdaterInterface;
+use Spryker\Zed\Asset\Business\Writer\AssetStoreRelationWriter;
+use Spryker\Zed\Asset\Business\Writer\AssetStoreRelationWriterInterface;
 use Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface;
 use Spryker\Zed\Asset\Dependency\Facade\AssetToStoreInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -92,6 +94,19 @@ class AssetBusinessFactory extends AbstractBusinessFactory
     public function createAssetTimeStamp(): AssetTimeStampInterface
     {
         return new AssetTimeStamp();
+    }
+
+    /**
+     * @return \Spryker\Zed\Asset\Business\Writer\AssetStoreRelationWriterInterface
+     */
+    public function createAssetStoreRelationWriter(): AssetStoreRelationWriterInterface
+    {
+        return new AssetStoreRelationWriter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->getStoreFacade(),
+            $this->getEventFacade(),
+        );
     }
 
     /**

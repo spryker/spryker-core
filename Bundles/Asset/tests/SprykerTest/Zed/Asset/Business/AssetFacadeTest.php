@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\AssetDeletedTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
 use Generated\Shared\Transfer\AssetUpdatedTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Asset\Persistence\SpyAssetQuery;
 use Spryker\Zed\Asset\Business\AssetBusinessFactory;
 use Spryker\Zed\Asset\Business\AssetFacade;
@@ -1047,5 +1048,57 @@ class AssetFacadeTest extends Unit
         $assetFacadeMock->setFactory($assetBusinessFactory);
 
         return $assetFacadeMock;
+    }
+
+    /**
+     * @return void
+     */
+    public function testRefreshAllAssetStoreRelationsIfNewStoreWasAddedAppendsThisStoreIntoAssetStoreRelations(): void
+    {
+        if (!$this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is not applicable for non-dynamic stores.');
+        }
+
+        // Arrange
+        $assetTransfer = $this->tester->haveAsset();
+
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'test-store',
+        ]);
+
+        $this->tester->assertAssetStoreRelationDoesNotExist($assetTransfer->getIdAsset(), $storeTransfer->getIdStore());
+
+        // Act
+        $this->tester->getFacade()->refreshAllAssetStoreRelations();
+
+        // Assert
+        $this->tester->assertAssetStoreRelationExists($assetTransfer->getIdAsset(), $storeTransfer->getIdStore());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRefreshAllAssetStoreRelationsDoesNothingToExistingRelationsIfNoStoreWasAdded(): void
+    {
+        if (!$this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is not applicable for non-dynamic stores.');
+        }
+
+        // Arrange
+        $assetTransfer = $this->tester->haveAsset();
+
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'test-store',
+        ]);
+
+        $this->tester->haveAssetStoreRelation($assetTransfer->getIdAsset(), $storeTransfer->getIdStore());
+
+        $this->tester->assertAssetStoreRelationExists($assetTransfer->getIdAsset(), $storeTransfer->getIdStore());
+
+        // Act
+        $this->tester->getFacade()->refreshAllAssetStoreRelations();
+
+        // Assert
+        $this->tester->assertAssetStoreRelationExists($assetTransfer->getIdAsset(), $storeTransfer->getIdStore());
     }
 }

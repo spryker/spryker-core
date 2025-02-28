@@ -113,4 +113,15 @@ interface TaxAppFacadeInterface
      * @return \Generated\Shared\Transfer\TaxAppValidationResponseTransfer
      */
     public function validateTaxId(TaxAppValidationRequestTransfer $taxAppValidationRequestTransfer): TaxAppValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Fetches a collection of TaxApp configs from the Persistence.
+     * - Iterates over the collection and triggers an update for each TaxApp config, creating non-existent store relations.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function refreshTaxAppStoreRelations(): void;
 }

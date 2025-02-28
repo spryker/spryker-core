@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\AssetDeletedTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
 use Generated\Shared\Transfer\AssetUpdatedTransfer;
 use Orm\Zed\Asset\Persistence\SpyAssetQuery;
+use Orm\Zed\Asset\Persistence\SpyAssetStoreQuery;
 use Spryker\Zed\Asset\Business\TimeStamp\AssetTimeStamp;
 
 /**
@@ -32,6 +33,8 @@ use Spryker\Zed\Asset\Business\TimeStamp\AssetTimeStamp;
  * @method void pause()
  *
  * @SuppressWarnings(\SprykerTest\Zed\Asset\PHPMD)
+ *
+ * @method \Spryker\Zed\Asset\Business\AssetFacadeInterface getFacade()
  */
 class AssetBusinessTester extends Actor
 {
@@ -122,5 +125,31 @@ class AssetBusinessTester extends Actor
         $this->assertFalse($assetEntity->getIsActive());
         $this->assertEquals($assetDeletedTransfer->getAssetSlot(), $assetEntity->getAssetSlot());
         $this->assertEquals($assetDeletedTransfer->getMessageAttributesOrFail()->getTimestampOrFail(), $assetEntity->getLastMessageTimestamp()->format(AssetTimeStamp::TIMESTAMP_FORMAT));
+    }
+
+    /**
+     * @param int $idAsset
+     * @param int $idStore
+     *
+     * @return void
+     */
+    public function assertAssetStoreRelationExists(int $idAsset, int $idStore): void
+    {
+        $this->assertTrue(
+            SpyAssetStoreQuery::create()->filterByFkAsset($idAsset)->filterByFkStore($idStore)->exists(),
+        );
+    }
+
+    /**
+     * @param int $idAsset
+     * @param int $idStore
+     *
+     * @return void
+     */
+    public function assertAssetStoreRelationDoesNotExist(int $idAsset, int $idStore): void
+    {
+        $this->assertFalse(
+            SpyAssetStoreQuery::create()->filterByFkAsset($idAsset)->filterByFkStore($idStore)->exists(),
+        );
     }
 }
