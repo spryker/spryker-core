@@ -851,21 +851,28 @@ class CategoryFacadeTest extends Unit
         $localeTransferEn = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_EN]);
         $localeTransferDe = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_DE]);
 
-        $parentCategoryTransfer = $this->tester->haveCategory();
-        $parentCategoryLocalizedAttributesTransferEn = $this->tester->createCategoryLocalizedAttributesForLocale(
-            $localeTransferEn,
-            $parentCategoryTransfer->getIdCategory(),
+        $parentCategoryLocalizedAttributesTransferEn = $this->tester->createCategoryLocalizedAttributesTransferForLocale($localeTransferEn);
+        $parentCategoryLocalizedAttributesTransferDE = $this->tester->createCategoryLocalizedAttributesTransferForLocale($localeTransferDe);
+
+        $parentCategoryTransfer = $this->tester->haveCategory(
+            [
+                CategoryTransfer::LOCALIZED_ATTRIBUTES => [
+                    $parentCategoryLocalizedAttributesTransferEn->toArray(),
+                    $parentCategoryLocalizedAttributesTransferDE->toArray(),
+                ],
+            ],
         );
-        $this->tester->createCategoryLocalizedAttributesForLocale($localeTransferDe, $parentCategoryTransfer->getIdCategory());
+
+        $childCategoryLocalizedAttributesTransferEn = $this->tester->createCategoryLocalizedAttributesTransferForLocale($localeTransferEn);
+        $childCategoryLocalizedAttributesTransferDe = $this->tester->createCategoryLocalizedAttributesTransferForLocale($localeTransferDe);
 
         $childCategoryTransfer = $this->tester->haveCategory([
             CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryTransfer->getCategoryNode(),
+            CategoryTransfer::LOCALIZED_ATTRIBUTES => [
+                $childCategoryLocalizedAttributesTransferEn->toArray(),
+                $childCategoryLocalizedAttributesTransferDe->toArray(),
+            ],
         ]);
-        $childCategoryLocalizedAttributesTransferEn = $this->tester->createCategoryLocalizedAttributesForLocale(
-            $localeTransferEn,
-            $childCategoryTransfer->getIdCategory(),
-        );
-        $this->tester->createCategoryLocalizedAttributesForLocale($localeTransferDe, $childCategoryTransfer->getIdCategory());
 
         $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
             ->setIdCategory($parentCategoryTransfer->getIdCategory())

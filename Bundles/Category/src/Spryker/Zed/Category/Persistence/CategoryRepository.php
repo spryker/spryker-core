@@ -978,13 +978,20 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         if ($categoryCriteriaTransfer->getLocaleName()) {
             $categoryClosureTableQuery
                 ->useDescendantNodeQuery()
+                    ->joinWithSpyUrl()
                     ->useCategoryQuery()
                         ->joinWithAttribute()
                         ->useAttributeQuery()
+                            ->joinWithLocale()
                             ->useLocaleQuery()
                                 ->filterByLocaleName($categoryCriteriaTransfer->getLocaleName())
                             ->endUse()
                         ->endUse()
+                        ->joinWithCategoryTemplate()
+                        ->joinWithSpyCategoryStore()
+                            ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
+                                ->leftJoinWithSpyStore()
+                            ->endUse()
                     ->endUse()
                 ->endUse();
         }
