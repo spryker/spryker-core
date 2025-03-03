@@ -468,22 +468,12 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->leftJoinWithDescendantNode()
             ->useNodeQuery('node')
                 ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
-            ->endUse()
+            ->endUse();
+
+        $categoryClosureTableQuery
             ->useDescendantNodeQuery()
-                ->orderByNodeOrder(Criteria::DESC)
-                ->joinWithSpyUrl()
                 ->leftJoinWithCategory()
-                ->useCategoryQuery()
-                    ->joinWithAttribute()
-                    ->useAttributeQuery()
-                        ->joinWithLocale()
-                    ->endUse()
-                    ->joinWithCategoryTemplate()
-                    ->joinWithSpyCategoryStore()
-                        ->useSpyCategoryStoreQuery()
-                            ->joinWithSpyStore()
-                        ->endUse()
-                ->endUse()
+                ->orderByNodeOrder(Criteria::DESC)
             ->endUse();
 
         $this->applyCategoryClosureTableFilters($categoryClosureTableQuery, $categoryCriteriaTransfer);
