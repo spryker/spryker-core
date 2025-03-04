@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\CompanyUser\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyUserBuilder;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface;
 use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 use Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeBridge;
 use SprykerTest\Shared\Customer\Helper\CustomerDataHelperTrait;
@@ -26,10 +27,11 @@ class CompanyUserHelper extends Module
 
     /**
      * @param array $seed
+     * @param array<\Generated\Shared\Transfer\CompanyRoleTransfer> $companyRoles
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function haveCompanyUser(array $seed = []): CompanyUserTransfer
+    public function haveCompanyUser(array $seed = [], array $companyRoles = []): CompanyUserTransfer
     {
         $companyUserTransfer = (new CompanyUserBuilder($seed))->build();
         $companyUserTransfer->setIdCompanyUser(null);
@@ -38,7 +40,33 @@ class CompanyUserHelper extends Module
 
         $companyUserResponseTransfer = $this->createCompanyUserFacade()->create($companyUserTransfer);
 
-        return $companyUserResponseTransfer->getCompanyUser();
+        $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
+
+        if ($companyRoles) {
+            $this->assignCompanyRolesToCompanyUser($companyUserTransfer, $companyRoles);
+        }
+
+        return $companyUserTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return void
+     */
+    public function assignCompanyRolesToCompanyUser(CompanyUserTransfer $companyUserTransfer): void
+    {
+        $companyUserTransfer->requireCompanyRoleCollection();
+
+        $this->getCompanyRoleFacade()->saveCompanyUser($companyUserTransfer);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface
+     */
+    protected function getCompanyRoleFacade(): CompanyRoleFacadeInterface
+    {
+        return $this->getLocator()->companyRole()->facade();
     }
 
     /**
