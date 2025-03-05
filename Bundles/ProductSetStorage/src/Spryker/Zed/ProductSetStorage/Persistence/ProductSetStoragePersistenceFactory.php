@@ -9,11 +9,13 @@ namespace Spryker\Zed\ProductSetStorage\Persistence;
 
 use Orm\Zed\ProductSetStorage\Persistence\SpyProductSetStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductSetStorage\Persistence\Propel\Mapper\ProductSetStorageMapper;
 use Spryker\Zed\ProductSetStorage\ProductSetStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductSetStorage\ProductSetStorageConfig getConfig()
  * @method \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageRepositoryInterface getRepository()
  */
 class ProductSetStoragePersistenceFactory extends AbstractPersistenceFactory
 {
@@ -39,5 +41,13 @@ class ProductSetStoragePersistenceFactory extends AbstractPersistenceFactory
     public function getProductImageQueryContainer()
     {
         return $this->getProvidedDependency(ProductSetStorageDependencyProvider::QUERY_CONTAINER_PRODUCT_IMAGE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetStorage\Persistence\Propel\Mapper\ProductSetStorageMapper
+     */
+    public function createProductSetStorageMapper(): ProductSetStorageMapper
+    {
+        return new ProductSetStorageMapper();
     }
 }

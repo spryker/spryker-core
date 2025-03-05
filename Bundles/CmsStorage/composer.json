@@ -10,12 +10,13 @@
         "spryker/kernel": "^3.33.0",
         "spryker/locale": "^3.1.0 || ^4.0.0",
         "spryker/propel-orm": "^1.0.0",
+        "spryker/sitemap-extension": "^1.0.0",
         "spryker/storage": "^3.4.0",
         "spryker/store": "^1.5.0",
         "spryker/synchronization": "^0.2.0 || ^1.0.0",
         "spryker/synchronization-behavior": "^1.0.0",
         "spryker/synchronization-extension": "^1.0.0",
-        "spryker/transfer": "^3.25.0",
+        "spryker/transfer": "^3.27.0",
         "spryker/util-encoding": "^2.0.0"
     },
     "require-dev": {

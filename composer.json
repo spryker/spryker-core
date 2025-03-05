@@ -1026,6 +1026,8 @@
         "spryker/shopping-lists-rest-api": "*",
         "spryker/shopping-lists-rest-api-extension": "*",
         "spryker/silex": "*",
+        "spryker/sitemap": "*",
+        "spryker/sitemap-extension": "*",
         "spryker/sql-criteria-builder": "*",
         "spryker/state-machine": "*",
         "spryker/step-engine": "*",

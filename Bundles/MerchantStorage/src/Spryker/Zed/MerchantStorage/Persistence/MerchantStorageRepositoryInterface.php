@@ -20,4 +20,11 @@ interface MerchantStorageRepositoryInterface
     public function getFilteredMerchantStorageEntityTransfers(
         MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
     ): ObjectCollection;
+
+    /**
+     * @param string $storeName
+     *
+     * @return array<\Generated\Shared\Transfer\SitemapUrlTransfer>
+     */
+    public function getSitemapUrls(string $storeName): array;
 }

@@ -13,6 +13,7 @@ use Spryker\Zed\ProductSetStorage\Business\Storage\ProductSetStorageWriter;
 /**
  * @method \Spryker\Zed\ProductSetStorage\ProductSetStorageConfig getConfig()
  * @method \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageRepositoryInterface getRepository()
  */
 class ProductSetStorageBusinessFactory extends AbstractBusinessFactory
 {

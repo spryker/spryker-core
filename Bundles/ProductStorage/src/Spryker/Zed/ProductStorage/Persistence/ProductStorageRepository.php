@@ -43,6 +43,11 @@ class ProductStorageRepository extends AbstractRepository implements ProductStor
     protected const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
 
     /**
+     * @var int
+     */
+    protected const SITEMAP_QUERY_LIMIT = 1000;
+
+    /**
      * @param array<int> $productAbstractIds
      *
      * @return array<int|string|bool>
@@ -84,5 +89,32 @@ class ProductStorageRepository extends AbstractRepository implements ProductStor
             ->find();
 
         return $productConcretesCollection->toArray();
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return array<\Generated\Shared\Transfer\SitemapUrlTransfer>
+     */
+    public function getSitemapUrls(string $storeName): array
+    {
+        $offset = 0;
+        $productAbstractStorageQuery = $this->getFactory()
+            ->createSpyProductAbstractStorageQuery()
+            ->filterByStore($storeName)
+            ->orderByIdProductAbstractStorage()
+            ->limit(static::SITEMAP_QUERY_LIMIT)
+            ->offset($offset);
+        $sitemapUrlTransfers = [];
+        $productStorageMapper = $this->getFactory()->createProductStorageMapper();
+
+        do {
+            $offset += static::SITEMAP_QUERY_LIMIT;
+            $productAbstractStorageEntities = $productAbstractStorageQuery->find();
+            $sitemapUrlTransfers[] = $productStorageMapper->mapProductAbstractStorageEntitiesToSitemapUrlTransfers($productAbstractStorageEntities);
+            $productAbstractStorageQuery->offset($offset);
+        } while ($productAbstractStorageEntities->count() === static::SITEMAP_QUERY_LIMIT);
+
+        return array_merge(...$sitemapUrlTransfers);
     }
 }
