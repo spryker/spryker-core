@@ -379,6 +379,10 @@ class DataImportConsole extends Console
             $dataImporterReport->getImportTime(),
             $this->getImportStatusByDataImportReportStatus($dataImporterReport),
         ));
+
+        foreach ($dataImporterReport->getMessages() as $dataImporterReportMessageTransfer) {
+            $this->warning($dataImporterReportMessageTransfer->getMessage());
+        }
     }
 
     /**
