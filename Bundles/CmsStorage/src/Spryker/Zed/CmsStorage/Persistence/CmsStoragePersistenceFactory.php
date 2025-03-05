@@ -10,11 +10,13 @@ namespace Spryker\Zed\CmsStorage\Persistence;
 use Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorageQuery;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Zed\CmsStorage\CmsStorageDependencyProvider;
+use Spryker\Zed\CmsStorage\Persistence\Propel\Mapper\CmsStorageMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CmsStorage\CmsStorageConfig getConfig()
  * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageRepositoryInterface getRepository()
  */
 class CmsStoragePersistenceFactory extends AbstractPersistenceFactory
 {
@@ -40,5 +42,13 @@ class CmsStoragePersistenceFactory extends AbstractPersistenceFactory
     public function getCmsQueryContainer()
     {
         return $this->getProvidedDependency(CmsStorageDependencyProvider::QUERY_CONTAINER_CMS_PAGE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsStorage\Persistence\Propel\Mapper\CmsStorageMapper
+     */
+    public function createCmsStorageMapper(): CmsStorageMapper
+    {
+        return new CmsStorageMapper();
     }
 }

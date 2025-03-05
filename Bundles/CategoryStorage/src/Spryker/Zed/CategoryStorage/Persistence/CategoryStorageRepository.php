@@ -19,6 +19,11 @@ use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationData
 class CategoryStorageRepository extends AbstractRepository implements CategoryStorageRepositoryInterface
 {
     /**
+     * @var int
+     */
+    protected const SITEMAP_QUERY_LIMIT = 1000;
+
+    /**
      * @param int $offset
      * @param int $limit
      * @param array<int> $categoryNodeIds
@@ -58,6 +63,33 @@ class CategoryStorageRepository extends AbstractRepository implements CategorySt
         return $this->buildQueryFromCriteria($query, $filterTransfer)
             ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
             ->find();
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return array<\Generated\Shared\Transfer\SitemapUrlTransfer>
+     */
+    public function getSitemapUrls(string $storeName): array
+    {
+        $offset = 0;
+        $categoryNodeStorageQuery = $this->getFactory()
+            ->createSpyCategoryNodeStorageQuery()
+            ->filterByStore($storeName)
+            ->orderByIdCategoryNodeStorage()
+            ->limit(static::SITEMAP_QUERY_LIMIT)
+            ->offset($offset);
+        $sitemapUrlTransfers = [];
+        $categoryNodeStorageMapper = $this->getFactory()->createCategoryNodeStorageMapper();
+
+        do {
+            $offset += static::SITEMAP_QUERY_LIMIT;
+            $categoryNodeStorageEntities = $categoryNodeStorageQuery->find();
+            $sitemapUrlTransfers[] = $categoryNodeStorageMapper->mapCategoryNodeStorageEntitiesToSitemapUrlTransfers($categoryNodeStorageEntities);
+            $categoryNodeStorageQuery->offset($offset);
+        } while ($categoryNodeStorageEntities->count() === static::SITEMAP_QUERY_LIMIT);
+
+        return array_merge(...$sitemapUrlTransfers);
     }
 
     /**

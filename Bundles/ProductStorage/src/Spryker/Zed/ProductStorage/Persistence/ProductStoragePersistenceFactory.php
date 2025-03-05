@@ -12,6 +12,7 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery;
 use Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductStorage\Persistence\Propel\Mapper\ProductStorageMapper;
 use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider;
 
 /**
@@ -59,5 +60,13 @@ class ProductStoragePersistenceFactory extends AbstractPersistenceFactory
     public function getProductAbstractLocalizedAttributesPropelQuery(): SpyProductAbstractLocalizedAttributesQuery
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductStorage\Persistence\Propel\Mapper\ProductStorageMapper
+     */
+    public function createProductStorageMapper(): ProductStorageMapper
+    {
+        return new ProductStorageMapper();
     }
 }

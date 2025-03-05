@@ -26,4 +26,11 @@ interface CategoryStorageRepositoryInterface
      * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(int $offset, int $limit, array $categoryTreeStorageIds): array;
+
+    /**
+     * @param string $storeName
+     *
+     * @return array<\Generated\Shared\Transfer\SitemapUrlTransfer>
+     */
+    public function getSitemapUrls(string $storeName): array;
 }

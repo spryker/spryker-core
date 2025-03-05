@@ -166,6 +166,7 @@ class TwigHelper extends Module
     protected function addDependencies(): void
     {
         $this->getDependencyProviderHelper()->setDependency(TwigDependencyProvider::PLUGINS_TWIG, $this->twigPlugins);
+        $this->getDependencyProviderHelper()->setDependency(TwigDependencyProvider::PLUGINS_TWIG_GATEWAY, $this->twigPlugins);
         $this->getDependencyProviderHelper()->setDependency(TwigDependencyProvider::PLUGINS_TWIG_LOADER, $this->loaderPlugins);
     }
 

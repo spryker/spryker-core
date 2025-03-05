@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CmsStorage\Business\CmsStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageRepositoryInterface getRepository()
  */
 class CmsStorageFacade extends AbstractFacade implements CmsStorageFacadeInterface
 {

@@ -54,4 +54,12 @@
         <property name="contentWidgetParameterMap" type="array" singular="contentWidgetParameterMap"/>
     </transfer>
 
+    <transfer name="SitemapUrl" strict="true">
+        <property name="idEntity" type="int"/>
+        <property name="url" type="string"/>
+        <property name="updatedAt" type="string"/>
+        <property name="languageCode" type="string"/>
+        <property name="storeName" type="string"/>
+    </transfer>
+
 </transfers>

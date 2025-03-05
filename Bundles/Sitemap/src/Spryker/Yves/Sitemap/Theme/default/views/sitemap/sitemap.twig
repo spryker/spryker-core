@@ -1,0 +1,9 @@
+{% extends template('widget') %}
+
+{% define data = {
+    sitemapIndexFileName: _widget.sitemapIndexFileName,
+} %}
+
+{% block body %}
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/{{ data.sitemapIndexFileName }}">
+{% endblock %}

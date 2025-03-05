@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="SitemapUrl" strict="true">
+        <property name="idEntity" type="int"/>
+        <property name="url" type="string"/>
+        <property name="languageCode" type="string"/>
+        <property name="storeName" type="string"/>
+        <property name="updatedAt" type="string"/>
+    </transfer>
+
+    <transfer name="FileSystemStream">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="FileSystemContent">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="FileSystemDelete">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="FileSystemList">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+        <property name="recursive" type="bool"/>
+    </transfer>
+
+    <transfer name="FileSystemResource">
+        <property name="path" type="string"/>
+    </transfer>
+
+</transfers>

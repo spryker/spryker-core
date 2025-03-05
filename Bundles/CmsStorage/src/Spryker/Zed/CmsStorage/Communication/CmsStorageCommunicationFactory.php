@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CmsStorage\CmsStorageConfig getConfig()
  * @method \Spryker\Zed\CmsStorage\Business\CmsStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageRepositoryInterface getRepository()
  */
 class CmsStorageCommunicationFactory extends AbstractCommunicationFactory
 {

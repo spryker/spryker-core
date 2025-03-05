@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\CmsStorage\CmsStorageConfig getConfig()
  * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageRepositoryInterface getRepository()
  */
 class CmsStorageBusinessFactory extends AbstractBusinessFactory
 {
