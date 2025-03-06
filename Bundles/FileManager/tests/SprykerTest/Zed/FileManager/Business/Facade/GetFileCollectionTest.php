@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\FileManager\Business\Facade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\FileConditionsTransfer;
 use Generated\Shared\Transfer\FileCriteriaTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use SprykerTest\Zed\FileManager\FileManagerBusinessTester;
@@ -48,5 +49,27 @@ class GetFileCollectionTest extends Unit
 
         // Assert
         $this->assertCount(5, $fileCollectionTransfer->getFiles());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetFileCollectionFiltersByFileIds(): void
+    {
+        // Arrange
+        $fileIds = $this->tester->insertFilesCollection(3);
+        $fileCriteriaTransfer = (new FileCriteriaTransfer())
+            ->setFileConditions(
+                (new FileConditionsTransfer())->setFileIds([$fileIds[0], $fileIds[1]]),
+            );
+
+        // Act
+        $fileCollectionTransfer = $this->tester->getFacade()
+            ->getFileCollection($fileCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $fileCollectionTransfer->getFiles());
+        $this->assertSame($fileIds[0], $fileCollectionTransfer->getFiles()[0]->getIdFile());
+        $this->assertSame($fileIds[1], $fileCollectionTransfer->getFiles()[1]->getIdFile());
     }
 }

@@ -20,19 +20,21 @@ interface FileContentInterface
 
     /**
      * @param string $fileName
+     * @param string|null $storageName
      *
      * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
-    public function delete($fileName);
+    public function delete($fileName, ?string $storageName = null);
 
     /**
      * @param string $fileName
+     * @param string|null $storageName
      *
      * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return string
      */
-    public function read($fileName);
+    public function read($fileName, ?string $storageName = null);
 }

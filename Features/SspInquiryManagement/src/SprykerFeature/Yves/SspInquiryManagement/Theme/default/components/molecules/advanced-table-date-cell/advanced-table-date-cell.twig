@@ -1,0 +1,13 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'advanced-table-date-cell',
+} %}
+
+{% define data = {
+    column: '',
+} %}
+
+{% block body %}
+    {{ date(data.column) | formatDateTime }}
+{% endblock %}

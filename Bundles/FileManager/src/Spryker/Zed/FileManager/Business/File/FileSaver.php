@@ -177,7 +177,11 @@ class FileSaver implements FileSaverInterface
         $fileInfoTransfer->setFkFile($fileTransfer->getIdFile());
         $fileInfoTransfer->setVersion($nextVersion);
         $fileInfoTransfer->setVersionName($nextVersionName);
-        $fileInfoTransfer->setStorageName($this->config->getStorageName());
+
+        if (!$fileInfoTransfer->getStorageName()) {
+            $fileInfoTransfer->setStorageName($this->config->getStorageName());
+        }
+
         $fileInfoTransfer->setStorageFileName(
             $this->buildFilename($fileInfoTransfer, $fileTransfer->getFkFileDirectory()),
         );
@@ -215,6 +219,7 @@ class FileSaver implements FileSaverInterface
             $fileTransfer->setFileName(
                 $fileManagerDataTransfer->getFileInfoOrFail()->getStorageFileName(),
             );
+            $fileTransfer->addFileInfo($fileManagerDataTransfer->getFileInfoOrFail());
             $this->fileContent->save($fileTransfer);
         }
     }

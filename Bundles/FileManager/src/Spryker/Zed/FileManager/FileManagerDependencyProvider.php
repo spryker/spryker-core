@@ -38,6 +38,11 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_FILE_MANAGER_DATA_COLLECTION_EXPANDER_PRE_SAVE = 'PLUGINS_FILE_MANAGER_DATA_COLLECTION_EXPANDER_PRE_SAVE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_FILE_PRE_DELETE = 'PLUGINS_FILE_PRE_DELETE';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -47,6 +52,7 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFileSystemService($container);
         $container = $this->addFileManagerDataCollectionExpanderPlugins($container);
         $container = $this->addFileManagerDataCollectionExpanderPreSavePlugins($container);
+        $container = $this->addFilePreDeletePlugins($container);
 
         return $container;
     }
@@ -123,6 +129,28 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFilePreDeletePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_FILE_PRE_DELETE, function () {
+            return $this->getFilePreDeletePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\FileManagerExtension\Dependency\Plugin\FilePreDeletePluginInterface>
+     */
+    protected function getFilePreDeletePlugins(): array
+    {
+        return [];
     }
 
     /**

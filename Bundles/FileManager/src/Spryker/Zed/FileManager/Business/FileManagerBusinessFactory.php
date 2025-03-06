@@ -81,6 +81,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->createFileContent(),
+            $this->getFilePreDeletePlugins(),
         );
     }
 
@@ -220,5 +221,13 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     public function getFileManagerDataCollectionExpanderPreSavePlugins(): array
     {
         return $this->getProvidedDependency(FileManagerDependencyProvider::PLUGINS_FILE_MANAGER_DATA_COLLECTION_EXPANDER_PRE_SAVE);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\FileManagerExtension\Dependency\Plugin\FilePreDeletePluginInterface>
+     */
+    public function getFilePreDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(FileManagerDependencyProvider::PLUGINS_FILE_PRE_DELETE);
     }
 }

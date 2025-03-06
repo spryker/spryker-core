@@ -1,0 +1,74 @@
+{% set readableFormats = input.vars.attr.accept | split('.') | reduce((carry, format) =>
+    "#{carry} #{format | upper}", '')
+%}
+{% set max = input.vars.attr.max | default(0) %}
+
+{% set size = 'K' in input.vars.attr.size
+    ? (input.vars.attr.size | replace({ 'K': '' }) / 1024) | number_format(2) ~ ' MB'
+    : input.vars.attr.size | replace({ 'M': ' MB' })
+%}
+
+{% block dropzone %}
+    <div data-template="input-dropzone-file" class="input-dropzone js-input-dropzone">
+        {% block label %}
+            {{ form_label(input) }}
+        {% endblock %}
+
+        {% block area %}
+            <div data-max="{{ max }}" class="input-dropzone__area js-input-dropzone__area">
+                {% block content %}
+                    {% block description %}
+                        <div class="input-dropzone__description">
+                            <strong>
+                                {{ 'Max %max% files up to %size%' | trans({
+                                    '%max%': max,
+                                    '%size%': size,
+                                }) }}
+                            </strong>
+                            <span>
+                                {{ 'Recommended to add a %types%' | trans({
+                                    '%types%': readableFormats,
+                                }) }}
+                            </span>
+                        </div>
+                    {% endblock %}
+
+                    {% block input %}
+                        {{ form_widget(input, {
+                            attr: {
+                                class: 'input-dropzone__input js-input-dropzone__input',
+                            }
+                        }) }}
+                    {% endblock %}
+
+                    {% block button %}
+                        <button type="button" class="btn btn-primary">
+                            <i class="fa fa-plus"></i>
+                            {{ 'Upload file' | trans }}
+                        </button>
+                    {% endblock %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+
+        {% block files %}
+            <div class="input-dropzone__files js-input-dropzone__files"></div>
+        {% endblock %}
+
+        {% block errors %}
+            {{ form_errors(input) }}
+        {% endblock %}
+
+        {% block file %}
+            <template data-id="input-dropzone-file">
+                <span class="input-dropzone__file js-input-dropzone__file">
+                    <i class="fa fa-times input-dropzone__file-icon"></i>
+
+                    <span class="input-dropzone__file-name js-input-dropzone__file-name"></span>
+
+                    <span>(<span class="input-dropzone__file-size js-input-dropzone__file-size"></span> {{ 'MB' | trans }})</span>
+                </span>
+            </template>
+        {% endblock %}
+    </div>
+{% endblock %}

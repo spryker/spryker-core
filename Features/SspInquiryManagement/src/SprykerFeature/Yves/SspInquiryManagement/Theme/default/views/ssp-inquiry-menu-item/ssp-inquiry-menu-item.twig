@@ -1,0 +1,13 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isActivePage: _widget.isActivePage,
+} %}
+
+{% set itemClass = data.isActivePage ? ' menu__item--active' : '' %}
+
+{% block body %}
+    <li class="menu__item {{ itemClass }}">
+        <a href="{{ url('customer/ssp-inquiry') }}" data-id="sidebar-ssp-inquiries">{{ 'ssp_inquiry.list.widget.title' | trans }}</a>
+    </li>
+{% endblock %}

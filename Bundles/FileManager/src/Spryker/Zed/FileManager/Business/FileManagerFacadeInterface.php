@@ -65,6 +65,7 @@ interface FileManagerFacadeInterface
      * Specification:
      * - Deletes all file info
      * - Deletes all file versions and content
+     * - Executes the stack of {@link \Spryker\Zed\FileManagerExtension\Dependency\Plugin\FilePreDeletePluginInterface} plugins.
      *
      * @api
      *
@@ -262,6 +263,7 @@ interface FileManagerFacadeInterface
     /**
      * Specification:
      * - Fetches a collection of files from the Persistence.
+     * - Uses `FileCriteriaTransfer.fileConditions.fileIds` to filter by file ids.
      * - Uses `FileCriteriaTransfer.pagination.limit` and `FileCriteriaTransfer.pagination.offset` to paginate results with limit and offset.
      * - Returns `FileCollectionTransfer` filled with found files.
      *

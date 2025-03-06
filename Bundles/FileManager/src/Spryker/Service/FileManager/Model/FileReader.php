@@ -63,12 +63,13 @@ class FileReader implements FileReaderInterface
 
     /**
      * @param string $fileName
+     * @param string|null $storageName
      *
      * @return mixed
      */
-    public function readStream(string $fileName)
+    public function readStream(string $fileName, ?string $storageName = null)
     {
-        $fileSystemStreamTransfer = $this->createStreamTransfer($fileName);
+        $fileSystemStreamTransfer = $this->createStreamTransfer($fileName, $storageName);
 
         return $this->fileSystem->readStream($fileSystemStreamTransfer);
     }
@@ -85,13 +86,14 @@ class FileReader implements FileReaderInterface
 
     /**
      * @param string $fileName
+     * @param string|null $storageName
      *
      * @return \Generated\Shared\Transfer\FileSystemStreamTransfer
      */
-    protected function createStreamTransfer(string $fileName)
+    protected function createStreamTransfer(string $fileName, ?string $storageName = null)
     {
         $fileSystemStreamTransfer = new FileSystemStreamTransfer();
-        $fileSystemStreamTransfer->setFileSystemName($this->config->getStorageName());
+        $fileSystemStreamTransfer->setFileSystemName($storageName ?? $this->config->getStorageName());
         $fileSystemStreamTransfer->setPath($fileName);
 
         return $fileSystemStreamTransfer;

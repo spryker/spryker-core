@@ -339,6 +339,15 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
                 ->endUse();
         }
 
+        if ($criteriaFilterTransfer->getCustomerName() !== null) {
+            $queryCompanyUser
+                ->useCustomerQuery()
+                    ->filterByFirstName_Like('%' . $criteriaFilterTransfer->getCustomerName() . '%')
+                    ->_or()
+                    ->filterByLastName_Like('%' . $criteriaFilterTransfer->getCustomerName() . '%')
+                ->endUse();
+        }
+
         if ($criteriaFilterTransfer->getIdCompany() !== null) {
             $queryCompanyUser->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
         }

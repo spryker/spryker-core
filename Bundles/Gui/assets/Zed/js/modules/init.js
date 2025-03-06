@@ -15,6 +15,8 @@ var initFormattedNumber = require('./libs/formatted-number-input');
 var initFormattedMoney = require('./libs/formatted-money-input');
 var select2combobox = require('./libs/select2-combobox');
 var timeoutId = 0;
+import { Dropzone } from './libs/dropzone';
+import { FormSubmitter } from './libs/form-submitter';
 
 var dataTablesSearchDelay = function () {
     var dataTablesWrapper = $('.dataTables_wrapper');
@@ -234,6 +236,9 @@ $(document).ready(function () {
 
     initFormattedNumber();
     initFormattedMoney();
+
+    new Dropzone();
+    new FormSubmitter();
 });
 
 $(window).on('load', function () {

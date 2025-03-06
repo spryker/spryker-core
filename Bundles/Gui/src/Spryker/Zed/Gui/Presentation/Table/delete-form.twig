@@ -10,5 +10,5 @@
     {% if form._token is defined %}
         {{ form_widget(form._token) }}
     {% endif %}
-    <button type="submit" class="safe-submit btn btn-xs btn-outline btn-danger"><i class="fa fa-trash"></i> {{ title | trans }}</button>
+    <button type="submit" class="safe-submit btn btn-xs btn-outline btn-danger" data-qa="delete-button"><i class="fa fa-trash"></i> {{ title | trans }}</button>
 {{ form_end(form) }}

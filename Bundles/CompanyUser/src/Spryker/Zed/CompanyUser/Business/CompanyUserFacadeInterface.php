@@ -112,9 +112,16 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves user companies which can filtered by company ID, user ID and/or active flag.
-     * - Includes company users of anonymized customers if `CompanyUserCriteriaFilterTransfer.includeAnonymizedCustomers` is set to `true`.
-     * - Ignores company users of anonymized customers otherwise.
+     * - Retrieves company user entities filtered by criteria from Persistence.
+     * - Uses `CompanyUserCriteriaFilterTransfer.idCompany` to filter by specific company ID.
+     * - Uses `CompanyUserCriteriaFilterTransfer.companyUserIds` to filter by multiple company user IDs.
+     * - Uses `CompanyUserCriteriaFilterTransfer.customerName` to filter by customer first or last name (case-insensitive partial match).
+     * - Uses `CompanyUserCriteriaFilterTransfer.isActive` to filter by company user active status.
+     * - Uses `CompanyUserCriteriaFilterTransfer.includeAnonymizedCustomers` to include or exclude anonymized customers.
+     * - Uses `CompanyUserCriteriaFilterTransfer.filter` for generic filtering options.
+     * - Uses `CompanyUserCriteriaFilterTransfer.pagination` for paginated results.
+     * - Returns `CompanyUserCollectionTransfer` containing filtered company user data.
+     * - Returns empty collection if no company users match the criteria.
      *
      * @api
      *

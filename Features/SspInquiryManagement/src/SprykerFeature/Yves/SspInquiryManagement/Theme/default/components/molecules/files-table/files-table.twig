@@ -1,0 +1,55 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'files-table',
+} %}
+
+{% define data = {
+    files: required,
+    reference: required,
+} %}
+
+{% block body %}
+    <strong>{{ 'customer.ssp_inquiry.details.files' | trans }}</strong>
+
+    {% set columns = [
+        {
+            id: 'name',
+            title: 'customer.ssp_inquiry.details.file.name',
+        },
+        {
+            id: 'size',
+            title: 'customer.ssp_inquiry.details.file.size',
+        },
+        {
+            id: 'extension',
+            title: 'customer.ssp_inquiry.details.file.extension',
+        },
+        {
+            id: 'actions',
+            type: 'actions',
+        },
+    ] %}
+
+    {% set rows = data.files | map(file => {
+        name: file.fileName,
+        size: file.fileInfo[0].size | default(0) | format_bytes,
+        extension: file.fileInfo[0].extension | default('N/A'),
+        actions: [{
+            url: url('/customer/ssp-inquiry-file/download',
+                {'ssp-inquiry-reference': data.reference, 'uuid': file.uuid }
+            ),
+            label: 'customer.ssp_inquiry.details.file.download'
+        }],
+    }) %}
+
+    {% block table %}
+        {% include molecule('advanced-table', 'SspInquiryManagement') with {
+            data: {
+                columns: columns,
+                rows: rows,
+            },
+            qa: 'web-table-files',
+        } only %}
+    {% endblock %}
+{% endblock %}

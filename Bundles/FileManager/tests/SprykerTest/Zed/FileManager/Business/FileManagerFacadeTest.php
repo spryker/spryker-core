@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\FileManager\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\FileCollectionTransfer;
 use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeNodeTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
@@ -40,6 +41,7 @@ use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceBri
 use Spryker\Zed\FileManager\FileManagerDependencyProvider;
 use Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPluginInterface;
 use Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPreSavePluginInterface;
+use Spryker\Zed\FileManagerExtension\Dependency\Plugin\FilePreDeletePluginInterface;
 use Spryker\Zed\Kernel\Container;
 use SprykerTest\Zed\FileManager\Stub\FileManagerConfigStub;
 use SprykerTest\Zed\FileManager\Stub\FileSystemConfigStub;
@@ -105,6 +107,10 @@ class FileManagerFacadeTest extends Unit
 
         $container[FileManagerDependencyProvider::PLUGINS_FILE_MANAGER_DATA_COLLECTION_EXPANDER] = function (Container $container) {
             return [$this->getFileManagerDataCollectionExpanderPluginMock()];
+        };
+
+        $container[FileManagerDependencyProvider::PLUGINS_FILE_PRE_DELETE] = function (Container $container) {
+            return [$this->getFilePreDeletePluginMock()];
         };
 
         $config = new FileManagerConfigStub();
@@ -441,6 +447,18 @@ class FileManagerFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testDeleteFileExecutesThePreDeletePlugins(): void
+    {
+        // Act
+        $result = $this->facade->deleteFile($this->tester->getIdFile());
+
+        // Assert
+        $this->assertTrue($result);
+    }
+
+    /**
      * @param int $idMimeType
      *
      * @return \Generated\Shared\Transfer\MimeTypeTransfer
@@ -513,9 +531,26 @@ class FileManagerFacadeTest extends Unit
     }
 
     /**
+     * @return \Spryker\Zed\FileManagerExtension\Dependency\Plugin\FilePreDeletePluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getFilePreDeletePluginMock(): FilePreDeletePluginInterface|MockObject
+    {
+        $filePreDeletePluginMock = $this->getMockBuilder(FilePreDeletePluginInterface::class)
+            ->getMock();
+
+        $filePreDeletePluginMock->expects($this->any())
+            ->method('preDelete')
+            ->willReturnCallback(function (FileCollectionTransfer $fileCollectionTransfer) {
+                return $fileCollectionTransfer;
+            });
+
+        return $filePreDeletePluginMock;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function createFileManagerDataTransfer(): FileManagerDataTransfer
+    protected function createFileManagerDataTransfer(): FileManagerDataTransfer
     {
         $fileInfo = new FileInfoTransfer();
         $fileInfo->setVersionName('v10');

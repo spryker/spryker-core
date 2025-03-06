@@ -1,0 +1,19 @@
+namespace: SprykerFeatureTest\Yves\SspInquiryManagement
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/*'
+suites:
+    Yves:
+        path: .
+        actor: SspInquiryTester
+        modules:
+            enabled:
+                - Asserts

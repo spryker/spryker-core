@@ -1,0 +1,255 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="SspInquiryCollection" strict="true">
+        <property name="sspInquiries" type="SspInquiry[]" singular="sspInquiry"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="SspInquiry" strict="true">
+        <property name="idSspInquiry" type="int"/>
+        <property name="reference" type="string"/>
+        <property name="subject" type="string"/>
+        <property name="status" type="string"/>
+        <property name="description" type="string"/>
+        <property name="order" type="Order"/>
+        <property name="files" type="File[]" singular="file"/>
+        <property name="createdDate" type="string"/>
+        <property name="internalCommentThread" type="CommentThread"/>
+        <property name="companyUser" type="CompanyUser"/>
+        <property name="type" type="string"/>
+        <property name="fkStateMachineItemState" type="int"/>
+        <property name="manualEvents" type="string[]" singular="manualEvent"/>
+        <property name="statusHistory" type="StateMachineItem[]" singular="statusHistory"/>
+        <property name="isCancellable" type="bool"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="File">
+        <property name="idFile" type="int"/>
+        <property name="encodedContent" type="string"/>
+        <property name="fileUpload" type="FileUpload"/>
+        <property name="fileName" type="string"/>
+        <property name="uuid" type="string"/>
+        <property name="fileInfo" type="FileInfo[]" singular="fileInfo"/>
+    </transfer>
+
+    <transfer name="Mail">
+        <property name="sspInquiry" type="SspInquiry"/>
+        <property name="sspInquiryUrl" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="type" type="string"/>
+        <property name="subject" type="string"/>
+        <property name="subjectTranslationParameters" type="string[]" singular="subjectTranslationParameter"/>
+        <property name="templates" type="MailTemplate[]" singular="template"/>
+        <property name="recipients" type="MailRecipient[]" singular="recipient"/>
+    </transfer>
+
+    <transfer name="SspInquiryCriteria">
+        <property name="sspInquiryConditions" type="SspInquiryConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="include" type="SspInquiryInclude"/>
+    </transfer>
+
+    <transfer name="SspInquiryInclude">
+        <property name="withFiles" type="bool"/>
+        <property name="withOrder" type="bool"/>
+        <property name="withManualEvents" type="bool"/>
+        <property name="withCompanyUser" type="bool"/>
+        <property name="withStateMachineState" type="bool"/>
+        <property name="withStatusHistory" type="bool"/>
+        <property name="withComments" type="bool"/>
+    </transfer>
+
+    <transfer name="SspInquiryConditions">
+        <property name="sspInquiryIds" type="int[]" singular="idSspInquiry"/>
+        <property name="references" type="string[]" singular="reference"/>
+        <property name="type" type="string"/>
+        <property name="status" type="string"/>
+        <property name="createdDateFrom" type="string"/>
+        <property name="createdDateTo" type="string"/>
+        <property name="sspInquiryOwnerConditionGroup" type="SspInquiryOwnerConditionGroup"/>
+        <property name="fkStore" type="int"/>
+    </transfer>
+
+    <transfer name="SspInquiryOwnerConditionGroup">
+        <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="fkCompany" type="int"/>
+        <property name="fkCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="idSalesOrder" type="int"/>
+        <property name="orderReference" type="string"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="SspInquiryCollectionRequest">
+        <property name="sspInquiries" type="SspInquiry[]" singular="sspInquiry"/>
+    </transfer>
+
+    <transfer name="SspInquiryCollectionResponse">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="sspInquiries" type="SspInquiry[]" singular="sspInquiry"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="entityIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="previousPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="Item">
+
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="CommentThread">
+        <property name="ownerId" type="int"/>
+    </transfer>
+
+    <transfer name="SequenceNumberSettings">
+        <property name="name" type="string"/>
+        <property name="prefix" type="string"/>
+    </transfer>
+
+    <transfer name="FileManagerData">
+        <property name="file" type="File"/>
+        <property name="fileInfo" type="FileInfo"/>
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="SspInquiryFileDownloadRequest">
+        <property name="fileId" type="int"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+        <property name="companyUser" type="CompanyUser"/>
+        <property name="email" type="string"/>
+        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="isOnBehalf" type="bool"/>
+    </transfer>
+
+    <transfer name="FileInfo">
+        <property name="type" type="string"/>
+        <property name="extension" type="string"/>
+        <property name="size" type="int"/>
+        <property name="storageName" type="string"/>
+        <property name="storageFileName" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="customer" type="Customer"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="fkCompany" type="int"/>
+        <property name="fkCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="FileUpload">
+        <property name="size" type="int"/>
+        <property name="clientOriginalExtension" type="string"/>
+        <property name="mimeTypeName" type="string"/>
+        <property name="realPath" type="string"/>
+        <property name="clientOriginalName" type="string"/>
+    </transfer>
+
+    <transfer name="Company">
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="company" type="Company"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="timezone" type="string"/>
+        <property name="name" type="string"/>
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="DataImporterReport">
+
+    </transfer>
+
+    <transfer name="DataImporterConfiguration">
+
+    </transfer>
+
+    <transfer name="DataImporterDataSourceConfiguration">
+        <property name="importType" type="string"/>
+        <property name="fileName" type="string"/>
+        <property name="moduleName" type="string"/>
+        <property name="directory" type="string"/>
+    </transfer>
+
+    <transfer name="OrderCriteria" strict="true">
+        <property name="orderConditions" type="OrderConditions"/>
+    </transfer>
+
+    <transfer name="OrderConditions" strict="true">
+        <property name="salesOrderIds" type="int[]" singular="idSalesOrder"/>
+    </transfer>
+
+    <transfer name="MailRecipient">
+        <property name="email" type="string"/>
+    </transfer>
+
+    <transfer name="CommentsRequest">
+        <property name="ownerType" type="string"/>
+        <property name="ownerIds" type="array" singular="ownerId"/>
+    </transfer>
+
+    <transfer name="StateMachineProcess">
+        <property name="processName" type="string"/>
+        <property name="stateMachineName" type="string"/>
+    </transfer>
+
+    <transfer name="OrderCollection">
+        <property name="orders" type="Order[]" singular="order"/>
+    </transfer>
+
+    <transfer name="CompanyUserCriteriaFilter">
+        <property name="companyUserIds" type="array" singular="companyUserIds"/>
+    </transfer>
+
+    <transfer name="MailTemplate">
+        <property name="name" type="string"/>
+        <property name="idStore" type="int"/>
+        <property name="isHtml" type="bool"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="StateMachineItem">
+        <property name="identifier" type="int"/>
+        <property name="idItemState" type="int"/>
+        <property name="stateMachineName" type="string"/>
+        <property name="stateName" type="string"/>
+        <property name="processName" type="string"/>
+        <property name="eventName" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUserCollection">
+        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
+    </transfer>
+</transfers>

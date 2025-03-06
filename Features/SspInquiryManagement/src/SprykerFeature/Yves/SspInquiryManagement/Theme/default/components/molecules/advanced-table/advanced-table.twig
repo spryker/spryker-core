@@ -1,0 +1,131 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'advanced-table',
+} %}
+
+{% define data = {
+    columns: [],
+    rows: [],
+    emptyText: '',
+    sortableForm: {},
+    sortableFormClass: '',
+} %}
+
+{% set isEmpty = (data.rows | default([])) is empty or (data.columns | default([])) is empty %}
+
+{% block body %}
+    {% if isEmpty %}
+        {% block empty %}
+            <p class="{{ _self.renderClass(config.name ~ '__empty', modifiers) }}">{{ data.emptyText | trans }}</p>
+        {% endblock %}
+    {% else %}
+        {% block table %}
+            <table class="{{ _self.renderClass(config.name ~ '__container', modifiers) }}">
+                {% block thead %}
+                    <thead class="{{ _self.renderClass(config.name ~ '__head', modifiers) }}">
+                        <tr class="{{ _self.renderClass(config.name ~ '__row', modifiers) }} {{ config.name }}__row--head">
+                            {% for columnData in data.columns %}
+                                {% set headColClass = "#{_self.renderClass(config.name ~ '__col', modifiers)} #{config.name}__col--head" %}
+
+                                <th {{ _self.sortingAttributes(columnData, headColClass, config, data) }}>
+                                    {% block headCol %}
+                                        {{ columnData.title | default('') | trans }}
+                                        {{ _self.sortingIcon(columnData, config, data) }}
+                                    {% endblock %}
+                                </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                {% endblock %}
+
+                {% block tbody %}
+                    <tbody class="{{ _self.renderClass(config.name ~ '__body', modifiers) }}">
+                        {% for row in data.rows %}
+                            <tr class="{{ _self.renderClass(config.name ~ '__row', modifiers) }}">
+                                {% for columnData in data.columns %}
+                                    {% set column = row[columnData.id] | default(null) %}
+
+                                    <td
+                                        data-content="{{ columnData.title | default('') | trans }}"
+                                        data-qa="cell-{{ columnData.id }}"
+                                        class="{{ _self.renderClass(config.name ~ '__col', modifiers) }}"
+                                    >
+                                        {% block col %}
+                                            {% if columnData.type | default(null) %}
+                                                {% include molecule("advanced-table-#{columnData.type}-cell", 'SspInquiryManagement') with {
+                                                    data: {
+                                                        column: column,
+                                                        row: row,
+                                                        config: columnData,
+                                                    },
+                                                } only %}
+                                            {% else  %}
+                                                {{ column | raw }}
+                                            {% endif %}
+                                        {% endblock %}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                {% endblock %}
+            </table>
+        {% endblock %}
+    {% endif %}
+
+    {% block sortingForm %}
+        {% if data.sortableForm %}
+            {{ form_row(data.sortableForm.orderBy, {
+                attr: {
+                    class: "#{config.jsName}-order-by-target",
+                }})
+            }}
+
+            {{ form_row(data.sortableForm.orderDirection, {
+                attr: {
+                    class: "#{config.jsName}-order-direction-target",
+                }})
+            }}
+
+            {% include molecule('form-sort-submitter', 'CustomerPage') with {
+                attributes: {
+                    'form-class-name': data.sortableFormClass,
+                    'trigger-class-name': "#{config.jsName}-sort-trigger",
+                    'target-sort-by-class-name': "#{config.jsName}-order-by-target",
+                    'target-sort-direction-class-name': "#{config.jsName}-order-direction-target",
+                },
+            } only %}
+        {% endif %}
+    {% endblock %}
+
+     {%- macro sortingAttributes(columnData, class, config, data) -%}
+        {% if data.sortableForm and (columnData.sortable | default(null)) %}
+            {% set class = "#{class} #{config.jsName}-sort-trigger #{config.name}__col--sortable" %}
+            {% set orderDirection = data.sortableForm.orderDirection.vars.value %}
+
+            sort-by="{{ columnData.id }}"
+            sort-direction="{{ (orderDirection == 'ASC') ? 'DESC' : 'ASC' }}"
+        {% endif %}
+        class="{{ class }}"
+    {%- endmacro -%}
+
+    {%- macro sortingIcon(columnData, config, data) -%}
+        {% if data.sortableForm and (columnData.sortable | default(null)) %}
+            {% set orderDirection = data.sortableForm.orderDirection.vars.value %}
+            {% set orderBy = data.sortableForm.orderBy.vars.value %}
+            {% set iconName = 'sort-none' %}
+
+            {% if orderBy == columnData.id %}
+                {% set iconName = (orderDirection == 'ASC') ? 'sort-asc' : 'sort-desc' %}
+            {% endif %}
+
+            {% include atom('icon') with {
+                modifiers: ['small'],
+                data: {
+                    name: iconName,
+                },
+            } only %}
+        {% endif %}
+    {%- endmacro -%}
+{% endblock %}

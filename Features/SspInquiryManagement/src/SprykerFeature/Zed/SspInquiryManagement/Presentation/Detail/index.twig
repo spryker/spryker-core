@@ -1,0 +1,141 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'View Ssp Inquiry: ' ~ sspInquiry.reference | trans %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url('/ssp-inquiry-management'), 'Back to Ssp Inquiries' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General' | trans } %}
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-xs-6 col-md-3 col-lg-3">
+                    <dl>
+                        <dt>{{ 'Ssp Inquiry reference' | trans }}</dt>
+                        <dd>{{ sspInquiry.reference }}</dd>
+                    </dl>
+                    <dl>
+                        <dt>{{ 'Date' | trans }}</dt>
+                        <dd>{{ sspInquiry.createdDate | formatDateTime }}</dd>
+                    </dl>
+                    <dl>
+                        <dt data-qa="ssp-inquiry-status">{{ 'Status' | trans }}</dt>
+                        <dd><span data-qa="ssp-inquiry-status" class="label {{ sspInquiryStatusClassMap[sspInquiry.status] | default('') }}">{{ sspInquiry.status | trans }}</span></dd>
+                    </dl>
+                    <dl>
+                        <dt>{{ 'Store' | trans }}</dt>
+                        <dd>
+                            <span class="label label-info">{{ sspInquiry.store.name }}</span>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="col-xs-6 col-md-9 col-lg-9">
+                    <dl>
+                        <dt>{{ 'Customer' | trans }}</dt>
+                        <dd>{{ sspInquiry.companyUser.customer.salutation }} {{ sspInquiry.companyUser.customer.firstName }} {{ sspInquiry.companyUser.customer.lastName }}</dd>
+                    </dl>
+                    <dl>
+                        <dt>{{ 'Customer Email' | trans }}</dt>
+                        <dd>{{ sspInquiry.companyUser.customer.email }}</dd>
+                    </dl>
+                    <dl>
+                        <dt>{{ 'Company / Business Unit' | trans }}</dt>
+                        <dd>{{ sspInquiry.companyUser.companyBusinessUnit.company.name }} / {{ sspInquiry.companyUser.companyBusinessUnit.name }}</dd>
+                    </dl>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Ssp Inquiry Details' | trans } %}
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-xs-12 col-md-3 col-lg-3">
+                    <dl>
+                        <dt>{{ 'Type' | trans }}</dt>
+                        <dd>{{ sspInquiry.type | trans }}</dd>
+                    </dl>
+                    <dl>
+                        <dt>{{ 'Subject' | trans }}</dt>
+                        <dd>{{ sspInquiry.subject }}</dd>
+                    </dl>
+
+                    {% if (sspInquiry.order is not empty and sspInquiry.order.orderReference is not empty) %}
+                        <dl>
+                            <dt>{{ 'Order reference' | trans }}</dt>
+                            <dd><a href="{{ url('/sales/detail', {'id-sales-order': sspInquiry.order.idSalesOrder}) }}">{{ sspInquiry.order.orderReference }}</a></dd>
+                        </dl>
+                    {% endif %}
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-6">
+                    <dl>
+                        <dt>{{ 'Description' | trans }}</dt>
+                        <dd>{{ sspInquiry.description }}</dd>
+                    </dl>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Files' | trans } %}
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <table class="table table--expand">
+                        <thead>
+                            <tr>
+                                <th>{{ 'File name' | trans }}</th>
+                                <th>{{ 'Size' | trans }}</th>
+                                <th>{{ 'Type' | trans }}</th>
+                                <th>{{ 'Actions' | trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% if sspInquiry.files is empty %}
+                            <tr>
+                                <td colspan="4">{{ 'No files available' | trans }}</td>
+                            </tr>
+                        {% else %}
+                            {% for file in sspInquiry.files %}
+                                <tr>
+                                    <td>{{ file.fileName }}</td>
+                                    <td>{{ format_bytes(file.fileInfo[0].size | default(0)) }}</td>
+                                    <td>{{ file.fileInfo[0].extension | default('N/A') }}</td>
+                                    <td>
+                                        <a class="btn btn-xs btn-outline" btn-view href="{{ url(
+                                            '/ssp-inquiry-management/ssp-inquiry-file/download',
+                                            {'id-file': file.idFile }
+                                        )
+                                        }}">{{ 'Download' | trans }}</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% include '@SspInquiryManagement/Partials/status.twig' %}
+
+    {% block widget_content %}
+        {% include '@CommentGui/Comment/comment-thread.twig' ignore missing with {
+            title: 'Internal Comments',
+            commentThread: sspInquiry.internalCommentThread,
+            returnUrl: app.request.requestUri,
+            ownerId: sspInquiry.idSspInquiry,
+            ownerType: 'ssp-inquiry-internal',
+        } %}
+    {% endblock %}
+{% endblock %}

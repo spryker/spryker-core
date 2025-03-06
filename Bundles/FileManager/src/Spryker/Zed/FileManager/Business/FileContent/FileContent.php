@@ -43,8 +43,15 @@ class FileContent implements FileContentInterface
      */
     public function save(FileTransfer $fileTransfer)
     {
+        $fileSystemName = $this->config->getStorageName();
+        if ($fileTransfer->getFileInfo()->count()) {
+            /** @var \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer */
+            $fileInfoTransfer = $fileTransfer->getFileInfo()->getIterator()->current();
+            $fileSystemName = $fileInfoTransfer->getStorageName() ?? $fileSystemName;
+        }
+
         $fileSystemContentTransfer = new FileSystemContentTransfer();
-        $fileSystemContentTransfer->setFileSystemName($this->config->getStorageName());
+        $fileSystemContentTransfer->setFileSystemName($fileSystemName);
         $fileSystemContentTransfer->setPath($fileTransfer->getFileName());
         $fileSystemContentTransfer->setContent($fileTransfer->getFileContent());
 
@@ -53,13 +60,14 @@ class FileContent implements FileContentInterface
 
     /**
      * @param string $fileName
+     * @param string|null $storageName
      *
      * @return void
      */
-    public function delete($fileName)
+    public function delete($fileName, ?string $storageName = null)
     {
         $fileSystemQueryTransfer = new FileSystemQueryTransfer();
-        $fileSystemQueryTransfer->setFileSystemName($this->config->getStorageName());
+        $fileSystemQueryTransfer->setFileSystemName($storageName ?? $this->config->getStorageName());
         $fileSystemQueryTransfer->setPath($fileName);
 
         if ($this->fileSystemService->has($fileSystemQueryTransfer)) {
@@ -71,13 +79,14 @@ class FileContent implements FileContentInterface
 
     /**
      * @param string $fileName
+     * @param string|null $storageName
      *
      * @return string
      */
-    public function read($fileName)
+    public function read($fileName, ?string $storageName = null)
     {
         $fileSystemQueryTransfer = new FileSystemQueryTransfer();
-        $fileSystemQueryTransfer->setFileSystemName($this->config->getStorageName());
+        $fileSystemQueryTransfer->setFileSystemName($storageName ?? $this->config->getStorageName());
         $fileSystemQueryTransfer->setPath($fileName);
 
         return $this->fileSystemService->read($fileSystemQueryTransfer);

@@ -1,0 +1,48 @@
+pending,Ausstehend
+in_review,In Bearbeitung
+approved,Genehmigt
+rejected,Abgelehnt
+canceled,Storniert
+start_review,Überprüfung starten
+cancel,Stornieren
+approve,Genehmigen
+reject,Ablehnen
+Actions,Aktionen
+Back to Ssp Inquiries,Zurück zu Anfragen
+General,Allgemein
+Ssp Inquiry reference,Referenz
+Reference,Referenz
+Date,Datum
+Status,Status
+Store,Store
+Customer,Kunde
+Customer Email,Kunden-E-Mail
+Company / Business Unit,Firma / Geschätseinheit
+Ssp Inquiry Details,Anfragedetails
+Type,Typ
+general,Allgemein
+order,Bestellung
+Subject,Betreff
+Description,Beschreibung
+Files,Dateien
+File name,Dateiname
+Size,Größe
+Type,Typ
+Actions,Aktionen
+Download,Herunterladen
+Ssp Inquiry status transition is not possible.,Eine Änderung des Anfragestatus ist nicht möglich.
+Internal Comments,Interne Anmerkungen
+File was not found,Datei wurde nicht gefunden
+general,Allgemein
+No files available.,Keine Dateien verfügbar.
+Order reference,Bestellnummer
+List of Ssp Inquiries,Liste der Anfragen
+Show history,Historie anzeigen
+Select Type,Typ auswählen
+Select Status,Status auswählen
+Filter,Filter
+Ssp Inquiries,Anfragen
+Status,Status
+Date,Datum
+Create Reclamation,Reklamieren
+Overview of Ssp Inquiries,Übersicht der Anfragen

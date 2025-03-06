@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SspInquiryManagement\Persistence" package="src.Orm.Zed.SspInquiryManagement.Persistence">
+    <table name="spy_ssp_inquiry" idMethod="native" allowPkInsert="true">
+        <column name="id_ssp_inquiry" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="reference" required="true" size="255" type="VARCHAR"/>
+        <column name="fk_company_user" required="false" type="INTEGER"/>
+        <column name="subject" required="true" size="255" type="VARCHAR"/>
+        <column name="description" required="true" type="LONGVARCHAR"/>
+        <column name="fk_state_machine_item_state" type="INTEGER"/>
+        <column name="type" required="true" size="255" type="VARCHAR"/>
+        <column name="fk_store" required="true" type="INTEGER"/>
+
+        <unique name="spy_ssp_inquiry-reference">
+            <unique-column name="reference"/>
+        </unique>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="id_ssp_inquiry_pk_seq"/>
+
+        <foreign-key name="spy_ssp_inquiry-fk_company_user" foreignTable="spy_company_user">
+            <reference local="fk_company_user" foreign="id_company_user"/>
+        </foreign-key>
+
+        <foreign-key name="spy_ssp_inquiry-fk_store" foreignTable="spy_store">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+
+        <foreign-key name="ssp_inquiry-fk_state_machine_item_state" foreignTable="spy_state_machine_item_state" phpName="StateMachineItemState">
+            <reference local="fk_state_machine_item_state" foreign="id_state_machine_item_state"/>
+        </foreign-key>
+    </table>
+
+    <table name="spy_ssp_inquiry_file" idMethod="native" allowPkInsert="true">
+        <column name="id_ssp_inquiry_file" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_ssp_inquiry" required="true" type="INTEGER"/>
+        <column name="fk_file" required="true" type="INTEGER"/>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_ssp_inquiry_file"/>
+        </behavior>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="id_ssp_inquiry_file_pk_seq"/>
+
+        <unique name="spy_ssp_inquiry_file-fk_ssp_inquiry-fk_file">
+            <unique-column name="fk_ssp_inquiry"/>
+            <unique-column name="fk_file"/>
+        </unique>
+
+        <foreign-key name="spy_ssp_inquiry_file-fk_ssp_inquiry" foreignTable="spy_ssp_inquiry">
+            <reference local="fk_ssp_inquiry" foreign="id_ssp_inquiry"/>
+        </foreign-key>
+
+        <foreign-key name="spy_ssp_inquiry_file-fk_file" foreignTable="spy_file">
+            <reference local="fk_file" foreign="id_file"/>
+        </foreign-key>
+    </table>
+
+    <table name="spy_ssp_inquiry_sales_order" idMethod="native" allowPkInsert="true">
+        <column name="id_ssp_inquiry_sales_order" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_ssp_inquiry" required="true" type="INTEGER"/>
+        <column name="fk_sales_order" required="true" type="INTEGER"/>
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_ssp_inquiry_sales_order"/>
+        </behavior>
+
+        <behavior name="timestampable"/>
+        <id-method-parameter value="id_ssp_inquiry_sales_order_pk_seq"/>
+
+        <unique name="spy_ssp_inquiry_sales_order-fk_ssp_inquiry-fk_sales_order">
+            <unique-column name="fk_ssp_inquiry"/>
+            <unique-column name="fk_sales_order"/>
+        </unique>
+
+        <foreign-key name="spy_ssp_inquiry_sales_order-fk_ssp_inquiry" foreignTable="spy_ssp_inquiry">
+            <reference local="fk_ssp_inquiry" foreign="id_ssp_inquiry"/>
+        </foreign-key>
+
+        <foreign-key name="spy_ssp_inquiry_sales_order-fk_sales_order" foreignTable="spy_sales_order">
+            <reference local="fk_sales_order" foreign="id_sales_order"/>
+        </foreign-key>
+    </table>
+
+    <table name="spy_ssp_inquiry_sales_order_item" idMethod="native" allowPkInsert="true">
+        <column name="id_ssp_inquiry_sales_order_item" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_ssp_inquiry_sales_order" required="true" type="INTEGER"/>
+        <column name="fk_sales_order_item" required="true" type="INTEGER"/>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_ssp_inquiry_sales_order_item"/>
+        </behavior>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="id_ssp_inquiry_sales_order_item_pk_seq"/>
+
+        <unique name="spy_ssp_inquiry_sales_order_item-fk_ssp_inquiry_sales_order-fk_sales_order_item">
+            <unique-column name="fk_ssp_inquiry_sales_order"/>
+            <unique-column name="fk_sales_order_item"/>
+        </unique>
+
+        <foreign-key name="spy_ssp_inquiry_sales_order_item-fk_ssp_inquiry_sales_order" foreignTable="spy_ssp_inquiry_sales_order">
+            <reference local="fk_ssp_inquiry_sales_order" foreign="id_ssp_inquiry_sales_order"/>
+        </foreign-key>
+
+        <foreign-key name="spy_ssp_inquiry_sales_order_item-fk_sales_order_item" foreignTable="spy_sales_order_item">
+            <reference local="fk_sales_order_item" foreign="id_sales_order_item"/>
+        </foreign-key>
+    </table>
+
+</database>

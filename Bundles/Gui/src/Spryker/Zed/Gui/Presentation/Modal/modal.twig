@@ -1,16 +1,21 @@
-<div {% if extras is defined and extras is not null %}{{ extras }}{% endif %}>
+<div
+    {% if id is defined and id is not null %}id={{ id }} {% endif %}
+    {% if extras is defined and extras is not null %}{{ extras }}{% endif %}
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+>
     <div class="modal-dialog">
         <div class="modal-content">
             <header class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{ title }}</h4>
+                <h4 class="modal-title">{{ title }}</h4>
             </header>
             <div class="modal-body">{{ content }}</div>
 
-        {% if footer is defined and footer is not null %}
-            <footer class="modal-footer">{{ footer }}</footer>
-        {% endif %}
-
+            {% if footer is defined and footer is not null %}
+                <div class="modal-footer">{{ footer }}</div>
+            {% endif %}
         </div>
     </div>
 </div>

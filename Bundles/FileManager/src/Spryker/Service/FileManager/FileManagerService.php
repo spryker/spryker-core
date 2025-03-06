@@ -36,13 +36,14 @@ class FileManagerService extends AbstractService implements FileManagerServiceIn
      * @api
      *
      * @param string $fileName
+     * @param string|null $storageName
      *
      * @return mixed
      */
-    public function readStream(string $fileName)
+    public function readStream(string $fileName, ?string $storageName = null)
     {
         return $this->getFactory()
             ->createFileReader()
-            ->readStream($fileName);
+            ->readStream($fileName, $storageName);
     }
 }

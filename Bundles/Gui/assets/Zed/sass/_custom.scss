@@ -385,6 +385,16 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
             flex: 0 0 auto;
             margin: 0 0 0 10px;
         }
+
+        &-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            h5 {
+                flex: 0;
+            }
+        }
     }
 
     &.nested {
@@ -1975,4 +1985,16 @@ a.label {
     &__heading {
         font-style: 16px;
     }
+}
+
+// Drop with bootstrap 4
+.d-inline {
+    display: inline;
+}
+
+form .horizontal-form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
 }

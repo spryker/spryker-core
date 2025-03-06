@@ -1,0 +1,36 @@
+namespace: SprykerFeatureTest\Zed\SspFileManagement
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Business:
+        path: Business
+        actor: SspFileManagementBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\FileManager\Helper\FileManagerHelper
+                - \SprykerTest\Zed\Company\Helper\CompanyHelper
+                - \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper
+                - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
+                - \SprykerFeatureTest\Shared\SspFileManagement\Helper\SspFileManagementHelper
+                - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Service\Testify\Helper\ServiceHelper

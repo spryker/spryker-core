@@ -38,6 +38,7 @@
         <property name="idCompany" type="int"/>
         <property name="filter" type="Filter"/>
         <property name="name" type="string"/>
+        <property name="companyIds" type="int[]" singular="companyId"/>
     </transfer>
 
     <transfer name="Filter">

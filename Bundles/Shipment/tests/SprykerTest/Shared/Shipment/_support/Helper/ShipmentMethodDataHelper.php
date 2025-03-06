@@ -68,6 +68,13 @@ class ShipmentMethodDataHelper extends Module
         array $priceList = self::DEFAULT_PRICE_LIST,
         array $idStoreList = []
     ): ShipmentMethodTransfer {
+        if (isset($overrideShipmentMethod['key'])) {
+            $shipmentMethodTransfer = SpyShipmentMethodQuery::create()->findOneByShipmentMethodKey($overrideShipmentMethod['key']);
+            if ($shipmentMethodTransfer) {
+                return (new ShipmentMethodTransfer())->fromArray($shipmentMethodTransfer->toArray(), true);
+            }
+        }
+
         $shipmentMethodTransfer = (new ShipmentMethodBuilder($overrideShipmentMethod))->build();
         $shipmentMethodTransfer = $this->assertCarrier($shipmentMethodTransfer, $overrideCarrier);
 

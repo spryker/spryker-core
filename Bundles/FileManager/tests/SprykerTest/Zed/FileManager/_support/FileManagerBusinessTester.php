@@ -13,6 +13,7 @@ use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
 use Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
+use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\FileManager\Persistence\SpyMimeType;
 use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
@@ -103,9 +104,10 @@ class FileManagerBusinessTester extends Actor
      */
     public function resetDb(): void
     {
-        SpyFileQuery::create()->deleteAll();
-        SpyMimeTypeQuery::create()->deleteAll();
-        SpyFileDirectoryQuery::create()->deleteAll();
+        $this->ensureDatabaseTableIsEmpty(SpyFileQuery::create());
+        $this->ensureDatabaseTableIsEmpty(SpyFileInfoQuery::create());
+        $this->ensureDatabaseTableIsEmpty(SpyMimeTypeQuery::create());
+        $this->ensureDatabaseTableIsEmpty(SpyFileDirectoryQuery::create());
     }
 
     /**

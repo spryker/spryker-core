@@ -61,7 +61,7 @@ class ReclamationSalesTablePlugin implements SalesTablePluginInterface
             Url::generate(static::URL_CREATE_RECLAMATION, [
                 static::PARAM_ID_SALES_ORDER => $idSalesOrder,
             ]),
-            'Claim',
+            'Create Reclamation',
             [
                 'class' => 'btn-remove',
                 'icon' => 'fa-repeat',

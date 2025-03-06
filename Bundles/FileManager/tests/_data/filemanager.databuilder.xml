@@ -6,20 +6,19 @@
 >
 
     <transfer name="File">
-        <property name="fileName" dataBuilderRule="=fileName"/>
+        <property name="fileName" type="string" dataBuilderRule="word()"/>
     </transfer>
 
     <transfer name="FileInfo">
-        <property name="fkFile" dataBuilderRule="1"/>
-        <property name="type" dataBuilderRule="=text()"/>
-        <property name="size" dataBuilderRule="10"/>
-        <property name="version" dataBuilderRule="=1"/>
-        <property name="versionName" dataBuilderRule="=v1"/>
-        <property name="storageName" dataBuilderRule="=file"/>
-        <property name="storageFileName" dataBuilderRule="=file"/>
-        <property name="extension" dataBuilderRule="=txt"/>
-        <property name="createdAt" dataBuilderRule="=date('Y-m-d', '-1 year')"/>
-        <property name="updatedAt" dataBuilderRule="=date('Y-m-d', '-1 year')"/>
+        <property name="type" type="string" dataBuilderRule="word()"/>
+        <property name="size" type="int" dataBuilderRule="=10"/>
+        <property name="version" type="int" dataBuilderRule="=1"/>
+        <property name="versionName" type="string" dataBuilderRule="=v1"/>
+        <property name="storageName" type="string" dataBuilderRule="=file"/>
+        <property name="storageFileName" type="string" dataBuilderRule="=file"/>
+        <property name="extension" type="string" dataBuilderRule="=txt"/>
+        <property name="createdAt" dataBuilderRule="dateTime('-1 day')->format('Y-m-d H:i:s')"/>
+        <property name="updatedAt" dataBuilderRule="dateTime('-1 day')->format('Y-m-d H:i:s')"/>
     </transfer>
 
 </transfers>

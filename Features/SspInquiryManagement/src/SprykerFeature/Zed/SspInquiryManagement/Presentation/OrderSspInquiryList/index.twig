@@ -1,0 +1,5 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Ssp Inquiries' | trans } %}
+    {% block widget_content %}
+        {{ sspInquiryTable | raw }}
+    {% endblock %}
+{% endembed %}

@@ -28,6 +28,8 @@
         "cs-check": "phpcs"
     },
     "replace": {
+        "spryker-feature/ssp-file-management": "*",
+        "spryker-feature/ssp-inquiry-management": "*",
         "spryker/acl": "*",
         "spryker/acl-data-import": "*",
         "spryker/acl-entity": "*",

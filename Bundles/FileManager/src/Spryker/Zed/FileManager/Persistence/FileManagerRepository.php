@@ -321,6 +321,8 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
         $fileCollectionTransfer = new FileCollectionTransfer();
         $fileQuery = $this->getFactory()->createFileQuery();
 
+        $fileQuery = $this->applyFileFilters($fileQuery, $fileCriteriaTransfer);
+
         $paginationTransfer = $fileCriteriaTransfer->getPagination();
         if ($paginationTransfer !== null) {
             $fileQuery = $this->applyFilePagination($fileQuery, $paginationTransfer);
@@ -329,6 +331,26 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
 
         return $this->getFactory()->createFileManagerMapper()
             ->mapFileEntitiesToFileCollectionTransfer($fileQuery->find(), $fileCollectionTransfer);
+    }
+
+    /**
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
+     * @param \Generated\Shared\Transfer\FileCriteriaTransfer $fileCriteriaTransfer
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
+     */
+    protected function applyFileFilters(SpyFileQuery $fileQuery, FileCriteriaTransfer $fileCriteriaTransfer): SpyFileQuery
+    {
+        $fileConditionsTransfer = $fileCriteriaTransfer->getFileConditions();
+        if ($fileConditionsTransfer === null) {
+            return $fileQuery;
+        }
+
+        if ($fileConditionsTransfer->getFileIds() !== []) {
+            $fileQuery->filterByIdFile_In($fileConditionsTransfer->getFileIds());
+        }
+
+        return $fileQuery;
     }
 
     /**

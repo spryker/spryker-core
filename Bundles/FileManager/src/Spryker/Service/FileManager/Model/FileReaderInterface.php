@@ -18,8 +18,9 @@ interface FileReaderInterface
 
     /**
      * @param string $fileName
+     * @param string|null $storageName
      *
      * @return mixed
      */
-    public function readStream(string $fileName);
+    public function readStream(string $fileName, ?string $storageName = null);
 }

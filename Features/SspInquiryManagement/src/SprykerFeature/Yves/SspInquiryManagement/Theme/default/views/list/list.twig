@@ -1,0 +1,100 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    sspInquiries: _view.sspInquiryList,
+    title: 'customer.account.ssp_inquiries' | trans,
+    sspInquirySearchForm: _view.sspInquirySearchForm | default(null),
+    activePage: 'ssp-inquiry',
+    pagination: {
+        parameters: app.request.query.all(),
+        currentPage: _view.pagination.page,
+        paginationPath: 'customer/ssp-inquiry',
+        maxPage: _view.pagination.lastPage,
+        showAlwaysFirstAndLast: true,
+    },
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'customer.account.ssp_inquiries' | trans,
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
+
+{% set formClass = 'js-ssp-inquiry-form' %}
+
+{% block customerContent %}
+    {% block sspInquiryCreateButton %}
+        {% if can('CreateSspInquiryPermissionPlugin') %}
+            <div class="box text-right">
+                <a class="button" data-qa="create-general-ssp-inquiry"
+                   href="{{url('customer/ssp-inquiry/create')}}"
+                        {{qa('customer-create-ssp-inquiry')}}>
+                    {{ 'customer.ssp_inquiry.create.button' | trans }}
+                </a>
+            </div>
+        {% endif %}
+    {% endblock %}
+
+    {% block sspInquiryList %}
+        <div class="box">
+            {% block sspInquiryListContent %}
+                {% block filterSection %}
+                    {% if data.sspInquirySearchForm %}
+                        {% block searchForm %}
+                            {{ form_start(data.sspInquirySearchForm, {
+                                attr: {
+                                    class: formClass,
+                                },
+                            }) }}
+
+                            {% block sspInquiryFilters %}
+                                {% include molecule('ssp-inquiry-filters', 'SspInquiryManagement') with {
+                                    class: 'spacing-y spacing-y--inner',
+                                    data: {
+                                        sspInquirySearchForm: data.sspInquirySearchForm,
+                                    },
+                                } only %}
+                            {% endblock %}
+                        {% endblock %}
+                    {% endif %}
+                {% endblock %}
+
+                {% block sspInquiryTableSection %}
+                    {% block sspInquiryTable %}
+                        {% include molecule('ssp-inquiry-table', 'SspInquiryManagement') with {
+                            data: {
+                                sspInquiries: data.sspInquiries,
+                                sspInquirySearchForm: data.sspInquirySearchForm,
+                                formClass: formClass,
+                            },
+                        } only %}
+                    {% endblock %}
+
+                    {% block tableFooter %}
+                        <hr>
+
+                        {% block pagination %}
+                            {% include molecule('pagination') with {
+                                data: data.pagination,
+                            } only %}
+                        {% endblock %}
+                    {% endblock %}
+                {% endblock %}
+
+                {% if data.sspInquirySearchForm %}
+                    {{ form_end(data.sspInquirySearchForm) }}
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

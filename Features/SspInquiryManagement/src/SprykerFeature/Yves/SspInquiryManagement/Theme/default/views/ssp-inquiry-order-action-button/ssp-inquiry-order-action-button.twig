@@ -1,0 +1,17 @@
+{% extends template('widget') %}
+
+{% define data = {
+    orderReference: _widget.orderReference,
+    orderId: _widget.orderId,
+} %}
+
+{% block body %}
+    <a href="{{ url('customer/ssp-inquiry/create', parameters: {
+        orderReference: data.orderReference,
+        backUrlType: 'order',
+        backUrlIdentifier: data.orderId
+    })}}"
+       class="link float-right spacing-left"
+       data-qa="create-order-ssp-inquiry"
+    >{{ 'ssp_inquiry.order.create_ssp_inquiry' | trans }}</a>
+{% endblock %}

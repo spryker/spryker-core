@@ -143,7 +143,7 @@ class CompanyBusinessUnitForm extends AbstractType
         return function (FormEvent $formEvent) {
             $data = $formEvent->getData();
             $form = $formEvent->getForm();
-            $fkParentCompanyBusinessUnitFieldData = $data[static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT];
+            $fkParentCompanyBusinessUnitFieldData = $data[static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT] ?? null;
             if (!$fkParentCompanyBusinessUnitFieldData) {
                 return;
             }

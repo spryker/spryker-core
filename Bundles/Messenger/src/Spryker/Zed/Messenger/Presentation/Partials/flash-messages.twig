@@ -1,6 +1,6 @@
 <div class="flash-messages">
     {% for message in app.session.flashbag.get('flash.messages.success') %}
-        <div class="alert alert-success">
+        <div class="alert alert-success" data-qa="success-message">
             <i class="far fa-check-circle alert__icon"></i>
             <div class="alert__text">
                 {{ message | trans }}
@@ -8,7 +8,7 @@
         </div>
     {% endfor %}
     {% for message in app.session.flashbag.get('flash.messages.info') %}
-        <div class="alert alert-info">
+        <div class="alert alert-info" data-qa="info-message">
             <i class="fas fa-info-circle alert__icon"></i>
             <div class="alert__text">
                 {{ message | trans }}
@@ -16,7 +16,7 @@
         </div>
     {% endfor %}
     {% for message in app.session.flashbag.get('flash.messages.error') %}
-        <div class="alert alert-danger">
+        <div class="alert alert-danger" data-qa="error-message">
             <i class="fas fa-ban alert__icon"></i>
             <div class="alert__text">
                 {{ message | trans }}

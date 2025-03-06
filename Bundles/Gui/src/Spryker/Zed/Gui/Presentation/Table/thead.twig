@@ -2,7 +2,7 @@
 <thead>
     <tr>
         {% for id, value in config.header %}
-        <th id="{{ id }}">
+        <th id="{{ id }}" data-qa="{{ id }}">
             {{ value | trans }}
         </th>
         {% endfor %}

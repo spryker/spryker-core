@@ -1,0 +1,27 @@
+{% block content %}
+    {% set content %}
+        <p>{{ message | default('') | trans }}</p>
+    {% endset %}
+
+    {% set footer %}
+        <button
+            type="button"
+            class="btn btn-danger safe-submit js-form-submitter"
+            data-submitter-form-name="{{ formName }}"
+        >
+            {{ confirmButtonText | default('Confirm') | trans }}
+        </button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">
+            {{ cancelButtonText | default('Cancel') | trans }}
+        </button>
+    {% endset %}
+
+    {% block modal %}
+        {% include '@Gui/Modal/modal.twig' with {
+            id: id | default('confirmation-modal-window'),
+            title: title | default('Confirm action') | trans,
+            content: content,
+            footer: footer
+        } %}
+    {% endblock %}
+{% endblock %}

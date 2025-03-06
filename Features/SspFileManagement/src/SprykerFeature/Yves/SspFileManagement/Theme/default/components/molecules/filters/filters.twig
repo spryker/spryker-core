@@ -1,0 +1,34 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'filters',
+} %}
+
+{% define data = {
+    fileSearchFilterForm: required,
+    jsPrefix: required,
+} %}
+
+{% block body %}
+    <div class="form__fields grid grid--bottom">
+        {% block filters %}
+            {% for filter in data.fileSearchFilterForm.filters.children %}
+                <div class="form__field col col--sm-12 col--lg-4">
+                    {{ form_row(filter, {
+                        attr: {
+                            class: data.jsPrefix ~ filter.vars.name ~ '-target',
+                        }})
+                    }}
+                </div>
+            {% endfor %}
+        {% endblock %}
+
+        {% block submitFilters %}
+            <div class="form__field col col--right">
+                <button name="buttonSubmit" class="button button--success" data-qa="filters-apply">
+                    {{ 'ssp_file_management.file_management.file_search_filter_form.field.apply.label' | trans }}
+                </button>
+            </div>
+         {% endblock %}
+    </div>
+{% endblock %}

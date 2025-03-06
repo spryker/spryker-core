@@ -159,6 +159,10 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
             $companyQuery->filterByIdCompany($companyCriteriaFilterTransfer->getIdCompany());
         }
 
+        if ($companyCriteriaFilterTransfer->getCompanyIds()) {
+            $companyQuery->filterByIdCompany_In($companyCriteriaFilterTransfer->getCompanyIds());
+        }
+
         if ($companyCriteriaFilterTransfer->getName()) {
             $companyQuery->filterByName(sprintf('%%%s%%', $companyCriteriaFilterTransfer->getName()), Criteria::LIKE);
             $companyQuery->setIgnoreCase(true);

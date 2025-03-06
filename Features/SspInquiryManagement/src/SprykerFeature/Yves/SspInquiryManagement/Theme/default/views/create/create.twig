@@ -1,0 +1,58 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    form: _view.form,
+    backUrlPath: _view.backUrlPath | default(null),
+    backUrlParams: _view.backUrlParams | default([]),
+    formAction: url('customer/ssp-inquiry/create', app.request.query.all),
+    title: 'customer.ssp_inquiry.create_ssp_inquiry' | trans,
+    activePage: 'ssp-inquiry',
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'customer.account.ssp_inquiries' | trans,
+                    url: url('customer/ssp-inquiry'),
+                },
+                {
+                    label: 'customer.ssp_inquiry.create_ssp_inquiry' | trans,
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
+
+{% block customerContent %}
+    <div class="box">
+        {% block form %}
+            {% include molecule('form') with {
+                data: {
+                    title: false,
+                    form: data.form,
+                    options: {
+                        attr: {
+                            novalidate: false,
+                        },
+                        action: data.formAction,
+                    },
+                    submit: {
+                        enable: true,
+                        text: 'ssp_inquiry.submit.button' | trans,
+                    },
+                    cancel: {
+                        enable: true,
+                        url: data.backUrlPath is not empty ? url(data.backUrlPath, data.backUrlParams) : url('customer/ssp-inquiry'),
+                        text: 'general.back.button' | trans,
+                    },
+                },
+            } only %}
+        {% endblock %}
+    </div>
+{% endblock %}

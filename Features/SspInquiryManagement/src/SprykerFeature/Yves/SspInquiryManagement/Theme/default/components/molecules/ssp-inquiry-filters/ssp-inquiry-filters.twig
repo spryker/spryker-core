@@ -1,0 +1,50 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'ssp-inquiry-filters',
+} %}
+
+{% define data = {
+    sspInquirySearchForm: required,
+} %}
+
+{% block separator %}
+    <hr class="box__separator">
+{% endblock %}
+
+{% block body %}
+    {% block searchRow %}
+        <div class="form__fields grid grid--bottom">
+            <div class="form__field col col--sm-6">
+                {{ form_row(data.sspInquirySearchForm.type) }}
+            </div>
+            <div class="form__field col col--sm-6">
+                {{ form_row(data.sspInquirySearchForm.status) }}
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block additionalFiltersRow %}
+        <div class="form__fields grid grid--bottom">
+            {% for filter in data.sspInquirySearchForm.filters.children %}
+                <div class="{{ filter.vars.attr.class }}">
+                    {{ form_row(filter) }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock %}
+
+    {{ block('separator') }}
+
+    {% block filterModeRow %}
+        <div class="form__fields grid grid--right">
+            <div class="form__field col">
+                <button class="button button--success">
+                    {{ 'ssp_inquiry.list.filter.apply' | trans }}
+                </button>
+            </div>
+        </div>
+    {% endblock %}
+
+    {{ block('separator') }}
+{% endblock %}

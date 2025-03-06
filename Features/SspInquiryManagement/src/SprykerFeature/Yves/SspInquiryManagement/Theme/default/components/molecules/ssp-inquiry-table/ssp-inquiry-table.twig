@@ -1,0 +1,74 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'ssp-inquiry-table',
+} %}
+
+{% define data = {
+    sspInquiries: required,
+    sspInquirySearchForm: {},
+    formClass: '',
+} %}
+
+{% block body %}
+    {% set columns = [
+        {
+            id: 'reference',
+            title: 'customer.ssp_inquiry.list.reference',
+        },
+        {
+            id: 'type',
+            title: 'customer.ssp_inquiry.list.type',
+            sortable: true,
+        },
+        {
+            id: 'subject',
+            title: 'customer.ssp_inquiry.list.subject',
+        },
+        {
+            id: 'owner',
+            title: 'customer.ssp_inquiry.list.owner',
+        },
+        {
+            id: 'date_created',
+            title: 'customer.ssp_inquiry.list.date_created',
+            type: 'date',
+            sortable: true,
+        },
+        {
+            id: 'status',
+            title: 'customer.ssp_inquiry.list.status',
+            type: 'status',
+        },
+        {
+            id: 'actions',
+            type: 'actions',
+        },
+    ] %}
+
+    {% set rows = data.sspInquiries | map(sspInquiry => {
+        reference: sspInquiry.reference,
+        type: "ssp_inquiry.type.#{sspInquiry.type}" | trans,
+        subject: sspInquiry.subject,
+        owner: "#{sspInquiry.companyUser.customer.firstName} #{sspInquiry.companyUser.customer.lastName} <br /> <i>#{sspInquiry.companyUser.companyBusinessUnit.name}</i>",
+        date_created: sspInquiry.createdDate,
+        status: { label: "ssp_inquiry.status.#{sspInquiry.status}", status: sspInquiry.status },
+        actions: [{
+            url: path('customer/ssp-inquiry/details', { reference: sspInquiry.reference }),
+            label: 'customer.ssp_inquiry.view_ssp_inquiry'
+        }],
+    }) %}
+
+    {% block table %}
+        {% include molecule('advanced-table', 'SspInquiryManagement') with {
+            data: {
+                columns: columns,
+                rows: rows,
+                emptyText: 'customer.account.no_ssp_inquiries',
+                sortableForm: data.sspInquirySearchForm,
+                sortableFormClass: data.formClass,
+            },
+            qa: 'web-table-ssp-inquiries',
+        } only %}
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    sspInquiry: _view.sspInquiry,
+    cancelForm: _view.cancelForm,
+    isSspInquiryOwner: _view.isSspInquiryOwner,
+    title: 'customer.account.ssp_inquiry.details' | trans,
+    activePage: 'ssp-inquiry',
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'customer.account.ssp_inquiries' | trans,
+                    url: url('customer/ssp-inquiry'),
+                },
+                {
+                    label: 'customer.ssp_inquiry.view_ssp_inquiry' | trans,
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
+
+{% block separator %}
+    <hr class="box__separator">
+{% endblock %}
+
+{% block customerContent %}
+    {% block sspInquiryCancelAction %}
+        {% if data.sspInquiry.isCancellable and data.isSspInquiryOwner %}
+            <div class="box text-right">
+                {{ form_start(data.cancelForm, {'action': path('customer/ssp-inquiry/cancel', {
+                    'sspInquiryReference': data.sspInquiry.reference
+                })}) }}
+                <button class="button button--alert button--hollow" data-qa="cancel-ssp-inquiry">{{ 'ssp_inquiry.cancel' | trans }}</button>
+                {{ form_end(data.cancelForm) }}
+            </div>
+        {% endif %}
+    {% endblock %}
+
+    {% block sspInquiryData %}
+        <div class="box">
+            {% block sspInquiryMainInfo %}
+                <ul>
+                    <li>
+                        <strong>{{ 'customer.ssp_inquiry.details.reference' | trans  ~ ': ' }}</strong>
+                        {{ data.sspInquiry.reference }}
+                    </li>
+                    <li>
+                        <strong>{{ 'customer.ssp_inquiry.details.date' | trans  ~ ': ' }}</strong>
+                        {{ data.sspInquiry.createdDate | formatDateTime }}
+                    </li>
+                    <li>
+                        <strong>{{ 'customer.ssp_inquiry.details.status' | trans  ~ ': ' }}</strong>
+
+                        {% include molecule('status') with {
+                            data: {
+                                label: ('ssp_inquiry.status.' ~ data.sspInquiry.status) | trans ,
+                                status: data.sspInquiry.status,
+                            },
+                        } only %}
+                    </li>
+                </ul>
+            {% endblock %}
+
+            {{ block('separator') }}
+
+            {% block sspInquiryDetails %}
+                <ul class="spacing-bottom">
+                    <li class="spacing-bottom">
+                        <strong>{{ 'customer.ssp_inquiry.details' | trans }}</strong>
+                    </li>
+                    <li>
+                        <strong>{{ 'customer.ssp_inquiry.details.type' | trans  ~ ': ' }}</strong>
+                        {{ ('ssp_inquiry.type.' ~ data.sspInquiry.type) | trans }}
+                    </li>
+                    {% if data.sspInquiry.order and data.sspInquiry.order.orderReference %}
+                        <li>
+                            <strong>{{ 'customer.ssp_inquiry.details.order_reference' | trans  ~ ': ' }}</strong>
+                            {{ data.sspInquiry.order.orderReference }}
+                        </li>
+                    {% endif %}
+                    <li>
+                        <strong>{{ 'customer.ssp_inquiry.details.subject' | trans  ~ ': ' }}</strong>
+                        {{ data.sspInquiry.subject }}
+                    </li>
+                    <li>
+                        <strong>{{ 'customer.ssp_inquiry.details.description' | trans  ~ ': ' }}</strong>
+                        {{ data.sspInquiry.description }}
+                    </li>
+                </ul>
+            {% endblock %}
+
+            {{ block('separator') }}
+
+            {% block sspInquiryOwnerInfo %}
+                <ul class="spacing-bottom">
+                    <li class="spacing-bottom">
+                        <strong>{{ 'customer.ssp_inquiry.owner' | trans }}</strong>
+                    </li>
+                    <li>
+                        <strong>{{ 'customer.ssp_inquiry.details.first_name' | trans  ~ ': ' }}</strong>
+                        {{ data.sspInquiry.companyUser.customer.firstName }}
+                    </li>
+                    <li>
+                        <strong>{{ 'customer.ssp_inquiry.details.last_name' | trans  ~ ': ' }}</strong>
+                        {{ data.sspInquiry.companyUser.customer.lastName }}
+                    </li>
+                    <li>
+                        <strong>{{ 'customer.ssp_inquiry.details.email' | trans  ~ ': ' }}</strong>
+                        {{ data.sspInquiry.companyUser.customer.email }}
+                    </li>
+                    <li class="spacing-bottom">
+                        <strong>{{ 'customer.ssp_inquiry.details.company' | trans  ~ ': ' }}</strong>
+                        {{ data.sspInquiry.companyUser.companyBusinessUnit.company.name }} / {{ data.sspInquiry.companyUser.companyBusinessUnit.name }}
+                    </li>
+                </ul>
+            {% endblock %}
+
+            {% if data.sspInquiry.files is not empty %}
+                {{ block('separator') }}
+
+                {% block sspInquiryFiles %}
+                    {% include molecule('files-table', 'SspInquiryManagement') with {
+                        data: {
+                            files: data.sspInquiry.files,
+                            reference: data.sspInquiry.reference,
+                        },
+                    } only %}
+                {% endblock %}
+            {% endif %}
+        </div>
+    {% endblock %}
+{% endblock %}

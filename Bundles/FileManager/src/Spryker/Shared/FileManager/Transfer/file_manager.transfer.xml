@@ -145,6 +145,11 @@
 
     <transfer name="FileCriteria" strict="true">
         <property name="pagination" type="Pagination"/>
+        <property name="fileConditions" type="FileConditions"/>
+    </transfer>
+
+    <transfer name="FileConditions" strict="true">
+        <property name="fileIds" type="int[]" singular="idFile"/>
     </transfer>
 
     <transfer name="FileCollection" strict="true">

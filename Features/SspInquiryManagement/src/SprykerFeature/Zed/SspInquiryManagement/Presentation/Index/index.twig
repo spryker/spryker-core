@@ -1,0 +1,32 @@
+{% extends '@Gui/layout/layout.twig' %}
+
+{% set widget_title = 'Ssp Inquiries' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_title -%}
+            <h5>{{ 'List of Inquiries' | trans}}</h5>
+        {%- endblock %}
+        {% block widget_content %}
+            {{ form_start(sspInquiryFilterForm, { 'attr' : { 'class': 'form-filter' }}) }}
+                <div class="row">
+                    <div class="col-xs-4">
+                        {{ form_row(sspInquiryFilterForm.type, {
+                            attr: { class: 'js-form-submitter' }
+                        }) }}
+                    </div>
+                    <div class="col-xs-4">
+                        {{ form_row(sspInquiryFilterForm.status, {
+                            attr: { class: 'js-form-submitter' }
+                        }) }}
+                    </div>
+                </div>
+            {{ form_end(sspInquiryFilterForm) }}
+
+            {{ sspInquiryTable | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

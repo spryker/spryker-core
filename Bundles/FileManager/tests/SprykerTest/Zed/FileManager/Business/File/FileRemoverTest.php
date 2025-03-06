@@ -104,6 +104,7 @@ class FileRemoverTest extends Unit
             $fileRepositoryMock,
             $fileManagerEntityManagerMock,
             $fileContentMock,
+            [],
         );
 
         $this->assertTrue($fileRemover->delete(1));
@@ -134,6 +135,7 @@ class FileRemoverTest extends Unit
             $fileRepositoryMock,
             $fileManagerEntityManagerMock,
             $fileContentMock,
+            [],
         );
 
         $this->assertTrue($fileRemover->deleteFileInfo(1));

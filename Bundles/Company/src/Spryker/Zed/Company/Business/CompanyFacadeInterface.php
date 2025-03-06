@@ -105,7 +105,13 @@ interface CompanyFacadeInterface
 
     /**
      * Specification:
-     * - Finds companies according to criteria from CompanyCriteriaFilterTransfer.
+     * - Retrieves company entities filtered by criteria from Persistence.
+     * - Uses `CompanyCriteriaFilterTransfer.idCompany` to filter by specific company ID.
+     * - Uses `CompanyCriteriaFilterTransfer.companyIds` to filter by multiple company IDs.
+     * - Uses `CompanyCriteriaFilterTransfer.name` to filter companies by name (case-insensitive partial match).
+     * - Uses `CompanyCriteriaFilterTransfer.filter.limit` to limit the number of results.
+     * - Returns `CompanyCollectionTransfer` containing filtered company data.
+     * - Returns empty collection if no companies match the criteria.
      *
      * @api
      *

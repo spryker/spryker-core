@@ -1,0 +1,7 @@
+parameters:
+    level: 8
+    ignoreErrors:
+        - '#Method SprykerFeature\\Zed\\SspFileManagement\\Persistence\\SspFileManagementRepository::getCompanyFiles\(\) should return iterable<Orm\\Zed\\SspFileManagement\\Persistence\\SpyCompanyFile>&Propel\\Runtime\\Collection\\ObjectCollection but returns Propel\\Runtime\\Collection\\Collection#'
+        - '#Method SprykerFeature\\Zed\\SspFileManagement\\Persistence\\SspFileManagementRepository::getCompanyUserFiles\(\) should return iterable<Orm\\Zed\\SspFileManagement\\Persistence\\SpyCompanyUserFile>&Propel\\Runtime\\Collection\\ObjectCollection but returns Propel\\Runtime\\Collection\\Collection#'
+        - '#Method SprykerFeature\\Zed\\SspFileManagement\\Persistence\\SspFileManagementRepository::getCompanyBusinessUnitFiles\(\) should return iterable<Orm\\Zed\\SspFileManagement\\Persistence\\SpyCompanyBusinessUnitFile>&Propel\\Runtime\\Collection\\ObjectCollection but returns Propel\\Runtime\\Collection\\Collection#'
+        - '#Parameter \#2 \$length of function fread expects int<0, max>, int given#'

@@ -1,0 +1,47 @@
+{% embed '@Gui/Partials/widget.twig' %}
+    {% block widget_title %}
+        <div class="ibox-title-content">
+            <h5>{{ 'Status' | default('') | trans }}</h5>
+            <span data-qa="ssp-inquiry-status" class="label {{ sspInquiryStatusClassMap[sspInquiry.status] | default('') }}">{{ sspInquiry.status | trans }}</span>
+        </div>
+    {% endblock %}
+
+    {% block widget_content %}
+        <div class="row">
+            <div class="col-xs-8">
+                {{ form(triggerEventForm, {
+                    action: url('/ssp-inquiry-management/state-machine/trigger', {'id-ssp-inquiry': sspInquiry.idSspInquiry}),
+                    attr: {'class': 'horizontal-form'}
+                })}}
+            </div>
+
+            {% if sspInquiry.statusHistory | length %}
+                <div class="col-xs-4 clearfix">
+                    <a id="history-btn-{{ sspInquiry.idSspInquiry }}" class="pull-right btn btn-xs btn-outline more-history is-hidden" data-id="{{ sspInquiry.idSspInquiry }}" data-qa="show-ssp-inquiry-status-history">
+                        <span class="show-more">{{ 'Show history' | trans }}</span>
+                        <span class="show-less">{{ 'Hide history' | trans }}</span>
+                    </a>
+                </div>
+
+                <div class="col-xs-12 hidden spacing-bottom" id="history_details_{{ sspInquiry.idSspInquiry }}">
+                    <table class="table table--expand dataTable" data-qa="history-details-table">
+                        <thead>
+                            <tr>
+                                <th>{{ 'Status' | trans }}</th>
+                                <th>{{ 'Date' | trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for statusHistory in sspInquiry.statusHistory %}
+                                <tr>
+                                    <td><span class="label {{ sspInquiryStatusClassMap[statusHistory.stateName] | default('') }}">{{ statusHistory.stateName | trans }}</span></td>
+                                    <td>{{ statusHistory.createdAt | formatDateTime }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    {% endblock %}
+{% endembed %}

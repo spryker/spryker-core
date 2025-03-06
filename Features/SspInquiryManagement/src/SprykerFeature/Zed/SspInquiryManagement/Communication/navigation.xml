@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config>
+    <sales>
+        <pages>
+            <ssp-inquiries>
+                <label>Inquiries</label>
+                <title>Inquiries</title>
+                <bundle>ssp-inquiry-management</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <pages>
+                    <ssp-inquiry-view>
+                        <label>Inquiry Overview</label>
+                        <title>Inquiry Overview</title>
+                        <bundle>ssp-inquiry-management</bundle>
+                        <controller>detail</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </ssp-inquiry-view>
+                </pages>
+            </ssp-inquiries>
+        </pages>
+    </sales>
+</config>

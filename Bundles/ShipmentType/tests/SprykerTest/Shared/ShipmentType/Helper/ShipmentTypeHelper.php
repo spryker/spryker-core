@@ -33,6 +33,14 @@ class ShipmentTypeHelper extends Module
      */
     public function haveShipmentType(array $seedData = []): ShipmentTypeTransfer
     {
+        if (isset($seedData['key'])) {
+            $shipmentTypeEntity = $this->getShipmentTypeQuery()->findOneByKey($seedData['key']);
+
+            if ($shipmentTypeEntity) {
+                return (new ShipmentTypeTransfer())->fromArray($shipmentTypeEntity->toArray(), true);
+            }
+        }
+
         $shipmentTypeTransfer = (new ShipmentTypeBuilder($seedData))->build();
         $shipmentTypeTransfer = $this->createShipmentType($shipmentTypeTransfer);
         if ($shipmentTypeTransfer->getStoreRelation()) {

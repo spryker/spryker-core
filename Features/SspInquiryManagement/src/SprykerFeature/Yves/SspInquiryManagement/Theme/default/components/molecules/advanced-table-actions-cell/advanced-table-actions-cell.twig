@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'web-table-actions-cell',
+} %}
+
+{% define data = {
+    column: [],
+} %}
+
+{% block body %}
+    <ul class="menu menu--inline">
+        {% for action in data.column %}
+            <li class="menu__item">
+                <a href="{{ action.url }}" {% if action.dataQa is defined %}data-qa="{{ action.dataQa }}"{% endif %}>
+                    {{ action.label | trans }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

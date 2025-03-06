@@ -4,4 +4,7 @@
     <transfer name="FileManagerDataCollection" strict="true">
     </transfer>
 
+    <transfer name="FileCollection" strict="true">
+    </transfer>
+
 </transfers>

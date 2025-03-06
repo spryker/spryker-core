@@ -1,0 +1,61 @@
+@mixin shop-ui-advanced-table($name: '.advanced-table') {
+    #{$name} {
+        &__container {
+            width: 100%;
+        }
+
+        thead,
+        &__head {
+            @include helper-font-weight(bold);
+            border-bottom: 0.0625rem solid $setting-color-light;
+        }
+
+        tbody,
+        &__body {
+            tr:not(#{$name}__row--backgroungless) {
+                &:nth-child(even) {
+                    background-color: $setting-color-lightest;
+                }
+            }
+        }
+
+        th,
+        td {
+            padding: 0.5rem 0.25rem;
+            text-align: left;
+        }
+
+        &__row {
+            &--backgroungless {
+                background: none;
+            }
+
+            &--highlighted {
+                background-color: $setting-color-lightest;
+            }
+
+            &--spacing-y-small {
+                th,
+                td {
+                    padding-top: 0.25rem;
+                    padding-bottom: 0.25rem;
+                }
+            }
+
+            &--spacing-bottom-reset {
+                th,
+                td {
+                    padding-bottom: 0;
+                }
+            }
+        }
+
+        &__col {
+            &--sortable {
+                cursor: pointer;
+            }
+        }
+
+        @content;
+    }
+}

@@ -1,0 +1,106 @@
+{# @var data.files array<\Generated\Shared\Transfer\FileTransfer> #}
+{# @var data.fileSearchFilterForm \SprykerFeature\Yves\SspFileManagement\Form\FileSearchFilterForm #}
+
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    title: 'ssp_file_management.file_management' | trans,
+    activePage: 'sspFileManagement',
+    currentBreadcrumb: 'ssp_file_management.file_management' | trans,
+    files: _view.files,
+    fileSearchFilterForm: _view.fileSearchFilterForm,
+    pagination: {
+        parameters: app.request.query.all(),
+        currentPage: _view.pagination.page,
+        paginationPath: 'ssp-file-management',
+        maxPage: _view.pagination.lastPage,
+        showAlwaysFirstAndLast: true,
+    },
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'ssp_file_management.file_management' | trans,
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
+
+{% block separator %}
+    <hr class="box__separator">
+{% endblock %}
+
+{% set jsPrefix = 'js-ssp-file-management-' %}
+{% set formClass = "#{jsPrefix}form" %}
+
+{% block customerContent %}
+    <div class="box">
+        {% block fileManagerFilterSection %}
+            {% block fileSearchFilterFormStart %}
+                {{ form_start(data.fileSearchFilterForm, {
+                    attr: {
+                        class: formClass,
+                    },
+                }) }}
+            {% endblock %}
+
+            {% block relationRequesFilters %}
+                {% include molecule('filters', 'SspFileManagement') with {
+                    data: {
+                        fileSearchFilterForm: data.fileSearchFilterForm,
+                        jsPrefix: jsPrefix,
+                    },
+                } only %}
+            {% endblock %}
+
+            {% block relationRequesActiveFilters %}
+                {% include molecule('active-filters', 'SspFileManagement') with {
+                    class: 'spacing-bottom spacing-bottom--big',
+                    data: {
+                        fileSearchFilterForm: data.fileSearchFilterForm,
+                        jsPrefix: jsPrefix,
+                        formClass: formClass,
+                    },
+                } only %}
+            {% endblock %}
+        {% endblock %}
+
+        {{ block('separator') }}
+
+        {% block files %}
+            {% block fileManagerList %}
+                {% include molecule('view-table', 'SspFileManagement') with {
+                    data: {
+                        files: data.files,
+                        fileSearchFilterForm: data.fileSearchFilterForm,
+                        formClass: formClass,
+                    },
+                } only %}
+            {% endblock %}
+
+            {% if data.files | length %}
+                {% block fileManagerPagination %}
+                    {% if data.pagination.maxPage > 1 %}
+                        {{ block('separator') }}
+                    {% endif %}
+
+                    {% include molecule('pagination') with {
+                        data: data.pagination,
+                    } only %}
+                {% endblock %}
+            {% endif %}
+        {% endblock %}
+
+        {% block fileSearchFilterFormEnd %}
+            {{ form_end(data.fileSearchFilterForm) }}
+        {% endblock %}
+    </div>
+{% endblock %}
