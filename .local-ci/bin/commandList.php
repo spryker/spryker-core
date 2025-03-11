@@ -71,6 +71,15 @@ return [
             '-m',
         ],
     ],
+    'ValidatePropelAbstractClass' => [
+        'hasModule' => true,
+        'command' => [
+            'vendor/bin/console',
+            'code:propel:validate-abstract',
+            '-vv',
+            '-m',
+        ],
+    ],
     'Testing' => [
         'hasModule' => true,
         'hasModuleInArgument' => true,

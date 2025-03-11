@@ -30,10 +30,20 @@
                 <event>payment cancellation successful</event>
             </transition>
 
+            <transition condition="Payment/IsCanceled">
+                <source>payment cancellation pending</source>
+                <target>payment cancelled</target>
+            </transition>
+
             <transition>
                 <source>payment cancellation pending</source>
                 <target>payment cancellation failed</target>
                 <event>payment cancellation failed</event>
+            </transition>
+
+            <transition condition="Payment/IsCancellationFailed">
+                <source>payment cancellation pending</source>
+                <target>payment cancellation failed</target>
             </transition>
 
             <transition>

@@ -8,6 +8,8 @@
         "spryker/cart": "^7.5.0",
         "spryker/kernel": "^3.30.0",
         "spryker/kernel-app": "^1.0.0",
+        "spryker/log": "^3.0.0",
+        "spryker/message-broker-extension": "^1.0.0",
         "spryker/payment": "^5.25.0",
         "spryker/payment-app-extension": "^1.1.0",
         "spryker/symfony": "^3.0.0",
@@ -17,9 +19,18 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/oms": "*",
         "spryker/propel": "*",
+        "spryker/propel-orm": "*",
         "spryker/ramsey-uuid": "*",
-        "spryker/testify": "*"
+        "spryker/sales": "*",
+        "spryker/shipment": "*",
+        "spryker/testify": "*",
+        "spryker/testify-async-api": "*"
+    },
+    "suggest": {
+        "spryker/oms": "If you want to use the OMS Plugins",
+        "spryker/sales": "If you want to use the OMS Plugins, they are using the SalesItem"
     },
     "autoload": {
         "psr-4": {
@@ -39,7 +50,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     },
     "config": {

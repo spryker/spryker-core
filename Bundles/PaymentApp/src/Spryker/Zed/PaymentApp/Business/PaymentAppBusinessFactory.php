@@ -5,6 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace Spryker\Zed\PaymentApp\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -12,10 +14,18 @@ use Spryker\Zed\PaymentApp\Business\Customer\PaymentCustomer;
 use Spryker\Zed\PaymentApp\Business\Customer\PaymentCustomerInterface;
 use Spryker\Zed\PaymentApp\Business\Expander\QuotePaymentExpander;
 use Spryker\Zed\PaymentApp\Business\Expander\QuotePaymentExpanderInterface;
+use Spryker\Zed\PaymentApp\Business\Mapper\PaymentMessageMapper;
+use Spryker\Zed\PaymentApp\Business\Mapper\PaymentMessageMapperInterface;
 use Spryker\Zed\PaymentApp\Business\PreOrderPayment\PreOrderPayment;
 use Spryker\Zed\PaymentApp\Business\PreOrderPayment\PreOrderPaymentInterface;
+use Spryker\Zed\PaymentApp\Business\Reader\PaymentAppPaymentStatusReader;
+use Spryker\Zed\PaymentApp\Business\Reader\PaymentAppPaymentStatusReaderInterface;
 use Spryker\Zed\PaymentApp\Business\RequestExecutor\ExpressCheckoutPaymentRequestExecutor;
 use Spryker\Zed\PaymentApp\Business\RequestExecutor\ExpressCheckoutPaymentRequestExecutorInterface;
+use Spryker\Zed\PaymentApp\Business\Status\PaymentAppPaymentStatus;
+use Spryker\Zed\PaymentApp\Business\Status\PaymentAppPaymentStatusInterface;
+use Spryker\Zed\PaymentApp\Business\Writer\PaymentAppPaymentStatusWriter;
+use Spryker\Zed\PaymentApp\Business\Writer\PaymentAppPaymentStatusWriterInterface;
 use Spryker\Zed\PaymentApp\Dependency\Facade\PaymentAppToCartFacadeInterface;
 use Spryker\Zed\PaymentApp\Dependency\Facade\PaymentAppToKernelAppFacadeInterface;
 use Spryker\Zed\PaymentApp\Dependency\Facade\PaymentAppToPaymentFacadeInterface;
@@ -24,6 +34,8 @@ use Spryker\Zed\PaymentApp\PaymentAppDependencyProvider;
 
 /**
  * @method \Spryker\Zed\PaymentApp\PaymentAppConfig getConfig()
+ * @method \Spryker\Zed\PaymentApp\Persistence\PaymentAppEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\PaymentApp\Persistence\PaymentAppRepositoryInterface getRepository()
  */
 class PaymentAppBusinessFactory extends AbstractBusinessFactory
 {
@@ -105,5 +117,42 @@ class PaymentAppBusinessFactory extends AbstractBusinessFactory
             $this->getKernelAppFacade(),
             $this->getUtilEncodingService(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PaymentApp\Business\Status\PaymentAppPaymentStatusInterface
+     */
+    public function createPaymentAppPaymentStatus(): PaymentAppPaymentStatusInterface
+    {
+        return new PaymentAppPaymentStatus(
+            $this->createPaymentAppPaymentStatusReader(),
+            $this->createPaymentAppPaymentStatusWriter(),
+            $this->createPaymentMessageMapper(),
+            $this->getUtilEncodingService(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PaymentApp\Business\Reader\PaymentAppPaymentStatusReaderInterface
+     */
+    public function createPaymentAppPaymentStatusReader(): PaymentAppPaymentStatusReaderInterface
+    {
+        return new PaymentAppPaymentStatusReader($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\PaymentApp\Business\Writer\PaymentAppPaymentStatusWriterInterface
+     */
+    public function createPaymentAppPaymentStatusWriter(): PaymentAppPaymentStatusWriterInterface
+    {
+        return new PaymentAppPaymentStatusWriter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\PaymentApp\Business\Mapper\PaymentMessageMapperInterface
+     */
+    public function createPaymentMessageMapper(): PaymentMessageMapperInterface
+    {
+        return new PaymentMessageMapper();
     }
 }

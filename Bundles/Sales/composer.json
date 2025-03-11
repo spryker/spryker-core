@@ -40,6 +40,7 @@
         "spryker/currency": "*",
         "spryker/price": "*",
         "spryker/product": "*",
+        "spryker/ramsey-uuid": "*",
         "spryker/shipment": "*",
         "spryker/stock": "*",
         "spryker/testify": "*",

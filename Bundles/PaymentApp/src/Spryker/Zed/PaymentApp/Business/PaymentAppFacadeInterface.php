@@ -5,16 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace Spryker\Zed\PaymentApp\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ExpressCheckoutPaymentRequestTransfer;
 use Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer;
+use Generated\Shared\Transfer\PaymentAppPaymentStatusCollectionTransfer;
+use Generated\Shared\Transfer\PaymentAppPaymentStatusCriteriaTransfer;
+use Generated\Shared\Transfer\PaymentAppPaymentStatusRequestTransfer;
+use Generated\Shared\Transfer\PaymentAppPaymentStatusResponseTransfer;
 use Generated\Shared\Transfer\PaymentCustomerRequestTransfer;
 use Generated\Shared\Transfer\PaymentCustomerResponseTransfer;
 use Generated\Shared\Transfer\PreOrderPaymentRequestTransfer;
 use Generated\Shared\Transfer\PreOrderPaymentResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 interface PaymentAppFacadeInterface
 {
@@ -107,4 +114,53 @@ interface PaymentAppFacadeInterface
     public function cancelPreOrderPayment(
         PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
     ): PreOrderPaymentResponseTransfer;
+
+    /**
+     * Specification:
+     * - Creates a new payment status entity if it doesn't exist yet.
+     * - Updates an existing payment status entity if it exists.
+     * - Creates a new payment status history entity.
+     *
+     * @api
+     *
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $paymentAppMessage
+     *
+     * @return void
+     */
+    public function savePaymentAppPaymentStatus(AbstractTransfer $paymentAppMessage): void;
+
+    /**
+     * Specification:
+     * - Reads a collection of payment status entities by given order references.
+     * - Requires `PaymentAppPaymentStatusCriteriaTransfer.orderReferences` to be set.
+     * - Returns a `PaymentAppPaymentStatusCollectionTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentAppPaymentStatusCriteriaTransfer $paymentAppPaymentStatusCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentAppPaymentStatusCollectionTransfer
+     */
+    public function getPaymentAppPaymentStatusCollection(
+        PaymentAppPaymentStatusCriteriaTransfer $paymentAppPaymentStatusCriteriaTransfer
+    ): PaymentAppPaymentStatusCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Checks if a Payment is in an expected state.
+     * - Requires `PaymentAppPaymentStatusRequestTransfer.orderReference` to be set.
+     * - Requires `PaymentAppPaymentStatusRequestTransfer.status` to be set.
+     * - Returns a `PaymentAppPaymentStatusResponseTransfer`.
+     * - `PaymentAppPaymentStatusResponseTransfer.isInExpectedStatus` is true when the Payment is in the asked status, has passed the expected status, or when the payment is not an App controlled payment.
+     * - `PaymentAppPaymentStatusResponseTransfer.isInExpectedStatus` is false when the Payment is not in the expected state.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentAppPaymentStatusRequestTransfer $paymentAppPaymentStatusRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentAppPaymentStatusResponseTransfer
+     */
+    public function hasPaymentAppExpectedPaymentStatus(
+        PaymentAppPaymentStatusRequestTransfer $paymentAppPaymentStatusRequestTransfer
+    ): PaymentAppPaymentStatusResponseTransfer;
 }

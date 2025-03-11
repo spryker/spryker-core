@@ -175,12 +175,14 @@
         <property name="storeName" type="string"/>
         <property name="limit" type="int"/>
         <property name="omsProcessorIdentifiers" type="int[]" singular="omsProcessorIdentifier"/>
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId" description="Required for testing to be able to run for known sales order items"/>
     </transfer>
 
     <transfer name="OmsCheckConditionsQueryCriteria">
         <property name="storeName" type="string"/>
         <property name="limit" type="int"/>
         <property name="omsProcessorIdentifiers" type="int[]" singular="omsProcessorIdentifier"/>
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId" description="Required for testing to be able to run for known sales order items"/>
     </transfer>
 
     <transfer name="OmsEvent">

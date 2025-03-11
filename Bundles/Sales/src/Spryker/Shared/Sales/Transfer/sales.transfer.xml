@@ -570,4 +570,14 @@
         <property name="errors" type="Error[]" singular="error"/>
     </transfer>
 
+    <transfer name="OmsCheckTimeoutsQueryCriteria">
+        <property name="limit" type="int"/>
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId" description="Required for testing to be able to run for known sales order items"/>
+    </transfer>
+
+    <transfer name="OmsCheckConditionsQueryCriteria">
+        <property name="limit" type="int"/>
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId" description="Required for testing to be able to run for known sales order items"/>
+    </transfer>
+
 </transfers>

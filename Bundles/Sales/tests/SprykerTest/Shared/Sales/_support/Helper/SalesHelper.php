@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\Sales\Helper;
 
 use Codeception\Module;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
@@ -38,11 +39,26 @@ class SalesHelper extends Module
     protected const SHIPMENT_METHOD_NAME_STANDARD = 'Standard';
 
     /**
+     * @var array<int>
+     */
+    protected array $salesOrderEntityIds = [];
+
+    /**
+     * @param array $seed
+     *
      * @return int
      */
-    public function createOrder(): int
+    public function createOrder(array $seed = []): int
     {
         $salesOrderEntity = new SpySalesOrder();
+
+        if (isset($seed[OrderTransfer::ORDER_REFERENCE])) {
+            $salesOrderEntity->setOrderReference($seed[OrderTransfer::ORDER_REFERENCE]);
+        }
+
+        if (isset($seed[OrderTransfer::ORDER_REFERENCE]) && isset($this->salesOrderEntityIds[$seed[OrderTransfer::ORDER_REFERENCE]])) {
+            return $this->salesOrderEntityIds[$seed[OrderTransfer::ORDER_REFERENCE]];
+        }
 
         $this->addOrderDetails($salesOrderEntity);
         $this->addAddresses($salesOrderEntity);
@@ -52,6 +68,8 @@ class SalesHelper extends Module
 
         $idSalesExpense = $this->addExpenses($salesOrderEntity);
         $this->addShipment($salesOrderEntity, $idSalesExpense);
+
+        $this->salesOrderEntityIds[$salesOrderEntity->getOrderReference()] = $salesOrderEntity->getIdSalesOrder();
 
         return $salesOrderEntity->getIdSalesOrder();
     }
@@ -83,7 +101,7 @@ class SalesHelper extends Module
      */
     protected function addOrderDetails(SpySalesOrder $salesOrderEntity): void
     {
-        $salesOrderEntity->setOrderReference(random_int(0, 9999999));
+        $salesOrderEntity->setOrderReference($salesOrderEntity->getOrderReference() ?? random_int(0, 9999999));
         $salesOrderEntity->setCurrencyIsoCode('EUR');
         $salesOrderEntity->setPriceMode(null);
         $salesOrderEntity->setIsTest(true);

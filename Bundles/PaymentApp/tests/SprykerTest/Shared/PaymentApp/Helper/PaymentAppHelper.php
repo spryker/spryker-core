@@ -5,6 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace SprykerTest\Shared\PaymentApp\Helper;
 
 use Codeception\Module;
@@ -12,12 +14,17 @@ use Codeception\Stub;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\AcpHttpResponseTransfer;
 use Generated\Shared\Transfer\EndpointTransfer;
+use Generated\Shared\Transfer\PaymentAppPaymentStatusTransfer;
 use Generated\Shared\Transfer\PaymentCustomerRequestTransfer;
 use Generated\Shared\Transfer\PaymentMethodAppConfigurationTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PreOrderPaymentRequestTransfer;
+use Orm\Zed\PaymentApp\Persistence\SpyPaymentAppPaymentStatus;
+use Orm\Zed\PaymentApp\Persistence\SpyPaymentAppPaymentStatusHistoryQuery;
+use Orm\Zed\PaymentApp\Persistence\SpyPaymentAppPaymentStatusQuery;
+use Propel\Runtime\Collection\Collection;
 use Ramsey\Uuid\Uuid;
 use Spryker\Zed\KernelApp\Business\KernelAppFacadeInterface;
 use Spryker\Zed\Payment\Business\PaymentFacade;
@@ -172,12 +179,12 @@ class PaymentAppHelper extends Module
     }
 
     /**
-     * @param string $expectedResponseCode
+     * @param int $expectedResponseCode
      * @param array|string $expectedResponseData
      *
      * @return void
      */
-    public function mockKernelAppFacadeResponse(string $expectedResponseCode, array|string $expectedResponseData): void
+    public function mockKernelAppFacadeResponse(int $expectedResponseCode, array|string $expectedResponseData): void
     {
         // Mock the KernelApp response
         $kernelAppFacadeMock = Stub::makeEmpty(KernelAppFacadeInterface::class, [
@@ -192,5 +199,102 @@ class PaymentAppHelper extends Module
         ]);
 
         $this->getDependencyHelper()->setDependency(PaymentAppDependencyProvider::FACADE_KERNEL_APP, new PaymentAppToKernelAppFacadeBridge($kernelAppFacadeMock));
+    }
+
+    /**
+     * @param string $orderReference
+     * @param string $status
+     *
+     * @return \Generated\Shared\Transfer\PaymentAppPaymentStatusTransfer
+     */
+    public function havePaymentAppPaymentStatusEntity(string $orderReference, string $status): PaymentAppPaymentStatusTransfer
+    {
+        $paymentAppPaymentStatusEntity = new SpyPaymentAppPaymentStatus();
+        $paymentAppPaymentStatusEntity
+            ->setOrderReference($orderReference)
+            ->setStatus($status)
+            ->save();
+
+        $paymentAppPaymentStatusTransfer = new PaymentAppPaymentStatusTransfer();
+        $paymentAppPaymentStatusTransfer->fromArray($paymentAppPaymentStatusEntity->toArray(), true);
+
+        return $paymentAppPaymentStatusTransfer;
+    }
+
+    /**
+     * @param string $orderReference
+     * @param string $expectedStatus
+     *
+     * @return void
+     */
+    public function assertPaymentAppPaymentStatusEntityExists(string $orderReference, string $expectedStatus): void
+    {
+        $paymentAppPaymentStatusQuery = SpyPaymentAppPaymentStatusQuery::create();
+        $paymentAppPaymentStatusEntity = $paymentAppPaymentStatusQuery
+            ->filterByOrderReference($orderReference)
+            ->findOne();
+
+        $this->assertInstanceOf(SpyPaymentAppPaymentStatus::class, $paymentAppPaymentStatusEntity);
+        $this->assertSame($expectedStatus, $paymentAppPaymentStatusEntity->getStatus());
+    }
+
+    /**
+     * @param string $orderReference
+     * @param string $expectedStatus
+     *
+     * @return void
+     */
+    public function assertPaymentAppPaymentStatusHistoryEntityExists(string $orderReference, string $expectedStatus): void
+    {
+        $paymentAppPaymentStatusHistoryQuery = SpyPaymentAppPaymentStatusHistoryQuery::create();
+        $paymentAppPaymentStatusHistoryEntityCollection = $paymentAppPaymentStatusHistoryQuery
+            ->filterByOrderReference($orderReference)
+            ->find();
+
+        $this->assertInstanceOf(Collection::class, $paymentAppPaymentStatusHistoryEntityCollection);
+
+        $found = false;
+
+        foreach ($paymentAppPaymentStatusHistoryEntityCollection as $paymentAppPaymentStatusHistoryEntity) {
+            if ($paymentAppPaymentStatusHistoryEntity->getStatus() !== $expectedStatus) {
+                continue;
+            }
+
+            $found = true;
+        }
+
+        $this->assertTrue($found, sprintf('Expected to find a history entity with status "%s" but it was not found.', $expectedStatus));
+    }
+
+    /**
+     * @param string $orderReference
+     *
+     * @return void
+     */
+    public function assertPaymentAppPaymentStatusHistoryEntityDoesNotExist(string $orderReference): void
+    {
+        $paymentAppPaymentStatusHistoryQuery = SpyPaymentAppPaymentStatusHistoryQuery::create();
+        $paymentAppPaymentStatusHistoryEntityCollection = $paymentAppPaymentStatusHistoryQuery
+            ->filterByOrderReference($orderReference)
+            ->findOne();
+
+        $this->assertNull($paymentAppPaymentStatusHistoryEntityCollection, 'Did not expected to find a history entity but it was found.');
+    }
+
+    /**
+     * @param string $orderReference
+     * @param string $status
+     *
+     * @return void
+     */
+    public function assertPaymentAppPaymentStatusEntityDoesNotExists(string $orderReference, string $status): void
+    {
+        $paymentAppPaymentStatusQuery = SpyPaymentAppPaymentStatusQuery::create();
+        $paymentAppPaymentStatusEntity = $paymentAppPaymentStatusQuery
+            ->filterByOrderReference($orderReference)
+            ->filterByStatus($status)
+            ->findOne();
+
+        $this->assertNull($paymentAppPaymentStatusEntity);
     }
 }

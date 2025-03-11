@@ -5,9 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace SprykerTest\Zed\Oms\Helper;
 
 use Codeception\Module;
+use Codeception\TestInterface;
 use DateInterval;
 use Generated\Shared\DataBuilder\OmsEventTriggerResponseBuilder;
 use Generated\Shared\DataBuilder\OmsProductReservationBuilder;
@@ -24,14 +27,138 @@ use ReflectionProperty;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
+use Spryker\Zed\Oms\OmsDependencyProvider;
+use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
+use SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelperTrait;
 use Symfony\Component\Process\Process;
 
 class OmsHelper extends Module
 {
     use DataCleanupHelperTrait;
     use ConfigHelperTrait;
+    use DependencyProviderHelperTrait;
+
+    /**
+     * @var string
+     */
+    protected const CONDITION_PLUGINS = 'conditions';
+
+    /**
+     * @var string
+     */
+    protected const COMMAND_PLUGINS = 'commands';
+
+    /**
+     * @var array<string, mixed>
+     */
+    protected array $config = [
+        self::COMMAND_PLUGINS => [],
+        self::CONDITION_PLUGINS => [],
+    ];
+
+    /**
+     * @param \Codeception\TestInterface $test
+     *
+     * @return void
+     */
+    public function _before(TestInterface $test): void
+    {
+        parent::_before($test);
+
+        $this->reloadCommands();
+        $this->reloadConditions();
+        $this->disableProcessCache();
+    }
+
+    /**
+     * @return void
+     */
+    protected function reloadCommands(): void
+    {
+        if ($this->config[static::COMMAND_PLUGINS] === []) {
+            return;
+        }
+
+        $commandCollection = new CommandCollection();
+
+        foreach ($this->config[static::COMMAND_PLUGINS] as $commandName => $commandPlugin) {
+            $commandCollection->add(new $commandPlugin(), $commandName);
+        }
+
+        // CommandPlugins provided in the codeception.yml where the OmsHelper is enabled.
+        // You can use `\SprykerTest\Zed\Oms\Helper\Mock\AlwaysTrueConditionPluginMock` and `\SprykerTest\Zed\Oms\Helper\Mock\AlwaysFalseConditionPluginMock` for testing purposes.
+        $this->getDependencyProviderHelper()->setDependency(
+            OmsDependencyProvider::COMMAND_PLUGINS,
+            $commandCollection,
+        );
+    }
+
+    /**
+     * @return void
+     */
+    protected function reloadConditions(): void
+    {
+        if ($this->config[static::CONDITION_PLUGINS] === []) {
+            return;
+        }
+
+        $conditionCollection = new ConditionCollection();
+
+        foreach ($this->config[static::CONDITION_PLUGINS] as $conditionName => $conditionPlugin) {
+            $conditionCollection->add(new $conditionPlugin(), $conditionName);
+        }
+
+        // ConditionPlugins provided in the codeception.yml where the OmsHelper is enabled.
+        // You can use `\SprykerTest\Zed\Oms\Helper\Mock\CommandByOrderPluginMock` and `\SprykerTest\Zed\Oms\Helper\Mock\CommandByItemPluginMock` for testing purposes.
+        $this->getDependencyProviderHelper()->setDependency(
+            OmsDependencyProvider::CONDITION_PLUGINS,
+            $conditionCollection,
+        );
+    }
+
+    /**
+     * Disable the process cache to avoid caching issues.
+     *
+     * @return void
+     */
+    public function disableProcessCache(): void
+    {
+        if (!$this->hasModule(ConfigHelper::class)) {
+            return;
+        }
+
+        $this->setConfig(OmsConstants::ENABLE_PROCESS_CACHE, false);
+    }
+
+    /**
+     * @param string $commandName
+     * @param string $commandPlugin
+     *
+     * @return void
+     */
+    public function addCommand(string $commandName, string $commandPlugin): void
+    {
+        $this->config[static::COMMAND_PLUGINS][$commandName] = $commandPlugin;
+
+        $this->reloadCommands();
+    }
+
+    /**
+     * @param string $conditionName
+     * @param string $conditionPlugin
+     *
+     * @return void
+     */
+    public function addCondition(string $conditionName, string $conditionPlugin): void
+    {
+        $this->config[static::CONDITION_PLUGINS][$conditionName] = $conditionPlugin;
+
+        $this->reloadConditions();
+    }
 
     /**
      * @param array $idSalesOrderItems

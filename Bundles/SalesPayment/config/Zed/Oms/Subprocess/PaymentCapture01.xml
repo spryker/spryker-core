@@ -10,8 +10,21 @@
             <state name="payment capture ready" reserved="true" display="oms.state.payment-pending"/>
             <state name="payment capture pending" reserved="true" display="oms.state.payment-pending"/>
             <state name="payment captured" reserved="true" display="oms.state.paid"/>
+            <state name="payment fully captured" reserved="true" display="oms.state.fully-paid"/>
             <state name="payment failed" reserved="true" display="oms.state.payment-pending"/>
+            <state name="payment underpaid" reserved="true" display="oms.state.underpaid"/>
+            <state name="payment overpaid" reserved="true" display="oms.state.overpaid"/>
         </states>
+
+        <events>
+            <event name="payment capture successful"/>
+            <event name="payment capture failed"/>
+            <event name="payment underpaid"/>
+            <event name="payment overpay checked"/>
+            <event name="retry payment" manual="true"/>
+            <event name="capture payment" manual="true"/>
+            <event name="start payment capture" onEnter="true" command="Payment/Capture"/>
+        </events>
 
         <transitions>
             <transition happy="true">
@@ -26,10 +39,37 @@
                 <event>payment capture successful</event>
             </transition>
 
+            <transition happy="true" condition="Payment/IsCaptured">
+                <source>payment capture pending</source>
+                <target>payment captured</target>
+            </transition>
+
+            <transition condition="Payment/IsOverpaid">
+                <source>payment captured</source>
+                <target>payment overpaid</target>
+                <event>payment overpay checked</event>
+            </transition>
+
+            <transition happy="true">
+                <source>payment captured</source>
+                <target>payment fully captured</target>
+                <event>payment overpay checked</event>
+            </transition>
+
             <transition>
                 <source>payment capture pending</source>
                 <target>payment failed</target>
                 <event>payment capture failed</event>
+            </transition>
+
+            <transition condition="Payment/IsUnderpaid">
+                <source>payment capture pending</source>
+                <target>payment failed</target>
+            </transition>
+
+            <transition condition="Payment/IsCaptureFailed">
+                <source>payment capture pending</source>
+                <target>payment failed</target>
             </transition>
 
             <transition>
@@ -43,15 +83,12 @@
                 <target>payment capture ready</target>
                 <event>retry payment</event>
             </transition>
-        </transitions>
 
-        <events>
-            <event name="payment capture successful"/>
-            <event name="payment capture failed"/>
-            <event name="retry payment" manual="true"/>
-            <event name="capture payment" manual="true"/>
-            <event name="start payment capture" onEnter="true" command="Payment/Capture"/>
-        </events>
+            <transition condition="Payment/IsUnderpaid">
+                <source>payment failed</source>
+                <target>payment underpaid</target>
+            </transition>
+        </transitions>
     </process>
 
 </statemachine>

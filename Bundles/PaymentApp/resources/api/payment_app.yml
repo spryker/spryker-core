@@ -1,0 +1,118 @@
+asyncapi: 2.6.0
+info:
+    title: 'PaymentApp AsyncAPI definition.'
+    version: 0.1.1
+channels:
+    payment-events:
+        publish:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/PaymentAuthorized'
+                    - $ref: '#/components/messages/PaymentAuthorizationFailed'
+                    - $ref: '#/components/messages/PaymentCaptured'
+                    - $ref: '#/components/messages/PaymentCaptureFailed'
+                    - $ref: '#/components/messages/PaymentCanceled'
+                    - $ref: '#/components/messages/PaymentCancellationFailed'
+                    - $ref: '#/components/messages/PaymentOverpaid'
+                    - $ref: '#/components/messages/PaymentUnderpaid'
+
+components:
+    messages:
+        PaymentAuthorized:
+            name: PaymentAuthorized
+            x-spryker:
+                module: PaymentApp
+            summary: 'Handle payment preauthorization event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+
+        PaymentAuthorizationFailed:
+            name: PaymentAuthorizationFailed
+            x-spryker:
+                module: PaymentApp
+            summary: 'Handle payment preauthorization failure event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+
+        PaymentCaptured:
+            name: PaymentCaptured
+            x-spryker:
+                module: PaymentApp
+            summary: 'Handle payment confirmation event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+
+        PaymentCaptureFailed:
+            name: PaymentCaptureFailed
+            x-spryker:
+                module: PaymentApp
+            summary: 'Handle payment confirmation failure event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+
+        PaymentCanceled:
+            name: PaymentCanceled
+            x-spryker:
+                module: PaymentApp
+            summary: 'Handle payment reservation cancellation event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+
+        PaymentCancellationFailed:
+            name: PaymentCancellationFailed
+            x-spryker:
+                module: PaymentApp
+            summary: 'Handle payment reservation cancellation failure event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+
+        PaymentOverpaid:
+            name: PaymentOverpaid
+            x-spryker:
+                module: PaymentApp
+            summary: 'Handle payment reservation cancellation failure event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+
+        PaymentUnderpaid:
+            name: PaymentOverpaid
+            x-spryker:
+                module: PaymentApp
+            summary: 'Handle payment reservation cancellation failure event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+
+    schemas:
+        PaymentPayload:
+            type: object
+            properties:
+                orderReference:
+                    type: string
+                orderItemIds:
+                    type: array
+                amount:
+                    type: integer
+                currencyIsoCode:
+                    type: string
+            required:
+                - orderReference
+                - orderItemIds
+
+        message-broker:
+            $ref: 'https://raw.githubusercontent.com/spryker/message-broker/1.6.0/resources/api/template.yml'

@@ -26,22 +26,18 @@ use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapperInterface;
 use SprykerTest\Shared\Sales\Helper\Config\TesterSalesConfig;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
-use SprykerTest\Zed\Oms\Helper\OmsHelper;
+use SprykerTest\Zed\Oms\Helper\OmsHelperTrait;
 
 class SalesDataHelper extends Module
 {
     use LocatorHelperTrait;
     use DataCleanupHelperTrait;
-
-    /**
-     * @var string
-     */
-    public const NAMESPACE_ROOT = '\\';
+    use OmsHelperTrait;
 
     /**
      * @var array<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface>
      */
-    protected $saveOrderStack = [];
+    protected array $saveOrderStack = [];
 
     /**
      * @param array $override
@@ -120,7 +116,7 @@ class SalesDataHelper extends Module
         ?string $stateMachineProcessName = null,
         array $saveOrderStack = []
     ): SaveOrderTransfer {
-        $this->getOmsHelperModule()->configureTestStateMachine([$stateMachineProcessName]);
+        $this->getOmsHelper()->configureTestStateMachine([$stateMachineProcessName]);
 
         $this->saveOrderStack = $saveOrderStack;
 
@@ -208,20 +204,6 @@ class SalesDataHelper extends Module
         foreach ($this->saveOrderStack as $orderSaver) {
             $orderSaver->saveOrder($quoteTransfer, $saveOrderTransfer);
         }
-    }
-
-    /**
-     * @return \Codeception\Module|\SprykerTest\Zed\Oms\Helper\OmsHelper
-     */
-    protected function getOmsHelperModule(): OmsHelper
-    {
-        if ($this->hasModule(static::NAMESPACE_ROOT . OmsHelper::class)) {
-            return $this->getModule(static::NAMESPACE_ROOT . OmsHelper::class);
-        }
-
-        $this->moduleContainer->create(static::NAMESPACE_ROOT . OmsHelper::class);
-
-        return $this->getModule(static::NAMESPACE_ROOT . OmsHelper::class);
     }
 
     /**

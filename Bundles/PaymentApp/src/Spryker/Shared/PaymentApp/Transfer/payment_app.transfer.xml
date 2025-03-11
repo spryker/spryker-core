@@ -125,4 +125,143 @@
     <transfer name="Item">
     </transfer>
 
+    <transfer name="PaymentAppStatusUpdated">
+        <property name="orderReference" type="string"/>
+        <property name="transactionId" type="string"/>
+        <property name="status" type="string"/>
+        <property name="context" type="string"/>
+    </transfer>
+
+    <!-- Asynchronous Messages -->
+    <!-- Authorize Messages -->
+    <transfer name="PaymentAuthorized">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentAuthorizationFailed">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <!-- Capture Messages -->
+    <transfer name="PaymentCaptured">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentCaptureFailed">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <!-- Cancel Messages -->
+    <transfer name="PaymentCanceled">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentCancellationFailed">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentOverpaid">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentUnderpaid">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+    <!-- EOF Payment Messages -->
+
+    <transfer name="AddPaymentMethod">
+        <property name="name" type="string"/>
+        <property name="providerName" type="string"/>
+        <property name="paymentAuthorizationEndpoint" type="string"/>
+        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="UpdatePaymentMethod">
+        <property name="name" type="string"/>
+        <property name="providerName" type="string"/>
+        <property name="paymentAuthorizationEndpoint" type="string"/>
+        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="DeletePaymentMethod">
+        <property name="name" type="string"/>
+        <property name="providerName" type="string"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentCreated" strict="true">
+        <property name="entityReference" type="string" strict="true"/>
+        <property name="paymentReference" type="string" strict="true"/>
+        <property name="details" type="string" strict="true"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentUpdated" strict="true">
+        <property name="entityReference" type="string" strict="true"/>
+        <property name="paymentReference" type="string" strict="true"/>
+        <property name="details" type="string" strict="true"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentAppPaymentStatus">
+        <property name="orderReference" type="string"/>
+        <property name="transactionId" type="string"/>
+        <property name="status" type="string"/>
+    </transfer>
+
+    <transfer name="MessageAttributes">
+    </transfer>
+    <!-- EOF Payment Messages -->
+
+    <transfer name="PaymentAppPaymentStatusRequest">
+        <property name="orderReference" type="string"/>
+        <property name="status" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentAppPaymentStatusResponse">
+        <property name="isInExpectedState" type="bool"/>
+    </transfer>
+
+    <transfer name="PaymentAppPaymentStatusCriteria">
+        <property name="orderReferences" type="array" singular="orderReferences"/>
+    </transfer>
+
+    <transfer name="PaymentAppPaymentStatusCollection">
+        <property name="paymentAppPaymentStates" type="PaymentAppPaymentStatus[]" singular="paymentAppPaymentStatus"/>
+    </transfer>
+
 </transfers>

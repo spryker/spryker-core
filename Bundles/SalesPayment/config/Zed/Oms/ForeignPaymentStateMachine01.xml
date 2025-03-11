@@ -34,12 +34,6 @@
                 <event>created</event>
             </transition>
 
-            <transition happy="true">
-                <source>payment pending</source>
-                <target>payment captured</target>
-                <event>payment capture successful</event>
-            </transition>
-
             <transition>
                 <source>payment pending</source>
                 <target>payment cancellation ready</target>
@@ -52,10 +46,9 @@
                 <event>cancel</event>
             </transition>
 
-            <transition>
+            <transition condition="Payment/IsCaptureFailed">
                 <source>payment pending</source>
                 <target>payment failed</target>
-                <event>payment capture failed</event>
             </transition>
 
             <transition happy="true">
@@ -65,7 +58,7 @@
             </transition>
 
             <transition happy="true">
-                <source>payment captured</source>
+                <source>payment fully captured</source>
                 <target>commission calculated</target>
                 <event>commission calculate</event>
             </transition>

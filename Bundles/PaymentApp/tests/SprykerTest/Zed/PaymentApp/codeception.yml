@@ -33,6 +33,32 @@ suites:
         modules:
             enabled:
                 - Asserts
+                - \Spryker\Zed\TestifyAsyncApi\Business\Codeception\Helper\AsyncApiHelper:
+                      asyncapi: resources/api/payment_app.yml
+                      handlers:
+                          - \Spryker\Zed\PaymentApp\Communication\Plugin\MessageBroker\PaymentAppOperationsMessageHandlerPlugin
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Zed\Sales\Helper\BusinessHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesOmsHelper
+                - \SprykerTest\Shared\Payment\Helper\PaymentDataHelper
+                - \SprykerTest\Shared\PaymentApp\Helper\PaymentAppHelper
+                - \SprykerTest\Zed\PaymentApp\Helper\PaymentAppMessageHelper
+
+    Integration:
+        path: Integration
+        actor: PaymentAppIntegrationTester
+        modules:
+            enabled:
+                - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
@@ -41,3 +67,33 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Shared\Payment\Helper\PaymentDataHelper
                 - \SprykerTest\Shared\PaymentApp\Helper\PaymentAppHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Zed\PaymentApp\Helper\PaymentAppOmsSalesHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesOmsHelper
+                - \SprykerTest\Zed\PaymentApp\Helper\PaymentAppMessageHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper:
+                      conditions:
+                          Payment/IsAuthorizationFailed: \Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusAuthorizationFailedConditionPlugin
+                          Payment/IsAuthorized: \Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusAuthorizedConditionPlugin
+                          Payment/IsCanceled: \Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusCanceledConditionPlugin
+                          Payment/IsCancellationFailed: \Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusCancellationFailedConditionPlugin
+                          Payment/IsCaptured: \Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusCapturedConditionPlugin
+                          Payment/IsCaptureFailed: \Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusCaptureFailedConditionPlugin
+                          Payment/IsCaptureRequested: \Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusCaptureRequestedConditionPlugin
+                          Payment/IsOverpaid: \Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusOverpaidConditionPlugin
+                          Payment/IsUnderpaid: \Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusUnderpaidConditionPlugin
+                          SalesPaymentMerchant/IsMerchantPaidOut: \SprykerTest\Zed\Oms\Helper\Mock\AlwaysTrueConditionPluginMock
+                      commands:
+                          Payment/Capture: \SprykerTest\Zed\Oms\Helper\Mock\CommandByOrderPluginMock
+                          Payment/Cancel: \SprykerTest\Zed\Oms\Helper\Mock\CommandByOrderPluginMock
+                          MerchantCommission/Calculate: \SprykerTest\Zed\Oms\Helper\Mock\CommandByOrderPluginMock
+                          MerchantSalesOrder/CreateOrders: \SprykerTest\Zed\Oms\Helper\Mock\CommandByOrderPluginMock
+                          SalesPaymentMerchant/Payout: \SprykerTest\Zed\Oms\Helper\Mock\CommandByOrderPluginMock
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \Spryker\Zed\TestifyAsyncApi\Business\Codeception\Helper\AsyncApiHelper:
+                      asyncapi: resources/api/payment_app.yml
+                      handlers:
+                          - \Spryker\Zed\PaymentApp\Communication\Plugin\MessageBroker\PaymentAppOperationsMessageHandlerPlugin

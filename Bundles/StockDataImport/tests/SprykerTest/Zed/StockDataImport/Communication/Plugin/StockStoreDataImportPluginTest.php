@@ -50,6 +50,9 @@ class StockStoreDataImportPluginTest extends Unit
             StockTransfer::NAME => 'Warehouse2',
         ]);
         $this->tester->haveStore([
+            StoreTransfer::NAME => 'US',
+        ]);
+        $this->tester->haveStore([
             StoreTransfer::NAME => 'DE',
         ]);
         $this->tester->haveStore([

@@ -19,6 +19,146 @@ class SalesPaymentHelper extends AbstractHelper
     use InMemoryMessageBrokerHelperTrait;
 
     /**
+     * @var string
+     */
+    public const STATE_NEW = 'new';
+
+    /**
+     * @var string
+     */
+    public const STATE_PAYMENT_PENDING = 'payment pending';
+
+    /**
+     * @var string
+     */
+    public const STATE_PAYMENT_AUTHORIZED = 'payment authorized';
+
+    /**
+     * @var string
+     */
+    public const STATE_PAYMENT_AUTHORIZATION_FAILED = 'payment authorization failed';
+
+    /**
+     * @var string
+     */
+    public const STATE_PAYMENT_AUTHORIZATION_CANCELED = 'payment authorization canceled';
+
+    /**
+     * @var string
+     */
+    public const STATE_PAYMENT_CANCELLATION_READY = 'payment cancellation ready';
+
+    /**
+     * @var string
+     */
+    public const STATE_PAYMENT_CANCELLATION_PENDING = 'payment cancellation pending';
+
+    /**
+     * @var string
+     */
+    public const STATE_PAYMENT_CANCELLATION_FAILED = 'payment cancellation failed';
+
+    /**
+     * @var string
+     */
+    public const STATE_PAYMENT_CANCELLED = 'payment cancelled';
+
+    /**
+     * @var string
+     */
+    public const STATE_PAYMENT_CAPTURE_READY = 'payment capture ready';
+
+    /**
+     * @var string
+     */
+    public const STATE_PAYMENT_CAPTURE_PENDING = 'payment capture pending';
+
+    /**
+     * @var string
+     */
+    public const STATE_PAYMENT_FAILED = 'payment failed';
+
+    /**
+     * @var string
+     */
+    public const STATE_PAYMENT_UNDERPAID = 'payment underpaid';
+
+    /**
+     * @var string
+     */
+    public const STATE_PAYMENT_OVERPAID = 'payment overpaid';
+
+    /**
+     * @var string
+     */
+    public const STATE_PAYMENT_CAPTURED = 'payment captured';
+
+    /**
+     * @var string
+     */
+    public const STATE_PAYMENT_CAPTURE_FAILED = 'payment capture failed';
+
+    /**
+     * @var string
+     */
+    public const STATE_COMMISSION_CALCULATED = 'commission calculated';
+
+    /**
+     * @var string
+     */
+    public const STATE_SENT_TO_MERCHANT = 'sent to merchant';
+
+    /**
+     * @var string
+     */
+    public const STATE_MERCHANT_PAYOUT_READY = 'merchant payout ready';
+
+    /**
+     * @var string
+     */
+    public const STATE_DELIVERED = 'delivered';
+
+    /**
+     * @var string
+     */
+    public const STATE_CLOSED = 'closed';
+
+    /**
+     * @var string
+     */
+    public const STATE_CANCELED = 'canceled';
+
+    /**
+     * @var string
+     */
+    public const EVENT_CAPTURE_PAYMENT = 'capture payment';
+
+    /**
+     * @var string
+     */
+    public const EVENT_PAYMENT_OVERPAY_CHECKED = 'payment overpay checked';
+
+    /**
+     * @var string
+     */
+    public const EVENT_DELIVER = 'deliver';
+
+    /**
+     * @var string
+     */
+    public const EVENT_MERCHANT_PAYOUT = 'merchant payout';
+
+    /**
+     * @var string
+     */
+    public const EVENT_CANCEL = 'cancel';
+
+    /**
+     * @var string
+     */
+    public const EVENT_CLOSE = 'close';
+
+    /**
      * @param array $seed
      *
      * @return \Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer

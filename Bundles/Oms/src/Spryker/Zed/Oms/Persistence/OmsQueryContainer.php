@@ -115,10 +115,12 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     ): SpySalesOrderItemQuery {
         $storeName = $omsCheckConditionsQueryCriteriaTransfer->getStoreName();
         $limit = $omsCheckConditionsQueryCriteriaTransfer->getLimit();
+        // Required for testing to be able to run for known sales order items
+        $salesOrderItemsIds = $omsCheckConditionsQueryCriteriaTransfer->getSalesOrderItemIds();
         $omsProcessorIdentifiers = $omsCheckConditionsQueryCriteriaTransfer->getOmsProcessorIdentifiers();
 
         $baseQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
-        $baseQuery->addSelectQuery($this->buildSubQueryForSalesOrderByItemStateQuery($idOmsOrderProcess, $omsOrderItemStateIds, $storeName, $limit, $omsProcessorIdentifiers), 't', false)
+        $baseQuery->addSelectQuery($this->buildSubQueryForSalesOrderByItemStateQuery($idOmsOrderProcess, $omsOrderItemStateIds, $storeName, $limit, $omsProcessorIdentifiers, $salesOrderItemsIds), 't', false)
             ->addSelfSelectColumns()
             ->addSelectColumn('t.fk_sales_order')
             ->filterByFkOmsOrderProcess($idOmsOrderProcess)
@@ -148,6 +150,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      * @param string|null $storeName
      * @param int|null $limit
      * @param array<int> $omsProcessorIdentifiers
+     * @param array<int> $salesOrderItemsIds Required for testing to be able to run for known sales order items
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
@@ -156,7 +159,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         array $omsOrderItemStateIds,
         ?string $storeName = null,
         ?int $limit = null,
-        array $omsProcessorIdentifiers = []
+        array $omsProcessorIdentifiers = [],
+        array $salesOrderItemsIds = []
     ) {
         $subQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
         $subQuery
@@ -168,6 +172,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         $subQuery = $this->addStoreFilterToSalesOrderItemQuery($subQuery, $storeName);
         $subQuery = $this->addOmsProcessorIdentifierFilterToSalesOrderItemQuery($subQuery, $omsProcessorIdentifiers);
         $subQuery = $this->addLimitToSalesOrderItemQuery($subQuery, $limit);
+        $subQuery = $this->addSalesOrderItemsIdsToSalesOrderItemQuery($subQuery, $salesOrderItemsIds);
 
         return $subQuery;
     }
@@ -351,6 +356,23 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     {
         if ($limit !== null) {
             $query->limit($limit);
+        }
+
+        return $query;
+    }
+
+    /**
+     * Required for testing to be able to run for known sales order items
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
+     * @param array<int> $salesOrderItemsIds
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function addSalesOrderItemsIdsToSalesOrderItemQuery(SpySalesOrderItemQuery $query, array $salesOrderItemsIds): SpySalesOrderItemQuery
+    {
+        if (count($salesOrderItemsIds) > 0) {
+            $query->filterByIdSalesOrderItem_In($salesOrderItemsIds);
         }
 
         return $query;

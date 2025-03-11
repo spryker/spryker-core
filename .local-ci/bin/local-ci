@@ -11,6 +11,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
+use Spryker\Shared\Config\Application\Environment;
+use Spryker\Zed\ModuleFinder\Business\ModuleFinderFacade;
+
+!defined('APPLICATION_ROOT_DIR') && define('APPLICATION_ROOT_DIR', getcwd());
+!defined('APPLICATION') && define('APPLICATION', 'Zed');
+
+Environment::initialize();
 
 $application = new Application('Local CI', '1.0.0');
 $application->add(new class extends Command {
@@ -60,6 +67,45 @@ DESC
         $errors = [];
 
         $moduleList = $this->getModuleList();
+
+        $filterChain = new \Laminas\Filter\FilterChain();
+        $filterChain->attach(new \Laminas\Filter\Word\CamelCaseToDash());
+        $filterChain->attach(new \Laminas\Filter\Word\SeparatorToSeparator('.', '/'));
+        $filterChain->attach(new \Laminas\Filter\StringToLower());
+
+        $packageList = [];
+
+        foreach ($moduleList as $moduleCiDefinition) {
+            $packageList[] = $filterChain->filter($moduleCiDefinition['module']);
+        }
+
+        $moduleFinderFacade = new ModuleFinderFacade();
+        $allModulesList = $moduleFinderFacade->getModules();
+
+        $changedModulesUsingModules = [];
+
+        foreach ($allModulesList as $moduleTransfer) {
+            $composerJsonPath = $moduleTransfer->getPath() . '/composer.json';
+
+            if (!file_exists($composerJsonPath)) {
+                continue;
+            }
+
+            $composerJsonContent = file_get_contents($composerJsonPath);
+
+            foreach ($packageList as $package) {
+                if (strpos($composerJsonContent, $package) === false) {
+                    continue;
+                }
+
+                $moduleUsingModuleModule = sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());
+
+                $changedModulesUsingModules[$moduleUsingModuleModule][] = $package;
+            }
+        }
+
+        $output->writeln(sprintf('Your changed modules are used by <fg=green>%s</> other modules.', count($changedModulesUsingModules)), OutputInterface::VERBOSITY_NORMAL);
+
         $commandList = $this->getCommands();
 
         if ($input->getOption('pre')) {
