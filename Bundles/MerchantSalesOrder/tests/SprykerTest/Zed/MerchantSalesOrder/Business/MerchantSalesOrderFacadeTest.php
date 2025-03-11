@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Zed\MerchantSalesOrder\MerchantSalesOrderDependencyProvider;
+use Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderTotalsPreRecalculatePluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -39,6 +41,9 @@ class MerchantSalesOrderFacadeTest extends Unit
      */
     protected const TEST_MERCHANT_ORDER_ITEM_ID = 1;
 
+    /**
+     * @var int
+     */
     protected const TEST_INVALID_MERCHANT_ORDER_ITEM_ID = -1;
 
     /**
@@ -424,6 +429,32 @@ class MerchantSalesOrderFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testShouldExecuteMerchantOrderTotalsPreRecalculatePlugins(): void
+    {
+        // Assert
+        $pluginMock = $this->createMock(MerchantOrderTotalsPreRecalculatePluginInterface::class);
+        $pluginMock
+            ->expects($this->once())
+            ->method('preRecalculate')
+            ->willReturnCallback(
+                function (OrderTransfer $orderTransfer, MerchantOrderTransfer $merchantOrderTransfer) {
+                    return $orderTransfer;
+                },
+            );
+
+        // Arrange
+        $this->tester->setDependency(
+            MerchantSalesOrderDependencyProvider::PLUGINS_MERCHANT_ORDER_TOTALS_PRE_RECALCULATE,
+            [$pluginMock],
+        );
+
+        // Act
+        $this->tester->getFacade()->createMerchantOrderCollection($this->createMainOrder());
+    }
+
+    /**
+     * @return void
+     */
     public function testExpandOrderWithMerchantReferencess(): void
     {
         // Arrange
@@ -702,5 +733,19 @@ class MerchantSalesOrderFacadeTest extends Unit
                 ],
             ],
         ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function createMainOrder(): OrderTransfer
+    {
+        $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+
+        return (new OrderTransfer())
+            ->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder())
+            ->setOrderReference($saveOrderTransfer->getOrderReference())
+            ->setItems($saveOrderTransfer->getOrderItems());
     }
 }

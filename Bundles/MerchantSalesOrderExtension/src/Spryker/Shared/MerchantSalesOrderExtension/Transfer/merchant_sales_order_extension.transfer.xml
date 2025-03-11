@@ -4,4 +4,7 @@
     <transfer name="MerchantOrder">
     </transfer>
 
+    <transfer name="Order">
+    </transfer>
+
 </transfers>

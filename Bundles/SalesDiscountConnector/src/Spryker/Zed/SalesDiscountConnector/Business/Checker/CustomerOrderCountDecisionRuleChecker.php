@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\SalesDiscountConnector\Dependency\Facade\SalesDiscountConnectorToDiscountFacadeInterface;
 use Spryker\Zed\SalesDiscountConnector\Dependency\Facade\SalesDiscountConnectorToSalesFacadeInterface;
+use Spryker\Zed\SalesDiscountConnector\SalesDiscountConnectorConfig;
 
 class CustomerOrderCountDecisionRuleChecker implements CustomerOrderCountDecisionRuleCheckerInterface
 {
@@ -26,15 +27,23 @@ class CustomerOrderCountDecisionRuleChecker implements CustomerOrderCountDecisio
     protected SalesDiscountConnectorToSalesFacadeInterface $salesFacade;
 
     /**
+     * @var \Spryker\Zed\SalesDiscountConnector\SalesDiscountConnectorConfig
+     */
+    protected SalesDiscountConnectorConfig $salesDiscountConnectorConfig;
+
+    /**
      * @param \Spryker\Zed\SalesDiscountConnector\Dependency\Facade\SalesDiscountConnectorToDiscountFacadeInterface $discountFacade
      * @param \Spryker\Zed\SalesDiscountConnector\Dependency\Facade\SalesDiscountConnectorToSalesFacadeInterface $salesFacade
+     * @param \Spryker\Zed\SalesDiscountConnector\SalesDiscountConnectorConfig $salesDiscountConnectorConfig
      */
     public function __construct(
         SalesDiscountConnectorToDiscountFacadeInterface $discountFacade,
-        SalesDiscountConnectorToSalesFacadeInterface $salesFacade
+        SalesDiscountConnectorToSalesFacadeInterface $salesFacade,
+        SalesDiscountConnectorConfig $salesDiscountConnectorConfig
     ) {
         $this->discountFacade = $discountFacade;
         $this->salesFacade = $salesFacade;
+        $this->salesDiscountConnectorConfig = $salesDiscountConnectorConfig;
     }
 
     /**
@@ -53,11 +62,41 @@ class CustomerOrderCountDecisionRuleChecker implements CustomerOrderCountDecisio
         $orderListTransfer = (new OrderListTransfer())
             ->setWithoutSearchOrderExpanders(true);
 
-        $customerOrderCount = $this->salesFacade
+        $orderTransfers = $this->salesFacade
             ->getCustomerOrders($orderListTransfer, $idCustomer)
-            ->getOrders()
-            ->count();
+            ->getOrders();
+
+        $customerOrderCount = $this->excludeCurrentOrderFromCount(
+            $quoteTransfer,
+            $orderListTransfer,
+            $orderTransfers->count(),
+        );
 
         return $this->discountFacade->queryStringCompare($clauseTransfer, $customerOrderCount);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param int $customerOrderCount
+     *
+     * @return int
+     */
+    protected function excludeCurrentOrderFromCount(
+        QuoteTransfer $quoteTransfer,
+        OrderListTransfer $orderListTransfer,
+        int $customerOrderCount
+    ): int {
+        if (!$this->salesDiscountConnectorConfig->isCurrentOrderExcludedFromCount() || !$quoteTransfer->getOrderReference()) {
+            return $customerOrderCount;
+        }
+
+        foreach ($orderListTransfer->getOrders() as $orderTransfer) {
+            if ($orderTransfer->getOrderReferenceOrFail() === $quoteTransfer->getOrderReferenceOrFail()) {
+                return $customerOrderCount - 1;
+            }
+        }
+
+        return $customerOrderCount;
     }
 }

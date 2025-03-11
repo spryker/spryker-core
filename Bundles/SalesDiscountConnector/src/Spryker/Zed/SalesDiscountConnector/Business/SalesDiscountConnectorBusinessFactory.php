@@ -27,6 +27,7 @@ class SalesDiscountConnectorBusinessFactory extends AbstractBusinessFactory
         return new CustomerOrderCountDecisionRuleChecker(
             $this->getDiscountFacade(),
             $this->getSalesFacade(),
+            $this->getConfig(),
         );
     }
 

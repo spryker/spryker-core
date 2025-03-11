@@ -32,6 +32,7 @@ interface MerchantSalesOrderFacadeInterface
      * - Creates a new merchant order for each unique merchant reference found.
      * - Creates a new merchant order item for each order item with merchant reference and assign it to a merchant order accordingly.
      * - Creates a new merchant order totals and assign it to a merchant order accordingly.
+     * - Executes {@link \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderTotalsPreRecalculatePluginInterface} plugin stack.
      * - Returns a collection of merchant orders filled with merchant order items and merchant order totals.
      * - Executes MerchantOrderPostCreatePluginInterface plugin stack.
      *

@@ -49,6 +49,11 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
     public const PLUGINS_MERCHANT_ORDER_FILTER = 'PLUGINS_MERCHANT_ORDER_FILTER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_MERCHANT_ORDER_TOTALS_PRE_RECALCULATE = 'PLUGINS_MERCHANT_ORDER_TOTALS_PRE_RECALCULATE';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -63,6 +68,7 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addMerchantOrderPostCreatePlugins($container);
         $container = $this->addMerchantOrderExpanderPlugins($container);
         $container = $this->addMerchantOrderFilterPlugins($container);
+        $container = $this->addMerchantOrderTotalsPreRecalculatePlugins($container);
 
         return $container;
     }
@@ -162,6 +168,20 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantOrderTotalsPreRecalculatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_ORDER_TOTALS_PRE_RECALCULATE, function () {
+            return $this->getMerchantOrderTotalsPreRecalculatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderExpanderPluginInterface>
      */
     protected function getMerchantOrderExpanderPlugins(): array
@@ -173,6 +193,14 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
      * @return array<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface>
      */
     protected function getMerchantOrderFilterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderTotalsPreRecalculatePluginInterface>
+     */
+    protected function getMerchantOrderTotalsPreRecalculatePlugins(): array
     {
         return [];
     }

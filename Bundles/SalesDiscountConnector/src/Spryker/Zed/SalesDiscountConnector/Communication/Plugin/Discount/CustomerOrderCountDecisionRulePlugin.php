@@ -36,6 +36,7 @@ class CustomerOrderCountDecisionRulePlugin extends AbstractPlugin implements Dec
      * - Expects `QuoteTransfer.customer` to be set.
      * - Expects `QuoteTransfer.customer.idCustomer` to be set.
      * - Checks if customer's order count matches clause.
+     * - Excludes current order from customer order count if `SalesDiscountConnectorConfig::isCurrentOrderExcludedFromCount()` is set to `true`.
      *
      * @api
      *

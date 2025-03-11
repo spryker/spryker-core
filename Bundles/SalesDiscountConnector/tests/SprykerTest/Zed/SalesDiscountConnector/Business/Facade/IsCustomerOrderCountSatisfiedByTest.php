@@ -9,9 +9,12 @@ namespace SprykerTest\Zed\SalesDiscountConnector\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CurrencyBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use SprykerTest\Zed\SalesDiscountConnector\SalesDiscountConnectorBusinessTester;
 
 /**
@@ -178,5 +181,78 @@ class IsCustomerOrderCountSatisfiedByTest extends Unit
 
         // Assert
         $this->assertFalse($isCustomerOrderCountSatisfied);
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldBeSatisfiedByCustomerOrderCountWithExcludedCurrentOrderFromCountConfiguration(): void
+    {
+        // Arrange
+        $this->tester->mockConfigMethod('isCurrentOrderExcludedFromCount', true);
+
+        $customerTransfer = $this->tester->haveCustomer();
+        $saveOrderTransfer = $this->createOrder($customerTransfer);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer($customerTransfer)
+            ->setOrderReference($saveOrderTransfer->getOrderReference());
+
+        // Act
+        $isCustomerOrderCountSatisfied = $this->tester
+            ->getFacade()
+            ->isCustomerOrderCountSatisfiedBy(
+                $quoteTransfer,
+                $this->tester->createClauseTransfer(static::EQUAL_EXPRESSION, '0'),
+            );
+
+        // Assert
+        $this->assertTrue($isCustomerOrderCountSatisfied);
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldNotBeSatisfiedByCustomerOrderCountWithExcludedCurrentOrderFromCountConfigurationAndMissedOrderReference(): void
+    {
+        // Arrange
+        $this->tester->mockConfigMethod('isCurrentOrderExcludedFromCount', true);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer($this->tester->haveCustomer())
+            ->setOrderReference(null);
+
+        // Act
+        $isCustomerOrderCountSatisfied = $this->tester
+            ->getFacade()
+            ->isCustomerOrderCountSatisfiedBy(
+                $quoteTransfer,
+                $this->tester->createClauseTransfer(static::EQUAL_EXPRESSION, '1'),
+            );
+
+        // Assert
+        $this->assertFalse($isCustomerOrderCountSatisfied);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    protected function createOrder(CustomerTransfer $customerTransfer): SaveOrderTransfer
+    {
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem()
+            ->withBillingAddress()
+            ->withTotals()
+            ->withCurrency()
+            ->build();
+
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
+        $quoteTransfer
+            ->setStore($storeTransfer)
+            ->setCustomer($customerTransfer);
+
+        return $this->tester->haveOrderFromQuote($quoteTransfer, static::DEFAULT_OMS_PROCESS_NAME);
     }
 }

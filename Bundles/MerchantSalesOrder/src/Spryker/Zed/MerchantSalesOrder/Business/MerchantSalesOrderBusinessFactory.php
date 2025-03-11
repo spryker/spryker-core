@@ -80,7 +80,11 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
      */
     public function createMerchantOrderTotalsCreator(): MerchantOrderTotalsCreatorInterface
     {
-        return new MerchantOrderTotalsCreator($this->getEntityManager(), $this->getCalculationFacade());
+        return new MerchantOrderTotalsCreator(
+            $this->getEntityManager(),
+            $this->getCalculationFacade(),
+            $this->getMerchantOrderTotalsPreRecalculatePlugins(),
+        );
     }
 
     /**
@@ -170,5 +174,13 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     public function getMerchantOrderFilterPlugins(): array
     {
         return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::PLUGINS_MERCHANT_ORDER_FILTER);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderTotalsPreRecalculatePluginInterface>
+     */
+    public function getMerchantOrderTotalsPreRecalculatePlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::PLUGINS_MERCHANT_ORDER_TOTALS_PRE_RECALCULATE);
     }
 }

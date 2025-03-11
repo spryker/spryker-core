@@ -26,15 +26,23 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
     protected $calculationFacade;
 
     /**
+     * @var list<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderTotalsPreRecalculatePluginInterface>
+     */
+    protected array $merchantOrderTotalsPreRecalculatePlugins;
+
+    /**
      * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager
      * @param \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface $calculationFacade
+     * @param list<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderTotalsPreRecalculatePluginInterface> $merchantOrderTotalsPreRecalculatePlugins
      */
     public function __construct(
         MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager,
-        MerchantSalesOrderToCalculationFacadeInterface $calculationFacade
+        MerchantSalesOrderToCalculationFacadeInterface $calculationFacade,
+        array $merchantOrderTotalsPreRecalculatePlugins = []
     ) {
         $this->merchantSalesOrderEntityManager = $merchantSalesOrderEntityManager;
         $this->calculationFacade = $calculationFacade;
+        $this->merchantOrderTotalsPreRecalculatePlugins = $merchantOrderTotalsPreRecalculatePlugins;
     }
 
     /**
@@ -76,6 +84,11 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
             $merchantOrderTransfer,
         );
 
+        $calculationOrderTransfer = $this->executeMerchantOrderTotalsPreRecalculatePlugins(
+            $calculationOrderTransfer,
+            $merchantOrderTransfer,
+        );
+
         $calculationOrderTransfer = $this->calculationFacade->recalculateOrder($calculationOrderTransfer);
         /** @var \Generated\Shared\Transfer\TotalsTransfer $totals */
         $totals = $calculationOrderTransfer->getTotals();
@@ -101,5 +114,22 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
         }
 
         return $calculationOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function executeMerchantOrderTotalsPreRecalculatePlugins(
+        OrderTransfer $orderTransfer,
+        MerchantOrderTransfer $merchantOrderTransfer
+    ): OrderTransfer {
+        foreach ($this->merchantOrderTotalsPreRecalculatePlugins as $merchantOrderTotalsPreRecalculatePlugin) {
+            $orderTransfer = $merchantOrderTotalsPreRecalculatePlugin->preRecalculate($orderTransfer, $merchantOrderTransfer);
+        }
+
+        return $orderTransfer;
     }
 }
