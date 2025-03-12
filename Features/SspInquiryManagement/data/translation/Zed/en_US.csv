@@ -1,49 +1,43 @@
 pending,Pending
-in_review,In Review
+in_review,"In Review"
 approved,Approved
 rejected,Rejected
 canceled,Canceled
-start_review,Start Review
+start_review,"Start Review"
 cancel,Cancel
 approve,Approve
 reject,Reject
 Actions,Actions
 "View Ssp Inquiry: ","View Inquiry: "
-Back to Ssp Inquiries,Back to Inquiries
-General,General
-Ssp Inquiry reference,Inquiry reference
+"Back to Ssp Inquiries","Back to Inquiries"
+"Ssp Inquiry reference","Inquiry reference"
 Reference,Reference
 Date,Date
 Status,Status
 Store,Store
 Customer,Customer
-Customer Email,Customer Email
-Company / Business Unit,Company / Business Unit
-Ssp Inquiry Details,Inquiry Details
-Type,Type
-general,General
+"Customer Email","Customer Email"
+"Company / Business Unit","Company / Business Unit"
+"Ssp Inquiry Details","Inquiry Details"
 order,Order
 Subject,Subject
 Description,Description
 Files,Files
-File name,File name
+"File name","File name"
 Size,Size
-Type,Type
-Actions,Actions
 Download,Download
-Ssp Inquiry status transition is not possible.,Inquiry status transition is not possible.
-Internal Comments,Internal Comments
-File was not found,File was not found
-general,General
-No files available.,No files available.
-Order reference,Order reference
-List of Ssp Inquiries,List of Inquiries
-Show history,Show history
-Select Type,Select Type
-Select Status,Select Status
+"Ssp Inquiry status transition is not possible.","Inquiry status transition is not possible."
+"Internal Comments","Internal Comments"
+"File was not found","File was not found"
+"No files available.","No files available."
+"Order reference","Order reference"
+"List of Ssp Inquiries","List of Inquiries"
+"Show history","Show history"
+"Select Type","Select Type"
+"Select Status","Select Status"
 Filter,Filter
-Ssp Inquiries,Inquiries
-Status,Status
-Date,Date
-Create Reclamation,Create Reclamation
-Overview of Ssp Inquiries,Overview of Inquiries
+"Ssp Inquiries",Inquiries
+"Create Reclamation","Create Reclamation"
+"Overview of Ssp Inquiries","Overview of Inquiries"
+general,General
+Type,Type

@@ -1,4 +1,4 @@
-@mixin shop-ui-advanced-table($name: '.advanced-table') {
+@mixin ssp-inquiry-management-advanced-table($name: '.advanced-table') {
     #{$name} {
         &__container {
             width: 100%;

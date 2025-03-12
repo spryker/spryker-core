@@ -38,6 +38,11 @@ class SspInquiryManagementConfig extends AbstractBundleConfig
     protected const NAME_SSP_INQUIRY_REFERENCE = 'SspInquiryReference';
 
     /**
+     * @var string
+     */
+    protected const MODULE_NAME = 'ssp-inquiry-management';
+
+    /**
      * Specification:
      * - Returns the settings for the ssp inquiry sequence number.
      *
@@ -173,7 +178,7 @@ class SspInquiryManagementConfig extends AbstractBundleConfig
         return (new DataImporterDataSourceConfigurationTransfer())
             ->setImportType(static::IMPORT_TYPE_SSP_INQUIRY)
             ->setFileName('ssp_inquiry.csv')
-            ->setModuleName('SspInquiryManagement')
+            ->setModuleName(static::MODULE_NAME)
             ->setDirectory('/data/data/import/common/common/');
     }
 
