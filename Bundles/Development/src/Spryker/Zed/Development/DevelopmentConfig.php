@@ -111,7 +111,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     protected const INTERNAL_NAMESPACES_TO_PATH_MAPPING = [
         self::NAMESPACE_SPRYKER => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker/',
-        self::NAMESPACE_SPRYKER_FEATURE => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker/',
+        self::NAMESPACE_SPRYKER_FEATURE => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-feature/',
         self::NAMESPACE_SPRYKER_SHOP => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-shop/',
         self::NAMESPACE_SPRYKER_ECO => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-eco/',
         self::NAMESPACE_SPRYKER_SDK => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-sdk/',
@@ -260,6 +260,20 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getPathToShop()
     {
         return $this->getPathToRoot() . 'vendor/spryker-shop/';
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerShopModulePathBuilder::buildPaths()} instead.
+     *
+     * Gets path to SprykerFeature core modules.
+     *
+     * @return string
+     */
+    public function getPathToFeature()
+    {
+        return $this->getPathToRoot() . 'vendor/spryker-feature/';
     }
 
     /**
