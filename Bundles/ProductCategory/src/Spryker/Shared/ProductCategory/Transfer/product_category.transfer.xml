@@ -53,6 +53,8 @@
         <property name="idCategoryNode" type="int"/>
         <property name="category" type="Category"/>
         <property name="childrenNodes" type="NodeCollection"/>
+        <property name="isRoot" type="bool"/>
+        <property name="fkParentCategoryNode" type="int"/>
     </transfer>
 
     <transfer name="ProductAbstract">
@@ -73,6 +75,7 @@
     <transfer name="CategoryCriteria">
         <property name="isRoot" type="bool" deprecated="Use CategoryConditions.isRoot instead."/>
         <property name="withChildrenRecursively" type="bool"/>
+        <property name="categoryConditions" type="CategoryConditions" strict="true"/>
     </transfer>
 
     <transfer name="NodeCollection">
@@ -95,6 +98,10 @@
 
     <transfer name="AclEntityMetadataCollection">
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+    <transfer name="CategoryConditions" strict="true">
+        <property name="categoryIds" type="int[]" singular="idCategory"/>
     </transfer>
 
 </transfers>

@@ -8,10 +8,10 @@
 namespace Spryker\Zed\ProductCategory\Business\Expander;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CategoryConditionsTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Generated\Shared\Transfer\ProductCategoryCollectionTransfer;
 use Generated\Shared\Transfer\ProductCategoryConditionsTransfer;
 use Generated\Shared\Transfer\ProductCategoryCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -20,6 +20,11 @@ use Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface;
 
 class ProductConcreteExpander implements ProductConcreteExpanderInterface
 {
+    /**
+     * @var array<int, \Generated\Shared\Transfer\NodeTransfer|null>
+     */
+    protected static $categoryCache = [];
+
     /**
      * @var \Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface
      */
@@ -47,114 +52,143 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
      */
     public function expandProductConcreteWithProductCategories(array $productConcreteTransfers): array
     {
-        $rootCategory = $this->categoryFacade->findCategory(
-            (new CategoryCriteriaTransfer())
-                ->setIsRoot(true)
-                ->setWithChildrenRecursively(true),
-        );
+        $productCategoryTransferListGroupedByAbstractId = $this->findProductCategoriesIndexedByIdAbstract($productConcreteTransfers);
 
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
-            $productCategoryCollectionTransfer = $this->findProductCategories($productConcreteTransfer);
+            /** @var \ArrayObject<int, \Generated\Shared\Transfer\ProductCategoryTransfer>|null $productCategoryTransferList */
+            $productCategoryTransferList = $productCategoryTransferListGroupedByAbstractId[$productConcreteTransfer->getFkProductAbstract()] ?? null;
 
-            if ($productCategoryCollectionTransfer !== null) {
-                $productConcreteTransfer->setProductCategories($productCategoryCollectionTransfer->getProductCategories());
+            if ($productCategoryTransferList === null) {
+                continue;
             }
 
-            $productCategoriesIds = [];
-            foreach ($productConcreteTransfer->getProductCategories() as $productCategoryTransfer) {
-                $productCategoriesIds[] = $productCategoryTransfer->getFkCategory();
+            $productConcreteTransfer->setProductCategories($productCategoryTransferList);
+
+            $productCategoryIds = [];
+            foreach ($productCategoryTransferList as $productCategoryTransfer) {
+                $productCategoryIds[] = $productCategoryTransfer->getFkCategory();
             }
 
-            $filteredCategoryTree = $this->filterCategoryTree($productCategoriesIds, $rootCategory->getNodeCollection());
-
-            $productConcreteTransfer->setRelatedCategoryTreeNodes($filteredCategoryTree);
+            $productConcreteTransfer->setRelatedCategoryTreeNodes($this->getRelatedCategoryTreeNodes($productCategoryIds));
         }
 
         return $productConcreteTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param array<int, \Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer|null
+     * @return array<int, \ArrayObject<int, \Generated\Shared\Transfer\ProductCategoryTransfer>>
      */
-    protected function findProductCategories(ProductConcreteTransfer $productConcreteTransfer): ?ProductCategoryCollectionTransfer
+    protected function findProductCategoriesIndexedByIdAbstract(array $productConcreteTransfers): array
     {
-        if ($productConcreteTransfer->getFkProductAbstract() === null) {
-            return null;
+        $productAbstractIds = $this->getProductAbstractIdsFromProductConcreteCollection($productConcreteTransfers);
+
+        if ($productAbstractIds === []) {
+            return [];
         }
 
-        $productCategoryConditionsTransfer = (new ProductCategoryConditionsTransfer())
-            ->setProductAbstractIds([$productConcreteTransfer->getFkProductAbstract()]);
-
+        // Reading child categories for abstract products
         $productCategoryCriteriaTransfer = (new ProductCategoryCriteriaTransfer())
-            ->setProductCategoryConditions($productCategoryConditionsTransfer);
+            ->setProductCategoryConditions(
+                (new ProductCategoryConditionsTransfer())
+                    ->setProductAbstractIds($productAbstractIds),
+            );
+        $productCategoryCollectionTransfer = $this->productCategoryRepository->getProductCategoryCollection($productCategoryCriteriaTransfer);
+        $productCategories = [];
+        foreach ($productCategoryCollectionTransfer->getProductCategories() as $productCategoryTransfer) {
+            if (!isset($productCategories[$productCategoryTransfer->getFkProductAbstractOrFail()])) {
+                $productCategories[$productCategoryTransfer->getFkProductAbstractOrFail()] = new ArrayObject();
+            }
+            $productCategories[$productCategoryTransfer->getFkProductAbstractOrFail()]->append($productCategoryTransfer);
+        }
 
-        return $this->productCategoryRepository->getProductCategoryCollection($productCategoryCriteriaTransfer);
+        return $productCategories;
     }
 
     /**
-     * @param array<int> $productCategoriesIds
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\NodeTransfer>
+     * @return array<int>
      */
-    protected function filterCategoryTree(array $productCategoriesIds, NodeCollectionTransfer $nodeCollectionTransfer): ArrayObject
+    protected function getProductAbstractIdsFromProductConcreteCollection(array $productConcreteTransfers): array
     {
-        if (!$productCategoriesIds) {
-            return new ArrayObject();
-        }
+        $productAbstractIds = array_map(fn (ProductConcreteTransfer $productConcreteTransfer) => $productConcreteTransfer->getFkProductAbstract(), $productConcreteTransfers);
 
-        $filteredCategoryNodeStorageTransfers = new ArrayObject();
-
-        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
-            $include = false;
-            $includeChildren = false;
-
-            $nodeTransfer = (new NodeTransfer())
-                ->fromArray($nodeTransfer->toArray());
-
-            if (in_array($nodeTransfer->getCategory()->getIdCategoryOrFail(), $productCategoriesIds)) {
-                // current category is one of assigned product categories so it should be included in the list
-                $include = true;
-            }
-
-            // check if any children of current category should be included in the list
-            $includedChildren = $this->getIncludedChildrenFromTreeNode($nodeTransfer, $productCategoriesIds);
-
-            if (count($includedChildren)) {
-                $nodeTransfer->setChildrenNodes(
-                    (new NodeCollectionTransfer())->setNodes(new ArrayObject($includedChildren)),
-                );
-                $include = true;
-                $includeChildren = true;
-                // current category children nodes are one of assigned product categories so they should be included in the list
-            }
-
-            if (!$includeChildren) {
-                $nodeTransfer->setChildrenNodes(new NodeCollectionTransfer());
-            }
-
-            if ($include) {
-                $filteredCategoryNodeStorageTransfers->append($nodeTransfer);
-            }
-        }
-
-        return $filteredCategoryNodeStorageTransfers;
+         return array_unique(array_filter($productAbstractIds));
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param array $productCategoriesIds
+     * @param array<int> $productCategoryIds
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\NodeTransfer>
      */
-    protected function getIncludedChildrenFromTreeNode(NodeTransfer $nodeTransfer, array $productCategoriesIds): ArrayObject
+    protected function getRelatedCategoryTreeNodes(array $productCategoryIds): ArrayObject
     {
-        if ($nodeTransfer->getChildrenNodes()->getNodes()->count()) {
-            return $this->filterCategoryTree($productCategoriesIds, $nodeTransfer->getChildrenNodes());
+        $nodeTransferList = new ArrayObject();
+
+        if (!$productCategoryIds) {
+            return $nodeTransferList;
         }
 
-        return new ArrayObject();
+        // Reading and setting categories nested tree by child nodes
+        foreach ($productCategoryIds as $productCategoryId) {
+            $nodeTransfers = [];
+            $rootNode = null;
+            while ($productCategoryId !== null) {
+                if (!isset(static::$categoryCache[$productCategoryId])) {
+                    $categoryTransfer = $this->categoryFacade->findCategory(
+                        (new CategoryCriteriaTransfer())
+                            ->setCategoryConditions(
+                                (new CategoryConditionsTransfer())->setCategoryIds([$productCategoryId]),
+                            ),
+                    );
+                    static::$categoryCache[$productCategoryId] = $categoryTransfer !== null ? $categoryTransfer->getCategoryNode() : null;
+                }
+                if (static::$categoryCache[$productCategoryId] === null) {
+                    $productCategoryId = null;
+
+                    break;
+                }
+
+                $nodeTransfers[] = (new NodeTransfer())->fromArray(static::$categoryCache[$productCategoryId]->toArray());
+                if (static::$categoryCache[$productCategoryId]->getIsRoot()) {
+                    $rootNode = (new NodeTransfer())->fromArray(static::$categoryCache[$productCategoryId]->toArray());
+                }
+                // When the category doesn't have a parent, it is the root node and we continue with the next category.
+                $productCategoryId = static::$categoryCache[$productCategoryId]->getFkParentCategoryNode();
+            }
+
+            if (!$nodeTransfers || !$rootNode) {
+                continue;
+            }
+
+            $nodeTransferList->append($this->buildNodeTree($rootNode, $nodeTransfers));
+        }
+
+        return $nodeTransferList;
+    }
+
+    /**
+     * Build category nested tree from category nodes.
+     *
+     * @param \Generated\Shared\Transfer\NodeTransfer $rootNode
+     * @param array<\Generated\Shared\Transfer\NodeTransfer> $nodeTransfers
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    protected function buildNodeTree(NodeTransfer $rootNode, array $nodeTransfers): NodeTransfer
+    {
+        foreach ($nodeTransfers as $nodeTransfer) {
+            if ($rootNode->getCategory()->getIdCategoryOrFail() !== $nodeTransfer->getFkParentCategoryNode()) {
+                continue;
+            }
+            if ($rootNode->getChildrenNodes() == null) {
+                $rootNode->setChildrenNodes(new NodeCollectionTransfer());
+            }
+            $rootNode->getChildrenNodes()->addNode($this->buildNodeTree($nodeTransfer, $nodeTransfers));
+        }
+
+        return $rootNode;
     }
 }
