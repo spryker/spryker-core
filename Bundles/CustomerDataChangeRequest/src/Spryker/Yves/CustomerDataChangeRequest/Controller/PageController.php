@@ -67,6 +67,7 @@ class PageController extends AbstractController
         }
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_EMAIL_CHANGE_REQUEST_SUCCESS);
+        $this->getFactory()->getCustomerClient()->markCustomerAsDirty();
 
         return $this->redirectResponseInternal(static::ROUTE_NAME_CUSTOMER_PROFILE);
     }

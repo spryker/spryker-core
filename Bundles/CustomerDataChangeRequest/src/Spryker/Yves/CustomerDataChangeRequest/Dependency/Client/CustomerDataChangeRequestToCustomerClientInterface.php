@@ -15,4 +15,9 @@ interface CustomerDataChangeRequestToCustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findCustomerRawData(): ?CustomerTransfer;
+
+    /**
+     * @return void
+     */
+    public function markCustomerAsDirty(): void;
 }

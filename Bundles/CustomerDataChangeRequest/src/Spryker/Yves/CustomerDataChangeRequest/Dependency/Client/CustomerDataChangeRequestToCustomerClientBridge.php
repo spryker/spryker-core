@@ -31,4 +31,12 @@ class CustomerDataChangeRequestToCustomerClientBridge implements CustomerDataCha
     {
         return $this->customerClient->findCustomerRawData();
     }
+
+    /**
+     * @return void
+     */
+    public function markCustomerAsDirty(): void
+    {
+        $this->customerClient->markCustomerAsDirty();
+    }
 }
