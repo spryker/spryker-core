@@ -21,7 +21,7 @@ use Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface;
 class ProductConcreteExpander implements ProductConcreteExpanderInterface
 {
     /**
-     * @var array<int, \Generated\Shared\Transfer\NodeTransfer|null>
+     * @var array<int, \Generated\Shared\Transfer\CategoryTransfer|null>
      */
     protected static $categoryCache = [];
 
@@ -143,20 +143,21 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
                                 (new CategoryConditionsTransfer())->setCategoryIds([$productCategoryId]),
                             ),
                     );
-                    static::$categoryCache[$productCategoryId] = $categoryTransfer !== null ? $categoryTransfer->getCategoryNode() : null;
+                    static::$categoryCache[$productCategoryId] = $categoryTransfer;
                 }
                 if (static::$categoryCache[$productCategoryId] === null) {
                     $productCategoryId = null;
 
                     break;
                 }
-
-                $nodeTransfers[] = (new NodeTransfer())->fromArray(static::$categoryCache[$productCategoryId]->toArray());
-                if (static::$categoryCache[$productCategoryId]->getIsRoot()) {
-                    $rootNode = (new NodeTransfer())->fromArray(static::$categoryCache[$productCategoryId]->toArray());
+                $categoryTransfer = static::$categoryCache[$productCategoryId];
+                $categoryNode = static::$categoryCache[$productCategoryId]->getCategoryNode();
+                $nodeTransfers[] = (new NodeTransfer())->fromArray($categoryNode->toArray());
+                if ($categoryNode->getIsRoot()) {
+                    $rootNode = (new NodeTransfer())->fromArray($categoryNode->toArray());
                 }
                 // When the category doesn't have a parent, it is the root node and we continue with the next category.
-                $productCategoryId = static::$categoryCache[$productCategoryId]->getFkParentCategoryNode();
+                $productCategoryId = $categoryTransfer->getParentCategoryNode() ? $categoryTransfer->getParentCategoryNode()->getFkCategory() : null;
             }
 
             if (!$nodeTransfers || !$rootNode) {

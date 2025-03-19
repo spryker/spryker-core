@@ -33,6 +33,7 @@
         <property name="idCategory" type="int"/>
         <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="nodeCollection" type="NodeCollection"/>
+        <property name="parentCategoryNode" type="Node"/>
     </transfer>
 
     <transfer name="Locale">
@@ -55,6 +56,7 @@
         <property name="childrenNodes" type="NodeCollection"/>
         <property name="isRoot" type="bool"/>
         <property name="fkParentCategoryNode" type="int"/>
+        <property name="fkCategory" type="int"/>
     </transfer>
 
     <transfer name="ProductAbstract">
