@@ -155,11 +155,13 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
             $amountPerQuantity = $itemTransfer->getAmount()->divide($itemTransfer->getQuantity(), static::DIVISION_SCALE);
             $cartAmountMap[$productGroupKey] = $amountPerQuantity;
 
-            if (isset($quoteAmountMapByGroupKey[$productGroupKey])) {
-                $cartAmountMap[$productGroupKey] = $cartAmountMap[$productGroupKey]->add(
-                    $quoteAmountMapByGroupKey[$productGroupKey],
-                );
+            if (!isset($quoteAmountMapByGroupKey[$productGroupKey])) {
+                continue;
             }
+
+            $cartAmountMap[$productGroupKey] = $cartAmountMap[$productGroupKey]->add(
+                $quoteAmountMapByGroupKey[$productGroupKey],
+            );
         }
 
         return $cartAmountMap;
@@ -168,7 +170,7 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return array
+     * @return array<string, \Spryker\DecimalObject\Decimal>
      */
     protected function getQuoteAmountMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -185,15 +187,13 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer> .
+     * @return array<string, \Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer> .
      */
     protected function getProductPackagingUnitAmountTransferMap(array $itemTransfers): array
     {
-        $productPackagingUnitAmountTransferMap = $this->mapProductPackagingUnitAmountTransfersBySku($itemTransfers);
-
-        return $productPackagingUnitAmountTransferMap;
+        return $this->mapProductPackagingUnitAmountTransfersBySku($itemTransfers);
     }
 
     /**
@@ -328,20 +328,24 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer>
+     * @return array<string, \Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer>
      */
     protected function mapProductPackagingUnitAmountTransfersBySku(array $itemTransfers): array
     {
-        $productPackagingUnitAmountTransferMap = [];
-        foreach ($itemTransfers as $itemTransfer) {
-            $productPackagingUnitTransfer = $this->productPackagingUnitRepository
-                ->findProductPackagingUnitByProductSku($itemTransfer->getSku());
+        if (!$itemTransfers) {
+            return [];
+        }
 
-            if ($productPackagingUnitTransfer) {
-                $productPackagingUnitAmountTransferMap[$itemTransfer->getSku()] = $productPackagingUnitTransfer->getProductPackagingUnitAmount();
-            }
+        $skus = array_map(fn ($itemTransfer): string => $itemTransfer->getSkuOrFail(), $itemTransfers);
+        $skus = array_unique($skus);
+
+        $productPackagingUnitTransfers = $this->productPackagingUnitRepository->findProductPackagingUnitsByProductSku($skus);
+
+        $productPackagingUnitAmountTransferMap = [];
+        foreach ($productPackagingUnitTransfers as $sku => $productPackagingUnitTransfer) {
+            $productPackagingUnitAmountTransferMap[$sku] = $productPackagingUnitTransfer->getProductPackagingUnitAmount();
         }
 
         return $productPackagingUnitAmountTransferMap;
