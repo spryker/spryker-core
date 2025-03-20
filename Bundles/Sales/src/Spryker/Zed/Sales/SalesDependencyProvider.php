@@ -20,6 +20,7 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToStoreBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilUuidGeneratorBridge;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
@@ -221,6 +222,11 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**
+     * @var string
+     */
+    public const SERVICE_UTIL_UUID_GENERATOR = 'SERVICE_UTIL_UUID_GENERATOR';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -259,6 +265,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOrderItemCollectionPostUpdatePlugins($container);
         $container = $this->addOrderItemInitialStateProviderPlugins($container);
         $container = $this->addOrderItemInitialStateProviderPluginsForOrderAmendment($container);
+        $container = $this->addUtilUuidGeneratorService($container);
 
         return $container;
     }
@@ -518,6 +525,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_CALCULATION, function (Container $container) {
             return new SalesToCalculationBridge($container->getLocator()->calculation()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilUuidGeneratorService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_UUID_GENERATOR, function (Container $container) {
+            return new SalesToUtilUuidGeneratorBridge($container->getLocator()->utilUuidGenerator()->service());
         });
 
         return $container;

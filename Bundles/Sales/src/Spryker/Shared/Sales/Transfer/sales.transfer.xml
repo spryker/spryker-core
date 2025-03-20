@@ -580,4 +580,11 @@
         <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId" description="Required for testing to be able to run for known sales order items"/>
     </transfer>
 
+    <transfer name="IdGeneratorSettings" strict="true">
+        <property name="alphabet" type="string"/>
+        <property name="size" type="int"/>
+        <property name="splitLength" type="int"/>
+        <property name="splitSeparator" type="string"/>
+    </transfer>
+
 </transfers>

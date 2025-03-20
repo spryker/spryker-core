@@ -27,6 +27,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotalsQuery;
+use Spryker\Service\UtilUuidGenerator\UtilUuidGeneratorService;
 use Spryker\Shared\CheckoutExtension\CheckoutExtensionContextsInterface;
 use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use Spryker\Zed\Kernel\Container;
@@ -41,6 +42,7 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToStoreBridge;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilUuidGeneratorBridge;
 use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface;
@@ -65,6 +67,16 @@ class SalesFacadeSaveOrderTest extends Unit
      * @var \Spryker\Zed\Sales\Business\SalesFacade
      */
     protected $salesFacade;
+
+    /**
+     * @var \Spryker\Zed\Sales\SalesConfig
+     */
+    protected SalesConfig $salesConfig;
+
+    /**
+     * @var \Spryker\Zed\Sales\Business\SalesBusinessFactory
+     */
+    protected SalesBusinessFactory $salesBusinessFactory;
 
     /**
      * @var \SprykerTest\Zed\Sales\SalesBusinessTester
@@ -123,11 +135,13 @@ class SalesFacadeSaveOrderTest extends Unit
             ->will($this->returnValue($omsOrderProcessEntity));
 
         $sequenceNumberFacade = new SequenceNumberFacade();
+        $utilUuidGeneratorService = new UtilUuidGeneratorService();
 
         $this->businessFactoryContainer = new Container();
         $this->businessFactoryContainer[SalesDependencyProvider::FACADE_COUNTRY] = new SalesToCountryBridge($countryFacadeMock);
         $this->businessFactoryContainer[SalesDependencyProvider::FACADE_OMS] = new SalesToOmsBridge($omsFacadeMock);
         $this->businessFactoryContainer[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = new SalesToSequenceNumberBridge($sequenceNumberFacade);
+        $this->businessFactoryContainer[SalesDependencyProvider::SERVICE_UTIL_UUID_GENERATOR] = new SalesToUtilUuidGeneratorBridge($utilUuidGeneratorService);
         $this->businessFactoryContainer[SalesDependencyProvider::PROPEL_QUERY_LOCALE] = new SpyLocaleQuery();
         $this->businessFactoryContainer[SalesDependencyProvider::FACADE_STORE] = new SalesToStoreBridge(new StoreFacade());
         $this->businessFactoryContainer[SalesDependencyProvider::FACADE_LOCALE] = new SalesToLocaleBridge(new LocaleFacade());
@@ -145,12 +159,12 @@ class SalesFacadeSaveOrderTest extends Unit
         $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER_FOR_ORDER_AMENDMENT] = [];
 
         $this->salesFacade = new SalesFacade();
-        $businessFactory = new SalesBusinessFactory();
-        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->onlyMethods(['determineProcessForOrderItem'])->getMock();
-        $salesConfigMock->method('determineProcessForOrderItem')->willReturn('');
-        $businessFactory->setConfig($salesConfigMock);
-        $businessFactory->setContainer($this->businessFactoryContainer);
-        $this->salesFacade->setFactory($businessFactory);
+        $this->salesBusinessFactory = new SalesBusinessFactory();
+        $this->salesConfig = $this->getMockBuilder(SalesConfig::class)->onlyMethods(['determineProcessForOrderItem'])->getMock();
+        $this->salesConfig->method('determineProcessForOrderItem')->willReturn('');
+        $this->salesBusinessFactory->setConfig($this->salesConfig);
+        $this->salesBusinessFactory->setContainer($this->businessFactoryContainer);
+        $this->salesFacade->setFactory($this->salesBusinessFactory);
     }
 
     /**
@@ -622,6 +636,46 @@ class SalesFacadeSaveOrderTest extends Unit
         $this->assertNotNull($orderTotalsEntity);
         $this->assertSame(1337, $orderTotalsEntity->getGrandTotal());
         $this->assertSame(337, $orderTotalsEntity->getSubtotal());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderRawWithUniqueRandomIdOrderReferenceGenerator(): void
+    {
+        //Arrange
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
+        $saveOrderTransfer = $this->createSaveOrderTransfer();
+        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)
+            ->onlyMethods(['useUniqueRandomIdOrderReferenceGenerator'])
+            ->getMock();
+        $salesConfigMock->method('useUniqueRandomIdOrderReferenceGenerator')
+            ->willReturn(true);
+        $this->salesBusinessFactory->setConfig($salesConfigMock);
+
+        //Act
+        $this->salesFacade->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
+
+        //Assert
+        $this->salesBusinessFactory->setConfig($this->salesConfig);
+        $this->tester->assertRegExp('/^\w{2}--\d{5}-\d{5}-\d{5}$/', $saveOrderTransfer->getOrderReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderRawUsesSequenceGeneratorByDefault(): void
+    {
+        //Arrange
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
+        $saveOrderTransfer = $this->createSaveOrderTransfer();
+
+        //Act
+        $this->salesFacade->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
+
+        //Assert
+        $this->tester->assertRegExp('/^\w{2}--\d+$/', $saveOrderTransfer->getOrderReference());
+        $this->assertFalse($this->salesConfig->useUniqueRandomIdOrderReferenceGenerator());
     }
 
     /**

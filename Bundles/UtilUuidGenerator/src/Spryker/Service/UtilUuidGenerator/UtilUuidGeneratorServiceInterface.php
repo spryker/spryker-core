@@ -7,6 +7,8 @@
 
 namespace Spryker\Service\UtilUuidGenerator;
 
+use Generated\Shared\Transfer\IdGeneratorSettingsTransfer;
+
 interface UtilUuidGeneratorServiceInterface
 {
     /**
@@ -20,4 +22,21 @@ interface UtilUuidGeneratorServiceInterface
      * @return string
      */
     public function generateUuid5FromObjectId(string $name): string;
+
+    /**
+     * Specification:
+     * - Generates a unique random ID.
+     * - Generated value is unique and can be used as a unique identifier.
+     * - Generated values are not sortable.
+     * - Use `IdGeneratorSettingsTransfer.alphabet` to specify the characters to use for the generated ID. More symbols - fewer chances for collision.
+     * - Use `IdGeneratorSettingsTransfer.size` to specify the length of the generated ID. Longer size - fewer chances for collision.
+     * - Use `IdGeneratorSettingsTransfer.splitLength` with `IdGeneratorSettingsTransfer.splitSeparator` to split the generated ID into chunks.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\IdGeneratorSettingsTransfer $idGeneratorSettingsTransfer
+     *
+     * @return string
+     */
+    public function generateUniqueRandomId(IdGeneratorSettingsTransfer $idGeneratorSettingsTransfer): string;
 }

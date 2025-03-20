@@ -12,7 +12,7 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface;
 use Spryker\Zed\Sales\SalesConfig;
 
-class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
+class SequenceNumberOrderReferenceGenerator implements OrderReferenceGeneratorInterface
 {
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface
@@ -27,21 +27,21 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface
      */
-    protected SalesToStoreInterface $salesFacade;
+    protected SalesToStoreInterface $storeFacade;
 
     /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface $sequenceNumberFacade
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfig
-     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface $salesFacade
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface $storeFacade
      */
     public function __construct(
         SalesToSequenceNumberInterface $sequenceNumberFacade,
         SalesConfig $salesConfig,
-        SalesToStoreInterface $salesFacade
+        SalesToStoreInterface $storeFacade
     ) {
         $this->sequenceNumberFacade = $sequenceNumberFacade;
         $this->salesConfig = $salesConfig;
-        $this->salesFacade = $salesFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -55,7 +55,7 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
             return $quoteTransfer->getOrderReference();
         }
 
-        $storeName = $quoteTransfer->getStore() ? $quoteTransfer->getStore()->getName() : $this->salesFacade->getCurrentStore()->getName();
+        $storeName = $quoteTransfer->getStore() ? $quoteTransfer->getStore()->getName() : $this->storeFacade->getCurrentStore()->getName();
         $sequenceNumberSetting = $this->salesConfig->getOrderReferenceDefaults($storeName);
 
         return $this->sequenceNumberFacade->generate($sequenceNumberSetting);

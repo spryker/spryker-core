@@ -49,12 +49,14 @@ use Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterfac
 use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
-use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
+use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface;
 use Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
+use Spryker\Zed\Sales\Business\Model\Order\SequenceNumberOrderReferenceGenerator;
+use Spryker\Zed\Sales\Business\Model\Order\UniqueRandomIdOrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper as ModelSalesOrderItemMapper;
@@ -97,6 +99,7 @@ use Spryker\Zed\Sales\Business\Writer\OrderWriterInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToLocaleInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilUuidGeneratorInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
@@ -381,10 +384,34 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface
      */
-    public function createReferenceGenerator()
+    public function createReferenceGenerator(): OrderReferenceGeneratorInterface
     {
-        return new OrderReferenceGenerator(
+        if ($this->getConfig()->useUniqueRandomIdOrderReferenceGenerator()) {
+            return $this->createUniqueRandomIdOrderReferenceGenerator();
+        }
+
+        return $this->createSequenceNumberOrderReferenceGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface
+     */
+    public function createSequenceNumberOrderReferenceGenerator(): OrderReferenceGeneratorInterface
+    {
+        return new SequenceNumberOrderReferenceGenerator(
             $this->getSequenceNumberFacade(),
+            $this->getConfig(),
+            $this->getStoreFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface
+     */
+    public function createUniqueRandomIdOrderReferenceGenerator(): OrderReferenceGeneratorInterface
+    {
+        return new UniqueRandomIdOrderReferenceGenerator(
+            $this->getUtilUuidGeneratorService(),
             $this->getConfig(),
             $this->getStoreFacade(),
         );
@@ -836,6 +863,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getCustomerFacade(): SalesToCustomerInterface
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Service\SalesToUtilUuidGeneratorInterface
+     */
+    public function getUtilUuidGeneratorService(): SalesToUtilUuidGeneratorInterface
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_UUID_GENERATOR);
     }
 
     /**

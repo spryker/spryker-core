@@ -7,6 +7,7 @@
 
 namespace Spryker\Service\UtilUuidGenerator;
 
+use Generated\Shared\Transfer\IdGeneratorSettingsTransfer;
 use Spryker\Service\Kernel\AbstractService;
 
 /**
@@ -28,5 +29,21 @@ class UtilUuidGeneratorService extends AbstractService implements UtilUuidGenera
         return $this->getFactory()
             ->getUuidGenerator()
             ->generateUuid5FromObjectId($name);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\IdGeneratorSettingsTransfer $idGeneratorSettingsTransfer
+     *
+     * @return string
+     */
+    public function generateUniqueRandomId(IdGeneratorSettingsTransfer $idGeneratorSettingsTransfer): string
+    {
+        return $this->getFactory()
+            ->getNanoidGenerator()
+            ->generateUniqueRandomId($idGeneratorSettingsTransfer);
     }
 }

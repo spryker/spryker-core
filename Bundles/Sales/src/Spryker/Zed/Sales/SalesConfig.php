@@ -53,6 +53,21 @@ class SalesConfig extends AbstractBundleConfig
     public const PATTERN_LAST_NAME = '/^[^:\/<>]+$/';
 
     /**
+     * @var string
+     */
+    public const UNIQUE_RANDOM_ID_ORDER_REFERENCE_ALPHABET = '0123456789';
+
+    /**
+     * @var int
+     */
+    public const UNIQUE_RANDOM_ID_ORDER_REFERENCE_SIZE = 15;
+
+    /**
+     * @var int
+     */
+    public const UNIQUE_RANDOM_ID_ORDER_REFERENCE_SPLIT_LENGTH = 5;
+
+    /**
      * Separator for the sequence number
      *
      * @api
@@ -262,5 +277,59 @@ class SalesConfig extends AbstractBundleConfig
     public function shouldPersistModifiedOrderItemProperties(): bool
     {
         return false;
+    }
+
+    /**
+     * Specification:
+     * - Defines if the order reference should be generated using the UniqueRandomIdOrderReferenceGenerator, instead of SequenceNumberOrderReferenceGenerator. UniqueRandomIdOrderReferenceGenerator does not use a database, so it's faster in concurrent requests.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function useUniqueRandomIdOrderReferenceGenerator(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Specification:
+     * - Returns the alphabet for the UniqueRandomId order reference. When more symbols are used, there are fewer chances for collision.
+     *
+     * Example: '0123456789abcdefg'
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getUniqueRandomIdOrderReferenceAlphabet(): string
+    {
+        return static::UNIQUE_RANDOM_ID_ORDER_REFERENCE_ALPHABET;
+    }
+
+    /**
+     * Specification:
+     * - Returns the length of the UniqueRandomId order reference. Longer size - fewer chances for collision.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getUniqueRandomIdOrderReferenceSize(): int
+    {
+        return static::UNIQUE_RANDOM_ID_ORDER_REFERENCE_SIZE;
+    }
+
+    /**
+     * Specification:
+     * - Returns the split length for the UniqueRandomId order reference.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getUniqueRandomIdOrderReferenceSplitLength(): int
+    {
+        return static::UNIQUE_RANDOM_ID_ORDER_REFERENCE_SPLIT_LENGTH;
     }
 }

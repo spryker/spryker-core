@@ -8,6 +8,7 @@
 namespace SprykerTest\Service\UtilUuidGenerator;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\IdGeneratorSettingsTransfer;
 use Spryker\Service\UtilUuidGenerator\UtilUuidGeneratorService;
 use Spryker\Service\UtilUuidGenerator\UtilUuidGeneratorServiceInterface;
 
@@ -60,6 +61,47 @@ class UtilUuidGeneratorServiceTest extends Unit
         $secondGeneratedValue = $service->generateUuid5FromObjectId(static::TEST_VALUE_ENCODED);
 
         $this->tester->assertSame($firstGeneratedValue, $secondGeneratedValue);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGenerateUniqueRandomIdUnique(): void
+    {
+        // Arrange
+        $service = $this->getUtilUuidGeneratorService();
+        $idGeneratorSettingsTransfer = (new IdGeneratorSettingsTransfer())
+            ->setAlphabet('1234567890')
+            ->setSize(15);
+
+        // Act
+        $generatedValues = [];
+        for ($i = 0; $i < 10000; $i++) {
+            $generatedValues[] = $service->generateUniqueRandomId($idGeneratorSettingsTransfer);
+        }
+
+        // Assert
+        $this->tester->assertSame(count($generatedValues), count(array_unique($generatedValues)));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGenerateUniqueRandomIdSplit(): void
+    {
+        // Arrange
+        $service = $this->getUtilUuidGeneratorService();
+        $idGeneratorSettingsTransfer = (new IdGeneratorSettingsTransfer())
+            ->setAlphabet('1234567890')
+            ->setSize(15)
+            ->setSplitLength(5)
+            ->setSplitSeparator('-');
+
+        // Act
+        $uniqueRandomId = $service->generateUniqueRandomId($idGeneratorSettingsTransfer);
+
+        // Assert
+        $this->tester->assertRegExp('/^[0-9]{5}-[0-9]{5}-[0-9]{5}$/', $uniqueRandomId);
     }
 
     /**
