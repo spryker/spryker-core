@@ -2,7 +2,7 @@
     "name": "spryker/payment-data-import",
     "type": "library",
     "description": "PaymentDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/data-import": "^1.4.3",

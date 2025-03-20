@@ -2,7 +2,7 @@
     "name": "spryker/picking-list-multi-shipment-picking-strategy-example",
     "type": "library",
     "description": "PickingListMultiShipmentPickingStrategyExample module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/kernel": "^3.30.0",

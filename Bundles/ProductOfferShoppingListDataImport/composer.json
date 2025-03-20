@@ -2,7 +2,7 @@
     "name": "spryker/product-offer-shopping-list-data-import",
     "type": "library",
     "description": "ProductOfferShoppingListDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/data-import": "^1.6.0",

@@ -2,7 +2,7 @@
     "name": "spryker/product-offer-stock-data-import",
     "type": "library",
     "description": "ProductOfferStockDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/data-import": "^1.0.0",

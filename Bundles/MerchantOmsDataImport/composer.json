@@ -2,7 +2,7 @@
     "name": "spryker/merchant-oms-data-import",
     "type": "library",
     "description": "MerchantOmsDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/data-import": "^1.0.0",

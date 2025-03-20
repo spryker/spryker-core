@@ -2,7 +2,7 @@
     "name": "spryker/product-offer-warehouse-allocation-example",
     "type": "library",
     "description": "ProductOfferWarehouseAllocationExample module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/kernel": "^3.30.0",

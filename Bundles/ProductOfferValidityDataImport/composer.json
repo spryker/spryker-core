@@ -2,7 +2,7 @@
     "name": "spryker/product-offer-validity-data-import",
     "type": "library",
     "description": "ProductOfferValidityDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/data-import": "^1.0.0",

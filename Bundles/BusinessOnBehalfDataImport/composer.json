@@ -2,7 +2,7 @@
     "name": "spryker/business-on-behalf-data-import",
     "type": "library",
     "description": "BusinessOnBehalfDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/company": "^1.0.0",

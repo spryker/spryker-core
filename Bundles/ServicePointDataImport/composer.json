@@ -2,7 +2,7 @@
     "name": "spryker/service-point-data-import",
     "type": "library",
     "description": "ServicePointDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/country": "^4.0.0",

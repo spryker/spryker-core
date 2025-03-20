@@ -2,7 +2,7 @@
     "name": "spryker/product-alternative-data-import",
     "type": "library",
     "description": "ProductAlternativeDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/data-import": "^1.2.0",
