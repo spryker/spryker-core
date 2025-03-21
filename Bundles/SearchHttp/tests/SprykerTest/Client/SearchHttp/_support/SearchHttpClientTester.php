@@ -242,12 +242,12 @@ class SearchHttpClientTester extends Actor
         $categoryNodeStorageTransfers = new ArrayObject(
             [
                 (new CategoryNodeStorageBuilder())->build()
-                ->setNodeId(1)
+                ->setNodeId(2)
                 ->setIdCategory(1)
                 ->setName('Category_1')
                 ->setChildren(new ArrayObject([
                     (new CategoryNodeStorageBuilder())->build()
-                        ->setNodeId(2)
+                        ->setNodeId(3)
                         ->setIdCategory(2)
                         ->setName('Category_2'),
                     (new CategoryNodeStorageBuilder())->build()->setIdCategory(4),
@@ -255,7 +255,7 @@ class SearchHttpClientTester extends Actor
                 ])),
                 (new CategoryNodeStorageBuilder())
                     ->build()
-                    ->setNodeId(3)
+                    ->setNodeId(4)
                     ->setIdCategory(3)
                     ->setName('Category_3'),
             ],

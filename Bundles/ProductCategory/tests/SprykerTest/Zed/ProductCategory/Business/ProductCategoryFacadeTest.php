@@ -181,24 +181,29 @@ class ProductCategoryFacadeTest extends Unit
         $localeTransferEn = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::LOCALE_EN]);
         $localeTransferDe = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::LOCALE_DE]);
 
-        $categoryTransfer = $this->tester->haveCategory();
+        $categoryLevel3Transfer = $this->tester->haveCategory();
+        $categoryLevel1Transfer = $this->tester->haveCategory();
+        $categoryLevel2Transfer = $this->tester->haveCategory();
+        $nodeLevel1Transfer = $this->tester->haveCategoryNodeForCategory($categoryLevel2Transfer->getIdCategory(), [NodeTransfer::IS_ROOT => true]);
+        $nodeLevel2Transfer = $this->tester->haveCategoryNodeForCategory($categoryLevel3Transfer->getIdCategory(), [NodeTransfer::FK_PARENT_CATEGORY_NODE => $nodeLevel1Transfer->getIdCategoryNode()]);
+        $nodeLevel3Transfer = $this->tester->haveCategoryNodeForCategory($categoryLevel1Transfer->getIdCategory(), [NodeTransfer::FK_PARENT_CATEGORY_NODE => $nodeLevel2Transfer->getIdCategoryNode()]);
 
         $categoryLocalizedAttributesDataEn = (new CategoryLocalizedAttributesBuilder())->build()->toArray();
         $categoryLocalizedAttributesDataEn[LocalizedAttributesTransfer::LOCALE] = $localeTransferEn;
         $this->tester->haveCategoryLocalizedAttributeForCategory(
-            $categoryTransfer->getIdCategory(),
+            $categoryLevel1Transfer->getIdCategory(),
             $categoryLocalizedAttributesDataEn,
         );
 
         $categoryLocalizedAttributesDataDe = (new CategoryLocalizedAttributesBuilder())->build()->toArray();
         $categoryLocalizedAttributesDataDe[LocalizedAttributesTransfer::LOCALE] = $localeTransferDe;
         $this->tester->haveCategoryLocalizedAttributeForCategory(
-            $categoryTransfer->getIdCategory(),
+            $categoryLevel1Transfer->getIdCategory(),
             $categoryLocalizedAttributesDataDe,
         );
 
         $productTransfer = $this->tester->haveProduct();
-        $this->tester->assignProductToCategory($categoryTransfer->getIdCategory(), $productTransfer->getFkProductAbstract());
+        $this->tester->assignProductToCategory($categoryLevel1Transfer->getIdCategory(), $productTransfer->getFkProductAbstract());
 
         // Act
         $productTransfers = $this->getProductCategoryFacade()->expandProductConcreteTransfersWithProductCategories([$productTransfer]);
@@ -207,7 +212,32 @@ class ProductCategoryFacadeTest extends Unit
         $this->assertNotEmpty($productTransfers);
         $this->assertSame(
             $productTransfers[0]->getProductCategories()[0]->getCategory()->getIdCategory(),
-            $categoryTransfer->getIdCategory(),
+            $categoryLevel1Transfer->getIdCategory(),
+        );
+        $this->assertSame(
+            $productTransfers[0]->getRelatedCategoryTreeNodes()[0]->getCategory()->getIdCategory(),
+            $categoryLevel2Transfer->getIdCategory(),
+        );
+        $this->assertSame(
+            $productTransfers[0]->getRelatedCategoryTreeNodes()[0]->getChildrenNodes()->getNodes()->offsetGet(0)->getCategory()->getIdCategory(),
+            $categoryLevel3Transfer->getIdCategory(),
+        );
+        $this->assertSame(
+            $productTransfers[0]->getRelatedCategoryTreeNodes()[0]->getChildrenNodes()->getNodes()->offsetGet(0)->getChildrenNodes()->getNodes()->offsetGet(0)->getCategory()->getIdCategory(),
+            $categoryLevel1Transfer->getIdCategory(),
+        );
+
+        $this->assertSame(
+            $productTransfers[0]->getRelatedCategoryTreeNodes()[0]->getIdCategoryNode(),
+            $nodeLevel1Transfer->getIdCategoryNode(),
+        );
+        $this->assertSame(
+            $productTransfers[0]->getRelatedCategoryTreeNodes()[0]->getChildrenNodes()->getNodes()->offsetGet(0)->getIdCategoryNode(),
+            $nodeLevel2Transfer->getIdCategoryNode(),
+        );
+        $this->assertSame(
+            $productTransfers[0]->getRelatedCategoryTreeNodes()[0]->getChildrenNodes()->getNodes()->offsetGet(0)->getChildrenNodes()->getNodes()->offsetGet(0)->getIdCategoryNode(),
+            $nodeLevel3Transfer->getIdCategoryNode(),
         );
     }
 

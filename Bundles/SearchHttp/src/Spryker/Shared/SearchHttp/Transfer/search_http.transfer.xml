@@ -160,6 +160,7 @@
         <property name="idCategory" type="int"/>
         <property name="name" type="string"/>
         <property name="children" type="CategoryNodeStorage[]" singular="children"/>
+        <property name="nodeId" type="int"/>
     </transfer>
 
     <transfer name="RangeSearchResult">
