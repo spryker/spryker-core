@@ -181,7 +181,7 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
     protected function buildNodeTree(NodeTransfer $rootNode, array $nodeTransfers): NodeTransfer
     {
         foreach ($nodeTransfers as $nodeTransfer) {
-            if ($rootNode->getCategory()->getIdCategoryOrFail() !== $nodeTransfer->getFkParentCategoryNode()) {
+            if ($rootNode->getIdCategoryNode() !== $nodeTransfer->getFkParentCategoryNode()) {
                 continue;
             }
             if ($rootNode->getChildrenNodes() == null) {

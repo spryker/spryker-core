@@ -135,7 +135,7 @@ class CategoryExtractor implements AggregationExtractorInterface
         $result = [];
 
         foreach ($categoryNodeStorageTransfers as $categoryNodeStorageTransfer) {
-            $result[$categoryNodeStorageTransfer->getName()] = $categoryNodeStorageTransfer->getIdCategoryOrFail();
+            $result[$categoryNodeStorageTransfer->getName()] = $categoryNodeStorageTransfer->getNodeIdOrFail();
 
             if ($categoryNodeStorageTransfer->getChildren()->count()) {
                 $result = array_merge($result, $this->getCategoryNamesToIds($categoryNodeStorageTransfer->getChildren()));
