@@ -2,7 +2,7 @@
     "name": "spryker/sales-return-data-import",
     "type": "library",
     "description": "SalesReturnDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/data-import": "^1.0.0",

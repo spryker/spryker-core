@@ -2,7 +2,7 @@
     "name": "spryker/merchant-commission-data-import",
     "type": "library",
     "description": "MerchantCommissionDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/currency": "^4.0.0",

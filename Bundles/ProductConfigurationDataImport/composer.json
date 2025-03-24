@@ -2,7 +2,7 @@
     "name": "spryker/product-configuration-data-import",
     "type": "library",
     "description": "ProductConfigurationDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/data-import": "^1.5.0",

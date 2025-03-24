@@ -2,7 +2,7 @@
     "name": "spryker/cms-slot-data-import",
     "type": "library",
     "description": "CmsSlotDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/cms-slot": "^1.0.0",

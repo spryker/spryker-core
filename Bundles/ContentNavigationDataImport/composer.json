@@ -2,7 +2,7 @@
     "name": "spryker/content-navigation-data-import",
     "type": "library",
     "description": "ContentNavigationDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/content": "^2.1.0",

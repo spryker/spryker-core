@@ -2,7 +2,7 @@
     "name": "spryker/merchant-category-data-import",
     "type": "library",
     "description": "MerchantCategoryDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.2",
         "spryker/category": "^4.0.0 || ^5.0.0",
