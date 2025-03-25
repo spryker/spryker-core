@@ -41,7 +41,7 @@ class OriginalSalesOrderItemGroupKeyCartReorderItemHydratorPluginTest extends Un
     public function testShouldHydrateGroupKeysFromOrderItemsToReorderItems(): void
     {
         // Arrange
-        $orderItems = [$this->buildItemTransfer(), $this->buildItemTransfer()];
+        $orderItems = [$this->buildItemTransfer(222), $this->buildItemTransfer(333)];
         $reorderItems = [
             (new ItemTransfer())->setIdSalesOrderItem($orderItems[0]->getIdSalesOrderItem()),
             (new ItemTransfer())->setIdSalesOrderItem($orderItems[1]->getIdSalesOrderItem()),
@@ -72,7 +72,7 @@ class OriginalSalesOrderItemGroupKeyCartReorderItemHydratorPluginTest extends Un
     public function testShouldHydrateGroupKeysFromOrderItemsToNewReorderItems(): void
     {
         // Arrange
-        $orderItems = [$this->buildItemTransfer(), $this->buildItemTransfer()];
+        $orderItems = [$this->buildItemTransfer(222), $this->buildItemTransfer(333)];
         $cartReorderTransfer = (new CartReorderTransfer())
             ->setOrderItems(new ArrayObject($orderItems));
 
@@ -97,7 +97,7 @@ class OriginalSalesOrderItemGroupKeyCartReorderItemHydratorPluginTest extends Un
     public function testShouldThrowsRequiredTransferPropertyExceptionWhenOrderItemIdSalesOrderItemIsNotProvided(): void
     {
         // Arrange
-        $orderItems = [$this->buildItemTransfer(), $this->buildItemTransfer()];
+        $orderItems = [$this->buildItemTransfer(222), $this->buildItemTransfer(333)];
         $reorderItems = [
             (new ItemTransfer())->setIdSalesOrderItem($orderItems[0]->getIdSalesOrderItem()),
             (new ItemTransfer())->setIdSalesOrderItem($orderItems[1]->getIdSalesOrderItem()),
@@ -123,7 +123,7 @@ class OriginalSalesOrderItemGroupKeyCartReorderItemHydratorPluginTest extends Un
     public function testShouldThrowsRequiredTransferPropertyExceptionWhenOrderItemSkuIsNotProvided(): void
     {
         // Arrange
-        $orderItems = [$this->buildItemTransfer(), $this->buildItemTransfer()];
+        $orderItems = [$this->buildItemTransfer(222), $this->buildItemTransfer(333)];
         $reorderItems = [
             (new ItemTransfer())->setIdSalesOrderItem($orderItems[0]->getIdSalesOrderItem()),
             (new ItemTransfer())->setIdSalesOrderItem($orderItems[1]->getIdSalesOrderItem()),
@@ -149,7 +149,7 @@ class OriginalSalesOrderItemGroupKeyCartReorderItemHydratorPluginTest extends Un
     public function testShouldThrowsRequiredTransferPropertyExceptionWhenOrderItemQuantityIsNotProvided(): void
     {
         // Arrange
-        $orderItems = [$this->buildItemTransfer(), $this->buildItemTransfer()];
+        $orderItems = [$this->buildItemTransfer(222), $this->buildItemTransfer(333)];
         $reorderItems = [
             (new ItemTransfer())->setIdSalesOrderItem($orderItems[0]->getIdSalesOrderItem()),
             (new ItemTransfer())->setIdSalesOrderItem($orderItems[1]->getIdSalesOrderItem()),
@@ -175,7 +175,7 @@ class OriginalSalesOrderItemGroupKeyCartReorderItemHydratorPluginTest extends Un
     public function testShouldThrowsRequiredTransferPropertyExceptionWhenOrderItemGroupKeyIsNotProvided(): void
     {
         // Arrange
-        $orderItems = [$this->buildItemTransfer(), $this->buildItemTransfer()];
+        $orderItems = [$this->buildItemTransfer(222), $this->buildItemTransfer(333)];
         $reorderItems = [
             (new ItemTransfer())->setIdSalesOrderItem($orderItems[0]->getIdSalesOrderItem()),
             (new ItemTransfer())->setIdSalesOrderItem($orderItems[1]->getIdSalesOrderItem()),
@@ -201,7 +201,7 @@ class OriginalSalesOrderItemGroupKeyCartReorderItemHydratorPluginTest extends Un
     public function testShouldThrowsRequiredTransferPropertyExceptionWhenReorderItemGroupKeyIsNotProvided(): void
     {
         // Arrange
-        $orderItems = [$this->buildItemTransfer(), $this->buildItemTransfer()];
+        $orderItems = [$this->buildItemTransfer(222), $this->buildItemTransfer(333)];
         $reorderItems = [
             (new ItemTransfer())->setIdSalesOrderItem($orderItems[0]->getIdSalesOrderItem()),
             (new ItemTransfer())->setIdSalesOrderItem(null),
@@ -220,12 +220,14 @@ class OriginalSalesOrderItemGroupKeyCartReorderItemHydratorPluginTest extends Un
     }
 
     /**
+     * @param int $idSalesOrderItem
+     *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function buildItemTransfer(): ItemTransfer
+    protected function buildItemTransfer(int $idSalesOrderItem): ItemTransfer
     {
         return (new ItemBuilder([
-            ItemTransfer::ID_SALES_ORDER_ITEM => rand(1, 100),
+            ItemTransfer::ID_SALES_ORDER_ITEM => $idSalesOrderItem,
         ]))->build();
     }
 }
