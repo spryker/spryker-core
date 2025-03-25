@@ -17,6 +17,7 @@ suites:
         modules:
             enabled:
                 - Asserts
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Zed\PickingList\Helper\PickingListHelper
@@ -30,6 +31,5 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
                 - \SprykerTest\Zed\WarehouseUser\Helper\WarehouseUserHelper

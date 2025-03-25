@@ -32,29 +32,20 @@ class ProductListProductConcreteDataImportPluginTest extends Unit
     protected $tester;
 
     /**
-     * @var bool
-     */
-    protected static $neededDataAdded = false;
-
-    /**
      * @return void
      */
     protected function setUp(): void
     {
         parent::setUp();
 
-        if (!static::$neededDataAdded) {
-            //this data is the data needed for the import files under _data/import
-            $skus = [
-                '2312412',
-                '12312412',
-                '7787276',
-            ];
+        $skus = [
+            '2312412',
+            '12312412',
+            '7787276',
+        ];
 
-            foreach ($skus as $sku) {
-                $this->tester->haveProduct(['sku' => $sku]);
-            }
-            static::$neededDataAdded = true;
+        foreach ($skus as $sku) {
+            $this->tester->haveProduct(['sku' => $sku]);
         }
     }
 

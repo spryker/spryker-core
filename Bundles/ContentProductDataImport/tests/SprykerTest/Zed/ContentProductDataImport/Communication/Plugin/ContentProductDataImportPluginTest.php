@@ -44,11 +44,6 @@ class ContentProductDataImportPluginTest extends Unit
     protected $tester;
 
     /**
-     * @var bool
-     */
-    protected static $productAbstractsAdded = false;
-
-    /**
      * @var array<string>
      */
     protected static $productAbstractSkuIds = [];
@@ -60,6 +55,7 @@ class ContentProductDataImportPluginTest extends Unit
     {
         parent::_before();
         $this->tester->ensureDatabaseTableIsEmpty();
+        $this->addNeededProductAbstract();
     }
 
     /**
@@ -67,27 +63,22 @@ class ContentProductDataImportPluginTest extends Unit
      */
     protected function addNeededProductAbstract(): void
     {
-        if (!static::$productAbstractsAdded) {
-            //these values come from the csv files that are tested in this data import
-            $skus = [
-                '12314204',
-                '12314205',
-                '12314156',
-                '12314154',
-                '12314152',
-                '12314151',
-                '12314191',
-                '12314190',
-                '12314180',
-                '12314171',
-            ];
+        $skus = [
+            '12314204',
+            '12314205',
+            '12314156',
+            '12314154',
+            '12314152',
+            '12314151',
+            '12314191',
+            '12314190',
+            '12314180',
+            '12314171',
+        ];
 
-            foreach ($skus as $sku) {
-                static::$productAbstractSkuIds[$sku] =
-                    $this->tester->haveProductAbstract(['sku' => $sku])->getIdProductAbstract();
-            }
-
-            static::$productAbstractsAdded = true;
+        foreach ($skus as $sku) {
+            static::$productAbstractSkuIds[$sku] =
+                $this->tester->haveProductAbstract(['sku' => $sku])->getIdProductAbstract();
         }
     }
 
@@ -96,7 +87,7 @@ class ContentProductDataImportPluginTest extends Unit
      */
     public function testImportProductAbstractListsData(): void
     {
-        $this->addNeededProductAbstract();
+        // Assign
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_abstract_list.csv',
         );
@@ -117,6 +108,7 @@ class ContentProductDataImportPluginTest extends Unit
      */
     public function testImportProductAbstractListsDataWrongSkus(): void
     {
+        // Assign
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_abstract_list_wrong_skus.csv',
         )->setThrowException(true);
@@ -145,7 +137,7 @@ class ContentProductDataImportPluginTest extends Unit
      */
     public function testUpdateLocale(): void
     {
-        $this->addNeededProductAbstract();
+        // Assign
         //these locale values come from import/content_product_abstract_list(update).csv
         $enLocaleTransfer = $this->getLocaleFacade()->getLocale('en_US');
         $deLocaleTransfer = $this->getLocaleFacade()->getLocale('de_DE');
@@ -179,7 +171,7 @@ class ContentProductDataImportPluginTest extends Unit
      */
     public function testUpdateLocaleFromDefault(): void
     {
-        $this->addNeededProductAbstract();
+        // Assign
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_abstract_list(update_locale_from_default).csv',
         );
@@ -213,7 +205,7 @@ class ContentProductDataImportPluginTest extends Unit
      */
     public function testUpdateLocaleToDefault(): void
     {
-        $this->addNeededProductAbstract();
+        // Assign
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_abstract_list(update_locale_to_default).csv',
         );

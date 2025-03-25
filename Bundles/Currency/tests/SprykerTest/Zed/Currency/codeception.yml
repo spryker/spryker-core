@@ -21,11 +21,11 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Application\Helper\ZedHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Shared\Currency\Helper\CurrencyDependencyHelper
@@ -37,6 +37,7 @@ suites:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Application\Helper\ZedHelper
                 - \SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper
@@ -45,6 +46,5 @@ suites:
                 - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper

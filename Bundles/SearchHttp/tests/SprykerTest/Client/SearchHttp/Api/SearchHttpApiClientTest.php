@@ -39,8 +39,6 @@ class SearchHttpApiClientTest extends Unit
     protected $tester;
 
     /**
-     * @group test1
-     *
      * @return void
      */
     public function testSearchHttpRequestSuccessfullySent(): void
