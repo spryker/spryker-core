@@ -33,6 +33,16 @@ class DataExportDependencyProvider extends AbstractBundleDependencyProvider
     public const DATA_ENTITY_EXPORTER_PLUGINS = 'DATA_ENTITY_EXPORTER_PLUGINS';
 
     /**
+     * @var string
+     */
+    public const DATA_ENTITY_GENERATOR_PLUGINS = 'DATA_ENTITY_GENERATOR_PLUGINS';
+
+    /**
+     * @var string
+     */
+    public const DATA_ENTITY_READER_PLUGINS = 'DATA_ENTITY_READER_PLUGINS';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -42,6 +52,8 @@ class DataExportDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addDataExportService($container);
         $container = $this->addDataEntityExporterPlugins($container);
+        $container = $this->addDataEntityReaderPlugins($container);
+        $container = $this->addDataEntityGeneratorPlugins($container);
         $container = $this->addGracefulRunnerFacade($container);
 
         return $container;
@@ -110,5 +122,49 @@ class DataExportDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDataEntityReaderPlugins(Container $container): Container
+    {
+        $container->set(static::DATA_ENTITY_READER_PLUGINS, function () {
+            return $this->getDataEntityReaderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityReaderPluginInterface>
+     */
+    protected function getDataEntityReaderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDataEntityGeneratorPlugins(Container $container): Container
+    {
+        $container->set(static::DATA_ENTITY_GENERATOR_PLUGINS, function () {
+            return $this->getDataEntityGeneratorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityGeneratorPluginInterface>
+     */
+    protected function getDataEntityGeneratorPlugins(): array
+    {
+        return [];
     }
 }

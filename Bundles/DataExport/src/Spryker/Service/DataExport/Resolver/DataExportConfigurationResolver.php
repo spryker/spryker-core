@@ -57,17 +57,17 @@ class DataExportConfigurationResolver implements DataExportConfigurationResolver
     }
 
     /**
-     * @param string $dataEntity
+     * @param string $dataEntityName
      * @param \Generated\Shared\Transfer\DataExportConfigurationsTransfer $dataExportConfigurationsTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer|null
      */
     protected function findDataExportActionConfigurationByDataEntity(
-        string $dataEntity,
+        string $dataEntityName,
         DataExportConfigurationsTransfer $dataExportConfigurationsTransfer
     ): ?DataExportConfigurationTransfer {
         foreach ($dataExportConfigurationsTransfer->getActions() as $dataExportConfigurationTransfer) {
-            if ($dataExportConfigurationTransfer->getDataEntity() === $dataEntity) {
+            if ($dataExportConfigurationTransfer->getDataEntity() === $dataEntityName) {
                 return $dataExportConfigurationTransfer;
             }
         }

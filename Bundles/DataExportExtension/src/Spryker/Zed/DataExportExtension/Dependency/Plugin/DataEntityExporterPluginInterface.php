@@ -10,18 +10,8 @@ namespace Spryker\Zed\DataExportExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportReportTransfer;
 
-interface DataEntityExporterPluginInterface
+interface DataEntityExporterPluginInterface extends DataEntityPluginInterface
 {
-    /**
-     * Specification:
-     * - Returns supported data entity name.
-     *
-     * @api
-     *
-     * @return string
-     */
-    public static function getDataEntity(): string;
-
     /**
      * Specification:
      * - Exports data according to configuration in `DataExportConfigurationTransfer`.
