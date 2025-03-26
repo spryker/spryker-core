@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Zed\Kernel\Communication\FacadeResolverAwareTrait;
 use Spryker\Zed\Kernel\Communication\FactoryResolverAwareTrait;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -84,6 +85,9 @@ class ConsoleBootstrap extends Application
         $inputDefinitions->addOption(new InputOption('--no-pre', '', InputOption::VALUE_NONE, 'Will not execute pre run hooks'));
         $inputDefinitions->addOption(new InputOption('--no-post', '', InputOption::VALUE_NONE, 'Will not execute post run hooks'));
         $inputDefinitions->addOption(new InputOption('--quiet-meta', '', InputOption::VALUE_NONE, 'Disables meta output of store and environment'));
+        $inputDefinitions->addOption(new InputOption('--repeatable', '', InputOption::VALUE_OPTIONAL, 'Enables multiple executions of the command until a certain duration', $this->getConfig()->getMaxRepeatableExecutionDuration()));
+        $inputDefinitions->addOption(new InputOption('--max-duration', '-max', InputOption::VALUE_OPTIONAL, 'Maximum duration of the repeatable execution in seconds', $this->getConfig()->getMaxRepeatableExecutionDuration()));
+        $inputDefinitions->addOption(new InputOption('--min-duration', '-min', InputOption::VALUE_OPTIONAL, 'Minimum duration of the repeatable execution in seconds', $this->getConfig()->getMinRepeatableExecutionDuration()));
 
         return $inputDefinitions;
     }
@@ -119,6 +123,53 @@ class ConsoleBootstrap extends Application
         }
 
         return $response;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Command\Command $command
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return int
+     */
+    protected function doRunCommand(Command $command, InputInterface $input, OutputInterface $output): int
+    {
+        if (!$input->hasParameterOption('--repeatable')) {
+            return parent::doRunCommand($command, $input, $output);
+        }
+
+        $maxProcessDuration = $input->getParameterOption('--max-duration');
+        $minProcessDuration = $input->getParameterOption('--min-duration');
+        $startProcessTime = microtime(true);
+
+        do {
+            $startCommandTime = microtime(true);
+            $exitCode = parent::doRunCommand($command, $input, $output);
+
+            $stopCommandTime = microtime(true);
+            $commandDuration = $stopCommandTime - $startCommandTime;
+            $processDuration = $stopCommandTime - $startProcessTime;
+
+            if ($minProcessDuration > $commandDuration) {
+                usleep((int)(($minProcessDuration - $commandDuration) * 1e6));
+            }
+
+            if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+                $output->writeln(
+                    sprintf(
+                        '<fg=magenta>Process executed. Duration: %s. Exit code: %s</>',
+                        $processDuration,
+                        $exitCode,
+                    ),
+                );
+            }
+
+            if ($exitCode !== 0) {
+                return $exitCode;
+            }
+        } while ($maxProcessDuration > 0 && $processDuration + $commandDuration < $maxProcessDuration);
+
+        return $exitCode;
     }
 
     /**

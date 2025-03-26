@@ -48,4 +48,30 @@ class ConsoleConfig extends AbstractBundleConfig
     {
         return PHP_SAPI === static::SAPI_NAME_CONSOLE;
     }
+
+    /**
+     * Specification:
+     * - Returns the maximum duration (in seconds) of repeatable command execution.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getMaxRepeatableExecutionDuration(): int
+    {
+        return $this->getSharedConfig()->getMaxRepeatableExecutionDuration();
+    }
+
+    /**
+     * Specification:
+     * - Returns the minimum duration (in seconds) of repeatable command execution.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getMinRepeatableExecutionDuration(): int
+    {
+        return $this->getSharedConfig()->getMaxRepeatableExecutionDuration();
+    }
 }

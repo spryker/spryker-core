@@ -12,6 +12,16 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 class ConsoleConfig extends AbstractSharedConfig
 {
     /**
+     * @var int
+     */
+    protected const MAX_REPEATABLE_EXECUTION_DURATION = 2;
+
+    /**
+     * @var int
+     */
+    protected const MIN_REPEATABLE_EXECUTION_DURATION = 1;
+
+    /**
      * @api
      *
      * @return bool
@@ -29,5 +39,31 @@ class ConsoleConfig extends AbstractSharedConfig
     public function isDebugModeEnabled(): bool
     {
         return $this->get(ConsoleConstants::IS_DEBUG_ENABLED, false);
+    }
+
+    /**
+     * Specification:
+     * - Returns the maximum duration (in seconds) of repeatable command execution.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getMaxRepeatableExecutionDuration(): int
+    {
+        return static::MAX_REPEATABLE_EXECUTION_DURATION;
+    }
+
+    /**
+     * Specification:
+     * - Returns the minimum duration (in seconds) of repeatable command execution.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getMinRepeatableExecutionDuration(): int
+    {
+        return static::MIN_REPEATABLE_EXECUTION_DURATION;
     }
 }

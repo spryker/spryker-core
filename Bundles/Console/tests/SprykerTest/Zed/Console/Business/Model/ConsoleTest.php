@@ -8,16 +8,22 @@
 namespace SprykerTest\Zed\Console\Business\Model;
 
 use Codeception\Test\Unit;
+use ReflectionClass as ReflectionClassReflectionClass;
 use Spryker\Zed\Console\Business\ConsoleBusinessFactory;
 use Spryker\Zed\Console\Business\ConsoleFacade;
+use Spryker\Zed\Console\Communication\Bootstrap\ConsoleBootstrap;
 use Spryker\Zed\Console\ConsoleDependencyProvider;
 use Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface;
 use Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Communication\Console\Console;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerTest\Zed\Console\Business\Model\Fixtures\ConsoleMock;
+use Symfony\Component\Console\Helper\HelperSet;
+use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -175,5 +181,67 @@ class ConsoleTest extends Unit
         $consoleFacade->setFactory($consoleBusinessFactory);
 
         return $consoleFacade;
+    }
+
+    /**
+     * @return void
+     */
+    public function testDoRunProcessWillExecuteSeveralTimesWhenRepeatableOptionIsTrue(): void
+    {
+        // Arrange
+        $inputMock = $this->getMockBuilder(InputInterface::class)->getMock();
+        $inputMock->method('hasParameterOption')->with()->willReturn(true);
+        $inputMock->method('getParameterOption')->willReturn(1);
+
+        $outputMock = $this->getMockBuilder(OutputInterface::class)->getMock();
+
+        $commandMock = $this->createPartialMock(
+            Console::class,
+            [
+                'execute',
+                'getHelperSet',
+            ],
+        );
+
+        $definition = new InputDefinition();
+        $definition->addOption(new InputOption('repeatable', null, InputOption::VALUE_NONE));
+        $commandMock->setDefinition($definition);
+        $commandMock->method('getHelperSet')->willReturn(new HelperSet([]));
+        $commandMock->expects($this->atLeast(2))
+            ->method('execute')
+            ->willReturn(0);
+
+        $bootstrap = new ConsoleBootstrap();
+
+        // Act
+        $code = $this->invokeBoostrapCommandMethod(
+            [
+                $commandMock,
+                $inputMock,
+                $outputMock,
+            ],
+        );
+
+        // Assert
+        $this->assertSame(Console::CODE_SUCCESS, $code);
+    }
+
+    /**
+     * A workaround to call a protected/private method of a class.
+     *
+     * @param array<string, mixed> $methodParameters
+     *
+     * @return mixed.
+     */
+    protected function invokeBoostrapCommandMethod(array $methodParameters = [])
+    {
+        $object = new ConsoleBootstrap();
+
+        $reflection = new ReflectionClassReflectionClass(get_class($object));
+
+        $method = $reflection->getMethod('doRunCommand');
+        $method->setAccessible(true);
+
+        return $method->invokeArgs($object, $methodParameters);
     }
 }
