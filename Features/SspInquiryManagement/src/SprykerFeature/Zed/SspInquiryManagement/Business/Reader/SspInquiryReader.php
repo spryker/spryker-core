@@ -9,10 +9,13 @@ namespace SprykerFeature\Zed\SspInquiryManagement\Business\Reader;
 
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
+use Spryker\Zed\Kernel\PermissionAwareTrait;
 use SprykerFeature\Zed\SspInquiryManagement\Persistence\SspInquiryManagementRepositoryInterface;
 
 class SspInquiryReader implements SspInquiryReaderInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @param \SprykerFeature\Zed\SspInquiryManagement\Persistence\SspInquiryManagementRepositoryInterface $sspInquiryManagementRepository
      * @param array<int, \SprykerFeature\Zed\SspInquiryManagement\Business\Expander\SspInquiryExpanderInterface> $sspInquiryExpanders
@@ -30,7 +33,7 @@ class SspInquiryReader implements SspInquiryReaderInterface
      */
     public function getSspInquiryCollection(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer
     {
-         $sspInquiryCollectionTransfer = $this->sspInquiryManagementRepository->getSspInquiryCollection($sspInquiryCriteriaTransfer);
+        $sspInquiryCollectionTransfer = $this->sspInquiryManagementRepository->getSspInquiryCollection($sspInquiryCriteriaTransfer);
         foreach ($this->sspInquiryExpanders as $sspInquiryExpander) {
             if (!$sspInquiryExpander->isApplicable($sspInquiryCriteriaTransfer)) {
                 continue;

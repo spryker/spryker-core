@@ -12,7 +12,7 @@
     <ul class="menu menu--inline">
         {% for action in data.column %}
             <li class="menu__item">
-                <a href="{{ action.url }}" {% if action.dataQa is defined %}data-qa="{{ action.dataQa }}"{% endif %}>
+                <a href="{{ action.url }}" {% if action.qa is defined %}data-qa="{{ action.qa }}"{% endif %}>
                     {{ action.label | trans }}
                 </a>
             </li>

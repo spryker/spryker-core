@@ -1,0 +1,24 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'title-counter',
+} %}
+
+{% define data = {
+    title: required,
+    counter: 0,
+} %}
+
+{% block body %}
+    <div class="grid grid--middle">
+        {% block title %}
+            <h5 class="{{ config.name }}__title spacing-right col">{{ data.title | trans }}</h5>
+        {% endblock %}
+
+        {% block counter %}
+            {% if data.counter %}
+                <span class="{{ config.name }}__counter col badge">{{ data.counter }}</span>
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isActivePage: _widget.isActivePage,
+    canViewFiles: can('ViewDashboardPermissionPlugin'),
+} %}
+
+{% set itemClass = data.isActivePage ? ' menu__item--active' : '' %}
+
+{% block body %}
+    {% if data.canViewFiles %}
+        <li class="menu__item {{ itemClass }}">
+            <a href="{{ url('customer/dashboard') }}" data-id="sidebar-dashboard">{{ 'dashboard.index.widget.title' | trans }}</a>
+        </li>
+    {% endif %}
+{% endblock %}

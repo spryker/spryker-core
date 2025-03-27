@@ -252,4 +252,18 @@
     <transfer name="CompanyUserCollection">
         <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
     </transfer>
+
+    <transfer name="DashboardResponse">
+        <property name="dashboardComponentInquiry" type="DashboardComponentInquiry"/>
+    </transfer>
+
+    <transfer name="DashboardComponentInquiry">
+        <property name="pendingItems" type="int"/>
+        <property name="sspInquiryCollection" type="SspInquiryCollection"/>
+    </transfer>
+
+    <transfer name="DashboardRequest">
+        <property name="companyUser" type="CompanyUser"/>
+        <property name="store" type="Store"/>
+    </transfer>
 </transfers>

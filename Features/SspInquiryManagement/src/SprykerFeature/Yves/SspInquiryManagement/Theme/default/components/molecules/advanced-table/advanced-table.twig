@@ -17,7 +17,9 @@
 {% block body %}
     {% if isEmpty %}
         {% block empty %}
-            <p class="{{ _self.renderClass(config.name ~ '__empty', modifiers) }}">{{ data.emptyText | trans }}</p>
+            <div class="{{ _self.renderClass(config.name ~ '__empty', modifiers) }}">
+                <p class="{{ _self.renderClass(config.name ~ '__empty-text', modifiers) }}">{{ data.emptyText | trans }}</p>
+            </div>
         {% endblock %}
     {% else %}
         {% block table %}

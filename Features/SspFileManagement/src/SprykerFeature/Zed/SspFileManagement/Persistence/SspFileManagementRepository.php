@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\FileManager\Persistence\Map\SpyFileInfoTableMap;
+use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -126,7 +127,7 @@ class SspFileManagementRepository extends AbstractRepository implements SspFileM
         $query = $this->getFactory()
             ->getFilePropelQuery()
             ->leftJoinSpyFileInfo()
-            ->distinct();
+            ->groupBy(SpyFileTableMap::COL_ID_FILE);
 
         $query = $this->applyPermissionStrategies($query, $fileAttachmentFileCriteriaTransfer, $queryStrategies);
         $query = $this->applyFileSearch($query, $fileAttachmentFileCriteriaTransfer);
@@ -318,10 +319,12 @@ class SspFileManagementRepository extends AbstractRepository implements SspFileM
     protected function applySorting(ModelCriteria $query, ArrayObject $sortTransfers): ModelCriteria
     {
         foreach ($sortTransfers as $sortTransfer) {
-            $query->orderBy(
-                static::ORDER_BY_MAPPING[$sortTransfer->getFieldOrFail()] ?? $sortTransfer->getFieldOrFail(),
-                $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
-            );
+            $query
+                ->groupBy(static::ORDER_BY_MAPPING[$sortTransfer->getFieldOrFail()] ?? $sortTransfer->getFieldOrFail())
+                ->orderBy(
+                    static::ORDER_BY_MAPPING[$sortTransfer->getFieldOrFail()] ?? $sortTransfer->getFieldOrFail(),
+                    $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
+                );
         }
 
         return $query;

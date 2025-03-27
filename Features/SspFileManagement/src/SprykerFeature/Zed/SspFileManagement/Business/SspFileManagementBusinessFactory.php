@@ -8,6 +8,8 @@
 namespace SprykerFeature\Zed\SspFileManagement\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use SprykerFeature\Zed\SspFileManagement\Business\DashboardDataProvider\FileDashboardDataProvider;
+use SprykerFeature\Zed\SspFileManagement\Business\DashboardDataProvider\FileDashboardDataProviderInterface;
 use SprykerFeature\Zed\SspFileManagement\Business\Deleter\FileAttachmentDeleter;
 use SprykerFeature\Zed\SspFileManagement\Business\Deleter\FileAttachmentDeleterInterface;
 use SprykerFeature\Zed\SspFileManagement\Business\Reader\FileReader;
@@ -90,5 +92,13 @@ class SspFileManagementBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
         );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspFileManagement\Business\DashboardDataProvider\FileDashboardDataProviderInterface
+     */
+    public function createDashboardDataProvider(): FileDashboardDataProviderInterface
+    {
+        return new FileDashboardDataProvider($this->createFileReader(), $this->getConfig());
     }
 }

@@ -1,0 +1,42 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'stats-overview',
+} %}
+
+{% define data = {
+    title: 'dashboard.overview.title',
+    stats: [],
+} %}
+
+{%- block extraClass %} grid grid--column {{ parent() }}{% endblock -%}
+
+{% block body %}
+    {% block title %}
+        {% include molecule('title-counter', 'SspDashboardManagement') with {
+            class: 'spacing-bottom col--sm-12',
+            data: {
+                title: data.title,
+            },
+        } only %}
+    {% endblock %}
+
+    {% block stats %}
+        {% if data.stats is not empty %}
+            <div class="grid grid--middle col--expand col--sm-12">
+                {% block statCol %}
+                    {% for stat in data.stats %}
+                        <div class="col col--with-gutter col--sm-12 col--lg-6 col--xl-4">
+                            {% block stat %}
+                                <div class="{{ config.name }}__stat text-center">
+                                    <div class="{{ config.name }}__title">{{ stat.title | trans }}</div>
+                                    <strong class="{{ config.name }}__counter">{{ stat.value | default('dashboard.overview.not_applicable' | trans) }}</strong>
+                                </div>
+                            {% endblock %}
+                        </div>
+                    {% endfor %}
+                {% endblock %}
+            </div>
+        {% endif %}
+    {% endblock %}
+{% endblock %}

@@ -30,6 +30,7 @@
     "replace": {
         "spryker-feature/ssp-file-management": "*",
         "spryker-feature/ssp-inquiry-management": "*",
+        "spryker-feature/ssp-dashboard-management": "*",
         "spryker/acl": "*",
         "spryker/acl-data-import": "*",
         "spryker/acl-entity": "*",

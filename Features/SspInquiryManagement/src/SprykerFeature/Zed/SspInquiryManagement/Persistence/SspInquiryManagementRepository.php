@@ -33,8 +33,9 @@ class SspInquiryManagementRepository extends AbstractRepository implements SspIn
      *
      * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
      */
-    public function getSspInquiryCollection(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer
-    {
+    public function getSspInquiryCollection(
+        SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
+    ): SspInquiryCollectionTransfer {
          $sspInquiryCollectionTransfer = new SspInquiryCollectionTransfer();
 
          $sspInquiryQuery = $this->getFactory()->createSspInquiryQuery()

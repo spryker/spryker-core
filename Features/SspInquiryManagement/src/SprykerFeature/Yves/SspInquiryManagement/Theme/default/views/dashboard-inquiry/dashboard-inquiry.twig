@@ -1,0 +1,57 @@
+{% extends template('widget') %}
+
+{% define data = {
+    totalItems: _widget.totalItems,
+    inquiries: _widget.inquiries,
+} %}
+
+{% block body %}
+    {% if can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin') %}
+        {% set columns = [
+            {
+                id: 'reference',
+                title: 'customer.ssp_inquiry.list.reference' | trans,
+            },
+            {
+                id: 'type',
+                title: 'customer.ssp_inquiry.list.type' | trans,
+            },
+            {
+                id: 'date',
+                title: 'customer.ssp_inquiry.list.date_created' | trans,
+                type: 'date',
+            },
+            {
+                id: 'status',
+                title: 'customer.ssp_inquiry.list.status' | trans,
+                type: 'status',
+            },
+            {
+                id: 'actions',
+                type: 'actions',
+            },
+        ] %}
+
+        {% set rows = (data.inquiries | default([])) | map(inquiry => {
+            reference: inquiry.reference,
+            type: "ssp_inquiry.type.#{inquiry.type | lower}" | trans,
+            date: inquiry.createdDate,
+            status: { label: "ssp_inquiry.status.#{inquiry.status}" | lower | trans, status: inquiry.status },
+            actions: [{ url: path('customer/ssp-inquiry/details', {'reference': inquiry.reference}), label: 'customer.ssp_inquiry.view_ssp_inquiry' }],
+        }) %}
+
+        {% block table %}
+            {% include molecule('dashboard-table', 'SspDashboardManagement') with {
+                data: {
+                    title: 'customer.account.ssp_inquiries',
+                    counter: data.totalItems,
+                    columns: columns,
+                    rows: rows,
+                    emptyText: 'customer.account.no_ssp_inquiries',
+                    moreLink: path('customer/ssp-inquiry'),
+                },
+                qa: 'dashboard-table-table-claims',
+            } only %}
+        {% endblock %}
+    {% endif %}
+{% endblock %}

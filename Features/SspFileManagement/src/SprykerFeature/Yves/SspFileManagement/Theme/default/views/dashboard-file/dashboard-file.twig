@@ -1,0 +1,51 @@
+{% extends template('widget') %}
+
+{% define data = {
+    totalItems: _widget.totalItems,
+    files: _widget.files,
+    canViewFiles: can('ViewFilesPermissionPlugin'),
+} %}
+
+{% block body %}
+    {% if data.canViewFiles %}
+        {% set columns = [
+            {
+                id: 'name',
+                title: 'ssp_file_management.file_management.table.header.file_name' | trans,
+            },
+            {
+                id: 'size',
+                title: 'ssp_file_management.file_management.table.header.file_size' | trans,
+            },
+            {
+                id: 'type',
+                title: 'ssp_file_management.file_management.table.header.file_type' | trans,
+            },
+            {
+                id: 'actions',
+                type: 'actions',
+            },
+        ] %}
+
+        {% set rows = (data.files | default([])) | map(file => {
+            name: file.fileName,
+            size: file.fileInfo[0].size | readable_bytesize,
+            type: file.fileInfo[0].extension,
+            actions: [{ url: path('ssp-file-management/download', {'id-file': file.uuid }), label: 'ssp_file_management.file_management.table.actions.download' }],
+        }) %}
+
+        {% block table %}
+            {% include molecule('dashboard-table', 'SspDashboardManagement') with {
+                data: {
+                    title: 'customer.account.files',
+                    counter: data.totalItems,
+                    columns: columns,
+                    rows: rows,
+                    emptyText: 'customer.account.no_files',
+                    moreLink: path('ssp-file-management'),
+                },
+                qa: 'dashboard-table-table-files',
+            } only %}
+        {% endblock %}
+    {% endif %}
+{% endblock %}

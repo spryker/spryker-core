@@ -257,4 +257,16 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="DashboardResponse">
+        <property name="dashboardComponentFiles" type="DashboardComponentFiles"/>
+    </transfer>
+
+    <transfer name="DashboardComponentFiles">
+        <property name="fileAttachmentFileCollection" type="FileAttachmentFileCollection"/>
+    </transfer>
+
+    <transfer name="DashboardRequest">
+        <property name="companyUser" type="CompanyUser"/>
+    </transfer>
+
 </transfers>

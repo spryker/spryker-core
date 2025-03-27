@@ -1,0 +1,55 @@
+{
+    "name": "spryker-feature/ssp-dashboard-management",
+    "type": "library",
+    "description": "SspDashboardManagement module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.2",
+        "spryker-shop/shop-application": "^1.15.0",
+        "spryker-shop/shop-application-extension": "^1.2.0",
+        "spryker/cms-block-storage-extension": "^1.0.0",
+        "spryker/customer": "^7.66.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/locale": "^4.0.0",
+        "spryker/permission-extension": "^1.0.0",
+        "spryker/router": "^1.23.0",
+        "spryker/storage": "^3.0.0",
+        "spryker/store": "^1.19.0",
+        "spryker/symfony": "^3.18.0",
+        "spryker/synchronization": "^1.0.0",
+        "spryker/zed-request": "^3.22.0"
+    },
+    "require-dev": {
+        "spryker-feature/ssp-inquiry-management": "*",
+        "spryker-shop/customer-page": "*",
+        "spryker/code-sniffer": "*",
+        "spryker/propel": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker-feature/ssp-inquiry-management": "If you want to display inquiries in the dashboard, you need to install the SspInquiryManagement module.",
+        "spryker-shop/customer-page": "Used for Yves frontend integration."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerFeature\\": "src/SprykerFeature/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

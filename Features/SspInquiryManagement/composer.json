@@ -37,6 +37,7 @@
         "spryker/zed-request": "^3.22.0"
     },
     "require-dev": {
+        "spryker-feature/ssp-dashboard-management": "*",
         "spryker-shop/customer-page": "*",
         "spryker/code-sniffer": "*",
         "spryker/company": "*",
@@ -46,6 +47,7 @@
         "spryker/testify": "*"
     },
     "suggest": {
+        "spryker-feature/ssp-dashboard-management": "If you want to see files on the dashboard.",
         "spryker-shop/customer-page": "Contains the customer page and its components."
     },
     "autoload": {

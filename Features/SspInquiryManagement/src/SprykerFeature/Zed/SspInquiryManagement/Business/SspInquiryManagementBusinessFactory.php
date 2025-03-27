@@ -20,6 +20,8 @@ use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface;
 use Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
+use SprykerFeature\Zed\SspInquiryManagement\Business\DashboardDataProvider\InquiryDashboardDataProvider;
+use SprykerFeature\Zed\SspInquiryManagement\Business\DashboardDataProvider\InquiryDashboardDataProviderInterface;
 use SprykerFeature\Zed\SspInquiryManagement\Business\DataImport\Step\CompanyUserKeyToIdCompanyUserStep;
 use SprykerFeature\Zed\SspInquiryManagement\Business\DataImport\Step\SspInquiryStateMachineWriterStep;
 use SprykerFeature\Zed\SspInquiryManagement\Business\DataImport\Step\SspInquiryWriterStep;
@@ -394,5 +396,13 @@ class SspInquiryManagementBusinessFactory extends AbstractBusinessFactory
     public function getCommentFacade(): CommentFacadeInterface
     {
         return $this->getProvidedDependency(SspInquiryManagementDependencyProvider::FACADE_COMMENT);
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspInquiryManagement\Business\DashboardDataProvider\InquiryDashboardDataProviderInterface
+     */
+    public function createInquiryDashboardDataProvider(): InquiryDashboardDataProviderInterface
+    {
+        return new InquiryDashboardDataProvider($this->createSspInquiryReader(), $this->getConfig());
     }
 }

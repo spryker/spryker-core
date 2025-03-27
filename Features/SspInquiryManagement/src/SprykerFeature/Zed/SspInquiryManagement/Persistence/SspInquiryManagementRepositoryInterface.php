@@ -18,7 +18,9 @@ interface SspInquiryManagementRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
      */
-    public function getSspInquiryCollection(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer;
+    public function getSspInquiryCollection(
+        SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
+    ): SspInquiryCollectionTransfer;
 
     /**
      * @param array<int> $stateIds

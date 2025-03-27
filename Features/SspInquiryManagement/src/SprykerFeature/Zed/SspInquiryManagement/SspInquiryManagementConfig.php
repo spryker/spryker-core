@@ -166,6 +166,19 @@ class SspInquiryManagementConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the ssp inquiry status that is considered as "Pending".
+     *
+     * @api
+     *
+     * @return string|null
+     */
+    public function getPendingStatus(): ?string
+    {
+        return '';
+    }
+
+    /**
      *  Specification:
      *  - Import configuration for ssp inquiry.
      *
