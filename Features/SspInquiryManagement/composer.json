@@ -6,6 +6,7 @@
     "require": {
         "ext-zlib": "*",
         "php": ">=8.2",
+        "spryker-feature/ssp-asset-management": "^0.1.0",
         "spryker-shop/shop-application": "^1.15.0",
         "spryker-shop/shop-application-extension": "^1.2.0",
         "spryker/application": "^3.36.0",
@@ -15,6 +16,7 @@
         "spryker/customer": "^7.66.0",
         "spryker/data-import": "^1.27.0",
         "spryker/file-manager": "^2.5.0",
+        "spryker/file-manager-extension": "^1.1.0",
         "spryker/file-system-extension": "^1.0.0",
         "spryker/gui": "^3.55.0",
         "spryker/kernel": "^3.75.0",

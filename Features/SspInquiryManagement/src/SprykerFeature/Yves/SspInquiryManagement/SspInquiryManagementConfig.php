@@ -19,6 +19,7 @@ class SspInquiryManagementConfig extends AbstractBundleConfig
      */
     protected const BACK_URL_TYPE_TO_PATH_MAP = [
         'order' => 'customer/order/details',
+        'ssp-asset' => 'customer/asset/details',
     ];
 
     /**
@@ -26,6 +27,7 @@ class SspInquiryManagementConfig extends AbstractBundleConfig
      */
     protected const BACK_URL_TYPE_TO_IDENTIFIER_MAP = [
         'order' => 'id',
+        'ssp-asset' => 'reference',
     ];
 
     /**

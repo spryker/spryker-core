@@ -36,9 +36,9 @@
     {% block sspInquiryCreateButton %}
         {% if can('CreateSspInquiryPermissionPlugin') %}
             <div class="box text-right">
-                <a class="button" data-qa="create-general-ssp-inquiry"
-                   href="{{url('customer/ssp-inquiry/create')}}"
-                        {{qa('customer-create-ssp-inquiry')}}>
+                <a class="button"
+                   {{qa('create-general-ssp-inquiry')}}
+                   href="{{ url('customer/ssp-inquiry/create') }}">
                     {{ 'customer.ssp_inquiry.create.button' | trans }}
                 </a>
             </div>

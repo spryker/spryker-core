@@ -110,4 +110,27 @@
         </foreign-key>
     </table>
 
+    <table name="spy_ssp_inquiry_ssp_asset" idMethod="native" allowPkInsert="true">
+        <column name="id_ssp_inquiry_ssp_asset" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_ssp_inquiry" required="true" type="INTEGER"/>
+        <column name="fk_ssp_asset" required="true" type="INTEGER"/>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="id_ssp_inquiry_ssp_asset_pk_seq"/>
+
+        <unique name="spy_ssp_inquiry_ssp_asset-fk_ssp_inquiry-fk_ssp_asset">
+            <unique-column name="fk_ssp_asset"/>
+            <unique-column name="fk_ssp_inquiry"/>
+        </unique>
+
+        <foreign-key name="spy_ssp_inquiry_ssp_asset-fk_ssp_inquiry" foreignTable="spy_ssp_inquiry">
+            <reference local="fk_ssp_inquiry" foreign="id_ssp_inquiry"/>
+        </foreign-key>
+
+        <foreign-key name="spy_ssp_inquiry_ssp_asset-fk_ssp_asset" foreignTable="spy_ssp_asset">
+            <reference local="fk_ssp_asset" foreign="id_ssp_asset"/>
+        </foreign-key>
+    </table>
+
 </database>

@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="SspAssetCollection" strict="true">
+        <property name="sspAssets" type="SspAsset[]" singular="sspAsset"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="SspAsset" strict="true">
+        <property name="idSspAsset" type="int"/>
+        <property name="reference" type="string"/>
+        <property name="name" type="string"/>
+        <property name="image" type="File"/>
+        <property name="status" type="string"/>
+        <property name="serialNumber" type="string"/>
+        <property name="note" type="string"/>
+        <property name="assignments" type="SspAssetAssignment[]" singular="assignment"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="createdDate" type="string"/>
+    </transfer>
+
+    <transfer name="File">
+        <property name="idFile" type="int"/>
+        <property name="delete" type="bool"/>
+        <property name="fileInfo" type="FileInfo[]" singular="fileInfo"/>
+        <property name="fileUpload" type="FileUpload"/>
+        <property name="encodedContent" type="string"/>
+        <property name="fileContent" type="string"/>
+        <property name="fileName" type="string"/>
+    </transfer>
+
+    <transfer name="FileUpload">
+        <property name="size" type="int"/>
+        <property name="clientOriginalExtension" type="string"/>
+        <property name="clientOriginalName" type="string"/>
+        <property name="mimeTypeName" type="string"/>
+        <property name="realPath" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCriteriaFilter">
+        <property name="companyBusinessUnitIds" type="array" singular="companyBusinessUnitIds"/>
+    </transfer>
+
+    <transfer name="FileManagerData">
+        <property name="file" type="File"/>
+        <property name="fileInfo" type="FileInfo"/>
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="SequenceNumberSettings">
+        <property name="name" type="string"/>
+        <property name="prefix" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCollection">
+        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="FileInfo">
+        <property name="storageName" type="string"/>
+        <property name="storageFileName" type="string"/>
+        <property name="type" type="string"/>
+        <property name="extension" type="string"/>
+        <property name="size" type="int"/>
+    </transfer>
+
+    <transfer name="SspAssetAssignment" strict="true">
+        <property name="assignedAt" type="string"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="sspAsset" type="SspAsset"/>
+    </transfer>
+
+    <transfer name="SspAssetCollectionRequest" strict="true">
+        <property name="sspAssets" type="SspAsset[]" singular="sspAsset"/>
+        <property name="assignmentsToRemove" type="SspAssetAssignment[]" singular="assignmentToRemove"/>
+        <property name="assignmentsToAdd" type="SspAssetAssignment[]" singular="assignmentToAdd"/>
+    </transfer>
+
+    <transfer name="SspAssetCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="sspAssets" type="SspAsset[]" singular="sspAsset"/>
+    </transfer>
+
+    <transfer name="SspAssetCriteria" strict="true">
+        <property name="sspAssetConditions" type="SspAssetConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="include" type="SspAssetInclude"/>
+    </transfer>
+
+    <transfer name="SspAssetConditions" strict="true">
+        <property name="sspAssetIds" type="int[]" singular="idSspAsset"/>
+        <property name="references" type="string[]" singular="reference"/>
+        <property name="status" type="string"/>
+        <property name="assignedBusinessUnitId" type="int"/>
+        <property name="assignedBusinessUnitCompanyId" type="int"/>
+        <property name="searchText" type="string"/>
+        <property name="fileIds" type="int[]" singular="idFile"/>
+    </transfer>
+
+    <transfer name="SspAssetInclude" strict="true">
+        <property name="withCompanyBusinessUnit" type="bool"/>
+        <property name="withImageFile" type="bool"/>
+        <property name="withAssignedBusinessUnits" type="bool"/>
+        <property name="withSspInquiries" type="bool"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="previousPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="entityIdentifier" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="name" type="string"/>
+        <property name="company" type="Company"/>
+        <property name="fkCompany" type="int"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="idCompany" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="SspAssetImageRequest" strict="true">
+        <property name="imageUuid" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="fkCompany" type="int"/>
+    </transfer>
+
+    <transfer name="FileCollection" strict="true">
+        <property name="files" type="File[]" singular="file"/>
+    </transfer>
+
+</transfers>

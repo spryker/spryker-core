@@ -39,6 +39,7 @@ class TranslatorConfig extends AbstractBundleConfig
     {
         return [
             APPLICATION_VENDOR_DIR . '/spryker/*/data/translation/Zed/[a-z][a-z]_[A-Z][A-Z].csv',
+            APPLICATION_VENDOR_DIR . '/spryker-feature/*/data/translation/Zed/[a-z][a-z]_[A-Z][A-Z].csv',
         ];
     }
 

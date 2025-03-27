@@ -3,6 +3,7 @@
 {% define data = {
     totalItems: _widget.totalItems,
     inquiries: _widget.inquiries,
+    moreLink: _widget.moreLink | default(url('customer/ssp-inquiry')),
 } %}
 
 {% block body %}
@@ -48,9 +49,9 @@
                     columns: columns,
                     rows: rows,
                     emptyText: 'customer.account.no_ssp_inquiries',
-                    moreLink: path('customer/ssp-inquiry'),
+                    moreLink: data.moreLink,
                 },
-                qa: 'dashboard-table-table-claims',
+                qa: 'ssp-inquiry-table',
             } only %}
         {% endblock %}
     {% endif %}

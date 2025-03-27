@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\SspInquiryManagement\Business;
+namespace SprykerFeatureTest\Zed\SspInquiryManagement\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\FileUploadTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SortTransfer;
+use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspInquiryConditionsTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
@@ -32,7 +33,7 @@ use SprykerFeature\Zed\SspInquiryManagement\Communication\Plugin\StateMachine\Ss
 use SprykerFeature\Zed\SspInquiryManagement\SspInquiryManagementConfig;
 
 /**
- * @group SprykerTest
+ * @group SprykerFeatureTest
  * @group Zed
  * @group SspInquiry
  * @group Business
@@ -105,6 +106,7 @@ class SspInquiryFacadeTest extends Unit
             'test_general_type' => 'test_general_ssp_inquiry',
             'test_order_type' => 'test_order_ssp_inquiry',
             'test_product_type' => 'test_product_type',
+            'ssp_asset' => 'test_ssp_asset_ssp_inquiry',
         ]);
 
         $this->tester->setDependency(static::SERVICE_FILE_SYSTEM, $fileSystemServiceMock);
@@ -184,6 +186,11 @@ class SspInquiryFacadeTest extends Unit
              );
         }
 
+        if (isset($sspInquiryData['assetReference'])) {
+            $this->tester->haveAsset([SspAssetTransfer::REFERENCE => $sspInquiryData['assetReference']]);
+            $sspInquiryTransfer->setSspAsset((new SspAssetTransfer())->setReference($sspInquiryData['assetReference']));
+        }
+
         // Act
          $sspInquiryCollectionResponseTransfer = $this->sspInquiryManagementFacade->createSspInquiryCollection(
              (new SspInquiryCollectionRequestTransfer())->addSspInquiry($sspInquiryTransfer),
@@ -203,6 +210,10 @@ class SspInquiryFacadeTest extends Unit
 
             if (isset($sspInquiryData['orderReference'])) {
                 $this->assertNotNull($createdSspInquiryTransfer->getOrder());
+            }
+
+            if (isset($sspInquiryData['assetReference'])) {
+                $this->assertSame($sspInquiryData['assetReference'], $createdSspInquiryTransfer->getSspAsset()->getReference());
             }
 
             return;
@@ -256,6 +267,10 @@ class SspInquiryFacadeTest extends Unit
                     ->setOrderReference($sspInquiryData['orderReference'])
                     ->setCustomerReference($this->customerTransfer->getCustomerReference()),
              );
+        }
+
+        if (isset($sspInquiryData['assetReference'])) {
+            $sspInquiryTransfer->setSspAsset((new SspAssetTransfer())->setReference($sspInquiryData['assetReference']));
         }
 
         // Assert
@@ -409,6 +424,19 @@ class SspInquiryFacadeTest extends Unit
                 'expectedFileCount' => 0,
                 'expectedValidationErrors' => [],
             ],
+            'ssp asset ssp inquiry' => [
+                'sspInquiryData' => [
+                    'subject' => 'Test SSP Asset Ssp Inquiry',
+                    'type' => 'ssp_asset',
+                    'description' => 'Test SSP Asset Description',
+                    'files' => [],
+                    'assetReference' => 'test_asset_reference',
+                ],
+                'expectedSspInquiryCount' => 1,
+                'expectedSubject' => 'Test SSP Asset Ssp Inquiry',
+                'expectedFileCount' => 0,
+                'expectedValidationErrors' => [],
+            ],
         ];
     }
 
@@ -426,6 +454,15 @@ class SspInquiryFacadeTest extends Unit
                     'files' => [],
                 ],
                 'expectedExceptionMessage' => 'Missing required property "order" for transfer Generated\Shared\Transfer\SspInquiryTransfer',
+            ],
+            'ssp asset ssp inquiry without asset reference' => [
+                'sspInquiryData' => [
+                    'subject' => 'Test SSP Asset Ssp Inquiry',
+                    'type' => 'ssp_asset',
+                    'description' => 'Test Description',
+                    'files' => [],
+                ],
+                'expectedExceptionMessage' => 'Missing required property "sspAsset" for transfer Generated\Shared\Transfer\SspInquiryTransfer.',
             ],
         ];
     }

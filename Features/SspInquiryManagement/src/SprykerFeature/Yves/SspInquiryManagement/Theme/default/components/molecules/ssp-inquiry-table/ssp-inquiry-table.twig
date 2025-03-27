@@ -30,7 +30,7 @@
             title: 'customer.ssp_inquiry.list.owner',
         },
         {
-            id: 'date_created',
+            id: 'createdDate',
             title: 'customer.ssp_inquiry.list.date_created',
             type: 'date',
             sortable: true,
@@ -50,8 +50,8 @@
         reference: sspInquiry.reference,
         type: "ssp_inquiry.type.#{sspInquiry.type}" | trans,
         subject: sspInquiry.subject,
-        owner: "#{sspInquiry.companyUser.customer.firstName} #{sspInquiry.companyUser.customer.lastName} <br /> <i>#{sspInquiry.companyUser.companyBusinessUnit.name}</i>",
-        date_created: sspInquiry.createdDate,
+        owner: "#{sspInquiry.companyUser.customer.firstName} #{sspInquiry.companyUser.customer.lastName} <br> <i>#{sspInquiry.companyUser.companyBusinessUnit.name}</i>",
+        createdDate: sspInquiry.createdDate,
         status: { label: "ssp_inquiry.status.#{sspInquiry.status}", status: sspInquiry.status },
         actions: [{
             url: path('customer/ssp-inquiry/details', { reference: sspInquiry.reference }),

@@ -1,0 +1,17 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isActivePage: _widget.isActivePage,
+} %}
+
+{% set itemClass = data.isActivePage ? ' menu__item--active' : '' %}
+
+{% block body %}
+    <li class="menu__item {{ itemClass }}">
+        <a
+            href="{{ url('customer/asset') }}"
+            data-id="sidebar-asset"
+            data-qa="ssp-asset-customer-menu-item"
+        >{{ 'ssp_asset.list.widget.title' | trans }}</a>
+    </li>
+{% endblock %}

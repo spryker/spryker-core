@@ -65,6 +65,13 @@ class SspInquiryDataHelper extends Module
                 ->setFkSalesOrder($sspInquiryTransfer->getOrder()->getIdSalesOrder())
                 ->save();
         }
+
+        if ($sspInquiryTransfer->getSspAsset()) {
+            (new SpySspInquirySspAsset())
+                ->setFkSspInquiry($sspInquiryTransfer->getIdSspInquiry())
+                ->setFkSspAsset($sspInquiryTransfer->getSspAsset()->getIdSspAsset());
+        }
+
         $this->generateAndSaveSspInquiryImages($seedData['fileAmount'] ?? 0, $sspInquiryTransfer);
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($sspInquiryTransfer): void {

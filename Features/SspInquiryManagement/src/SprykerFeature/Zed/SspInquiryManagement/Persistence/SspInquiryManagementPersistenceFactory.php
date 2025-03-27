@@ -11,6 +11,7 @@ use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\SspInquiryManagement\Persistence\SpySspInquiryFileQuery;
 use Orm\Zed\SspInquiryManagement\Persistence\SpySspInquiryQuery;
 use Orm\Zed\SspInquiryManagement\Persistence\SpySspInquirySalesOrderQuery;
+use Orm\Zed\SspInquiryManagement\Persistence\SpySspInquirySspAssetQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use SprykerFeature\Zed\SspInquiryManagement\Persistence\Mapper\SspInquiryMapper;
@@ -69,5 +70,13 @@ class SspInquiryManagementPersistenceFactory extends AbstractPersistenceFactory
     public function createStateMachineItemStateQuery(): SpyStateMachineItemStateQuery
     {
         return SpyStateMachineItemStateQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\SspInquiryManagement\Persistence\SpySspInquirySspAssetQuery
+     */
+    public function createSspInquirySspAssetQuery(): SpySspInquirySspAssetQuery
+    {
+        return SpySspInquirySspAssetQuery::create();
     }
 }

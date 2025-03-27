@@ -1,4 +1,4 @@
-namespace: SprykerTest
+namespace: SprykerFeatureTest
 
 include:
     - tests/SprykerFeatureTest/Zed/SspFileManagement

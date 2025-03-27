@@ -12,6 +12,7 @@ use Exception;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\FileUploadTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
 use Spryker\Client\CompanyUser\CompanyUserClientInterface;
 use Spryker\Client\Customer\CustomerClientInterface;
@@ -61,6 +62,10 @@ class CreateSspInquiryFormDataToTransferMapper implements CreateSspInquiryFormDa
               $sspInquiryTransfer->setOrder((new OrderTransfer())
                 ->setOrderReference($formData['orderReference'])
                 ->setCustomerReference($companyUserTransfer->getCustomerOrFail()->getCustomerReference()));
+        }
+
+        if (isset($formData['sspAssetReference'])) {
+            $sspInquiryTransfer->setSspAsset((new SspAssetTransfer())->setReference($formData['sspAssetReference']));
         }
 
         return $sspInquiryTransfer;

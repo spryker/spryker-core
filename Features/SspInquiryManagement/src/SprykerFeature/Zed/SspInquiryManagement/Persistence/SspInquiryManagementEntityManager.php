@@ -7,10 +7,12 @@
 
 namespace SprykerFeature\Zed\SspInquiryManagement\Persistence;
 
+use Generated\Shared\Transfer\FileCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
 use Orm\Zed\SspInquiryManagement\Persistence\SpySspInquiry;
 use Orm\Zed\SspInquiryManagement\Persistence\SpySspInquiryFile;
 use Orm\Zed\SspInquiryManagement\Persistence\SpySspInquirySalesOrder;
+use Orm\Zed\SspInquiryManagement\Persistence\SpySspInquirySspAsset;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -104,5 +106,41 @@ class SspInquiryManagementEntityManager extends AbstractEntityManager implements
          $sspInquirySalesOrderEntity->save();
 
         return $sspInquiryTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspInquiryTransfer
+     */
+    public function createSspInquirySspAsset(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
+    {
+        $sspInquirySspAssetEntity = (new SpySspInquirySspAsset())
+            ->setFkSspInquiry($sspInquiryTransfer->getIdSspInquiryOrFail())
+            ->setFkSspAsset($sspInquiryTransfer->getSspAssetOrFail()->getIdSspAssetOrFail());
+
+        $sspInquirySspAssetEntity->save();
+
+        return $sspInquiryTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileCollectionTransfer $fileCollectionTransfer
+     *
+     * @return void
+     */
+    public function deleteSspInquiryFile(FileCollectionTransfer $fileCollectionTransfer): void
+    {
+        $fileIds = [];
+
+        foreach ($fileCollectionTransfer->getFiles() as $fileTransfer) {
+            $fileIds[] = $fileTransfer->getIdFileOrFail();
+        }
+
+        if (!$fileIds) {
+            return;
+        }
+
+        $this->getFactory()->createSspInquiryFileQuery()->filterByFkFile_In($fileIds)->delete();
     }
 }

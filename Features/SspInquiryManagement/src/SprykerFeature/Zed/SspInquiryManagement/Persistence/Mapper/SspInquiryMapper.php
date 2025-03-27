@@ -8,6 +8,7 @@
 namespace SprykerFeature\Zed\SspInquiryManagement\Persistence\Mapper;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -40,7 +41,7 @@ class SspInquiryMapper implements SspInquiryMapperInterface
      */
     public function mapSspInquiryEntityToSspInquiryTransfer(SpySspInquiry $sspInquiryEntity, SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
     {
-         $sspInquiryTransfer->fromArray($sspInquiryEntity->toArray(), true);
+        $sspInquiryTransfer->fromArray($sspInquiryEntity->toArray(), true);
         if ($sspInquiryEntity->getCreatedAt()) {
              $sspInquiryTransfer->setCreatedDate($sspInquiryEntity->getCreatedAt()->format('Y-m-d H:i:s'));
         }
@@ -50,11 +51,17 @@ class SspInquiryMapper implements SspInquiryMapperInterface
              $sspInquiryTransfer->setStatus($stateMachineItemState->getName());
         }
 
-         $sspInquiryTransfer->setStore((new StoreTransfer())->fromArray($sspInquiryEntity->getSpyStore()->toArray(), true));
+        if ($sspInquiryEntity->hasVirtualColumn(SspAssetTransfer::ID_SSP_ASSET)) {
+            $sspInquiryTransfer->setSspAsset(
+                (new SspAssetTransfer())->setIdSspAsset($sspInquiryEntity->getVirtualColumn(SspAssetTransfer::ID_SSP_ASSET)),
+            );
+        }
 
-         $sspInquiryTransfer->setCompanyUser(
-             (new CompanyUserTransfer())->setIdCompanyUser($sspInquiryEntity->getFkCompanyUser()),
-         );
+        $sspInquiryTransfer->setStore((new StoreTransfer())->fromArray($sspInquiryEntity->getSpyStore()->toArray(), true));
+
+        $sspInquiryTransfer->setCompanyUser(
+            (new CompanyUserTransfer())->setIdCompanyUser($sspInquiryEntity->getFkCompanyUser()),
+        );
 
         return $sspInquiryTransfer;
     }

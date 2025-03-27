@@ -7,6 +7,7 @@
 
 namespace SprykerFeature\Zed\SspInquiryManagement\Persistence;
 
+use Generated\Shared\Transfer\FileCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
 
 interface SspInquiryManagementEntityManagerInterface
@@ -31,4 +32,18 @@ interface SspInquiryManagementEntityManagerInterface
      * @return \Generated\Shared\Transfer\SspInquiryTransfer
      */
     public function createSspInquirySalesOrder(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspInquiryTransfer
+     */
+    public function createSspInquirySspAsset(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\FileCollectionTransfer $fileCollectionTransfer
+     *
+     * @return void
+     */
+    public function deleteSspInquiryFile(FileCollectionTransfer $fileCollectionTransfer): void;
 }

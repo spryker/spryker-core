@@ -75,7 +75,7 @@ class TwigFileSystem extends FilesystemLoader
         $filter = new CamelCaseToDash();
         foreach ($this->paths as $path) {
             $formattedBundleName = $bundle;
-            if (preg_match('/vendor\/spryker\/[a-zA-Z0-9._-]+\/Bundles/', $path) === 0 && strpos($path, 'vendor/spryker/') > 0) {
+            if (preg_match('/vendor\/spryker\/[a-zA-Z0-9._-]+\/(Bundles|Features)/', $path) === 0 && strpos($path, 'vendor/spryker/') > 0) {
                 $formattedBundleName = strtolower($filter->filter($bundle));
             }
             $path = sprintf($path, $bundle, $formattedBundleName);

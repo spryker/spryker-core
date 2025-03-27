@@ -28,11 +28,17 @@ class SspInquiryManagementConfig extends AbstractSharedConfig
     public const ORDER_SSP_INQUIRY_SOURCE = 'order';
 
     /**
+     * @var string
+     */
+    public const SSP_ASSET_SSP_INQUIRY_SOURCE = 'ssp_asset';
+
+    /**
      * @var array<string, array<string>>
      */
     protected const SELECTABLE_SSP_INQUIRY_TYPES_TO_SSP_INQUIRY_SOURCE_MAP = [
         'general' => ['general'],
         'order' => ['order'],
+        'ssp_asset' => ['ssp_asset'],
     ];
 
     /**

@@ -20,6 +20,7 @@ use SprykerFeature\Yves\SspInquiryManagement\Form\DataProvider\SspInquiryFormDat
 use SprykerFeature\Yves\SspInquiryManagement\Form\DataProvider\SspInquirySearchFormDataProvider;
 use SprykerFeature\Yves\SspInquiryManagement\Form\Expander\CreateGeneralSspInquiryFormExpander;
 use SprykerFeature\Yves\SspInquiryManagement\Form\Expander\CreateOrderSspInquiryFormExpander;
+use SprykerFeature\Yves\SspInquiryManagement\Form\Expander\CreateSspAssetSspInquiryFormExpander;
 use SprykerFeature\Yves\SspInquiryManagement\Form\Expander\CreateSspInquiryFormExpanderInterface;
 use SprykerFeature\Yves\SspInquiryManagement\Form\SspInquiryCancelForm;
 use SprykerFeature\Yves\SspInquiryManagement\Form\SspInquiryForm;
@@ -118,6 +119,7 @@ class SspInquiryManagementFactory extends AbstractFactory
         return [
             $this->createCreateGeneralSspInquiryFormExpander(),
             $this->createCreateOrderSspInquiryFormExpander(),
+            $this->createCreateSspAssetSspInquiryFormExpander(),
         ];
     }
 
@@ -135,6 +137,14 @@ class SspInquiryManagementFactory extends AbstractFactory
     public function createCreateOrderSspInquiryFormExpander(): CreateSspInquiryFormExpanderInterface
     {
         return new CreateOrderSspInquiryFormExpander($this->getRequestStack());
+    }
+
+    /**
+     * @return \SprykerFeature\Yves\SspInquiryManagement\Form\Expander\CreateSspAssetSspInquiryFormExpander
+     */
+    public function createCreateSspAssetSspInquiryFormExpander(): CreateSspInquiryFormExpanderInterface
+    {
+        return new CreateSspAssetSspInquiryFormExpander($this->getRequestStack());
     }
 
     /**

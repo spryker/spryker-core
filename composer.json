@@ -28,6 +28,7 @@
         "cs-check": "phpcs"
     },
     "replace": {
+        "spryker-feature/ssp-asset-management": "*",
         "spryker-feature/ssp-file-management": "*",
         "spryker-feature/ssp-inquiry-management": "*",
         "spryker-feature/ssp-dashboard-management": "*",

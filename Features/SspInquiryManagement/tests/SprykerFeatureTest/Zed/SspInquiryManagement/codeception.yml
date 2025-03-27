@@ -31,6 +31,7 @@ suites:
                 - \SprykerFeatureTest\Zed\SspInquiryManagement\Helper\SspInquiryDataHelper
                 - \SprykerTest\Zed\StateMachine\Helper\StateMachineHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerFeatureTest\Zed\SspAssetManagement\Helper\SspAssetDataHelper
 
     Communication:
         path: Communication

@@ -82,7 +82,8 @@ class SspInquiryReader implements SspInquiryReaderInterface
                         ->setWithCompanyUser(true)
                         ->setWithFiles(true)
                         ->setWithOrder(true)
-                        ->setWithManualEvents(true),
+                        ->setWithManualEvents(true)
+                        ->setWithSspAsset(true),
                 ),
           );
 

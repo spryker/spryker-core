@@ -12,12 +12,14 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryConditionsTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
+use Orm\Zed\SspInquiryManagement\Persistence\Map\SpySspInquirySspAssetTableMap;
+use Orm\Zed\SspInquiryManagement\Persistence\Map\SpySspInquiryTableMap;
 use Orm\Zed\SspInquiryManagement\Persistence\SpySspInquiryQuery;
-use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\Collection;
@@ -39,8 +41,7 @@ class SspInquiryManagementRepository extends AbstractRepository implements SspIn
          $sspInquiryCollectionTransfer = new SspInquiryCollectionTransfer();
 
          $sspInquiryQuery = $this->getFactory()->createSspInquiryQuery()
-            ->joinWithStateMachineItemState()
-            ->withColumn(SpyStateMachineItemStateTableMap::COL_NAME, 'status');
+            ->joinWithStateMachineItemState();
 
          $sspInquiryQuery = $this->applyFilters($sspInquiryQuery, $sspInquiryCriteriaTransfer);
 
@@ -112,6 +113,30 @@ class SspInquiryManagementRepository extends AbstractRepository implements SspIn
         }
 
         return $sspInquiryCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
+     */
+    public function getSspInquirySspAssetCollection(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer
+    {
+        $sspInquirySspAssetQuery = $this->getFactory()->createSspInquirySspAssetQuery();
+
+        $sspInquirySspAssetQuery->filterByFkSspInquiry_In($sspInquiryCriteriaTransfer->getSspInquiryConditionsOrFail()->getSspInquiryIds());
+
+        $inquiryCollectionTransfer = new SspInquiryCollectionTransfer();
+
+        foreach ($sspInquirySspAssetQuery->find() as $sspInquirySspAssetEntity) {
+            $inquiryCollectionTransfer->addSspInquiry(
+                (new SspInquiryTransfer())
+                    ->setIdSspInquiry($sspInquirySspAssetEntity->getFkSspInquiry())
+                    ->setSspAsset((new SspAssetTransfer())->setIdSspAsset($sspInquirySspAssetEntity->getFkSspAsset())),
+            );
+        }
+
+        return $inquiryCollectionTransfer;
     }
 
     /**
@@ -188,6 +213,24 @@ class SspInquiryManagementRepository extends AbstractRepository implements SspIn
              $sspInquiryQuery->filterByFkStore($sspInquiryConditions->getFkStore());
         }
 
+        if ($sspInquiryConditions->getSspAssetIds() !== []) {
+             $sspInquiryQuery
+                 ->joinSpySspInquirySspAsset()
+                 ->withColumn(SpySspInquirySspAssetTableMap::COL_FK_SSP_ASSET, SspAssetTransfer::ID_SSP_ASSET)
+                 ->useSpySspInquirySspAssetExistsQuery()
+                     ->filterByFkSspAsset_In($sspInquiryConditions->getSspAssetIds())
+                 ->endUse();
+        }
+
+        if ($sspInquiryConditions->getSspAssetReferences() !== []) {
+            $sspInquiryQuery
+                ->useSpySspInquirySspAssetExistsQuery()
+                    ->useSpySspAssetQuery()
+                        ->filterByReference_In($sspInquiryConditions->getSspAssetReferences())
+                    ->endUse()
+                ->endUse();
+        }
+
         return $sspInquiryQuery;
     }
 
@@ -242,7 +285,11 @@ class SspInquiryManagementRepository extends AbstractRepository implements SspIn
     protected function applySorting(SpySspInquiryQuery $sspInquiryQuery, ArrayObject $sortCollection): SpySspInquiryQuery
     {
         foreach ($sortCollection as $sort) {
-             $sspInquiryQuery->orderBy($sort->getFieldOrFail(), $sort->getIsAscending() ? Criteria::ASC : Criteria::DESC);
+            $field = $sort->getFieldOrFail();
+            if ($field === SspInquiryTransfer::CREATED_DATE) {
+                $field = SpySspInquiryTableMap::COL_CREATED_AT;
+            }
+            $sspInquiryQuery->orderBy($field, $sort->getIsAscending() ? Criteria::ASC : Criteria::DESC);
         }
 
         return $sspInquiryQuery;

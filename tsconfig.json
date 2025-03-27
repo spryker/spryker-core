@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "noImplicitAny": false,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "noEmitHelpers": true,
+        "importHelpers": true,
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "target": "es2020",
+        "module": "esnext",
+        "typeRoots": ["node_modules/@types"],
+        "lib": ["dom", "esnext"],
+        "baseUrl": ".",
+        "rootDir": ".",
+        "removeComments": true,
+        "paths": {
+            "ShopUi/*": ["../spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Theme/default/*"]
+        }
+    }
+}

@@ -19,7 +19,6 @@ use Spryker\Yves\Kernel\View\View;
 use SprykerFeature\Shared\SspInquiryManagement\Plugin\Permission\CreateSspInquiryPermissionPlugin;
 use SprykerFeature\Yves\SspInquiryManagement\Plugin\Router\SspInquiryRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -258,42 +257,31 @@ class SspInquiryController extends AbstractController
             throw new NotFoundHttpException('ssp_inquiry.error.company_user_not_found');
         }
 
-         $sspInquiryConditionsTransfer = $this->getFactory()->createSspInquiryCustomerPermissionExpander()->extendSspInquiryCriteriaTransferWithPermissions(
-             $sspInquiryCriteriaTransfer->getSspInquiryConditionsOrFail(),
-             $companyUserTransfer,
-         );
+        $sspInquiryConditionsTransfer = $this->getFactory()->createSspInquiryCustomerPermissionExpander()->extendSspInquiryCriteriaTransferWithPermissions(
+            $sspInquiryCriteriaTransfer->getSspInquiryConditionsOrFail(),
+            $companyUserTransfer,
+        );
 
-         $sspInquiryCriteriaTransfer = $this->handleSspInquirySearchFormSubmit($request, $sspInquirySearchForm, $sspInquiryCriteriaTransfer);
+        $sspInquirySearchForm->handleRequest($request);
 
-         $sspInquiryCollectionTransfer = $this->getFactory()->createSspInquiryReader()->getSspInquiryCollection(
-             $request,
-             $sspInquiryCriteriaTransfer,
-         );
+        $sspInquiryCriteriaTransfer = $this->getFactory()
+            ->createSspInquirySearchFormHandler()
+            ->handleFormSubmit($sspInquirySearchForm, $sspInquiryCriteriaTransfer);
+
+        if ($request->query->has('ssp_asset_reference')) {
+            $sspInquiryConditionsTransfer->addSspAssetReference((string)$request->query->get('ssp_asset_reference'));
+        }
+
+        $sspInquiryCollectionTransfer = $this->getFactory()->createSspInquiryReader()->getSspInquiryCollection(
+            $request,
+            $sspInquiryCriteriaTransfer,
+        );
 
         return [
             'pagination' => $sspInquiryCollectionTransfer->getPagination(),
             'sspInquiryList' => $sspInquiryCollectionTransfer->getSspInquiries(),
             'sspInquirySearchForm' => $sspInquirySearchForm->createView(),
         ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Form\FormInterface $sspInquirySearchForm
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCriteriaTransfer
-     */
-    protected function handleSspInquirySearchFormSubmit(
-        Request $request,
-        FormInterface $sspInquirySearchForm,
-        SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-    ): SspInquiryCriteriaTransfer {
-         $sspInquirySearchForm->handleRequest($request);
-
-        return $this->getFactory()
-            ->createSspInquirySearchFormHandler()
-            ->handleFormSubmit($sspInquirySearchForm, $sspInquiryCriteriaTransfer);
     }
 
     /**

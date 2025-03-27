@@ -98,7 +98,7 @@ class SspFileManagementDownloadController extends SspFileManagementAbstractContr
             fclose($fileStream);
         });
 
-        $fileName = basename($fileInfoTransfer->getStorageFileNameOrFail());
+        $fileName = basename($fileTransfer->getFileNameOrFail());
         $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
 
         $response->headers->set(static::HEADER_CONTENT_DISPOSITION, $disposition);

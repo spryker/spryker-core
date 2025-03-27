@@ -68,5 +68,8 @@
         "ts-node": "~10.9.1",
         "typescript": "~5.4.2",
         "zone.js": "~0.14.4"
+    },
+    "dependencies": {
+        "formatter": "^0.4.2"
     }
 }

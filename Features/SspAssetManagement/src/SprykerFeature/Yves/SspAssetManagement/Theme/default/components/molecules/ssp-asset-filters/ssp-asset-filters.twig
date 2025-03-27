@@ -1,0 +1,62 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'ssp-asset-filters',
+} %}
+
+{% define data = {
+    sspAssetSearchForm: required,
+} %}
+
+{% set jsPrefix = 'js-ssp-asset-management-' %}
+{% set formClass = "#{jsPrefix}form" %}
+
+{% block separator %}
+    <hr class="box__separator">
+{% endblock %}
+
+{% block body %}
+    {% block filters %}
+        <div class="form__fields grid grid--bottom">
+            {% for filter in data.sspAssetSearchForm.filters.children %}
+                <div class="form__field col col--sm-4">
+                    {{ form_row(filter,
+                        {
+                            attr: {
+                            class: data.jsPrefix ~ filter.vars.name ~ '-target',
+                        }}
+                    ) }}
+                </div>
+            {% endfor %}
+            <div class="form__field col col--sm-4">
+                {{ form_row(data.sspAssetSearchForm.searchText, {
+                    attr: {
+                        class: data.jsPrefix ~ data.sspAssetSearchForm.searchText.vars.name ~ '-target',
+                    }}) }}
+            </div>
+            {% block filterModeRow %}
+                <div class="form__fields grid grid--right">
+                    <div class="form__field col">
+                        <button
+                            class="button button--success"
+                            {{ qa('ssp-asset-submit-filters') }}
+                        >{{ 'ssp_asset.list.filter.apply' | trans }}</button>
+                    </div>
+                </div>
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block activeFilters %}
+        {% include molecule('active-filters', 'SspAssetManagement') with {
+            class: 'spacing-bottom spacing-bottom--big',
+            data: {
+                sspAssetSearchForm: data.sspAssetSearchForm,
+                jsPrefix: jsPrefix,
+                formClass: formClass,
+            },
+        } only %}
+    {% endblock %}
+
+    {{ block('separator') }}
+{% endblock %}

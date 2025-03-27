@@ -1,0 +1,67 @@
+{
+    "name": "spryker-feature/ssp-asset-management",
+    "type": "library",
+    "description": "SspAssetManagement module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.2",
+        "spryker-shop/shop-application": "^1.15.0",
+        "spryker/company-business-unit": "^2.17.0",
+        "spryker/company-user": "^2.19.0",
+        "spryker/file-manager": "^2.5.0",
+        "spryker/file-manager-extension": "^1.1.0",
+        "spryker/file-system-extension": "^1.0.0",
+        "spryker/kernel": "^3.75.0",
+        "spryker/permission-extension": "^1.2.0",
+        "spryker/propel-orm": "^1.21.0",
+        "spryker/sequence-number": "^3.1.0",
+        "spryker/symfony": "^3.18.0",
+        "spryker/util-text": "^1.6.0",
+        "spryker/validator": "^1.5.0",
+        "spryker/zed-request": "^3.22.0"
+    },
+    "require-dev": {
+        "spryker-feature/ssp-inquiry-management": "*",
+        "spryker-shop/customer-page": "*",
+        "spryker/code-sniffer": "*",
+        "spryker/company": "*",
+        "spryker/customer": "*",
+        "spryker/propel": "*",
+        "spryker/ramsey-uuid": "*",
+        "spryker/router": "*",
+        "spryker/testify": "*",
+        "spryker/util-date-time": "*"
+    },
+    "suggest": {
+        "spryker-shop/customer-page": "Provides template for customer page",
+        "spryker/router": "You need to install this module when you want to use the RouterExtension interfaces."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerFeature\\": "src/SprykerFeature/",
+            "SprykerFeatureTest\\Zed\\SspAssetManagement\\Helper\\": "tests/SprykerFeatureTest/Zed/SspAssetManagement/_support/Helper/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerFeatureTest\\": "tests/SprykerFeatureTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

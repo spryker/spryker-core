@@ -13,6 +13,7 @@
         <property name="status" type="string"/>
         <property name="description" type="string"/>
         <property name="order" type="Order"/>
+        <property name="sspAsset" type="SspAsset"/>
         <property name="files" type="File[]" singular="file"/>
         <property name="createdDate" type="string"/>
         <property name="internalCommentThread" type="CommentThread"/>
@@ -60,6 +61,7 @@
         <property name="withStateMachineState" type="bool"/>
         <property name="withStatusHistory" type="bool"/>
         <property name="withComments" type="bool"/>
+        <property name="withSspAsset" type="bool"/>
     </transfer>
 
     <transfer name="SspInquiryConditions">
@@ -71,6 +73,8 @@
         <property name="createdDateTo" type="string"/>
         <property name="sspInquiryOwnerConditionGroup" type="SspInquiryOwnerConditionGroup"/>
         <property name="fkStore" type="int"/>
+        <property name="sspAssetIds" type="int[]" singular="idSspAsset"/>
+        <property name="sspAssetReferences" type="string[]" singular="sspAssetReference"/>
     </transfer>
 
     <transfer name="SspInquiryOwnerConditionGroup">
@@ -265,5 +269,36 @@
     <transfer name="DashboardRequest">
         <property name="companyUser" type="CompanyUser"/>
         <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="SspAsset" strict="true">
+        <property name="reference" type="string"/>
+        <property name="idSspAsset" type="int"/>
+        <property name="sspInquiryCollection" type="SspInquiryCollection"/>
+    </transfer>
+
+    <transfer name="SspAssetCollection" strict="true">
+        <property name="sspAssets" type="SspAsset[]" singular="sspAsset"/>
+    </transfer>
+
+    <transfer name="SspAssetConditions" strict="true">
+        <property name="sspAssetIds" type="int[]" singular="idSspAsset"/>
+        <property name="references" type="string[]" singular="reference"/>
+        <property name="assignedBusinessUnitCompanyId" type="int"/>
+        <property name="assignedBusinessUnitId" type="int"/>
+    </transfer>
+
+    <transfer name="SspAssetCriteria" strict="true">
+
+        <property name="sspAssetConditions" type="SspAssetConditions"/>
+        <property name="include" type="SspAssetInclude"/>
+    </transfer>
+
+    <transfer name="FileCollection" strict="true">
+        <property name="files" type="File[]" singular="file"/>
+    </transfer>
+
+    <transfer name="SspAssetInclude" strict="true">
+        <property name="withSspInquiries" type="bool"/>
     </transfer>
 </transfers>

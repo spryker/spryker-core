@@ -44,6 +44,13 @@ interface SspInquiryManagementRepositoryInterface
     public function getSspInquiryOrderCollection(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
+     */
+    public function getSspInquirySspAssetCollection(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer;
+
+    /**
      * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer

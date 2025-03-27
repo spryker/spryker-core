@@ -83,6 +83,11 @@ class SspInquiryManagementDependencyProvider extends AbstractBundleDependencyPro
     public const SERVICE_FILE_MANAGER = 'SERVICE_FILE_MANAGER';
 
     /**
+     * @var string
+     */
+    public const FACADE_SSP_ASSET_MANAGEMENT = 'FACADE_SSP_ASSET_MANAGEMENT';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -119,6 +124,7 @@ class SspInquiryManagementDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addCommentFacade($container);
         $container = $this->addCommentFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addSspAssetManagementFacade($container);
 
         return $container;
     }
@@ -316,6 +322,20 @@ class SspInquiryManagementDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::SERVICE_FILE_MANAGER, function (Container $container): FileManagerServiceInterface {
             return $container->getLocator()->fileManager()->service();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSspAssetManagementFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_SSP_ASSET_MANAGEMENT, function (Container $container) {
+            return $container->getLocator()->sspAssetManagement()->facade();
         });
 
         return $container;

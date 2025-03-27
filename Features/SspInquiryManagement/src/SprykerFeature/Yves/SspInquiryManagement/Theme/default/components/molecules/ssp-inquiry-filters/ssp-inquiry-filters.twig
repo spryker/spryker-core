@@ -13,19 +13,16 @@
 {% endblock %}
 
 {% block body %}
-    {% block searchRow %}
+    {% block filters %}
         <div class="form__fields grid grid--bottom">
             <div class="form__field col col--sm-6">
                 {{ form_row(data.sspInquirySearchForm.type) }}
             </div>
+
             <div class="form__field col col--sm-6">
                 {{ form_row(data.sspInquirySearchForm.status) }}
             </div>
-        </div>
-    {% endblock %}
 
-    {% block additionalFiltersRow %}
-        <div class="form__fields grid grid--bottom">
             {% for filter in data.sspInquirySearchForm.filters.children %}
                 <div class="{{ filter.vars.attr.class }}">
                     {{ form_row(filter) }}

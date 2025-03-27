@@ -20,6 +20,7 @@ use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface;
 use Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
+use SprykerFeature\Zed\SspAssetManagement\Business\SspAssetManagementFacadeInterface;
 use SprykerFeature\Zed\SspInquiryManagement\Business\DashboardDataProvider\InquiryDashboardDataProvider;
 use SprykerFeature\Zed\SspInquiryManagement\Business\DashboardDataProvider\InquiryDashboardDataProviderInterface;
 use SprykerFeature\Zed\SspInquiryManagement\Business\DataImport\Step\CompanyUserKeyToIdCompanyUserStep;
@@ -31,20 +32,25 @@ use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\CompanyUserSspInqu
 use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\FileSspInquiryExpander;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\ManualEventsSspInquiryExpander;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\SalesOrderSspInquiryExpander;
+use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\SspAssetSspInquiryExpander;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\SspInquiryExpanderInterface;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\StatusHistorySspInquiryExpander;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Hooks\PostCreate\FileSspInquiryPostCreateHook;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Hooks\PostCreate\OrderSspInquiryPostCreateHook;
+use SprykerFeature\Zed\SspInquiryManagement\Business\Hooks\PostCreate\SspAssetSspInquiryPostCreateHook;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Hooks\PostCreate\SspInquiryPostCreateHookInterface;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Hooks\PostCreate\StateMachineSspInquiryPostCreateHook;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Hooks\PreCreate\FileSspInquiryPreCreateHook;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Hooks\PreCreate\OrderSspInquiryPreCreateHook;
+use SprykerFeature\Zed\SspInquiryManagement\Business\Hooks\PreCreate\SspAssetSspInquiryPreCreateHook;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Hooks\PreCreate\SspInquiryPreCreateHookInterface;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Hooks\PreCreate\StoreSspInquiryPreCreateHook;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Reader\SspInquiryReader;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Reader\SspInquiryReaderInterface;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Validator\SspInquiryValidator;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Validator\SspInquiryValidatorInterface;
+use SprykerFeature\Zed\SspInquiryManagement\Business\Writer\SspAssetFileDeleter;
+use SprykerFeature\Zed\SspInquiryManagement\Business\Writer\SspAssetFileDeleterInterface;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Writer\SspInquiryStateWriter;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Writer\SspInquiryStateWriterInterface;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Writer\SspInquiryWriter;
@@ -100,6 +106,7 @@ class SspInquiryManagementBusinessFactory extends AbstractBusinessFactory
             $this->createCompanyUserSspInquiryExpander(),
             $this->createStatusHistorySspInquiryExpander(),
             $this->createCommentsSspInquiryExpander(),
+            $this->createSsAssetSspInquiryExpander(),
         ];
     }
 
@@ -160,6 +167,17 @@ class SspInquiryManagementBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \SprykerFeature\Zed\SspInquiryManagement\Business\Expander\SspInquiryExpanderInterface
      */
+    public function createSsAssetSspInquiryExpander(): SspInquiryExpanderInterface
+    {
+        return new SspAssetSspInquiryExpander(
+            $this->getRepository(),
+            $this->getSspAssetManagementFacade(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspInquiryManagement\Business\Expander\SspInquiryExpanderInterface
+     */
     public function createCommentsSspInquiryExpander(): SspInquiryExpanderInterface
     {
         return new CommentsSspInquiryExpander(
@@ -175,6 +193,16 @@ class SspInquiryManagementBusinessFactory extends AbstractBusinessFactory
         return new SspInquiryReader(
             $this->getRepository(),
             $this->getSspInquiryExpanders(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspInquiryManagement\Business\Writer\SspAssetFileDeleterInterface
+     */
+    public function createSspAssetFileDeleter(): SspAssetFileDeleterInterface
+    {
+        return new SspAssetFileDeleter(
+            $this->getEntityManager(),
         );
     }
 
@@ -219,6 +247,7 @@ class SspInquiryManagementBusinessFactory extends AbstractBusinessFactory
             $this->createFileSspInquiryPreCreateHook(),
             $this->createOrderSspInquiryPreCreateHook(),
             $this->createStoreSspInquiryPreCreateHook(),
+            $this->createSspAssetSspInquiryPreCreateHook(),
         ];
     }
 
@@ -231,6 +260,7 @@ class SspInquiryManagementBusinessFactory extends AbstractBusinessFactory
             $this->createOrderSspInquiryPostCreateHook(),
             $this->createFileSspInquiryPostCreateHook(),
             $this->createStateMachineSspInquiryPostCreateHook(),
+            $this->createSspAssetSspInquiryPostCreateHook(),
         ];
     }
 
@@ -266,6 +296,16 @@ class SspInquiryManagementBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \SprykerFeature\Zed\SspInquiryManagement\Business\Hooks\PreCreate\SspInquiryPreCreateHookInterface
+     */
+    public function createSspAssetSspInquiryPreCreateHook(): SspInquiryPreCreateHookInterface
+    {
+        return new SspAssetSspInquiryPreCreateHook(
+            $this->getSspAssetManagementFacade(),
+        );
+    }
+
+    /**
      * @return \SprykerFeature\Zed\SspInquiryManagement\Business\Hooks\PostCreate\SspInquiryPostCreateHookInterface
      */
     public function createOrderSspInquiryPostCreateHook(): SspInquiryPostCreateHookInterface
@@ -281,6 +321,16 @@ class SspInquiryManagementBusinessFactory extends AbstractBusinessFactory
     public function createFileSspInquiryPostCreateHook(): SspInquiryPostCreateHookInterface
     {
         return new FileSspInquiryPostCreateHook(
+            $this->getEntityManager(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspInquiryManagement\Business\Hooks\PostCreate\SspInquiryPostCreateHookInterface
+     */
+    public function createSspAssetSspInquiryPostCreateHook(): SspInquiryPostCreateHookInterface
+    {
+        return new SspAssetSspInquiryPostCreateHook(
             $this->getEntityManager(),
         );
     }
@@ -404,5 +454,13 @@ class SspInquiryManagementBusinessFactory extends AbstractBusinessFactory
     public function createInquiryDashboardDataProvider(): InquiryDashboardDataProviderInterface
     {
         return new InquiryDashboardDataProvider($this->createSspInquiryReader(), $this->getConfig());
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspAssetManagement\Business\SspAssetManagementFacadeInterface
+     */
+    public function getSspAssetManagementFacade(): SspAssetManagementFacadeInterface
+    {
+        return $this->getProvidedDependency(SspInquiryManagementDependencyProvider::FACADE_SSP_ASSET_MANAGEMENT);
     }
 }

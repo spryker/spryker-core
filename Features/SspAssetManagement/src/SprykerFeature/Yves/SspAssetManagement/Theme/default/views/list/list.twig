@@ -1,0 +1,102 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    sspAssets: _view.sspAssetList,
+    title: 'customer.account.ssp_assets' | trans,
+    sspAssetSearchForm: _view.sspAssetSearchForm | default(null),
+    activePage: 'asset',
+    pagination: {
+        parameters: app.request.query.all(),
+        currentPage: _view.pagination.page,
+        paginationPath: 'customer/asset',
+        maxPage: _view.pagination.lastPage,
+        showAlwaysFirstAndLast: true,
+    },
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'customer.account.ssp_assets' | trans,
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
+
+{% set jsPrefix = 'js-ssp-asset-management-' %}
+{% set formClass = "#{jsPrefix}form" %}
+
+{% block customerContent %}
+    {% block sspAssetCreateButton %}
+        {% if can('CreateSspAssetPermissionPlugin') %}
+            <div class="box text-right">
+                <a class="button" data-qa="create-ssp-asset"
+                   href="{{ url('customer/asset/create') }}">
+                    {{ 'customer.ssp_asset.create.button' | trans }}
+                </a>
+            </div>
+        {% endif %}
+    {% endblock %}
+
+    {% block sspAssetList %}
+        <div class="box">
+            {% block sspAssetListContent %}
+                {% block filterSection %}
+                    {% if data.sspAssetSearchForm %}
+                        {% block searchForm %}
+                            {{ form_start(data.sspAssetSearchForm, {
+                                attr: {
+                                    class: formClass,
+                                },
+                            }) }}
+
+                            {% block sspAssetFilters %}
+                                {% include molecule('ssp-asset-filters', 'SspAssetManagement') with {
+                                    class: 'spacing-y spacing-y--inner',
+                                    data: {
+                                        sspAssetSearchForm: data.sspAssetSearchForm,
+                                        jsPrefix: 'js-ssp-asset-management-',
+                                        formClass: "#js-ssp-asset-management-form",
+                                    },
+                                } only %}
+                            {% endblock %}
+                        {% endblock %}
+                    {% endif %}
+                {% endblock %}
+
+                {% block sspAssetTableSection %}
+                    {% block sspAssetTable %}
+                        {% include molecule('ssp-asset-table', 'SspAssetManagement') with {
+                            data: {
+                                sspAssets: data.sspAssets,
+                                searchForm: data.sspAssetSearchForm,
+                                formClass: formClass,
+                            },
+                        } only %}
+                    {% endblock %}
+
+                    {% block tableFooter %}
+                        <hr>
+
+                        {% block pagination %}
+                            {% include molecule('pagination') with {
+                                data: data.pagination,
+                            } only %}
+                        {% endblock %}
+                    {% endblock %}
+                {% endblock %}
+
+                {% if data.sspAssetSearchForm %}
+                    {{ form_end(data.sspAssetSearchForm) }}
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}
