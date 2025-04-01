@@ -62,7 +62,6 @@ class FileSspAssetWriter implements FileSspAssetWriterInterface
         }
 
         if ($fileTransfer->getDelete() && $fileTransfer->getIdFile()) {
-            $this->fileManagerFacade->deleteFile($fileTransfer->getIdFileOrFail());
             $sspAssetTransfer->setImage(null);
         }
 

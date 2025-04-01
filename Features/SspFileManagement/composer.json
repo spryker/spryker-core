@@ -52,7 +52,8 @@
     },
     "autoload": {
         "psr-4": {
-            "SprykerFeature\\": "src/SprykerFeature/"
+            "SprykerFeature\\": "src/SprykerFeature/",
+            "SprykerFeatureTest\\Shared\\SspFileManagement\\Helper\\": "tests/SprykerFeatureTest/Shared/SspFileManagement/_support/Helper/"
         }
     },
     "autoload-dev": {

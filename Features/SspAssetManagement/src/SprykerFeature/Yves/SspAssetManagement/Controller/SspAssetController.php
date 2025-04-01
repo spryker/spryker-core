@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetIncludeTransfer;
-use InvalidArgumentException;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\View\View;
@@ -71,7 +70,6 @@ class SspAssetController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \InvalidArgumentException
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
@@ -81,13 +79,13 @@ class SspAssetController extends AbstractController
     {
         $sspAssetReference = (string)$request->query->get('reference');
         if (!$sspAssetReference) {
-            throw new InvalidArgumentException('ssp_asset.error.reference_not_found');
+            throw new NotFoundHttpException('Asset reference not found');
         }
 
         $companyUserTransfer = $this->getFactory()->getCompanyUserClient()->findCompanyUser();
 
         if (!$companyUserTransfer) {
-            throw new NotFoundHttpException('ssp_asset.error.company_user_not_found');
+            throw new NotFoundHttpException('Company user not found');
         }
 
         $sspAssetCriteriaTransfer = (new SspAssetCriteriaTransfer())
@@ -219,7 +217,6 @@ class SspAssetController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \InvalidArgumentException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      *
@@ -230,7 +227,7 @@ class SspAssetController extends AbstractController
         $sspAssetReference = $request->get('reference');
 
         if (!$sspAssetReference) {
-            throw new InvalidArgumentException('ssp_asset.error.reference_not_found');
+            throw new NotFoundHttpException('Asset reference not found');
         }
 
         $sspAssetFormDataProvider = $this->getFactory()->createSspAssetFormDataProvider();
@@ -272,7 +269,7 @@ class SspAssetController extends AbstractController
             if (!$sspAssetCollectionResponseTransfer->getErrors()->count() && $sspAssetCollectionResponseTransfer->getSspAssets()->count()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_ASSET_UPDATED);
 
-                return $this->redirectResponseInternal(SspAssetRouteProviderPlugin::ROUTE_NAME_ASSET_UPDATE, [
+                return $this->redirectResponseInternal(SspAssetRouteProviderPlugin::ROUTE_NAME_ASSET_DETAILS, [
                     'reference' => $sspAssetCollectionResponseTransfer->getSspAssets()->offsetGet(0)->getReference(),
                 ]);
             }

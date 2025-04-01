@@ -47,13 +47,11 @@ class SspInquiryReader implements SspInquiryReaderInterface
      */
     public function getSspInquiryCollection(Request $request, SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer
     {
-          $sspInquiryCriteriaTransfer->setPagination($this->createPaginationTransfer($request));
+        $sspInquiryCriteriaTransfer->setPagination($this->createPaginationTransfer($request));
 
         if (!$sspInquiryCriteriaTransfer->getSspInquiryConditions()) {
               $sspInquiryCriteriaTransfer->setSspInquiryConditions(new SspInquiryConditionsTransfer());
         }
-
-          $sspInquiryCriteriaTransfer->getSspInquiryConditionsOrFail()->setFkStore($this->storeClient->getCurrentStore()->getIdStore());
 
         return $this->sspInquiryManagementClient->getSspInquiryCollection($sspInquiryCriteriaTransfer);
     }
@@ -74,8 +72,7 @@ class SspInquiryReader implements SspInquiryReaderInterface
                         (new SspInquiryOwnerConditionGroupTransfer())
                             ->setFkCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit())
                             ->setFkCompany($companyUserTransfer->getFkCompany()),
-                    )
-                    ->setFkStore($this->storeClient->getCurrentStore()->getIdStore()),
+                    ),
               )
                 ->setInclude(
                     (new SspInquiryIncludeTransfer())

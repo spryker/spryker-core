@@ -21,7 +21,7 @@ class SspAssetManagementConfig extends AbstractSharedConfig
      */
     public function getAllowedFileExtensions(): array
     {
-        return ['jpg', 'jpeg', 'png', 'heif'];
+        return ['jpg', 'jpeg', 'png'];
     }
 
     /**
@@ -38,7 +38,6 @@ class SspAssetManagementConfig extends AbstractSharedConfig
             'image/png',
             'image/jpeg',
             'image/jpg',
-            'image/heif',
         ];
     }
 

@@ -45,6 +45,10 @@
 
                     {{ form_errors(data.form.asset_image) }}
 
+                    {% for child in data.form.asset_image %}
+                        {{ form_errors(child) }}
+                    {% endfor %}
+
                     {% include molecule('image-uploader', 'SspAssetManagement') with {
                         class: 'spacing-x spacing-top--big',
                         data: {
