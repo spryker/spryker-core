@@ -31,7 +31,11 @@
             name: file.fileName,
             size: file.fileInfo[0].size | readable_bytesize,
             type: file.fileInfo[0].extension,
-            actions: [{ url: path('ssp-file-management/download', {'id-file': file.uuid }), label: 'ssp_file_management.file_management.table.actions.download' }],
+            actions: can('DownloadFilesPermissionPlugin')
+            ? [{
+                url: path('ssp-file-management/download', {'id-file': file.uuid }),
+                label: 'ssp_file_management.file_management.table.actions.download'
+            }] : [],
         }) %}
 
         {% block table %}

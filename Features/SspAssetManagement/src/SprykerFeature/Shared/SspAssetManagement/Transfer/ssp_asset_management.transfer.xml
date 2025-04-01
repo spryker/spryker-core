@@ -148,10 +148,23 @@
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
         <property name="fkCompanyBusinessUnit" type="int"/>
         <property name="fkCompany" type="int"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="FileCollection" strict="true">
         <property name="files" type="File[]" singular="file"/>
+    </transfer>
+
+    <transfer name="DashboardResponse">
+        <property name="dashboardComponentAssets" type="DashboardComponentAssets"/>
+    </transfer>
+
+    <transfer name="DashboardComponentAssets">
+        <property name="sspAssetCollection" type="SspAssetCollection"/>
+    </transfer>
+
+    <transfer name="DashboardRequest">
+        <property name="companyUser" type="CompanyUser"/>
     </transfer>
 
 </transfers>

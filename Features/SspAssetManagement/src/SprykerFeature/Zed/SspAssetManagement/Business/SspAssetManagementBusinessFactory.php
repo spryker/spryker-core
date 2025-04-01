@@ -12,6 +12,8 @@ use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\FileManager\Business\FileManagerFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface;
+use SprykerFeature\Zed\SspAssetManagement\Business\DashboardDataProvider\DashboardDataProvider;
+use SprykerFeature\Zed\SspAssetManagement\Business\DashboardDataProvider\DashboardDataProviderInterface;
 use SprykerFeature\Zed\SspAssetManagement\Business\Reader\SspAssetReader;
 use SprykerFeature\Zed\SspAssetManagement\Business\Reader\SspAssetReaderInterface;
 use SprykerFeature\Zed\SspAssetManagement\Business\Validator\SspAssetValidator;
@@ -113,5 +115,13 @@ class SspAssetManagementBusinessFactory extends AbstractBusinessFactory
     public function getSspAssetManagementExpanderPlugins(): array
     {
         return $this->getProvidedDependency(SspAssetManagementDependencyProvider::PLUGINS_SSP_ASSET_MANAGEMENT_EXPANDER);
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspAssetManagement\Business\DashboardDataProvider\DashboardDataProviderInterface
+     */
+    public function createDashboardDataProvider(): DashboardDataProviderInterface
+    {
+        return new DashboardDataProvider($this->createSspAssetReader());
     }
 }

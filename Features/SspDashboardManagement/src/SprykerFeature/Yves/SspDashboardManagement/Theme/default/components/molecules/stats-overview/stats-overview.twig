@@ -5,7 +5,7 @@
 } %}
 
 {% define data = {
-    title: 'dashboard.overview.title',
+    title: 'ssp_dashboard.overview.title',
     stats: [],
 } %}
 
@@ -30,7 +30,7 @@
                             {% block stat %}
                                 <div class="{{ config.name }}__stat text-center">
                                     <div class="{{ config.name }}__title">{{ stat.title | trans }}</div>
-                                    <strong class="{{ config.name }}__counter">{{ stat.value | default('dashboard.overview.not_applicable' | trans) }}</strong>
+                                    <strong class="{{ config.name }}__counter">{{ stat.value | default('ssp_dashboard.overview.not_applicable' | trans) }}</strong>
                                 </div>
                             {% endblock %}
                         </div>

@@ -21,6 +21,7 @@
         "spryker/zed-request": "^3.22.0"
     },
     "require-dev": {
+        "spryker-feature/ssp-dashboard-management": "*",
         "spryker-feature/ssp-inquiry-management": "*",
         "spryker-shop/customer-page": "*",
         "spryker/code-sniffer": "*",
@@ -33,6 +34,7 @@
         "spryker/util-date-time": "*"
     },
     "suggest": {
+        "spryker-feature/ssp-dashboard-management": "If you want to see assets on the dashboard.",
         "spryker-shop/customer-page": "Provides template for customer page",
         "spryker/router": "You need to install this module when you want to use the RouterExtension interfaces."
     },

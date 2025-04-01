@@ -1,0 +1,16 @@
+{% extends template('widget') %}
+
+{% define data = {
+    totalItems: _widget.totalItems,
+    sspAssets: _widget.sspAssets,
+} %}
+
+{% block body %}
+    {% include molecule('assets-preview', 'SspAssetManagement') with {
+        class: 'spacing-bottom--big spacing-x',
+        data: {
+            counter: data.totalItems,
+            sspAssets: data.sspAssets,
+        },
+    } only %}
+{% endblock %}

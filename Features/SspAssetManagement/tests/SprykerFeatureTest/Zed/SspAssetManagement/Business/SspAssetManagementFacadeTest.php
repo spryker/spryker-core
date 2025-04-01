@@ -10,6 +10,9 @@ namespace SprykerFeatureTest\Zed\SspAssetManagement\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\DashboardRequestTransfer;
+use Generated\Shared\Transfer\DashboardResponseTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\SortTransfer;
 use Generated\Shared\Transfer\SspAssetAssignmentTransfer;
@@ -24,6 +27,7 @@ use Orm\Zed\SspAssetManagement\Persistence\SpySspAssetQuery;
 use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface;
 use Spryker\Zed\FileManager\FileManagerDependencyProvider;
 use SprykerFeature\Zed\SspAssetManagement\Business\SspAssetManagementFacade;
+use SprykerFeature\Zed\SspAssetManagement\Communication\Plugin\SspDashboardManagement\SspAssetDashboardDataProviderPlugin;
 
 /**
  * @group SprykerFeatureTest
@@ -70,6 +74,7 @@ class SspAssetManagementFacadeTest extends Unit
         $serviceFileSystemMock->method('write')->willReturnCallback(function (): void {
         });
         $this->tester->setDependency(FileManagerDependencyProvider::SERVICE_FILE_SYSTEM, $serviceFileSystemMock);
+        $this->tester->setDependency(static::LOCALE_CURRENT, 'en_US');
     }
 
     /**
@@ -306,6 +311,61 @@ class SspAssetManagementFacadeTest extends Unit
                 $this->assertSame($expectedCompanyBusinessUnit['key'], $companyBusinessUnitEntity->getKey());
             }
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testSspAssetDashboardDataProviderPluginWillAddAssetToCollection(): void
+    {
+        $customerTransfer = $this->tester->haveCustomer();
+        $companyTransfer = $this->tester->haveCompany();
+
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+        $businessUnitAssignments = [
+            [
+                SspAssetAssignmentTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
+            ],
+        ];
+
+        $expectedName = 'asset name';
+        $expectedSerialNumber = 'asset serial number';
+        $expectedNote = 'note of the asset';
+        $this->tester->haveAsset([
+            SspAssetTransfer::NAME => $expectedName,
+            SspAssetTransfer::SERIAL_NUMBER => $expectedSerialNumber,
+            SspAssetTransfer::NOTE => $expectedNote,
+            SspAssetTransfer::COMPANY_BUSINESS_UNIT => $this->companyBusinessUnit,
+            SspAssetTransfer::ASSIGNMENTS => $businessUnitAssignments,
+        ]);
+
+        $dashboardResponseTransfer = (new SspAssetDashboardDataProviderPlugin())->provideDashboardData(
+            (new DashboardResponseTransfer()),
+            (new DashboardRequestTransfer())->setCompanyUser($this->tester->haveCompanyUser([
+                CompanyUserTransfer::CUSTOMER => $customerTransfer,
+                CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+                CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+            ])),
+        );
+
+        $this->assertCount(1, $dashboardResponseTransfer->getDashboardComponentAssets()->getSspAssetCollection()->getSspAssets());
+        $this->assertSame(
+            1,
+            $dashboardResponseTransfer->getDashboardComponentAssets()->getSspAssetCollection()->getSspAssets()->count(),
+        );
+        /** @var \Generated\Shared\Transfer\SspAssetTransfer $actualSspAssetTransfer */
+        $actualSspAssetTransfer = $dashboardResponseTransfer
+            ->getDashboardComponentAssets()
+            ->getSspAssetCollection()
+            ->getSspAssets()
+            ->getIterator()
+            ->current();
+
+        $this->assertSame($expectedName, $actualSspAssetTransfer->getName());
+        $this->assertSame($expectedSerialNumber, $actualSspAssetTransfer->getSerialNumber());
+        $this->assertSame($expectedNote, $actualSspAssetTransfer->getNote());
     }
 
     /**
