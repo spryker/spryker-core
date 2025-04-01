@@ -51,11 +51,13 @@
                 {% block filterSection %}
                     {% if data.sspInquirySearchForm %}
                         {% block searchForm %}
-                            {{ form_start(data.sspInquirySearchForm, {
-                                attr: {
-                                    class: formClass,
-                                },
-                            }) }}
+                            {% block sspInquirySearchFormStart %}
+                                {{ form_start(data.sspInquirySearchForm, {
+                                    attr: {
+                                        class: formClass,
+                                    },
+                                }) }}
+                            {% endblock %}
 
                             {% block sspInquiryFilters %}
                                 {% include molecule('ssp-inquiry-filters', 'SspInquiryManagement') with {
@@ -69,31 +71,22 @@
                     {% endif %}
                 {% endblock %}
 
-                {% block sspInquiryTableSection %}
-                    {% block sspInquiryTable %}
-                        {% include molecule('ssp-inquiry-table', 'SspInquiryManagement') with {
-                            data: {
-                                sspInquiries: data.sspInquiries,
-                                sspInquirySearchForm: data.sspInquirySearchForm,
-                                formClass: formClass,
-                            },
-                        } only %}
-                    {% endblock %}
-
-                    {% block tableFooter %}
-                        <hr>
-
-                        {% block pagination %}
-                            {% include molecule('pagination') with {
-                                data: data.pagination,
-                            } only %}
-                        {% endblock %}
-                    {% endblock %}
+                {% block sspInquiryTable %}
+                    {% include molecule('ssp-inquiry-table', 'SspInquiryManagement') with {
+                        data: {
+                            sspInquiries: data.sspInquiries,
+                            sspInquirySearchForm: data.sspInquirySearchForm,
+                            formClass: formClass,
+                            pagination: data.pagination,
+                        },
+                    } only %}
                 {% endblock %}
 
-                {% if data.sspInquirySearchForm %}
-                    {{ form_end(data.sspInquirySearchForm) }}
-                {% endif %}
+                {% block sspInquirySearchFormEnd %}
+                    {% if data.sspInquirySearchForm %}
+                        {{ form_end(data.sspInquirySearchForm) }}
+                    {% endif %}
+                {% endblock %}
             {% endblock %}
         </div>
     {% endblock %}

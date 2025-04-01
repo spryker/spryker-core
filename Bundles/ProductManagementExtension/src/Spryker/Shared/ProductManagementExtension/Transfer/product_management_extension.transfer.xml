@@ -13,4 +13,7 @@
     <transfer name="ButtonCollection">
     </transfer>
 
+    <transfer name="ProductAbstract">
+    </transfer>
+
 </transfers>

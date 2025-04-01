@@ -34,10 +34,6 @@
     } only %}
 {% endblock %}
 
-{% block separator %}
-    <hr class="box__separator">
-{% endblock %}
-
 {% set jsPrefix = 'js-ssp-file-management-' %}
 {% set formClass = "#{jsPrefix}form" %}
 
@@ -52,7 +48,7 @@
                 }) }}
             {% endblock %}
 
-            {% block relationRequesFilters %}
+            {% block filters %}
                 {% include molecule('filters', 'SspFileManagement') with {
                     data: {
                         fileSearchFilterForm: data.fileSearchFilterForm,
@@ -61,7 +57,7 @@
                 } only %}
             {% endblock %}
 
-            {% block relationRequesActiveFilters %}
+            {% block activeFilter %}
                 {% include molecule('active-filters', 'SspFileManagement') with {
                     class: 'spacing-bottom spacing-bottom--big',
                     data: {
@@ -73,30 +69,19 @@
             {% endblock %}
         {% endblock %}
 
-        {{ block('separator') }}
+        {% block separator %}
+            <hr class="box__separator">
+        {% endblock %}
 
         {% block files %}
-            {% block fileManagerList %}
-                {% include molecule('view-table', 'SspFileManagement') with {
-                    data: {
-                        files: data.files,
-                        fileSearchFilterForm: data.fileSearchFilterForm,
-                        formClass: formClass,
-                    },
-                } only %}
-            {% endblock %}
-
-            {% if data.files | length %}
-                {% block fileManagerPagination %}
-                    {% if data.pagination.maxPage > 1 %}
-                        {{ block('separator') }}
-                    {% endif %}
-
-                    {% include molecule('pagination') with {
-                        data: data.pagination,
-                    } only %}
-                {% endblock %}
-            {% endif %}
+            {% include molecule('view-table', 'SspFileManagement') with {
+                data: {
+                    files: data.files,
+                    fileSearchFilterForm: data.fileSearchFilterForm,
+                    formClass: formClass,
+                    pagination: data.pagination,
+                },
+            } only %}
         {% endblock %}
 
         {% block fileSearchFilterFormEnd %}

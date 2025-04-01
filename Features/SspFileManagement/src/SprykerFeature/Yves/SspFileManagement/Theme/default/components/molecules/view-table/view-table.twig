@@ -11,6 +11,7 @@
     files: required,
     fileSearchFilterForm: required,
     formClass: required,
+    pagination: {},
 } %}
 
 {% block body %}
@@ -71,6 +72,7 @@
                 emptyText: 'ssp_file_management.file_management.view.empty',
                 sortableForm: data.fileSearchFilterForm,
                 sortableFormClass: data.formClass,
+                pagination: data.pagination,
             },
             qa: 'web-table-files',
         } only %}

@@ -1,0 +1,73 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'ssp-service-table',
+} %}
+
+{% define data = {
+    rows: required,
+    searchForm: {},
+    formClass: '',
+    pagination: {},
+} %}
+
+{% block body %}
+    {% set columns = [
+        {
+            id: 'order_reference',
+            title: 'ssp_service_management.list.order_reference',
+            sortable: true,
+        },
+        {
+            id: 'product_name',
+            title: 'ssp_service_management.list.product_name',
+            sortable: true,
+        },
+        {
+            id: 'scheduled_at',
+            title: 'ssp_service_management.list.scheduled_at',
+            type: 'date',
+            sortable: true,
+        },
+        {
+            id: 'created_at',
+            title: 'ssp_service_management.list.created_at',
+            type: 'date',
+            sortable: true,
+        },
+        {
+            id: 'state',
+            title: 'ssp_service_management.list.state',
+            sortable: true,
+        },
+        {
+            id: 'actions',
+            type: 'actions',
+        },
+    ] %}
+
+    {% set rows = data.rows | map(row => {
+        order_reference: row.orderReference,
+        product_name: row.productName,
+        scheduled_at: row.scheduledAt,
+        created_at: row.createdAt,
+        state: row.stateDisplayName | trans,
+        actions: [{
+            url: url('customer/order/details', { 'id': row.idSalesOrder }),
+            label: 'ssp_service_management.list.button.view'
+        }],
+    }) %}
+
+    {% block table %}
+        {% include molecule('advanced-table', 'SspServiceManagement') with {
+            data: {
+                columns: columns,
+                rows: rows,
+                emptyText: 'ssp_service_management.list.empty',
+                sortableForm: data.searchForm,
+                sortableFormClass: data.formClass,
+                pagination: data.pagination,
+            },
+        } only %}
+    {% endblock %}
+{% endblock %}

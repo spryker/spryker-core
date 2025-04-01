@@ -1,0 +1,10 @@
+{% extends template('widget') %}
+
+{% define data = {
+    servicePointName: _widget.servicePointName,
+    isVisible: _widget.servicePointName is not empty,
+} %}
+
+{% block body %}
+    <div><strong>{{ 'ssp_service_management.cart_item.service_point.name' | trans }}</strong>: {{ data.servicePointName }}</div>
+{% endblock %}

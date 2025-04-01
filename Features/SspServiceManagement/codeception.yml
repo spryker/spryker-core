@@ -1,0 +1,18 @@
+namespace: SprykerFeatureTest
+
+include:
+    - tests/SprykerFeatureTest/Zed/SspServiceManagement
+    - tests/SprykerFeatureTest/Yves/SspServiceManagement
+
+paths:
+    tests: tests
+    support: .
+    output: tests/_output
+    data: tests/_data
+    envs: tests/_envs
+
+settings:
+    suite_class: \PHPUnit\Framework\TestSuite
+    colors: true
+    memory_limit: 1024M
+    log: true

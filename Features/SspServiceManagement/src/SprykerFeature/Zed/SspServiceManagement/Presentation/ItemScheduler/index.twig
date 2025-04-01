@@ -1,0 +1,56 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Update time' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+	{{ backActionButton('/sales/detail?id-sales-order=' ~ orderItem.fkSalesOrder, 'Back to Order' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            <div class="well">
+                <div class="spacing-bottom"><strong>{{ 'Order Item Details' | trans }}</strong></div>
+
+                {% set data = [
+                    {
+                        label: 'SKU',
+                        value: orderItem.sku,
+                    },
+                    {
+                        label: 'Name',
+                        value: orderItem.name,
+                    },
+                    {
+                        label: 'Quantity',
+                        value: orderItem.quantity,
+                    },
+                    {
+                        label: 'Current State',
+                        value: orderItem.state.name,
+                    },
+                ] %}
+
+                {% for item in data %}
+                    <div class="row spacing-bottom">
+                        <div class="col-xs-3">
+                            <strong>{{ item.label | trans }}</strong>
+                        </div>
+                        <div class="col-xs-9">{{ item.value }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {{ form_start(itemSchedulerForm) }}
+                <div class="form-group">
+                    {{ form_widget(itemSchedulerForm.scheduledAt) }}
+                </div>
+
+                <button class="btn btn-primary safe-submit">{{ 'Save' | trans }}</button>
+            {{ form_end(itemSchedulerForm) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

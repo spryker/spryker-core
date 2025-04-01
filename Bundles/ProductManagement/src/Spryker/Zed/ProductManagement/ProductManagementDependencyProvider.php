@@ -242,6 +242,16 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const PLUGINS_PRODUCT_VARIANT_TABLE_ACTION_EXPANDER = 'PLUGINS_PRODUCT_VARIANT_TABLE_ACTION_EXPANDER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_ABSTRACT_TRANSFER_MAPPER = 'PLUGINS_PRODUCT_ABSTRACT_TRANSFER_MAPPER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_ABSTRACT_FORM_DATA_PROVIDER_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_DATA_PROVIDER_EXPANDER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -407,6 +417,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductTableDataBulkExpanderPlugins($container);
         $container = $this->addProductTableActionExpanderPlugins($container);
         $container = $this->addProductVariantTableActionExpanderPlugins($container);
+        $container = $this->addProductAbstractTransferMapperPlugins($container);
+        $container = $this->addProductAbstractFormDataProviderExpanderPlugins($container);
 
         return $container;
     }
@@ -943,6 +955,50 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductVariantTableActionExpanderPluginInterface>
      */
     protected function getProductVariantTableActionExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractTransferMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_TRANSFER_MAPPER, function () {
+            return $this->getProductAbstractTransferMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractTransferMapperPluginInterface>
+     */
+    protected function getProductAbstractTransferMapperPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractFormDataProviderExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_FORM_DATA_PROVIDER_EXPANDER, function (): array {
+            return $this->getProductAbstractFormDataProviderExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormDataProviderExpanderPluginInterface>
+     */
+    protected function getProductAbstractFormDataProviderExpanderPlugins(): array
     {
         return [];
     }

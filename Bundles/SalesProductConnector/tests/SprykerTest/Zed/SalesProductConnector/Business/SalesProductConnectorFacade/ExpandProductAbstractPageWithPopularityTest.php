@@ -33,9 +33,24 @@ class ExpandProductAbstractPageWithPopularityTest extends Unit
     protected const FAKE_ID_PRODUCT_ABSTRACT = 6666;
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_OMS_PROCESS_NAME = 'DummyPayment01';
+
+    /**
      * @var \SprykerTest\Zed\SalesProductConnector\SalesProductConnectorBusinessTester
      */
     protected $tester;
+
+      /**
+       * @return void
+       */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->configureTestStateMachine([static::DEFAULT_OMS_PROCESS_NAME]);
+    }
 
     /**
      * @return void
@@ -86,7 +101,7 @@ class ExpandProductAbstractPageWithPopularityTest extends Unit
             ->withStore()
             ->build();
 
-        $this->tester->haveOrderFromQuote($quoteTransfer, 'DummyPayment01');
+        $this->tester->haveOrderFromQuote($quoteTransfer, static::DEFAULT_OMS_PROCESS_NAME);
 
         $productPageLoadTransfer = (new ProductPageLoadTransfer())
             ->setProductAbstractIds([

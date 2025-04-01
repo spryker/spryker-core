@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block body %}
-    {% block filters %}
+    {% block search %}
         <div class="form__fields grid grid--bottom">
             <div class="form__field col col--sm-6">
                 {{ form_row(data.sspInquirySearchForm.type) }}
@@ -22,10 +22,16 @@
             <div class="form__field col col--sm-6">
                 {{ form_row(data.sspInquirySearchForm.status) }}
             </div>
+        </div>
+    {% endblock %}
 
+    {% block filters %}
+        <div class="form__fields grid grid--bottom">
             {% for filter in data.sspInquirySearchForm.filters.children %}
                 <div class="{{ filter.vars.attr.class }}">
-                    {{ form_row(filter) }}
+                    {% block filter %}
+                        {{ form_row(filter) }}
+                    {% endblock %}
                 </div>
             {% endfor %}
         </div>
@@ -33,7 +39,7 @@
 
     {{ block('separator') }}
 
-    {% block filterModeRow %}
+    {% block submit %}
         <div class="form__fields grid grid--right">
             <div class="form__field col">
                 <button class="button button--success">

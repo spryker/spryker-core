@@ -109,13 +109,16 @@ class ProductDataHelper extends Module
         $productAbstractTransfer = new ProductAbstractBuilder($productAbstractOverride);
 
         if ($localized) {
-            $localizedAttributes = (new LocalizedAttributesBuilder([
-                LocalizedAttributesTransfer::NAME => uniqid('Product #', true),
-                LocalizedAttributesTransfer::LOCALE => $this->getCurrentLocale(),
-                LocalizedAttributesTransfer::ATTRIBUTES => $productAbstractOverride[ProductAbstractTransfer::ATTRIBUTES] ?? [],
-            ]))->build()->toArray();
+            $availableLocales = $this->getLocaleFacade()->getLocaleCollection();
+            foreach ($availableLocales as $locale) {
+                $localizedAttributes = (new LocalizedAttributesBuilder([
+                    LocalizedAttributesTransfer::NAME => uniqid('Product #', true),
+                    LocalizedAttributesTransfer::LOCALE => $locale,
+                    LocalizedAttributesTransfer::ATTRIBUTES => $productAbstractOverride[ProductAbstractTransfer::ATTRIBUTES] ?? [],
+                ]))->build()->toArray();
 
-            $productAbstractTransfer->withLocalizedAttributes($localizedAttributes);
+                $productAbstractTransfer->withLocalizedAttributes($localizedAttributes);
+            }
         }
 
         $productAbstractTransfer = $productAbstractTransfer->build();

@@ -14,7 +14,7 @@
 {% endif %}
 <td>
     <div>
-        <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItem.idProductAbstract, 'id-product': orderItem.id, 'type': 'regular'}) }}">
+        <a id="id-sales-order-item-{{ orderItem.idSalesOrderItem }}" target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItem.idProductAbstract, 'id-product': orderItem.id, 'type': 'regular'}) }}">
             {{ orderItem.name }}
         </a>
     </div>
@@ -49,6 +49,10 @@
     } %}
 
     {% include '@SalesProductConfigurationGui/Sales/Partials/order-item-product-configuration.twig' ignore missing with {
+        orderItem: orderItem,
+    } %}
+
+    {% include '@SspServiceManagement/Partials/schedule-item-date.twig' ignore missing with {
         orderItem: orderItem,
     } %}
 </td>
@@ -105,6 +109,10 @@
             eventsFormAttributeMap: eventsFormAttributeMap | default([]),
         } only %}
     {% endif %}
+
+    {% include '@SspServiceManagement/Partials/schedule-item-button.twig' ignore missing with {
+        orderItem: orderItem,
+    } %}
 </td>
 {% if tableColumnCellsContent[orderItem.idSalesOrderItem] is defined %}
     {% for tableColumnCellContent in tableColumnCellsContent[orderItem.idSalesOrderItem] %}

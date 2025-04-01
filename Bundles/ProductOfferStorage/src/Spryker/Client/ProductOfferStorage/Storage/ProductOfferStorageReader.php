@@ -182,6 +182,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer
     {
         $productOfferStorageTransfers = $this->getProductOfferStoragesByReferences([$productOfferReference]);
+        $productOfferStorageTransfers = $this->executeProductOfferStorageExpanderPlugins($productOfferStorageTransfers);
 
         return $productOfferStorageTransfers[0] ?? null;
     }

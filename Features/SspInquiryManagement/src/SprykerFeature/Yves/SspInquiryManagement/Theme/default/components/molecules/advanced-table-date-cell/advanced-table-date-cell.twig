@@ -14,5 +14,7 @@
 } %}
 
 {% block body %}
-    {{ data.column | date(data.config.options.format | default(null)) }}
+    {% if data.column %}
+        {{ data.column | date(data.config.options.format | default(null)) }}
+    {% endif %}
 {% endblock %}

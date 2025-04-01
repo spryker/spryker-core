@@ -10,6 +10,7 @@
     emptyText: '',
     sortableForm: {},
     sortableFormClass: '',
+    pagination: {},
 } %}
 
 {% set isEmpty = (data.rows | default([])) is empty or (data.columns | default([])) is empty %}
@@ -32,8 +33,10 @@
 
                                 <th {{ _self.sortingAttributes(columnData, headColClass, config, data) }}>
                                     {% block headCol %}
-                                        {{ columnData.title | default('') | trans }}
-                                        {{ _self.sortingIcon(columnData, config, data) }}
+                                        <div class="{{ config.name }}__heading">
+                                            {{ columnData.title | default('') | trans }}
+                                            {{ _self.sortingIcon(columnData, config, data) }}
+                                        </div>
                                     {% endblock %}
                                 </th>
                             {% endfor %}
@@ -74,6 +77,15 @@
                 {% endblock %}
             </table>
         {% endblock %}
+
+        {% block pagination %}
+            {% if data.pagination %}
+                {% include molecule('pagination') with {
+                    class: 'spacing-top--big',
+                    data: data.pagination,
+                } only %}
+            {% endif %}
+        {% endblock %}
     {% endif %}
 
     {% block sortingForm %}
@@ -101,7 +113,7 @@
         {% endif %}
     {% endblock %}
 
-     {%- macro sortingAttributes(columnData, class, config, data) -%}
+    {%- macro sortingAttributes(columnData, class, config, data) -%}
         {% if data.sortableForm and (columnData.sortable | default(null)) %}
             {% set class = "#{class} #{config.jsName}-sort-trigger #{config.name}__col--sortable" %}
             {% set orderDirection = data.sortableForm.orderDirection.vars.value %}

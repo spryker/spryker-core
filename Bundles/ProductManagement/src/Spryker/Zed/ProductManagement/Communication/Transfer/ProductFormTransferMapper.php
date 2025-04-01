@@ -65,6 +65,11 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     protected $productFormTransferMapperExpanderPlugins;
 
     /**
+     * @var array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractTransferMapperPluginInterface>
+     */
+    protected $productAbstractTransferMapperPlugins;
+
+    /**
      * @var \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface
      */
     protected $productConcreteSuperAttributeFilterHelperInterface;
@@ -75,6 +80,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface> $productFormTransferMapperExpanderPlugins
+     * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractTransferMapperPluginInterface> $productAbstractTransferMapperPlugins
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface $productConcreteSuperAttributeFilterHelperInterface
      */
     public function __construct(
@@ -83,6 +89,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         ProductManagementToLocaleInterface $localeFacade,
         LocaleProvider $localeProvider,
         array $productFormTransferMapperExpanderPlugins,
+        array $productAbstractTransferMapperPlugins,
         ProductConcreteSuperAttributeFilterHelperInterface $productConcreteSuperAttributeFilterHelperInterface
     ) {
         $this->productQueryContainer = $productQueryContainer;
@@ -90,6 +97,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $this->localeFacade = $localeFacade;
         $this->localeProvider = $localeProvider;
         $this->productFormTransferMapperExpanderPlugins = $productFormTransferMapperExpanderPlugins;
+        $this->productAbstractTransferMapperPlugins = $productAbstractTransferMapperPlugins;
         $this->productConcreteSuperAttributeFilterHelperInterface = $productConcreteSuperAttributeFilterHelperInterface;
     }
 
@@ -259,6 +267,10 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             ->setIdProductAbstract($data[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT])
             ->setSku($data[ProductFormAdd::FIELD_SKU])
             ->setIdTaxSet($data[ProductFormAdd::FIELD_TAX_RATE]);
+
+        foreach ($this->productAbstractTransferMapperPlugins as $productAbstractTransferMapperPlugin) {
+            $productAbstractTransfer = $productAbstractTransferMapperPlugin->map($data, $productAbstractTransfer);
+        }
 
         return $productAbstractTransfer;
     }

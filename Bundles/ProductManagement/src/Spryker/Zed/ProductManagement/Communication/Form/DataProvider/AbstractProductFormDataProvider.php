@@ -184,6 +184,11 @@ class AbstractProductFormDataProvider
     protected $productAttributeReader;
 
     /**
+     * @var array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormDataProviderExpanderPluginInterface>
+     */
+    protected $productAbstractFormDataProviderExpanderPlugins = [];
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
@@ -196,6 +201,7 @@ class AbstractProductFormDataProvider
      * @param array $taxCollection
      * @param string $imageUrlPrefix
      * @param \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface|null $productAttributeReader
+     * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormDataProviderExpanderPluginInterface> $productAbstractFormDataProviderExpanderPlugins
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -209,7 +215,8 @@ class AbstractProductFormDataProvider
         LocaleTransfer $currentLocale,
         array $taxCollection,
         $imageUrlPrefix,
-        ?ProductAttributeReaderInterface $productAttributeReader = null
+        ?ProductAttributeReaderInterface $productAttributeReader = null,
+        array $productAbstractFormDataProviderExpanderPlugins = []
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
@@ -223,6 +230,7 @@ class AbstractProductFormDataProvider
         $this->taxCollection = $taxCollection;
         $this->imageUrlPrefix = $imageUrlPrefix;
         $this->productAttributeReader = $productAttributeReader;
+        $this->productAbstractFormDataProviderExpanderPlugins = $productAbstractFormDataProviderExpanderPlugins;
         $this->attributeTransferCollection = $this->getAttributeTransferCollection();
     }
 

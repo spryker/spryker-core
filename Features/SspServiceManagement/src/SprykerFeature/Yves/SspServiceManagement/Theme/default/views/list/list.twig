@@ -1,0 +1,71 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    serviceList: _view.serviceList,
+    title: 'ssp_service_management.list.title' | trans,
+    serviceSearchForm: _view.serviceSearchForm,
+    activePage: 'ssp-service',
+    pagination: _view.pagination,
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview')
+                },
+                {
+                    label: 'ssp_service_management.list.title' | trans
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
+{% set formClass = 'js-search-form' %}
+
+{% block customerContent %}
+    <div class="box">
+        {% block serviceContent %}
+            {% block formStart %}
+                {{ form_start(data.serviceSearchForm, {
+                    attr: {
+                        class: formClass,
+                    },
+                }) }}
+            {% endblock %}
+
+            {% block filters %}
+                {% include molecule('ssp-service-filters', 'SspServiceManagement') with {
+                    class: 'spacing-y spacing-y--inner',
+                    data: {
+                        searchForm: data.serviceSearchForm,
+                    },
+                } only %}
+            {% endblock %}
+
+            {% block table %}
+                {% include molecule('ssp-service-table', 'SspServiceManagement') with {
+                    data: {
+                        rows: data.serviceList,
+                        searchForm: data.serviceSearchForm,
+                        formClass: formClass,
+                        pagination: {
+                            parameters: app.request.query.all,
+                            currentPage: data.pagination.page,
+                            paginationPath: 'customer/ssp-service',
+                            maxPage: data.pagination.lastPage,
+                            showAlwaysFirstAndLast: true
+                        },
+                    },
+                } only %}
+            {% endblock %}
+
+            {% block formEnd %}
+                {{ form_end(data.serviceSearchForm) }}
+            {% endblock %}
+        {% endblock %}
+    </div>
+{% endblock %}

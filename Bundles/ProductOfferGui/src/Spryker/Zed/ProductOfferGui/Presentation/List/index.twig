@@ -5,6 +5,11 @@
 {% block head_title widget_title %}
 {% block section_title widget_title %}
 
+{% block action %}
+    {{ parent() }}
+    {% include '@SspServiceManagement/Partials/create-offer-link.twig' ignore missing %}
+{% endblock %}
+
 {% block content %}
 
     {% include '@ProductOfferGui/_partials/filters.twig' %}

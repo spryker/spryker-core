@@ -16,6 +16,7 @@
         <property name="productOfferReference" type="string"/>
         <property name="merchantReference" type="string"/>
         <property name="identifier" type="string"/>
+        <property name="isMerchantCheckSkipped" type="bool"/>
     </transfer>
 
     <transfer name="ProductOfferServicePointAvailabilityResponseItem" strict="true">

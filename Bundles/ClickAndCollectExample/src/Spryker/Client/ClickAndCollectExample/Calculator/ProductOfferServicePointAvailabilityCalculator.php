@@ -196,7 +196,7 @@ class ProductOfferServicePointAvailabilityCalculator implements ProductOfferServ
         ProductOfferServicePointAvailabilityResponseItemTransfer $productOfferServicePointAvailabilityResponseItemTransfer
     ): bool {
         if (!$productOfferServicePointAvailabilityRequestItemTransfer->getMerchantReference()) {
-            return $productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference() === null;
+            return $productOfferServicePointAvailabilityRequestItemTransfer->getIsMerchantCheckSkipped() || $productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference() === null;
         }
 
         return $productOfferServicePointAvailabilityRequestItemTransfer->getMerchantReferenceOrFail() === $productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference();

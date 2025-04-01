@@ -55,6 +55,14 @@
     {{ form_row(form.companySuppliers) }}
 {% endif %}
 
+{% include '@SspServiceManagement/Partials/concrete-product-form-shipment-type-field.twig' ignore missing with {
+    form: form,
+} %}
+
+{% include '@SspServiceManagement/Partials/concrete-product-form-is-service-date-time-enabled-field.twig' ignore missing with {
+    form: form,
+} %}
+
 {% block footer_js %}
     <script src="{{ assetsPath('js/spryker-zed-productmanagement-concrete-add.js') }}"></script>
 {% endblock %}

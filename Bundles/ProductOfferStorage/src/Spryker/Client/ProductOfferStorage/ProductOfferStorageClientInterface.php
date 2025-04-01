@@ -52,6 +52,7 @@ interface ProductOfferStorageClientInterface
     /**
      * Specification:
      * - Finds a product offer within Storage by reference.
+     * - Executes {@link \Spryker\Client\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface} plugin stack to expand `ProductOfferStorageTransfer` with additional data.
      * - Returns null if product offer was not found.
      *
      * @api

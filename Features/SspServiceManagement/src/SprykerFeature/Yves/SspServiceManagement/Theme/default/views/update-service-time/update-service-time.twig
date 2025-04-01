@@ -1,0 +1,55 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    orderItem: _view.orderItem,
+    serviceItemSchedulerForm: _view.serviceItemSchedulerForm,
+    activePage: 'ssp-service',
+    title: 'ssp_service_management.update_scheduled_time.title' | trans,
+} %}
+
+{% block customerContent %}
+    <div class="box">
+        {% block details %}
+            {% include molecule('order-item-details', 'SspServiceManagement') with {
+                data: {
+                    details: [
+                        {
+                            label: 'ssp_service_management.update_scheduled_time.service.sku',
+                            value: data.orderItem.sku,
+                        },
+                        {
+                            label: 'ssp_service_management.update_scheduled_time.service.name',
+                            value: data.orderItem.name,
+                        },
+                        {
+                            label: 'ssp_service_management.update_scheduled_time.service.quantity',
+                            value: data.orderItem.quantity,
+                        },
+                        {
+                            label: 'ssp_service_management.update_scheduled_time.service.state',
+                            value: data.orderItem.state.name,
+                        },
+                    ],
+                },
+            } only %}
+        {% endblock %}
+
+        {% block form %}
+            {% include molecule('form') with {
+                class: '',
+                data: {
+                    form: data.serviceItemSchedulerForm,
+                    submit: {
+                        enable: true,
+                        text: 'ssp_service_management.update_scheduled_time.button.save' | trans,
+                    },
+                    cancel: {
+                        enable: true,
+                        text: 'ssp_service_management.update_scheduled_time.button.cancel' | trans,
+                        url: path('customer/ssp-service'),
+                    },
+                }
+            } only %}
+        {% endblock %}
+    </div>
+{% endblock %}

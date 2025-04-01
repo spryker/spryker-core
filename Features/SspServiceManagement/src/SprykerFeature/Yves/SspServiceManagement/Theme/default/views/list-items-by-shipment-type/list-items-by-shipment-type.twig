@@ -1,0 +1,31 @@
+{% extends template('widget') %}
+
+{% define data = {
+    shipmentTypeGroups: _widget.shipmentTypeGroups,
+} %}
+
+{% block body %}
+    {% for key, group in data.shipmentTypeGroups %}
+        {% block group %}
+            <div>
+                {% block title %}
+                    <div class="title--h4">{{ group.name }}</div>
+                {% endblock %}
+
+                {% block items %}
+                    {% for cartItem in group.items %}
+                        {% block content %}
+                            <div>{% block cartItem %}{% endblock %}</div>
+                        {% endblock %}
+                    {% endfor %}
+                {% endblock %}
+
+                {% block separator %}
+                    {% if not loop.last %}
+                        <hr>
+                    {% endif %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+    {% endfor %}
+{% endblock %}

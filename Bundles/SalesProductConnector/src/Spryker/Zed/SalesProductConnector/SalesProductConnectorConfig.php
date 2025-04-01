@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesProductConnector;
 
+use Generated\Shared\Transfer\ItemMetadataTransfer;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SalesProductConnectorConfig extends AbstractBundleConfig
@@ -20,6 +21,13 @@ class SalesProductConnectorConfig extends AbstractBundleConfig
      * @var int
      */
     protected const PRODUCT_PAGE_DATA_REFRESH_DAYS_INTERVAL = 1;
+
+    /**
+     * @var list<string>
+     */
+    protected const EXCLUDED_METADATA_ATTRIBUTES = [
+        ItemMetadataTransfer::SUPER_ATTRIBUTES,
+    ];
 
     /**
      * Specification:
@@ -45,5 +53,18 @@ class SalesProductConnectorConfig extends AbstractBundleConfig
     public function getProductPageDataRefreshDaysInterval(): int
     {
         return static::PRODUCT_PAGE_DATA_REFRESH_DAYS_INTERVAL;
+    }
+
+    /**
+     * Specification:
+     * - Returns list of metadata attributes to be excluded during metadata saving.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getExcludedMetadataAttributes(): array
+    {
+        return static::EXCLUDED_METADATA_ATTRIBUTES;
     }
 }

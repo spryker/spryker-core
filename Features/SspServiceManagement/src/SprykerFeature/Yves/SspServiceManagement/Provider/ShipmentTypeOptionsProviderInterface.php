@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerFeature\Yves\SspServiceManagement\Provider;
+
+interface ShipmentTypeOptionsProviderInterface
+{
+    /**
+     * @param array<\Generated\Shared\Transfer\ShipmentTypeTransfer> $shipmentTypeTransfers
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function provideShipmentTypeOptions(array $shipmentTypeTransfers): array;
+}

@@ -17,6 +17,7 @@ var select2combobox = require('./libs/select2-combobox');
 var timeoutId = 0;
 import { Dropzone } from './libs/dropzone';
 import { FormSubmitter } from './libs/form-submitter';
+import { DatePicker } from './libs/datepicker';
 
 var dataTablesSearchDelay = function () {
     var dataTablesWrapper = $('.dataTables_wrapper');
@@ -237,6 +238,7 @@ $(document).ready(function () {
     initFormattedNumber();
     initFormattedMoney();
 
+    new DatePicker().init();
     new Dropzone();
     new FormSubmitter();
 });

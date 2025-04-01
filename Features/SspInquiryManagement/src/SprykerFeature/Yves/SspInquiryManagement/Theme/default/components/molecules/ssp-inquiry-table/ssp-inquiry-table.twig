@@ -8,6 +8,7 @@
     sspInquiries: required,
     sspInquirySearchForm: {},
     formClass: '',
+    pagination: {},
 } %}
 
 {% block body %}
@@ -67,6 +68,7 @@
                 emptyText: 'customer.account.no_ssp_inquiries',
                 sortableForm: data.sspInquirySearchForm,
                 sortableFormClass: data.formClass,
+                pagination: data.pagination,
             },
             qa: 'web-table-ssp-inquiries',
         } only %}

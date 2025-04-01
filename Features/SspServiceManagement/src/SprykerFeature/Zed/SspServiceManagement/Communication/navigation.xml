@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config>
+    <ssp-service-management>
+        <label>Services</label>
+        <title>Services</title>
+        <bundle>ssp-service-management</bundle>
+        <controller>list</controller>
+        <action>index</action>
+        <icon>fa-paperclip</icon>
+    </ssp-service-management>
+</config>

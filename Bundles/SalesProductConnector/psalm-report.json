@@ -62,6 +62,54 @@
         },
         {
             "severity": "error",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>' for Spryker\\Zed\\SalesProductConnector\\Business\\Expander\\OrderExpander::extractItemTransfersFromOrderTransfers is incorrect, got 'array<Generated\\Shared\\Transfer\\ItemTransfer, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/Business/Expander/OrderExpander.php",
+            "snippet": "     * @return array<\\Generated\\Shared\\Transfer\\ItemTransfer>",
+            "selected_text": "array<\\Generated\\Shared\\Transfer\\ItemTransfer>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of array_merge expects array<array-key, mixed>, but array<Generated\\Shared\\Transfer\\ItemTransfer, mixed> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/Business/Expander/OrderExpander.php",
+            "snippet": "                $itemTransfers,",
+            "selected_text": "$itemTransfers",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "InvalidArgument",
+            "message": "Argument 2 of array_merge expects array<array-key, mixed>, but array<Generated\\Shared\\Transfer\\ItemTransfer, mixed> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/Business/Expander/OrderExpander.php",
+            "snippet": "                $orderTransfer->getItems()->getArrayCopy(),",
+            "selected_text": "$orderTransfer->getItems()->getArrayCopy()",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<Generated\\Shared\\Transfer\\ItemTransfer, mixed>' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>' for Spryker\\Zed\\SalesProductConnector\\Business\\Expander\\OrderExpander::extractItemTransfersFromOrderTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/Business/Expander/OrderExpander.php",
+            "snippet": "        return $itemTransfers;",
+            "selected_text": "$itemTransfers",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
             "line_from": 56,
             "line_to": 56,
             "type": "InvalidReturnType",
@@ -83,6 +131,18 @@
             "selected_text": "array_unique($productConcreteSkus)",
             "error_level": 6,
             "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 105,
+            "line_to": 105,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of ArrayObject::offsetGet expects Generated\\Shared\\Transfer\\ProductImageTransfer, but 0 provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/Persistence/Propel/Mapper/SalesOrderItemMetadataMapper.php",
+            "snippet": "        $productImageTransfer = $images->offsetGet(0);",
+            "selected_text": "0",
+            "error_level": 6,
+            "shortcode": 4
         }
     ],
     "warning": [
@@ -352,18 +412,6 @@
         },
         {
             "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/Business/Expander/OrderExpander.php",
-            "snippet": "                $orderTransfer->getItems()->getArrayCopy(),",
-            "selected_text": "getArrayCopy",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
             "line_from": 75,
             "line_to": 75,
             "type": "PossiblyNullArrayOffset",
@@ -373,18 +421,6 @@
             "selected_text": "$groupedItemTransfers",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/Business/Expander/OrderExpander.php",
-            "snippet": "            $orderTransfer->getItems()->exchangeArray(",
-            "selected_text": "exchangeArray",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -400,8 +436,8 @@
         },
         {
             "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
+            "line_from": 79,
+            "line_to": 79,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $popularityByIdProductAbstractAndInterval using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/Business/Expander/PopularityProductPageExpander.php",
@@ -433,78 +469,6 @@
             "selected_text": "$mappedProductConcreteTransfers",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\SalesProductConnector\\Business\\Model\\ItemMetadataHydrator::findMetadata cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/Business/Model/ItemMetadataHydrator.php",
-            "snippet": "            $metadata = $this->findMetadata($item->getIdSalesOrderItem());",
-            "selected_text": "$item->getIdSalesOrderItem()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\SalesProductConnector\\Business\\Model\\ProductIdHydrator::findConcreteProduct cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/Business/Model/ProductIdHydrator.php",
-            "snippet": "            $concreteProduct = $this->findConcreteProduct($item->getSku());",
-            "selected_text": "$item->getSku()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemMetadata::setSuperAttributes cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/Persistence/Propel/Mapper/SalesOrderItemMetadataMapper.php",
-            "snippet": "        $entity->setSuperAttributes($this->utilEncodingService->encodeJson($superAttributes));",
-            "selected_text": "$this->utilEncodingService->encodeJson($superAttributes)",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemMetadata::setFkSalesOrderItem cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/Persistence/Propel/Mapper/SalesOrderItemMetadataMapper.php",
-            "snippet": "        $entity->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());",
-            "selected_text": "$itemTransfer->getIdSalesOrderItem()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "ArgumentTypeCoercion",
-            "message": "Argument 1 of Spryker\\Zed\\SalesProductConnector\\Persistence\\Propel\\Mapper\\SalesOrderItemMetadataMapper::mapSalesOrderItemMetadataEntityCollectionToItemMetadataTransfers expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemMetadata>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemMetadata> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/Persistence/SalesProductConnectorRepository.php",
-            "snippet": "            ->mapSalesOrderItemMetadataEntityCollectionToItemMetadataTransfers($salesOrderItemMetadataQuery->find());",
-            "selected_text": "$salesOrderItemMetadataQuery->find()",
-            "error_level": 3,
-            "shortcode": 193
-        },
-        {
-            "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "ArgumentTypeCoercion",
-            "message": "Argument 1 of Spryker\\Zed\\SalesProductConnector\\Persistence\\Propel\\Mapper\\ProductMapper::mapProductEntityCollectionToRawProductConcreteTransfers expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\Product\\Persistence\\SpyProduct>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Product\\Persistence\\SpyProduct> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/Persistence/SalesProductConnectorRepository.php",
-            "snippet": "            ->mapProductEntityCollectionToRawProductConcreteTransfers($productQuery->find());",
-            "selected_text": "$productQuery->find()",
-            "error_level": 3,
-            "shortcode": 193
         }
     ],
     "deprecation": [
@@ -533,5 +497,5 @@
             "shortcode": 1
         }
     ],
-    "count": 44
+    "count": 41
 }

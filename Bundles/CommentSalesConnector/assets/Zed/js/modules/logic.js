@@ -3,7 +3,7 @@
 var scrollDownComments = function () {
     var commentWrapper = document.getElementsByClassName('comment-wrapper')[0];
 
-    if (!commentWrapper) {
+    if (!commentWrapper || window.location.hash) {
         return;
     }
 

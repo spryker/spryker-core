@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SalesProductConnector\Dependency\QueryContainer\ProductToSalesProductConnectorQueryContainerBridge;
 use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingBridge;
+use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilTextServiceBridge;
 
 /**
  * @method \Spryker\Zed\SalesProductConnector\SalesProductConnectorConfig getConfig()
@@ -21,6 +22,11 @@ class SalesProductConnectorDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     /**
      * @var string
@@ -52,6 +58,7 @@ class SalesProductConnectorDependencyProvider extends AbstractBundleDependencyPr
 
         $container = $this->addProductQueryContainer($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addUtilTextService($container);
 
         return $container;
     }
@@ -80,6 +87,22 @@ class SalesProductConnectorDependencyProvider extends AbstractBundleDependencyPr
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new SalesProductConnectorToUtilEncodingBridge(
                 $container->getLocator()->utilEncoding()->service(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilTextService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container): SalesProductConnectorToUtilTextServiceBridge {
+            return new SalesProductConnectorToUtilTextServiceBridge(
+                $container->getLocator()->utilText()->service(),
             );
         });
 

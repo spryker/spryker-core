@@ -78,4 +78,10 @@
             <p>{{ form_row(form.new_to) }}</p>
         {% endif %}
     {% endblock %}
+
+    {% block productAbstractType %}
+        {% if form.product_abstract_types is defined %}
+            {{ form_row(form.product_abstract_types) }}
+        {% endif %}
+    {% endblock %}
 {% endblock %}

@@ -11,6 +11,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadataQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface;
+use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilTextServiceInterface;
 use Spryker\Zed\SalesProductConnector\Persistence\Propel\Mapper\ProductMapper;
 use Spryker\Zed\SalesProductConnector\Persistence\Propel\Mapper\SalesOrderItemMetadataMapper;
 use Spryker\Zed\SalesProductConnector\SalesProductConnectorDependencyProvider;
@@ -46,6 +47,8 @@ class SalesProductConnectorPersistenceFactory extends AbstractPersistenceFactory
     {
         return new SalesOrderItemMetadataMapper(
             $this->getUtilEncodingService(),
+            $this->getConfig(),
+            $this->getUtilTextService(),
         );
     }
 
@@ -71,6 +74,14 @@ class SalesProductConnectorPersistenceFactory extends AbstractPersistenceFactory
     public function getUtilEncodingService(): SalesProductConnectorToUtilEncodingInterface
     {
         return $this->getProvidedDependency(SalesProductConnectorDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilTextServiceInterface
+     */
+    public function getUtilTextService(): SalesProductConnectorToUtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(SalesProductConnectorDependencyProvider::SERVICE_UTIL_TEXT);
     }
 
     /**

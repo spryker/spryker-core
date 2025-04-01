@@ -7,15 +7,73 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
+use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
+use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 {
+    /**
+     * @var array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormDataProviderExpanderPluginInterface>
+     */
+    protected $productAbstractFormDataProviderExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
+     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface $productImageFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface $priceProductFacade
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
+     * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocale
+     * @param array $taxCollection
+     * @param string $imageUrlPrefix
+     * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormDataProviderExpanderPluginInterface> $productAbstractFormDataProviderExpanderPlugins
+     */
+    public function __construct(
+        CategoryQueryContainerInterface $categoryQueryContainer,
+        ProductManagementQueryContainerInterface $productManagementQueryContainer,
+        ProductQueryContainerInterface $productQueryContainer,
+        StockQueryContainerInterface $stockQueryContainer,
+        ProductManagementToProductInterface $productFacade,
+        ProductManagementToProductImageInterface $productImageFacade,
+        ProductManagementToPriceProductInterface $priceProductFacade,
+        LocaleProvider $localeProvider,
+        LocaleTransfer $currentLocale,
+        array $taxCollection,
+        $imageUrlPrefix,
+        array $productAbstractFormDataProviderExpanderPlugins = []
+    ) {
+        parent::__construct(
+            $categoryQueryContainer,
+            $productManagementQueryContainer,
+            $productQueryContainer,
+            $stockQueryContainer,
+            $productFacade,
+            $productImageFacade,
+            $priceProductFacade,
+            $localeProvider,
+            $currentLocale,
+            $taxCollection,
+            $imageUrlPrefix,
+            null,
+            $productAbstractFormDataProviderExpanderPlugins,
+        );
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array|null $priceDimension
@@ -32,6 +90,23 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         $formData = $this->appendStoreRelation($productAbstractTransfer, $formData);
 
         $formData[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT] = $productAbstractTransfer->getIdProductAbstract();
+
+        return $this->executeProductAbstractFormDataProviderExpanderPlugins($formData, $productAbstractTransfer);
+    }
+
+    /**
+     * @param array<string, mixed> $formData
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return array<string, mixed>
+     */
+    protected function executeProductAbstractFormDataProviderExpanderPlugins(
+        array $formData,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): array {
+        foreach ($this->productAbstractFormDataProviderExpanderPlugins as $productAbstractFormDataProviderExpanderPlugin) {
+            $formData = $productAbstractFormDataProviderExpanderPlugin->expand($formData, $productAbstractTransfer);
+        }
 
         return $formData;
     }

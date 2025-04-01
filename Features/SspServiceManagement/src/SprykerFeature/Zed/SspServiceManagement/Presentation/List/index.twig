@@ -1,0 +1,14 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'List of Services' | trans %}
+
+{% block section_title 'Overview of Services' | trans %}
+{% block head_title 'Overview of Services' | trans %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            {{ serviceTable | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
