@@ -11,6 +11,9 @@ use Exception;
 use Spryker\Client\ShipmentTypeStorage\Dependency\Client\ShipmentTypeStorageToStorageClientInterface;
 use Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageConfig;
 
+/**
+ * @deprecated Exists for BC reasons. Will be removed in the next major release.
+ */
 class ShipmentTypeStorageKeyScanner implements ShipmentTypeStorageKeyScannerInterface
 {
     /**
@@ -19,28 +22,18 @@ class ShipmentTypeStorageKeyScanner implements ShipmentTypeStorageKeyScannerInte
     protected const DEFAULT_SCAN_KEY_PATTERN = 'shipment_type*uuid*';
 
     /**
-     * @var \Spryker\Client\ShipmentTypeStorage\Dependency\Client\ShipmentTypeStorageToStorageClientInterface
-     */
-    protected ShipmentTypeStorageToStorageClientInterface $storageClient;
-
-    /**
-     * @var \Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageConfig
-     */
-    protected ShipmentTypeStorageConfig $shipmentTypeStorageConfig;
-
-    /**
      * @param \Spryker\Client\ShipmentTypeStorage\Dependency\Client\ShipmentTypeStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageConfig $shipmentTypeStorageConfig
      */
     public function __construct(
-        ShipmentTypeStorageToStorageClientInterface $storageClient,
-        ShipmentTypeStorageConfig $shipmentTypeStorageConfig
+        protected ShipmentTypeStorageToStorageClientInterface $storageClient,
+        protected ShipmentTypeStorageConfig $shipmentTypeStorageConfig
     ) {
-        $this->storageClient = $storageClient;
-        $this->shipmentTypeStorageConfig = $shipmentTypeStorageConfig;
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @return list<string>
      */
     public function scanShipmentTypeUuids(): array

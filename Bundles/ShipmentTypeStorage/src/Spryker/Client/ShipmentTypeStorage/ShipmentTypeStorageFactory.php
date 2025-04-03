@@ -36,10 +36,13 @@ class ShipmentTypeStorageFactory extends AbstractFactory
             $this->getUtilEncodingService(),
             $this->createShipmentTypeStorageKeyScanner(),
             $this->getShipmentTypeStorageExpanderPlugins(),
+            $this->getSynchronizationService(),
         );
     }
 
     /**
+     * @deprecated Exists for BC reasons. Will be removed in the next major release.
+     *
      * @return \Spryker\Client\ShipmentTypeStorage\Scanner\ShipmentTypeStorageKeyScannerInterface
      */
     public function createShipmentTypeStorageKeyScanner(): ShipmentTypeStorageKeyScannerInterface

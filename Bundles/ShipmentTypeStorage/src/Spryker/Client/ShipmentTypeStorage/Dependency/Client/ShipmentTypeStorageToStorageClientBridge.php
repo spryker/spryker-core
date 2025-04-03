@@ -55,4 +55,14 @@ class ShipmentTypeStorageToStorageClientBridge implements ShipmentTypeStorageToS
     {
         return $this->storageClient->getKeys($pattern);
     }
+
+    /**
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function get(string $key): mixed
+    {
+        return $this->storageClient->get($key);
+    }
 }

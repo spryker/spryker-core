@@ -7,14 +7,18 @@
 
 namespace Spryker\Client\ShipmentTypeStorage\Reader;
 
+use Generated\Shared\Transfer\ShipmentTypeListStorageTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageConditionsTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageTransfer;
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ShipmentTypeStorage\Dependency\Client\ShipmentTypeStorageToStorageClientInterface;
+use Spryker\Client\ShipmentTypeStorage\Dependency\Service\ShipmentTypeStorageToSynchronizationServiceInterface;
 use Spryker\Client\ShipmentTypeStorage\Dependency\Service\ShipmentTypeStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ShipmentTypeStorage\Generator\ShipmentTypeStorageKeyGeneratorInterface;
 use Spryker\Client\ShipmentTypeStorage\Scanner\ShipmentTypeStorageKeyScannerInterface;
+use Spryker\Shared\ShipmentTypeStorage\ShipmentTypeStorageConfig as SharedShipmentTypeStorageConfig;
 
 class ShipmentTypeStorageReader implements ShipmentTypeStorageReaderInterface
 {
@@ -49,24 +53,32 @@ class ShipmentTypeStorageReader implements ShipmentTypeStorageReaderInterface
     protected array $shipmentTypeStorageExpanderPlugins;
 
     /**
+     * @var \Spryker\Client\ShipmentTypeStorage\Dependency\Service\ShipmentTypeStorageToSynchronizationServiceInterface
+     */
+    protected ShipmentTypeStorageToSynchronizationServiceInterface $synchronizationService;
+
+    /**
      * @param \Spryker\Client\ShipmentTypeStorage\Generator\ShipmentTypeStorageKeyGeneratorInterface $shipmentTypeStorageKeyGenerator
      * @param \Spryker\Client\ShipmentTypeStorage\Dependency\Client\ShipmentTypeStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ShipmentTypeStorage\Dependency\Service\ShipmentTypeStorageToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Client\ShipmentTypeStorage\Scanner\ShipmentTypeStorageKeyScannerInterface $shipmentTypeStorageKeyScanner
      * @param list<\Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface> $shipmentTypeStorageExpanderPlugins
+     * @param \Spryker\Client\ShipmentTypeStorage\Dependency\Service\ShipmentTypeStorageToSynchronizationServiceInterface $synchronizationService
      */
     public function __construct(
         ShipmentTypeStorageKeyGeneratorInterface $shipmentTypeStorageKeyGenerator,
         ShipmentTypeStorageToStorageClientInterface $storageClient,
         ShipmentTypeStorageToUtilEncodingServiceInterface $utilEncodingService,
         ShipmentTypeStorageKeyScannerInterface $shipmentTypeStorageKeyScanner,
-        array $shipmentTypeStorageExpanderPlugins
+        array $shipmentTypeStorageExpanderPlugins,
+        ShipmentTypeStorageToSynchronizationServiceInterface $synchronizationService
     ) {
         $this->shipmentTypeStorageKeyGenerator = $shipmentTypeStorageKeyGenerator;
         $this->storageClient = $storageClient;
         $this->utilEncodingService = $utilEncodingService;
         $this->shipmentTypeStorageKeyScanner = $shipmentTypeStorageKeyScanner;
         $this->shipmentTypeStorageExpanderPlugins = $shipmentTypeStorageExpanderPlugins;
+        $this->synchronizationService = $synchronizationService;
     }
 
     /**
@@ -120,10 +132,39 @@ class ShipmentTypeStorageReader implements ShipmentTypeStorageReaderInterface
     protected function getShipmentTypeStorageByStore(string $storeName): ShipmentTypeStorageCollectionTransfer
     {
         $shipmentTypeStorageConditionsTransfer = (new ShipmentTypeStorageConditionsTransfer())
-            ->setUuids($this->shipmentTypeStorageKeyScanner->scanShipmentTypeUuids())
+            ->setUuids($this->getShipmentTypeUuids($storeName))
             ->setStoreName($storeName);
 
         return $this->getShipmentTypeStorageByUuids($shipmentTypeStorageConditionsTransfer);
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return array<string>
+     */
+    protected function getShipmentTypeUuids(string $storeName): array
+    {
+        $shipmentTypeList = $this->storageClient->get(
+            $this->generateKey($storeName),
+        );
+
+        return $shipmentTypeList[ShipmentTypeListStorageTransfer::UUIDS] ?? $this->shipmentTypeStorageKeyScanner->scanShipmentTypeUuids();
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return string
+     */
+    protected function generateKey(string $storeName): string
+    {
+        $synchronizationDataTransfer = new SynchronizationDataTransfer();
+        $synchronizationDataTransfer->setStore($storeName);
+
+        return $this->synchronizationService
+            ->getStorageKeyBuilder(SharedShipmentTypeStorageConfig::SHIPMENT_TYPE_LIST_RESOURCE_NAME)
+            ->generateKey($synchronizationDataTransfer);
     }
 
     /**

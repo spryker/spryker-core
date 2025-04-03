@@ -76,7 +76,7 @@ class LocaleStoreStoragePublisherTest extends Unit
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
 
         $this->tester->setDependency(StoreDependencyProvider::STORE, $this->getStoreToStoreInterface());
-        $this->tester->setDependency(StoreDependencyProvider::SERVICE_STORE, $storeTransfer);
+        $this->tester->setDependency(StoreDependencyProvider::SERVICE_STORE, $storeTransfer->getName());
 
         $eventTransfers = [
             (new EventEntityTransfer())

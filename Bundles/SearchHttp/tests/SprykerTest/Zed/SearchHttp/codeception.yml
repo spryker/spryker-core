@@ -26,3 +26,9 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
                 - \SprykerTest\Zed\SearchHttp\Helper\SearchHttpBusinessHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper
+                - \SprykerTest\Client\RabbitMq\Helper\RabbitMqHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
+                - \SprykerTest\Client\Testify\Helper\ConfigHelper

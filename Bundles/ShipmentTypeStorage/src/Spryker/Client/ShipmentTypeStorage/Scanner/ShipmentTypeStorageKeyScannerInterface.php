@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\ShipmentTypeStorage\Scanner;
 
+/**
+ * @deprecated Exists for BC reasons. Will be removed in the next major release.
+ */
 interface ShipmentTypeStorageKeyScannerInterface
 {
     /**

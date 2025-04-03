@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ShipmentTypeStorageTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
+use Orm\Zed\ShipmentTypeStorage\Persistence\SpyShipmentTypeListStorageQuery;
 use Orm\Zed\ShipmentTypeStorage\Persistence\SpyShipmentTypeStorage;
 use Orm\Zed\ShipmentTypeStorage\Persistence\SpyShipmentTypeStorageQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
@@ -92,6 +93,7 @@ class ShipmentTypeStorageBusinessTester extends Actor
     public function ensureShipmentTypeStorageTableIsEmpty(): void
     {
         $this->getShipmentTypeStorageQuery()->deleteAll();
+        $this->getShipmentTypeListStorageQuery()->deleteAll();
     }
 
     /**
@@ -106,6 +108,14 @@ class ShipmentTypeStorageBusinessTester extends Actor
      * @return int
      */
     public function getShipmentTypeStorageEntitiesCount(): int
+    {
+        return $this->getShipmentTypeStorageQuery()->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function getShipmentTypeListStorageEntitiesCount(): int
     {
         return $this->getShipmentTypeStorageQuery()->count();
     }
@@ -238,6 +248,14 @@ class ShipmentTypeStorageBusinessTester extends Actor
     protected function getShipmentTypeStorageQuery(): SpyShipmentTypeStorageQuery
     {
         return SpyShipmentTypeStorageQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ShipmentTypeStorage\Persistence\SpyShipmentTypeListStorageQuery
+     */
+    protected function getShipmentTypeListStorageQuery(): SpyShipmentTypeListStorageQuery
+    {
+        return SpyShipmentTypeListStorageQuery::create();
     }
 
     /**

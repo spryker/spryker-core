@@ -10,6 +10,7 @@ namespace SprykerTest\Client\ShipmentTypeStorage;
 use Codeception\Test\Unit;
 use Exception;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTypeListStorageTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageConditionsTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageCriteriaTransfer;
@@ -118,6 +119,44 @@ class ShipmentTypeStorageClientTest extends Unit
 
         // Act
         $this->tester->getClient()->getShipmentTypeStorageCollection($shipmentTypeStorageCriteriaTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetShipmentTypeStorageCollectionReturnsCollectionFilteredByStoreNameToAvoidScanAndUseGet(): void
+    {
+        // Arrange
+        $storageClientMock = $this->createStorageClientMock();
+        $storageClientMock->expects($this->never())->method('getKeys');
+        $storageClientMock->expects($this->never())->method('scanKeys');
+        $storageClientMock->method('getMulti')->willReturn([
+            'fake_storage_key_1' => [
+                static::KEY_ID => static::TEST_ID_SHIPMENT_TYPE,
+                ShipmentTypeStorageTransfer::ID_SHIPMENT_TYPE => static::TEST_ID_SHIPMENT_TYPE,
+            ],
+            'fake_storage_key_2' => [
+                static::KEY_ID => static::TEST_ID_SHIPMENT_TYPE,
+                ShipmentTypeStorageTransfer::ID_SHIPMENT_TYPE => static::TEST_ID_SHIPMENT_TYPE,
+            ],
+        ]);
+        $storageClientMock->method('get')->willReturn(
+            (new ShipmentTypeListStorageTransfer())->setUuids(['fake_storage_key_1', 'fake_storage_key_2'])->toArray(),
+        );
+
+        $this->tester->setDependency(ShipmentTypeStorageDependencyProvider::CLIENT_STORAGE, $storageClientMock);
+        $shipmentTypeStorageCriteriaTransfer = (new ShipmentTypeStorageCriteriaTransfer())->setShipmentTypeStorageConditions(
+            (new ShipmentTypeStorageConditionsTransfer())
+                ->setStoreName(static::STORE_NAME_DE),
+        );
+
+        // Act
+        $shipmentTypeStorageCollectionTransfer = $this->tester
+            ->getClient()
+            ->getShipmentTypeStorageCollection($shipmentTypeStorageCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $shipmentTypeStorageCollectionTransfer->getShipmentTypeStorages());
     }
 
     /**

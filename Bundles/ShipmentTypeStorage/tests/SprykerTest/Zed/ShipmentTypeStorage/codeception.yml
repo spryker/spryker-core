@@ -29,6 +29,12 @@ suites:
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentCarrierDataHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper
+                - \SprykerTest\Client\RabbitMq\Helper\RabbitMqHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
+                - \SprykerTest\Client\Testify\Helper\ConfigHelper
     Communication:
         path: Communication
         actor: ShipmentTypeStorageCommunicationTester
@@ -40,5 +46,13 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\ShipmentType\Helper\ShipmentTypeHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper
+                - \SprykerTest\Client\RabbitMq\Helper\RabbitMqHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
+                - \SprykerTest\Client\Testify\Helper\ConfigHelper

@@ -25,3 +25,5 @@ suites:
                 - \SprykerTest\Client\Testify\Helper\ClientHelper
                 - \SprykerTest\Client\Testify\Helper\DependencyProviderHelper
                 - \SprykerTest\Client\Storage\Helper\StorageHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper

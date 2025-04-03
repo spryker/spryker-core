@@ -87,6 +87,7 @@ class WriteShipmentTypeStorageCollectionByShipmentTypeEventsTest extends Unit
 
         // Assert
         $this->assertSame(0, $this->tester->getShipmentTypeStorageEntitiesCount());
+        $this->assertSame(0, $this->tester->getShipmentTypeListStorageEntitiesCount());
     }
 
     /**
@@ -107,6 +108,7 @@ class WriteShipmentTypeStorageCollectionByShipmentTypeEventsTest extends Unit
 
         // Assert
         $this->assertSame(0, $this->tester->getShipmentTypeStorageEntitiesCount());
+        $this->assertSame(0, $this->tester->getShipmentTypeListStorageEntitiesCount());
     }
 
     /**
@@ -125,6 +127,7 @@ class WriteShipmentTypeStorageCollectionByShipmentTypeEventsTest extends Unit
 
         // Assert
         $this->assertSame(0, $this->tester->getShipmentTypeStorageEntitiesCount());
+        $this->assertSame(0, $this->tester->getShipmentTypeListStorageEntitiesCount());
     }
 
     /**
@@ -149,6 +152,7 @@ class WriteShipmentTypeStorageCollectionByShipmentTypeEventsTest extends Unit
 
         // Assert
         $this->assertSame(0, $this->tester->getShipmentTypeStorageEntitiesCount());
+        $this->assertSame(0, $this->tester->getShipmentTypeListStorageEntitiesCount());
     }
 
     /**

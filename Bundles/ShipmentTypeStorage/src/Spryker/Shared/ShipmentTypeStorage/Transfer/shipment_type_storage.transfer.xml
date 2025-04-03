@@ -13,6 +13,10 @@
         <property name="shipmentMethodIds" type="int[]" singular="idShipmentMethod"/>
     </transfer>
 
+    <transfer name="ShipmentTypeListStorage" strict="true">
+        <property name="uuids" type="array" singular="uuid"/>
+    </transfer>
+
     <transfer name="ShipmentTypeStorageCriteria" strict="true">
         <property name="shipmentTypeStorageConditions" type="ShipmentTypeStorageConditions"/>
     </transfer>
@@ -26,6 +30,7 @@
     <transfer name="ShipmentType" strict="true">
         <property name="storeRelation" type="StoreRelation"/>
         <property name="idShipmentType" type="int"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="ShipmentTypeCollection" strict="true">

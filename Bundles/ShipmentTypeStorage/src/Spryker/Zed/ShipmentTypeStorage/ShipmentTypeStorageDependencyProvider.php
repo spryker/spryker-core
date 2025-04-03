@@ -10,6 +10,7 @@ namespace Spryker\Zed\ShipmentTypeStorage;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToPropelFacadeBridge;
 use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToShipmentFacadeBridge;
 use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToShipmentTypeFacadeBridge;
 use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToStoreFacadeBridge;
@@ -45,6 +46,11 @@ class ShipmentTypeStorageDependencyProvider extends AbstractBundleDependencyProv
     public const PLUGINS_SHIPMENT_TYPE_STORAGE_EXPANDER = 'PLUGINS_SHIPMENT_TYPE_STORAGE_EXPANDER';
 
     /**
+     * @var string
+     */
+    public const FACADE_PROPEL = 'FACADE_PROPEL';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -53,6 +59,19 @@ class ShipmentTypeStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addShipmentTypeFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addPropelFacade($container);
 
         return $container;
     }
@@ -158,5 +177,21 @@ class ShipmentTypeStorageDependencyProvider extends AbstractBundleDependencyProv
     protected function getShipmentTypeStorageExpanderPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPropelFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PROPEL, function (Container $container) {
+            return new ShipmentTypeStorageToPropelFacadeBridge(
+                $container->getLocator()->propel()->facade(),
+            );
+        });
+
+        return $container;
     }
 }

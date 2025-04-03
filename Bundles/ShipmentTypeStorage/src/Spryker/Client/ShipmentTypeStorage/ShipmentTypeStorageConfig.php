@@ -18,9 +18,11 @@ class ShipmentTypeStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Restricts the number of scan keys due to performance reasons.
+     *  - Restricts the number of scan keys due to performance reasons.
      *
      * @api
+     *
+     * @deprecated Exists for BC reasons. Will be removed in the next major release.
      *
      * @return int
      */

@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\Country\Persistence\Map\SpyCountryStoreTableMap;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
-use Spryker\Client\Store\StoreDependencyProvider;
-use Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface;
 use Spryker\Shared\StoreStorage\StoreStorageConfig;
 use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\CountryStore\CountryStoreWritePublisherPlugin;
 
@@ -77,9 +75,6 @@ class CountryStoreStoragePublisherTest extends Unit
     public function testStoreCountryWritePublisherStoreData(): void
     {
         // Arrange
-        $this->tester->setDependency(StoreDependencyProvider::STORE, $this->getStoreToStoreInterface());
-        $this->tester->setDependency(StoreDependencyProvider::SERVICE_STORE, static::STORE_NAME);
-
         $eventTransfers = [
             (new EventEntityTransfer())
                 ->setForeignKeys([
@@ -97,16 +92,5 @@ class CountryStoreStoragePublisherTest extends Unit
         $this->assertArrayHasKey(static::DATA_KEY_STORE_NAME, $storeStorageEntity->getData());
         $this->assertSame(static::STORE_ID, $storeStorageEntity->getData()[static::DATA_KEY_ID_STORE]);
         $this->assertSame(static::STORE_NAME, $storeStorageEntity->getData()[static::DATA_KEY_STORE_NAME]);
-    }
-
-    /**
-     * @return \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface
-     */
-    protected function getStoreToStoreInterface(): StoreToStoreInterface
-    {
-        $storeToStoreInterfaceMock = $this->getMockBuilder(StoreToStoreInterface::class)->getMock();
-        $storeToStoreInterfaceMock->method('getAvailableLocaleIsoCodesFor')->willReturn([$this->tester::LOCALE_DE]);
-
-        return $storeToStoreInterfaceMock;
     }
 }

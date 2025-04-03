@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ShipmentMethodCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeConditionsTransfer;
 use Generated\Shared\Transfer\ShipmentTypeCriteriaTransfer;
+use Generated\Shared\Transfer\ShipmentTypeListStorageTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\StoreCriteriaTransfer;
 use Spryker\Zed\ShipmentTypeStorage\Business\Expander\ShipmentTypeStorageExpanderInterface;
@@ -240,6 +241,7 @@ class ShipmentTypeStorageWriter implements ShipmentTypeStorageWriterInterface
             );
             $this->writeShipmentTypeStorageTransfersForStore($shipmentTypeStorageTransfers, $storeName);
         }
+        $this->updateShipmentTypeListStorage();
     }
 
     /**
@@ -333,5 +335,38 @@ class ShipmentTypeStorageWriter implements ShipmentTypeStorageWriterInterface
         }
 
         return array_unique($shipmentTypeIds);
+    }
+
+    /**
+     * @return void
+     */
+    protected function updateShipmentTypeListStorage(): void
+    {
+        if (!$this->shipmentTypeStorageEntityManager->isShipmentTypeListStorageTableExists()) {
+            return;
+        }
+
+        $shipmentTypeCollectionTransfer = $this->shipmentTypeFacade->getShipmentTypeCollection($this->createShipmentTypeCriteriaTransfer([]));
+
+        $uuidsGroupedByStoreName = [];
+        foreach ($shipmentTypeCollectionTransfer->getShipmentTypes() as $shipmentTypeTransfer) {
+            if (!$shipmentTypeTransfer->getStoreRelation()) {
+                continue;
+            }
+
+            foreach ($shipmentTypeTransfer->getStoreRelation()->getStores() as $store) {
+                if (!isset($uuidsGroupedByStoreName[$store->getName()])) {
+                    $uuidsGroupedByStoreName[$store->getName()] = [];
+                }
+                $uuidsGroupedByStoreName[$store->getName()][] = $shipmentTypeTransfer->getUuid();
+            }
+        }
+
+        foreach ($uuidsGroupedByStoreName as $storeName => $uuids) {
+            $this->shipmentTypeStorageEntityManager->saveShipmentTypeListStorage(
+                (new ShipmentTypeListStorageTransfer())->setUuids($uuids),
+                $storeName,
+            );
+        }
     }
 }

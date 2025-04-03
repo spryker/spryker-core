@@ -35,4 +35,11 @@ interface ShipmentTypeStorageToStorageClientInterface
      * @return array<string, string|null>
      */
     public function getKeys(string $pattern): array;
+
+    /**
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function get(string $key): mixed;
 }

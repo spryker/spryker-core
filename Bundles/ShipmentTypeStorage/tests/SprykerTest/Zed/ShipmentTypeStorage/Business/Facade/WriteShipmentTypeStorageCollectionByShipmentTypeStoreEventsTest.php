@@ -68,10 +68,11 @@ class WriteShipmentTypeStorageCollectionByShipmentTypeStoreEventsTest extends Un
     public function testPersistsShipmentTypeStorageData(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore();
+        $storeTransferDe = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeTransferAt = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
         $shipmentTypeTransfer = $this->tester->haveShipmentType([
             ShipmentTypeTransfer::IS_ACTIVE => true,
-            ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
+            ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransferDe)->addStores($storeTransferAt),
         ]);
         $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
             static::COL_FK_SHIPMENT_TYPE => $shipmentTypeTransfer->getIdShipmentTypeOrFail(),
@@ -81,9 +82,22 @@ class WriteShipmentTypeStorageCollectionByShipmentTypeStoreEventsTest extends Un
         $this->tester->getFacade()->writeShipmentTypeStorageCollectionByShipmentTypeStoreEvents([$eventEntityTransfer]);
 
         // Assert
+        $this->assertSame(2, $this->tester->getShipmentTypeStorageEntitiesCount());
+        $this->assertSame(2, $this->tester->getShipmentTypeListStorageEntitiesCount());
+
         $shipmentTypeStorageTransfer = $this->tester->findShipmentTypeStorageTransfer(
             $shipmentTypeTransfer->getIdShipmentTypeOrFail(),
-            $storeTransfer->getNameOrFail(),
+            $storeTransferDe->getNameOrFail(),
+        );
+        $this->assertNotNull($shipmentTypeStorageTransfer);
+        $this->assertSame($shipmentTypeTransfer->getNameOrFail(), $shipmentTypeStorageTransfer->getName());
+        $this->assertSame($shipmentTypeTransfer->getKeyOrFail(), $shipmentTypeStorageTransfer->getKey());
+        $this->assertSame($shipmentTypeTransfer->getUuidOrFail(), $shipmentTypeStorageTransfer->getUuid());
+        $this->assertSame($shipmentTypeTransfer->getIdShipmentTypeOrFail(), $shipmentTypeStorageTransfer->getIdShipmentType());
+
+        $shipmentTypeStorageTransfer = $this->tester->findShipmentTypeStorageTransfer(
+            $shipmentTypeTransfer->getIdShipmentTypeOrFail(),
+            $storeTransferAt->getNameOrFail(),
         );
         $this->assertNotNull($shipmentTypeStorageTransfer);
         $this->assertSame($shipmentTypeTransfer->getNameOrFail(), $shipmentTypeStorageTransfer->getName());
@@ -118,6 +132,7 @@ class WriteShipmentTypeStorageCollectionByShipmentTypeStoreEventsTest extends Un
 
         // Assert
         $this->assertSame(1, $this->tester->getShipmentTypeStorageEntitiesCount());
+        $this->assertSame(1, $this->tester->getShipmentTypeListStorageEntitiesCount());
         $shipmentTypeStorageTransfer = $this->tester->findShipmentTypeStorageTransfer(
             $shipmentTypeTransfer->getIdShipmentTypeOrFail(),
             $storeTransferDe->getNameOrFail(),

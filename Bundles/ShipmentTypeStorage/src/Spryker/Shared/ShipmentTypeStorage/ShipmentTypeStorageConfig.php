@@ -170,4 +170,14 @@ class ShipmentTypeStorageConfig extends AbstractBundleConfig
      * @var string
      */
     public const SHIPMENT_TYPE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.shipment_type.error';
+
+    /**
+     * Specification:
+     * - Defines resource name, that will be used for key generation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const SHIPMENT_TYPE_LIST_RESOURCE_NAME = 'shipment_type_list';
 }

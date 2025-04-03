@@ -18,4 +18,12 @@ interface ShipmentTypeStorageRepositoryInterface
      * @return list<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getShipmentTypeStorageSynchronizationDataTransfers(FilterTransfer $filterTransfer, array $shipmentTypeIds = []): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param list<int> $shipmentTypeListIds
+     *
+     * @return list<\Generated\Shared\Transfer\SynchronizationDataTransfer>
+     */
+    public function getShipmentTypeListStorageSynchronizationDataTransfers(FilterTransfer $filterTransfer, array $shipmentTypeListIds = []): array;
 }
