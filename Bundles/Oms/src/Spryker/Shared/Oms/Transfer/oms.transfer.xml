@@ -148,6 +148,7 @@
     </transfer>
 
     <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="ShipmentCarrier">

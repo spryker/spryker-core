@@ -104,7 +104,9 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
         $originalLastStateChange = $salesOrderItemEntity->getLastStateChange();
 
         $salesOrderItemEntity->fromArray($salesOrderItemEntityTransfer->toArray());
-        $salesOrderItemEntity->setFkOmsOrderProcess($salesOrderItemEntityTransfer->getProcess()->getIdOmsOrderProcess());
+        if ($salesOrderItemEntityTransfer->getProcess() && $salesOrderItemEntityTransfer->getProcess()->getIdOmsOrderProcess()) {
+            $salesOrderItemEntity->setFkOmsOrderProcess($salesOrderItemEntityTransfer->getProcess()->getIdOmsOrderProcess());
+        }
 
         if ($originalLastStateChange !== null && $salesOrderItemEntityTransfer->getLastStateChange() === null) {
             $salesOrderItemEntity->setLastStateChange($originalLastStateChange);

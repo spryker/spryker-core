@@ -9,9 +9,11 @@ namespace SprykerTest\Zed\Sales\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OmsOrderItemStateTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
+use Orm\Zed\Oms\Persistence\Base\SpyOmsOrderItemState;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
@@ -134,15 +136,32 @@ class SaveSalesOrderItemsTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testShouldExecuteOrderItemInitialStateProviderPluginStack(): void
+    {
+        // Assert
+        $omsOrderItemStateEntity = $this->tester->createInitialState();
+        $this->tester->setDependency(
+            SalesDependencyProvider::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER,
+            [$this->getOrderItemInitialStateProviderPluginMock($omsOrderItemStateEntity)],
+        );
+
+        // Arrange
+        $saveOrderTransfer = new SaveOrderTransfer();
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
+        $this->salesFacade->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
+
+        // Act
+        $this->salesFacade->saveSalesOrderItems($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
      * @return array<string, array<string, \PHPUnit\Framework\MockObject\MockObject>>
      */
     public function saveSalesOrderItemsPluginProvider(): array
     {
         return [
-            'order item initial state provider plugin stack' => [
-                SalesDependencyProvider::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER,
-                $this->getOrderItemInitialStateProviderPluginMock(),
-            ],
             'order item expander pre save plugin stack' => [
                 SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS,
                 $this->getOrderItemExpanderPreSavePluginMock(),
@@ -155,17 +174,21 @@ class SaveSalesOrderItemsTest extends Unit
     }
 
     /**
+     * @param \Orm\Zed\Oms\Persistence\Base\SpyOmsOrderItemState $omsOrderItemStateEntity
+     *
      * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemInitialStateProviderPluginInterface
      */
-    protected function getOrderItemInitialStateProviderPluginMock(): OrderItemInitialStateProviderPluginInterface
-    {
+    protected function getOrderItemInitialStateProviderPluginMock(
+        SpyOmsOrderItemState $omsOrderItemStateEntity
+    ): OrderItemInitialStateProviderPluginInterface {
         $orderItemInitialStateProviderPluginMock = $this
             ->getMockBuilder(OrderItemInitialStateProviderPluginInterface::class)
             ->getMock();
 
         $orderItemInitialStateProviderPluginMock
             ->expects($this->once())
-            ->method('getInitialItemState');
+            ->method('getInitialItemState')
+            ->willReturn((new OmsOrderItemStateTransfer())->fromArray($omsOrderItemStateEntity->toArray(), true));
 
         return $orderItemInitialStateProviderPluginMock;
     }

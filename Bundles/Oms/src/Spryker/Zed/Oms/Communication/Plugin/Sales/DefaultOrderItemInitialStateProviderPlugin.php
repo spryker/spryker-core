@@ -24,6 +24,7 @@ class DefaultOrderItemInitialStateProviderPlugin extends AbstractPlugin implemen
     /**
      * {@inheritDoc}
      * - Returns initial oms order item state for order items.
+     * - Returns null if any item in quote has `idSalesOrderItem`.
      *
      * @api
      *
@@ -36,6 +37,12 @@ class DefaultOrderItemInitialStateProviderPlugin extends AbstractPlugin implemen
         QuoteTransfer $quoteTransfer,
         SaveOrderTransfer $saveOrderTransfer
     ): ?OmsOrderItemStateTransfer {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getIdSalesOrderItem()) {
+                return null;
+            }
+        }
+
         return $this->getFacade()->getOmsOrderItemState($this->getConfig()->getInitialStatus());
     }
 }

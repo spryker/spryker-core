@@ -165,13 +165,16 @@ class OrderItemsSaver implements OrderItemsSaverInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyOmsOrderItemStateEntityTransfer
+     * @return \Generated\Shared\Transfer\SpyOmsOrderItemStateEntityTransfer|null
      */
     protected function getInitialStateEntityTransfer(
         QuoteTransfer $quoteTransfer,
         SaveOrderTransfer $saveOrderTransfer
-    ): SpyOmsOrderItemStateEntityTransfer {
+    ): ?SpyOmsOrderItemStateEntityTransfer {
         $omsOrderItemStateTransfer = $this->executeOrderItemInitialStateProviderPlugins($quoteTransfer, $saveOrderTransfer);
+        if (!$omsOrderItemStateTransfer && count($this->getOrderItemInitialStateProviderPlugins($quoteTransfer))) {
+            return null;
+        }
 
         // For BC reasons, if no plugin is registered, we use the default state
         if (!$omsOrderItemStateTransfer) {
@@ -210,7 +213,7 @@ class OrderItemsSaver implements OrderItemsSaverInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\SpyOmsOrderItemStateEntityTransfer $initialStateEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyOmsOrderItemStateEntityTransfer|null $initialStateEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
@@ -219,7 +222,7 @@ class OrderItemsSaver implements OrderItemsSaverInterface
         QuoteTransfer $quoteTransfer,
         SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
         ItemTransfer $itemTransfer,
-        SpyOmsOrderItemStateEntityTransfer $initialStateEntityTransfer
+        ?SpyOmsOrderItemStateEntityTransfer $initialStateEntityTransfer
     ): SpySalesOrderItemEntityTransfer {
         $processEntityTransfer = $this->getProcessEntityTransfer($quoteTransfer, $itemTransfer);
         $sanitizedItemTransfer = $this->sanitizeItemSumPrices(clone $itemTransfer);
@@ -227,7 +230,6 @@ class OrderItemsSaver implements OrderItemsSaverInterface
         $salesOrderItemEntityTransfer->fromArray($itemTransfer->toArray(), true);
         $salesOrderItemEntityTransfer->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
         $salesOrderItemEntityTransfer->setFkSalesShipment($sanitizedItemTransfer->getShipment()->getIdSalesShipment());
-        $salesOrderItemEntityTransfer->setFkOmsOrderItemState($initialStateEntityTransfer->getIdOmsOrderItemState());
         $salesOrderItemEntityTransfer->setGrossPrice($sanitizedItemTransfer->getSumGrossPrice());
         $salesOrderItemEntityTransfer->setNetPrice($sanitizedItemTransfer->getSumNetPrice());
         $salesOrderItemEntityTransfer->setPrice($sanitizedItemTransfer->getSumPrice());
@@ -241,7 +243,11 @@ class OrderItemsSaver implements OrderItemsSaverInterface
         $salesOrderItemEntityTransfer->setDiscountAmountFullAggregation($sanitizedItemTransfer->getSumDiscountAmountFullAggregation());
         $salesOrderItemEntityTransfer->setRefundableAmount($itemTransfer->getRefundableAmount());
         $salesOrderItemEntityTransfer->setProcess($processEntityTransfer);
-        $salesOrderItemEntityTransfer->setState($initialStateEntityTransfer);
+
+        if ($initialStateEntityTransfer) {
+            $salesOrderItemEntityTransfer->setFkOmsOrderItemState($initialStateEntityTransfer->getIdOmsOrderItemState());
+            $salesOrderItemEntityTransfer->setState($initialStateEntityTransfer);
+        }
 
         return $salesOrderItemEntityTransfer;
     }
@@ -331,10 +337,7 @@ class OrderItemsSaver implements OrderItemsSaverInterface
         QuoteTransfer $quoteTransfer,
         SaveOrderTransfer $saveOrderTransfer
     ): ?OmsOrderItemStateTransfer {
-        $quoteProcessFlowName = $quoteTransfer->getQuoteProcessFlow()?->getNameOrFail();
-        $orderItemInitialStateProviderPlugins = $this->orderItemInitialStateProviderPluginStrategyResolver->get($quoteProcessFlowName);
-
-        foreach ($orderItemInitialStateProviderPlugins as $orderItemInitialStateProviderPlugin) {
+        foreach ($this->getOrderItemInitialStateProviderPlugins($quoteTransfer) as $orderItemInitialStateProviderPlugin) {
             $omsOrderItemStateTransfer = $orderItemInitialStateProviderPlugin->getInitialItemState($quoteTransfer, $saveOrderTransfer);
 
             if ($omsOrderItemStateTransfer) {
@@ -343,5 +346,17 @@ class OrderItemsSaver implements OrderItemsSaverInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemInitialStateProviderPluginInterface>
+     */
+    protected function getOrderItemInitialStateProviderPlugins(QuoteTransfer $quoteTransfer): array
+    {
+        $quoteProcessFlowName = $quoteTransfer->getQuoteProcessFlow()?->getNameOrFail();
+
+        return $this->orderItemInitialStateProviderPluginStrategyResolver->get($quoteProcessFlowName);
     }
 }
