@@ -79,12 +79,11 @@ class Address implements AddressInterface
     {
         $customerEntity = $this->getCustomerFromAddressTransfer($addressTransfer);
 
-        $addressEntity = $this->createCustomerAddress($addressTransfer, $customerEntity);
-        $addressTransfer->setIdCustomerAddress($addressEntity->getIdCustomerAddress());
+        $addressTransfer = $this->getOrCreateCustomerAddress($addressTransfer, $customerEntity);
 
         $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity);
 
-        return $this->entityToAddressTransfer($addressEntity);
+        return $addressTransfer;
     }
 
     /**
@@ -565,7 +564,7 @@ class Address implements AddressInterface
         try {
             $customerEntity = $this->getCustomerFromAddressTransfer($addressTransfer);
 
-            $addressEntity = $this->createCustomerAddress($addressTransfer, $customerEntity);
+            $addressEntity = $this->getOrCreateCustomerAddress($addressTransfer, $customerEntity);
             $addressTransfer->setIdCustomerAddress($addressEntity->getIdCustomerAddress());
 
             $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity);
@@ -600,14 +599,24 @@ class Address implements AddressInterface
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddress
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function createCustomerAddress(AddressTransfer $addressTransfer, SpyCustomer $customer)
+    protected function getOrCreateCustomerAddress(AddressTransfer $addressTransfer, SpyCustomer $customer): AddressTransfer
     {
+        $addressEntity = new SpyCustomerAddress();
+
+        $existingAddress = $this->findCustomerAddressByAddressData($addressTransfer);
+
+        // When the same address already exists do not create a new one and return the existing one.
+        // This covers the case of prePayments (payment is created before the order is placed) made where the Payment Service Provider (PSP)
+        // returns the address. To prevent duplicates of such addresses, we return the existing one.
+        if ($existingAddress !== null) {
+            return $existingAddress;
+        }
+
         $addressTransfer->setUuid(null);
         $addressTransfer->setIdCustomerAddress(null);
 
-        $addressEntity = new SpyCustomerAddress();
         $addressEntity->fromArray($addressTransfer->toArray());
 
         $fkCountry = $this->retrieveFkCountry($addressTransfer);
@@ -616,7 +625,7 @@ class Address implements AddressInterface
         $addressEntity->setCustomer($customer);
         $addressEntity->save();
 
-        return $addressEntity;
+        return $addressTransfer->fromArray($addressEntity->toArray(), true);
     }
 
     /**

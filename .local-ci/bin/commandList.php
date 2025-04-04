@@ -3,9 +3,16 @@
 return [
     'CodeStyleSniffer' => [
         'hasModule' => true,
+        'hasFixCommand' => true,
         'command' => [
             'vendor/bin/console',
             'c:s:s',
+            '-m',
+        ],
+        'fixCommand' => [
+            'vendor/bin/console',
+            'c:s:s',
+            '-f', // Runs the fix command of the CS fixer
             '-m',
         ],
     ],

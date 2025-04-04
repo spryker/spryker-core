@@ -57,6 +57,7 @@ class CustomerMapper implements CustomerMapperInterface
 
         /** @var \Orm\Zed\Country\Persistence\SpyCountry|null $countryEntity */
         $countryEntity = $customerAddressEntity->getCountry();
+
         if ($countryEntity === null) {
             return $addressTransfer;
         }

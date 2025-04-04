@@ -18,9 +18,11 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Propel\PropelFilterCriteria;
@@ -73,29 +75,53 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
      */
     public function findAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer
     {
-        /** @var \Orm\Zed\Customer\Persistence\SpyCustomerAddress|null $addressEntity */
-        $addressEntity = $this->getFactory()
+        /** @var \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery $customerAddressQuery */
+        $customerAddressQuery = $this->getFactory()
             ->createSpyCustomerAddressQuery()
             ->filterByFkCustomer($addressTransfer->getFkCustomer())
-            ->filterByFirstName($addressTransfer->getFirstName())
-            ->filterByLastName($addressTransfer->getLastName())
-            ->filterByAddress1($addressTransfer->getAddress1())
-            ->filterByAddress2($addressTransfer->getAddress2())
-            ->filterByAddress3($addressTransfer->getAddress3())
-            ->filterByZipCode($addressTransfer->getZipCode())
-            ->filterByCity($addressTransfer->getCity())
-            ->filterByPhone($addressTransfer->getPhone())
-            ->useCountryQuery()
-            ->filterByIso2Code($addressTransfer->getIso2Code())
-            ->endUse()
-            ->findOne();
-        if ($addressEntity === null) {
+            ->joinWithCountry();
+
+        $customerAddressEntities = $customerAddressQuery->find();
+
+        $customerAddressEntity = $this->getExistingAddressByAddress($customerAddressEntities, $addressTransfer);
+
+        if ($customerAddressEntity === null) {
             return null;
         }
 
         return $this->getFactory()
             ->createCustomerMapper()
-            ->mapCustomerAddressEntityToAddressTransfer($addressEntity, new AddressTransfer());
+            ->mapCustomerAddressEntityToAddressTransfer($customerAddressEntity, new AddressTransfer());
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection $customerAddressEntities
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddress|null
+     */
+    protected function getExistingAddressByAddress(Collection $customerAddressEntities, AddressTransfer $addressTransfer): ?SpyCustomerAddress
+    {
+        /** @var \Orm\Zed\Customer\Persistence\SpyCustomerAddress $customerAddressEntity */
+        foreach ($customerAddressEntities as $customerAddressEntity) {
+            if (
+                $customerAddressEntity->getFirstName() !== $addressTransfer->getFirstName()
+                || $customerAddressEntity->getLastName() !== $addressTransfer->getLastName()
+                || $customerAddressEntity->getAddress1() !== $addressTransfer->getAddress1()
+                || $customerAddressEntity->getAddress2() !== $addressTransfer->getAddress2()
+                || $customerAddressEntity->getAddress3() !== $addressTransfer->getAddress3()
+                || $customerAddressEntity->getZipCode() !== $addressTransfer->getZipCode()
+                || $customerAddressEntity->getCity() !== $addressTransfer->getCity()
+                || $customerAddressEntity->getPhone() !== $addressTransfer->getPhone()
+                || $customerAddressEntity->getCountry()->getIso2Code() !== $addressTransfer->getIso2Code()
+            ) {
+                continue;
+            }
+
+            return $customerAddressEntity;
+        }
+
+        return null;
     }
 
     /**

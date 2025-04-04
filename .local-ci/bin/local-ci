@@ -13,6 +13,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Spryker\Shared\Config\Application\Environment;
 use Spryker\Zed\ModuleFinder\Business\ModuleFinderFacade;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToDash;
+use Laminas\Filter\Word\SeparatorToSeparator;
 
 !defined('APPLICATION_ROOT_DIR') && define('APPLICATION_ROOT_DIR', getcwd());
 !defined('APPLICATION') && define('APPLICATION', 'Zed');
@@ -21,6 +25,9 @@ Environment::initialize();
 
 $application = new Application('Local CI', '1.0.0');
 $application->add(new class extends Command {
+    protected InputInterface $input;
+    protected OutputInterface $output;
+
     /**
      * @return void
      */
@@ -29,7 +36,8 @@ $application->add(new class extends Command {
         $this->setName('local-ci');
         $this->addOption('module', 'm', InputOption::VALUE_REQUIRED, 'Run only for the specified module. Use Fully Qualified Module name e.g. Spryker.FooBar');
         $this->addOption('command', 'c', InputOption::VALUE_REQUIRED, 'Run only the specified command.');
-        $this->addOption('full', 'f', InputOption::VALUE_NONE, 'Full-run including preCommands (Transfer & DataBuilder)');
+        $this->addOption('full', null, InputOption::VALUE_NONE, 'Full-run including preCommands (Transfer & DataBuilder)');
+        $this->addOption('fix', 'f', InputOption::VALUE_NONE, 'Run a fix command before the command is executed when the command has a fix command.');
         $this->addOption('pre', 'p', InputOption::VALUE_NONE, 'Run preCommands (Transfer & DataBuilder)');
         $this->setHelp(<<<DESC
 The <info>%command.name%</info> command runs the local CI for the Spryker modules.
@@ -40,11 +48,21 @@ Options ro run
 <fg=green>vendor/bin/console local-ci --module=Spryker.FooBar</> - Runs the local CI for the specified module
 <fg=green>vendor/bin/console local-ci --command=CodeStyleSniffer</> - Runs the specified command for all modules
 <fg=green>vendor/bin/console local-ci --full</> - Runs the full local CI including preCommands
-<fg=green>vendor/bin/console local-ci --pre</> - Runs the preCommands (Transfer & DataBuilder)
+<fg=green>vendor/bin/console local-ci --fix (-f)</> - When the command has a fix command, then it will be executed before the command gets executed
+<fg=green>vendor/bin/console local-ci --pre (-p)</> - Runs the preCommands (Transfer & DataBuilder)
 <fg=green> vendor/bin/console local-ci --module=Spryker.FooBar --command=CodeStyleSniffer</> - Runs the specified command for the specified module
 DESC
 );
     }
+
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $this->input = $input;
+        $this->output = $output;
+
+        parent::initialize($input, $output);
+    }
+
 
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
@@ -68,10 +86,10 @@ DESC
 
         $moduleList = $this->getModuleList();
 
-        $filterChain = new \Laminas\Filter\FilterChain();
-        $filterChain->attach(new \Laminas\Filter\Word\CamelCaseToDash());
-        $filterChain->attach(new \Laminas\Filter\Word\SeparatorToSeparator('.', '/'));
-        $filterChain->attach(new \Laminas\Filter\StringToLower());
+        $filterChain = new FilterChain();
+        $filterChain->attach(new CamelCaseToDash());
+        $filterChain->attach(new SeparatorToSeparator('.', '/'));
+        $filterChain->attach(new StringToLower());
 
         $packageList = [];
 
@@ -82,29 +100,10 @@ DESC
         $moduleFinderFacade = new ModuleFinderFacade();
         $allModulesList = $moduleFinderFacade->getModules();
 
-        $changedModulesUsingModules = [];
+        $moduleUsingChangedModules = $this->getModulesUsingChangedModules($allModulesList, $packageList);
 
-        foreach ($allModulesList as $moduleTransfer) {
-            $composerJsonPath = $moduleTransfer->getPath() . '/composer.json';
-
-            if (!file_exists($composerJsonPath)) {
-                continue;
-            }
-
-            $composerJsonContent = file_get_contents($composerJsonPath);
-
-            foreach ($packageList as $package) {
-                if (strpos($composerJsonContent, $package) === false) {
-                    continue;
-                }
-
-                $moduleUsingModuleModule = sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());
-
-                $changedModulesUsingModules[$moduleUsingModuleModule][] = $package;
-            }
-        }
-
-        $output->writeln(sprintf('Your changed modules are used by <fg=green>%s</> other modules.', count($changedModulesUsingModules)), OutputInterface::VERBOSITY_NORMAL);
+        // This is for now only informative output and will probably later be used to run the CI on these modules.
+        $output->writeln(sprintf('Your changed modules are used by <fg=green>%s</> other modules.', count($moduleUsingChangedModules)), OutputInterface::VERBOSITY_NORMAL);
 
         $commandList = $this->getCommands();
 
@@ -112,9 +111,12 @@ DESC
             $this->runPreCommands($output);
         }
 
+        $isFixRequested = $input->getOption('fix', false);
+
         foreach ($moduleList as $moduleData) {
             $moduleName = $moduleData['module'];
 
+            // Check if only a specific module should be run. When this option is set, then only the module that is requested will be fixed and validated.
             if ($input->getOption('module') && $input->getOption('module') !== $moduleName) {
                 continue;
             }
@@ -123,6 +125,7 @@ DESC
 
             foreach ($commandList as $commandName => $commandData) {
 
+                // when this option is set then only the requested command will be run.
                 if ($input->getOption('command') && $input->getOption('command') !== $commandName) {
                     continue;
                 }
@@ -140,41 +143,12 @@ DESC
                     continue;
                 }
 
-                $output->writeln(sprintf('Command <fg=yellow>%s</>', $commandName), OutputInterface::VERBOSITY_VERBOSE);
 
-                // When we need to run a command with the short module name, explode Namespace.ModuleName and use the short name
-                if (isset($commandData['useFullName']) && $commandData['useFullName'] === false) {
-                    $moduleName = explode('.', $moduleName)[1];
+                if ($isFixRequested && isset($commandData['fixCommand'])) {
+                    $this->runCommand($commandName, $commandData, $moduleName, 'fixCommand', $errors);
                 }
 
-                if ($commandData['hasModule'] === true) {
-                    if (isset($commandData['hasModuleInArgument']) && $commandData['hasModuleInArgument']) {
-
-                        $commandData['command'][$commandData['moduleArgument']] = sprintf($commandData['command'][$commandData['moduleArgument']], $moduleName);
-                    }
-
-                    if (!isset($commandData['hasModuleInArgument']) || !$commandData['hasModuleInArgument']) {
-                        $commandData['command'][] = $moduleName;
-                    }
-                }
-
-                $output->writeln(implode(' ', $commandData['command']), OutputInterface::VERBOSITY_VERBOSE);
-
-                $process = new Process($commandData['command']);
-
-                $process->run(function ($type, $buffer) use ($output) {
-                    if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
-                        echo $buffer;
-                    }
-                });
-
-                if (!$process->isSuccessful()) {
-                    $errors[$moduleName][] = $commandName;
-                    $output->writeln(sprintf('Command <fg=red>%s failed</> for module %s', $commandName, $moduleName), OutputInterface::VERBOSITY_NORMAL);
-                    continue;
-                }
-
-                $output->writeln(sprintf('Command <fg=green>%s succeeded</> for module %s', $commandName, $moduleName), OutputInterface::VERBOSITY_NORMAL);
+                $this->runCommand($commandName, $commandData, $moduleName, 'command', $errors);
             }
 
             $output->writeln('');
@@ -183,6 +157,79 @@ DESC
         $this->printErrors($errors, $output);
 
         return count($errors) ? static::FAILURE : static::SUCCESS;
+    }
+
+    protected function getModulesUsingChangedModules(array $allModulesList, array $packageList): array
+    {
+        $modulesUsingChangedModules = [];
+
+        foreach ($allModulesList as $moduleTransfer) {
+            $composerJsonPath = $moduleTransfer->getPath() . '/composer.json';
+
+            if (!file_exists($composerJsonPath)) {
+                $this->output->writeln(sprintf('<fg=yellow>Composer json file not found in path "%s".</>', $composerJsonPath), OutputInterface::VERBOSITY_VERY_VERBOSE);
+
+                continue;
+            }
+
+            $composerJsonContent = file_get_contents($composerJsonPath);
+
+            foreach ($packageList as $package) {
+                if (strpos($composerJsonContent, $package) === false) {
+                    continue;
+                }
+
+                $moduleUsingModuleModule = sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());
+
+                $modulesUsingChangedModules[$moduleUsingModuleModule][] = $package;
+            }
+        }
+
+        return $modulesUsingChangedModules;
+    }
+
+    protected function runCommand(string $commandName, array $commandData, string $moduleName, string $command, array &$errors): void
+    {
+        $this->output->writeln(sprintf('Command <fg=yellow>%s</>', $commandName), OutputInterface::VERBOSITY_VERBOSE);
+
+        // When we need to run a command with the short module name, explode Namespace.ModuleName and use the short name
+        if (isset($commandData['useFullName']) && $commandData['useFullName'] === false) {
+            $moduleName = explode('.', $moduleName)[1];
+        }
+
+        if ($commandData['hasModule'] === true) {
+            if (isset($commandData['hasModuleInArgument']) && $commandData['hasModuleInArgument']) {
+
+                $commandData[$command][$commandData['moduleArgument']] = sprintf($commandData[$command][$commandData['moduleArgument']], $moduleName);
+            }
+
+            if (!isset($commandData['hasModuleInArgument']) || !$commandData['hasModuleInArgument']) {
+                $commandData[$command][] = $moduleName;
+            }
+        }
+
+        $this->output->writeln(implode(' ', $commandData['command']), OutputInterface::VERBOSITY_VERBOSE);
+
+        $process = new Process($commandData[$command]);
+
+        $process->run(function ($type, $buffer) {
+            if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
+                echo $buffer;
+            }
+        });
+
+        if ($command === 'fixCommand') {
+            return;
+        }
+
+        if (!$process->isSuccessful()) {
+            $errors[$moduleName][] = $commandName;
+            $this->output->writeln(sprintf('Command <fg=red>%s failed</> for module %s', $commandName, $moduleName), OutputInterface::VERBOSITY_NORMAL);
+
+            return;
+        }
+
+        $this->output->writeln(sprintf('Command <fg=green>%s succeeded</> for module %s', $commandName, $moduleName), OutputInterface::VERBOSITY_NORMAL);
     }
 
     protected function getModuleList(): array
