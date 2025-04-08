@@ -99,6 +99,46 @@ class ProductDataHelper extends Module
     }
 
     /**
+     * @param array $productConcreteOverride
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function haveProductConcreteWithLocalizedAttributes(array $productConcreteOverride = []): ProductConcreteTransfer
+    {
+        $allStoresRelation = $this->getAllStoresRelation()->toArray();
+        $localizedAttributes = $productConcreteOverride[ProductConcreteTransfer::LOCALIZED_ATTRIBUTES] ?? null;
+        if ($localizedAttributes === null) {
+            $localizedAttributes[] = (new LocalizedAttributesBuilder([
+                LocalizedAttributesTransfer::NAME => uniqid('Product #', true),
+                LocalizedAttributesTransfer::LOCALE => $productConcreteOverride[LocalizedAttributesTransfer::LOCALE] ?? $this->getCurrentLocale(),
+                LocalizedAttributesTransfer::ATTRIBUTES => [],
+            ]))->build()->toArray();
+        }
+
+        $productConcreteBuilder = new ProductConcreteBuilder($productConcreteOverride);
+
+        foreach ($localizedAttributes as $localizedAttribute) {
+            $productConcreteBuilder->withLocalizedAttributes($localizedAttribute);
+        }
+
+        $productConcreteTransfer = $productConcreteBuilder->withStores($allStoresRelation)->build();
+        $productConcreteTransfer->setAbstractSku($productConcreteOverride[ProductConcreteTransfer::ABSTRACT_SKU]);
+
+        $this->getProductFacade()->createProductConcrete($productConcreteTransfer);
+
+        $this->debug(sprintf(
+            'Inserted Concrete Product: %d',
+            $productConcreteTransfer->getIdProductConcrete(),
+        ));
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer): void {
+            $this->cleanupProductConcrete($productConcreteTransfer->getIdProductConcrete());
+        });
+
+        return $productConcreteTransfer;
+    }
+
+    /**
      * @param array $productAbstractOverride
      * @param bool $localized
      *

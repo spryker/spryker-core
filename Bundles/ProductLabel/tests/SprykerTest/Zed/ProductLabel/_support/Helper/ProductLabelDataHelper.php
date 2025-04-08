@@ -24,10 +24,11 @@ class ProductLabelDataHelper extends Module
 
     /**
      * @param array $seedData
+     * @param array $localizedSeedData
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer
      */
-    public function haveProductLabel(array $seedData = []): ProductLabelTransfer
+    public function haveProductLabel(array $seedData = [], array $localizedSeedData = []): ProductLabelTransfer
     {
         /** @var \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer */
         $productLabelTransfer = (new ProductLabelBuilder($seedData + [
@@ -38,7 +39,7 @@ class ProductLabelDataHelper extends Module
         $productLabelTransfer->setPosition($seedData[ProductLabelTransfer::POSITION] ?? 0);
 
         foreach ($this->getLocator()->locale()->facade()->getLocaleCollection() as $localeTransfer) {
-            $productLabelLocalizedAttributesTransfer = (new ProductLabelLocalizedAttributesBuilder([
+            $productLabelLocalizedAttributesTransfer = (new ProductLabelLocalizedAttributesBuilder($localizedSeedData + [
                 ProductLabelLocalizedAttributesTransfer::FK_LOCALE => $localeTransfer->getIdLocale(),
             ]))->build();
             $productLabelTransfer->addLocalizedAttributes($productLabelLocalizedAttributesTransfer);
