@@ -78,6 +78,7 @@
         <property name="state" type="string"/>
         <property name="zipCode" type="string"/>
         <property name="phone" type="string"/>
+        <property name="isFromExternalService" type="bool" description="When the address is received from an external service like PayPal this must be marked as such when entering the system."/>
     </transfer>
 
     <transfer name="Store">

@@ -45,6 +45,7 @@
         <property name="region" type="string"/>
         <property name="middleName" type="string"/>
         <property name="cellPhone" type="string"/>
+        <property name="isFromExternalService" type="bool" description="When the address is received from an external service like PayPal this must be marked as such when entering the system."/>
     </transfer>
 
     <transfer name="Addresses">

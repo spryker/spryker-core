@@ -564,8 +564,7 @@ class Address implements AddressInterface
         try {
             $customerEntity = $this->getCustomerFromAddressTransfer($addressTransfer);
 
-            $addressEntity = $this->getOrCreateCustomerAddress($addressTransfer, $customerEntity);
-            $addressTransfer->setIdCustomerAddress($addressEntity->getIdCustomerAddress());
+            $addressTransfer = $this->getOrCreateCustomerAddress($addressTransfer, $customerEntity);
 
             $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity);
 
@@ -596,6 +595,10 @@ class Address implements AddressInterface
     }
 
     /**
+     * When the address is coming from an external system we want to ensure that these addresses are only added once.
+     * If we do not check for duplicate addresses of external services a checkout made e.g. with PayPal Express
+     * will create a new address with each checkout.
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
@@ -605,13 +608,15 @@ class Address implements AddressInterface
     {
         $addressEntity = new SpyCustomerAddress();
 
-        $existingAddress = $this->findCustomerAddressByAddressData($addressTransfer);
+        if ($addressTransfer->getIsFromExternalService()) {
+            $existingAddress = $this->findCustomerAddressByAddressData($addressTransfer);
 
-        // When the same address already exists do not create a new one and return the existing one.
-        // This covers the case of prePayments (payment is created before the order is placed) made where the Payment Service Provider (PSP)
-        // returns the address. To prevent duplicates of such addresses, we return the existing one.
-        if ($existingAddress !== null) {
-            return $existingAddress;
+            // When the same address already exists do not create a new one and return the existing one.
+            // This covers the case of prePayments (payment is created before the order is placed) made where the Payment Service Provider (PSP)
+            // returns the address. To prevent duplicates of such addresses, we return the existing one.
+            if ($existingAddress !== null) {
+                return $existingAddress->fromArray($addressTransfer->toArray(), true);
+            }
         }
 
         $addressTransfer->setUuid(null);

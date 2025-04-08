@@ -33,14 +33,17 @@ class CreateAddressWithDuplicateCheckTest extends AbstractCustomerAddressFacadeT
     /**
      * @return void
      */
-    public function testCreateAddressWithExistingAddressDataShouldReuseExistingAddress(): void
+    public function testCreateAddressFromExternalServiceWithExistingAddressDataShouldReuseExistingAddressWhenTheAddressAlreadyExists(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer([CustomerTransfer::PASSWORD => $this->password]);
         $addressTransfer1 = $this->tester->haveCustomerAddress([AddressTransfer::EMAIL => $customerTransfer->getEmail()]);
 
         // Act
-        $addressTransfer2 = $this->customerFacade->createAddress($addressTransfer1);
+        $addressTransfer2 = clone $addressTransfer1;
+        $addressTransfer2->setIsFromExternalService(true);
+
+        $addressTransfer2 = $this->customerFacade->createAddress($addressTransfer2);
 
         // Assert
         $this->assertEquals($addressTransfer1->getIdCustomerAddress(), $addressTransfer2->getIdCustomerAddress());

@@ -99,8 +99,12 @@ class PaymentCustomer implements PaymentCustomerInterface
         }
 
         $customerData = $decodedResponseBody['customer'];
+
         $shippingAddress = $customerData['shippingAddress'] ?? [];
+        $shippingAddress['isFromExternalService'] = true;
+
         $billingAddress = $customerData['billingAddress'] ?? [];
+        $billingAddress['isFromExternalService'] = true;
 
         unset($customerData['shippingAddress'], $customerData['billingAddress']);
 
