@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentFileConditionsTransfer;
 use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentFileSearchConditionsTransfer;
-use Generated\Shared\Transfer\FileInfoTransfer;
+use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\SortTransfer;
 use SprykerFeature\Client\SspFileManagement\SspFileManagementClientInterface;
@@ -89,7 +89,7 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
             ->setRangeCreatedAt(new CriteriaRangeFilterTransfer());
 
         $sortTransfer = (new SortTransfer())
-            ->setField(FileInfoTransfer::CREATED_AT)
+            ->setField(FileTransfer::ID_FILE)
             ->setIsAscending(false);
 
         return (new FileAttachmentFileCriteriaTransfer())

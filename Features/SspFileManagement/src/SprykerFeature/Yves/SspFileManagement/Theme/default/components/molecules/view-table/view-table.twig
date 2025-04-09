@@ -17,7 +17,7 @@
 {% block body %}
     {% set columns = [
         {
-            id: 'fileReference',
+            id: 'idFile',
             title: 'ssp_file_management.file_management.table.header.file_reference',
             sortable: true,
         },
@@ -50,11 +50,11 @@
     ] %}
 
     {% set rows = data.files | map(file => {
-        fileReference: file.fileReference,
+        idFile: file.fileReference,
         fileName: file.fileName,
         fileType: file.fileInfo[0].extension,
         createdAt: file.fileInfo[0].createdAt,
-        size: file.fileInfo[0].size,
+        size: file.fileInfo[0].size | readable_bytesize,
         actions: can('DownloadFilesPermissionPlugin')
             ? [{
                 url: path('ssp-file-management/download', { 'id-file': file.uuid }),
