@@ -15,6 +15,7 @@
     formFieldProductOfferReference: null,
     formFieldItemMetadataScheduledAt: null,
     hasOnlyDeliveryShipmentType: false,
+    isConcreteProduct: false,
 } %}
 
 {% define attributes = {
@@ -162,9 +163,11 @@
         {% endif %}
     {% else %}
         {% block empty %}
-            <div class="box box--alert">
-                {{ 'ssp_service_management.product.no_shipment_types_available' | trans }}
-            </div>
+            {% if data.isConcreteProduct %}
+                <div class="box box--alert">
+                    {{ 'ssp_service_management.product.no_shipment_types_available' | trans }}
+                </div>
+            {% endif %}
         {% endblock %}
     {% endif %}
 

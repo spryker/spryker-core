@@ -31,6 +31,7 @@
             isServiceDateTimeEnabled: data.isServiceDateTimeEnabled,
             hasOnlyServiceShipmentType: data.hasOnlyServiceShipmentType,
             hasOnlyDeliveryShipmentType: data.hasOnlyDeliveryShipmentType,
+            isConcreteProduct: data.product.idProductConcrete is not null,
         },
         attributes: {
             'data-service-point-product-sku': data.product.sku,
