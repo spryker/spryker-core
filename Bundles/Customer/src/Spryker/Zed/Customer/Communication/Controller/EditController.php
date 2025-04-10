@@ -69,6 +69,7 @@ class EditController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $customerTransfer = new CustomerTransfer();
             $customerTransfer->fromArray($form->getData(), true);
+            $customerTransfer->setIsEditedInBackoffice(true);
 
             $customerResponseTransfer = $this->getFacade()->updateCustomer($customerTransfer);
             if (!$customerResponseTransfer->getIsSuccess()) {

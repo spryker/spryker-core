@@ -1034,7 +1034,7 @@ class Customer implements CustomerInterface
      */
     protected function executePreUpdatePlugins(CustomerTransfer $customerTransfer, CustomerResponseTransfer $customerResponseTransfer): CustomerTransfer
     {
-        if ($customerTransfer->getAnonymizedAt() !== null) {
+        if ($this->shouldSkipPreUpdatePlugins($customerTransfer)) {
             return $customerTransfer;
         }
 
@@ -1051,5 +1051,15 @@ class Customer implements CustomerInterface
         }
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function shouldSkipPreUpdatePlugins(CustomerTransfer $customerTransfer): bool
+    {
+        return $customerTransfer->getAnonymizedAt() !== null || $customerTransfer->getIsEditedInBackoffice() === true;
     }
 }

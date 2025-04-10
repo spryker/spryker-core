@@ -1,0 +1,34 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'multi-factor-authentication-content',
+} %}
+
+{% define data = {
+    form: required,
+    title: required,
+    url: required,
+    modifiers: [],
+    submitText: 'multi_factor_auth.continue' | trans,
+} %}
+
+{% define attributes = {
+    url: data.url,
+} %}
+
+{% block body %}
+    {% include molecule('form') with {
+        modifiers: data.modifiers,
+        data: {
+            title: data.title,
+            form: data.form,
+            layout: {
+                type: 'col col--sm-12',
+            },
+            submit: {
+                text: data.submitText,
+                enable: true,
+            }
+        }
+    } only %}
+{% endblock %}

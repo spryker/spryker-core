@@ -1,0 +1,82 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'multi-factor-authentication-handler',
+    tag: 'multi-factor-authentication-handler',
+} %}
+
+{% define data = {
+    id: required,
+    url: required,
+    isLoginFlow: false,
+    isJsEnabledHandler: false,
+} %}
+
+{% define attributes = {
+    'form-selector': required,
+    'trigger-class-name': "js-#{config.name}__trigger-#{data.id}",
+    'is-login-flow': data.isLoginFlow,
+    'is-js-enabled-handler': data.isJsEnabledHandler,
+} %}
+
+{% block body %}
+    {% set popupContentId = "#{config.jsName}__popup-content-#{data.id}" %}
+
+    {% block popup %}
+        {% include molecule('main-popup') with {
+            class: config.jsName ~ '__popup',
+            data: {
+                content: block('popupContent'),
+            },
+            attributes: {
+                'content-id': "#{popupContentId}",
+                'trigger-class-name': attributes['trigger-class-name'],
+                'has-content-mount': true,
+            },
+        } only %}
+    {% endblock %}
+
+    {% block popupContent %}
+        <div class="{{ config.jsName }}__popup-content {{ config.name }}__popup-content {{ config.jsName }}__popup-content-{{ data.id }}" id="{{ config.jsName }}__popup-content-{{ data.id }}"></div>
+    {% endblock %}
+
+    {% block initialProvider %}
+        {% set ajaxProviderClass = "#{config.jsName}__ajax-provider" %}
+        {% set ajaxProviderId = "#{ajaxProviderClass}-#{data.id}" %}
+
+        {% include molecule('ajax-provider') with {
+            class: "#{ajaxProviderClass} #{ajaxProviderId}",
+            attributes: {
+                method: 'POST',
+                url: data.url,
+            },
+        } only %}
+
+        {% include molecule('ajax-renderer') with {
+            attributes: {
+                'provider-class-name': "#{ajaxProviderId}",
+                'target-class-name': "#{popupContentId}",
+            },
+        } only %}
+    {% endblock %}
+
+    {% block dynamicProvider %}
+        {% set ajaxProviderDynamicClass = "#{config.jsName}__ajax-provider-dynamic" %}
+        {% set ajaxProviderDynamicId = "#{ajaxProviderDynamicClass}-#{data.id}" %}
+
+        {% include molecule('ajax-provider') with {
+            class: "#{ajaxProviderDynamicClass} #{ajaxProviderDynamicId}",
+            attributes: {
+                method: 'POST',
+                url: '',
+            },
+        } only %}
+
+        {% include molecule('ajax-renderer') with {
+            attributes: {
+                'provider-class-name': "#{ajaxProviderDynamicId}",
+                'target-class-name': "#{popupContentId}",
+            },
+        } only %}
+    {% endblock %}
+{% endblock %}

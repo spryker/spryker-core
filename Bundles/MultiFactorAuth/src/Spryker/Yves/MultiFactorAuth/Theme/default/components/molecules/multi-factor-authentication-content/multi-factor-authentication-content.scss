@@ -1,0 +1,15 @@
+@mixin multi-factor-auth-multi-factor-authentication-content($name: '.multi-factor-authentication-content') {
+    #{$name} {
+        &__type-selection {
+            .radio__container {
+                > .label--required {
+                    &::after {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        @content;
+    }
+}

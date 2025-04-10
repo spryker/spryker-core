@@ -1,0 +1,9 @@
+{% extends template('widget') %}
+
+{% define data = {
+    dataError: _view.dataError | default(''),
+} %}
+
+{% block body %}
+    <div data-close-popup {{ data.dataError }}></div>
+{% endblock %}

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="MultiFactorAuthCode" strict="true">
+        <property name="idCode" type="int"/>
+        <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="attempts" type="int"/>
+        <property name="expirationDate" type="string"/>
+    </transfer>
+
+    <transfer name="MultiFactorAuth" strict="true">
+        <property name="customer" type="Customer"/>
+        <property name="status" type="int"/>
+        <property name="type" type="string"/>
+        <property name="contact" type="string"/>
+        <property name="multiFactorAuthCode" type="MultiFactorAuthCode"/>
+    </transfer>
+
+    <transfer name="MultiFactorAuthTypesCollection" strict="true">
+        <property name="multiFactorAuthTypes" type="MultiFactorAuth[]" singular="multiFactorAuth"/>
+    </transfer>
+
+    <transfer name="MultiFactorAuthValidationRequest" strict="true">
+        <property name="isActivation" type="bool"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="MultiFactorAuthValidationResponse" strict="true">
+        <property name="isRequired" type="bool"/>
+        <property name="message" type="string"/>
+        <property name="status" type="int"/>
+    </transfer>
+
+    <transfer name="Mail">
+        <property name="multiFactorAuth" type="MultiFactorAuth" strict="true"/>
+        <property name="type" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="subject" type="string"/>
+        <property name="templates" type="MailTemplate[]" singular="template"/>
+        <property name="recipients" type="MailRecipient[]" singular="recipient"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="idCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="MailRecipient">
+        <property name="email" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MailTemplate">
+        <property name="name" type="string"/>
+        <property name="isHtml" type="bool"/>
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+</transfers>

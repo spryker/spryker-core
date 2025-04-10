@@ -1,0 +1,23 @@
+# IDE
+.idea/
+.project/
+nbproject/
+.buildpath/
+.settings/
+*.sublime-*
+
+# OS
+.DS_Store
+*.AppleDouble
+*.AppleDB
+*.AppleDesktop
+
+# grunt stuff
+.grunt
+.sass-cache
+/node_modules/
+
+# tooling
+vendor/
+composer.lock
+.phpunit.result.cache

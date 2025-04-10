@@ -1,0 +1,26 @@
+{% extends template('widget') %}
+
+{% define data = {
+    id: id is defined ? id : required,
+    url: url is defined ? url : required,
+    formSelector: formSelector is defined ? formSelector : required,
+    isLoginFlow: isLoginFlow is defined ? isLoginFlow : false,
+    isJsEnabledHandler: isJsEnabledHandler is defined ? isJsEnabledHandler : false,
+    configurations: configurations is defined ? configurations : required,
+} %}
+
+{% block body %}
+    {% if data.configurations is not empty or data.isLoginFlow %}
+        {% include molecule('multi-factor-authentication-handler', 'MultiFactorAuth') with {
+            data: {
+                id: data.id,
+                url: data.url,
+                isLoginFlow: data.isLoginFlow,
+                isJsEnabledHandler: data.isJsEnabledHandler,
+            },
+            attributes: {
+                'form-selector': data.formSelector,
+            }
+        } only %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,6 @@
+namespace: SprykerTest\Shared\MultiFactorAuth
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output

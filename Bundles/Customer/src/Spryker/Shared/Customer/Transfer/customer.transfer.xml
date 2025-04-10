@@ -87,6 +87,7 @@
         <property name="phone" type="string"/>
         <property name="isDirty" type="bool"/>
         <property name="storeName" type="string"/>
+        <property name="isEditedInBackoffice" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="CustomerError">

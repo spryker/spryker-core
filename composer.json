@@ -6,7 +6,8 @@
         "php": ">=8.1"
     },
     "require-dev": {
-        "spryker/code-sniffer": "dev-master"
+        "spryker/code-sniffer": "dev-master",
+        "phpstan/phpdoc-parser": "^1.33"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -547,6 +548,8 @@
         "spryker/multi-cart": "*",
         "spryker/multi-cart-data-import": "*",
         "spryker/multi-carts-rest-api": "*",
+        "spryker/multi-factor-auth": "*",
+        "spryker/multi-factor-auth-extension": "*",
         "spryker/navigation": "*",
         "spryker/navigation-collector": "*",
         "spryker/navigation-gui": "*",
