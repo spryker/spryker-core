@@ -94,7 +94,7 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
     /**
      * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ProductUrlTransfer>
+     * @return array<int, \Generated\Shared\Transfer\ProductUrlTransfer>
      */
     public function generateProductsUrl(array $productAbstractTransfers): array
     {
@@ -114,7 +114,7 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
 
                 $productUrlTransfer->addUrl($localizedUrl);
             }
-            $productUrlTransfers[] = $productUrlTransfer;
+            $productUrlTransfers[$productAbstractTransfer->getIdProductAbstractOrFail()] = $productUrlTransfer;
         }
 
         return $productUrlTransfers;

@@ -91,6 +91,78 @@ class UrlHandlingTest extends FacadeTestAbstract
     /**
      * @return void
      */
+    public function testUpdateProductsUrlShouldCreateUrlsForProductAbstracts(): void
+    {
+        // Arrange
+        $firstProductAbstractTransfer = clone $this->productAbstractTransfer;
+        $firstProductAbstractTransfer->setSku($firstProductAbstractTransfer->getSku() . '_first');
+        $secondProductAbstractTransfer = clone $this->productAbstractTransfer;
+        $secondProductAbstractTransfer->setSku($firstProductAbstractTransfer->getSku() . '_second');
+        $firstProductAbstractTransfer->setIdProductAbstract(
+            $this->productAbstractManager->createProductAbstract($firstProductAbstractTransfer),
+        );
+        $secondProductAbstractTransfer->setIdProductAbstract(
+            $this->productAbstractManager->createProductAbstract($secondProductAbstractTransfer),
+        );
+        $productAbstractTransfers = [
+            $firstProductAbstractTransfer->getIdProductAbstract() => $firstProductAbstractTransfer,
+            $secondProductAbstractTransfer->getIdProductAbstract() => $secondProductAbstractTransfer,
+        ];
+
+        // Act
+        $urlTransfers = $this->productFacade->updateProductsUrl($productAbstractTransfers);
+
+        $urlTransfersGroupedByAbstractId = [];
+        foreach ($urlTransfers as $urlTransfer) {
+            $urlTransfersGroupedByAbstractId[$urlTransfer->getFkResourceProductAbstract()][$urlTransfer->getFkLocale()] = $urlTransfer;
+        }
+
+        // Assert
+        $this->assertArrayHasKey($firstProductAbstractTransfer->getIdProductAbstract(), $urlTransfersGroupedByAbstractId);
+        $this->assertArrayHasKey($secondProductAbstractTransfer->getIdProductAbstract(), $urlTransfersGroupedByAbstractId);
+        $this->assertCount(2, $urlTransfersGroupedByAbstractId[$secondProductAbstractTransfer->getIdProductAbstract()]);
+        $this->assertCount(2, $urlTransfersGroupedByAbstractId[$firstProductAbstractTransfer->getIdProductAbstract()]);
+
+        $firstProductAbstractUrlTransfers = $urlTransfersGroupedByAbstractId[$firstProductAbstractTransfer->getIdProductAbstract()];
+        $this->assertSame(
+            $firstProductAbstractUrlTransfers[$this->locales[static::EN_LOCALE]->getIdLocale()]->getUrl(),
+            '/en-us/product-name-enus-' . $firstProductAbstractTransfer->getIdProductAbstract(),
+        );
+        $this->assertSame(
+            $firstProductAbstractUrlTransfers[$this->locales[static::EN_LOCALE]->getIdLocale()]->getFkResourceProductAbstract(),
+            $firstProductAbstractTransfer->getIdProductAbstract(),
+        );
+        $this->assertSame(
+            $firstProductAbstractUrlTransfers[$this->locales[static::DE_LOCALE]->getIdLocale()]->getUrl(),
+            '/de-de/product-name-dede-' . $firstProductAbstractTransfer->getIdProductAbstract(),
+        );
+        $this->assertSame(
+            $firstProductAbstractUrlTransfers[$this->locales[static::DE_LOCALE]->getIdLocale()]->getFkResourceProductAbstract(),
+            $firstProductAbstractTransfer->getIdProductAbstract(),
+        );
+
+        $secondProductAbstractUrlTransfers = $urlTransfersGroupedByAbstractId[$secondProductAbstractTransfer->getIdProductAbstract()];
+        $this->assertSame(
+            $secondProductAbstractUrlTransfers[$this->locales[static::EN_LOCALE]->getIdLocale()]->getUrl(),
+            '/en-us/product-name-enus-' . $secondProductAbstractTransfer->getIdProductAbstract(),
+        );
+        $this->assertSame(
+            $secondProductAbstractUrlTransfers[$this->locales[static::EN_LOCALE]->getIdLocale()]->getFkResourceProductAbstract(),
+            $secondProductAbstractTransfer->getIdProductAbstract(),
+        );
+        $this->assertSame(
+            $secondProductAbstractUrlTransfers[$this->locales[static::DE_LOCALE]->getIdLocale()]->getUrl(),
+            '/de-de/product-name-dede-' . $secondProductAbstractTransfer->getIdProductAbstract(),
+        );
+        $this->assertSame(
+            $secondProductAbstractUrlTransfers[$this->locales[static::DE_LOCALE]->getIdLocale()]->getFkResourceProductAbstract(),
+            $secondProductAbstractTransfer->getIdProductAbstract(),
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateProductUrlShouldSaveUrlForProductAbstract(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);

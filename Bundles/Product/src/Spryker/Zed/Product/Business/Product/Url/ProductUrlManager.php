@@ -257,14 +257,8 @@ class ProductUrlManager implements ProductUrlManagerInterface
      */
     protected function executeUpdateProductsUrlTransaction(array $productAbstractTransfers): array
     {
-        $productUrls = $this->urlGenerator->generateProductsUrl($productAbstractTransfers);
-
-        $urlTransfers = $this->getUrlByProductAbstractIdsAndLocaleIds(
-            array_map(function (ProductAbstractTransfer $productAbstractTransfer) {
-                return $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract();
-            }, $productAbstractTransfers),
-            $productUrls,
-        );
+        $productUrlTransfersIndexedByIdProductAbstract = $this->urlGenerator->generateProductsUrl($productAbstractTransfers);
+        $urlTransfers = $this->createUrlTransfersByProductUrlTransfers($productUrlTransfersIndexedByIdProductAbstract);
 
         return $this->urlFacade->saveUrlCollection($urlTransfers);
     }
@@ -351,39 +345,30 @@ class ProductUrlManager implements ProductUrlManagerInterface
     }
 
     /**
-     * @param array<int> $productAbstractIds
-     * @param array<\Generated\Shared\Transfer\ProductUrlTransfer> $productUrls
+     * @param array<int, \Generated\Shared\Transfer\ProductUrlTransfer> $productUrlTransfersIndexedByIdProductAbstract
      *
      * @return array<string, \Generated\Shared\Transfer\UrlTransfer>
      */
-    protected function getUrlByProductAbstractIdsAndLocaleIds(array $productAbstractIds, array $productUrls): array
+    protected function createUrlTransfersByProductUrlTransfers(array $productUrlTransfersIndexedByIdProductAbstract): array
     {
+        $productAbstractMapIdToSku = [];
+        foreach ($productUrlTransfersIndexedByIdProductAbstract as $idProductAbstract => $productUrl) {
+            $productAbstractMapIdToSku[$idProductAbstract] = $productUrl->getAbstractSkuOrFail();
+        }
+
         $indexedUrlTransfers = $this->productRepository->getUrlsByProductAbstractIds(
-            $productAbstractIds,
+            array_keys($productAbstractMapIdToSku),
             fn (int $productAbstractId, int $localeId) => $this->generateIndex($productAbstractId, $localeId),
         );
 
+        $productAbstractMapSkuToId = array_flip($productAbstractMapIdToSku);
         $urlTransfers = [];
-
-        foreach ($productAbstractIds as $productAbstractId) {
-            $urlTransfers = array_merge($urlTransfers, $this->processProductUrls($productAbstractId, $productUrls, $indexedUrlTransfers));
-        }
-
-        return $urlTransfers;
-    }
-
-    /**
-     * @param int $productAbstractId
-     * @param array<\Generated\Shared\Transfer\ProductUrlTransfer> $productUrls
-     * @param array<string, \Generated\Shared\Transfer\UrlTransfer> $indexedUrlTransfers
-     *
-     * @return array<string, \Generated\Shared\Transfer\UrlTransfer>
-     */
-    protected function processProductUrls(int $productAbstractId, array $productUrls, array $indexedUrlTransfers): array
-    {
-        $urlTransfers = [];
-        foreach ($productUrls as $productUrlTransfer) {
-            $urlTransfers = array_merge($urlTransfers, $this->processUrls($productAbstractId, $productUrlTransfer, $indexedUrlTransfers));
+        foreach ($productUrlTransfersIndexedByIdProductAbstract as $productUrlTransfer) {
+            $urlTransfers = array_merge($urlTransfers, $this->processUrls(
+                $productAbstractMapSkuToId[$productUrlTransfer->getAbstractSkuOrFail()],
+                $productUrlTransfer,
+                $indexedUrlTransfers,
+            ));
         }
 
         return $urlTransfers;

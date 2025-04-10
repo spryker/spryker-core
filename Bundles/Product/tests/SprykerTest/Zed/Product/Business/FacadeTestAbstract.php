@@ -45,6 +45,16 @@ use Spryker\Zed\Url\Business\UrlFacade;
 class FacadeTestAbstract extends Unit
 {
     /**
+     * @var string
+     */
+    public const EN_LOCALE = 'en_US';
+
+    /**
+     * @var string
+     */
+    public const DE_LOCALE = 'de_DE';
+
+    /**
      * @var array
      */
     public const PRODUCT_ABSTRACT_NAME = [
