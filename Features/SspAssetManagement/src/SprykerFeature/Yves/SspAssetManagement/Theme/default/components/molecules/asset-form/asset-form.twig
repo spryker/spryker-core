@@ -49,7 +49,7 @@
                         {{ form_errors(child) }}
                     {% endfor %}
 
-                    {% include molecule('image-uploader', 'SspAssetManagement') with {
+                    {% include molecule('image-uploader', 'FeatureUi') with {
                         class: 'spacing-x spacing-top--big',
                         data: {
                             image: fileInput.attr['original-image-url'] | default(null),

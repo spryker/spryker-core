@@ -1,0 +1,121 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'active-filters',
+} %}
+
+{% define data = {
+    searchForm: required,
+    jsPrefix: required,
+    formClass: required,
+} %}
+
+{% set activeFilters = [] %}
+
+{% for field in data.searchForm.filters.children %}
+    {% set filter = [] %}
+    {% set isSelectField = field.vars is not empty and field.vars.choices is defined and field.vars.choices is not empty and field.vars.value %}
+
+    {% if isSelectField %}
+        {% set choices = field.vars.choices | filter(v => v.value == field.vars.value) %}
+        {% set label = choices | length ? (choices | first).label : null %}
+        {% set fitlerValue = label | trans %}
+
+        {% set filter = [{
+            name: field.vars.name,
+            label: field.vars.label,
+            defaultValue: field.vars.placeholder,
+            value: fitlerValue,
+        }] %}
+    {% endif %}
+
+    {% set activeFilters = activeFilters | merge(filter) %}
+
+    {% if data.searchForm.searchText.vars.value | default(null) %}
+        {% set filter = [{
+            name: data.searchForm.searchText.vars.name,
+            label: data.searchForm.searchText.vars.label,
+            defaultValue: null,
+            value: data.searchForm.searchText.vars.value,
+        }] %}
+        {% set activeFilters = activeFilters | merge(filter) %}
+    {% endif %}
+{% endfor %}
+
+{% block component %}
+    {% if activeFilters | length %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% set labelClass = '' %}
+    {% set activeItemClass = 'link link--small spacing-left' %}
+    {% set activeItemKeyClass = '' %}
+    {% set activeItemValueClass = '' %}
+    {% set resetClass = "link link--small spacing-left #{data.jsPrefix}reset-trigger" %}
+
+    {% block label %}
+        <small class="{{ labelClass }}">
+            {{- 'ssp_asset_management.ssp_asset_search_filter_form.label.active_filters' | trans -}}
+        </small>
+    {% endblock %}
+
+    {% for activeFilter in activeFilters %}
+        {% block activeFilter %}
+            <span class="{{ activeItemClass }} {{ data.jsPrefix ~ activeFilter.name }}-trigger"
+                  set-value="{{ activeFilter.defaultValue }}">
+                {% block activeFilterKey %}
+                    <strong class="{{ activeItemKeyClass }}">{{ activeFilter.label | trans }}:</strong>
+                {% endblock %}
+
+                {% block activeFilterValue %}
+                    <span class="{{ activeItemValueClass }}">{{ activeFilter.value }}</span>
+                {% endblock %}
+
+                {% block activeFilterIcon %}
+                    &times;
+                {% endblock %}
+            </span>
+        {% endblock %}
+    {% endfor %}
+
+    {% block resetTrigger %}
+        <span class="{{ resetClass }}" set-value="1">
+            {% block resetText %}
+                <span class="{{ activeItemKeyClass }}">{{ 'ssp_asset_management.ssp_asset_search_filter_form.field.reset_all.label' | trans }}</span>
+            {% endblock %}
+
+            {% block resetIcon %}
+                &times;
+            {% endblock %}
+        </span>
+    {% endblock %}
+
+    {% for activeFilter in activeFilters %}
+        {% block activeFilterReset %}
+            {% include molecule('form-value-submitter') with {
+                attributes: {
+                    'form-class-name': data.formClass,
+                    'trigger-class-name': data.jsPrefix ~ activeFilter.name ~ '-trigger',
+                    'target-class-name': data.jsPrefix ~ activeFilter.name ~ '-target',
+                },
+            } only %}
+        {% endblock %}
+    {% endfor %}
+
+    {% block resetAll %}
+        {{ form_row(data.searchForm.reset, {
+            attr: {
+                class: data.jsPrefix ~ 'reset-target',
+            }})
+        }}
+        {% include molecule('form-value-submitter') with {
+            attributes: {
+                'form-class-name': data.formClass,
+                'trigger-class-name': data.jsPrefix ~ 'reset-trigger',
+                'target-class-name': data.jsPrefix ~ 'reset-target',
+            },
+        } only %}
+    {% endblock %}
+{% endblock %}

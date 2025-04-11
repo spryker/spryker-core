@@ -1,9 +1,9 @@
 {% extends template('page-layout-customer', 'CustomerPage') %}
 
 {% define data = {
-    sspInquiry: _view.sspInquiry,
+    inquiry: _view.sspInquiry,
     cancelForm: _view.cancelForm,
-    isSspInquiryOwner: _view.isSspInquiryOwner,
+    isInquiryOwner: _view.isSspInquiryOwner,
     title: 'customer.account.ssp_inquiry.details' | trans,
     activePage: 'ssp-inquiry',
 } %}
@@ -28,158 +28,207 @@
     } only %}
 {% endblock %}
 
-{% block separator %}
-    <hr class="box__separator">
-{% endblock %}
-
 {% block customerContent %}
     {% block actions %}
-        {% if data.sspInquiry.isCancellable and data.isSspInquiryOwner %}
+        {% if data.inquiry.isCancellable and data.isInquiryOwner %}
             <div class="box text-right">
                 {{ form_start(data.cancelForm, {'action': path('customer/ssp-inquiry/cancel', {
-                    'sspInquiryReference': data.sspInquiry.reference
+                    'sspInquiryReference': data.inquiry.reference
                 })}) }}
-                <button class="button button--alert button--hollow" data-qa="cancel-ssp-inquiry">{{ 'ssp_inquiry.cancel' | trans }}</button>
+                    <button class="button button--alert button--hollow" data-qa="cancel-ssp-inquiry">{{ 'ssp_inquiry.cancel' | trans }}</button>
                 {{ form_end(data.cancelForm) }}
             </div>
         {% endif %}
     {% endblock %}
 
-    {% block sspInquiryBox %}
+    {% block overlay %}
         <div class="box">
-            {% block sspInquiryMainInfo %}
-                <ul>
-                    <li>
-                        <strong>{{ 'customer.ssp_inquiry.details.reference' | trans  ~ ': ' }}</strong>
-                        {{ data.sspInquiry.reference }}
-                    </li>
-                    <li>
-                        <strong>{{ 'customer.ssp_inquiry.details.date' | trans  ~ ': ' }}</strong>
-                        {{ data.sspInquiry.createdDate | formatDateTime }}
-                    </li>
-                    <li>
-                        <strong>{{ 'customer.ssp_inquiry.details.status' | trans  ~ ': ' }}</strong>
+            {% block information %}
+                {% block main %}
+                    {% include molecule('inquiry-information', 'SspInquiryManagement') with {
+                        data: {
+                            title: 'customer.ssp_inquiry.details',
+                            information: [
+                                {
+                                    title: 'customer.ssp_inquiry.details.reference',
+                                    value: data.inquiry.reference,
+                                },
+                                {
+                                    title: 'customer.ssp_inquiry.details.date',
+                                    value: data.inquiry.createdDate | formatDateTime,
+                                },
+                                {
+                                    block: block('status'),
+                                },
+                            ] ,
+                        },
+                    } only %}
+                {% endblock %}
 
-                        {% include molecule('status') with {
-                            data: {
-                                label: ('ssp_inquiry.status.' ~ data.sspInquiry.status) | trans ,
-                                status: data.sspInquiry.status,
+                {% block details %}
+                    {% include molecule('inquiry-information', 'SspInquiryManagement') with {
+                        data: {
+                            title: 'customer.ssp_inquiry.details',
+                            information: [
+                                {
+                                    title: 'customer.ssp_inquiry.details.type',
+                                    value: "ssp_inquiry.type.#{data.inquiry.type}",
+                                },
+                                (data.inquiry.order and data.inquiry.order.orderReference
+                                    ? {
+                                        title: 'customer.ssp_inquiry.details.last_name',
+                                        value: data.inquiry.companyUser.customer.lastName,
+                                    }
+                                    : {}
+                                ),
+                                {
+                                    title: 'customer.ssp_inquiry.details.subject',
+                                    value: data.inquiry.subject,
+                                },
+                                {
+                                    title: 'customer.ssp_inquiry.details.description',
+                                    value: data.inquiry.description,
+                                },
+                            ] ,
+                        },
+                    } only %}
+                {% endblock %}
+
+                {% block asset %}
+                    {% include molecule('inquiry-information', 'SspInquiryManagement') with {
+                        data: {
+                            title: 'customer.ssp_inquiry.ssp_asset.details',
+                            information: data.inquiry.sspAsset ? [
+                                (data.inquiry.sspAsset.image
+                                    ? {
+                                        block: block('assetImage'),
+                                    }
+                                    : {}
+                                ),
+                                (data.inquiry.sspAsset.reference
+                                    ? {
+                                        title: 'customer.ssp_inquiry.details.ssp_asset_reference',
+                                        value: data.inquiry.sspAsset.reference,
+                                    }
+                                    : {}
+                                ),
+                                (data.inquiry.sspAsset.name
+                                    ? {
+                                        title: 'customer.ssp_inquiry.details.ssp_asset_name',
+                                        value: data.inquiry.sspAsset.name,
+                                    }
+                                    : {}
+                                ),
+                            ] : [],
+                            empty: 'customer.ssp_inquiry.details.ssp_asset_not_available',
+                        },
+                    } only %}
+                {% endblock %}
+
+                {% block owner %}
+                    {% include molecule('inquiry-information', 'SspInquiryManagement') with {
+                        data: {
+                            title: 'customer.ssp_inquiry.owner',
+                            information: [
+                                {
+                                    title: 'customer.ssp_inquiry.details.first_name',
+                                    value: data.inquiry.companyUser.customer.firstName,
+                                },
+                                {
+                                    title: 'customer.ssp_inquiry.details.last_name',
+                                    value: data.inquiry.companyUser.customer.lastName,
+                                },
+                                {
+                                    title: 'customer.ssp_inquiry.details.email',
+                                    value: data.inquiry.companyUser.customer.email,
+                                },
+                                {
+                                    title: 'customer.ssp_inquiry.details.company',
+                                    value: "#{data.inquiry.companyUser.companyBusinessUnit.company.name} / #{data.inquiry.companyUser.companyBusinessUnit.name}",
+                                },
+                            ],
+                            showSeparator: data.inquiry.files is not empty,
+                        },
+                    } only %}
+                {% endblock %}
+
+                {% block files %}
+                    {% if data.inquiry.files is not empty %}
+                        {% set columns = [
+                            {
+                                id: 'name',
+                                title: 'customer.ssp_inquiry.details.file.name',
                             },
-                        } only %}
-                    </li>
-                </ul>
-            {% endblock %}
-
-            {{ block('separator') }}
-
-            {% block sspInquiryDetails %}
-                <ul class="spacing-bottom">
-                    <li class="spacing-bottom">
-                        <strong>{{ 'customer.ssp_inquiry.details' | trans }}</strong>
-                    </li>
-                    <li>
-                        <strong>{{ 'customer.ssp_inquiry.details.type' | trans  ~ ': ' }}</strong>
-                        {{ ('ssp_inquiry.type.' ~ data.sspInquiry.type) | trans }}
-                    </li>
-                    {% if data.sspInquiry.order and data.sspInquiry.order.orderReference %}
-                        <li>
-                            <strong>{{ 'customer.ssp_inquiry.details.order_reference' | trans  ~ ': ' }}</strong>
-                            {{ data.sspInquiry.order.orderReference }}
-                        </li>
-                    {% endif %}
-                    <li>
-                        <strong>{{ 'customer.ssp_inquiry.details.subject' | trans  ~ ': ' }}</strong>
-                        {{ data.sspInquiry.subject }}
-                    </li>
-                    <li>
-                        <strong>{{ 'customer.ssp_inquiry.details.description' | trans  ~ ': ' }}</strong>
-                        {{ data.sspInquiry.description }}
-                    </li>
-                </ul>
-            {% endblock %}
-
-            {{ block('separator') }}
-
-            {% block sspAssetDetails %}
-                <ul class="spacing-bottom">
-                    <li class="spacing-bottom">
-                        <strong>{{ 'customer.ssp_inquiry.ssp_asset.details' | trans }}</strong>
-                    </li>
-                    {% if data.sspInquiry.sspAsset %}
-                        {% if data.sspInquiry.sspAsset.image %}
-                            <li>
-                                <div class="grid">
-                                    <div class="col col--sm-12 col--lg-6">
-                                {% include molecule('lazy-image') with {
-                                    class: 'spacing-bottom--big',
-                                    data: {
-                                        imagePlaceholder: 'data:image/webp;base64,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nTp06b7DKgHvJvp0dJQ95N9OnTp06dOnTp06b7DKgHvJvp0dJQ95N9OnTp06dOnTp06b7DKgHvJvp0dJQ95N9OnTp06dOnTp06b7DKgHvJvp0dJQ95N9OnTp06dOnTp06b7DKgHvJvp0dJQ95N9OnTp06dOnTp06b7DKgHvJvp0dJQ95N9OnTp06dOnTp06b7DKgHvJvp0dJQ95N9OnTp06dOnTp06b7DKgHvJvp0dJQ95N9OnTp06dOnTp06b7DKgHvJvp0dJQ95N9OnTp06dOnTp06b7DKgHvJvp0dJQ95N9OnTp06dOnTp06b5KWv2UkbMSNmJGzEjZiRsxI2YkbMSNVjp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp06dOnTp0cAAD+/+jQAAAAAAAAAAAAAAAAAAAAAGf//OHIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-                                        imageSrc: url('customer/asset/view-image', {'ssp-asset-reference': data.sspInquiry.sspAsset.reference}),
-                                        imageTitle: '',
-                                    },
-                                } only %}
-                                    </div>
-                                </div>
-                            </li>
-                        {% endif %}
-                        {% if data.sspInquiry.sspAsset.reference %}
-                            <li>
-                                <strong>{{ 'customer.ssp_inquiry.details.ssp_asset_reference' | trans  ~ ': ' }}</strong>
-                                {{ data.sspInquiry.sspAsset.reference }}
-                            </li>
-                        {% endif %}
-                        {% if data.sspInquiry.sspAsset.name %}
-                            <li>
-                                <strong>{{ 'customer.ssp_inquiry.details.ssp_asset_name' | trans  ~ ': ' }}</strong>
-                                {{ data.sspInquiry.sspAsset.name }}
-                            </li>
-                        {% endif %}
-                    {% else %}
-                        <li>{{ 'customer.ssp_inquiry.details.ssp_asset_not_available' | trans }}</li>
-                    {% endif %}
-                </ul>
-            {% endblock %}
-
-            {{ block('separator') }}
-
-            {% block sspInquiryOwnerInfo %}
-                <ul class="spacing-bottom">
-                    <li class="spacing-bottom">
-                        <strong>{{ 'customer.ssp_inquiry.owner' | trans }}</strong>
-                    </li>
-                    <li>
-                        <strong>{{ 'customer.ssp_inquiry.details.first_name' | trans  ~ ': ' }}</strong>
-                        {{ data.sspInquiry.companyUser.customer.firstName }}
-                    </li>
-                    <li>
-                        <strong>{{ 'customer.ssp_inquiry.details.last_name' | trans  ~ ': ' }}</strong>
-                        {{ data.sspInquiry.companyUser.customer.lastName }}
-                    </li>
-                    <li>
-                        <strong>{{ 'customer.ssp_inquiry.details.email' | trans  ~ ': ' }}</strong>
-                        {{ data.sspInquiry.companyUser.customer.email }}
-                    </li>
-                    <li class="spacing-bottom">
-                        <strong>{{ 'customer.ssp_inquiry.details.company' | trans  ~ ': ' }}</strong>
-                        {{ data.sspInquiry.companyUser.companyBusinessUnit.company.name }} / {{ data.sspInquiry.companyUser.companyBusinessUnit.name }}
-                    </li>
-                </ul>
-            {% endblock %}
-
-            {% block sspInquiryFiles %}
-                {% if data.sspInquiry.files is not empty %}
-                    {{ block('separator') }}
-
-                    {% block sspInquiryFilesTable %}
-                        {% include molecule('files-table', 'SspInquiryManagement') with {
-                            data: {
-                                files: data.sspInquiry.files,
-                                reference: data.sspInquiry.reference,
+                            {
+                                id: 'size',
+                                title: 'customer.ssp_inquiry.details.file.size',
                             },
-                        } only %}
-                    {% endblock %}
-                {% endif %}
+                            {
+                                id: 'extension',
+                                title: 'customer.ssp_inquiry.details.file.extension',
+                            },
+                            {
+                                id: 'actions',
+                                type: 'actions',
+                            },
+                        ] %}
+
+                        {% set rows = data.inquiry.files | map(file => {
+                            name: file.fileName,
+                            size: file.fileInfo[0].size | default(0) | format_bytes,
+                            extension: file.fileInfo[0].extension | default('N/A'),
+                            actions: [{
+                                url: url('/customer/ssp-inquiry-file/download',
+                                    {'ssp-inquiry-reference': data.inquiry.reference, 'uuid': file.uuid }
+                                ),
+                                label: 'customer.ssp_inquiry.details.file.download',
+                                qa: 'download-button',
+                            }],
+                        }) %}
+
+                        <div><strong>{{ 'customer.ssp_inquiry.details.files' | trans }}</strong></div>
+
+                        {% block table %}
+                            {% include molecule('advanced-table', 'FeatureUi') with {
+                                data: {
+                                    columns: columns,
+                                    rows: rows,
+                                },
+                            } only %}
+                        {% endblock %}
+                    {% endif %}
+                {% endblock %}
             {% endblock %}
         </div>
     {% endblock %}
+{% endblock %}
+
+{% block status %}
+    <li>
+        <strong>{{ 'customer.ssp_inquiry.details.status' | trans  ~ ': ' }}</strong>
+
+        {% include molecule('status') with {
+            data: {
+                label: ('ssp_inquiry.status.' ~ data.inquiry.status) | trans ,
+                status: data.inquiry.status,
+            },
+        } only %}
+    </li>
+{% endblock %}
+
+{% block assetImage %}
+    {% if data.inquiry.sspAsset.image | default %}
+        <div class="grid">
+            <div class="col col--sm-12 col--lg-6">
+                {% include molecule('lazy-image') with {
+                    class: 'spacing-bottom--big',
+                    data: {
+                        imagePlaceholder: publicPath('images/image-placeholder.png'),
+                        imageSrc: url('customer/asset/view-image', {'ssp-asset-reference': data.inquiry.sspAsset.reference}),
+                        imageTitle: '',
+                    },
+                } only %}
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'advanced-table-image-cell',
+} %}
+
+{% define data = {
+    cell: '',
+} %}
+
+{% block body %}
+    {% include molecule('lazy-image') with {
+        class: 'spacing-x--small',
+        modifiers: ['smaller'],
+        data: {
+            imagePlaceholder: publicPath('images/image-placeholder.png'),
+            imageSrc: data.cell,
+            isBackground: true,
+        },
+    } only %}
+{% endblock %}

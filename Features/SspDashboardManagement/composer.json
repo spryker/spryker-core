@@ -5,6 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.2",
+        "spryker-feature/feature-ui": "^0.1.0",
         "spryker-shop/shop-application": "^1.15.0",
         "spryker-shop/shop-application-extension": "^1.2.0",
         "spryker/cms-block-storage-extension": "^1.0.0",

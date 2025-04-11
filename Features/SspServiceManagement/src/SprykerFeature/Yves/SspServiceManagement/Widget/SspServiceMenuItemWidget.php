@@ -69,7 +69,7 @@ class SspServiceMenuItemWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@SspServiceManagement/views/ssp-service-menu-item/ssp-service-menu-item.twig';
+        return '@SspServiceManagement/views/service-menu-item/service-menu-item.twig';
     }
 
     /**

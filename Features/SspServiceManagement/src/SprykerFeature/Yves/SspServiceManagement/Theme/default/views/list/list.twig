@@ -3,7 +3,7 @@
 {% define data = {
     serviceList: _view.serviceList,
     title: 'ssp_service_management.list.title' | trans,
-    serviceSearchForm: _view.serviceSearchForm,
+    searchForm: _view.serviceSearchForm,
     activePage: 'ssp-service',
     pagination: _view.pagination,
 } %}
@@ -30,41 +30,107 @@
     <div class="box">
         {% block serviceContent %}
             {% block formStart %}
-                {{ form_start(data.serviceSearchForm, {
+                {{ form_start(data.searchForm, {
                     attr: {
                         class: formClass,
                     },
                 }) }}
             {% endblock %}
 
-            {% block filters %}
-                {% include molecule('ssp-service-filters', 'SspServiceManagement') with {
-                    class: 'spacing-y spacing-y--inner',
-                    data: {
-                        searchForm: data.serviceSearchForm,
+            {% block filtersSection %}
+                {% set filters = [
+                    {
+                        row: data.searchForm.searchType,
+                        class: 'col--md-6 col--lg-3',
                     },
-                } only %}
+                    {
+                        row: data.searchForm.searchText,
+                        class: 'col--md-6 col--lg-6',
+                    },
+                    {
+                        row: data.searchForm.companyBusinessUnit,
+                        class: 'col--md-6 col--lg-3',
+                    },
+                ] %}
+
+                {% block filters %}
+                    {% include molecule('filters', 'FeatureUi') with {
+                        data: {
+                            filters: filters,
+                        },
+                    } only %}
+                {% endblock %}
             {% endblock %}
 
-            {% block table %}
-                {% include molecule('ssp-service-table', 'SspServiceManagement') with {
-                    data: {
-                        rows: data.serviceList,
-                        searchForm: data.serviceSearchForm,
-                        formClass: formClass,
-                        pagination: {
-                            parameters: app.request.query.all,
-                            currentPage: data.pagination.page,
-                            paginationPath: 'customer/ssp-service',
-                            maxPage: data.pagination.lastPage,
-                            showAlwaysFirstAndLast: true
-                        },
+            {% block services %}
+                {% set columns = [
+                    {
+                        id: 'order_reference',
+                        title: 'ssp_service_management.list.order_reference',
+                        sortable: true,
                     },
-                } only %}
+                    {
+                        id: 'product_name',
+                        title: 'ssp_service_management.list.product_name',
+                        sortable: true,
+                    },
+                    {
+                        id: 'scheduled_at',
+                        title: 'ssp_service_management.list.scheduled_at',
+                        type: 'date',
+                        sortable: true,
+                    },
+                    {
+                        id: 'created_at',
+                        title: 'ssp_service_management.list.created_at',
+                        type: 'date',
+                        sortable: true,
+                    },
+                    {
+                        id: 'state',
+                        title: 'ssp_service_management.list.state',
+                        sortable: true,
+                    },
+                    {
+                        id: 'actions',
+                        type: 'actions',
+                    },
+                ] %}
+
+                {% set rows = data.serviceList | map(row => {
+                    order_reference: row.orderReference,
+                    product_name: row.productName,
+                    scheduled_at: row.scheduledAt,
+                    created_at: row.createdAt,
+                    state: row.stateDisplayName | trans,
+                    actions: [{
+                        url: url('customer/order/details', { 'id': row.idSalesOrder }),
+                        label: 'ssp_service_management.list.button.view'
+                    }],
+                }) %}
+
+                {% block table %}
+                    {% include molecule('advanced-table', 'FeatureUi') with {
+                        data: {
+                            columns: columns,
+                            rows: rows,
+                            emptyText: 'ssp_service_management.list.empty',
+                            sortableForm: data.searchForm,
+                            sortableFormClass: formClass,
+                            pagination: {
+                                parameters: app.request.query.all,
+                                currentPage: data.pagination.page,
+                                paginationPath: 'customer/ssp-service',
+                                maxPage: data.pagination.lastPage,
+                                showAlwaysFirstAndLast: true
+                            },
+                        },
+                    } only %}
+                {% endblock %}
             {% endblock %}
 
             {% block formEnd %}
-                {{ form_end(data.serviceSearchForm) }}
+                {{ form_end(data.searchForm) }}
             {% endblock %}
         {% endblock %}
     </div>

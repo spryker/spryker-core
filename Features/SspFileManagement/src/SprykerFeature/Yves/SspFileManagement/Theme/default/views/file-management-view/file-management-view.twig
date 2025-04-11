@@ -1,0 +1,143 @@
+{# @var data.files array<\Generated\Shared\Transfer\FileTransfer> #}
+{# @var data.fileSearchFilterForm \SprykerFeature\Yves\SspFileManagement\Form\FileSearchFilterForm #}
+
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    title: 'ssp_file_management.file_management' | trans,
+    activePage: 'sspFileManagement',
+    currentBreadcrumb: 'ssp_file_management.file_management' | trans,
+    files: _view.files,
+    searchForm: _view.fileSearchFilterForm,
+    pagination: {
+        parameters: app.request.query.all(),
+        currentPage: _view.pagination.page,
+        paginationPath: 'ssp-file-management',
+        maxPage: _view.pagination.lastPage,
+        showAlwaysFirstAndLast: true,
+    },
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'ssp_file_management.file_management' | trans,
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
+
+{% set jsPrefix = 'js-file-management-' %}
+{% set formClass = "#{jsPrefix}form" %}
+
+{% block customerContent %}
+    <div class="box">
+        {% block formStart %}
+            {{ form_start(data.searchForm, {
+                attr: {
+                    class: formClass,
+                },
+            }) }}
+        {% endblock %}
+
+        {% block filtersSection %}
+            {% set filters = data.searchForm.filters.children
+                | map(filter => { row: filter, class: 'search' in filter.vars.id ? 'col--lg-8' : 'col--lg-4' })
+            %}
+
+            {% block filters %}
+                {% include molecule('filters', 'FeatureUi') with {
+                    data: {
+                        filters: filters,
+                    },
+                } only %}
+            {% endblock %}
+        {% endblock %}
+
+        {% block activeFilters %}
+            {% include molecule('active-filters', 'FeatureUi') with {
+                class: 'spacing-bottom spacing-bottom--big',
+                data: {
+                    searchForm: data.searchForm,
+                    jsPrefix: jsPrefix,
+                    formClass: formClass,
+                },
+            } only %}
+        {% endblock %}
+
+        {% block files %}
+            {% set columns = [
+                {
+                    id: 'idFile',
+                    title: 'ssp_file_management.file_management.table.header.file_reference',
+                    sortable: true,
+                },
+                {
+                    id: 'fileName',
+                    title: 'ssp_file_management.file_management.table.header.file_name',
+                    sortable: true,
+                },
+                {
+                    id: 'fileType',
+                    title: 'ssp_file_management.file_management.table.header.file_type',
+                    sortable: true,
+                },
+                {
+                    id: 'createdAt',
+                    title: 'ssp_file_management.file_management.table.header.file_created_at',
+                    sortable: true,
+                    type: 'date',
+                },
+                {
+                    id: 'size',
+                    title: 'ssp_file_management.file_management.table.header.file_size',
+                    sortable: true,
+                },
+                {
+                    id: 'actions',
+                    title: 'ssp_file_management.file_management.table.header.actions',
+                    type: 'actions',
+                },
+            ] %}
+
+            {% set rows = data.files | map(file => {
+                idFile: file.fileReference,
+                fileName: file.fileName,
+                fileType: file.fileInfo[0].extension,
+                createdAt: file.fileInfo[0].createdAt,
+                size: file.fileInfo[0].size | readable_bytesize,
+                actions: can('DownloadFilesPermissionPlugin')
+                    ? [{
+                        url: path('ssp-file-management/download', { 'id-file': file.uuid }),
+                        label: 'ssp_file_management.file_management.table.actions.download',
+                        qa: 'download-button',
+                    }]
+                    : [],
+            }) %}
+
+            {% block table %}
+                {% include molecule('advanced-table', 'FeatureUi') with {
+                    data: {
+                        columns: columns,
+                        rows: rows,
+                        emptyText: 'ssp_file_management.file_management.view.empty',
+                        sortableForm: data.searchForm,
+                        sortableFormClass: formClass,
+                        pagination: data.pagination,
+                    },
+                } only %}
+            {% endblock %}
+        {% endblock %}
+
+        {% block formEnd %}
+            {{ form_end(data.searchForm) }}
+        {% endblock %}
+    </div>
+{% endblock %}

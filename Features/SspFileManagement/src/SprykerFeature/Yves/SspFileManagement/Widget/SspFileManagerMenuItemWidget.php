@@ -51,7 +51,7 @@ class SspFileManagerMenuItemWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@SspFileManagement/views/ssp-file-management-menu-item/ssp-file-management-menu-item.twig';
+        return '@SspFileManagement/views/file-management-menu-item/file-management-menu-item.twig';
     }
 
     /**

@@ -86,9 +86,9 @@
         {% endblock %}
 
         {% block assets %}
-            {% set sspAssetCollection = data.dashboard.dashboardComponentAssets ? data.dashboard.dashboardComponentAssets.sspAssetCollection : null %}
+            {% set assetCollection = data.dashboard.dashboardComponentAssets ? data.dashboard.dashboardComponentAssets.sspAssetCollection : null %}
 
-            {% widget 'SspAssetListWidget' args [sspAssetCollection] only %}
+            {% widget 'SspAssetListWidget' args [assetCollection] only %}
             {% endwidget %}
         {% endblock %}
 
@@ -115,11 +115,11 @@
                     {% endif %}
 
                     {% block inquiryCol %}
-                        {% set sspInquiryCollection = data.dashboard.dashboardComponentInquiry is not empty ? data.dashboard.dashboardComponentInquiry.sspInquiryCollection : null %}
+                        {% set inquiryCollection = data.dashboard.dashboardComponentInquiry is not empty ? data.dashboard.dashboardComponentInquiry.sspInquiryCollection : null %}
 
                         <div class="{{ colClasses }}">
                             {% block inquiries %}
-                                {% widget 'DashboardInquiryWidget' args [sspInquiryCollection] only %}
+                                {% widget 'DashboardInquiryWidget' args [inquiryCollection] only %}
                                 {% endwidget %}
                             {% endblock %}
                         </div>

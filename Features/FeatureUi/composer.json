@@ -1,0 +1,32 @@
+{
+    "name": "spryker-feature/feature-ui",
+    "type": "library",
+    "description": "FeatureUi module",
+    "license": "proprietary",
+    "require": {},
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/testify": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerFeature\\": "src/SprykerFeature/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerFeatureTest\\": "tests/SprykerFeatureTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {},
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

@@ -34,6 +34,6 @@ class CreateOrderSspInquiryLinkWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@SspInquiryManagement/views/ssp-inquiry-order-action-button/ssp-inquiry-order-action-button.twig';
+        return '@SspInquiryManagement/views/inquiry-order-action-button/inquiry-order-action-button.twig';
     }
 }

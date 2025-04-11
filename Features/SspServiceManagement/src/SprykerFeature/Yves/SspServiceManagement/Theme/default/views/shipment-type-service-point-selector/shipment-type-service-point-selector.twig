@@ -4,7 +4,7 @@
     shipmentTypeOptions: _widget.shipmentTypeOptions,
     hasOnlyServiceShipmentType: _widget.hasOnlyServiceShipmentType,
     hasOnlyDeliveryShipmentType: _widget.hasOnlyDeliveryShipmentType,
-    isDisabled: _widget.isDisabled,
+    isSelectionDisabled: _widget.isDisabled,
     isServiceDateTimeEnabled: _widget.isServiceDateTimeEnabled,
     formFieldShipmentTypeUuid: _widget.formFieldShipmentTypeUuid,
     formFieldServicePointUuid: _widget.formFieldServicePointUuid,
@@ -22,7 +22,7 @@
 
     {% include molecule('service-point-shipment-types', 'SspServiceManagement') with {
         data: {
-            isDisabled: data.isDisabled,
+            isSelectionDisabled: data.isSelectionDisabled,
             formFieldShipmentTypeUuid: data.formFieldShipmentTypeUuid,
             shipmentTypes: data.shipmentTypeOptions,
             formFieldServicePointUuid: data.formFieldServicePointUuid,

@@ -34,6 +34,6 @@ class SspAssetListWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@SspAssetManagement/views/ssp-asset-list/ssp-asset-list.twig';
+        return '@SspAssetManagement/views/asset-list/asset-list.twig';
     }
 }

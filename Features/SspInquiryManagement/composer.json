@@ -6,6 +6,7 @@
     "require": {
         "ext-zlib": "*",
         "php": ">=8.2",
+        "spryker-feature/feature-ui": "^0.1.0",
         "spryker-feature/ssp-asset-management": "^0.1.0",
         "spryker-shop/shop-application": "^1.15.0",
         "spryker-shop/shop-application-extension": "^1.2.0",

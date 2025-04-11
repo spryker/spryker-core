@@ -26,7 +26,7 @@ class SspFileManagementViewController extends SspFileManagementAbstractControlle
         return $this->view(
             $this->executeIndexAction($request),
             [],
-            '@SspFileManagement/views/ssp-file-management-view/ssp-file-management-view.twig',
+            '@SspFileManagement/views/file-management-view/file-management-view.twig',
         );
     }
 

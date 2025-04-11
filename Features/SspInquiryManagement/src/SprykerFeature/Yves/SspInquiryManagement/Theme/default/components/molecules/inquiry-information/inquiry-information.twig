@@ -1,0 +1,53 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'inquiry-information',
+} %}
+
+{% define data = {
+    information: [],
+    title: '',
+    empty: '',
+    showSeparator: true,
+} %}
+
+{% block body %}
+    {% block title %}
+        {% if data.title %}
+            <div class="spacing-bottom {{ config.name }}__title">
+                <strong>{{ data.title | trans }}</strong>
+            </div>
+        {% endif %}
+    {% endblock %}
+
+    {% block list %}
+        {% if data.information is not empty %}
+            <ul class="{{ config.name }}__info">
+                {% block listInner %}
+                    {% for info in data.information %}
+                        {% block item %}
+                            {% if info is not empty %}
+                                <li>
+                                    {% if info.block | default %}
+                                        {{ info.block | raw }}
+                                    {% else %}
+                                        <strong class="{{ config.name }}__info-title">{{ info.title | trans }}:</strong>
+                                        {{ info.value | trans }}
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                        {% endblock %}
+                    {% endfor %}
+                {% endblock %}
+            </ul>
+        {% else %}
+            <div>{{ data.empty | trans }}</div>
+        {% endif %}
+    {% endblock %}
+
+    {% block separator %}
+        {% if data.showSeparator %}
+            <hr class="box__separator">
+        {% endif %}
+    {% endblock %}
+{% endblock %}

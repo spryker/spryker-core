@@ -52,7 +52,7 @@ class SspInquiryMenuItemWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@SspInquiryManagement/views/ssp-inquiry-menu-item/ssp-inquiry-menu-item.twig';
+        return '@SspInquiryManagement/views/inquiry-menu-item/inquiry-menu-item.twig';
     }
 
     /**

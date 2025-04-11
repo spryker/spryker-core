@@ -1,0 +1,20 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'advanced-table-date-cell',
+} %}
+
+{% define data = {
+    cell: '',
+    config: {
+        options: {
+            format: '',
+        },
+    },
+} %}
+
+{% block body %}
+    {% if data.cell %}
+        {{ data.cell | formatDateTime(data.config.options.format | default(null)) }}
+    {% endif %}
+{% endblock %}

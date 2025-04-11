@@ -1,0 +1,18 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'advanced-table-status-cell',
+} %}
+
+{% define data = {
+    cell: {},
+} %}
+
+{% block body %}
+    {% include molecule('status') with {
+        data: {
+            label: data.cell.label | trans,
+            status: data.cell.status | replace({' ': '-'}) | lower,
+        },
+    } only %}
+{% endblock %}

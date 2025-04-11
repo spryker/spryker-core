@@ -7,7 +7,7 @@
 
 {% define data = {
     shipmentTypes: [],
-    isDisabled: false,
+    isSelectionDisabled: false,
     formFieldShipmentTypeUuid: null,
     isServiceDateTimeEnabled: false,
     hasOnlyServiceShipmentType: false,
@@ -114,7 +114,7 @@
                                         attributes: {
                                             checked: shipmentType.serviceTypeKey,
                                             name: data.formFieldShipmentTypeUuid,
-                                            disabled: data.isDisabled,
+                                            disabled: data.isSelectionDisabled,
                                             value: shipmentType.value,
                                             required: shipmentType.isServicePointRequired,
                                             'data-service-type-key': shipmentType.serviceTypeKey,
@@ -146,7 +146,7 @@
                     attributes: {
                         checked: shipmentType.serviceTypeKey,
                         name: data.formFieldShipmentTypeUuid,
-                        disabled: data.isDisabled,
+                        disabled: data.isSelectionDisabled,
                         value: shipmentType.value,
                         required: shipmentType.isServicePointRequired,
                         'data-service-type-key': shipmentType.serviceTypeKey,

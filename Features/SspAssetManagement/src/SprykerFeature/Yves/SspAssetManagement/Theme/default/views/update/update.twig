@@ -2,7 +2,7 @@
 
 {% define data = {
     form: _view.form,
-    sspAsset: _view.sspAsset,
+    asset: _view.sspAsset,
     formAction: url('customer/asset/update', { 'reference': _view.sspAsset.reference }),
     title: 'ssp_asset.update.title' | trans,
     activePage: 'asset',
@@ -21,7 +21,7 @@
                     url: url('customer/asset'),
                 },
                 {
-                    label: 'ssp_asset.update.title' | trans ~ ' ' ~ data.sspAsset.reference,
+                    label: 'ssp_asset.update.title' | trans ~ ' ' ~ data.asset.reference,
                 }
             ]
         }
@@ -36,10 +36,10 @@
                     form: data.form,
                     formAction: data.formAction,
                     assetData: [
-                        { title: 'ssp_asset.details.reference', value: data.sspAsset.reference },
+                        { title: 'ssp_asset.details.reference', value: data.asset.reference },
                         { title: 'ssp_asset.details.status', value: block('status') },
-                        { title: 'ssp_asset.details.created_date', value: data.sspAsset.createdDate | formatDateTime },
-                        { title: 'ssp_asset.details.owner', value: data.sspAsset.companyBusinessUnit.name | default('ssp_asset.details.owner.undefined' | trans) },
+                        { title: 'ssp_asset.details.created_date', value: data.asset.createdDate | formatDateTime },
+                        { title: 'ssp_asset.details.owner', value: data.asset.companyBusinessUnit.name | default('ssp_asset.details.owner.undefined' | trans) },
                     ],
                 },
             } only %}
@@ -51,8 +51,8 @@
     {% include molecule('status') with {
         class: 'spacing-y',
         data: {
-            label: ('ssp_asset.status.' ~ data.sspAsset.status) | trans,
-            status: data.sspAsset.status,
+            label: ('ssp_asset.status.' ~ data.asset.status) | trans,
+            status: data.asset.status,
         },
     } only %}
 {% endblock %}
