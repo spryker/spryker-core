@@ -1,5 +1,6 @@
 {
     "include": {
-        "spryker/transfer": "Provides transfer objects definition with strict types and `::get*OrFail()` functionality."
+        "spryker/transfer": "Provides transfer objects definition with strict types and `::get*OrFail()` functionality.",
+        "spryker-feature/feature-ui": "Offers shared UI components used across various feature modules."
     }
 }

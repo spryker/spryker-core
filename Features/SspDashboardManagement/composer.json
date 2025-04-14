@@ -21,7 +21,6 @@
         "spryker/zed-request": "^3.22.0"
     },
     "require-dev": {
-        "spryker-feature/ssp-inquiry-management": "*",
         "spryker-shop/customer-page": "*",
         "spryker/code-sniffer": "*",
         "spryker/propel": "*",

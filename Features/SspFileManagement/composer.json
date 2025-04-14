@@ -31,7 +31,6 @@
     },
     "require-dev": {
         "spryker-feature/ssp-dashboard-management": "*",
-        "spryker-feature/ssp-inquiry-management": "*",
         "spryker-shop/customer-page": "*",
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
@@ -45,7 +44,6 @@
     },
     "suggest": {
         "spryker-feature/ssp-dashboard-management": "If you want to see inquiries on the dashboard.",
-        "spryker-feature/ssp-inquiry-management": "Use this module when you want to use the Inquiries with file managment",
         "spryker-shop/customer-page": "Contains the customer page and its components.",
         "spryker/container": "If you want to use Application plugins. Minimum required version: 1.0.0",
         "spryker/router": "Use this module when you want to use the Router.",

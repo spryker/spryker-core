@@ -63,7 +63,6 @@
         "spryker/testify": "*"
     },
     "suggest": {
-        "spryker-feature/ssp-inquiry-management": "If you want to use the advanced table view, you need to install the spryker-feature/ssp-inquiry-management module.",
         "spryker-shop/customer-page": "If you want to use the customer page module, you need to install the spryker-shop/customer-page module.",
         "spryker/catalog": "If you want to use the catalog module, you need to install the spryker/catalog module.",
         "spryker/product-page-search": "If you want to use the product page data expander and data loader plugins, you need to install the spryker/product-page-search module.",

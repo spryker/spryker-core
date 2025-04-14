@@ -37,6 +37,7 @@
     </transfer>
 
     <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="Store">
