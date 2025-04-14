@@ -12,17 +12,19 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CountryConfig extends AbstractBundleConfig
 {
     /**
+     * Specification:
+     * - Includes ISO2 codes for the territories that should be skipped during the data install process. Such territories will not be available anywhere in the system (e.g. in the data returned by CountryFacade).
+     * - Refer to /data/cldr/en/territories.json for the full list of countries and codes.
+     *
      * @api
+     *
+     * @example ['EU', 'QO']
      *
      * @return array<string>
      */
     public function getTerritoriesBlacklist(): array
     {
-        return [
-            'EU', // Europe
-            'QO', // Outlying Oceania
-            'ZZ', // undefined
-        ];
+        return [];
     }
 
     /**
