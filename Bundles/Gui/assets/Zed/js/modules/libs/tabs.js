@@ -22,7 +22,13 @@ Tabs.prototype.checkErrors = function () {
 
     self.tabsContainer.find('.tab-content .tab-pane').each(function (i, tab) {
         var hasError = $(tab).find('.has-error, .alert-danger').length;
-        var tabHeader = self.tabsContainer.find('.nav-tabs li[data-tab-content-id="' + tab.id + '"]');
+
+        if (window.spryker?.isBootstrapVersionLatest) {
+            var tabHeader = self.tabsContainer.find('.nav-tabs li[data-bs-target="' + tab.id + '"]');
+        } else {
+            var tabHeader = self.tabsContainer.find('.nav-tabs li[data-tab-content-id="' + tab.id + '"]');
+        }
+        var tabHeader = self.tabsContainer.find('.nav-tabs li[data-bs-target="' + tab.id + '"]');
 
         if (hasError) {
             tabHeader.addClass('error');
@@ -47,6 +53,7 @@ Tabs.prototype.setNavigation = function () {
 
 Tabs.prototype.listenNavigationButtons = function () {
     var self = this;
+
     self.tabsContainer.find('.btn-tab-previous').on('click', function (event) {
         event.preventDefault();
         var element = $(this);
@@ -116,7 +123,15 @@ Tabs.prototype.changeTabsOnClick = function () {
 
 Tabs.prototype.activateTab = function (element, hash) {
     window.history.pushState(null, null, hash);
-    element.tab('show');
+
+    if (window.spryker?.isBootstrapVersionLatest) {
+        var bootstrap = window.spryker.bootstrap;
+        var tab = bootstrap.Tab.getOrCreateInstance(element[0]?.parentNode);
+        tab?.show();
+    } else {
+        element.tab('show');
+    }
+
     this.onTabChange(element.attr('href'));
 };
 
@@ -137,8 +152,15 @@ Tabs.prototype.showHideNavigationButtons = function () {
 
 Tabs.prototype.navigateElement = function () {
     var self = this;
-    var element = self.tabsContainer.find('[data-toggle="tab"]:eq(' + this.currentTabPosition + ')');
-    var hash = element.attr('href');
+
+    if (window.spryker?.isBootstrapVersionLatest) {
+        var tab = self.tabsContainer.find('[data-bs-toggle="tab"]:eq(' + this.currentTabPosition + ')');
+        var element = tab.find('a');
+        var hash = tab.attr('data-bs-target');
+    } else {
+        var element = self.tabsContainer.find('[data-toggle="tab"]:eq(' + this.currentTabPosition + ')');
+        var hash = element.attr('href');
+    }
 
     this.proceedChange(element, hash);
 };

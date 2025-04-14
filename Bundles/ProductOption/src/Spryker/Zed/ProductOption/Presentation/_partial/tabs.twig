@@ -1,7 +1,9 @@
 <div class="tabs-container tabs-manager product-option-tabs">
     <ul id="product-option-tabs" class="nav nav-tabs">
-        <li class="active"><a class="tab-item" data-toggle="tab" href="#general">{{ 'General information' | trans }}</a></li>
-        <li><a class="tab-item" data-toggle="tab" href="#products">{{ 'Products' | trans }}</a></li>
+        {# @deprecated html attribute "data-toggle" is deprecated use "data-bs-toggle" instead #}
+        <li class="active" data-bs-toggle="tab"><a data-toggle="tab" class="tab-item" href="#general">{{ 'General information' | trans }}</a></li>
+        {# @deprecated html attribute "data-toggle" is deprecated use "data-bs-toggle" instead #}
+        <li data-bs-toggle="tab"><a data-toggle="tab" class="tab-item" href="#products">{{ 'Products' | trans }}</a></li>
     </ul>
     <div class="tab-content ">
         <div id="general" class="tab-pane active">

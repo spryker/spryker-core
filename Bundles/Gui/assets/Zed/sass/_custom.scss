@@ -4,6 +4,7 @@
  */
 
 /* General styles */
+
 body {
     font-family: $main-font;
     background-color: $grey-lighter;
@@ -1244,7 +1245,7 @@ a.label {
         }
     }
 
-    a:not([class]) {
+    a:not([class]):not(.dropdown-menu *) {
         display: inline-block;
         vertical-align: middle;
         padding: 3px 8px;
@@ -1528,7 +1529,6 @@ a.label {
     &.navbar-minimalize {
         border-radius: 4px;
         padding: 2px 12px;
-        margin-top: 10px;
 
         .fa-bars {
             font-size: 12px;

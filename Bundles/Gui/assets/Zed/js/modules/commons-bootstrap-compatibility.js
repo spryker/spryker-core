@@ -3,7 +3,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+/*
+ * This file include new set of dependencies for bootstrap 5 compatibility.
+ * It will replace a commons.js in the next Major.
+ */
+
 'use strict';
+
+// Temporary check for bootstrap compatibility
+if (!window.spryker) {
+    window.spryker = {};
+}
+window.spryker.isBootstrapVersionLatest = true;
 
 // external dependencies
 const $ = require('jquery');
@@ -23,7 +34,6 @@ require('jquery-ui/ui/widgets/autocomplete');
 require('jquery-ui/ui/widgets/button');
 require('jquery-ui/ui/widgets/sortable');
 require('jquery-ui/ui/widgets/tooltip');
-require('bootstrap-sass');
 require('metismenu');
 require('pace');
 require('@spryker/nestable');
@@ -32,6 +42,8 @@ window.CodeMirror = require('codemirror');
 require('codemirror/mode/htmlmixed/htmlmixed.js');
 require('summernote');
 require('sweetalert');
+var bootstrap = require('bootstrap');
+window.spryker.bootstrap = bootstrap;
 
 XMLHttpRequest.prototype = Object.getPrototypeOf(new XMLHttpRequest());
 

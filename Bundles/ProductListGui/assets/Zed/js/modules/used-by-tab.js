@@ -5,7 +5,14 @@ $(document).ready(function () {
         e.preventDefault();
 
         clickedButtonUrl = $(this).attr('href');
-        $('#confirmation-modal-window').modal('show');
+
+        if (window.spryker?.isBootstrapVersionLatest) {
+            var bootstrap = window.spryker.bootstrap;
+            var confirmModal = new bootstrap.Modal($('#confirmation-modal-window'));
+            confirmModal.show();
+        } else {
+            $('#confirmation-modal-window').modal('show');
+        }
     });
 
     $('.js-btn-confirm').on('click', function () {

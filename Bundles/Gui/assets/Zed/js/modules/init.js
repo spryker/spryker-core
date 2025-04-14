@@ -204,8 +204,6 @@ $(document).ready(function () {
         },
     );
 
-    $('.dropdown-toggle').dropdown();
-
     $('.more-history').click(function (e) {
         e.preventDefault();
         var idProductItem = $(this).data('id');
@@ -225,6 +223,14 @@ $(document).ready(function () {
     $('.tabs-container').each(function (index, item) {
         new Tabs(item, dataTable.onTabChange);
     });
+
+    if (window.spryker?.isBootstrapVersionLatest) {
+        $('a[data-toggle="tab"]').on('click', function (event) {
+            event.preventDefault();
+        });
+    } else {
+        $('.dropdown-toggle').dropdown();
+    }
 
     /* Init translation copy fields */
     new TranslationCopyFields();

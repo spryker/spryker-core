@@ -137,7 +137,13 @@ $(document).ready(function () {
         }
     });
 
-    $('[data-toggle=popover]').popover();
+    if (window.spryker?.isBootstrapVersionLatest) {
+        const bootstrap = window.spryker.bootstrap;
+        const dropdowns = document.querySelectorAll('[data-toggle=popover]');
+        const dropdown = [...dropdowns].map((dropdownToggleEl) => new bootstrap.Dropdown(dropdownToggleEl));
+    } else {
+        $('[data-toggle=popover]').popover();
+    }
 });
 
 // Minimalize menu when screen is less than 768px

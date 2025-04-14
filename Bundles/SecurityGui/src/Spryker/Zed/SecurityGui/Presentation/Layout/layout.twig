@@ -1,3 +1,5 @@
+{% set isBootstrapLatest = false %}
+
 <!DOCTYPE html>
 <html lang="{{ (app.locale | slice(0, 2)) | lower }}">
 <head>
@@ -8,7 +10,11 @@
     <title>{% block head_title %}{% if title is defined %}{{ title | trans }}{% endif %}{% endblock %}</title>
 
     {% block head_css %}
-        <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-gui-commons.css') }}">
+        {% if isBootstrapLatest %}
+            <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-gui-commons-bootstrap-compatibility.css') }}">
+        {% else %}
+            <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-gui-commons.css') }}">
+        {% endif %}
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     {% endblock %}
 
@@ -35,7 +41,11 @@
 </div>
 
 {% block footer_js %}
-    <script src="{{ assetsPath('js/spryker-zed-gui-commons.js') }}"></script>
+    {% if isBootstrapLatest %}
+        <script src="{{ assetsPath('js/spryker-zed-gui-commons-bootstrap-compatibility.js') }}"></script>
+    {% else %}
+        <script src="{{ assetsPath('js/spryker-zed-gui-commons.js') }}"></script>
+    {% endif %}
 {% endblock %}
 
 </body>

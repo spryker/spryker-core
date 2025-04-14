@@ -1,7 +1,13 @@
 <div class="tabs-container">
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#assigned-tab" id="">{{ 'Assigned customers' | trans }}</a></li>
-        <li class=""><a data-toggle="tab" href="#deassigned-tab" id="deassigned-tab-label">{{ 'Customers to be deassigned' | trans }}</a></li>
+        <li class="active" data-bs-toggle="tab" data-bs-target="#assigned-tab" class="active">
+            {# @deprecated html attribute "data-toggle" is deprecated use "data-bs-toggle" instead #}
+            <a data-toggle="tab" href="#assigned-tab" id="">{{ 'Assigned customers' | trans }}</a>
+        </li>
+        <li data-bs-toggle="tab" data-bs-target="#deassigned-tab">
+            {# @deprecated html attribute "data-toggle" is deprecated use "data-bs-toggle" instead #}
+            <a data-toggle="tab" href="#deassigned-tab" id="deassigned-tab-label">{{ 'Customers to be deassigned' | trans }}</a>
+        </li>
     </ul>
     <div class="tab-content">
         <div id="assigned-tab" class="tab-pane active">

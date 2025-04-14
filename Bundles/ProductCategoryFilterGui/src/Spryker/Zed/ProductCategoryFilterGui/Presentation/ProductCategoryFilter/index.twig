@@ -14,14 +14,16 @@
             <div class="ibox-content">
                 {% if not productCategoryFilters.idProductCategoryFilter %}
                     <div class="alert alert-info alert-dismissable">
-                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        {# @deprecated html attribute "data-dismiss" is deprecated use "data-bs-dismiss" instead #}
+                        <button aria-hidden="true" data-bs-dismiss="alert" data-dismiss="alert" class="close" type="button">×</button>
                         <div>
                             {{ 'There are no manual filter preferences defined for this category. The filters listed below are global settings. To define manual references for this category, modify the filters below.' | trans }}
                         </div>
                     </div>
                 {% else %}
                     <div class="alert alert-info alert-dismissable">
-                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        {# @deprecated html attribute "data-dismiss" is deprecated use "data-bs-dismiss" instead #}
+                        <button aria-hidden="true" data-bs-dismiss="alert" data-dismiss="alert" class="close" type="button">×</button>
                         {% apply trans|raw %}
                             <div>
                                 Filter preferences for this category have been manually defined. You can discard the custom settings by resetting to global settings.
@@ -31,7 +33,8 @@
                 {% endif %}
                 {% if nonSearchAttributes is not empty %}
                     <div class="alert alert-info alert-dismissable">
-                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        {# @deprecated html attribute "data-dismiss" is deprecated use "data-bs-dismiss" instead #}
+                        <button aria-hidden="true" data-bs-dismiss="alert" data-dismiss="alert" class="close" type="button">×</button>
                         {% apply trans|raw %}
                             <div>
                                 Please note, the category filters in <span class="non-filter-attribute">italics</span> will not be displayed in the shop. To display the filters please add them to global filter settings.

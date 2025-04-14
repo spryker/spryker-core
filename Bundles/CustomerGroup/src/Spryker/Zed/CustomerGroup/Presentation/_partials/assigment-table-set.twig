@@ -1,9 +1,11 @@
 <div class="tabs-container">
     <ul class="nav nav-tabs">
-        <li class="active">
+        <li class="active" data-bs-toggle="tab" data-bs-target="#{{ sourceTabId }}" class="active">
+            {# @deprecated html attribute "data-toggle" is deprecated use "data-bs-toggle" instead #}
             <a data-toggle="tab" href="#{{ sourceTabId }}">{{ sourceTabLabel }}</a>
         </li>
-        <li class="">
+        <li data-bs-toggle="tab" data-bs-target="#{{ destinationTabId }}">
+            {# @deprecated html attribute "data-toggle" is deprecated use "data-bs-toggle" instead #}
             <a data-toggle="tab" href="#{{ destinationTabId }}" id="{{ destinationTabId }}-label">
                 {{ destinationTabLabel }}
             </a>

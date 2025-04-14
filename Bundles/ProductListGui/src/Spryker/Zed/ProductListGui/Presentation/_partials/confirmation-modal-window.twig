@@ -3,7 +3,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{{ modalTitle | default('Confirm action') | trans }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                {# @deprecated html attribute "data-dismiss" is deprecated use "data-bs-dismiss" instead #}
+                <button type="button" class="close" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -14,7 +15,8 @@
                 <button type="button" class="btn btn-primary js-btn-confirm">
                     {{ confirmButtonText | default('Сonfirm') | trans }}
                 </button>
-                <button type="button" class="btn btn-danger js-btn-cancel" data-dismiss="modal">
+                {# @deprecated html attribute "data-dismiss" is deprecated use "data-bs-dismiss" instead #}
+                <button type="button" class="btn btn-danger js-btn-cancel" data-bs-dismiss="modal" data-dismiss="modal">
                     {{ cancelButtonText | default('Cancel') | trans }}
                 </button>
             </div>

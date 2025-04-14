@@ -1,0 +1,40 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+// fix path to fonts in the `bootstrap-sass` dependency
+$icon-font-path: '../../fonts/bootstrap/';
+
+// external dependencies
+@import '~jquery-ui/themes/base/all.css';
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import '~animate.css/animate';
+@import '~metismenu/src/metisMenu';
+@import '~datatables.net-bs/css/dataTables.bootstrap';
+@import '~datatables.net-buttons-bs/css/buttons.bootstrap';
+@import '~datatables.net-responsive-bs/css/responsive.bootstrap';
+@import '~datatables.net-select-bs/css/select.bootstrap';
+@import '~select2/dist/css/select2';
+@import '~codemirror/lib/codemirror';
+@import '~summernote/dist/summernote';
+@import '~sweetalert/dist/sweetalert';
+
+// inspinia
+@import 'bootstrap5-update';
+@import '../../Inspinia/css/style';
+
+// spryker customization
+@import 'variables';
+@import 'mixins';
+@import 'inspinia';
+@import 'action-buttons';
+@import 'custom';
+@import 'flags';
+@import 'data-tables';
+@import 'wave-loader';
+@import 'product-item';
+@import 'popover';
+@import 'form';

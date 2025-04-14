@@ -35,8 +35,10 @@
 
             <div class="tabs-container">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#tab-1">{{ 'Select products to assign' | trans }}</a></li>
-                    <li class=""><a data-toggle="tab" href="#tab-2" id="assigned-tab-label">{{ 'Products to be assigned' | trans }}</a></li>
+                    {# @deprecated html attribute "data-toggle" is deprecated use "data-bs-toggle" instead #}
+                    <li class="active" data-bs-toggle="tab" data-bs-target="#tab-1" data-toggle="tab"><a href="#tab-1">{{ 'Select products to assign' | trans }}</a></li>
+                    {# @deprecated html attribute "data-toggle" is deprecated use "data-bs-toggle" instead #}
+                    <li data-bs-toggle="tab" data-bs-target="#tab-2" data-toggle="tab"><a href="#tab-2" id="assigned-tab-label">{{ 'Products to be assigned' | trans }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tab-1" class="tab-pane active">
@@ -73,8 +75,8 @@
 
             <div class="tabs-container">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#tab-11">{{ 'Products in this category' | trans }}</a></li>
-                    <li class=""><a data-toggle="tab" href="#tab-21" id="deassigned-tab-label">{{ 'Products to be deassigned' | trans }}</a></li>
+                    <li class="active" data-bs-toggle="tab" data-bs-target="#tab-11"><a href="#tab-11">{{ 'Products in this category' | trans }}</a></li>
+                    <li data-bs-toggle="tab" data-bs-target="#tab-21"><a href="#tab-21" id="deassigned-tab-label">{{ 'Products to be deassigned' | trans }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tab-11" class="tab-pane active">

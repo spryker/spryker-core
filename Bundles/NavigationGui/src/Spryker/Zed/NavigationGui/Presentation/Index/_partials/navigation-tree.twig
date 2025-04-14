@@ -11,7 +11,8 @@
 
     <div class="ibox-content">
         <div class="alert alert-info alert-dismissable">
-            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            {# @deprecated html attribute "data-dismiss" is deprecated use "data-bs-dismiss" instead #}
+            <button aria-hidden="true" data-bs-dismiss="alert" data-dismiss="alert" class="close" type="button">×</button>
             {% apply trans|raw %}
                 <ul>
                     <li>{{ 'If a navigation node is inactive, then this item and all navigation items under this one will not be visible.' | trans }}</li>

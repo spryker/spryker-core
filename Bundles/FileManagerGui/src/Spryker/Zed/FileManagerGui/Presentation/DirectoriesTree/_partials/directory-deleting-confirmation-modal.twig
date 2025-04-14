@@ -3,7 +3,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{{ 'Confirm deleting' | trans }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+                {# @deprecated html attribute "data-dismiss" is deprecated use "data-bs-dismiss" instead #}
+                <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -14,7 +16,9 @@
                 {{ form_start(deleteDirectoryForm, {action: '', attr: {class: 'form-inline'} }) }}
                     <button id="delete-directory-confirmation-button" class="btn btn-primary">{{ 'Сonfirm' | trans }}</button>
                 {{ form_end(deleteDirectoryForm) }}
-                <button type="button" class="btn btn-danger" data-dismiss="modal">{{ 'Cancel' | trans }}</button>
+
+                {# @deprecated html attribute "data-dismiss" is deprecated use "data-bs-dismiss" instead #}
+                <button type="button" class="btn btn-danger" data-dismiss="modal" data-bs-dismiss="modal">{{ 'Cancel' | trans }}</button>
             </div>
         </div>
     </div>
