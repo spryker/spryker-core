@@ -59,6 +59,25 @@ class AssetsPathTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      */
     protected function getZedAssetsPathByName(string $path): string
     {
-        return rtrim($this->getConfig()->getZedAssetsPath(), '/') . '/' . $path;
+        return $this->appendBuildHash(
+            rtrim($this->getConfig()->getZedAssetsPath(), '/') . '/' . $path,
+        );
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    protected function appendBuildHash(string $path): string
+    {
+        $buildHash = $this->getConfig()->getAssetsBuildHash();
+
+        if ($buildHash) {
+            $separator = strpos($path, '?') === false ? '?' : '&';
+            $path .= $separator . 'v=' . $buildHash;
+        }
+
+        return $path;
     }
 }

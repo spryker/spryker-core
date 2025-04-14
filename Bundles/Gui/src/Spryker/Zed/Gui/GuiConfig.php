@@ -56,6 +56,11 @@ class GuiConfig extends AbstractBundleConfig
     protected const LIST_GROUP_MULTI_DEFAULT_TEMPLATE_PATH = '@Gui/ListGroup/list-group-multidimensional.twig';
 
     /**
+     * @var string
+     */
+    protected const SPRYKER_BUILD_HASH = 'SPRYKER_BUILD_HASH';
+
+    /**
      * @api
      *
      * @return string
@@ -95,6 +100,16 @@ class GuiConfig extends AbstractBundleConfig
     public function getZedAssetsPath(): string
     {
         return $this->get(GuiConstants::ZED_ASSETS_BASE_URL, '/assets/');
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getAssetsBuildHash(): string
+    {
+        return getenv(static::SPRYKER_BUILD_HASH) ?: '';
     }
 
     /**
