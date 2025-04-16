@@ -21,6 +21,12 @@
         <property name="idProductAbstract" type="int"/>
         <property name="idProduct" type="int"/>
         <property name="quantity" type="int"/>
+        <property name="priceProductResolveConditions" type="PriceProductResolveConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="PriceProductResolveConditions" strict="true">
+        <property name="sku" type="string"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="CurrentProductPrice">
@@ -68,6 +74,7 @@
         <property name="idProductConcrete" type="int"/>
         <property name="productOfferReference" type="string"/>
         <property name="price" type="CurrentProductPrice"/>
+        <property name="productConcreteSku" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferStorageCollection">

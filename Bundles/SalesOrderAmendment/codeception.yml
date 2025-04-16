@@ -1,5 +1,6 @@
 namespace: SalesOrderAmendment
 include:
+    - tests/SprykerTest/Client/SalesOrderAmendment
     - tests/SprykerTest/Zed/SalesOrderAmendment
 paths:
     tests: tests/

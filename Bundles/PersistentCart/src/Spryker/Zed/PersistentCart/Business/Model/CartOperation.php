@@ -44,24 +44,32 @@ class CartOperation implements CartOperationInterface
     protected $quoteFacade;
 
     /**
+     * @var list<\Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuotePostMergePluginInterface>
+     */
+    protected array $quotePostMergePlugins;
+
+    /**
      * @param \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface $itemFinderPlugin
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface $quoteResolver
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationInterface $quoteItemOperations
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
+     * @param list<\Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuotePostMergePluginInterface> $quotePostMergePlugins
      */
     public function __construct(
         QuoteItemFinderPluginInterface $itemFinderPlugin,
         QuoteResponseExpanderInterface $quoteResponseExpander,
         QuoteResolverInterface $quoteResolver,
         QuoteItemOperationInterface $quoteItemOperations,
-        PersistentCartToQuoteFacadeInterface $quoteFacade
+        PersistentCartToQuoteFacadeInterface $quoteFacade,
+        array $quotePostMergePlugins
     ) {
         $this->quoteResponseExpander = $quoteResponseExpander;
         $this->itemFinderPlugin = $itemFinderPlugin;
         $this->quoteResolver = $quoteResolver;
         $this->quoteItemOperation = $quoteItemOperations;
         $this->quoteFacade = $quoteFacade;
+        $this->quotePostMergePlugins = $quotePostMergePlugins;
     }
 
     /**
@@ -468,9 +476,12 @@ class CartOperation implements CartOperationInterface
             return $persistentQuoteTransfer;
         }
 
-        $quoteTransfer->fromArray($persistentQuoteTransfer->modifiedToArray(), true);
+        $currentQuoteTransfer = clone $quoteTransfer;
 
-        return $quoteTransfer;
+        return $this->executeQuotePostMergePlugins(
+            $quoteTransfer->fromArray($persistentQuoteTransfer->modifiedToArray(), true),
+            $currentQuoteTransfer,
+        );
     }
 
     /**
@@ -498,5 +509,22 @@ class CartOperation implements CartOperationInterface
         $quoteResponseTransfer->setIsSuccessful(false);
 
         return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $persistentQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $currentQuoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeQuotePostMergePlugins(
+        QuoteTransfer $persistentQuoteTransfer,
+        QuoteTransfer $currentQuoteTransfer
+    ): QuoteTransfer {
+        foreach ($this->quotePostMergePlugins as $quotePostMergePlugin) {
+            $persistentQuoteTransfer = $quotePostMergePlugin->postMerge($persistentQuoteTransfer, $currentQuoteTransfer);
+        }
+
+        return $persistentQuoteTransfer;
     }
 }

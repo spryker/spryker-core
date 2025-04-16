@@ -52,6 +52,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteResolver(),
             $this->createQuoteItemOperation(),
             $this->getQuoteFacade(),
+            $this->getQuotePostMergePlugins(),
         );
     }
 
@@ -251,5 +252,13 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     public function getCartAddItemStrategyPlugins(): array
     {
         return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGINS_CART_ADD_ITEM_STRATEGY);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuotePostMergePluginInterface>
+     */
+    public function getQuotePostMergePlugins(): array
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGINS_QUOTE_POST_MERGE);
     }
 }

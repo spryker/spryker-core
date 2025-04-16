@@ -4,6 +4,13 @@
 
 SalesOrderAmendmentOms module provides order management system functionality for sales order amendment.
 
+> ⚠️ **BETA WARNING — UNSTABLE API**
+>
+> This package is currently in **version 0.x.x** and is considered **unstable**.
+> According to [Semantic Versioning](https://semver.org/#spec-item-4), **anything may change at any time**, including breaking changes.
+>
+> ❗ **Do not use in production unless you're prepared to handle frequent changes.**
+
 ## Installation
 
 ```

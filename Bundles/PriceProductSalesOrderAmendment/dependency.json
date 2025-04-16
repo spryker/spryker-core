@@ -1,0 +1,7 @@
+{
+    "include": {
+        "spryker/price-product": "Added for future compatibility.",
+        "spryker/sales-order-amendment": "Added for future compatibility.",
+        "spryker/transfer": "Provides transfer objects definition with strict types."
+    }
+}

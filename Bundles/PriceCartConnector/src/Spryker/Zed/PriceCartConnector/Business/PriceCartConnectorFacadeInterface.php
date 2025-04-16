@@ -22,10 +22,11 @@ interface PriceCartConnectorFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param string|null $priceType
+     * @param bool|null $ignorePriceMissingException
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addPriceToItems(CartChangeTransfer $cartChangeTransfer, $priceType = null);
+    public function addPriceToItems(CartChangeTransfer $cartChangeTransfer, $priceType = null, ?bool $ignorePriceMissingException = false);
 
     /**
      * Specification:

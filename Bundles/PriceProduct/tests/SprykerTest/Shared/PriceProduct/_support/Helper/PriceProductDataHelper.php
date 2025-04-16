@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
@@ -138,6 +139,20 @@ class PriceProductDataHelper extends Module
         $priceTypeTransfer->setIdPriceType($priceTypeId);
 
         return $priceTypeTransfer;
+    }
+
+    /**
+     * @param int $fkPriceProduct
+     * @param int $grossPrice
+     * @param int $netPrice
+     *
+     * @return void
+     */
+    public function updatePriceProductStore(int $fkPriceProduct, int $grossPrice, int $netPrice): void
+    {
+        $this->getPriceProductStoreQuery()
+            ->filterByFkPriceProduct($fkPriceProduct)
+            ->update(['GrossPrice' => $grossPrice, 'NetPrice' => $netPrice]);
     }
 
     /**
@@ -316,5 +331,13 @@ class PriceProductDataHelper extends Module
     protected function getCurrencyFacade(): CurrencyFacadeInterface
     {
         return $this->getLocator()->currency()->facade();
+    }
+
+    /**
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
+     */
+    protected function getPriceProductStoreQuery(): SpyPriceProductStoreQuery
+    {
+        return SpyPriceProductStoreQuery::create();
     }
 }

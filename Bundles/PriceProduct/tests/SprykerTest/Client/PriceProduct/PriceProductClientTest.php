@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Service\PriceProduct;
+namespace SprykerTest\Client\PriceProduct;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\PriceProduct\PriceProductClient;
+use Spryker\Client\PriceProduct\PriceProductDependencyProvider;
+use Spryker\Client\PriceProductExtension\Dependency\Plugin\PriceProductPostResolvePluginInterface;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Client\Store\StoreDependencyProvider;
 use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
@@ -25,7 +27,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
  * Auto-generated group annotations
  *
  * @group SprykerTest
- * @group Service
+ * @group Client
  * @group PriceProduct
  * @group PriceProductClientTest
  * Add your own group annotations below this line
@@ -182,6 +184,46 @@ class PriceProductClientTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testShouldExecutePriceProductPostResolvePluginStackInResolveProductPriceTransferByPriceProductFilter(): void
+    {
+        // Assert
+        $this->tester->setDependency(
+            PriceProductDependencyProvider::PLUGINS_PRICE_PRODUCT_POST_RESOLVE,
+            [
+                $this->getPriceProductPostResolvePluginMock(),
+            ],
+        );
+
+        // Act
+        $this->tester->getClient()->resolveProductPriceTransferByPriceProductFilter([
+            $this->createPriceProductTransfer(static::NET_PRICE, static::GROSS_PRICE, static::PRICE_TYPE_DEFAULT),
+            $this->createPriceProductTransfer(static::NET_PRICE, static::GROSS_PRICE, static::PRICE_TYPE_ORIGINAL),
+        ], new PriceProductFilterTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldExecutePriceProductPostResolvePluginStackInResolveProductPriceTransfer(): void
+    {
+        // Assert
+        $this->tester->setDependency(
+            PriceProductDependencyProvider::PLUGINS_PRICE_PRODUCT_POST_RESOLVE,
+            [
+                $this->getPriceProductPostResolvePluginMock(),
+            ],
+        );
+
+        // Act
+        $this->tester->getClient()->resolveProductPriceTransfer([
+            $this->createPriceProductTransfer(static::NET_PRICE, static::GROSS_PRICE, static::PRICE_TYPE_DEFAULT),
+            $this->createPriceProductTransfer(static::NET_PRICE, static::GROSS_PRICE, static::PRICE_TYPE_ORIGINAL),
+        ]);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      * @param string $volumePriceDataDefaultDefaultJson
      * @param string $volumePriceDataOriginJson
@@ -277,5 +319,24 @@ class PriceProductClientTest extends Unit
                 ->setDefaultCurrencyIsoCode(static::CURRENCY_CODE));
 
         return $storeStorageStoreExpanderPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductExtension\Dependency\Plugin\PriceProductPostResolvePluginInterface
+     */
+    protected function getPriceProductPostResolvePluginMock(): PriceProductPostResolvePluginInterface
+    {
+        $priceProductPostResolvePluginMock = $this
+            ->getMockBuilder(PriceProductPostResolvePluginInterface::class)
+            ->getMock();
+
+        $priceProductPostResolvePluginMock
+            ->expects($this->once())
+            ->method('postResolve')
+            ->willReturnCallback(function (PriceProductTransfer $priceProductTransfer) {
+                return $priceProductTransfer;
+            });
+
+        return $priceProductPostResolvePluginMock;
     }
 }

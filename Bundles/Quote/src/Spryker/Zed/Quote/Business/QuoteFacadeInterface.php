@@ -114,6 +114,7 @@ interface QuoteFacadeInterface
     /**
      * Specification:
      * - Gets quote collection filtered by criteria.
+     * - Executes {@link \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteCollectionFilterPluginInterface} plugins.
      * - Filters by FilterTransfer when provided.
      * - Filters by customer reference when provided.
      * - Filters by store ID when provided.

@@ -13,11 +13,13 @@ use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartItemReplaceTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\QuoteProcessFlowTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -30,13 +32,16 @@ use Spryker\Client\Store\StoreDependencyProvider as ClientStoreDependencyProvide
 use Spryker\Client\StoreStorage\Plugin\Store\StoreStorageStoreExpanderPlugin;
 use Spryker\Service\PriceProduct\PriceProductDependencyProvider as ServicePriceProductDependencyProvider;
 use Spryker\Service\PriceProductVolume\Plugin\PriceProductExtension\PriceProductVolumeFilterPlugin;
+use Spryker\Shared\CheckoutExtension\CheckoutExtensionContextsInterface;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig;
+use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\PriceCalculatorPlugin;
 use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface;
 use Spryker\Zed\PriceCartConnector\Communication\Plugin\CartItemPricePlugin;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
 use Spryker\Zed\PriceProductVolume\Communication\Plugin\PriceProductExtension\PriceProductVolumeExtractorPlugin;
@@ -749,6 +754,137 @@ class CartFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider executesCartPreCheckPluginStackDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteProcessFlowTransfer|null $quoteProcessFlowTransfer
+     * @param string $dependencyKeyOnceCalledCartPreCheckPluginMock
+     * @param string $dependencyKeyNeverCalledCartPreCheckPluginMock
+     *
+     * @return void
+     */
+    public function testAddToCartExecutesCartPreCheckPluginStack(
+        ?QuoteProcessFlowTransfer $quoteProcessFlowTransfer,
+        string $dependencyKeyOnceCalledCartPreCheckPluginMock,
+        string $dependencyKeyNeverCalledCartPreCheckPluginMock
+    ): void {
+        // Arrange
+        $newCartChangeTransfer = (new CartChangeTransfer())
+            ->addItem((new ItemTransfer())->setSku('sku')->setQuantity(1))
+            ->setQuote((new QuoteTransfer())->setQuoteProcessFlow($quoteProcessFlowTransfer));
+
+        // Assert
+        $this->tester->setDependency($dependencyKeyOnceCalledCartPreCheckPluginMock, [$this->getOnceCalledCartPreCheckPluginMock()]);
+        $this->tester->setDependency($dependencyKeyNeverCalledCartPreCheckPluginMock, [$this->getNeverCalledCartPreCheckPluginMock()]);
+
+        // Act
+        $this->getCartFacade()->addToCart($newCartChangeTransfer);
+    }
+
+    /**
+     * @dataProvider executesCartPreCheckPluginStackDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteProcessFlowTransfer|null $quoteProcessFlowTransfer
+     * @param string $dependencyKeyOnceCalledCartPreCheckPluginMock
+     * @param string $dependencyKeyNeverCalledCartPreCheckPluginMock
+     *
+     * @return void
+     */
+    public function testAddExecutesCartPreCheckPluginStack(
+        ?QuoteProcessFlowTransfer $quoteProcessFlowTransfer,
+        string $dependencyKeyOnceCalledCartPreCheckPluginMock,
+        string $dependencyKeyNeverCalledCartPreCheckPluginMock
+    ): void {
+        // Arrange
+        $newCartChangeTransfer = (new CartChangeTransfer())
+            ->addItem((new ItemTransfer())->setSku('sku')->setQuantity(1))
+            ->setQuote((new QuoteTransfer())->setQuoteProcessFlow($quoteProcessFlowTransfer));
+
+        // Assert
+        $this->tester->setDependency($dependencyKeyOnceCalledCartPreCheckPluginMock, [$this->getOnceCalledCartPreCheckPluginMock()]);
+        $this->tester->setDependency($dependencyKeyNeverCalledCartPreCheckPluginMock, [$this->getNeverCalledCartPreCheckPluginMock()]);
+
+        // Act
+        $this->getCartFacade()->add($newCartChangeTransfer);
+    }
+
+    /**
+     * @dataProvider executesCartPreCheckPluginStackDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteProcessFlowTransfer|null $quoteProcessFlowTransfer
+     * @param string $dependencyKeyOnceCalledCartPreCheckPluginMock
+     * @param string $dependencyKeyNeverCalledCartPreCheckPluginMock
+     *
+     * @return void
+     */
+    public function testAddValidExecutesCartPreCheckPluginStack(
+        ?QuoteProcessFlowTransfer $quoteProcessFlowTransfer,
+        string $dependencyKeyOnceCalledCartPreCheckPluginMock,
+        string $dependencyKeyNeverCalledCartPreCheckPluginMock
+    ): void {
+        // Arrange
+        $newCartChangeTransfer = (new CartChangeTransfer())
+            ->addItem((new ItemTransfer())->setSku('sku')->setQuantity(1))
+            ->setQuote((new QuoteTransfer())->setQuoteProcessFlow($quoteProcessFlowTransfer));
+
+        // Assert
+        $this->tester->setDependency($dependencyKeyOnceCalledCartPreCheckPluginMock, [$this->getOnceCalledCartPreCheckPluginMock()]);
+        $this->tester->setDependency($dependencyKeyNeverCalledCartPreCheckPluginMock, [$this->getNeverCalledCartPreCheckPluginMock()]);
+
+        // Act
+        $this->getCartFacade()->addValid($newCartChangeTransfer);
+    }
+
+    /**
+     * @dataProvider executesCartPreCheckPluginStackDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteProcessFlowTransfer|null $quoteProcessFlowTransfer
+     * @param string $dependencyKeyOnceCalledCartPreCheckPluginMock
+     * @param string $dependencyKeyNeverCalledCartPreCheckPluginMock
+     *
+     * @return void
+     */
+    public function testReloadItemsInQuoteExecutesCartPreCheckPluginStack(
+        ?QuoteProcessFlowTransfer $quoteProcessFlowTransfer,
+        string $dependencyKeyOnceCalledCartPreCheckPluginMock,
+        string $dependencyKeyNeverCalledCartPreCheckPluginMock
+    ): void {
+        // Arrange
+        $quoteTransfer = (new QuoteTransfer())->setQuoteProcessFlow($quoteProcessFlowTransfer);
+
+        // Assert
+        $this->tester->setDependency($dependencyKeyOnceCalledCartPreCheckPluginMock, [$this->getOnceCalledCartPreCheckPluginMock()]);
+        $this->tester->setDependency($dependencyKeyNeverCalledCartPreCheckPluginMock, [$this->getNeverCalledCartPreCheckPluginMock()]);
+
+        // Act
+        $this->getCartFacade()->reloadItemsInQuote($quoteTransfer);
+    }
+
+    /**
+     * @dataProvider executesCartPreCheckPluginStackDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteProcessFlowTransfer|null $quoteProcessFlowTransfer
+     * @param string $dependencyKeyOnceCalledCartPreCheckPluginMock
+     * @param string $dependencyKeyNeverCalledCartPreCheckPluginMock
+     *
+     * @return void
+     */
+    public function testReloadItemsExecutesCartPreCheckPluginStack(
+        ?QuoteProcessFlowTransfer $quoteProcessFlowTransfer,
+        string $dependencyKeyOnceCalledCartPreCheckPluginMock,
+        string $dependencyKeyNeverCalledCartPreCheckPluginMock
+    ): void {
+        // Arrange
+        $quoteTransfer = (new QuoteTransfer())->setQuoteProcessFlow($quoteProcessFlowTransfer);
+
+        // Assert
+        $this->tester->setDependency($dependencyKeyOnceCalledCartPreCheckPluginMock, [$this->getOnceCalledCartPreCheckPluginMock()]);
+        $this->tester->setDependency($dependencyKeyNeverCalledCartPreCheckPluginMock, [$this->getNeverCalledCartPreCheckPluginMock()]);
+
+        // Act
+        $this->getCartFacade()->reloadItems($quoteTransfer);
+    }
+
+    /**
      * @return callable
      */
     protected function getQuoteChangeObserverPluginCheckChangesCallback(): callable
@@ -760,5 +896,62 @@ class CartFacadeTest extends Unit
                 throw new InvalidArgumentException('Quote transfer was not deep cloned.');
             }
         };
+    }
+
+    /**
+     * @return array<string, list<\Generated\Shared\Transfer\QuoteProcessFlowTransfer|string>>
+     */
+    protected function executesCartPreCheckPluginStackDataProvider(): array
+    {
+        return [
+            'Calls default context when default context is set' => [
+                (new QuoteProcessFlowTransfer())->setName(CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT),
+                CartDependencyProvider::CART_PRE_CHECK_PLUGINS,
+                CartDependencyProvider::CART_PRE_CHECK_PLUGINS_FOR_ORDER_AMENDMENT,
+            ],
+            'Calls default context when quote process flow is not set' => [
+                null,
+                CartDependencyProvider::CART_PRE_CHECK_PLUGINS,
+                CartDependencyProvider::CART_PRE_CHECK_PLUGINS_FOR_ORDER_AMENDMENT,
+            ],
+            'Calls default context when wron quote process flow name is set' => [
+                (new QuoteProcessFlowTransfer())->setName('wrong-flow-name'),
+                CartDependencyProvider::CART_PRE_CHECK_PLUGINS,
+                CartDependencyProvider::CART_PRE_CHECK_PLUGINS_FOR_ORDER_AMENDMENT,
+            ],
+            'Calls order amendment context when order amendment context is set' => [
+                (new QuoteProcessFlowTransfer())->setName(SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT),
+                CartDependencyProvider::CART_PRE_CHECK_PLUGINS_FOR_ORDER_AMENDMENT,
+                CartDependencyProvider::CART_PRE_CHECK_PLUGINS,
+            ],
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface
+     */
+    protected function getNeverCalledCartPreCheckPluginMock(): CartPreCheckPluginInterface
+    {
+        $cartPreCheckPluginMock = $this
+            ->getMockBuilder(CartPreCheckPluginInterface::class)
+            ->getMock();
+        $cartPreCheckPluginMock->expects($this->never())->method('check');
+
+        return $cartPreCheckPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface
+     */
+    protected function getOnceCalledCartPreCheckPluginMock(): CartPreCheckPluginInterface
+    {
+        $cartPreCheckPluginMock = $this
+            ->getMockBuilder(CartPreCheckPluginInterface::class)
+            ->getMock();
+        $cartPreCheckPluginMock->method('check')
+            ->willReturn((new CartPreCheckResponseTransfer())->setIsSuccess(true));
+        $cartPreCheckPluginMock->expects($this->once())->method('check');
+
+        return $cartPreCheckPluginMock;
     }
 }

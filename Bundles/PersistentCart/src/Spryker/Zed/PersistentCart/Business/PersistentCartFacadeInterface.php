@@ -28,6 +28,7 @@ interface PersistentCartFacadeInterface
      * Specification:
      *  - Loads customer quote from database.
      *  - Merges loaded quote with quote from change request if is provided.
+     *  - Executes {@link \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuotePostMergePluginInterface} plugins.
      *  - Runs cart pre check plugins.
      *  - For each new item runs the item expander plugins (requires a SKU for each new item).
      *  - Adds new item(s) to quote (Requires a quantity > 0 for each new item).
@@ -51,6 +52,7 @@ interface PersistentCartFacadeInterface
      * Specification:
      *  - Loads customer quote from database.
      *  - Merges loaded quote with quote from change request if is provided.
+     *  - Executes {@link \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuotePostMergePluginInterface} plugins.
      *  - Runs cart pre check plugins, per every item.
      *  - Adds to cart only valid items.
      *  - If some items relay on one stock - items will be added by same order, until stock allow it.
@@ -74,6 +76,7 @@ interface PersistentCartFacadeInterface
      * Specification:
      *  - Loads customer quote from database.
      *  - Merges loaded quote with quote from change request if is provided.
+     *  - Executes {@link \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuotePostMergePluginInterface} plugins.
      *  - For each new item runs the item expander plugins (requires a SKU for each new item).
      *  - Decreases the given quantity for the given item(s) from the quote.
      *  - Recalculates quote (-> Calculation).
@@ -106,6 +109,7 @@ interface PersistentCartFacadeInterface
      * Specification:
      *  - Loads quote from db.
      *  - Merges loaded quote with quote from change request if is provided.
+     *  - Executes {@link \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuotePostMergePluginInterface} plugins.
      *  - Calls calculate quantity to add or remove.
      *  - Removes or add items.
      *  - Saves quote to DB.
@@ -123,6 +127,7 @@ interface PersistentCartFacadeInterface
      * Specification:
      *  - Loads quote from db.
      *  - Merges loaded quote with quote from change request if is provided.
+     *  - Executes {@link \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuotePostMergePluginInterface} plugins.
      *  - Calls calculate quantity to add or remove.
      *  - Removes or add items to achieve provided quantities.
      *  - Saves quote to DB in case success result.
@@ -140,6 +145,7 @@ interface PersistentCartFacadeInterface
      * Specification:
      *  - Loads quote from db.
      *  - Merges loaded quote with quote from change request if is provided.
+     *  - Executes {@link \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuotePostMergePluginInterface} plugins.
      *  - Calls calculate quantity to remove.
      *  - Removes items from quote.
      *  - Saves quote to DB.
@@ -157,6 +163,7 @@ interface PersistentCartFacadeInterface
      * Specification:
      *  - Loads quote from db.
      *  - Merges loaded quote with quote from change request if is provided.
+     *  - Executes {@link \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuotePostMergePluginInterface} plugins.
      *  - Calls calculate quantity to add.
      *  - Adds items to quote.
      *  - Saves quote to DB.

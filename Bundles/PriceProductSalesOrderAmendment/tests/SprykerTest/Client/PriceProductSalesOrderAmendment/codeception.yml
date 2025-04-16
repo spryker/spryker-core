@@ -1,0 +1,33 @@
+namespace: SprykerTest\Client\PriceProductSalesOrderAmendment
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Client:
+        path: Client
+        actor: PriceProductSalesOrderAmendmentClientTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Locale\Helper\LocaleDependencyHelper
+
+    Communication:
+        path: Communication
+        actor: PriceProductSalesOrderAmendmentCommunicationTester
+        modules:
+            enabled:
+                - Asserts

@@ -9,6 +9,11 @@
         <property name="customer" type="Customer"/>
         <property name="currency" type="Currency"/>
         <property name="idQuote" type="int"/>
+        <property name="quoteProcessFlow" type="QuoteProcessFlow" strict="true"/>
+    </transfer>
+
+    <transfer name="QuoteProcessFlow" strict="true">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="CartChange">

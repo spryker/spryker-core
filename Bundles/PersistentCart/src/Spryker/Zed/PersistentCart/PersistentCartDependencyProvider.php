@@ -62,6 +62,11 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CART_ADD_ITEM_STRATEGY = 'PLUGINS_CART_ADD_ITEM_STRATEGY';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_QUOTE_POST_MERGE = 'PLUGINS_QUOTE_POST_MERGE';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -78,6 +83,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteResponseExpanderPlugins($container);
         $container = $this->addRemoveItemsRequestExpanderPlugins($container);
         $container = $this->addCartAddItemStrategyPlugins($container);
+        $container = $this->addQuotePostMergePlugins($container);
 
         return $container;
     }
@@ -208,6 +214,20 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuotePostMergePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_QUOTE_POST_MERGE, function () {
+            return $this->getQuotePostMergePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface
      */
     protected function getQuoteItemFinderPlugin(): QuoteItemFinderPluginInterface
@@ -237,6 +257,14 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface>
      */
     protected function getCartAddItemStrategyPlugins(Container $container): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuotePostMergePluginInterface>
+     */
+    protected function getQuotePostMergePlugins(): array
     {
         return [];
     }

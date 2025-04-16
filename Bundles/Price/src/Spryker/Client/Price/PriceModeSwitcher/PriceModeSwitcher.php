@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Price\PriceModeSwitcher;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface;
 use Spryker\Client\Price\Exception\UnknownPriceModeException;
 use Spryker\Client\Price\PriceConfig;
@@ -25,9 +26,14 @@ class PriceModeSwitcher implements PriceModeSwitcherInterface
     protected $priceConfig;
 
     /**
-     * @var array<\Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface>
+     * @var list<\Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface>
      */
     protected $priceModePostUpdatePlugins;
+
+    /**
+     * @var list<\Spryker\Client\PriceExtension\Dependency\Plugin\CurrentPriceModePreCheckPluginInterface>
+     */
+    protected array $currentPriceModePreCheckPlugins;
 
     /**
      * @var \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface
@@ -37,18 +43,21 @@ class PriceModeSwitcher implements PriceModeSwitcherInterface
     /**
      * @param \Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\Price\PriceConfig $priceConfig
-     * @param array<\Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface> $priceModePostUpdatePlugins
+     * @param list<\Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface> $priceModePostUpdatePlugins
+     * @param list<\Spryker\Client\PriceExtension\Dependency\Plugin\CurrentPriceModePreCheckPluginInterface> $currentPriceModePreCheckPlugins
      * @param \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface $priceModeCache
      */
     public function __construct(
         PriceToQuoteClientInterface $quoteClient,
         PriceConfig $priceConfig,
         array $priceModePostUpdatePlugins,
+        array $currentPriceModePreCheckPlugins,
         PriceModeCacheInterface $priceModeCache
     ) {
         $this->quoteClient = $quoteClient;
         $this->priceConfig = $priceConfig;
         $this->priceModePostUpdatePlugins = $priceModePostUpdatePlugins;
+        $this->currentPriceModePreCheckPlugins = $currentPriceModePreCheckPlugins;
         $this->priceModeCache = $priceModeCache;
     }
 
@@ -69,6 +78,11 @@ class PriceModeSwitcher implements PriceModeSwitcherInterface
             );
         }
         $quoteTransfer = $this->quoteClient->getQuote();
+
+        if (!$this->executeCurrentPriceModePreCheckPlugins($priceMode, $quoteTransfer)) {
+            return;
+        }
+
         $quoteTransfer->setPriceMode($priceMode);
         $this->quoteClient->setQuote($quoteTransfer);
         $this->executePriceModePostUpdatePlugins($priceMode);
@@ -86,5 +100,22 @@ class PriceModeSwitcher implements PriceModeSwitcherInterface
         foreach ($this->priceModePostUpdatePlugins as $priceModePostUpdatePlugin) {
             $priceModePostUpdatePlugin->execute($priceMode);
         }
+    }
+
+    /**
+     * @param string $priceMode
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function executeCurrentPriceModePreCheckPlugins(string $priceMode, QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($this->currentPriceModePreCheckPlugins as $currentPriceModePreCheckPlugin) {
+            if (!$currentPriceModePreCheckPlugin->isPriceModeChangeAllowed($priceMode, $quoteTransfer)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

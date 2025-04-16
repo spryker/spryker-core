@@ -27,6 +27,11 @@ class PriceDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_PRICE_MODE_POST_UPDATE = 'PLUGINS_PRICE_MODE_POST_UPDATE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_CURRENT_PRICE_MODE_PRE_CHECK = 'PLUGINS_CURRENT_PRICE_MODE_PRE_CHECK';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -35,6 +40,7 @@ class PriceDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addQuoteClient($container);
         $container = $this->addPriceModePostUpdatePlugins($container);
+        $container = $this->addCurrentPriceModePreCheckPlugins($container);
 
         return $container;
     }
@@ -68,9 +74,31 @@ class PriceDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface>
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCurrentPriceModePreCheckPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CURRENT_PRICE_MODE_PRE_CHECK, function () {
+            return $this->getCurrentPriceModePreCheckPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface>
      */
     protected function getPriceModePostUpdatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Client\PriceExtension\Dependency\Plugin\CurrentPriceModePreCheckPluginInterface>
+     */
+    protected function getCurrentPriceModePreCheckPlugins(): array
     {
         return [];
     }

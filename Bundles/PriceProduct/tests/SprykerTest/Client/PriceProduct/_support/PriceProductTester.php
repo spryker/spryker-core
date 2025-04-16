@@ -8,6 +8,7 @@
 namespace SprykerTest\Client\PriceProduct;
 
 use Codeception\Actor;
+use Spryker\Client\PriceProduct\PriceProductClientInterface;
 
 /**
  * Inherited Methods
@@ -30,6 +31,10 @@ class PriceProductTester extends Actor
     use _generated\PriceProductTesterActions;
 
     /**
-     * Define custom actions here
+     * @return \Spryker\Client\PriceProduct\PriceProductClientInterface
      */
+    public function getClient(): PriceProductClientInterface
+    {
+        return $this->getLocator()->priceProduct()->client();
+    }
 }

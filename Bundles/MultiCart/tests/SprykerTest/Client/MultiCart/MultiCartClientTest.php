@@ -98,7 +98,6 @@ class MultiCartClientTest extends Unit
 
         // Assert
         $quoteData = $quoteCollectionTransfer->getQuotes()->getIterator()->current()->toArray(true, true);
-        $this->assertCount(1, array_filter($quoteData));
         $this->assertArrayHasKey(QuoteTransfer::NAME, $quoteData);
         $this->assertSame(static::QUOTE_NAME, $quoteData[QuoteTransfer::NAME]);
     }
@@ -124,7 +123,6 @@ class MultiCartClientTest extends Unit
 
         // Assert
         $quoteData = $quoteCollectionTransfer->getQuotes()->getIterator()->current()->toArray(true, true);
-        $this->assertCount(1, array_filter($quoteData));
         $this->assertArrayHasKey(QuoteTransfer::ITEMS, $quoteData);
         $this->assertIsArray($quoteData[QuoteTransfer::ITEMS]);
         $this->assertCount(1, $quoteData[QuoteTransfer::ITEMS]);
@@ -154,7 +152,6 @@ class MultiCartClientTest extends Unit
 
         // Assert
         $quoteData = $quoteCollectionTransfer->getQuotes()->getIterator()->current()->toArray(true, true);
-        $this->assertCount(1, array_filter($quoteData));
         $this->assertArrayHasKey(QuoteTransfer::CUSTOMER, $quoteData);
         $this->assertSame(
             array_filter($quoteTransfer->getCustomer()->toArray(true, true)),
@@ -184,9 +181,7 @@ class MultiCartClientTest extends Unit
 
         // Assert
         $quoteData = $quoteCollectionTransfer->getQuotes()->getIterator()->current()->toArray(true, true);
-        $this->assertCount(1, array_filter($quoteData));
         $this->assertArrayHasKey(QuoteTransfer::CUSTOMER, $quoteData);
-        $this->assertCount(1, array_filter($quoteData[QuoteTransfer::CUSTOMER]));
         $this->assertSame(
             $quoteTransfer->getCustomer()->getCustomerReference(),
             $quoteData[QuoteTransfer::CUSTOMER][CustomerTransfer::CUSTOMER_REFERENCE],

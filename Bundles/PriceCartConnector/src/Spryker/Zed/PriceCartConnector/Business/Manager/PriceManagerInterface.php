@@ -13,8 +13,9 @@ interface PriceManagerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param bool|null $ignorePriceMissingException
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addPriceToItems(CartChangeTransfer $cartChangeTransfer);
+    public function addPriceToItems(CartChangeTransfer $cartChangeTransfer, ?bool $ignorePriceMissingException = false);
 }

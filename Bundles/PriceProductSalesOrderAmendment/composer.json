@@ -1,0 +1,55 @@
+{
+    "name": "spryker/price-product-sales-order-amendment",
+    "type": "library",
+    "description": "PriceProductSalesOrderAmendment module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.2",
+        "spryker/cart-extension": "^4.2.0",
+        "spryker/cart-reorder-extension": "^1.0.0",
+        "spryker/kernel": "^3.76.0",
+        "spryker/price-product": "^4.46.0",
+        "spryker/price-product-extension": "^1.8.0",
+        "spryker/price-product-sales-order-amendment-extension": "^1.0.0",
+        "spryker/price-product-storage-extension": "^1.2.0",
+        "spryker/quote-extension": "^1.0.0",
+        "spryker/sales-order-amendment": "^0.4.0",
+        "spryker/transfer": "^3.27.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/container": "*",
+        "spryker/locale": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/price-cart-connector": "If you want to use OriginalSalesOrderItemPriceItemExpanderPlugin: ^6.12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

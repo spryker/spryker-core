@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\Cart\Business;
 
+use Spryker\Shared\CheckoutExtension\CheckoutExtensionContextsInterface;
+use Spryker\Shared\Kernel\StrategyResolver;
+use Spryker\Shared\Kernel\StrategyResolverInterface;
+use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use Spryker\Zed\Cart\Business\Expander\GroupKeyExpander;
 use Spryker\Zed\Cart\Business\Expander\GroupKeyExpanderInterface;
 use Spryker\Zed\Cart\Business\Locker\QuoteLocker;
@@ -49,16 +53,15 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->getCalculatorFacade(),
             $this->getMessengerFacade(),
             $this->getQuoteFacade(),
-            $this->getItemExpanderPlugins(),
-            $this->getCartPreCheckPlugins(),
+            $this->createItemExpanderPluginStrategyResolver(),
+            $this->createCartPreCheckPluginStrategyResolver(),
             $this->getPostSavePlugins(),
             $this->getTerminationPlugins(),
             $this->getCartRemovalPreCheckPlugins(),
             $this->getPostReloadItemsPlugins(),
             $this->getCartBeforePreCheckNormalizerPlugins(),
+            $this->createCartPreReloadPluginStrategyResolver(),
         );
-
-        $operation->setPreReloadLoadPlugins($this->getPreReloadItemsPlugins());
 
         return $operation;
     }
@@ -116,6 +119,48 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface>>
+     */
+    public function createCartPreCheckPluginStrategyResolver(): StrategyResolverInterface
+    {
+        return new StrategyResolver(
+            [
+                CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT => $this->getProvidedDependency(CartDependencyProvider::CART_PRE_CHECK_PLUGINS, static::LOADING_LAZY),
+                SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT => $this->getProvidedDependency(CartDependencyProvider::CART_PRE_CHECK_PLUGINS_FOR_ORDER_AMENDMENT, static::LOADING_LAZY),
+            ],
+            CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT,
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface>>
+     */
+    public function createCartPreReloadPluginStrategyResolver(): StrategyResolverInterface
+    {
+        return new StrategyResolver(
+            [
+                CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT => $this->getProvidedDependency(CartDependencyProvider::CART_PRE_RELOAD_PLUGINS, static::LOADING_LAZY),
+                SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT => $this->getProvidedDependency(CartDependencyProvider::CART_PRE_RELOAD_PLUGINS_FOR_ORDER_AMENDMENT, static::LOADING_LAZY),
+            ],
+            CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT,
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface>>
+     */
+    public function createItemExpanderPluginStrategyResolver(): StrategyResolverInterface
+    {
+        return new StrategyResolver(
+            [
+                CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT => $this->getProvidedDependency(CartDependencyProvider::CART_EXPANDER_PLUGINS, static::LOADING_LAZY),
+                SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT => $this->getProvidedDependency(CartDependencyProvider::CART_EXPANDER_PLUGINS_FOR_ORDER_AMENDMENT, static::LOADING_LAZY),
+            ],
+            CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT,
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface
      */
     protected function getCalculatorFacade()
@@ -140,22 +185,6 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface>
-     */
-    protected function getItemExpanderPlugins()
-    {
-        return $this->getProvidedDependency(CartDependencyProvider::CART_EXPANDER_PLUGINS);
-    }
-
-    /**
-     * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface>
-     */
-    protected function getCartPreCheckPlugins()
-    {
-        return $this->getProvidedDependency(CartDependencyProvider::CART_PRE_CHECK_PLUGINS);
-    }
-
-    /**
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface>
      */
     public function getCartBeforePreCheckNormalizerPlugins(): array
@@ -177,14 +206,6 @@ class CartBusinessFactory extends AbstractBusinessFactory
     protected function getPostSavePlugins()
     {
         return $this->getProvidedDependency(CartDependencyProvider::CART_POST_SAVE_PLUGINS);
-    }
-
-    /**
-     * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface>
-     */
-    protected function getPreReloadItemsPlugins()
-    {
-        return $this->getProvidedDependency(CartDependencyProvider::CART_PRE_RELOAD_PLUGINS);
     }
 
     /**

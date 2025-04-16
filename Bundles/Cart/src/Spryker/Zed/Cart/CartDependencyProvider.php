@@ -42,7 +42,17 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const CART_EXPANDER_PLUGINS_FOR_ORDER_AMENDMENT = 'CART_EXPANDER_PLUGINS_FOR_ORDER_AMENDMENT';
+
+    /**
+     * @var string
+     */
     public const CART_PRE_CHECK_PLUGINS = 'pre check plugins';
+
+    /**
+     * @var string
+     */
+    public const CART_PRE_CHECK_PLUGINS_FOR_ORDER_AMENDMENT = 'CART_PRE_CHECK_PLUGINS_FOR_ORDER_AMENDMENT';
 
     /**
      * @var string
@@ -63,6 +73,11 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CART_PRE_RELOAD_PLUGINS = 'cart pre reload plugins';
+
+    /**
+     * @var string
+     */
+    public const CART_PRE_RELOAD_PLUGINS_FOR_ORDER_AMENDMENT = 'CART_PRE_RELOAD_PLUGINS_FOR_ORDER_AMENDMENT';
 
     /**
      * @var string
@@ -112,10 +127,13 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMessengerFacade($container);
         $container = $this->addQuoteFacade($container);
         $container = $this->addExpanderPlugins($container);
+        $container = $this->addExpanderPluginsForOrderAmendment($container);
         $container = $this->addPostSavePlugins($container);
         $container = $this->addPreCheckPlugins($container);
+        $container = $this->addPreCheckPluginsForOrderAmendment($container);
         $container = $this->addCartRemovalPreCheckPlugins($container);
         $container = $this->addPreReloadPlugins($container);
+        $container = $this->addPreReloadPluginsForOrderAmendment($container);
         $container = $this->addTerminationPlugins($container);
         $container = $this->addQuoteChangeObserverPlugins($container);
         $container = $this->addCartAddItemStrategyPlugins($container);
@@ -189,6 +207,20 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addExpanderPluginsForOrderAmendment(Container $container)
+    {
+        $container->set(static::CART_EXPANDER_PLUGINS_FOR_ORDER_AMENDMENT, function (Container $container) {
+            return $this->getExpanderPluginsForOrderAmendment($container);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addPostSavePlugins(Container $container)
     {
         $container->set(static::CART_POST_SAVE_PLUGINS, function (Container $container) {
@@ -231,6 +263,20 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addPreCheckPluginsForOrderAmendment(Container $container): Container
+    {
+        $container->set(static::CART_PRE_CHECK_PLUGINS_FOR_ORDER_AMENDMENT, function () {
+            return $this->getCartPreCheckPluginsForOrderAmendment();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addCartRemovalPreCheckPlugins(Container $container)
     {
         $container->set(static::CART_REMOVAL_PRE_CHECK_PLUGINS, function (Container $container) {
@@ -249,6 +295,20 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CART_PRE_RELOAD_PLUGINS, function (Container $container) {
             return $this->getPreReloadPlugins($container);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPreReloadPluginsForOrderAmendment(Container $container)
+    {
+        $container->set(static::CART_PRE_RELOAD_PLUGINS_FOR_ORDER_AMENDMENT, function (Container $container) {
+            return $this->getPreReloadPluginsForOrderAmendment($container);
         });
 
         return $container;
@@ -365,6 +425,16 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
+     * @return list<\Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface>
+     */
+    protected function getExpanderPluginsForOrderAmendment(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface>
      */
     protected function getPostSavePlugins(Container $container)
@@ -378,6 +448,14 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface>
      */
     protected function getCartPreCheckPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface>
+     */
+    protected function getCartPreCheckPluginsForOrderAmendment(): array
     {
         return [];
     }
@@ -408,6 +486,16 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface>
      */
     protected function getPreReloadPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return list<\Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface>
+     */
+    protected function getPreReloadPluginsForOrderAmendment(Container $container)
     {
         return [];
     }

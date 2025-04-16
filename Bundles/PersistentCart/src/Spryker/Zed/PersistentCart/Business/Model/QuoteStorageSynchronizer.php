@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\PersistentCart\Business\Model;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\PersistentCart\Business\Exception\QuoteSynchronizationNotAvailable;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
@@ -85,14 +88,14 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
 
         $quoteTransfer = $quoteSyncRequestTransfer->getQuoteTransfer();
         $storeTransfer = $this->storeFacade->getCurrentStore();
-        $customerQuoteTransfer = $this->quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
+        $quoteResponseTransfer = $this->getDefaultCustomerQuote($customerTransfer, $storeTransfer);
 
-        if ($customerTransfer->getIdCustomer() === null && $customerQuoteTransfer->getQuoteTransfer() === null) {
+        if ($customerTransfer->getIdCustomer() === null && $quoteResponseTransfer->getQuoteTransfer() === null) {
             return new QuoteResponseTransfer();
         }
 
-        if ($customerQuoteTransfer->getIsSuccessful()) {
-            $quoteTransfer = $this->mergeQuotes($quoteTransfer, $customerQuoteTransfer->getQuoteTransfer());
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $quoteTransfer = $this->mergeQuotes($quoteTransfer, $quoteResponseTransfer->getQuoteTransfer());
         }
 
         $quoteTransfer->setCustomer($customerTransfer);
@@ -172,5 +175,30 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
                 ),
             );
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function getDefaultCustomerQuote(
+        CustomerTransfer $customerTransfer,
+        StoreTransfer $storeTransfer
+    ): QuoteResponseTransfer {
+        $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReferenceOrFail())
+            ->setIdStore($storeTransfer->getIdStoreOrFail())
+            ->setIsDefault(true);
+
+        $defaultQuoteTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer)
+            ->getQuotes()
+            ->getIterator()
+            ->current();
+
+        return (new QuoteResponseTransfer())
+            ->setIsSuccessful($defaultQuoteTransfer !== null)
+            ->setQuoteTransfer($defaultQuoteTransfer);
     }
 }

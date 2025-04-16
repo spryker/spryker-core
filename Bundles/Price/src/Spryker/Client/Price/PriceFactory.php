@@ -36,6 +36,7 @@ class PriceFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->getConfig(),
             $this->getPriceModePostUpdatePlugins(),
+            $this->getCurrentPriceModePreCheckPlugins(),
             $this->createPriceModeCache(),
         );
     }
@@ -68,7 +69,15 @@ class PriceFactory extends AbstractFactory
     }
 
     /**
-     * @return array<\Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface>
+     * @return list<\Spryker\Client\PriceExtension\Dependency\Plugin\CurrentPriceModePreCheckPluginInterface>
+     */
+    public function getCurrentPriceModePreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceDependencyProvider::PLUGINS_CURRENT_PRICE_MODE_PRE_CHECK);
+    }
+
+    /**
+     * @return list<\Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface>
      */
     protected function getPriceModePostUpdatePlugins(): array
     {

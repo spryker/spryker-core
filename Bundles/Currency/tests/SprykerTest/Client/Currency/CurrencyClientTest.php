@@ -10,6 +10,8 @@ namespace SprykerTest\Client\Currency;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Spryker\Client\Currency\CurrencyClient;
+use Spryker\Client\Currency\CurrencyDependencyProvider;
+use Spryker\Client\CurrencyExtension\Dependency\Plugin\CurrentCurrencyIsoCodePreCheckPluginInterface;
 use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
 
 /**
@@ -92,6 +94,23 @@ class CurrencyClientTest extends Unit
     /**
      * @return void
      */
+    public function testSetCurrentCurrencyIsoCodeExecutesCurrentCurrencyIsoCodePreCheckPlugins(): void
+    {
+        // Assert
+        $this->tester->setDependency(
+            CurrencyDependencyProvider::PLUGINS_CURRENT_CURRENCY_ISO_CODE_PRE_CHECK,
+            [
+                $this->getCurrentCurrencyIsoCodePreCheckPluginMock(),
+            ],
+        );
+
+        // Act
+        $this->tester->getCurrencyClient()->setCurrentCurrencyIsoCode($this->tester::CURRENCY_EUR);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetCurrencyIsoCodesReturnsAvailbleCurrencyIsoCodes(): void
     {
         // Assign
@@ -103,5 +122,21 @@ class CurrencyClientTest extends Unit
 
         // Assert
         $this->assertSame([$this->tester::CURRENCY_EUR, $this->tester::CURRENCY_USD], $currencyIsoCodes);
+    }
+
+    /**
+     * @return \Spryker\Client\CurrencyExtension\Dependency\Plugin\CurrentCurrencyIsoCodePreCheckPluginInterface
+     */
+    protected function getCurrentCurrencyIsoCodePreCheckPluginMock(): CurrentCurrencyIsoCodePreCheckPluginInterface
+    {
+        $currentCurrencyIsoCodePreCheckPluginMock = $this
+            ->getMockBuilder(CurrentCurrencyIsoCodePreCheckPluginInterface::class)
+            ->getMock();
+
+        $currentCurrencyIsoCodePreCheckPluginMock
+            ->expects($this->once())
+            ->method('isCurrencyChangeAllowed');
+
+        return $currentCurrencyIsoCodePreCheckPluginMock;
     }
 }

@@ -26,9 +26,10 @@ interface PriceClientInterface
 
     /**
      * Specification:
-     *  - Checks if price mode is acceptable.
-     *  - Set price mode to quote.
-     *  - Call price mode update plugins.
+     * - Checks if price mode is acceptable.
+     * - Executes {@link \Spryker\Client\PriceExtension\Dependency\Plugin\CurrentPriceModePreCheckPluginInterface} plugins to check if price mode can be updated.
+     * - Sets price mode to quote.
+     * - Calls price mode update plugins.
      *
      * @api
      *

@@ -10,7 +10,7 @@
         "spryker/glue-application": "^1.0.0",
         "spryker/glue-application-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/sales-order-amendment": "^0.3.0",
+        "spryker/sales-order-amendment": "^0.4.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {

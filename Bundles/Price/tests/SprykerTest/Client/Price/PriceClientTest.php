@@ -10,6 +10,8 @@ namespace SprykerTest\Client\Price;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Price\PriceConfig;
+use Spryker\Client\Price\PriceDependencyProvider;
+use Spryker\Client\PriceExtension\Dependency\Plugin\CurrentPriceModePreCheckPluginInterface;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Client\Store\StoreDependencyProvider;
 use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
@@ -121,6 +123,21 @@ class PriceClientTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testSwitchPriceModeExecutesCurrentPriceModePreCheckPlugins(): void
+    {
+        // Arrange
+        $defaultPriceMode = $this->createPriceConfig()->getDefaultPriceMode();
+        $this->tester->setDependency(PriceDependencyProvider::PLUGINS_CURRENT_PRICE_MODE_PRE_CHECK, [
+            $this->getCurrentPriceModePreCheckPluginMock(),
+        ]);
+
+        // Act
+        $this->tester->getLocator()->price()->client()->switchPriceMode($defaultPriceMode);
+    }
+
+    /**
      * @return \Spryker\Client\Price\PriceConfig
      */
     protected function createPriceConfig(): PriceConfig
@@ -150,5 +167,20 @@ class PriceClientTest extends Unit
                 ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY));
 
         return $storeStorageStoreExpanderPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Client\PriceExtension\Dependency\Plugin\CurrentPriceModePreCheckPluginInterface
+     */
+    protected function getCurrentPriceModePreCheckPluginMock(): CurrentPriceModePreCheckPluginInterface
+    {
+        $currentPriceModePreCheckPluginMock = $this->getMockBuilder(CurrentPriceModePreCheckPluginInterface::class)
+            ->getMock();
+
+        $currentPriceModePreCheckPluginMock
+            ->expects($this->once())
+            ->method('isPriceModeChangeAllowed');
+
+        return $currentPriceModePreCheckPluginMock;
     }
 }

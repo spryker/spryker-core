@@ -30,6 +30,7 @@ class PriceProductFactory extends AbstractFactory
             $this->getConfig(),
             $this->getQuoteClient(),
             $this->getPriceProductService(),
+            $this->getPriceProductPostResolvePlugins(),
         );
     }
 
@@ -74,5 +75,13 @@ class PriceProductFactory extends AbstractFactory
         $config = parent::getConfig();
 
         return $config;
+    }
+
+    /**
+     * @return list<\Spryker\Client\PriceProductExtension\Dependency\Plugin\PriceProductPostResolvePluginInterface>
+     */
+    public function getPriceProductPostResolvePlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGINS_PRICE_PRODUCT_POST_RESOLVE);
     }
 }

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesOrderAmendment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SalesOrderAmendment\Business\Checker\CartChecker;
+use Spryker\Zed\SalesOrderAmendment\Business\Checker\CartCheckerInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Creator\SalesOrderAmendmentCreator;
 use Spryker\Zed\SalesOrderAmendment\Business\Creator\SalesOrderAmendmentCreatorInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Creator\SalesOrderAmendmentQuoteCreator;
@@ -272,6 +274,16 @@ class SalesOrderAmendmentBusinessFactory extends AbstractBusinessFactory
     public function createGroupKeyQuantitySalesOrderAmendmentItemCollectorStrategy(): SalesOrderAmendmentItemCollectorStrategyInterface
     {
         return new GroupKeyQuantitySalesOrderAmendmentItemCollectorStrategy();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendment\Business\Checker\CartCheckerInterface
+     */
+    public function createCartChecker(): CartCheckerInterface
+    {
+        return new CartChecker(
+            $this->createOrderReader(),
+        );
     }
 
     /**

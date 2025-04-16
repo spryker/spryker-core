@@ -10,7 +10,7 @@
         "spryker/event-behavior": "^1.14.0",
         "spryker/kernel": "^3.30.0",
         "spryker/merchant-product-offer-storage-extension": "^1.0.0",
-        "spryker/price-product": "^4.9.0",
+        "spryker/price-product": "^4.46.0",
         "spryker/price-product-offer": "^1.2.0",
         "spryker/price-product-offer-storage-extension": "^1.0.0",
         "spryker/price-product-storage": "^4.5.1",

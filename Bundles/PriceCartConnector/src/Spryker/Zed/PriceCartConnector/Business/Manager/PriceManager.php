@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -92,10 +93,11 @@ class PriceManager implements PriceManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param bool|null $ignorePriceMissingException
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addPriceToItems(CartChangeTransfer $cartChangeTransfer)
+    public function addPriceToItems(CartChangeTransfer $cartChangeTransfer, ?bool $ignorePriceMissingException = false)
     {
         $cartChangeTransfer->setQuote(
             $this->setQuotePriceMode($cartChangeTransfer->getQuote()),
@@ -110,6 +112,7 @@ class PriceManager implements PriceManagerInterface
             $cartChangeTransfer,
             $priceProductTransfers,
             $priceProductFilterTransfers,
+            $ignorePriceMissingException,
         );
 
         foreach ($cartChangeTransfer->getItems() as $key => $itemTransfer) {
@@ -140,6 +143,7 @@ class PriceManager implements PriceManagerInterface
     /**
      * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
+     * @param bool|null $ignorePriceMissingException
      *
      * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      *
@@ -147,7 +151,8 @@ class PriceManager implements PriceManagerInterface
      */
     protected function resolveProductPriceByPriceProductFilter(
         array $priceProductTransfers,
-        PriceProductFilterTransfer $priceFilterTransfer
+        PriceProductFilterTransfer $priceFilterTransfer,
+        ?bool $ignorePriceMissingException = false
     ): PriceProductTransfer {
         $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductFilter(
             $priceProductTransfers,
@@ -155,6 +160,10 @@ class PriceManager implements PriceManagerInterface
         );
 
         if (!$priceProductTransfer) {
+            if ($ignorePriceMissingException === true) {
+                return (new PriceProductTransfer())->setMoneyValue(new MoneyValueTransfer());
+            }
+
             throw new PriceMissingException(
                 sprintf(
                     static::ERROR_MESSAGE_CART_ITEM_CAN_NOT_BE_PRICED,
@@ -355,13 +364,15 @@ class PriceManager implements PriceManagerInterface
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param list<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param array<string, \Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
+     * @param bool|null $ignorePriceMissingException
      *
      * @return array<string, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function getPriceProductTransfersIndexedByItemIdentifier(
         CartChangeTransfer $cartChangeTransfer,
         array $priceProductTransfers,
-        array $priceProductFilterTransfers
+        array $priceProductFilterTransfers,
+        ?bool $ignorePriceMissingException = false
     ): array {
         $priceProductTransfersIndexedByItemIdentifier = [];
         foreach ($cartChangeTransfer->getItems() as $key => $itemTransfer) {
@@ -373,6 +384,7 @@ class PriceManager implements PriceManagerInterface
             $priceProductTransfersIndexedByItemIdentifier[$itemIdentifier] = $this->resolveProductPriceByPriceProductFilter(
                 $priceProductTransfers,
                 $priceProductFilterTransfers[$itemIdentifier],
+                $ignorePriceMissingException,
             );
         }
 

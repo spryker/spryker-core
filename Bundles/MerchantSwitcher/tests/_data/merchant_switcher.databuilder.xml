@@ -10,7 +10,7 @@
 
     <transfer name="ProductOffer">
         <property name="concreteSku" dataBuilderRule="unique()->sentence(5)"/>
-        <property name="productOfferReference" dataBuilderRule="unique()->sentence(5)"/>
+        <property name="productOfferReference" dataBuilderRule="lexify('????????????????????')"/>
     </transfer>
 
     <transfer name="WishlistItem">

@@ -39,6 +39,11 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_PRICE_PRODUCT_POST_RESOLVE = 'PLUGINS_PRICE_PRODUCT_POST_RESOLVE';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -49,6 +54,7 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
         $container = $this->addCurrencyClient($container);
         $container = $this->addQuoteClient($container);
         $container = $this->addPriceProductService($container);
+        $container = $this->addPriceProductPostResolvePlugins($container);
 
         return $container;
     }
@@ -107,5 +113,27 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceProductPostResolvePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRICE_PRODUCT_POST_RESOLVE, function () {
+            return $this->getPriceProductPostResolvePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Client\PriceProductExtension\Dependency\Plugin\PriceProductPostResolvePluginInterface>
+     */
+    protected function getPriceProductPostResolvePlugins(): array
+    {
+        return [];
     }
 }

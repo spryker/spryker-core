@@ -36,18 +36,26 @@ class QuoteReader implements QuoteReaderInterface
     protected $quoteExpanderPlugins;
 
     /**
+     * @var list<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteCollectionFilterPluginInterface>
+     */
+    protected array $quoteCollectionFilterPlugins;
+
+    /**
      * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
      * @param array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface> $quoteExpanderPlugins
      * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface $storeFacade
+     * @param list<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteCollectionFilterPluginInterface> $quoteCollectionFilterPlugins
      */
     public function __construct(
         QuoteRepositoryInterface $quoteRepository,
         array $quoteExpanderPlugins,
-        QuoteToStoreFacadeInterface $storeFacade
+        QuoteToStoreFacadeInterface $storeFacade,
+        array $quoteCollectionFilterPlugins
     ) {
         $this->quoteRepository = $quoteRepository;
         $this->quoteExpanderPlugins = $quoteExpanderPlugins;
         $this->storeFacade = $storeFacade;
+        $this->quoteCollectionFilterPlugins = $quoteCollectionFilterPlugins;
     }
 
     /**
@@ -178,9 +186,13 @@ class QuoteReader implements QuoteReaderInterface
     public function getFilteredQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
         $quoteCollectionTransfer = $this->quoteRepository->filterQuoteCollection($quoteCriteriaFilterTransfer);
-        $quoteCollectionTransfer = $this->executeExpandQuotePluginsForQuoteCollection($quoteCollectionTransfer);
 
-        return $quoteCollectionTransfer;
+        $quoteCollectionTransfer = $this->executeQuoteCollectionFilterPlugins(
+            $quoteCollectionTransfer,
+            $quoteCriteriaFilterTransfer,
+        );
+
+        return $this->executeExpandQuotePluginsForQuoteCollection($quoteCollectionTransfer);
     }
 
     /**
@@ -188,8 +200,9 @@ class QuoteReader implements QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    protected function executeExpandQuotePluginsForQuoteCollection(QuoteCollectionTransfer $quoteCollectionTransfer): QuoteCollectionTransfer
-    {
+    protected function executeExpandQuotePluginsForQuoteCollection(
+        QuoteCollectionTransfer $quoteCollectionTransfer
+    ): QuoteCollectionTransfer {
         $expandedQuotesCollection = new QuoteCollectionTransfer();
 
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
@@ -245,5 +258,22 @@ class QuoteReader implements QuoteReaderInterface
                 $quoteExpanderPlugin->postExpand();
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    protected function executeQuoteCollectionFilterPlugins(
+        QuoteCollectionTransfer $quoteCollectionTransfer,
+        QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+    ): QuoteCollectionTransfer {
+        foreach ($this->quoteCollectionFilterPlugins as $quoteCollectionFilterPlugin) {
+            $quoteCollectionTransfer = $quoteCollectionFilterPlugin->filter($quoteCollectionTransfer, $quoteCriteriaFilterTransfer);
+        }
+
+        return $quoteCollectionTransfer;
     }
 }

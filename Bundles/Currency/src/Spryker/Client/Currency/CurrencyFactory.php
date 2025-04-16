@@ -53,6 +53,7 @@ class CurrencyFactory extends AbstractFactory
             $this->createCurrencyPostChangePluginExecutor(),
             $this->createCurrencyPersistence(),
             $this->getStoreClient(),
+            $this->getCurrentCurrencyIsoCodePreCheckPlugins(),
         );
     }
 
@@ -100,10 +101,18 @@ class CurrencyFactory extends AbstractFactory
     }
 
     /**
-     * @return array<\Spryker\Client\CurrencyExtension\Dependency\CurrencyPostChangePluginInterface>
+     * @return list<\Spryker\Client\CurrencyExtension\Dependency\CurrencyPostChangePluginInterface>
      */
     public function getCurrencyPostChangePlugins(): array
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::PLUGINS_CURRENCY_POST_CHANGE);
+    }
+
+    /**
+     * @return list<\Spryker\Client\CurrencyExtension\Dependency\Plugin\CurrentCurrencyIsoCodePreCheckPluginInterface>
+     */
+    public function getCurrentCurrencyIsoCodePreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::PLUGINS_CURRENT_CURRENCY_ISO_CODE_PRE_CHECK);
     }
 }

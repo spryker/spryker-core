@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Kernel\StrategyResolverInterface;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\CartConfig;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
@@ -80,82 +81,95 @@ class Operation implements OperationInterface
     protected $quoteFacade;
 
     /**
-     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface>
-     */
-    protected $itemExpanderPlugins = [];
-
-    /**
-     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface>
+     * @var list<\Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface>
      */
     protected $cartBeforePreCheckNormalizerPlugins = [];
 
     /**
-     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface>
+     * @var list<\Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface>
      */
     protected $preCheckPlugins;
 
     /**
-     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface>
+     * @var \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface>>
+     */
+    protected StrategyResolverInterface $cartPreCheckPluginStrategyResolver;
+
+    /**
+     * @var \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface>>
+     */
+    protected StrategyResolverInterface $itemExpanderPluginStrategyResolver;
+
+    /**
+     * @var list<\Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface>
      */
     protected $cartRemovalPreCheckPlugins;
 
     /**
-     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface>
+     * @var list<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface>
      */
     protected $postSavePlugins = [];
 
     /**
-     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface>
+     * @var list<\Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface>
      */
     protected $preReloadPlugins = [];
 
     /**
-     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface>
+     * @var list<\Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface>
      */
     protected $terminationPlugins = [];
 
     /**
-     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface>
+     * @var list<\Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface>
      */
     protected $postReloadItemsPlugins = [];
+
+    /**
+     * @var \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface>>
+     */
+    protected StrategyResolverInterface $cartPreReloadPluginStrategyResolver;
 
     /**
      * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $cartStorageProvider
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface $quoteFacade
-     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface> $itemExpanderPlugins
-     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface> $preCheckPlugins
-     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface> $postSavePlugins
-     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface> $terminationPlugins
-     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface> $cartRemovalPreCheckPlugins
-     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface> $postReloadItemsPlugins
-     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface> $cartBeforePreCheckNormalizerPlugins
+     * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface>> $itemExpanderPluginStrategyResolver
+     * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface>> $cartPreCheckPluginStrategyResolver
+     * @param list<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface> $postSavePlugins
+     * @param list<\Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface> $terminationPlugins
+     * @param list<\Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface> $cartRemovalPreCheckPlugins
+     * @param list<\Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface> $postReloadItemsPlugins
+     * @param list<\Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface> $cartBeforePreCheckNormalizerPlugins
+     * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface>> $cartPreReloadPluginStrategyResolver
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
         CartToCalculationInterface $calculationFacade,
         CartToMessengerInterface $messengerFacade,
         CartToQuoteFacadeInterface $quoteFacade,
-        array $itemExpanderPlugins,
-        array $preCheckPlugins,
+        StrategyResolverInterface $itemExpanderPluginStrategyResolver,
+        StrategyResolverInterface $cartPreCheckPluginStrategyResolver,
         array $postSavePlugins,
         array $terminationPlugins,
         array $cartRemovalPreCheckPlugins,
         array $postReloadItemsPlugins,
-        array $cartBeforePreCheckNormalizerPlugins
+        array $cartBeforePreCheckNormalizerPlugins,
+        StrategyResolverInterface $cartPreReloadPluginStrategyResolver
     ) {
         $this->cartStorageProvider = $cartStorageProvider;
         $this->calculationFacade = $calculationFacade;
         $this->messengerFacade = $messengerFacade;
         $this->quoteFacade = $quoteFacade;
-        $this->itemExpanderPlugins = $itemExpanderPlugins;
-        $this->preCheckPlugins = $preCheckPlugins;
+        $this->itemExpanderPluginStrategyResolver = $itemExpanderPluginStrategyResolver;
+        $this->cartPreCheckPluginStrategyResolver = $cartPreCheckPluginStrategyResolver;
         $this->postSavePlugins = $postSavePlugins;
         $this->terminationPlugins = $terminationPlugins;
         $this->cartRemovalPreCheckPlugins = $cartRemovalPreCheckPlugins;
         $this->postReloadItemsPlugins = $postReloadItemsPlugins;
         $this->cartBeforePreCheckNormalizerPlugins = $cartBeforePreCheckNormalizerPlugins;
+        $this->cartPreReloadPluginStrategyResolver = $cartPreReloadPluginStrategyResolver;
     }
 
     /**
@@ -440,16 +454,19 @@ class Operation implements OperationInterface
      */
     protected function preCheckCart(CartChangeTransfer $cartChangeTransfer)
     {
+        $quoteProcessFlowName = $cartChangeTransfer->getQuoteOrFail()->getQuoteProcessFlow()?->getNameOrFail();
+        $cartPreCheckPlugins = $this->cartPreCheckPluginStrategyResolver->get($quoteProcessFlowName);
+
         $isCartValid = true;
-        foreach ($this->preCheckPlugins as $preCheck) {
-            $cartPreCheckResponseTransfer = $preCheck->check($cartChangeTransfer);
+        foreach ($cartPreCheckPlugins as $cartPreCheckPlugin) {
+            $cartPreCheckResponseTransfer = $cartPreCheckPlugin->check($cartChangeTransfer);
             if ($cartPreCheckResponseTransfer->getIsSuccess()) {
                 continue;
             }
 
             $this->collectErrorsFromPreCheckResponse($cartPreCheckResponseTransfer);
 
-            if ($preCheck instanceof TerminationAwareCartPreCheckPluginInterface && $preCheck->terminateOnFailure()) {
+            if ($cartPreCheckPlugin instanceof TerminationAwareCartPreCheckPluginInterface && $cartPreCheckPlugin->terminateOnFailure()) {
                 return false;
             }
 
@@ -531,7 +548,7 @@ class Operation implements OperationInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $type
      *
-     * @return array
+     * @return list<\Generated\Shared\Transfer\MessageTransfer>
      */
     protected function getMessagesByTypeFromItemTransfer(ItemTransfer $itemTransfer, string $type)
     {
@@ -553,8 +570,11 @@ class Operation implements OperationInterface
      */
     protected function expandChangedItems(CartChangeTransfer $cartChangeTransfer)
     {
-        foreach ($this->itemExpanderPlugins as $itemExpander) {
-            $cartChangeTransfer = $itemExpander->expandItems($cartChangeTransfer);
+        $quoteProcessFlowName = $cartChangeTransfer->getQuoteOrFail()->getQuoteProcessFlow()?->getNameOrFail();
+        $itemExpanderPlugins = $this->itemExpanderPluginStrategyResolver->get($quoteProcessFlowName);
+
+        foreach ($itemExpanderPlugins as $itemExpanderPlugin) {
+            $cartChangeTransfer = $itemExpanderPlugin->expandItems($cartChangeTransfer);
         }
 
         return $cartChangeTransfer;
@@ -581,7 +601,10 @@ class Operation implements OperationInterface
      */
     protected function executePreReloadPlugins(QuoteTransfer $quoteTransfer)
     {
-        foreach ($this->preReloadPlugins as $reloadPlugin) {
+        $quoteProcessFlowName = $quoteTransfer->getQuoteProcessFlow()?->getNameOrFail();
+        $cartPreReloadPlugins = $this->cartPreReloadPluginStrategyResolver->get($quoteProcessFlowName);
+
+        foreach ($cartPreReloadPlugins as $reloadPlugin) {
             $quoteTransfer = $reloadPlugin->preReloadItems($quoteTransfer);
         }
 
@@ -590,7 +613,7 @@ class Operation implements OperationInterface
 
     /**
      * @param string $message
-     * @param array $parameters
+     * @param array<string, string> $parameters
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
@@ -611,15 +634,5 @@ class Operation implements OperationInterface
     protected function recalculate(QuoteTransfer $quoteTransfer)
     {
         return $this->calculationFacade->recalculate($quoteTransfer, false);
-    }
-
-    /**
-     * @param array $preReloadPlugins
-     *
-     * @return void
-     */
-    public function setPreReloadLoadPlugins(array $preReloadPlugins)
-    {
-        $this->preReloadPlugins = $preReloadPlugins;
     }
 }

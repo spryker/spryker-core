@@ -63,24 +63,32 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected static $currentPriceMode;
 
     /**
+     * @var list<\Spryker\Client\PriceProductExtension\Dependency\Plugin\PriceProductPostResolvePluginInterface>
+     */
+    protected array $priceProductPostResolvePlugins;
+
+    /**
      * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface $priceClient
      * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface $currencyClient
      * @param \Spryker\Client\PriceProduct\PriceProductConfig $priceProductConfig
      * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface $quoteClient
      * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
+     * @param list<\Spryker\Client\PriceProductExtension\Dependency\Plugin\PriceProductPostResolvePluginInterface> $priceProductPostResolvePlugins
      */
     public function __construct(
         PriceProductToPriceClientInterface $priceClient,
         PriceProductToCurrencyClientInterface $currencyClient,
         PriceProductConfig $priceProductConfig,
         PriceProductToQuoteClientInterface $quoteClient,
-        PriceProductServiceInterface $priceProductService
+        PriceProductServiceInterface $priceProductService,
+        array $priceProductPostResolvePlugins
     ) {
         $this->priceProductConfig = $priceProductConfig;
         $this->priceClient = $priceClient;
         $this->currencyClient = $currencyClient;
         $this->quoteClient = $quoteClient;
         $this->priceProductService = $priceProductService;
+        $this->priceProductPostResolvePlugins = $priceProductPostResolvePlugins;
     }
 
     /**
@@ -162,6 +170,8 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         if (!$priceProductTransfer) {
             return $currentProductPriceTransfer;
         }
+
+        $priceProductTransfer = $this->executePriceProductPostResolvePlugins($priceProductTransfer, $priceProductFilter);
 
         /** @var string $priceMode */
         $priceMode = $priceProductFilter->requirePriceMode()->getPriceMode();
@@ -348,5 +358,25 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         }
 
         return $moneyValueTransfer->getPriceDataByPriceType();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function executePriceProductPostResolvePlugins(
+        PriceProductTransfer $priceProductTransfer,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): PriceProductTransfer {
+        foreach ($this->priceProductPostResolvePlugins as $priceProductPostResolvePlugin) {
+            $priceProductTransfer = $priceProductPostResolvePlugin->postResolve(
+                $priceProductTransfer,
+                $priceProductFilterTransfer,
+            );
+        }
+
+        return $priceProductTransfer;
     }
 }

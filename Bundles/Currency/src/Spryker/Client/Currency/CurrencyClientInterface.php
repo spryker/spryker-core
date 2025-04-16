@@ -36,6 +36,7 @@ interface CurrencyClientInterface
 
     /**
      * Specification:
+     * - Executes {@link \Spryker\Client\CurrencyExtension\Dependency\Plugin\CurrentCurrencyIsoCodePreCheckPluginInterface} plugins to check if currency can be changed.
      * - Sets selected currency to customer session.
      * - Calls currency post change plugins.
      *

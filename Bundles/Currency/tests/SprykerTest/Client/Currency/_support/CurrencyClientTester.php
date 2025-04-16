@@ -10,6 +10,7 @@ namespace SprykerTest\Client\Currency;
 use Codeception\Actor;
 use Codeception\Stub;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Client\Currency\CurrencyClientInterface;
 use Spryker\Client\Currency\CurrencyDependencyProvider;
 use Spryker\Client\Currency\Dependency\Client\CurrencyToStoreClientInterface;
 
@@ -61,5 +62,13 @@ class CurrencyClientTester extends Actor
             );
 
         $this->setDependency(CurrencyDependencyProvider::CLIENT_STORE, $currencyToStoreClientMock);
+    }
+
+    /**
+     * @return \Spryker\Client\Currency\CurrencyClientInterface
+     */
+    public function getCurrencyClient(): CurrencyClientInterface
+    {
+        return $this->getLocator()->currency()->client();
     }
 }

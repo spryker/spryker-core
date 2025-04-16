@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductOfferPricesRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\PriceProductResolveConditionsTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -166,7 +167,13 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
                 }
 
                 $priceProductFilterTransfer = $this->priceProductFilterTransferBuilder->build($restRequest);
-                $priceProductFilterTransfer->setProductOfferReference($productOfferReference);
+                $priceProductFilterTransfer
+                    ->setProductOfferReference($productOfferReference)
+                    ->setPriceProductResolveConditions(
+                        (new PriceProductResolveConditionsTransfer())
+                            ->fromArray($productConcreteDataItem, true)
+                            ->setProductOfferReference($productOfferReference),
+                    );
 
                 $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
                     $priceProductTransfers,

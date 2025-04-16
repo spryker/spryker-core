@@ -69,6 +69,10 @@
     <transfer name="PriceProductFilter">
         <property name="currency" type="Currency"/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="priceProductResolveConditions" type="PriceProductResolveConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="PriceProductResolveConditions" strict="true">
     </transfer>
 
 </transfers>

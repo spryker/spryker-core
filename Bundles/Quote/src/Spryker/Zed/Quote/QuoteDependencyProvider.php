@@ -78,6 +78,11 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER = 'PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_QUOTE_COLLECTION_FILTER = 'PLUGINS_QUOTE_COLLECTION_FILTER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -97,6 +102,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteExpanderPlugins($container);
         $container = $this->addQuoteExpandBeforeCreatePlugins($container);
         $container = $this->addQuoteFieldsAllowedForSavingProviderPlugins($container);
+        $container = $this->addQuoteCollectionFilterPlugins($container);
 
         return $container;
     }
@@ -282,6 +288,20 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteCollectionFilterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_QUOTE_COLLECTION_FILTER, function () {
+            return $this->getQuoteCollectionFilterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface>
      */
     protected function getQuoteCreateAfterPlugins(): array
@@ -357,6 +377,14 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface>
      */
     protected function getQuoteFieldsAllowedForSavingProviderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteCollectionFilterPluginInterface>
+     */
+    protected function getQuoteCollectionFilterPlugins(): array
     {
         return [];
     }

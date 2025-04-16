@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Item">
+        <property name="unitPrice" type="int"/>
+        <property name="unitNetPrice" type="int"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="priceProduct" type="PriceProduct"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="grossAmount" type="int"/>
+        <property name="netAmount" type="int"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="amendmentOrderReference" type="string" strict="true"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="originalSalesOrderItemUnitPrices" type="int[]" associative="true" singular="originalSalesOrderItemUnitPrice" strict="true"/>
+        <property name="priceMode" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteUpdateRequestAttributes">
+        <property name="originalSalesOrderItemUnitPrices" type="int[]" associative="true" singular="originalSalesOrderItemUnitPrice" strict="true"/>
+    </transfer>
+
+    <transfer name="CartReorder" strict="true">
+        <property name="quote" type="Quote"/>
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+    </transfer>
+
+    <transfer name="CartReorderRequest" strict="true">
+        <property name="isAmendment" type="bool"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="priceProductResolveConditions" type="PriceProductResolveConditions" strict="true"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="PriceProductResolveConditions" strict="true">
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="ProductView">
+    </transfer>
+
+</transfers>

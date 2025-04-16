@@ -150,6 +150,8 @@
         <property name="originalOrder" type="Order" strict="true"/>
         <property name="customerReference" type="string"/>
         <property name="orderReference" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="idQuote" type="int"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
@@ -198,6 +200,7 @@
     </transfer>
 
     <transfer name="Currency">
+        <property name="code" type="string"/>
     </transfer>
 
     <transfer name="OrderListRequest">
@@ -220,6 +223,23 @@
 
     <transfer name="SalesOrderItemCollectionResponse" strict="true">
         <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
     </transfer>
 
 </transfers>

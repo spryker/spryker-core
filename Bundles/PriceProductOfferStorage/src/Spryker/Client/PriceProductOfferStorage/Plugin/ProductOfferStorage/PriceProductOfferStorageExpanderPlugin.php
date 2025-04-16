@@ -8,6 +8,7 @@
 namespace Spryker\Client\PriceProductOfferStorage\Plugin\ProductOfferStorage;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductResolveConditionsTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface;
@@ -34,7 +35,12 @@ class PriceProductOfferStorageExpanderPlugin extends AbstractPlugin implements P
             ->setIdProductAbstract($productOfferStorageTransfer->getIdProductAbstract())
             ->setIdProduct($productOfferStorageTransfer->getIdProductConcrete())
             ->setProductOfferReference($productOfferStorageTransfer->getProductOfferReference())
-            ->setQuantity(1);
+            ->setQuantity(1)
+            ->setPriceProductResolveConditions(
+                (new PriceProductResolveConditionsTransfer())
+                    ->fromArray($productOfferStorageTransfer->toArray(), true)
+                    ->setSku($productOfferStorageTransfer->getProductConcreteSku()),
+            );
 
         return $productOfferStorageTransfer->setPrice(
             $this->getFactory()

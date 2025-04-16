@@ -1,0 +1,44 @@
+{
+    "name": "spryker/price-product-offer-sales-order-amendment-connector",
+    "type": "library",
+    "description": "PriceProductOfferSalesOrderAmendmentConnector module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.2",
+        "spryker/kernel": "^3.76.0",
+        "spryker/price-product-offer": "^1.0.0",
+        "spryker/price-product-sales-order-amendment-extension": "^1.0.0",
+        "spryker/sales-order-amendment": "^0.4.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/testify": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

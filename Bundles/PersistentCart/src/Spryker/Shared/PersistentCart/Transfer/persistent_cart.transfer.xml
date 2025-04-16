@@ -83,6 +83,7 @@
     <transfer name="QuoteCriteriaFilter">
         <property name="idStore" type="int"/>
         <property name="customerReference" type="string"/>
+        <property name="isDefault" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="CartChange">

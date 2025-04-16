@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices;
 
+use Generated\Shared\Transfer\PriceProductResolveConditionsTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
@@ -149,9 +150,14 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
                 $concreteProductData[static::KEY_ID_PRODUCT_ABSTRACT],
             );
 
+        $priceProductFilterTransfer = $this->priceProductFilterTransferBuilder->build($restRequest);
+        $priceProductFilterTransfer->setPriceProductResolveConditions(
+            (new PriceProductResolveConditionsTransfer())->fromArray($concreteProductData, true),
+        );
+
         $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
             $priceProductTransfers,
-            $this->priceProductFilterTransferBuilder->build($restRequest),
+            $priceProductFilterTransfer,
         );
 
         $restProductPricesAttributesTransfer = $this->productPricesMapper

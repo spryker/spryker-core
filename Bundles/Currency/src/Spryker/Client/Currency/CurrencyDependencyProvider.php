@@ -42,6 +42,11 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_CURRENCY_POST_CHANGE = 'PLUGINS_CURRENCY_POST_CHANGE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_CURRENT_CURRENCY_ISO_CODE_PRE_CHECK = 'PLUGINS_CURRENT_CURRENCY_ISO_CODE_PRE_CHECK';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -49,6 +54,7 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addCurrencyPostChangePlugins($container);
+        $container = $this->addCurrentCurrencyIsoCodePreCheckPlugins($container);
         $container = $this->addInternationalization($container);
         $container = $this->addSessionClient($container);
         $container = $this->addZedRequestClient($container);
@@ -128,9 +134,31 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Client\CurrencyExtension\Dependency\CurrencyPostChangePluginInterface>
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCurrentCurrencyIsoCodePreCheckPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CURRENT_CURRENCY_ISO_CODE_PRE_CHECK, function () {
+            return $this->getCurrentCurrencyIsoCodePreCheckPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Client\CurrencyExtension\Dependency\CurrencyPostChangePluginInterface>
      */
     protected function getCurrencyPostChangePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Client\CurrencyExtension\Dependency\Plugin\CurrentCurrencyIsoCodePreCheckPluginInterface>
+     */
+    protected function getCurrentCurrencyIsoCodePreCheckPlugins(): array
     {
         return [];
     }

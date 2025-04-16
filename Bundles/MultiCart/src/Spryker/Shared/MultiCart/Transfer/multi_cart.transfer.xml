@@ -29,6 +29,7 @@
         <property name="customerReference" type="string"/>
         <property name="filter" type="Filter"/>
         <property name="idStore" type="int"/>
+        <property name="isDefault" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="QuoteActivationRequest">

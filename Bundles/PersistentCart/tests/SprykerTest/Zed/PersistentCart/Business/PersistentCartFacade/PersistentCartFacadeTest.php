@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PersistentCart\Business\PersistentCartFacade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\PersistentItemReplaceTransfer;
@@ -17,6 +18,8 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface;
+use Spryker\Zed\PersistentCart\PersistentCartDependencyProvider;
+use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuotePostMergePluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -414,12 +417,64 @@ class PersistentCartFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testShouldExecuteQuotePostMergePlugins(): void
+    {
+        // Assert
+        $this->tester->setDependency(
+            PersistentCartDependencyProvider::PLUGINS_QUOTE_POST_MERGE,
+            [$this->createQuotePostMergePluginMock(true)],
+        );
+
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+        $oldQuoteTransfer = $this->createCustomerQuote($customerTransfer);
+        $newQuoteTransfer = $this->createCustomerQuote($customerTransfer);
+
+        $persistentCartChangeTransfer = (new PersistentCartChangeTransfer())
+            ->setQuote($newQuoteTransfer)
+            ->setIdQuote($oldQuoteTransfer->getIdQuote())
+            ->setCustomer($customerTransfer)
+            ->addItem((new ItemTransfer())->setQuantity(9)->setSku(static::FAKE_SKU_1));
+
+        // Act
+        $this->tester->getFacade()->updateQuantity($persistentCartChangeTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldNotExecuteQuotePostMergePlugins(): void
+    {
+        // Assert
+        $this->tester->setDependency(
+            PersistentCartDependencyProvider::PLUGINS_QUOTE_POST_MERGE,
+            [$this->createQuotePostMergePluginMock(false)],
+        );
+
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+        $quoteTransfer = $this->createCustomerQuote($customerTransfer);
+
+        $persistentCartChangeTransfer = (new PersistentCartChangeTransfer())
+            ->setIdQuote($quoteTransfer->getIdQuote())
+            ->setCustomer($customerTransfer)
+            ->addItem((new ItemTransfer())->setQuantity(9)->setSku(static::FAKE_SKU_1));
+
+        // Act
+        $this->tester->getFacade()->updateQuantity($persistentCartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createCustomerQuote(): QuoteTransfer
+    protected function createCustomerQuote(?CustomerTransfer $customerTransfer = null): QuoteTransfer
     {
         return $this->tester->havePersistentQuote([
-            QuoteTransfer::CUSTOMER => $this->tester->haveCustomer(),
+            QuoteTransfer::CUSTOMER => $customerTransfer ?? $this->tester->haveCustomer(),
             QuoteTransfer::STORE => [StoreTransfer::NAME => 'DE'],
             QuoteTransfer::ITEMS => [
                 [ItemTransfer::SKU => static::FAKE_SKU_1, ItemTransfer::GROUP_KEY => static::FAKE_SKU_1, ItemTransfer::QUANTITY => 5],
@@ -467,5 +522,26 @@ class PersistentCartFacadeTest extends Unit
             ->willReturn((new CartPreCheckResponseTransfer())->setIsSuccess(false));
 
         return $cartPreCheckPluginInterfaceMock;
+    }
+
+    /**
+     * @param bool $expectExec
+     *
+     * @return \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuotePostMergePluginInterface
+     */
+    protected function createQuotePostMergePluginMock(bool $expectExec): QuotePostMergePluginInterface
+    {
+        $quotePostMergePluginMock = $this
+            ->getMockBuilder(QuotePostMergePluginInterface::class)
+            ->getMock();
+
+        $quotePostMergePluginMock
+            ->expects($expectExec ? $this->once() : $this->never())
+            ->method('postMerge')
+            ->willReturnCallback(function (QuoteTransfer $persistentQuoteTransfer, QuoteTransfer $currentQuoteTransfer) {
+                return $persistentQuoteTransfer;
+            });
+
+        return $quotePostMergePluginMock;
     }
 }

@@ -84,6 +84,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getQuoteExpanderPlugins(),
             $this->getStoreFacade(),
+            $this->getQuoteCollectionFilterPlugins(),
         );
     }
 
@@ -249,5 +250,13 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     public function getQuoteFieldsAllowedForSavingProviderPlugins(): array
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteCollectionFilterPluginInterface>
+     */
+    public function getQuoteCollectionFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_COLLECTION_FILTER);
     }
 }

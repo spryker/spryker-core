@@ -7,4 +7,10 @@
     <transfer name="QuoteValidationResponse">
     </transfer>
 
+    <transfer name="QuoteCollection">
+    </transfer>
+
+    <transfer name="QuoteCriteriaFilter">
+    </transfer>
+
 </transfers>
