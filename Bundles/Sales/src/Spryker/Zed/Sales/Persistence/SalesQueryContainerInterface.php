@@ -138,7 +138,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
-     * @param int $idSalesOrder
+     * @param int|null $idSalesOrder allow null to be able to apply the needed filter outside of this method
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */

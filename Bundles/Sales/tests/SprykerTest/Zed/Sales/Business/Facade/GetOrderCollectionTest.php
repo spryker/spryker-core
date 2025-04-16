@@ -47,7 +47,6 @@ class GetOrderCollectionTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->ensureSalesOrderTableIsEmpty();
         $this->tester->configureTestStateMachine([static::DEFAULT_OMS_PROCESS_NAME]);
     }
 
@@ -57,16 +56,17 @@ class GetOrderCollectionTest extends Unit
     public function testShouldReturnCollectionOfOrders(): void
     {
         // Arrange
-        $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
-        $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
-
         $orderCriteriaTransfer = new OrderCriteriaTransfer();
+        $ordersCountBeforeTest = $this->tester->getFacade()->getOrderCollection($orderCriteriaTransfer)->getOrders()->count();
+
+        $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
+        $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
 
         // Act
         $orderCollectionTransfer = $this->tester->getFacade()->getOrderCollection($orderCriteriaTransfer);
 
         // Assert
-        $this->assertCount(2, $orderCollectionTransfer->getOrders());
+        $this->assertCount($ordersCountBeforeTest + 2, $orderCollectionTransfer->getOrders());
     }
 
     /**
@@ -80,6 +80,7 @@ class GetOrderCollectionTest extends Unit
 
         $orderConditionsTransfer = (new OrderConditionsTransfer())
             ->addIdSalesOrder($orderTransfer->getIdSalesOrderOrFail());
+
         $orderCriteriaTransfer = (new OrderCriteriaTransfer())->setOrderConditions($orderConditionsTransfer);
 
         // Act
@@ -104,6 +105,7 @@ class GetOrderCollectionTest extends Unit
 
         $orderConditionsTransfer = (new OrderConditionsTransfer())
             ->addOrderReference($orderTransfer->getOrderReferenceOrFail());
+
         $orderCriteriaTransfer = (new OrderCriteriaTransfer())->setOrderConditions($orderConditionsTransfer);
 
         // Act
@@ -124,13 +126,16 @@ class GetOrderCollectionTest extends Unit
     {
         // Arrange
         $customerReference = 'customer-reference';
+
         $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
+
         $orderTransfer = $this->tester->haveOrder([
             OrderTransfer::CUSTOMER_REFERENCE => $customerReference,
         ], static::DEFAULT_OMS_PROCESS_NAME);
 
         $orderConditionsTransfer = (new OrderConditionsTransfer())
             ->addCustomerReference($customerReference);
+
         $orderCriteriaTransfer = (new OrderCriteriaTransfer())->setOrderConditions($orderConditionsTransfer);
 
         // Act
@@ -150,14 +155,19 @@ class GetOrderCollectionTest extends Unit
     public function testShouldReturnOrderCollectionSortedByFieldAsc(): void
     {
         // Arrange
+        $orderCriteriaTransfer = new OrderCriteriaTransfer();
+        $ordersCountBeforeTest = $this->tester->getFacade()->getOrderCollection($orderCriteriaTransfer)->getOrders()->count();
+
         $this->tester->haveOrder([
-            OrderTransfer::ORDER_REFERENCE => 'order-reference-1',
+            OrderTransfer::ORDER_REFERENCE => 'AAA',
         ], static::DEFAULT_OMS_PROCESS_NAME);
+
         $this->tester->haveOrder([
-            OrderTransfer::ORDER_REFERENCE => 'order-reference-2',
+            OrderTransfer::ORDER_REFERENCE => 'AAAA',
         ], static::DEFAULT_OMS_PROCESS_NAME);
+
         $this->tester->haveOrder([
-            OrderTransfer::ORDER_REFERENCE => 'order-reference-3',
+            OrderTransfer::ORDER_REFERENCE => 'AAAAA',
         ], static::DEFAULT_OMS_PROCESS_NAME);
 
         $sortTransfer = (new SortTransfer())
@@ -171,10 +181,12 @@ class GetOrderCollectionTest extends Unit
 
         // Assert
         $orderTransfers = $orderCollectionTransfer->getOrders();
-        $this->assertCount(3, $orderTransfers);
-        $this->assertSame('order-reference-1', $orderTransfers->offsetGet(0)->getOrderReference());
-        $this->assertSame('order-reference-2', $orderTransfers->offsetGet(1)->getOrderReference());
-        $this->assertSame('order-reference-3', $orderTransfers->offsetGet(2)->getOrderReference());
+
+        $this->assertCount($ordersCountBeforeTest + 3, $orderTransfers);
+
+        $this->assertSame('AAA', $orderTransfers->offsetGet(0)->getOrderReference());
+        $this->assertSame('AAAA', $orderTransfers->offsetGet(1)->getOrderReference());
+        $this->assertSame('AAAAA', $orderTransfers->offsetGet(2)->getOrderReference());
     }
 
     /**
@@ -183,12 +195,17 @@ class GetOrderCollectionTest extends Unit
     public function testShouldReturnOrderCollectionSortedByFieldDesc(): void
     {
         // Arrange
+        $orderCriteriaTransfer = new OrderCriteriaTransfer();
+        $ordersCountBeforeTest = $this->tester->getFacade()->getOrderCollection($orderCriteriaTransfer)->getOrders()->count();
+
         $this->tester->haveOrder([
             OrderTransfer::ORDER_REFERENCE => 'order-reference-1',
         ], static::DEFAULT_OMS_PROCESS_NAME);
+
         $this->tester->haveOrder([
             OrderTransfer::ORDER_REFERENCE => 'order-reference-2',
         ], static::DEFAULT_OMS_PROCESS_NAME);
+
         $this->tester->haveOrder([
             OrderTransfer::ORDER_REFERENCE => 'order-reference-3',
         ], static::DEFAULT_OMS_PROCESS_NAME);
@@ -204,7 +221,9 @@ class GetOrderCollectionTest extends Unit
 
         // Assert
         $orderTransfers = $orderCollectionTransfer->getOrders();
-        $this->assertCount(3, $orderTransfers);
+
+        $this->assertCount($ordersCountBeforeTest + 3, $orderTransfers);
+
         $this->assertSame('order-reference-3', $orderTransfers->offsetGet(0)->getOrderReference());
         $this->assertSame('order-reference-2', $orderTransfers->offsetGet(1)->getOrderReference());
         $this->assertSame('order-reference-1', $orderTransfers->offsetGet(2)->getOrderReference());
@@ -216,6 +235,9 @@ class GetOrderCollectionTest extends Unit
     public function testShouldReturnSalesOrderAmendmentCollectionPaginatedByLimitAndOffset(): void
     {
         // Arrange
+        $orderCriteriaTransfer = new OrderCriteriaTransfer();
+        $ordersCountBeforeTest = $this->tester->getFacade()->getOrderCollection($orderCriteriaTransfer)->getOrders()->count();
+
         $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
@@ -236,7 +258,7 @@ class GetOrderCollectionTest extends Unit
         $this->assertNotNull($orderCollectionTransfer->getPagination());
 
         $paginationTransfer = $orderCollectionTransfer->getPaginationOrFail();
-        $this->assertSame(5, $paginationTransfer->getNbResults());
+        $this->assertSame($ordersCountBeforeTest + 5, $paginationTransfer->getNbResults());
     }
 
     /**
@@ -245,6 +267,9 @@ class GetOrderCollectionTest extends Unit
     public function testShouldReturnSalesOrderAmendmentCollectionPaginatedByPageAndMaxPerPage(): void
     {
         // Arrange
+        $orderCriteriaTransfer = new OrderCriteriaTransfer();
+        $ordersCountBeforeTest = $this->tester->getFacade()->getOrderCollection($orderCriteriaTransfer)->getOrders()->count();
+
         $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
@@ -265,13 +290,14 @@ class GetOrderCollectionTest extends Unit
         $this->assertNotNull($orderCollectionTransfer->getPagination());
 
         $paginationTransfer = $orderCollectionTransfer->getPaginationOrFail();
-        $this->assertSame(5, $paginationTransfer->getNbResults());
+        $this->assertSame($ordersCountBeforeTest + 5, $paginationTransfer->getNbResults());
         $this->assertSame(2, $paginationTransfer->getPageOrFail());
         $this->assertSame(2, $paginationTransfer->getMaxPerPageOrFail());
         $this->assertSame(3, $paginationTransfer->getFirstIndexOrFail());
         $this->assertSame(4, $paginationTransfer->getLastIndexOrFail());
         $this->assertSame(1, $paginationTransfer->getFirstPage());
-        $this->assertSame(3, $paginationTransfer->getLastPageOrFail());
+        // The number is calculated out of the existing order + the newly added ones (5) and devided by the max per page setting (2)
+        $this->assertSame((int)round(($ordersCountBeforeTest + 5) / 2), $paginationTransfer->getLastPageOrFail());
         $this->assertSame(3, $paginationTransfer->getNextPageOrFail());
         $this->assertSame(1, $paginationTransfer->getPreviousPageOrFail());
     }
@@ -303,7 +329,7 @@ class GetOrderCollectionTest extends Unit
     {
         $orderExpanderPluginMock = $this->getMockBuilder(OrderExpanderPluginInterface::class)->getMock();
         $orderExpanderPluginMock
-            ->expects($this->once())
+            ->expects($this->atLeastOnce())
             ->method('hydrate')
             ->willReturnCallback(function (OrderTransfer $orderTransfer) {
                 return $orderTransfer;

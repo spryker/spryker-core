@@ -5,12 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace Spryker\Zed\Sales\Business\Writer;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\OmsEventTriggerResponseTransfer;
 use Generated\Shared\Transfer\OrderCancelRequestTransfer;
 use Generated\Shared\Transfer\OrderCancelResponseTransfer;
+use Generated\Shared\Transfer\OrderConditionsTransfer;
+use Generated\Shared\Transfer\OrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
@@ -83,6 +87,16 @@ class OrderWriter implements OrderWriterInterface
      */
     public function cancelOrder(OrderCancelRequestTransfer $orderCancelRequestTransfer): OrderCancelResponseTransfer
     {
+        // This field will be set on purpose, when null, we have to check the customer as cancelOrder should have a customer for BC reasons.
+        // The possibility to cancel an order without a customer is added to be able to cancelOrders when a customer or guest customer is on a hosted payment page and uses the back button to change something in the cart.
+        // Without this possibility, it wouldn't be possible to order an item that was ordered before by the same customer when it was the last order item in stock
+        if ($orderCancelRequestTransfer->getAllowCancellationWithoutCustomer() === null) {
+                $orderCancelRequestTransfer
+                    ->requireCustomer()
+                    ->getCustomer()
+                        ->requireCustomerReference();
+        }
+
         if ($orderCancelRequestTransfer->getIdSalesOrder() === null && $orderCancelRequestTransfer->getOrderReference() === null) {
             throw new RequiredTransferPropertyException(
                 'OrderCancelRequestTransfer.idSalesOrder or OrderCancelRequestTransfer.orderReference and customer are required for cancelOrder',
@@ -91,14 +105,28 @@ class OrderWriter implements OrderWriterInterface
 
         $idSalesOrder = $orderCancelRequestTransfer->getIdSalesOrder();
 
-        if ($idSalesOrder === null) {
+        if (!$orderCancelRequestTransfer->getAllowCancellationWithoutCustomer() && $idSalesOrder === null) {
             $idSalesOrder = (int)$this->salesRepository->findCustomerOrderIdByOrderReference(
                 (string)$orderCancelRequestTransfer->getCustomerOrFail()->getCustomerReferenceOrFail(),
                 $orderCancelRequestTransfer->getOrderReferenceOrFail(),
             );
         }
 
-        $orderTransfer = $this->orderReader->findOrderByIdSalesOrder($idSalesOrder);
+        $orderConditionsTransfer = new OrderConditionsTransfer();
+
+        if ($orderCancelRequestTransfer->getIdSalesOrder()) {
+            $orderConditionsTransfer->addIdSalesOrder($idSalesOrder);
+        }
+
+        if ($orderCancelRequestTransfer->getOrderReference()) {
+            $orderConditionsTransfer->addOrderReference($orderCancelRequestTransfer->getOrderReference());
+        }
+
+        $orderCriteriaTransfer = new OrderCriteriaTransfer();
+        $orderCriteriaTransfer
+            ->setOrderConditions($orderConditionsTransfer);
+
+        $orderTransfer = $this->orderReader->findOrderByOrderCriteria($orderCriteriaTransfer);
 
         if (!$orderTransfer || !$this->isApplicableForCustomer($orderCancelRequestTransfer, $orderTransfer)) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_CUSTOMER_ORDER_NOT_FOUND);
@@ -121,7 +149,7 @@ class OrderWriter implements OrderWriterInterface
         }
 
         $updatedOrderTransfer = $this->executeOrderPostCancelPlugins(
-            $this->orderReader->findOrderByIdSalesOrder($idSalesOrder),
+            $this->orderReader->findOrderByOrderCriteria($orderCriteriaTransfer),
         );
 
         return (new OrderCancelResponseTransfer())

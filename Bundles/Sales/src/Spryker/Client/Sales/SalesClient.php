@@ -163,11 +163,6 @@ class SalesClient extends AbstractClient implements SalesClientInterface
      */
     public function cancelOrder(OrderCancelRequestTransfer $orderCancelRequestTransfer): OrderCancelResponseTransfer
     {
-        $orderCancelRequestTransfer
-            ->requireCustomer()
-            ->getCustomer()
-                ->requireCustomerReference();
-
         return $this->getFactory()
             ->createZedSalesStub()
             ->cancelOrder($orderCancelRequestTransfer);

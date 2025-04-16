@@ -235,7 +235,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @api
      *
-     * @param int $idSalesOrder
+     * @param int|null $idSalesOrder allow null to be able to apply the needed filter outside of this method
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
@@ -243,11 +243,15 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     {
         $query = $this->getFactory()->createSalesOrderQuery()
             ->setModelAlias('order')
-            ->filterByIdSalesOrder($idSalesOrder)
             ->innerJoinWith('order.BillingAddress billingAddress')
             ->innerJoinWith('billingAddress.Country billingCountry')
             ->leftJoinWith('order.ShippingAddress shippingAddress')
             ->leftJoinWith('shippingAddress.Country shippingCountry');
+
+        // When this method is used with a passed idSalesOrder, the filter will be applied to keep BC.
+        if ($idSalesOrder !== null) {
+            $query->filterByIdSalesOrder($idSalesOrder);
+        }
 
         return $query;
     }

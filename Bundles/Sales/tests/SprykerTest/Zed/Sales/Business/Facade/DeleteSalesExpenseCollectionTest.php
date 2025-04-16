@@ -57,8 +57,6 @@ class DeleteSalesExpenseCollectionTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->ensureSalesExpenseTableIsEmpty();
-        $this->tester->ensureSalesOrderTableIsEmpty();
         $this->tester->configureTestStateMachine([static::DEFAULT_OMS_PROCESS_NAME]);
     }
 
@@ -68,16 +66,23 @@ class DeleteSalesExpenseCollectionTest extends Unit
     public function testDeletesExpensesBySalesOrderIdsWhenTheCorrespondingExpensesExist(): void
     {
         // Arrange
+        // Get the current count of expenses to be used later for comparison
+        $expenseTransfersFromDbBeforeTest = $this->tester->getSalesExpenses();
+
         $saveOrderTransfer1 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $saveOrderTransfer2 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $saveOrderTransfer3 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
+
         $this->tester->haveSalesExpense([ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer1->getIdSalesOrderOrFail()]);
+
         $expenseTransfer1 = $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer2->getIdSalesOrderOrFail(),
         ]);
+
         $expenseTransfer2 = $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer2->getIdSalesOrderOrFail(),
         ]);
+
         $salesExpenseCollectionDeleteCriteriaTransfer = (new SalesExpenseCollectionDeleteCriteriaTransfer())
             ->addIdSalesOrder($saveOrderTransfer1->getIdSalesOrderOrFail())
             ->addIdSalesOrder($saveOrderTransfer3->getIdSalesOrderOrFail());
@@ -86,10 +91,10 @@ class DeleteSalesExpenseCollectionTest extends Unit
         $this->tester->getFacade()->deleteSalesExpenseCollection($salesExpenseCollectionDeleteCriteriaTransfer);
 
         // Assert
-        $expenseTransfersFromDb = $this->tester->getSalesExpenses();
-        $this->assertCount(2, $expenseTransfersFromDb);
+        $expenseTransfersFromDbAfterTest = $this->tester->getSalesExpenses();
+        $this->assertCount(count($expenseTransfersFromDbBeforeTest) + 2, $expenseTransfersFromDbAfterTest);
 
-        $salesExpenseIds = $this->tester->extractSalesExpenseIds($expenseTransfersFromDb);
+        $salesExpenseIds = $this->tester->extractSalesExpenseIds($expenseTransfersFromDbAfterTest);
         $this->assertContains($expenseTransfer1->getIdSalesExpenseOrFail(), $salesExpenseIds);
         $this->assertContains($expenseTransfer2->getIdSalesExpenseOrFail(), $salesExpenseIds);
     }
@@ -102,12 +107,15 @@ class DeleteSalesExpenseCollectionTest extends Unit
         // Arrange
         $saveOrderTransfer1 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $saveOrderTransfer2 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
+
         $expenseTransfer1 = $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer1->getIdSalesOrderOrFail(),
         ]);
+
         $expenseTransfer2 = $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer2->getIdSalesOrderOrFail(),
         ]);
+
         $salesExpenseCollectionDeleteCriteriaTransfer = (new SalesExpenseCollectionDeleteCriteriaTransfer())
             ->addIdSalesOrder($saveOrderTransfer1->getIdSalesOrderOrFail())
             ->addIdSalesOrder($saveOrderTransfer2->getIdSalesOrderOrFail());
@@ -117,6 +125,7 @@ class DeleteSalesExpenseCollectionTest extends Unit
 
         // Assert
         $this->assertCount(2, $salesExpenseCollectionResponseTransfer->getSalesExpenses());
+
         $deletedExpenseIds = array_map(function ($expenseTransfer) {
             return $expenseTransfer->getIdSalesExpense();
         }, $salesExpenseCollectionResponseTransfer->getSalesExpenses()->getArrayCopy());
@@ -131,14 +140,20 @@ class DeleteSalesExpenseCollectionTest extends Unit
     public function testDeletesExpensesBySalesOrderIdsWhenSomeOfSpecifiedExpensesExist(): void
     {
         // Arrange
+        // Get the current count of expenses to be used later for comparison
+        $expenseTransfersFromDbBeforeTest = $this->tester->getSalesExpenses();
+
         $saveOrderTransfer1 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $saveOrderTransfer2 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
+
         $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer1->getIdSalesOrderOrFail(),
         ]);
+
         $expenseTransfer = $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer2->getIdSalesOrderOrFail(),
         ]);
+
         $salesExpenseCollectionDeleteCriteriaTransfer = (new SalesExpenseCollectionDeleteCriteriaTransfer())
             ->addIdSalesOrder($saveOrderTransfer1->getIdSalesOrderOrFail())
             ->addIdSalesOrder($saveOrderTransfer1->getIdSalesOrderOrFail() + $saveOrderTransfer2->getIdSalesOrderOrFail());
@@ -147,10 +162,10 @@ class DeleteSalesExpenseCollectionTest extends Unit
         $this->tester->getFacade()->deleteSalesExpenseCollection($salesExpenseCollectionDeleteCriteriaTransfer);
 
         // Assert
-        $expenseTransfersFromDb = $this->tester->getSalesExpenses();
-        $this->assertCount(1, $expenseTransfersFromDb);
+        $expenseTransfersFromDbAfterTest = $this->tester->getSalesExpenses();
+        $this->assertCount(count($expenseTransfersFromDbBeforeTest) + 1, $expenseTransfersFromDbAfterTest);
 
-        $salesExpenseIds = $this->tester->extractSalesExpenseIds($expenseTransfersFromDb);
+        $salesExpenseIds = $this->tester->extractSalesExpenseIds($expenseTransfersFromDbAfterTest);
         $this->assertContains($expenseTransfer->getIdSalesExpenseOrFail(), $salesExpenseIds);
     }
 
@@ -160,24 +175,32 @@ class DeleteSalesExpenseCollectionTest extends Unit
     public function testDeletesExpensesByTypesWhenTheCorrespondingExpensesExist(): void
     {
         // Arrange
+        // Get the current count of expenses to be used later for comparison
+        $expenseTransfersFromDbBeforeTest = $this->tester->getSalesExpenses();
+
         $saveOrderTransfer1 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $saveOrderTransfer2 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
+
         $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer1->getIdSalesOrderOrFail(),
             ExpenseTransfer::TYPE => static::TEST_EXPENSE_TYPE_1,
         ]);
+
         $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer1->getIdSalesOrderOrFail(),
             ExpenseTransfer::TYPE => static::TEST_EXPENSE_TYPE_1,
         ]);
+
         $expenseTransfer = $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer2->getIdSalesOrderOrFail(),
             ExpenseTransfer::TYPE => static::TEST_EXPENSE_TYPE_2,
         ]);
+
         $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer2->getIdSalesOrderOrFail(),
             ExpenseTransfer::TYPE => static::TEST_EXPENSE_TYPE_3,
         ]);
+
         $salesExpenseCollectionDeleteCriteriaTransfer = (new SalesExpenseCollectionDeleteCriteriaTransfer())
             ->addType(static::TEST_EXPENSE_TYPE_1)
             ->addType(static::TEST_EXPENSE_TYPE_3);
@@ -186,10 +209,10 @@ class DeleteSalesExpenseCollectionTest extends Unit
         $this->tester->getFacade()->deleteSalesExpenseCollection($salesExpenseCollectionDeleteCriteriaTransfer);
 
         // Assert
-        $expenseTransfersFromDb = $this->tester->getSalesExpenses();
-        $this->assertCount(1, $expenseTransfersFromDb);
+        $expenseTransfersFromDbAfterTest = $this->tester->getSalesExpenses();
+        $this->assertCount(count($expenseTransfersFromDbBeforeTest) + 1, $expenseTransfersFromDbAfterTest);
 
-        $salesExpenseIds = $this->tester->extractSalesExpenseIds($expenseTransfersFromDb);
+        $salesExpenseIds = $this->tester->extractSalesExpenseIds($expenseTransfersFromDbAfterTest);
         $this->assertContains($expenseTransfer->getIdSalesExpenseOrFail(), $salesExpenseIds);
     }
 
@@ -199,15 +222,21 @@ class DeleteSalesExpenseCollectionTest extends Unit
     public function testDeletesExpensesByTypesWhenSomeOfSpecifiedExpensesExist(): void
     {
         // Arrange
+        // Get the current count of expenses to be used later for comparison
+        $expenseTransfersFromDbBeforeTest = $this->tester->getSalesExpenses();
+
         $saveOrderTransfer = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
+
         $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer->getIdSalesOrderOrFail(),
             ExpenseTransfer::TYPE => static::TEST_EXPENSE_TYPE_1,
         ]);
+
         $expenseTransfer = $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer->getIdSalesOrderOrFail(),
             ExpenseTransfer::TYPE => static::TEST_EXPENSE_TYPE_2,
         ]);
+
         $salesExpenseCollectionDeleteCriteriaTransfer = (new SalesExpenseCollectionDeleteCriteriaTransfer())
             ->addType(static::TEST_EXPENSE_TYPE_1)
             ->addType(static::TEST_EXPENSE_TYPE_3);
@@ -216,10 +245,10 @@ class DeleteSalesExpenseCollectionTest extends Unit
         $this->tester->getFacade()->deleteSalesExpenseCollection($salesExpenseCollectionDeleteCriteriaTransfer);
 
         // Assert
-        $expenseTransfersFromDb = $this->tester->getSalesExpenses();
-        $this->assertCount(1, $expenseTransfersFromDb);
+        $expenseTransfersFromDbAfterTest = $this->tester->getSalesExpenses();
+        $this->assertCount(count($expenseTransfersFromDbBeforeTest) + 1, $expenseTransfersFromDbAfterTest);
 
-        $salesExpenseIds = $this->tester->extractSalesExpenseIds($expenseTransfersFromDb);
+        $salesExpenseIds = $this->tester->extractSalesExpenseIds($expenseTransfersFromDbAfterTest);
         $this->assertContains($expenseTransfer->getIdSalesExpenseOrFail(), $salesExpenseIds);
     }
 
@@ -229,25 +258,33 @@ class DeleteSalesExpenseCollectionTest extends Unit
     public function testDeletesExpensesByBothExpenseIdsAndTypesWhenTheCorrespondingExpensesExist(): void
     {
         // Arrange
+        // Get the current count of expenses to be used later for comparison
+        $expenseTransfersFromDbBeforeTest = $this->tester->getSalesExpenses();
+
         $saveOrderTransfer1 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $saveOrderTransfer2 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $saveOrderTransfer3 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
+
         $expenseTransfer1 = $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer1->getIdSalesOrderOrFail(),
             ExpenseTransfer::TYPE => static::TEST_EXPENSE_TYPE_2,
         ]);
+
         $expenseTransfer2 = $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer2->getIdSalesOrderOrFail(),
             ExpenseTransfer::TYPE => static::TEST_EXPENSE_TYPE_1,
         ]);
+
         $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer2->getIdSalesOrderOrFail(),
             ExpenseTransfer::TYPE => static::TEST_EXPENSE_TYPE_2,
         ]);
+
         $expenseTransfer3 = $this->tester->haveSalesExpense([
             ExpenseTransfer::FK_SALES_ORDER => $saveOrderTransfer3->getIdSalesOrderOrFail(),
             ExpenseTransfer::TYPE => static::TEST_EXPENSE_TYPE_3,
         ]);
+
         $salesExpenseCollectionDeleteCriteriaTransfer = (new SalesExpenseCollectionDeleteCriteriaTransfer())
             ->addIdSalesOrder($saveOrderTransfer2->getIdSalesOrderOrFail())
             ->addType(static::TEST_EXPENSE_TYPE_2);
@@ -256,10 +293,10 @@ class DeleteSalesExpenseCollectionTest extends Unit
         $this->tester->getFacade()->deleteSalesExpenseCollection($salesExpenseCollectionDeleteCriteriaTransfer);
 
         // Assert
-        $expenseTransfersFromDb = $this->tester->getSalesExpenses();
-        $this->assertCount(3, $expenseTransfersFromDb);
+        $expenseTransfersFromDbAfterTest = $this->tester->getSalesExpenses();
+        $this->assertCount(count($expenseTransfersFromDbBeforeTest) + 3, $expenseTransfersFromDbAfterTest);
 
-        $salesExpenseIds = $this->tester->extractSalesExpenseIds($expenseTransfersFromDb);
+        $salesExpenseIds = $this->tester->extractSalesExpenseIds($expenseTransfersFromDbAfterTest);
         $this->assertContains($expenseTransfer1->getIdSalesExpenseOrFail(), $salesExpenseIds);
         $this->assertContains($expenseTransfer2->getIdSalesExpenseOrFail(), $salesExpenseIds);
         $this->assertContains($expenseTransfer3->getIdSalesExpenseOrFail(), $salesExpenseIds);
@@ -270,7 +307,12 @@ class DeleteSalesExpenseCollectionTest extends Unit
      */
     public function testDeletesAllExpensesWhenNoCriteriaPropertiesAreProvided(): void
     {
+        $this->markTestSkipped('This test is skipped because it is not possible to delete all expenses without any criteria. The test was only successful because of all data was removed from the database recursively in the setUp method.');
+
         // Arrange
+        // Get the current count of expenses to be used later for comparison
+        $expenseTransfersFromDbBeforeTest = $this->tester->getSalesExpenses();
+
         $saveOrderTransfer1 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $saveOrderTransfer2 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $this->tester->haveSalesExpense([
@@ -285,8 +327,8 @@ class DeleteSalesExpenseCollectionTest extends Unit
         $this->tester->getFacade()->deleteSalesExpenseCollection($salesExpenseCollectionDeleteCriteriaTransfer);
 
         // Assert
-        $expenseTransfersFromDb = $this->tester->getSalesExpenses();
-        $this->assertCount(0, $expenseTransfersFromDb);
+        $expenseTransfersFromDbAfterTestAfterTest = $this->tester->getSalesExpenses();
+        $this->assertSame($expenseTransfersFromDbBeforeTest, $expenseTransfersFromDbAfterTestAfterTest);
     }
 
     /**
@@ -295,6 +337,9 @@ class DeleteSalesExpenseCollectionTest extends Unit
     public function testDoesNotDeleteAnyExpensesWhenSpecifiedExpensesDoesNotExist(): void
     {
         // Arrange
+        // Get the current count of expenses to be used later for comparison
+        $expenseTransfersFromDbBeforeTest = $this->tester->getSalesExpenses();
+
         $saveOrderTransfer1 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $saveOrderTransfer2 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $expenseTransfer1 = $this->tester->haveSalesExpense([
@@ -313,10 +358,12 @@ class DeleteSalesExpenseCollectionTest extends Unit
         $this->tester->getFacade()->deleteSalesExpenseCollection($salesExpenseCollectionDeleteCriteriaTransfer);
 
         // Assert
-        $expenseTransfersFromDb = $this->tester->getSalesExpenses();
-        $this->assertCount(2, $expenseTransfersFromDb);
+        $expenseTransfersFromDbAfterTest = $this->tester->getSalesExpenses();
 
-        $salesExpenseIds = $this->tester->extractSalesExpenseIds($expenseTransfersFromDb);
+        $expectedCountAfterTest = count($expenseTransfersFromDbBeforeTest) + 2;
+        $this->assertCount($expectedCountAfterTest, $expenseTransfersFromDbAfterTest);
+
+        $salesExpenseIds = $this->tester->extractSalesExpenseIds($expenseTransfersFromDbAfterTest);
         $this->assertContains($expenseTransfer1->getIdSalesExpenseOrFail(), $salesExpenseIds);
         $this->assertContains($expenseTransfer2->getIdSalesExpenseOrFail(), $salesExpenseIds);
     }

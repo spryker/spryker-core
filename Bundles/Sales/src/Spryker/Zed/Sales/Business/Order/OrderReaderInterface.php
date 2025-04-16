@@ -5,8 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace Spryker\Zed\Sales\Business\Order;
 
+use Generated\Shared\Transfer\OrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
 interface OrderReaderInterface
@@ -16,7 +19,14 @@ interface OrderReaderInterface
      *
      * @return array<string>
      */
-    public function getDistinctOrderStates($idSalesOrder);
+    public function getDistinctOrderStates(int $idSalesOrder): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderCriteriaTransfer $orderCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderByOrderCriteria(OrderCriteriaTransfer $orderCriteriaTransfer): ?OrderTransfer;
 
     /**
      * @param int $idSalesOrder
@@ -30,5 +40,5 @@ interface OrderReaderInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer|null
      */
-    public function findOrderByIdSalesOrderItem($idSalesOrderItem);
+    public function findOrderByIdSalesOrderItem(int $idSalesOrderItem): ?OrderTransfer;
 }

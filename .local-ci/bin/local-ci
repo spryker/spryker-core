@@ -4,7 +4,13 @@
 define('LOCAL_CI_ROOT', dirname(__DIR__, 5));
 
 require_once LOCAL_CI_ROOT . '/vendor/autoload.php';
+require_once __DIR__ . '/../src/CiCommand.php';
+require_once __DIR__ . '/../src/CiRequest.php';
+require_once __DIR__ . '/../src/CiResponse.php';
 
+use SprykerCi\CiCommand;
+use SprykerCi\CiResponse;
+use SprykerCi\CiRequest;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,6 +23,7 @@ use Laminas\Filter\FilterChain;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToDash;
 use Laminas\Filter\Word\SeparatorToSeparator;
+use Generated\Shared\Transfer\ModuleTransfer;
 
 !defined('APPLICATION_ROOT_DIR') && define('APPLICATION_ROOT_DIR', getcwd());
 !defined('APPLICATION') && define('APPLICATION', 'Zed');
@@ -72,97 +79,173 @@ DESC
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->checkXDebugEnabled();
+
         $output->writeln('Running Local CI');
 
-        if (extension_loaded('xdebug')) {
-            $output->writeln('');
-            $output->writeln('*********************************************************************');
-            $output->writeln('* <fg=yellow>Xdebug is enabled, you should disable it for performance reasons.</> *');
-            $output->writeln('*********************************************************************');
-            $output->writeln('');
+        $ciRequest = new CiRequest();
+        $ciRequest = $this->setupCiRequest($ciRequest);
+
+        $ciResponse = new CiResponse();
+
+        // This is for now only informative output and will probably later be used to run the CI on these modules.
+        $output->writeln(sprintf('Your changed modules are used by <fg=green>%s</> other modules.', count($ciRequest->getModulesUsedByChangedModules())), OutputInterface::VERBOSITY_NORMAL);
+
+        $this->runPreCommands($ciRequest);
+
+        $ciResponse = $this->runCommandsOnModules($ciRequest, $ciResponse);
+
+        $this->printErrors($ciResponse);
+
+        return count($ciResponse->getErrors()) ? static::FAILURE : static::SUCCESS;
+    }
+
+    protected function runCommandsOnModules(CiRequest $ciRequest, CiResponse $ciResponse): CiResponse
+    {
+        foreach ($ciRequest->getModulesToRun() as $moduleName => $moduleTransfer) {
+            $this->output->writeln(sprintf('Module <fg=green>%s</>', $moduleName), OutputInterface::VERBOSITY_NORMAL);
+
+            foreach ($ciRequest->getCommandsToRun() as $commandName => $commandData) {
+                $ciCommand = new CiCommand($commandName, $commandData, $moduleTransfer);
+
+                $this->runCommandsOnModule(
+                    $ciCommand,
+                    $ciRequest,
+                    $ciResponse
+                );
+            }
+
+            $this->output->writeln('');
         }
 
-        $errors = [];
+        return $ciResponse;
+    }
 
-        $moduleList = $this->getModuleList();
+    protected function setupCiRequest(CiRequest $ciRequest): CiRequest
+    {
+        $ciRequest
+            ->setShouldRunPreCommands((bool) $this->input->getOption('pre') ?? false)
+            ->setShouldRunFixCommands((bool) $this->input->getOption('fix') ?? false);
 
-        $filterChain = new FilterChain();
-        $filterChain->attach(new CamelCaseToDash());
-        $filterChain->attach(new SeparatorToSeparator('.', '/'));
-        $filterChain->attach(new StringToLower());
+        $ciRequest = $this->setupModules($ciRequest);
 
-        $packageList = [];
+        return $this->setupCommands($ciRequest);
+    }
 
-        foreach ($moduleList as $moduleCiDefinition) {
-            $packageList[] = $filterChain->filter($moduleCiDefinition['module']);
-        }
+    protected function setupModules(CiRequest $ciRequest): CiRequest
+    {
+        $moduleNameToRun = $this->input->getOption('module');
 
         $moduleFinderFacade = new ModuleFinderFacade();
         $allModulesList = $moduleFinderFacade->getModules();
 
-        $moduleUsingChangedModules = $this->getModulesUsingChangedModules($allModulesList, $packageList);
+        $touchedModuleList = $this->getTouchedModuleList($allModulesList);
 
-        // This is for now only informative output and will probably later be used to run the CI on these modules.
-        $output->writeln(sprintf('Your changed modules are used by <fg=green>%s</> other modules.', count($moduleUsingChangedModules)), OutputInterface::VERBOSITY_NORMAL);
+        foreach ($touchedModuleList as $fullyQualifiedModuleName => $moduleCiDefinition) {
+            if ($moduleNameToRun && $moduleNameToRun !== $fullyQualifiedModuleName) {
+                $ciRequest->addModuleToSkip($fullyQualifiedModuleName);
 
-        $commandList = $this->getCommands();
-
-        if ($input->getOption('pre')) {
-            $this->runPreCommands($output);
-        }
-
-        $isFixRequested = $input->getOption('fix', false);
-
-        foreach ($moduleList as $moduleData) {
-            $moduleName = $moduleData['module'];
-
-            // Check if only a specific module should be run. When this option is set, then only the module that is requested will be fixed and validated.
-            if ($input->getOption('module') && $input->getOption('module') !== $moduleName) {
                 continue;
             }
 
-            $output->writeln(sprintf('Module <fg=green>%s</>', $moduleName), OutputInterface::VERBOSITY_NORMAL);
-
-            foreach ($commandList as $commandName => $commandData) {
-
-                // when this option is set then only the requested command will be run.
-                if ($input->getOption('command') && $input->getOption('command') !== $commandName) {
-                    continue;
-                }
-
-                // When the command is marked as skipped for the module, skip it
-                if (in_array($commandName, $moduleData['skip'])) {
-                    if (!isset($skippedModuleCommands[$moduleName])) {
-                        $skippedModuleCommands[$moduleName] = [];
-                    }
-
-                    $output->writeln(sprintf('Skipping command %s for module %s', $commandName, $moduleName), OutputInterface::VERBOSITY_VERBOSE);
-
-                    $skippedModuleCommands[$moduleName][] = $commandName;
-
-                    continue;
-                }
-
-
-                if ($isFixRequested && isset($commandData['fixCommand'])) {
-                    $this->runCommand($commandName, $commandData, $moduleName, 'fixCommand', $errors);
-                }
-
-                $this->runCommand($commandName, $commandData, $moduleName, 'command', $errors);
-            }
-
-            $output->writeln('');
+            $ciRequest->addModuleToRun($fullyQualifiedModuleName, $moduleCiDefinition['moduleTransfer']);
         }
 
-        $this->printErrors($errors, $output);
-
-        return count($errors) ? static::FAILURE : static::SUCCESS;
+        return $this->getModulesUsingChangedModules($allModulesList, $ciRequest);
     }
 
-    protected function getModulesUsingChangedModules(array $allModulesList, array $packageList): array
+    protected function setupCommands(CiRequest $ciRequest): CiRequest
     {
-        $modulesUsingChangedModules = [];
+        $commandNameToRun = $this->input->getOption('command');
 
+        $commands = $this->getCommands();
+
+        foreach ($commands as $commandName => $commandDefinition) {
+            if ($commandNameToRun && $commandName !== $commandNameToRun) {
+                continue;
+            }
+
+            $ciRequest->addCommandToRun($commandName, $commandDefinition);
+        }
+
+        return $ciRequest;
+    }
+
+    protected function runCommandsOnModule(
+        CiCommand $ciCommand,
+        CiRequest $ciRequest,
+        CiResponse $ciResponse
+    ): CiResponse
+    {
+        if ($ciCommand->shouldBeSkipped()) {
+            return $ciResponse;
+        }
+
+        if ($ciRequest->shouldRunFixCommands() && $ciCommand->hasFixCommand()) {
+            $this->runCommand($ciCommand, $ciResponse, true);
+        }
+
+        return $this->runCommand($ciCommand, $ciResponse);
+    }
+
+    protected function checkXDebugEnabled(): void
+    {
+        if (extension_loaded('xdebug')) {
+            $this->output->writeln('');
+            $this->output->writeln('*********************************************************************');
+            $this->output->writeln('* <fg=yellow>Xdebug is enabled, you should disable it for performance reasons.</> *');
+            $this->output->writeln('*********************************************************************');
+            $this->output->writeln('');
+        }
+    }
+
+    protected function runCommand(CiCommand $ciCommand, CiResponse $ciResponse, bool $fixCommand = false): CiResponse
+    {
+        $this->output->writeln(sprintf('Command <fg=yellow>%s</>', $ciCommand->getCommandName()), OutputInterface::VERBOSITY_VERBOSE);
+
+        $commandToRun = $fixCommand ? $ciCommand->getFixCommand() : $ciCommand->getCommand();
+
+        $this->output->writeln(implode(' ', $commandToRun), OutputInterface::VERBOSITY_VERBOSE);
+
+        $process = $this->getProcess($ciCommand, $fixCommand);
+
+        $process->run(function ($type, $buffer) {
+            if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
+                echo $buffer;
+            }
+        });
+
+        if ($fixCommand) {
+            return $ciResponse;
+        }
+
+        if (!$process->isSuccessful()) {
+            $ciResponse->addError($ciCommand->getModuleName(), $ciCommand->getCommandName(), implode(' ', $commandToRun));
+
+            $this->output->writeln(sprintf('Command <fg=red>%s failed</> for module %s', $ciCommand->getCommandName(), $ciCommand->getModuleName()), OutputInterface::VERBOSITY_NORMAL);
+
+            return $ciResponse;
+        }
+
+        $this->output->writeln(sprintf('Command <fg=green>%s succeeded</> for module %s', $ciCommand->getCommandName(), $ciCommand->getModuleName()), OutputInterface::VERBOSITY_NORMAL);
+
+        return $ciResponse;
+    }
+
+    protected function getProcess(CiCommand $ciCommand, bool $isFix = false): Process
+    {
+        $commandToRun = $isFix ? $ciCommand->getFixCommand() : $ciCommand->getCommand();
+
+        if ($ciCommand->isShellCommand()) {
+            return Process::fromShellCommandline(implode($commandToRun), $ciCommand->getPath());
+        }
+
+        return new Process($commandToRun, $ciCommand->getPath());
+
+    }
+
+    protected function getModulesUsingChangedModules(array $allModulesList, CiRequest $ciRequest): CiRequest
+    {
         foreach ($allModulesList as $moduleTransfer) {
             $composerJsonPath = $moduleTransfer->getPath() . '/composer.json';
 
@@ -174,69 +257,49 @@ DESC
 
             $composerJsonContent = file_get_contents($composerJsonPath);
 
-            foreach ($packageList as $package) {
-                if (strpos($composerJsonContent, $package) === false) {
+            foreach ($ciRequest->getModulesToRun() as $moduleToRunTransfer) {
+                $modulePackageName = sprintf('%s/%s', $moduleToRunTransfer->getOrganization()->getNameDashed(), $moduleToRunTransfer->getNameDashed());
+
+                if (strpos($composerJsonContent, $modulePackageName) === false) {
                     continue;
                 }
 
-                $moduleUsingModuleModule = sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());
+                $moduleUsingModule = sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());
 
-                $modulesUsingChangedModules[$moduleUsingModuleModule][] = $package;
+                $ciRequest->addModuleUsedByChangedModule($moduleUsingModule, $modulePackageName);
             }
         }
 
-        return $modulesUsingChangedModules;
+        return $ciRequest;
     }
 
-    protected function runCommand(string $commandName, array $commandData, string $moduleName, string $command, array &$errors): void
-    {
-        $this->output->writeln(sprintf('Command <fg=yellow>%s</>', $commandName), OutputInterface::VERBOSITY_VERBOSE);
-
-        // When we need to run a command with the short module name, explode Namespace.ModuleName and use the short name
-        if (isset($commandData['useFullName']) && $commandData['useFullName'] === false) {
-            $moduleName = explode('.', $moduleName)[1];
-        }
-
-        if ($commandData['hasModule'] === true) {
-            if (isset($commandData['hasModuleInArgument']) && $commandData['hasModuleInArgument']) {
-
-                $commandData[$command][$commandData['moduleArgument']] = sprintf($commandData[$command][$commandData['moduleArgument']], $moduleName);
-            }
-
-            if (!isset($commandData['hasModuleInArgument']) || !$commandData['hasModuleInArgument']) {
-                $commandData[$command][] = $moduleName;
-            }
-        }
-
-        $this->output->writeln(implode(' ', $commandData['command']), OutputInterface::VERBOSITY_VERBOSE);
-
-        $process = new Process($commandData[$command]);
-
-        $process->run(function ($type, $buffer) {
-            if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
-                echo $buffer;
-            }
-        });
-
-        if ($command === 'fixCommand') {
-            return;
-        }
-
-        if (!$process->isSuccessful()) {
-            $errors[$moduleName][] = $commandName;
-            $this->output->writeln(sprintf('Command <fg=red>%s failed</> for module %s', $commandName, $moduleName), OutputInterface::VERBOSITY_NORMAL);
-
-            return;
-        }
-
-        $this->output->writeln(sprintf('Command <fg=green>%s succeeded</> for module %s', $commandName, $moduleName), OutputInterface::VERBOSITY_NORMAL);
-    }
-
-    protected function getModuleList(): array
+    /**
+     * This method has to make use of the Diff to get the list of the touched modules.
+     *
+     * @param array $allModulesList
+     * @return array
+     */
+    protected function getTouchedModuleList(array $allModulesList): array
     {
         $moduleListFile = file_exists(LOCAL_CI_ROOT . '/.local-ci.modules') ? '.local-ci.modules' : '.local-ci.modules.dist';
 
-        return require LOCAL_CI_ROOT . '/' . $moduleListFile;
+        $moduleList = require LOCAL_CI_ROOT . '/' . $moduleListFile;
+
+        $namedModuleList = [];
+
+        foreach ($moduleList as $module) {
+            $namedModuleList[$module['module']] = $module;
+        }
+
+        foreach ($allModulesList as $moduleTransfer) {
+            $name = sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());
+
+            if (isset($namedModuleList[$name])) {
+                $namedModuleList[$name]['moduleTransfer'] = $moduleTransfer;
+            }
+        }
+
+        return $namedModuleList;
     }
 
     /**
@@ -255,20 +318,24 @@ DESC
         return include_once __DIR__ . '/preCommandList.php';
     }
 
-    protected function runPreCommands(OutputInterface $output): void
+    protected function runPreCommands(CiRequest $ciRequest): void
     {
-        $output->writeln('Running preCommands', OutputInterface::VERBOSITY_NORMAL);
+        if (!$ciRequest->shouldRunPreCommands()) {
+            return;
+        }
+
+        $this->output->writeln('Running preCommands', OutputInterface::VERBOSITY_NORMAL);
 
         $preCommandList = $this->getPreCommands();
 
         foreach ($preCommandList as $commandData) {
-            $output->writeln(sprintf('Running <fg=yellow>%s</>', $commandData['command']), OutputInterface::VERBOSITY_NORMAL);
-            $output->writeln(implode(' ', $commandData['command']), OutputInterface::VERBOSITY_VERBOSE);
+            $this->output->writeln(sprintf('Running <fg=yellow>%s</>', $commandData['command']), OutputInterface::VERBOSITY_NORMAL);
+            $this->output->writeln(implode(' ', $commandData['command']), OutputInterface::VERBOSITY_VERBOSE);
 
             $process = new Process($commandData['command']);
 
-            $process->run(function ($type, $buffer) use ($output) {
-                if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
+            $process->run(function ($type, $buffer) {
+                if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
                     echo $buffer;
                 }
             });
@@ -276,18 +343,18 @@ DESC
     }
 
     /**
-     * @param array<string, array<string>> $errors
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return void
      */
-    protected function printErrors(array $errors, OutputInterface $output): void
+    protected function printErrors(CiResponse $ciResponse): void
     {
-        foreach ($errors as $moduleName => $failedCommands) {
-            $output->writeln(sprintf('Module <fg=red>%s</> failed the following commands:', $moduleName));
-            foreach ($failedCommands as $failedCommand) {
-                $output->writeln(sprintf(' - %s', $failedCommand));
+        foreach ($ciResponse->getErrors() as $moduleName => $failedCommands) {
+            $this->output->writeln(sprintf('Module <fg=red>%s</> failed the following commands:', $moduleName));
+
+            foreach ($failedCommands as $failedCommandName => $failedCommand) {
+                $this->output->writeln(sprintf(' - %s (<fg=yellow>%s</>)', $failedCommandName, $failedCommand));
             }
-            $output->writeln('');
+
+            $this->output->writeln('');
         }
     }
 });

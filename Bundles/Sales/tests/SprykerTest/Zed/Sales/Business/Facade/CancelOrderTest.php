@@ -146,7 +146,7 @@ class CancelOrderTest extends Unit
     /**
      * @return void
      */
-    public function testCancelOrderWithOrderReferenceIsSuccessful(): void
+    public function testCancelOrderWithOrderReferenceAndCustomerIsSuccessful(): void
     {
         // Arrange
         $this->tester->setDependency(
@@ -159,6 +159,61 @@ class CancelOrderTest extends Unit
         $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
             ->setOrderReference($orderTransfer->getOrderReference())
             ->setCustomer($orderTransfer->getCustomer());
+
+        // Act
+        $orderCancelResponseTransfer = $this->tester
+            ->getFacade()
+            ->cancelOrder($orderCancelRequestTransfer);
+
+        // Assert
+        $this->assertTrue($orderCancelResponseTransfer->getIsSuccessful());
+        $this->assertSame(
+            static::CANCELLED_STATE_NAME,
+            $orderCancelResponseTransfer->getOrder()->getItems()->getIterator()->current()->getState()->getName(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCancelOrderWithOrderReferenceAndWithoutACustomerThrowsRequiredTransferPropertyException(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            SalesDependencyProvider::HYDRATE_ORDER_PLUGINS,
+            [$this->getOrderExpanderPluginMock()],
+        );
+
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS);
+
+        $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
+            ->setOrderReference($orderTransfer->getOrderReference());
+
+        // Expect
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester
+            ->getFacade()
+            ->cancelOrder($orderCancelRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCancelOrderWithOrderReferenceWithoutACustomerAndExplicitRequestToAllowCancellationWithoutACustomerIsSuccessful(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            SalesDependencyProvider::HYDRATE_ORDER_PLUGINS,
+            [$this->getOrderExpanderPluginMock()],
+        );
+
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS);
+
+        $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
+            ->setOrderReference($orderTransfer->getOrderReference())
+            ->setAllowCancellationWithoutCustomer(true);
 
         // Act
         $orderCancelResponseTransfer = $this->tester

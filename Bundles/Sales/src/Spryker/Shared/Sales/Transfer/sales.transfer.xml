@@ -418,6 +418,12 @@
         <property name="idSalesOrder" type="int"/>
         <property name="orderReference" type="string" strict="true"/>
         <property name="customer" type="Customer"/>
+        <property
+            name="allowCancellationWithoutCustomer"
+            type="bool"
+            strict="true"
+            description="Set this to be true for cases where a cancellation without a customer is allowed. For security reasons, this MUST be used carefully and should only be executed from code logic and not be executable via a URL."
+        />
     </transfer>
 
     <transfer name="OrderCancelResponse">

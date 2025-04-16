@@ -12,7 +12,9 @@
 
         <states>
             <state name="payment cancellation ready" display="oms.state.reservation-cancellation-pending"/>
-            <state name="payment cancellation pending" display="oms.state.reservation-cancellation-pending"/>
+            <state name="payment cancellation pending" display="oms.state.reservation-cancellation-pending">
+                <flag>exclude from customer</flag>
+            </state>
             <state name="payment cancelled" display="oms.state.reservation-cancelled"/>
             <state name="payment cancellation failed" display="oms.state.waiting"/>
         </states>
