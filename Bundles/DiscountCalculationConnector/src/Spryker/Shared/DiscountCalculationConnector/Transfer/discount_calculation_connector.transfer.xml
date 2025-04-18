@@ -23,6 +23,8 @@
 
     <transfer name="Quote">
         <property name="orderReference" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="originalOrder" type="Order" strict="true"/>
     </transfer>
 
     <transfer name="Order">

@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
@@ -342,7 +343,11 @@ class ProductValidator implements ProductValidatorInterface
             return [];
         }
 
-        $productConcreteTransfers = $this->productFacade->getRawProductConcreteTransfersByConcreteSkus($skus);
+        $productCriteriaTransfer = (new ProductCriteriaTransfer())
+            ->setSkus($skus)
+            ->setWithoutAdditionalProductData(true);
+
+        $productConcreteTransfers = $this->productFacade->getProductConcretesByCriteria($productCriteriaTransfer);
         $indexedProductConcreteTransfers = [];
 
         foreach ($productConcreteTransfers as $productConcreteTransfer) {

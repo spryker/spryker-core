@@ -82,8 +82,14 @@ class OrderExpander implements OrderExpanderInterface
      */
     protected function mapQuoteTransferToOrderTransfer(QuoteTransfer $quoteTransfer, OrderTransfer $orderTransfer): OrderTransfer
     {
-        $orderTransfer->fromArray($quoteTransfer->toArray(), true);
-        $orderTransfer->setStore($quoteTransfer->getStore()->getName());
+        $itemTransfers = $quoteTransfer->getItems();
+        $quoteTransfer->setItems(new ArrayObject());
+
+        $orderTransfer->fromArray($quoteTransfer->toArray(), true)
+            ->setStore($quoteTransfer->getStore()->getName())
+            ->setItems($itemTransfers);
+
+        $quoteTransfer->setItems($itemTransfers);
 
         return $orderTransfer;
     }
@@ -97,7 +103,12 @@ class OrderExpander implements OrderExpanderInterface
     protected function mapOrderTransferToQuoteTransfer(OrderTransfer $orderTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $storeTransfer = $quoteTransfer->getStore();
-        $quoteTransfer->fromArray($orderTransfer->toArray(), true);
+        $itemTransfers = $orderTransfer->getItems();
+        $orderTransfer->setItems(new ArrayObject());
+
+        $quoteTransfer->fromArray($orderTransfer->toArray(), true)
+            ->setItems($itemTransfers);
+        $orderTransfer->setItems($itemTransfers);
         $quoteTransfer->setStore($storeTransfer);
 
         return $quoteTransfer;

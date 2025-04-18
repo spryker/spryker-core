@@ -64,6 +64,9 @@ class FilteredCalculator extends Calculator implements CalculatorInterface
     protected function collectItems(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
     {
         $collectedItems = parent::collectItems($quoteTransfer, $discountTransfer);
+        if (!$collectedItems) {
+            return [];
+        }
 
         $collectedDiscountTransfer = $this->createCollectedDiscountTransfer($discountTransfer, $collectedItems);
 

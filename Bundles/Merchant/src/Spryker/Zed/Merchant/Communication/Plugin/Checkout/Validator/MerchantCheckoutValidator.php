@@ -74,9 +74,9 @@ class MerchantCheckoutValidator implements MerchantCheckoutValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return array<string, \Generated\Shared\Transfer\MerchantTransfer>
      */
-    protected function getMerchantTransfersGroupedByMerchantReference(QuoteTransfer $quoteTransfer)
+    protected function getMerchantTransfersGroupedByMerchantReference(QuoteTransfer $quoteTransfer): array
     {
         $merchantReferences = [];
         $merchantTransfers = [];
@@ -98,7 +98,8 @@ class MerchantCheckoutValidator implements MerchantCheckoutValidatorInterface
             (new MerchantCriteriaTransfer())
                 ->setMerchantReferences($merchantReferences)
                 ->setIsActive(true)
-                ->setStore($quoteTransfer->getStore()),
+                ->setStore($quoteTransfer->getStore())
+                ->setWithExpanders(false),
         );
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             $merchantTransfers[$merchantTransfer->getMerchantReference()] = $merchantTransfer;

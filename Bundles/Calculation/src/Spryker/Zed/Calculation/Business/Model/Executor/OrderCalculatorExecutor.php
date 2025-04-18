@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Calculation\Business\Model\Executor;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -49,12 +50,19 @@ class OrderCalculatorExecutor implements OrderCalculatorExecutorInterface
      *
      * @return \Generated\Shared\Transfer\CalculableObjectTransfer
      */
-    protected function mapCalculableObjectTransfer(OrderTransfer $orderTransfer)
+    protected function mapCalculableObjectTransfer(OrderTransfer $orderTransfer): CalculableObjectTransfer
     {
-        $calculableObjectTransfer = new CalculableObjectTransfer();
-        $calculableObjectTransfer->fromArray($orderTransfer->toArray(), true);
-        $calculableObjectTransfer->setStore((new StoreTransfer())->setName($orderTransfer->getStore()));
-        $calculableObjectTransfer->setOriginalOrder($orderTransfer);
+        $itemTransfers = $orderTransfer->getItems();
+        // speedups next fromArray() execution
+        $orderTransfer->setItems(new ArrayObject());
+
+        $calculableObjectTransfer = (new CalculableObjectTransfer())
+            ->fromArray($orderTransfer->toArray(), true)
+            ->setItems($itemTransfers)
+            ->setStore((new StoreTransfer())->setName($orderTransfer->getStore()))
+            ->setOriginalOrder($orderTransfer);
+
+        $orderTransfer->setItems($itemTransfers);
 
         return $calculableObjectTransfer;
     }
@@ -65,10 +73,16 @@ class OrderCalculatorExecutor implements OrderCalculatorExecutorInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function mapOrderTransfer(OrderTransfer $orderTransfer, CalculableObjectTransfer $calculableObjectTransfer)
+    protected function mapOrderTransfer(OrderTransfer $orderTransfer, CalculableObjectTransfer $calculableObjectTransfer): OrderTransfer
     {
-        $orderTransfer->fromArray($calculableObjectTransfer->toArray(), true);
-        $orderTransfer->setStore($calculableObjectTransfer->getStore()->getName());
+        $itemTransfers = $calculableObjectTransfer->getItems();
+        // speedups next fromArray() execution
+        $calculableObjectTransfer->setItems(new ArrayObject());
+
+        $orderTransfer
+            ->fromArray($calculableObjectTransfer->toArray(), true)
+            ->setStore($calculableObjectTransfer->getStore()->getName())
+            ->setItems($itemTransfers);
 
         return $orderTransfer;
     }

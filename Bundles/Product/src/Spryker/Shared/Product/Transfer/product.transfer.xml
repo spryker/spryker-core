@@ -127,6 +127,7 @@
         <property name="isActive" type="bool"/>
         <property name="skus" type="string[]" singular="sku"/>
         <property name="attributes" type="string[]" associative="true" singular="attribute"/>
+        <property name="withoutAdditionalProductData" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="Filter">

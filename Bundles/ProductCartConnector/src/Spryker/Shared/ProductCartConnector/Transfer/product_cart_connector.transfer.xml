@@ -61,6 +61,7 @@
         <property name="idStore" type="int"/>
         <property name="isActive" type="bool"/>
         <property name="skus" type="string[]" singular="sku"/>
+        <property name="withoutAdditionalProductData" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="Store">

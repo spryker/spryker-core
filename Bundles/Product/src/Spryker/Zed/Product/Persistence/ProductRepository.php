@@ -575,12 +575,12 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct>|\Propel\Runtime\Collection\Collection $productConcreteEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function mapProductConcreteEntitiesToProductConcreteTransfersWithoutRelations(
-        ObjectCollection $productConcreteEntities
+        ObjectCollection|Collection $productConcreteEntities
     ): array {
         $productConcreteTransfers = [];
         $productMapper = $this->getFactory()->createProductMapper();
@@ -728,14 +728,21 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     public function getProductConcretesByCriteria(ProductCriteriaTransfer $productCriteriaTransfer): array
     {
         $productQuery = $this->getFactory()
-            ->createProductQuery()
-            ->joinWithSpyProductAbstract()
-            ->joinWithSpyProductLocalizedAttributes();
+            ->createProductQuery();
+        if ($productCriteriaTransfer->getWithoutAdditionalProductData() !== true) {
+            $productQuery
+                ->joinWithSpyProductAbstract()
+                ->joinWithSpyProductLocalizedAttributes();
+        }
 
         $productQuery = $this->applyCriteriaFilter($productQuery, $productCriteriaTransfer);
         $productConcreteEntities = $productQuery->find();
 
-        return $this->mapProductEntitiesToProductConcreteTransfersWithoutStores($productConcreteEntities);
+        if ($productCriteriaTransfer->getWithoutAdditionalProductData() !== true) {
+            return $this->mapProductEntitiesToProductConcreteTransfersWithoutStores($productConcreteEntities);
+        }
+
+        return $this->mapProductConcreteEntitiesToProductConcreteTransfersWithoutRelations($productConcreteEntities);
     }
 
     /**

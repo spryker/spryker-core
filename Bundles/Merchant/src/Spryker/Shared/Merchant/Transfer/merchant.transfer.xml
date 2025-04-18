@@ -25,6 +25,7 @@
         <property name="status" type="string"/>
         <property name="pagination" type="Pagination"/>
         <property name="store" type="Store"/>
+        <property name="withExpanders" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="Filter">

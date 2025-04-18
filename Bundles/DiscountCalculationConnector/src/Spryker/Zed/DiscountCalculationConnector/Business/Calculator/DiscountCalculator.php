@@ -38,15 +38,11 @@ class DiscountCalculator implements DiscountCalculatorInterface
 
         $this->removeCalculatedDiscountsForItems($calculableObjectTransfer);
 
-        $quoteTransfer = (new QuoteTransfer())
-            ->fromArray($calculableObjectTransfer->toArray(), true);
+        $quoteTransfer = $this->createQuoteTransfer($calculableObjectTransfer);
 
-        if ($calculableObjectTransfer->getOriginalOrder()) {
-            $quoteTransfer->setOrderReference($calculableObjectTransfer->getOriginalOrderOrFail()->getOrderReference());
-        }
         $quoteTransfer = $this->discountFacade->calculateDiscounts($quoteTransfer);
 
-        return $calculableObjectTransfer->fromArray($quoteTransfer->toArray(), true);
+        return $this->addCalculatedDiscounts($calculableObjectTransfer, $quoteTransfer);
     }
 
     /**
@@ -61,5 +57,52 @@ class DiscountCalculator implements DiscountCalculatorInterface
         }
 
         return $calculableObjectTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createQuoteTransfer(CalculableObjectTransfer $calculableObjectTransfer): QuoteTransfer
+    {
+        $itemTransfers = $calculableObjectTransfer->getItems();
+        $originalOrderTransfer = $calculableObjectTransfer->getOriginalOrder();
+
+        // speedups next fromArray() execution
+        $calculableObjectTransfer->setItems(new ArrayObject());
+        $calculableObjectTransfer->setOriginalOrder(null);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->fromArray($calculableObjectTransfer->toArray(), true)
+            ->setItems($itemTransfers)
+            ->setOriginalOrder($originalOrderTransfer);
+
+        if ($originalOrderTransfer) {
+            $quoteTransfer->setOrderReference($originalOrderTransfer->getOrderReference());
+        }
+
+        $calculableObjectTransfer->setOriginalOrder($originalOrderTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function addCalculatedDiscounts(CalculableObjectTransfer $calculableObjectTransfer, QuoteTransfer $quoteTransfer): CalculableObjectTransfer
+    {
+        $itemTransfers = $quoteTransfer->getItems();
+        $originalOrderTransfer = $calculableObjectTransfer->getOriginalOrder();
+        // speedups next fromArray() execution
+        $quoteTransfer->setItems(new ArrayObject());
+        $quoteTransfer->setOriginalOrder(null);
+
+        return $calculableObjectTransfer->fromArray($quoteTransfer->toArray(), true)
+            ->setItems($itemTransfers)
+            ->setOriginalOrder($originalOrderTransfer);
     }
 }

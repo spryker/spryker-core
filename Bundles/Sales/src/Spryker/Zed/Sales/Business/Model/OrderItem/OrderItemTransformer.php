@@ -24,6 +24,11 @@ class OrderItemTransformer implements OrderItemTransformerInterface
         $transformedItemsCollection = new ItemCollectionTransfer();
 
         $quantity = $itemTransfer->getQuantity();
+
+        if ($quantity === 1) {
+            return $transformedItemsCollection->addItem($itemTransfer);
+        }
+
         for ($i = 1; $quantity >= $i; $i++) {
             $transformedItemTransfer = new ItemTransfer();
             $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);

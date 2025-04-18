@@ -55,7 +55,9 @@ class MerchantReader implements MerchantReaderInterface
     public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer
     {
         $merchantCollectionTransfer = $this->merchantRepository->get($merchantCriteriaTransfer);
-        $merchantCollectionTransfer = $this->expandMerchantCollection($merchantCollectionTransfer);
+        if ($merchantCriteriaTransfer->getWithExpanders() !== false) {
+            $merchantCollectionTransfer = $this->expandMerchantCollection($merchantCollectionTransfer);
+        }
 
         return $merchantCollectionTransfer;
     }
