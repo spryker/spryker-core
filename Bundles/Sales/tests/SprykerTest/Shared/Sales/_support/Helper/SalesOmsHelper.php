@@ -90,12 +90,23 @@ class SalesOmsHelper extends Module
     {
         $salesHelper = $this->getSalesHelper();
 
-        $idSalesOrder = $salesHelper->createOrder([OrderTransfer::ORDER_REFERENCE => $this->orderReference]);
+        if (isset($seed[OrderTransfer::ORDER_REFERENCE])) {
+            codecept_debug('Order reference is reserved in the seed data and can not be changed. It is required for the test setup.');
+        }
 
-        $salesOrderItemEntity = $salesHelper->createSalesOrderItemForOrder($idSalesOrder, [
+        if (isset($seed[ItemTransfer::PROCESS])) {
+            codecept_debug('The process is reserved in the seed data and can not be changed. It is required for the test setup.');
+        }
+
+        $seed = array_merge($seed, [
+            OrderTransfer::ORDER_REFERENCE => $this->orderReference,
             ItemTransfer::STATE => $stateName,
             ItemTransfer::PROCESS => $this->stateMachineName,
         ]);
+
+        $idSalesOrder = $salesHelper->createOrder($seed);
+
+        $salesOrderItemEntity = $salesHelper->createSalesOrderItemForOrder($idSalesOrder, $seed);
 
         $this->getOmsHelper()->triggerEventForNewOrderItems([$salesOrderItemEntity->getIdSalesOrderItem()]);
 

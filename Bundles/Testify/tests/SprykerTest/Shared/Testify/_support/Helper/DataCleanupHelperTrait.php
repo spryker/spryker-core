@@ -16,6 +16,10 @@ trait DataCleanupHelperTrait
      */
     protected function getDataCleanupHelper(): DataCleanupHelper
     {
+        if (method_exists($this, 'hasModule') && !$this->hasModule('\\' . DataCleanupHelper::class)) {
+            $this->moduleContainer->create('\\' . DataCleanupHelper::class);
+        }
+
         /** @var \SprykerTest\Shared\Testify\Helper\DataCleanupHelper $dataCleanerHelper */
         $dataCleanerHelper = $this->getModule('\\' . DataCleanupHelper::class);
 
