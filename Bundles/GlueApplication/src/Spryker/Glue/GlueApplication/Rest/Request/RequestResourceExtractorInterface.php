@@ -11,9 +11,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 interface RequestResourceExtractorInterface
 {
     /**

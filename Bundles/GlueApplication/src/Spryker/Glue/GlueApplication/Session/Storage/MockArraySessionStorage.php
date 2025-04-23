@@ -15,8 +15,6 @@ use Symfony\Component\HttpFoundation\Session\Storage\MetadataBag;
 use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 
 /**
- * @deprecated Will be removed without replacement.
- *
  * This class is used as workaround for Clients which depend on session, this will provide in memory storage that means after request complected it's discarded.
  * When using SessionClient within GLUE application context, it will use this storage.
  */
@@ -127,7 +125,7 @@ class MockArraySessionStorage implements SessionStorageInterface
      *
      * @return void
      */
-    public function setId(string $id)
+    public function setId(string $id): void
     {
         if ($this->started) {
             throw new LogicException('Cannot set session ID after the session has started.');
@@ -149,7 +147,7 @@ class MockArraySessionStorage implements SessionStorageInterface
      *
      * @return void
      */
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -161,7 +159,7 @@ class MockArraySessionStorage implements SessionStorageInterface
      *
      * @return void
      */
-    public function save()
+    public function save(): void
     {
         if (!$this->started || $this->closed) {
             throw new RuntimeException('Trying to save a session that was not started yet or was already closed');
@@ -176,7 +174,7 @@ class MockArraySessionStorage implements SessionStorageInterface
      *
      * @return void
      */
-    public function clear()
+    public function clear(): void
     {
         // clear out the bags
         foreach (static::$bags as $bag) {
@@ -197,7 +195,7 @@ class MockArraySessionStorage implements SessionStorageInterface
      *
      * @return void
      */
-    public function registerBag(SessionBagInterface $bag)
+    public function registerBag(SessionBagInterface $bag): void
     {
         static::$bags[$bag->getName()] = $bag;
     }

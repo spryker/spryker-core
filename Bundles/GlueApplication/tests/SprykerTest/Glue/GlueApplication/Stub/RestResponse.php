@@ -10,9 +10,6 @@ namespace SprykerTest\Glue\GlueApplication\Stub;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class RestResponse
 {
     /**

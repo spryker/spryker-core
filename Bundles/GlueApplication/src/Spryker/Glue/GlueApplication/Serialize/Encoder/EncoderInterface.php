@@ -7,9 +7,6 @@
 
 namespace Spryker\Glue\GlueApplication\Serialize\Encoder;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 interface EncoderInterface
 {
     /**

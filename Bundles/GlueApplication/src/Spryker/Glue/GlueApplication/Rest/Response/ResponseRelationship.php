@@ -10,9 +10,6 @@ namespace Spryker\Glue\GlueApplication\Rest\Response;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\ResourceRelationshipLoaderInterface;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class ResponseRelationship implements ResponseRelationshipInterface
 {
     /**

@@ -10,9 +10,6 @@ namespace Spryker\Glue\GlueApplication\Rest\Serialize;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface;
 use Spryker\Glue\GlueApplication\Serialize\Decoder\DecoderInterface;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 interface DecoderMatcherInterface
 {
     /**

@@ -7,9 +7,6 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\JsonApi;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class RestLink implements RestLinkInterface
 {
     /**

@@ -7,9 +7,6 @@
 
 namespace Spryker\Glue\GlueApplication\Controller;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 interface ErrorControllerInterface
 {
     /**

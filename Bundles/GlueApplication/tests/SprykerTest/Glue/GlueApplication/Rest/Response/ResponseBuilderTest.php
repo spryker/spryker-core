@@ -16,8 +16,6 @@ use Spryker\Glue\GlueApplication\Rest\Response\ResponseRelationshipInterface;
 use SprykerTest\Glue\GlueApplication\Stub\RestRequest;
 
 /**
- * @deprecated Will be removed without replacement.
- *
  * Auto-generated group annotations
  *
  * @group SprykerTest

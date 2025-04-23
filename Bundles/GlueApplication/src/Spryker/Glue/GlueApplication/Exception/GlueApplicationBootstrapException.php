@@ -9,9 +9,6 @@ namespace Spryker\Glue\GlueApplication\Exception;
 
 use Exception;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class GlueApplicationBootstrapException extends Exception
 {
 }

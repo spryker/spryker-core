@@ -17,9 +17,6 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPl
 use Spryker\Glue\Kernel\ModuleNameAwareInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class ResourceRouteLoader implements ResourceRouteLoaderInterface
 {
     /**

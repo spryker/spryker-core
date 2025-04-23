@@ -10,9 +10,6 @@ namespace Spryker\Glue\GlueApplication\Rest\Language;
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface;
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToLocaleServiceInterface;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class LanguageNegotiation implements LanguageNegotiationInterface
 {
     /**

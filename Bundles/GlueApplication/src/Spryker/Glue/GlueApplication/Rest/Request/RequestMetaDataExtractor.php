@@ -17,9 +17,6 @@ use Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcher;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class RequestMetaDataExtractor implements RequestMetaDataExtractorInterface
 {
     /**

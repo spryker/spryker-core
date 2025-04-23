@@ -10,9 +10,6 @@ namespace Spryker\Glue\GlueApplication\Rest\Collection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class ResourceRouteCollection implements ResourceRouteCollectionInterface
 {
     /**

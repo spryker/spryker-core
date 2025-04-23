@@ -22,8 +22,6 @@ use SprykerTest\Glue\GlueApplication\Stub\RestRequest;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Will be removed without replacement.
- *
  * Auto-generated group annotations
  *
  * @group SprykerTest

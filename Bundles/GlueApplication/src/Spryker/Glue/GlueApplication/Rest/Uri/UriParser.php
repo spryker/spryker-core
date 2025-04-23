@@ -11,9 +11,6 @@ use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class UriParser implements UriParserInterface
 {
     protected VersionResolverInterface $versionResolver;

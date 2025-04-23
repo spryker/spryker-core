@@ -14,9 +14,6 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class RequestFormatter implements RequestFormatterInterface
 {
     /**

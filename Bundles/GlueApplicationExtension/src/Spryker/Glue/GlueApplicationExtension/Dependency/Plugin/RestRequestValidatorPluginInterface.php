@@ -11,9 +11,6 @@ use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 interface RestRequestValidatorPluginInterface
 {
     /**

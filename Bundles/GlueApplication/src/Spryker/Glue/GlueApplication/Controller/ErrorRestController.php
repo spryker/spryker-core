@@ -13,9 +13,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class ErrorRestController extends AbstractController implements ErrorControllerInterface
 {
     /**

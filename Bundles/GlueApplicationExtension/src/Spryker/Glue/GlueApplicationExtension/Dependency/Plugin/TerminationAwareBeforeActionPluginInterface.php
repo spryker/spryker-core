@@ -8,8 +8,6 @@
 namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 
 /**
- * @deprecated Will be removed without replacement.
- *
  * Could be used together with *BeforeActionTerminatePluginInterface to give the ability not terminate controller processing in case of failure.
  */
 interface TerminationAwareBeforeActionPluginInterface

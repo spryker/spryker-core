@@ -10,9 +10,6 @@ namespace Spryker\Glue\GlueApplication\Rest;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class ControllerCallbacks implements ControllerCallbacksInterface
 {
     /**

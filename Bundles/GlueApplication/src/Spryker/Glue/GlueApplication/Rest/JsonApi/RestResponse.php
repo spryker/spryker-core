@@ -9,9 +9,6 @@ namespace Spryker\Glue\GlueApplication\Rest\JsonApi;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class RestResponse implements RestResponseInterface
 {
     /**

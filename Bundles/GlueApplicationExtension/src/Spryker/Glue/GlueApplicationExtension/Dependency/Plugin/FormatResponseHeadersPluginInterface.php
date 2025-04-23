@@ -11,9 +11,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 interface FormatResponseHeadersPluginInterface
 {
     /**

@@ -9,7 +9,7 @@
 
     <transfer name="GlueRequestValidation">
         <property name="isValid" type="bool"/>
-        <property name="statusCode" type="string" deprecated="Use `status` property for HTTP status."/>
+        <property name="statusCode" type="string"/>
         <property name="validationError" type="string"/>
         <property name="status" type="int"/>
         <property name="errors" type="GlueError[]" singular="error"/>
@@ -45,7 +45,7 @@
     </transfer>
 
     <transfer name="GlueResponse">
-        <property name="status" type="string" deprecated="Use `httpStatus` property for HTTP status."/>
+        <property name="status" type="string"/>
         <property name="httpStatus" type="int"/>
         <property name="meta" type="array" associative="true" singular="meta"/>
         <property name="content" type="string"/>
@@ -59,7 +59,7 @@
         <property name="format" type="string"/>
     </transfer>
 
-    <transfer name="RestPageOffsets" deprecated="Will be removed without replacement.">
+    <transfer name="RestPageOffsets">
         <property name="limit" type="int"/>
         <property name="firstOffset" type="int"/>
         <property name="lastOffset" type="int"/>

@@ -7,9 +7,6 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Language;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 interface LanguageNegotiationInterface
 {
     /**

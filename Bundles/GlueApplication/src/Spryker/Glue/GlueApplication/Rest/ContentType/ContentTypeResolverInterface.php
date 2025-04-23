@@ -10,9 +10,6 @@ namespace Spryker\Glue\GlueApplication\Rest\ContentType;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 interface ContentTypeResolverInterface
 {
     /**

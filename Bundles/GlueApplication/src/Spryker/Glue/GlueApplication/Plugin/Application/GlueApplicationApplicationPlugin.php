@@ -12,8 +12,6 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 
 /**
- * @deprecated Will be removed without replacement.
- *
  * @method \Spryker\Glue\GlueApplication\GlueApplicationConfig getConfig()
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
  */

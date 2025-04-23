@@ -14,9 +14,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class ResponsePagination implements ResponsePaginationInterface
 {
     /**

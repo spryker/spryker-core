@@ -15,8 +15,6 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserValidatorPlu
 use SprykerTest\Glue\GlueApplication\Stub\RestRequest;
 
 /**
- * @deprecated Will be removed without replacement.
- *
  * Auto-generated group annotations
  *
  * @group SprykerTest

@@ -12,9 +12,6 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class TestResourceWithParentRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**

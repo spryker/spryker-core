@@ -15,8 +15,6 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @deprecated Will be removed without replacement.
- *
  * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
  *
  * @method \Spryker\Glue\GlueApplication\GlueApplicationConfig getConfig()

@@ -17,9 +17,6 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\Sort;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\SparseField;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class RequestBuilder implements RequestBuilderInterface
 {
     /**

@@ -14,8 +14,6 @@ use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 class GlueApplicationConfig extends AbstractBundleConfig
 {
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @var string
      */
     public const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
@@ -96,50 +94,36 @@ class GlueApplicationConfig extends AbstractBundleConfig
     protected const DEFAULT_RESPONSE_FORMAT = 'application/json';
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @var string
      */
     protected const HEADER_X_FRAME_OPTIONS_VALUE = 'SAMEORIGIN';
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @var string
      */
     protected const HEADER_CONTENT_SECURITY_POLICY_VALUE = 'frame-ancestors \'self\'';
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @var string
      */
     protected const HEADER_X_CONTENT_TYPE_OPTIONS_VALUE = 'nosniff';
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @var string
      */
     protected const HEADER_X_XSS_PROTECTION_VALUE = '1; mode=block';
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @var string
      */
     protected const HEADER_REFERRER_POLICY_VALUE = 'same-origin';
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @var string
      */
     protected const HEADER_PERMISSIONS_POLICY_VALUE = '';
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @var bool
      */
     public const VALIDATE_REQUEST_HEADERS = true;
@@ -157,8 +141,6 @@ class GlueApplicationConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
      * @return bool
      */
     public function getValidateRequestHeaders(): bool
@@ -171,8 +153,6 @@ class GlueApplicationConfig extends AbstractBundleConfig
      *  - Domain name of glue application to build API links.
      *
      * @api
-     *
-     * @deprecated Will be removed without replacement.
      *
      * @return string
      */
@@ -187,8 +167,6 @@ class GlueApplicationConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
      * @return bool
      */
     public function getIsRestDebugEnabled(): bool
@@ -202,8 +180,6 @@ class GlueApplicationConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
      * @return string
      */
     public function getCorsAllowOrigin(): string
@@ -216,8 +192,6 @@ class GlueApplicationConfig extends AbstractBundleConfig
      *  - List of allowed CORS headers.
      *
      * @api
-     *
-     * @deprecated Will be removed without replacement.
      *
      * @return array<string>
      */
@@ -234,8 +208,6 @@ class GlueApplicationConfig extends AbstractBundleConfig
 
     /**
      * @api
-     *
-     * @deprecated Will be removed without replacement.
      *
      * @return array<string, string>
      */
@@ -257,8 +229,6 @@ class GlueApplicationConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
      * @return bool
      */
     public function isEagerRelationshipsLoadingEnabled(): bool
@@ -268,8 +238,6 @@ class GlueApplicationConfig extends AbstractBundleConfig
 
     /**
      * @api
-     *
-     * @deprecated Will be removed without replacement.
      *
      * @return bool
      */
@@ -285,8 +253,6 @@ class GlueApplicationConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
      * @return bool
      */
     public function getPathVersionResolving(): bool
@@ -301,8 +267,6 @@ class GlueApplicationConfig extends AbstractBundleConfig
      * - a "v" as a prefix to their version in the URL. e.g. /v1/resource
      *
      * @api
-     *
-     * @deprecated Will be removed without replacement.
      *
      * @return string
      */
@@ -320,8 +284,6 @@ class GlueApplicationConfig extends AbstractBundleConfig
      * - your full semVer version (e.g 1.1 or 1). Otherwise, the first capture group will be taken as full version number
      *
      * @api
-     *
-     * @deprecated Will be removed without replacement.
      *
      * @see https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
      *

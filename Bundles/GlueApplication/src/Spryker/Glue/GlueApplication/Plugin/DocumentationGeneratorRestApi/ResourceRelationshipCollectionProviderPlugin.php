@@ -12,8 +12,6 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationship
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @deprecated Will be removed without replacement.
- *
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
  */
 class ResourceRelationshipCollectionProviderPlugin extends AbstractPlugin implements ResourceRelationshipCollectionProviderPluginInterface

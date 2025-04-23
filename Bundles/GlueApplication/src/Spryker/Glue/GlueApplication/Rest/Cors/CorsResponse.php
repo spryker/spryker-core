@@ -14,9 +14,6 @@ use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class CorsResponse implements CorsResponseInterface
 {
     /**
