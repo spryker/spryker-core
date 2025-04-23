@@ -9,6 +9,7 @@ namespace Spryker\Zed\Availability\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityDataTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -344,6 +345,46 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
             ->mapAvailabilityEntitiesToProductConcreteAvailabilityCollectionTransfer(
                 $availabilityEntities,
                 new ProductConcreteAvailabilityCollectionTransfer(),
+            );
+    }
+
+    /**
+     * @module Product
+     *
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductAvailabilityDataTransfer
+     */
+    public function getProductConcreteWithAvailability(string $concreteSku): ProductAvailabilityDataTransfer
+    {
+        $productQuery = $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProduct()
+            ->filterBySku($concreteSku)
+            ->joinWithSpyProductAbstract()
+            ->joinWithStockProduct()
+                ->useStockProductQuery()
+                    ->joinWithStock()
+                    ->useStockQuery()
+                        ->joinWithStockStore()
+                    ->endUse()
+                ->endUse();
+
+        $productConcreteEntities = $productQuery->find();
+
+        $availabilityQuery = $this->getFactory()->createSpyAvailabilityQuery()
+            ->filterBySku($concreteSku)
+            ->joinWithStore()
+            ->joinWithSpyAvailabilityAbstract();
+
+        $availabilityEntities = $availabilityQuery->find();
+
+        return $this->getFactory()
+            ->createAvailabilityMapper()
+            ->mapAvailabilityEntitiesAndProductConcreteEntityToProductAvailabilityDataTransfer(
+                $availabilityEntities,
+                $productConcreteEntities->getFirst(),
+                new ProductAvailabilityDataTransfer(),
             );
     }
 

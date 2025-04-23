@@ -42,12 +42,15 @@
         <property name="sku" type="string"/>
         <property name="stockQuantity" type="decimal"/>
         <property name="isNeverOutOfStock" type="bool"/>
+        <property name="idStore" type="int" strict="true"/>
     </transfer>
 
     <transfer name="ProductConcreteAvailability">
         <property name="sku" type="string"/>
         <property name="availability" type="decimal"/>
         <property name="isNeverOutOfStock" type="bool"/>
+        <property name="store" type="Store" strict="true"/>
+        <property name="fkAvailabilityAbstract" type="int" strict="true"/>
     </transfer>
 
     <transfer name="ProductConcreteAvailabilityRequest">
@@ -90,6 +93,9 @@
 
     <transfer name="StockProduct">
         <property name="sku" type="string"/>
+        <property name="isNeverOutOfStock" type="string"/>
+        <property name="fkStock" type="int"/>
+        <property name="quantity" type="decimal"/>
     </transfer>
 
     <transfer name="ProductAvailabilityCriteria">
@@ -159,6 +165,28 @@
     </transfer>
 
     <transfer name="Error">
+    </transfer>
+
+    <transfer name="ProductAvailabilityData" strict="true">
+        <property name="productConcrete" type="ProductConcrete"/>
+        <property name="productAbstract" type="ProductAbstract"/>
+        <property name="stockProducts" type="StockProduct[]" singular="stockProduct"/>
+        <property name="stocks" type="Stock[]" singular="stock"/>
+        <property name="productAbstractAvailabilities" type="ProductAbstractAvailability[]" singular="productAbstractAvailability"/>
+        <property name="productConcreteAvailabilities" type="ProductConcreteAvailability[]" singular="productConcreteAvailability"/>
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="idStock" type="int"/>
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="ProductAbstract">
     </transfer>
 
 </transfers>

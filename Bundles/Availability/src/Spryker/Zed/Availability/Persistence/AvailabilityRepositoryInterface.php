@@ -9,6 +9,7 @@ namespace Spryker\Zed\Availability\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityDataTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -117,4 +118,13 @@ interface AvailabilityRepositoryInterface
     public function getProductConcreteAvailabilityCollection(
         ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
     ): ProductConcreteAvailabilityCollectionTransfer;
+
+    /**
+     * @param string $concreteSku
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Generated\Shared\Transfer\ProductAvailabilityDataTransfer
+     */
+    public function getProductConcreteWithAvailability(string $concreteSku): ProductAvailabilityDataTransfer;
 }

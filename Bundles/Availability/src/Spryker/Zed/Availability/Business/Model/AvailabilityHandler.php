@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AvailabilityNotificationDataTransfer;
 use Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityDataTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -20,6 +21,7 @@ use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
@@ -45,6 +47,11 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @var string
      */
     protected const FK_PRODUCT = 'fk_product';
+
+    /**
+     * @var list<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    protected static $allStoreTransfersCache = [];
 
     /**
      * @var \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface
@@ -82,6 +89,11 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected AvailabilityToProductFacadeInterface $productFacade;
 
     /**
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
+     */
+    protected AvailabilityToStoreFacadeInterface $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface $availabilityRepository
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface $availabilityEntityManager
      * @param \Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface $availabilityCalculator
@@ -89,6 +101,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface $eventFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         AvailabilityRepositoryInterface $availabilityRepository,
@@ -97,7 +110,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         AvailabilityToTouchFacadeInterface $touchFacade,
         AvailabilityToStockFacadeInterface $stockFacade,
         AvailabilityToEventFacadeInterface $eventFacade,
-        AvailabilityToProductFacadeInterface $productFacade
+        AvailabilityToProductFacadeInterface $productFacade,
+        AvailabilityToStoreFacadeInterface $storeFacade
     ) {
         $this->availabilityCalculator = $availabilityCalculator;
         $this->availabilityRepository = $availabilityRepository;
@@ -106,6 +120,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $this->stockFacade = $stockFacade;
         $this->eventFacade = $eventFacade;
         $this->productFacade = $productFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -113,38 +128,11 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      *
      * @return void
      */
-    public function updateAvailability($concreteSku)
+    public function updateAvailability(string $concreteSku): void
     {
-        $storeTransfersRelatedToProductAvailability = $this->availabilityRepository->getStoresWhereProductAvailabilityIsDefined($concreteSku);
-        $storeTransfersRelatedToProductStock = $this->stockFacade->getStoresWhereProductStockIsDefined($concreteSku);
+        $productAvailabilityDataTransfer = $this->availabilityRepository->getProductConcreteWithAvailability($concreteSku);
 
-        $storeTransfersRelatedToProductAvailabilityWithoutProductStockRelation = $this->getStoreTransfersRelatedToProductAvailabilityWithoutProductStockRelation(
-            $storeTransfersRelatedToProductAvailability,
-            $storeTransfersRelatedToProductStock,
-        );
-        if ($storeTransfersRelatedToProductAvailabilityWithoutProductStockRelation !== []) {
-            $this->updateProductAvailabilityForProductWithNotDefinedStock(
-                $concreteSku,
-                $storeTransfersRelatedToProductAvailabilityWithoutProductStockRelation,
-            );
-        }
-
-        foreach ($storeTransfersRelatedToProductStock as $storeTransfer) {
-            $this->updateAvailabilityForStore($concreteSku, $storeTransfer);
-        }
-    }
-
-    /**
-     * @param string $concreteSku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return void
-     */
-    public function updateAvailabilityForStore(string $concreteSku, StoreTransfer $storeTransfer): void
-    {
-        $quantity = $this->availabilityCalculator->calculateAvailabilityForProductConcrete($concreteSku, $storeTransfer);
-
-        $this->saveAndTouchAvailability($concreteSku, $quantity, $storeTransfer);
+        $this->saveAllAvailabilities($productAvailabilityDataTransfer);
     }
 
     /**
@@ -160,21 +148,21 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             $this->availabilityRepository->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer),
         );
 
-        /** @var string $abstractSku */
-        $abstractSku = $this->availabilityRepository->getAbstractSkuFromProductConcrete($concreteSku);
+        /** @var string $productAbstractSku */
+        $productAbstractSku = $this->availabilityRepository->getAbstractSkuFromProductConcrete($concreteSku);
         $productConcreteAvailabilityTransfer = (new ProductConcreteAvailabilityTransfer())
             ->setSku($concreteSku)
             ->setIsNeverOutOfStock($this->availabilityCalculator->isNeverOutOfStockForStore($concreteSku, $storeTransfer))
             ->setAvailability($quantity);
 
-        $this->updateProductAbstractAvailabilityBySku($abstractSku, $storeTransfer);
+        $this->updateProductAbstractAvailabilityBySku($productAbstractSku, $storeTransfer);
         $idAvailabilityAbstract = $this->availabilityRepository
-            ->findIdProductAbstractAvailabilityBySku($abstractSku, $storeTransfer);
+            ->findIdProductAbstractAvailabilityBySku($productAbstractSku, $storeTransfer);
 
         $isAvailabilityChanged = $this->availabilityEntityManager->saveProductConcreteAvailability(
             $productConcreteAvailabilityTransfer,
             $storeTransfer,
-            $abstractSku,
+            $productAbstractSku,
         );
 
         if ($isAvailabilityChanged) {
@@ -223,7 +211,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         string $concreteSku,
         StoreTransfer $storeTransfer
     ): ProductConcreteAvailabilityTransfer {
-        $abstractSku = $this->getAbstractSkuFromProductConcrete($concreteSku);
+        $productAbstractSku = $this->getAbstractSkuFromProductConcrete($concreteSku);
 
         $wasProductConcreteAvailable = $this->isProductConcreteAvailable(
             $this->availabilityRepository->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer),
@@ -232,12 +220,12 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $productConcreteAvailabilityTransfer = $this->availabilityCalculator
             ->getCalculatedProductConcreteAvailabilityTransfer($concreteSku, $storeTransfer);
 
-        $this->updateProductAbstractAvailabilityBySku($abstractSku, $storeTransfer);
+        $this->updateProductAbstractAvailabilityBySku($productAbstractSku, $storeTransfer);
 
         $isAvailabilityChanged = $this->availabilityEntityManager->saveProductConcreteAvailability(
             $productConcreteAvailabilityTransfer,
             $storeTransfer,
-            $abstractSku,
+            $productAbstractSku,
         );
 
         /** @var string $sku */
@@ -250,17 +238,17 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     }
 
     /**
-     * @param string $abstractSku
+     * @param string $productAbstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     public function updateProductAbstractAvailabilityBySku(
-        string $abstractSku,
+        string $productAbstractSku,
         StoreTransfer $storeTransfer
     ): ProductAbstractAvailabilityTransfer {
         $productAbstractAvailabilityTransfer = $this->availabilityCalculator
-            ->getCalculatedProductAbstractAvailabilityTransfer($abstractSku, $storeTransfer);
+            ->getCalculatedProductAbstractAvailabilityTransfer($productAbstractSku, $storeTransfer);
 
         $this->availabilityEntityManager->saveProductAbstractAvailability(
             $productAbstractAvailabilityTransfer,
@@ -307,19 +295,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     }
 
     /**
-     * @param string $concreteSku
-     * @param list<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
-     *
-     * @return void
-     */
-    protected function updateProductAvailabilityForProductWithNotDefinedStock(string $concreteSku, array $storeTransfers): void
-    {
-        foreach ($storeTransfers as $storeTransfer) {
-            $this->saveAndTouchAvailability($concreteSku, new Decimal(0), $storeTransfer);
-        }
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null $productConcreteAvailabilityTransfer
      *
      * @return bool
@@ -346,15 +321,15 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function getAbstractSkuFromProductConcrete(string $concreteSku): string
     {
-        $abstractSku = $this->availabilityRepository->getAbstractSkuFromProductConcrete($concreteSku);
+        $productAbstractSku = $this->availabilityRepository->getAbstractSkuFromProductConcrete($concreteSku);
 
-        if ($abstractSku === null) {
+        if ($productAbstractSku === null) {
             throw new ProductNotFoundException(
                 sprintf(static::PRODUCT_SKU_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT, $concreteSku),
             );
         }
 
-        return $abstractSku;
+        return $productAbstractSku;
     }
 
     /**
@@ -404,40 +379,221 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     }
 
     /**
-     * @param list<\Generated\Shared\Transfer\StoreTransfer> $storeTransfersRelatedToProductAvailability
-     * @param list<\Generated\Shared\Transfer\StoreTransfer> $storeTransfersRelatedToProductStock
+     * @param \Generated\Shared\Transfer\ProductAvailabilityDataTransfer $productAvailabilityDataTransfer
      *
-     * @return list<\Generated\Shared\Transfer\StoreTransfer>
+     * @return array<int, array<\Generated\Shared\Transfer\StockProductTransfer>>
      */
-    protected function getStoreTransfersRelatedToProductAvailabilityWithoutProductStockRelation(
-        array $storeTransfersRelatedToProductAvailability,
-        array $storeTransfersRelatedToProductStock
-    ): array {
-        $storeTransfersRelatedToProductStockIndexedByIdStore = $this->getStoreTransfersIndexedByIdStore($storeTransfersRelatedToProductStock);
-        $storeTransfersRelatedToProductAvailabilityWithoutProductStockRelation = [];
-        foreach ($storeTransfersRelatedToProductAvailability as $storeTransfer) {
-            if (isset($storeTransfersRelatedToProductStockIndexedByIdStore[$storeTransfer->getIdStoreOrFail()])) {
-                continue;
-            }
-
-            $storeTransfersRelatedToProductAvailabilityWithoutProductStockRelation[] = $storeTransfer;
+    protected function getStockProductTransfersIndexedByIdStore(ProductAvailabilityDataTransfer $productAvailabilityDataTransfer): array
+    {
+        $stockProductsIndexedByStock = [];
+        foreach ($productAvailabilityDataTransfer->getStockProducts() as $stockProductTransfer) {
+            $stockProductsIndexedByStock[$stockProductTransfer->getFkStock()] = $stockProductTransfer;
         }
 
-        return $storeTransfersRelatedToProductAvailabilityWithoutProductStockRelation;
+        $stockProductTransfersIndexedByIdStore = [];
+        foreach ($productAvailabilityDataTransfer->getStocks() as $stockTransfer) {
+            foreach ($stockTransfer->getStoreRelationOrFail()->getStores() as $storeTransfer) {
+                if (!isset($stockProductsIndexedByStock[$stockTransfer->getIdStock()])) {
+                    continue;
+                }
+                $stockProductTransfersIndexedByIdStore[(int)$storeTransfer->getIdStore()][] = $stockProductsIndexedByStock[$stockTransfer->getIdStock()];
+            }
+        }
+
+        return $stockProductTransfersIndexedByIdStore;
     }
 
     /**
-     * @param list<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
+     * @param \Generated\Shared\Transfer\ProductAvailabilityDataTransfer $productAvailabilityDataTransfer
      *
-     * @return array<int, \Generated\Shared\Transfer\StoreTransfer>
+     * @return array<int, \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer>
      */
-    protected function getStoreTransfersIndexedByIdStore(array $storeTransfers): array
+    protected function getProductConcreteAvailabilityTransfersIndexedByIdStore(ProductAvailabilityDataTransfer $productAvailabilityDataTransfer): array
     {
-        $storeTransfersIndexedByIdStore = [];
-        foreach ($storeTransfers as $storeTransfer) {
-            $storeTransfersIndexedByIdStore[$storeTransfer->getIdStoreOrFail()] = $storeTransfer;
+        $productConcreteAvailabilityTransfersIndexedByIdStore = [];
+        foreach ($productAvailabilityDataTransfer->getProductConcreteAvailabilities() as $productConcreteAvailabilityTransfer) {
+            $productConcreteAvailabilityTransfersIndexedByIdStore[(int)$productConcreteAvailabilityTransfer->getStoreOrFail()->getIdStore()] = $productConcreteAvailabilityTransfer;
         }
 
-        return $storeTransfersIndexedByIdStore;
+        return $productConcreteAvailabilityTransfersIndexedByIdStore;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAvailabilityDataTransfer $productAvailabilityDataTransfer
+     *
+     * @return array<int, \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer>
+     */
+    protected function getProductAbstractAvailabilityTransfersIndexedByIdStore(ProductAvailabilityDataTransfer $productAvailabilityDataTransfer): array
+    {
+        $productAbstractAvailabilityTransfersIndexedByIdStore = [];
+        foreach ($productAvailabilityDataTransfer->getProductAbstractAvailabilities() as $productAbstractAvailabilityTransfer) {
+            $productAbstractAvailabilityTransfersIndexedByIdStore[(int)$productAbstractAvailabilityTransfer->getIdStore()] = $productAbstractAvailabilityTransfer;
+        }
+
+        return $productAbstractAvailabilityTransfersIndexedByIdStore;
+    }
+
+    /**
+     * @param string $productAbstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param array<int, \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer> $productAbstractAvailabilityTransfersIndexedByIdStore
+     *
+     * @return void
+     */
+    protected function updateProductAbstractAvailability(
+        string $productAbstractSku,
+        StoreTransfer $storeTransfer,
+        array $productAbstractAvailabilityTransfersIndexedByIdStore
+    ): void {
+        $calculatedProductAbstractAvailabilityTransfer = $this->availabilityCalculator
+            ->getCalculatedProductAbstractAvailabilityTransfer($productAbstractSku, $storeTransfer);
+
+        /** @var \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null $productAbstractAvailabilityTransfer */
+        $productAbstractAvailabilityTransfer = $productAbstractAvailabilityTransfersIndexedByIdStore[$storeTransfer->getIdStore()] ?? null;
+        $abstractAvailabilityQuantity = isset($productAbstractAvailabilityTransfersIndexedByIdStore[$storeTransfer->getIdStore()]) ?
+            $productAbstractAvailabilityTransfer?->getAvailability() :
+            null;
+
+        if ($abstractAvailabilityQuantity === null || !$calculatedProductAbstractAvailabilityTransfer->getAvailabilityOrFail()->equals($abstractAvailabilityQuantity)) {
+            $this->availabilityEntityManager->saveProductAbstractAvailability(
+                $calculatedProductAbstractAvailabilityTransfer,
+                $storeTransfer,
+            );
+        }
+    }
+
+    /**
+     * @return list<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    protected function getAllStoreTransfersCache(): array
+    {
+        if (static::$allStoreTransfersCache) {
+            return static::$allStoreTransfersCache;
+        }
+        static::$allStoreTransfersCache = $this->storeFacade->getAllStores();
+
+        return static::$allStoreTransfersCache;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAvailabilityDataTransfer $productAvailabilityDataTransfer
+     *
+     * @return void
+     */
+    protected function saveAllAvailabilities(ProductAvailabilityDataTransfer $productAvailabilityDataTransfer): void
+    {
+        if (!$productAvailabilityDataTransfer->getProductConcrete() && !$productAvailabilityDataTransfer->getProductAbstract()) {
+            return;
+        }
+
+        $stockProductTransfersIndexedByIdStore = $this->getStockProductTransfersIndexedByIdStore($productAvailabilityDataTransfer);
+        $productConcreteAvailabilityTransfersIndexedByIdStore = $this->getProductConcreteAvailabilityTransfersIndexedByIdStore($productAvailabilityDataTransfer);
+        $productAbstractAvailabilityTransfersIndexedByIdStore = $this->getProductAbstractAvailabilityTransfersIndexedByIdStore($productAvailabilityDataTransfer);
+        $productAbstractSku = $productAvailabilityDataTransfer->getProductAbstractOrFail()->getSkuOrFail();
+        $productConcreteSku = $productAvailabilityDataTransfer->getProductConcreteOrFail()->getSkuOrFail();
+
+        foreach ($this->getAllStoreTransfersCache() as $storeTransfer) {
+            $this->executeSaveAllAvailabilitiesPerStore(
+                $stockProductTransfersIndexedByIdStore,
+                $productConcreteAvailabilityTransfersIndexedByIdStore,
+                $productAbstractAvailabilityTransfersIndexedByIdStore,
+                $productAbstractSku,
+                $productConcreteSku,
+                $storeTransfer,
+            );
+        }
+    }
+
+    /**
+     * @param array<int, array<\Generated\Shared\Transfer\StockProductTransfer>> $stockProductTransfersIndexedByIdStore
+     * @param array<int, \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer> $productConcreteAvailabilityTransfersIndexedByIdStore
+     * @param array<int, \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer> $productAbstractAvailabilityTransfersIndexedByIdStore
+     * @param string $productAbstractSku
+     * @param string $productConcreteSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return void
+     */
+    protected function executeSaveAllAvailabilitiesPerStore(
+        array $stockProductTransfersIndexedByIdStore,
+        array $productConcreteAvailabilityTransfersIndexedByIdStore,
+        array $productAbstractAvailabilityTransfersIndexedByIdStore,
+        string $productAbstractSku,
+        string $productConcreteSku,
+        StoreTransfer $storeTransfer
+    ): void {
+        $wasProductConcreteAvailable = $this->isProductConcreteAvailable(
+            $productConcreteAvailabilityTransfersIndexedByIdStore[$storeTransfer->getIdStore()] ?? null,
+        );
+
+        $this->updateProductAbstractAvailability($productAbstractSku, $storeTransfer, $productAbstractAvailabilityTransfersIndexedByIdStore);
+
+        $quantity = new Decimal(0);
+        if (isset($stockProductTransfersIndexedByIdStore[$storeTransfer->getIdStore()])) {
+            $quantity = $this->availabilityCalculator->calculateAvailabilityForProductConcrete(
+                $productConcreteSku,
+                $storeTransfer,
+                $stockProductTransfersIndexedByIdStore[$storeTransfer->getIdStore()],
+            );
+        }
+
+        $isNeverOutOfStock = $this->isNeverOutOfStock($stockProductTransfersIndexedByIdStore, $storeTransfer);
+        $productConcreteAvailabilityTransfer = (new ProductConcreteAvailabilityTransfer())
+            ->setSku($productConcreteSku)
+            ->setIsNeverOutOfStock($isNeverOutOfStock)
+            ->setAvailability($quantity);
+
+        if (isset($productConcreteAvailabilityTransfersIndexedByIdStore[$storeTransfer->getIdStore()])) {
+            $productConcreteAvailabilityTransfer = $productConcreteAvailabilityTransfersIndexedByIdStore[$storeTransfer->getIdStore()];
+        }
+
+        $isAvailabilityChanged = false;
+        if (
+            !$quantity->equals($productConcreteAvailabilityTransfer->getAvailability() ?? 0) ||
+            $productConcreteAvailabilityTransfer->getIsNeverOutOfStock() !== $isNeverOutOfStock ||
+            !isset($productConcreteAvailabilityTransfersIndexedByIdStore[$storeTransfer->getIdStore()])
+        ) {
+            $productConcreteAvailabilityTransfer->setAvailability($quantity);
+            $productConcreteAvailabilityTransfer->setIsNeverOutOfStock($isNeverOutOfStock);
+            $isAvailabilityChanged = $this->availabilityEntityManager->saveProductConcreteAvailability(
+                $productConcreteAvailabilityTransfer,
+                $storeTransfer,
+                $productAbstractSku,
+            );
+        }
+
+        if ($isAvailabilityChanged && $this->touchFacade->isTouchEnabled()) {
+            $idAvailabilityAbstract = $productConcreteAvailabilityTransfer->getFkAvailabilityAbstract();
+            if ($idAvailabilityAbstract === null) {
+                $idAvailabilityAbstract = $this->availabilityRepository
+                    ->findIdProductAbstractAvailabilityBySku($productAbstractSku, $storeTransfer);
+            }
+            $this->touchAvailabilityAbstract($idAvailabilityAbstract);
+        }
+
+        if ($isAvailabilityChanged && !$wasProductConcreteAvailable && $this->isProductConcreteAvailable($productConcreteAvailabilityTransfer)) {
+            $this->triggerProductIsAvailableAgainEvent($productConcreteSku, $storeTransfer);
+        }
+    }
+
+    /**
+     * @param array<int, array<\Generated\Shared\Transfer\StockProductTransfer>> $stockProductTransfersIndexedByIdStore
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    protected function isNeverOutOfStock(array $stockProductTransfersIndexedByIdStore, StoreTransfer $storeTransfer): bool
+    {
+        if (!isset($stockProductTransfersIndexedByIdStore[$storeTransfer->getIdStore()])) {
+            return false;
+        }
+
+        foreach ($stockProductTransfersIndexedByIdStore[$storeTransfer->getIdStore()] as $stockProductTransfer) {
+            if ($stockProductTransfer->getIsNeverOutOfStock()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

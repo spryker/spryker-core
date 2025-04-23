@@ -21,7 +21,7 @@ interface AvailabilityHandlerInterface
      *
      * @return void
      */
-    public function updateAvailability($concreteSku);
+    public function updateAvailability(string $concreteSku): void;
 
     /**
      * @param int $idAvailabilityAbstract

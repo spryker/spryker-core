@@ -144,15 +144,7 @@ class Reservation implements ReservationInterface
             ->setReservationQuantity($reservationQuantity)
             ->setStore($storeTransfer);
 
-        $omsProductReservationTransfer = $this->omsRepository->findProductReservation($reservationRequestTransfer);
-
-        if (!$omsProductReservationTransfer) {
-            $this->omsEntityManager->createReservation($reservationRequestTransfer);
-
-            return;
-        }
-
-        $this->omsEntityManager->updateReservation($reservationRequestTransfer);
+        $this->omsEntityManager->saveReservation($reservationRequestTransfer);
     }
 
     /**
@@ -170,15 +162,7 @@ class Reservation implements ReservationInterface
             }
         }
 
-        $omsProductReservationTransfer = $this->omsRepository->findProductReservation($reservationRequestTransfer);
-
-        if (!$omsProductReservationTransfer) {
-            $this->omsEntityManager->createReservation($reservationRequestTransfer);
-
-            return;
-        }
-
-        $this->omsEntityManager->updateReservation($reservationRequestTransfer);
+        $this->omsEntityManager->saveReservation($reservationRequestTransfer);
     }
 
     /**

@@ -31,4 +31,9 @@ interface AvailabilityToStoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getStoreByName($storeName);
+
+    /**
+     * @return list<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getAllStores(): array;
 }

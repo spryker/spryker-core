@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Oms\Business\Util;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Oms\Business\Reader\ReservationReaderInterface;
@@ -121,12 +120,7 @@ class ReservationTest extends Unit
      */
     protected function createOmsRepositoryMock(int $storesCount): OmsRepositoryInterface
     {
-        $omsRepositoryMock = $this->createMock(OmsRepositoryInterface::class);
-        $omsRepositoryMock->expects($this->exactly($storesCount))
-            ->method('findProductReservation')
-            ->willReturn(new OmsProductReservationTransfer());
-
-        return $omsRepositoryMock;
+        return $this->createMock(OmsRepositoryInterface::class);
     }
 
     /**
@@ -138,7 +132,7 @@ class ReservationTest extends Unit
     {
         $omsEntityManagerMock = $this->createMock(OmsEntityManagerInterface::class);
         $omsEntityManagerMock->expects($this->exactly($storesCount))
-            ->method('updateReservation');
+            ->method('saveReservation');
 
         return $omsEntityManagerMock;
     }

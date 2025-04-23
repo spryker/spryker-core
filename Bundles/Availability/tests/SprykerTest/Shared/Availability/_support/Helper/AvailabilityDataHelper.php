@@ -14,8 +14,10 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
+use ReflectionProperty;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\AvailabilityFacadeInterface;
+use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -107,6 +109,16 @@ class AvailabilityDataHelper extends Module
     public function ensureAvailabilityTableIsEmpty(): void
     {
         SpyAvailabilityQuery::create()->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function clearAvailabilityHandlerCache(): void
+    {
+        $reflectionProperty = new ReflectionProperty(AvailabilityHandler::class, 'allStoreTransfersCache');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue(null, []);
     }
 
     /**

@@ -17,10 +17,15 @@ interface ProductAvailabilityCalculatorInterface
     /**
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param array<\Generated\Shared\Transfer\StockProductTransfer> $stockProductTransfers
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateAvailabilityForProductConcrete(string $concreteSku, StoreTransfer $storeTransfer): Decimal;
+    public function calculateAvailabilityForProductConcrete(
+        string $concreteSku,
+        StoreTransfer $storeTransfer,
+        array $stockProductTransfers = []
+    ): Decimal;
 
     /**
      * @param string $abstractSku

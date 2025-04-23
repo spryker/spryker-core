@@ -8,12 +8,21 @@
 namespace Spryker\Zed\Availability\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityDataTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Propel\Runtime\Collection\Collection;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Service\Availability\AvailabilityServiceInterface;
+use Spryker\Zed\Availability\Persistence\Propel\Mapper\StoreMapper;
 
 class AvailabilityMapper implements AvailabilityMapperInterface
 {
@@ -23,11 +32,20 @@ class AvailabilityMapper implements AvailabilityMapperInterface
     protected $availabilityService;
 
     /**
-     * @param \Spryker\Service\Availability\AvailabilityServiceInterface $availabilityService
+     * @var \Spryker\Zed\Availability\Persistence\Propel\Mapper\StoreMapper
      */
-    public function __construct(AvailabilityServiceInterface $availabilityService)
-    {
+    protected StoreMapper $storeMapper;
+
+    /**
+     * @param \Spryker\Service\Availability\AvailabilityServiceInterface $availabilityService
+     * @param \Spryker\Zed\Availability\Persistence\Propel\Mapper\StoreMapper $storeMapper
+     */
+    public function __construct(
+        AvailabilityServiceInterface $availabilityService,
+        StoreMapper $storeMapper
+    ) {
         $this->availabilityService = $availabilityService;
+        $this->storeMapper = $storeMapper;
     }
 
     /**
@@ -85,6 +103,39 @@ class AvailabilityMapper implements AvailabilityMapperInterface
     }
 
     /**
+     * @param \Propel\Runtime\Collection\Collection $availabilityEntities
+     * @param \Orm\Zed\Product\Persistence\SpyProduct|null $productConcreteEntity
+     * @param \Generated\Shared\Transfer\ProductAvailabilityDataTransfer $productAvailabilityDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAvailabilityDataTransfer
+     */
+    public function mapAvailabilityEntitiesAndProductConcreteEntityToProductAvailabilityDataTransfer(
+        Collection $availabilityEntities,
+        ?SpyProduct $productConcreteEntity,
+        ProductAvailabilityDataTransfer $productAvailabilityDataTransfer
+    ): ProductAvailabilityDataTransfer {
+        if (!$productConcreteEntity) {
+            return $productAvailabilityDataTransfer;
+        }
+        $productConcreteTransfer = (new ProductConcreteTransfer())->fromArray($productConcreteEntity->toArray(), true);
+        $productAbstractTransfer = (new ProductAbstractTransfer())->fromArray($productConcreteEntity->getSpyProductAbstract()->toArray(), true);
+
+        $productAvailabilityDataTransfer
+            ->setProductAbstract($productAbstractTransfer)
+            ->setProductConcrete($productConcreteTransfer);
+
+        $this->expandProductAvailabilityDataTransferWithStock($productConcreteEntity, $productAvailabilityDataTransfer);
+
+        /** @var \Orm\Zed\Availability\Persistence\SpyAvailability $availabilityEntity */
+        foreach ($availabilityEntities as $availabilityEntity) {
+            $this->extendProductAvailabilityDataTransferWithConcreteAvailability($availabilityEntity, $productAvailabilityDataTransfer);
+            $this->extendProductAvailabilityDataTransferWithAbstractAvailability($availabilityEntity, $productAvailabilityDataTransfer);
+        }
+
+        return $productAvailabilityDataTransfer;
+    }
+
+    /**
      * @param array $availabilityAbstractData
      *
      * @return array
@@ -135,5 +186,73 @@ class AvailabilityMapper implements AvailabilityMapperInterface
         }
 
         return $reservation;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity
+     * @param \Generated\Shared\Transfer\ProductAvailabilityDataTransfer $productAvailabilityDataTransfer
+     *
+     * @return void
+     */
+    protected function expandProductAvailabilityDataTransferWithStock(
+        SpyProduct $productConcreteEntity,
+        ProductAvailabilityDataTransfer $productAvailabilityDataTransfer
+    ): void {
+        foreach ($productConcreteEntity->getStockProducts() as $stockProductEntity) {
+            $productAvailabilityDataTransfer->addStockProduct(
+                (new StockProductTransfer())->fromArray($stockProductEntity->toArray(), true),
+            );
+
+            $stockEntity = $stockProductEntity->getStock();
+            $stockTransfer = (new StockTransfer())->fromArray($stockEntity->toArray(), true);
+            $storeRelationTransfer = new StoreRelationTransfer();
+            foreach ($stockEntity->getStockStores() as $stockStoreEntity) {
+                $storeRelationTransfer->addStores(
+                    (new StoreTransfer())->fromArray($stockStoreEntity->getStore()->toArray(), true),
+                );
+            }
+
+            $stockTransfer->setStoreRelation($storeRelationTransfer);
+            $productAvailabilityDataTransfer->addStock($stockTransfer);
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $availabilityEntity
+     * @param \Generated\Shared\Transfer\ProductAvailabilityDataTransfer $productAvailabilityDataTransfer
+     *
+     * @return void
+     */
+    protected function extendProductAvailabilityDataTransferWithConcreteAvailability(
+        SpyAvailability $availabilityEntity,
+        ProductAvailabilityDataTransfer $productAvailabilityDataTransfer
+    ): void {
+        $productAvailabilityDataTransfer->addProductConcreteAvailability(
+            (new ProductConcreteAvailabilityTransfer())
+                ->fromArray($availabilityEntity->toArray(), true)
+                ->setStore((new StoreTransfer())->fromArray($availabilityEntity->getStore()?->toArray() ?? [], true))
+                ->setAvailability($availabilityEntity->getQuantity()),
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $availabilityEntity
+     * @param \Generated\Shared\Transfer\ProductAvailabilityDataTransfer $productAvailabilityDataTransfer
+     *
+     * @return void
+     */
+    protected function extendProductAvailabilityDataTransferWithAbstractAvailability(
+        SpyAvailability $availabilityEntity,
+        ProductAvailabilityDataTransfer $productAvailabilityDataTransfer
+    ): void {
+        $abstractAvailability = $availabilityEntity->getSpyAvailabilityAbstract();
+        $productAbstractAvailabilityTransfer = (new ProductAbstractAvailabilityTransfer())
+            ->setAvailability($abstractAvailability->getQuantity())
+            ->setSku($abstractAvailability->getAbstractSku())
+            ->setIdStore($abstractAvailability->getFkStore());
+
+        $productAvailabilityDataTransfer->addProductAbstractAvailability(
+            $productAbstractAvailabilityTransfer,
+        );
     }
 }

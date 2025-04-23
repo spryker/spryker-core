@@ -8,6 +8,12 @@
 namespace SprykerTest\Zed\Availability;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityDataTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
@@ -59,5 +65,36 @@ class AvailabilityBusinessTester extends Actor
     public function getAvailabilityAbstractQuery(): SpyAvailabilityAbstractQuery
     {
         return SpyAvailabilityAbstractQuery::create();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAvailabilityDataTransfer
+     */
+    public function prepareProductAvailabilityDataTransfer(
+        ProductConcreteTransfer $productConcreteTransfer,
+        StoreTransfer $storeTransfer
+    ): ProductAvailabilityDataTransfer {
+        $productAvailabilityDataTransfer = new ProductAvailabilityDataTransfer();
+        $productAvailabilityDataTransfer->addProductAbstractAvailability(
+            (new ProductAbstractAvailabilityTransfer())
+                ->setAvailability(15)
+                ->setSku($productConcreteTransfer->getAbstractSku())
+                ->setIdStore($storeTransfer->getIdStore()),
+        );
+        $productAvailabilityDataTransfer->addProductConcreteAvailability(
+            (new ProductConcreteAvailabilityTransfer())
+                ->setAvailability(10)
+                ->setSku($productConcreteTransfer->getSku())
+                ->setStore($storeTransfer),
+        );
+
+        return $productAvailabilityDataTransfer
+            ->setProductAbstract((new ProductAbstractTransfer())
+                ->setSku($productConcreteTransfer->getAbstractSku())
+                ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract()))
+            ->setProductConcrete($productConcreteTransfer);
     }
 }

@@ -50,13 +50,23 @@ class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInte
     /**
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param array<\Generated\Shared\Transfer\StockProductTransfer> $stockProductTransfers
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateAvailabilityForProductConcrete(string $concreteSku, StoreTransfer $storeTransfer): Decimal
-    {
-        $physicalItems = $this->stockFacade->calculateProductStockForStore($concreteSku, $storeTransfer);
+    public function calculateAvailabilityForProductConcrete(
+        string $concreteSku,
+        StoreTransfer $storeTransfer,
+        array $stockProductTransfers = []
+    ): Decimal {
         $reservedItems = $this->omsFacade->getOmsReservedProductQuantityForSku($concreteSku, $storeTransfer);
+        if ($stockProductTransfers) {
+            $physicalItems = $this->calculateTotalQuantity($stockProductTransfers);
+
+            return $this->normalizeQuantity($physicalItems->subtract($reservedItems));
+        }
+
+        $physicalItems = $this->stockFacade->calculateProductStockForStore($concreteSku, $storeTransfer);
 
         return $this->normalizeQuantity($physicalItems->subtract($reservedItems));
     }
@@ -115,19 +125,7 @@ class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInte
     {
         return (new ProductAbstractAvailabilityTransfer())
             ->setSku($abstractSku)
-            ->setAvailability($this->calculateAvailabilityForProductAbstract($abstractSku, $storeTransfer))
-            ->setIsNeverOutOfStock($this->isProductAbstractNeverOutOfStockForStore($abstractSku, $storeTransfer));
-    }
-
-    /**
-     * @param string $abstractSku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return bool
-     */
-    protected function isProductAbstractNeverOutOfStockForStore(string $abstractSku, StoreTransfer $storeTransfer): bool
-    {
-        return $this->stockFacade->isProductAbstractNeverOutOfStockForStore($abstractSku, $storeTransfer);
+            ->setAvailability($this->calculateAvailabilityForProductAbstract($abstractSku, $storeTransfer));
     }
 
     /**
@@ -138,5 +136,20 @@ class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInte
     protected function normalizeQuantity(Decimal $quantity): Decimal
     {
         return $quantity->greatherThanOrEquals(0) ? $quantity : new Decimal(0);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\StockProductTransfer> $stockProductTransfers
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function calculateTotalQuantity(array $stockProductTransfers): Decimal
+    {
+        $quantity = new Decimal(0);
+        foreach ($stockProductTransfers as $stockProductTransfer) {
+            $quantity = $quantity->add($stockProductTransfer->getQuantity() ?? 0);
+        }
+
+        return $quantity;
     }
 }

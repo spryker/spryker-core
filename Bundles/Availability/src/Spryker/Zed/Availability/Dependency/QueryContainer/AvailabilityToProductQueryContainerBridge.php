@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Availability\Dependency\QueryContainer;
 
+use Orm\Zed\Product\Persistence\SpyProductQuery;
+
 class AvailabilityToProductQueryContainerBridge implements AvailabilityToProductQueryContainerInterface
 {
     /**
@@ -28,5 +30,13 @@ class AvailabilityToProductQueryContainerBridge implements AvailabilityToProduct
     public function queryProductAbstract()
     {
         return $this->queryContainer->queryProductAbstract();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryProduct(): SpyProductQuery
+    {
+        return $this->queryContainer->queryProduct();
     }
 }

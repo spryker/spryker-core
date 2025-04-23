@@ -8,9 +8,11 @@
 namespace Spryker\Zed\Availability\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityDataTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Propel\Runtime\Collection\Collection;
 
 interface AvailabilityMapperInterface
@@ -47,4 +49,17 @@ interface AvailabilityMapperInterface
         Collection $availabilityEntities,
         ProductConcreteAvailabilityCollectionTransfer $productConcreteAvailabilityCollectionTransfer
     ): ProductConcreteAvailabilityCollectionTransfer;
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection $availabilityEntities
+     * @param \Orm\Zed\Product\Persistence\SpyProduct|null $productConcreteEntity
+     * @param \Generated\Shared\Transfer\ProductAvailabilityDataTransfer $productAvailabilityDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAvailabilityDataTransfer
+     */
+    public function mapAvailabilityEntitiesAndProductConcreteEntityToProductAvailabilityDataTransfer(
+        Collection $availabilityEntities,
+        ?SpyProduct $productConcreteEntity,
+        ProductAvailabilityDataTransfer $productAvailabilityDataTransfer
+    ): ProductAvailabilityDataTransfer;
 }

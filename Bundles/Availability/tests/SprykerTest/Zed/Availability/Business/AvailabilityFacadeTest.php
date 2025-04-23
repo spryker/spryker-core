@@ -103,6 +103,15 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->tester->clearAvailabilityHandlerCache();
+    }
+
+    /**
+     * @return void
+     */
     public function testIsProductSellableWhenNeverOutOfStockShouldReturnSuccess(): void
     {
         // Arrange

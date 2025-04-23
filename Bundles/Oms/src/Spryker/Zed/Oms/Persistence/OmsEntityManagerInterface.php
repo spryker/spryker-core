@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\ReservationRequestTransfer;
 interface OmsEntityManagerInterface
 {
     /**
+     * @deprecated use {@link \Spryker\Zed\Oms\Persistence\OmsEntityManager::saveReservation()} instead
+     *
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return void
@@ -19,11 +21,20 @@ interface OmsEntityManagerInterface
     public function createReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 
     /**
+     * @deprecated use {@link \Spryker\Zed\Oms\Persistence\OmsEntityManager::saveReservation()} instead
+     *
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return void
      */
     public function updateReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return void
+     */
+    public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 
     /**
      * @param list<int> $salesOrderItemIds

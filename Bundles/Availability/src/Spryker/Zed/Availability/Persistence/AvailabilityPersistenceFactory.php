@@ -46,7 +46,7 @@ class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createAvailabilityMapper(): AvailabilityMapperInterface
     {
-        return new AvailabilityMapper($this->getAvailabilityService());
+        return new AvailabilityMapper($this->getAvailabilityService(), $this->createStoreMapper());
     }
 
     /**

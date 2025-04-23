@@ -50,6 +50,8 @@ interface AvailabilityToStockFacadeInterface
     public function getStoreToWarehouseMapping();
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $sku
      *
      * @return array<\Generated\Shared\Transfer\StoreTransfer>

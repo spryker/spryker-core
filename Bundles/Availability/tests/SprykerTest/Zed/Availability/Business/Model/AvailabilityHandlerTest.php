@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Availability\Business\Model;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
@@ -17,6 +19,7 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterfac
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
@@ -57,17 +60,31 @@ class AvailabilityHandlerTest extends Unit
     /**
      * @return void
      */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->tester->clearAvailabilityHandlerCache();
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateAvailabilityShouldTouchWhenStockUpdated(): void
     {
         $productTransfer = $this->tester->haveProduct();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
         $availabilityCalculatorMock = $this->createAvailabilityCalculatorMock();
         $availabilityCalculatorMock->method('calculateAvailabilityForProductConcrete')->willReturn(new Decimal(15));
+        $availabilityCalculatorMock->method('getCalculatedProductAbstractAvailabilityTransfer')
+            ->willReturn((new ProductAbstractAvailabilityTransfer())->setAvailability(10));
 
         $availabilityRepositoryMock = $this->createAvailabilityRepositoryMock();
         $availabilityRepositoryMock->method('getAbstractSkuFromProductConcrete')
             ->willReturn($productTransfer->getAbstractSku());
         $availabilityRepositoryMock->method('findIdProductAbstractAvailabilityBySku')
             ->willReturn($productTransfer->getFkProductAbstract());
+        $availabilityRepositoryMock->method('getProductConcreteWithAvailability')
+            ->willReturn($this->tester->prepareProductAvailabilityDataTransfer($productTransfer, $storeTransfer));
 
         $availabilityEntityManagerMock = $this->createAvailabilityEntityManagerMock();
         $availabilityEntityManagerMock->method('saveProductConcreteAvailability')
@@ -75,9 +92,11 @@ class AvailabilityHandlerTest extends Unit
 
         $stockFacadeMock = $this->createAvailabilityToStockFacadeMock();
         $stockFacadeMock->method('getStoresWhereProductStockIsDefined')
-            ->willReturn([$this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME])]);
+            ->willReturn([$storeTransfer]);
 
         $touchFacadeMock = $this->createTouchFacadeMock();
+        $touchFacadeMock->method('isTouchEnabled')
+            ->willReturn(true);
         $touchFacadeMock->expects($this->once())->method('touchActive');
 
         $availabilityHandler = $this->createAvailabilityHandler(
@@ -96,14 +115,20 @@ class AvailabilityHandlerTest extends Unit
      */
     public function testUpdateAvailabilityShouldTouchAndUpdate(): void
     {
+        $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::PRODUCT_ABSTRACT_SKU]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
         $availabilityCalculatorMock = $this->createAvailabilityCalculatorMock();
         $availabilityCalculatorMock->method('calculateAvailabilityForProductConcrete')->willReturn(new Decimal(5));
+        $availabilityCalculatorMock->method('getCalculatedProductAbstractAvailabilityTransfer')
+            ->willReturn((new ProductAbstractAvailabilityTransfer())->setAvailability(10));
 
         $availabilityRepositoryMock = $this->createAvailabilityRepositoryMock();
         $availabilityRepositoryMock->method('getAbstractSkuFromProductConcrete')
             ->willReturn(static::PRODUCT_ABSTRACT_SKU);
         $availabilityRepositoryMock->method('findIdProductAbstractAvailabilityBySku')
             ->willReturn(123);
+        $availabilityRepositoryMock->method('getProductConcreteWithAvailability')
+            ->willReturn($this->tester->prepareProductAvailabilityDataTransfer($productConcreteTransfer, $storeTransfer));
 
         $availabilityEntityManagerMock = $this->createAvailabilityEntityManagerMock();
         $availabilityEntityManagerMock->method('saveProductConcreteAvailability')
@@ -114,6 +139,8 @@ class AvailabilityHandlerTest extends Unit
             ->willReturn([$this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME])]);
 
         $touchFacadeMock = $this->createTouchFacadeMock();
+        $touchFacadeMock->method('isTouchEnabled')
+            ->willReturn(true);
         $touchFacadeMock->expects($this->once())->method('touchActive');
 
         $availabilityHandler = $this->createAvailabilityHandler(
@@ -153,6 +180,10 @@ class AvailabilityHandlerTest extends Unit
             $availabilityToEventFacade = $this->createAvailabilityToEventFacade();
         }
 
+        $storeFacadeMock = $this->createAvailabilityToStoreFacadeInterface();
+        $storeFacadeMock->method('getAllStores')
+            ->willReturn([$this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME])]);
+
         return new AvailabilityHandler(
             $availabilityRepositoryMock,
             $availabilityEntityManagerMock,
@@ -161,6 +192,7 @@ class AvailabilityHandlerTest extends Unit
             $availabilityToStockFacade,
             $availabilityToEventFacade,
             $this->getProductFacadeMock(),
+            $storeFacadeMock,
         );
     }
 
@@ -233,6 +265,15 @@ class AvailabilityHandlerTest extends Unit
     protected function createAvailabilityToStockFacadeMock(): AvailabilityToStockFacadeInterface
     {
         return $this->getMockBuilder(AvailabilityToStockFacadeInterface::class)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
+     */
+    protected function createAvailabilityToStoreFacadeInterface(): AvailabilityToStoreFacadeInterface
+    {
+        return $this->getMockBuilder(AvailabilityToStoreFacadeInterface::class)
             ->getMock();
     }
 }

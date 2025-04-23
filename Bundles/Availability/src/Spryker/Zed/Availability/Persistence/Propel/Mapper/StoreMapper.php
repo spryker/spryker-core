@@ -33,7 +33,7 @@ class StoreMapper
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function mapStoreEntityToStoreTransfer(SpyStore $storeEntity, StoreTransfer $storeTransfer): StoreTransfer
+    public function mapStoreEntityToStoreTransfer(SpyStore $storeEntity, StoreTransfer $storeTransfer): StoreTransfer
     {
         return $storeTransfer->fromArray($storeEntity->toArray(), true);
     }

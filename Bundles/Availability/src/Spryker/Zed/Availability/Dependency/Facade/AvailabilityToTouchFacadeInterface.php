@@ -17,4 +17,9 @@ interface AvailabilityToTouchFacadeInterface
      * @return bool
      */
     public function touchActive($itemType, $idItem, $keyChange = false);
+
+    /**
+     * @return bool
+     */
+    public function isTouchEnabled(): bool;
 }
