@@ -21,6 +21,7 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\Util\PropelDateTime;
 use Spryker\Zed\Propel\Exception\StatementNotPreparedException;
+use Spryker\Zed\Propel\PropelConfig;
 use Throwable;
 
 /**
@@ -29,6 +30,11 @@ use Throwable;
  */
 trait ActiveRecordBatchProcessorTrait
 {
+    /**
+     * @var int
+     */
+    protected const UPDATE_CHUNK_SIZE = 200;
+
     /**
      * @var array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      */
@@ -279,6 +285,14 @@ trait ActiveRecordBatchProcessorTrait
         $tableMapClass = $this->getTableMapClass($entityClassName);
 
         return Propel::getServiceContainer()->getWriteConnection($tableMapClass::DATABASE_NAME);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isMysql(): bool
+    {
+        return Propel::getServiceContainer()->getAdapterClass() === PropelConfig::DB_ENGINE_MYSQL;
     }
 
     /**
@@ -571,6 +585,74 @@ trait ActiveRecordBatchProcessorTrait
      */
     protected function buildUpdateStatements(string $entityClassName, array $entities): array
     {
+        if (!$this->isMysql()) {
+            return $this->buildPostgresUpdateStatements($entityClassName, $entities);
+        }
+
+        $tableMapClass = $this->getTableMapClass($entityClassName);
+
+        $connection = $this->getWriteConnection($entityClassName);
+        $statements = [];
+
+        $chunkEntities = array_chunk($entities, static::UPDATE_CHUNK_SIZE);
+
+        foreach ($chunkEntities as $chunkEntity) {
+            $keyIndex = 0;
+            $whereClauses = [];
+            $columnNamesForUpdateWithPdoPlaceholder = [];
+            $sql = '';
+            $values = [];
+            foreach ($chunkEntity as $entity) {
+                $entityData = [];
+                $entity = $this->updateDateTimes($entity);
+
+                [$valuesForUpdate, $idColumnValuesAndTypes] = $this->prepareValuesForUpdate(
+                    $tableMapClass->getColumns(),
+                    $tableMapClass,
+                    $entityClassName::TABLE_MAP,
+                    $entity,
+                );
+
+                foreach ($valuesForUpdate as $columnName => $value) {
+                    $index = $keyIndex++;
+                    $entityData[$index] = $value;
+                    $columnNamesForUpdateWithPdoPlaceholder[] = sprintf('%s=:p%d', $this->quote($columnName, $tableMapClass), $index);
+                }
+
+                foreach ($idColumnValuesAndTypes as $primaryKeyColumnName => $valuesForUpdate) {
+                    $index = $keyIndex++;
+                    $entityData[$index] = $valuesForUpdate;
+                    $whereClauses[] = sprintf('%s.%s=:p%d', $tableMapClass->getName(), $primaryKeyColumnName, $index);
+                }
+
+                $sql .= sprintf(
+                    'UPDATE %s SET %s WHERE %s;',
+                    $tableMapClass->getName(),
+                    implode(', ', $columnNamesForUpdateWithPdoPlaceholder),
+                    implode(' AND ', $whereClauses),
+                );
+                $values[] = $entityData;
+            }
+
+            $statement = $this->prepareStatement($sql, $connection);
+            $statement = $this->bindUpdateValues($statement, $values);
+            $statements[] = $statement;
+        }
+
+        return $statements;
+    }
+
+    /**
+     * @param string $entityClassName
+     * @param array $entities
+     *
+     * @return array<\Propel\Runtime\Connection\StatementInterface>
+     */
+    protected function buildPostgresUpdateStatements(string $entityClassName, array $entities): array
+    {
+        //  MariaDB and PostgreSQL have significantly different syntax for batch updates.
+        //  It's more maintainable to keep them separate rather than forcing a generic method.
+        //  Note: only the MariaDB version is currently optimized for batch update performance.
         $tableMapClass = $this->getTableMapClass($entityClassName);
 
         $connection = $this->getWriteConnection($entityClassName);
@@ -607,7 +689,7 @@ trait ActiveRecordBatchProcessorTrait
             );
 
             $statement = $this->prepareStatement($sql, $connection);
-            $statement = $this->bindUpdateValues($statement, $values);
+            $statement = $this->bindUpdatePostgresValues($statement, $values);
             $statements[] = $statement;
         }
 
@@ -657,6 +739,23 @@ trait ActiveRecordBatchProcessorTrait
      * @return \Propel\Runtime\Connection\StatementInterface
      */
     protected function bindUpdateValues(StatementInterface $statement, array $values): StatementInterface
+    {
+        foreach ($values as $rowValues) {
+            foreach ($rowValues as $index => $value) {
+                $statement->bindValue(sprintf(':p%d', $index), $value['value'], $value['type']);
+            }
+        }
+
+        return $statement;
+    }
+
+    /**
+     * @param \Propel\Runtime\Connection\StatementInterface $statement
+     * @param array $values
+     *
+     * @return \Propel\Runtime\Connection\StatementInterface
+     */
+    protected function bindUpdatePostgresValues(StatementInterface $statement, array $values): StatementInterface
     {
         foreach (array_values($values) as $index => $value) {
             $statement->bindValue(sprintf(':p%d', $index), $value['value'], $value['type']);
