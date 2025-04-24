@@ -18,6 +18,7 @@ var timeoutId = 0;
 import { Dropzone } from './libs/dropzone';
 import { FormSubmitter } from './libs/form-submitter';
 import { DatePicker } from './libs/datepicker';
+import { ImageUploader } from './libs/image-uploader';
 
 var dataTablesSearchDelay = function () {
     var dataTablesWrapper = $('.dataTables_wrapper');
@@ -247,6 +248,7 @@ $(document).ready(function () {
     new DatePicker().init();
     new Dropzone();
     new FormSubmitter();
+    new ImageUploader();
 });
 
 $(window).on('load', function () {

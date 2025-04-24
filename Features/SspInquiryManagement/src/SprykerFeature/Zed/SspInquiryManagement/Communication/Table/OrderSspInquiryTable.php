@@ -14,7 +14,6 @@ use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\SspInquiryManagement\Persistence\SspInquiryManagementRepositoryInterface;
 use SprykerFeature\Zed\SspInquiryManagement\SspInquiryManagementConfig;
 
 class OrderSspInquiryTable extends AbstractTable
@@ -56,13 +55,11 @@ class OrderSspInquiryTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\SspInquiryManagement\Persistence\SpySspInquiryQuery $sspInquiryQuery
-     * @param \SprykerFeature\Zed\SspInquiryManagement\Persistence\SspInquiryManagementRepositoryInterface $sspInquiryManagementRepository
      * @param \SprykerFeature\Zed\SspInquiryManagement\SspInquiryManagementConfig $sspInquiryManagementConfig
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      */
     public function __construct(
         protected SpySspInquiryQuery $sspInquiryQuery,
-        protected SspInquiryManagementRepositoryInterface $sspInquiryManagementRepository,
         protected SspInquiryManagementConfig $sspInquiryManagementConfig,
         protected OrderTransfer $orderTransfer
     ) {

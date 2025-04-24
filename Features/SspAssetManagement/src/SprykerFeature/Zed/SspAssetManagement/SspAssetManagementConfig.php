@@ -31,16 +31,6 @@ class SspAssetManagementConfig extends AbstractBundleConfig
     protected const INITIAL_SSP_ASSET_STATUS = 'pending';
 
     /**
-     * @var array<string>
-     */
-    protected const SSP_ASSET_STATUSES = [
-        'pending',
-        'in_review',
-        'approved',
-        'deactivated',
-    ];
-
-    /**
      * Specification:
      * - Returns the settings for the ssp asset sequence number.
      *
@@ -67,7 +57,7 @@ class SspAssetManagementConfig extends AbstractBundleConfig
      */
     public function getAssetStatuses(): array
     {
-        return static::SSP_ASSET_STATUSES;
+        return $this->getSharedConfig()->getAssetStatuses();
     }
 
     /**
@@ -98,6 +88,58 @@ class SspAssetManagementConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the allowed file extensions for file uploads during ssp asset creation.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getAllowedFileExtensions(): array
+    {
+        return $this->getSharedConfig()->getAllowedFileExtensions();
+    }
+
+    /**
+     * Specification:
+     * - Returns the allowed file mime types for file uploads during ssp asset creation.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getAllowedFileMimeTypes(): array
+    {
+        return $this->getSharedConfig()->getAllowedFileMimeTypes();
+    }
+
+    /**
+     * Specification:
+     * - Returns the default file max size for file uploads for ssp asset.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultFileMaxSize(): string
+    {
+        return $this->getSharedConfig()->getDefaultFileMaxSize();
+    }
+
+    /**
+     * Specification:
+     * - Defines the download chunk size in bytes.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getDownloadChunkSize(): int
+    {
+        return $this->getSharedConfig()->getDownloadChunkSize();
+    }
+
+    /**
      * @return string
      */
     protected function createPrefix(): string
@@ -106,5 +148,20 @@ class SspAssetManagementConfig extends AbstractBundleConfig
         $sequenceNumberPrefixParts[] = static::SSP_ASSET_REFERENCE_PREFIX;
 
         return sprintf('%s--', implode('-', $sequenceNumberPrefixParts));
+    }
+
+    /**
+     * Specification:
+     * - Returns the asset statuses that are allowed for a specific action.
+     *
+     * @api
+     *
+     * @param string $allowedAction
+     *
+     * @return array<string>
+     */
+    public function getStatusesByAllowedAction(string $allowedAction): array
+    {
+        return $this->getSharedConfig()->getStatusesByAllowedAction($allowedAction);
     }
 }

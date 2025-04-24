@@ -20,4 +20,13 @@ class SspAssetManagementConstants
      * @var string
      */
     public const BASE_URL_YVES = 'SSP_ASSET_MANAGEMENT:BASE_URL_YVES';
+
+    /**
+     * Base URL for Backoffice including scheme and port (e.g. http://www.de.demoshop.local:8080)
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const BASE_URL_BACKOFFICE = 'SSP_ASSET_MANAGEMENT:BASE_URL_BACKOFFICE';
 }

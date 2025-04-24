@@ -33,8 +33,6 @@ class SspAssetManagementEntityManager extends AbstractEntityManager implements S
         $spySspAssetEntity->save();
         $sspAssetTransfer->setIdSspAsset($spySspAssetEntity->getIdSspAsset());
 
-        $this->createAssetToCompanyBusinessUnitRelations($sspAssetTransfer);
-
         return $this->getFactory()
             ->createAssetMapper()
             ->mapSpySspAssetEntityToSspAssetTransfer($spySspAssetEntity, $sspAssetTransfer);
@@ -107,5 +105,22 @@ class SspAssetManagementEntityManager extends AbstractEntityManager implements S
             ->filterByFkSspAsset($idSspAsset)
             ->filterByFkCompanyBusinessUnit_In($businessUnitIds)
             ->delete();
+    }
+
+    /**
+     * @param int $idSspAsset
+     * @param array<int> $businessUnitIds
+     *
+     * @return void
+     */
+    public function createAssetToCompanyBusinessUnitRelation(int $idSspAsset, array $businessUnitIds): void
+    {
+        foreach ($businessUnitIds as $businessUnitId) {
+            $spySspAssetToCompanyBusinessUnit = new SpySspAssetToCompanyBusinessUnit();
+            $spySspAssetToCompanyBusinessUnit
+                ->setFkSspAsset($idSspAsset)
+                ->setFkCompanyBusinessUnit($businessUnitId)
+                ->save();
+        }
     }
 }

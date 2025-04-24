@@ -1,0 +1,13 @@
+<dl>
+    {% for item in list | filter(item => item is not empty) %}
+        <dt>{{ item.title | trans }}</dt>
+        <dd {% if item.qa | default %}data-qa="{{ item.qa }}"{% endif %} class="spacing-bottom-big">
+            {% if item.block | default %}
+                {{ item.block | raw }}
+            {% else %}
+                {{ item.value }}
+            {% endif %}
+        </dd>
+    {% endfor %}
+</dl>
+

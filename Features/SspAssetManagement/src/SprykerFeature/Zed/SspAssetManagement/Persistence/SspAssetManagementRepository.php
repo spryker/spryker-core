@@ -8,6 +8,7 @@
 namespace SprykerFeature\Zed\SspAssetManagement\Persistence;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\SspAssetAssignmentTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
@@ -64,9 +65,19 @@ class SspAssetManagementRepository extends AbstractRepository implements SspAsse
             $sspAssetIds[] = $sspAssetTransfer->getIdSspAsset();
         }
 
+        $sspAssetCollectionTransfer->setPagination($sspAssetCriteriaTransfer->getPagination());
+
+        if (!$sspAssetCriteriaTransfer->getInclude()?->getWithAssignedBusinessUnits()) {
+            return $sspAssetCollectionTransfer;
+        }
+
+        /** @var \Orm\Zed\SspAssetManagement\Persistence\SpySspAssetToCompanyBusinessUnitQuery $sspAssetToCompanyBusinessUnitQuery */
         $sspAssetToCompanyBusinessUnitQuery = $this->getFactory()->createSspAssetToCompanyBusinessUnitQuery()
             ->filterByFkSspAsset_In($sspAssetIds)
-            ->joinWithSpyCompanyBusinessUnit();
+            ->joinWithSpyCompanyBusinessUnit()
+            ->useSpyCompanyBusinessUnitQuery()
+                ->joinWithCompany()
+            ->endUse();
 
         if ($sspAssetCriteriaTransfer->getSspAssetConditions()) {
             if ($sspAssetCriteriaTransfer->getSspAssetConditions()->getAssignedBusinessUnitId()) {
@@ -94,15 +105,17 @@ class SspAssetManagementRepository extends AbstractRepository implements SspAsse
                                 (new CompanyBusinessUnitTransfer())
                                     ->setIdCompanyBusinessUnit($sspAssetToCompanyBusinessUnit->getFkCompanyBusinessUnit())
                                     ->setName($sspAssetToCompanyBusinessUnit->getSpyCompanyBusinessUnit()->getName())
-                                    ->setFkCompany($sspAssetToCompanyBusinessUnit->getSpyCompanyBusinessUnit()->getFkCompany()),
+                                    ->setCompany(
+                                        (new CompanyTransfer())
+                                            ->setIdCompany($sspAssetToCompanyBusinessUnit->getSpyCompanyBusinessUnit()->getFkCompany())
+                                            ->setName($sspAssetToCompanyBusinessUnit->getSpyCompanyBusinessUnit()->getCompany()->getName()),
+                                    ),
                             )
                             ->setAssignedAt($sspAssetToCompanyBusinessUnit->getCreatedAt()->format('Y-m-d H:i:s')),
                     );
                 }
             }
         }
-
-        $sspAssetCollectionTransfer->setPagination($sspAssetCriteriaTransfer->getPagination());
 
         return $sspAssetCollectionTransfer;
     }
@@ -149,6 +162,10 @@ class SspAssetManagementRepository extends AbstractRepository implements SspAsse
                         ->filterByFkCompany($sspAssetConditionsTransfer->getAssignedBusinessUnitCompanyId())
                     ->endUse()
                 ->endUse();
+        }
+
+        if ($sspAssetConditionsTransfer->getStatuses() !== []) {
+            $sspAssetQuery->filterByStatus_In($sspAssetConditionsTransfer->getStatuses());
         }
 
         if ($sspAssetConditionsTransfer->getSearchText()) {

@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
+use Generated\Shared\Transfer\SspAssetIncludeTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
@@ -285,6 +286,10 @@ class SspAssetManagementFacadeTest extends Unit
                 (new PaginationTransfer())
                     ->setPage(1)
                     ->setMaxPerPage(count($expectedAssets)),
+            )
+            ->setInclude(
+                (new SspAssetIncludeTransfer())
+                    ->setWithAssignedBusinessUnits(true),
             );
 
         foreach ($sorting as $field => $direction) {

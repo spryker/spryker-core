@@ -16,3 +16,9 @@ Settings,Settings
 Confirm,Confirm
 Cancel,Cancel
 MB,MB
+Upload,Upload
+Remove,Remove
+"Max up to %size%. Allowed file formats %format%","Max up to %size%. Allowed file formats %format%"
+"Upload image requirements","Upload image requirements"
+"Confirm delete","Confirm delete"
+"Are you sure you want to delete the image?","Are you sure you want to delete the image?"

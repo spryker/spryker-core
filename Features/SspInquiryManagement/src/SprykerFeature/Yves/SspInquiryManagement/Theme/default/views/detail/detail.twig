@@ -95,34 +95,37 @@
                 {% endblock %}
 
                 {% block asset %}
-                    {% include molecule('inquiry-information', 'SspInquiryManagement') with {
-                        data: {
-                            title: 'customer.ssp_inquiry.ssp_asset.details',
-                            information: data.inquiry.sspAsset ? [
-                                (data.inquiry.sspAsset.image
-                                    ? {
-                                        block: block('assetImage'),
-                                    }
-                                    : {}
-                                ),
-                                (data.inquiry.sspAsset.reference
-                                    ? {
-                                        title: 'customer.ssp_inquiry.details.ssp_asset_reference',
-                                        value: data.inquiry.sspAsset.reference,
-                                    }
-                                    : {}
-                                ),
-                                (data.inquiry.sspAsset.name
-                                    ? {
-                                        title: 'customer.ssp_inquiry.details.ssp_asset_name',
-                                        value: data.inquiry.sspAsset.name,
-                                    }
-                                    : {}
-                                ),
-                            ] : [],
-                            empty: 'customer.ssp_inquiry.details.ssp_asset_not_available',
-                        },
-                    } only %}
+                    {% if data.inquiry.type is same as 'ssp_asset' %}
+
+                        {% include molecule('inquiry-information', 'SspInquiryManagement') with {
+                            data: {
+                                title: 'customer.ssp_inquiry.ssp_asset.details',
+                                information: data.inquiry.sspAsset ? [
+                                    (data.inquiry.sspAsset.image
+                                        ? {
+                                            block: block('assetImage'),
+                                        }
+                                        : {}
+                                    ),
+                                    (data.inquiry.sspAsset.reference
+                                        ? {
+                                            title: 'customer.ssp_inquiry.details.ssp_asset_reference',
+                                            value: data.inquiry.sspAsset.reference,
+                                        }
+                                        : {}
+                                    ),
+                                    (data.inquiry.sspAsset.name
+                                        ? {
+                                            title: 'customer.ssp_inquiry.details.ssp_asset_name',
+                                            value: data.inquiry.sspAsset.name,
+                                        }
+                                        : {}
+                                    ),
+                                ] : [],
+                                empty: 'customer.ssp_inquiry.details.ssp_asset_not_available',
+                            },
+                        } only %}
+                    {% endif %}
                 {% endblock %}
 
                 {% block owner %}

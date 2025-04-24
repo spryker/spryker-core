@@ -53,6 +53,6 @@ class SspAssetManagementPersistenceFactory extends AbstractPersistenceFactory
      */
     public function getUtilDateTimeService(): UtilDateTimeServiceInterface
     {
-        return $this->getProvidedDependency(SspAssetManagementDependencyProvider::UTIL_DATE_TIME_SERVICE);
+        return $this->getProvidedDependency(SspAssetManagementDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
 }

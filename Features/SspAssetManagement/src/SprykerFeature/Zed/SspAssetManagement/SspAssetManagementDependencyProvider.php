@@ -23,6 +23,11 @@ class SspAssetManagementDependencyProvider extends AbstractBundleDependencyProvi
     /**
      * @var string
      */
+    public const FACADE_COMPANY = 'FACADE_COMPANY';
+
+    /**
+     * @var string
+     */
     public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
 
     /**
@@ -38,12 +43,12 @@ class SspAssetManagementDependencyProvider extends AbstractBundleDependencyProvi
     /**
      * @var string
      */
-    public const UTIL_DATE_TIME_SERVICE = 'UTIL_DATE_TIME_SERVICE';
+    public const PLUGINS_SSP_ASSET_MANAGEMENT_EXPANDER = 'PLUGINS_SSP_ASSET_MANAGEMENT_EXPANDER';
 
     /**
      * @var string
      */
-    public const PLUGINS_SSP_ASSET_MANAGEMENT_EXPANDER = 'PLUGINS_SSP_ASSET_MANAGEMENT_EXPANDER';
+    public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -73,6 +78,23 @@ class SspAssetManagementDependencyProvider extends AbstractBundleDependencyProvi
         parent::providePersistenceLayerDependencies($container);
 
         $container = $this->addUtilDateTimeService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        parent::provideCommunicationLayerDependencies($container);
+
+        $container = $this->addFileManagerService($container);
+        $container = $this->addUtilDateTimeService($container);
+        $container = $this->addCompanyBusinessUnitFacade($container);
+        $container = $this->addCompanyFacade($container);
 
         return $container;
     }
@@ -138,9 +160,23 @@ class SspAssetManagementDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function addCompanyFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_COMPANY, function (Container $container) {
+            return $container->getLocator()->company()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addUtilDateTimeService(Container $container): Container
     {
-        $container->set(static::UTIL_DATE_TIME_SERVICE, function (Container $container) {
+        $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
         });
 

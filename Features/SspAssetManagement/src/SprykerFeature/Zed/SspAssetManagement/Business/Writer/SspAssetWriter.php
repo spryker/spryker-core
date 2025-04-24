@@ -86,9 +86,8 @@ class SspAssetWriter implements SspAssetWriterInterface
         }
 
         $businessUnitToDeleteGroupedBySspAssetId = [];
-
         foreach ($sspAssetCollectionRequestTransfer->getAssignmentsToRemove() as $sspAssetAssignmentTransfer) {
-            if ($sspAssetAssignmentTransfer->getCompanyBusinessUnit()?->getIdCompanyBusinessUnit() === $sspAssetAssignmentTransfer->getSspAssetOrFail()->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnit()) {
+            if ($sspAssetAssignmentTransfer->getCompanyBusinessUnit()?->getIdCompanyBusinessUnit() === $sspAssetAssignmentTransfer->getSspAssetOrFail()->getCompanyBusinessUnit()?->getIdCompanyBusinessUnit()) {
                 $sspAssetCollectionResponseTransfer->addError(
                     (new ErrorTransfer())->setMessage('ssp_asset.validation.cannot_remove_own_assignment'),
                 );
@@ -100,8 +99,19 @@ class SspAssetWriter implements SspAssetWriterInterface
             }
         }
 
+        $businessUnitToAddGroupedBySspAssetId = [];
+        foreach ($sspAssetCollectionRequestTransfer->getAssignmentsToAdd() as $sspAssetAssignmentTransfer) {
+            if ($sspAssetAssignmentTransfer->getCompanyBusinessUnit()) {
+                $businessUnitToAddGroupedBySspAssetId[$sspAssetAssignmentTransfer->getSspAssetOrFail()->getIdSspAssetOrFail()][] = $sspAssetAssignmentTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnitOrFail();
+            }
+        }
+
         foreach ($businessUnitToDeleteGroupedBySspAssetId as $idSspAsset => $companyBusinessUnitIds) {
             $this->entityManager->deleteAssetToCompanyBusinessUnitRelations($idSspAsset, $companyBusinessUnitIds);
+        }
+
+        foreach ($businessUnitToAddGroupedBySspAssetId as $idSspAsset => $companyBusinessUnitIds) {
+            $this->entityManager->createAssetToCompanyBusinessUnitRelation($idSspAsset, $companyBusinessUnitIds);
         }
 
         return $sspAssetCollectionResponseTransfer;
@@ -156,12 +166,32 @@ class SspAssetWriter implements SspAssetWriterInterface
     {
         $sspAssetTransfer
             ->setReference($this->sequenceNumberFacade->generate($this->config->getAssetSequenceNumberSettings()))
-            ->setStatus($this->config->getInitialAssetStatus());
+            ->setStatus($sspAssetTransfer->getStatus() ?: $this->config->getInitialAssetStatus());
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($sspAssetTransfer) {
             $sspAssetTransfer = $this->fileSspAssetWriter->createFile($sspAssetTransfer);
 
-            return $this->entityManager->createSspAsset($sspAssetTransfer);
+            $sspAssetTransfer = $this->entityManager->createSspAsset($sspAssetTransfer);
+
+            if (!$sspAssetTransfer->getAssignments()->count()) {
+                return $sspAssetTransfer;
+            }
+
+            $companyBusinessUnitIds = [];
+            foreach ($sspAssetTransfer->getAssignments() as $sspAssetAssignmentTransfer) {
+                if (!$sspAssetAssignmentTransfer->getCompanyBusinessUnit()) {
+                    continue;
+                }
+
+                $companyBusinessUnitIds[] = $sspAssetAssignmentTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnitOrFail();
+            }
+
+            $this->entityManager->createAssetToCompanyBusinessUnitRelation(
+                $sspAssetTransfer->getIdSspAssetOrFail(),
+                $companyBusinessUnitIds,
+            );
+
+            return $sspAssetTransfer;
         });
     }
 

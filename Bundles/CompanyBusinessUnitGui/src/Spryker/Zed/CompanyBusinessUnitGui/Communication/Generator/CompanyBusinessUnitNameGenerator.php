@@ -14,7 +14,7 @@ class CompanyBusinessUnitNameGenerator implements CompanyBusinessUnitNameGenerat
     /**
      * @var string
      */
-    protected const NAME_PATTERN = '%s (id: %s)';
+    protected const NAME_PATTERN = '%s (id: %s) | %s';
 
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
@@ -27,6 +27,7 @@ class CompanyBusinessUnitNameGenerator implements CompanyBusinessUnitNameGenerat
             static::NAME_PATTERN,
             $companyBusinessUnitTransfer->getName(),
             $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+            $companyBusinessUnitTransfer->getCompany()->getName(),
         );
     }
 }

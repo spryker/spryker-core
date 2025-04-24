@@ -1687,14 +1687,40 @@ a.label {
             padding-right: 30px;
         }
 
-        .select2-selection__arrow {
-            height: auto !important;
-            top: 0;
-            right: 0;
-            bottom: 0;
+        .select2-selection__arrow,
+        .select2-selection__clear {
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        &:hover .select2-selection__clear {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .select2-selection__clear {
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 5px;
+            border-radius: 50%;
+            z-index: 1;
+            background: $grey-base;
+            font-size: 15px;
+            color: $grey2;
+            transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .select2-selection__arrow {
+            height: auto;
+            top: 0;
+            right: 0;
+            bottom: 0;
             width: 30px;
 
             b {
@@ -1991,9 +2017,8 @@ a.label {
     }
 }
 
-// Drop with bootstrap 4
-.d-inline {
-    display: inline;
+.image {
+    max-width: 100%;
 }
 
 form .horizontal-form {
@@ -2002,3 +2027,15 @@ form .horizontal-form {
     flex-wrap: wrap;
     gap: 15px;
 }
+
+// [START] Drop with bootstrap 4
+.d-inline {
+    display: inline;
+}
+
+.col-md-auto {
+    @media only screen and (min-width: $tablet) {
+        width: auto;
+    }
+}
+// [END] Drop with bootstrap 4

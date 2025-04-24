@@ -99,7 +99,6 @@ class SspInquiryManagementCommunicationFactory extends AbstractCommunicationFact
     {
         return new SspInquiryTable(
             $this->getSspInquiryQuery(),
-            $this->getRepository(),
             $this->getConfig(),
             $this->getUtilDateTimeService(),
             $sspInquiryConditionsTransfer,
@@ -135,7 +134,6 @@ class SspInquiryManagementCommunicationFactory extends AbstractCommunicationFact
     {
         return new OrderSspInquiryTable(
             $this->getSspInquiryQuery(),
-            $this->getRepository(),
             $this->getConfig(),
             $orderTransfer,
         );

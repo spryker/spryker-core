@@ -3,6 +3,7 @@
 {% define data = {
     form: _view.form,
     asset: _view.sspAsset,
+    currentCompanyBusinessUnitAssigment: _view.currentCompanyBusinessUnitAssigment,
     formAction: url('customer/asset/update', { 'reference': _view.sspAsset.reference }),
     title: 'ssp_asset.update.title' | trans,
     activePage: 'asset',
@@ -38,7 +39,7 @@
                     assetData: [
                         { title: 'ssp_asset.details.reference', value: data.asset.reference },
                         { title: 'ssp_asset.details.status', value: block('status') },
-                        { title: 'ssp_asset.details.created_date', value: data.asset.createdDate | formatDateTime },
+                        { title: 'ssp_asset.details.created_date', value: data.currentCompanyBusinessUnitAssigment ? data.currentCompanyBusinessUnitAssigment.assignedAt | formatDateTime : '---' },
                         { title: 'ssp_asset.details.owner', value: data.asset.companyBusinessUnit.name | default('ssp_asset.details.owner.undefined' | trans) },
                     ],
                 },

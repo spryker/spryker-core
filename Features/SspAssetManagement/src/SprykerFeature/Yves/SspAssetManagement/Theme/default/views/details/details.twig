@@ -5,6 +5,8 @@
     title: 'customer.account.ssp_asset' | trans,
     unassignBusinessUnitForm: _view.unassignBusinessUnitForm,
     canBusinessUnitBeUnassigned: _view.canBusinessUnitBeUnassigned,
+    isUnassignmentAllowed: _view.isUnassignmentAllowed,
+    isUpdateAllowed: _view.isUpdateAllowed,
     activePage: 'asset',
 } %}
 
@@ -38,6 +40,8 @@
                     reference: data.asset.reference,
                     unassignBusinessUnitForm: data.unassignBusinessUnitForm,
                     canBusinessUnitBeUnassigned: data.canBusinessUnitBeUnassigned,
+                    isUnassignmentAllowed: data.isUnassignmentAllowed,
+                    isUpdateAllowed: data.isUpdateAllowed,
                 },
             } only %}
         {% endblock %}

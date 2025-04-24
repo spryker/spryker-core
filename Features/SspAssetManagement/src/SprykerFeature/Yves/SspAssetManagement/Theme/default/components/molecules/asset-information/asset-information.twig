@@ -81,7 +81,11 @@
                 <div class="grid grid--right">
                     {% if can('CreateSspInquiryPermissionPlugin') and data.reference %}
                         <div class="col spacing-right">
-                            <a href="{{ url('customer/ssp-inquiry/create', { sspAssetReference: data.reference, backUrlType: 'ssp-asset', backUrlIdentifier: data.reference }) }}" class="button button--hollow">{{ 'customer.ssp_inquiry.create.button' | trans }}</a>
+                            <a
+                                href="{{ url('customer/ssp-inquiry/create', { sspAssetReference: data.reference, backUrlType: 'ssp-asset', backUrlIdentifier: data.reference }) }}"
+                                class="button button--hollow"
+                                {{ qa('ssp-aset-create-inquiry') }}
+                            >{{ 'customer.ssp_inquiry.create.button' | trans }}</a>
                         </div>
                     {% endif %}
 

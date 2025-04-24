@@ -10,6 +10,7 @@ function select2combobox(selector) {
         var preloadUrl = $selectElement.data('dependent-preload-url');
         var disablePlaceholder = $selectElement.data('disable-placeholder');
         var clearInitial = $selectElement.data('clear-initial');
+        var clearable = $selectElement.data('clearable');
         var minimumInputLengthValue = Number($selectElement.data('minimum-input-length'));
         var parentFieldSelectors = $selectElement.data('depends-on-field')?.split(',');
         var $parentFields = parentFieldSelectors?.map((parentFieldSelector) => $(parentFieldSelector));
@@ -29,7 +30,26 @@ function select2combobox(selector) {
         if (autocompleteUrl) {
             select2InitOptions = {
                 ajax: {
-                    url: autocompleteUrl,
+                    url: function () {
+                        let url = autocompleteUrl;
+
+                        if ($parentFields) {
+                            const query = new URLSearchParams();
+
+                            $parentFields.forEach(($parentField) => {
+                                if ($parentField.data('dependent-name') && $parentField.val()) {
+                                    query.append($parentField.data('dependent-name'), $parentField.val());
+                                }
+                            });
+
+                            const queryString = query.toString();
+                            if (queryString) {
+                                url += (url.includes('?') ? '&' : '?') + queryString;
+                            }
+                        }
+
+                        return url;
+                    },
                     dataType: 'json',
                     delay: 500,
                     cache: true,
@@ -39,7 +59,9 @@ function select2combobox(selector) {
                         if ($parentFields) {
                             for (const $parentField of $parentFields) {
                                 var autocompleteKey = $selectElement.data('dependent-autocomplete-key');
-                                params[autocompleteKey] = $parentField.val();
+                                if (autocompleteKey) {
+                                    params[autocompleteKey] = $parentField.val();
+                                }
                             }
                         }
                         return params;
@@ -52,13 +74,7 @@ function select2combobox(selector) {
                 var idSelected = String(e.params.args.data.id);
                 var selectedValues = $selectElement.val();
 
-                $selectElement
-                    .val(
-                        selectedValues.filter(function (value) {
-                            return value !== idSelected;
-                        }),
-                    )
-                    .trigger('change');
+                $selectElement.val(selectedValues.filter?.((value) => value !== idSelected)).trigger('change');
             });
         }
 
@@ -116,6 +132,16 @@ function select2combobox(selector) {
                     });
                 }
             }
+        }
+
+        if (clearable) {
+            select2InitOptions = {
+                ...select2InitOptions,
+                placeholder: $selectElement.find('option:first').val()
+                    ? ''
+                    : $selectElement.find('option:first').text(),
+                allowClear: true,
+            };
         }
 
         $selectElement.select2(select2InitOptions);

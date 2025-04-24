@@ -7,6 +7,6 @@
     <transfer name="SspAsset" strict="true">
         <property name="reference" dataBuilderRule="unique()->regexify('[A-Za-z0-9]{5}')"/>
         <property name="name" dataBuilderRule="unique()->sentence(2)"/>
-        <property name="status" dataBuilderRule="randomElement(['active', 'inactive'])"/>
+        <property name="status" dataBuilderRule="randomElement(['pending', 'approved'])"/>
     </transfer>
 </transfers>

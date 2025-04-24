@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\SspAssetIncludeTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Orm\Zed\SspAssetManagement\Persistence\SpySspAsset;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 
 class SspAssetMapper implements SspAssetMapperInterface
@@ -36,9 +35,7 @@ class SspAssetMapper implements SspAssetMapperInterface
     ): SpySspAsset {
         $sspAssetEntity->fromArray($sspAssetTransfer->modifiedToArray());
 
-        if ($sspAssetTransfer->getCompanyBusinessUnit()) {
-            $sspAssetEntity->setFkCompanyBusinessUnit($sspAssetTransfer->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnit());
-        }
+        $sspAssetEntity->setFkCompanyBusinessUnit($sspAssetTransfer->getCompanyBusinessUnit()?->getIdCompanyBusinessUnit());
 
         $sspAssetEntity->setFkImageFile($sspAssetTransfer->getImage()?->getIdFile());
 
@@ -94,21 +91,5 @@ class SspAssetMapper implements SspAssetMapperInterface
         }
 
         return $sspAssetTransfer;
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SspAssetManagement\Persistence\SpySspAsset> $spySspAssetEntityCollection
-     *
-     * @return array<\Generated\Shared\Transfer\SspAssetTransfer>
-     */
-    public function mapSpySspAssetEntityCollectionToSspAssetTransfers(ObjectCollection $spySspAssetEntityCollection): array
-    {
-        $sspAssetTransfers = [];
-
-        foreach ($spySspAssetEntityCollection as $spySspAssetEntity) {
-            $sspAssetTransfers[] = $this->mapSpySspAssetEntityToSspAssetTransfer($spySspAssetEntity, new SspAssetTransfer());
-        }
-
-        return $sspAssetTransfers;
     }
 }

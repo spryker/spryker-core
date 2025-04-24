@@ -32,4 +32,12 @@ interface SspAssetManagementEntityManagerInterface
      * @return void
      */
     public function deleteAssetToCompanyBusinessUnitRelations(int $idSspAsset, array $businessUnitIds): void;
+
+    /**
+     * @param int $idSspAsset
+     * @param array<int> $businessUnitIds
+     *
+     * @return void
+     */
+    public function createAssetToCompanyBusinessUnitRelation(int $idSspAsset, array $businessUnitIds): void;
 }

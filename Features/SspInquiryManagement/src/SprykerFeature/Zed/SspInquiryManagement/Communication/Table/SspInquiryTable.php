@@ -16,7 +16,6 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\SspInquiryManagement\Persistence\SspInquiryManagementRepositoryInterface;
 use SprykerFeature\Zed\SspInquiryManagement\SspInquiryManagementConfig;
 
 class SspInquiryTable extends AbstractTable
@@ -57,49 +56,17 @@ class SspInquiryTable extends AbstractTable
     protected const CUSTOMER_FULL_NAME_FIELD_PATTERN = 'CONCAT(%s,\'%s\',%s)';
 
     /**
-     * @var \Orm\Zed\SspInquiryManagement\Persistence\SpySspInquiryQuery<\Orm\Zed\SspInquiryManagement\Persistence\SpySspInquiry>
-     */
-    protected SpySspInquiryQuery $sspInquiryQuery;
-
-    /**
-     * @var \SprykerFeature\Zed\SspInquiryManagement\Persistence\SspInquiryManagementRepositoryInterface
-     */
-    protected SspInquiryManagementRepositoryInterface $repository;
-
-    /**
-     * @var \SprykerFeature\Zed\SspInquiryManagement\SspInquiryManagementConfig
-     */
-    protected SspInquiryManagementConfig $sspInquiryManagementConfig;
-
-    /**
-     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
-     */
-    protected UtilDateTimeServiceInterface $utilDateTimeService;
-
-    /**
-     * @var \Generated\Shared\Transfer\SspInquiryConditionsTransfer
-     */
-    protected SspInquiryConditionsTransfer $sspInquiryConditionsTransfer;
-
-    /**
      * @param \Orm\Zed\SspInquiryManagement\Persistence\SpySspInquiryQuery $sspInquiryQuery
-     * @param \SprykerFeature\Zed\SspInquiryManagement\Persistence\SspInquiryManagementRepositoryInterface $sspInquiryManagementRepository
      * @param \SprykerFeature\Zed\SspInquiryManagement\SspInquiryManagementConfig $sspInquiryManagementConfig
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      * @param \Generated\Shared\Transfer\SspInquiryConditionsTransfer $sspInquiryConditionsTransfer
      */
     public function __construct(
-        SpySspInquiryQuery $sspInquiryQuery,
-        SspInquiryManagementRepositoryInterface $sspInquiryManagementRepository,
-        SspInquiryManagementConfig $sspInquiryManagementConfig,
-        UtilDateTimeServiceInterface $utilDateTimeService,
-        SspInquiryConditionsTransfer $sspInquiryConditionsTransfer
+        protected SpySspInquiryQuery $sspInquiryQuery,
+        protected SspInquiryManagementConfig $sspInquiryManagementConfig,
+        protected UtilDateTimeServiceInterface $utilDateTimeService,
+        protected SspInquiryConditionsTransfer $sspInquiryConditionsTransfer
     ) {
-        $this->sspInquiryQuery = $sspInquiryQuery;
-        $this->repository = $sspInquiryManagementRepository;
-        $this->sspInquiryManagementConfig = $sspInquiryManagementConfig;
-        $this->utilDateTimeService = $utilDateTimeService;
-        $this->sspInquiryConditionsTransfer = $sspInquiryConditionsTransfer;
     }
 
     /**

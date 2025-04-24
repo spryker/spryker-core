@@ -1,0 +1,128 @@
+.image-uploader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    &.is-loading .image-uploader__spinner {
+        display: flex;
+    }
+
+    &__container {
+        border: 2px solid $grey-light;
+        border-radius: 10px;
+        position: relative;
+        aspect-ratio: 1;
+        max-height: 200px;
+        max-width: 350px;
+        width: 100%;
+        background: $white;
+        overflow: hidden;
+
+        &:focus-within,
+        &:hover {
+            border-color: $green-base;
+        }
+    }
+
+    &__holder {
+        display: flex;
+        align-items: center;
+    }
+
+    &__input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    &__image {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    &__info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        gap: 5px;
+    }
+
+    &__tooltip {
+        position: relative;
+    }
+
+    &__tooltip-info {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__button,
+    &__delete {
+        position: absolute;
+        bottom: 5px;
+        padding: 3px 10px;
+    }
+
+    &__button {
+        left: 5px;
+        line-height: 22px;
+        font-size: 12px;
+    }
+
+    &__delete {
+        right: 5px;
+    }
+
+    &__delete-input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        z-index: -1;
+
+        // background image is only used to ensure Webpack includes this asset during build
+        background: url('../img/image-placeholder.png');
+    }
+
+    &__spinner {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+
+        &--icon {
+            animation: spin-to 1s linear infinite;
+        }
+    }
+
+    & .btn {
+        margin-bottom: 0;
+    }
+}
+
+@keyframes spin-to {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

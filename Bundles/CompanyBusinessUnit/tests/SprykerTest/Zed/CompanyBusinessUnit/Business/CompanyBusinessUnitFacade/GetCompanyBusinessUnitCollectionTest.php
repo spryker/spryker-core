@@ -56,6 +56,36 @@ class GetCompanyBusinessUnitCollectionTest extends Unit
     /**
      * @return void
      */
+    public function testGetCompanyBusinessUnitCollectionReturnsTransfersCollectionByCompanyIds(): void
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany();
+        $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+        $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+        $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+
+        $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
+            ->setCompanyIds([$companyTransfer->getIdCompany()])
+            ->setWithoutExpanders(true);
+
+        // Act
+        $companyBusinessUnitCollection = $this->tester
+            ->getFacade()
+            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertCount(2, $companyBusinessUnitCollection->getCompanyBusinessUnits());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetCompanyBusinessUnitCollectionReturnsEmptyCollectionByFakeIdCompany(): void
     {
         // Arrange

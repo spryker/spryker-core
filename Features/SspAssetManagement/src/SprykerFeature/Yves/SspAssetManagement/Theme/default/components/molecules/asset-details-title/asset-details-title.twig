@@ -9,6 +9,8 @@
     reference: required,
     unassignBusinessUnitForm: null,
     canBusinessUnitBeUnassigned: true,
+    isUnassignmentAllowed: false,
+    isUpdateAllowed: false,
 } %}
 
 {% set confirmationTrigger = "js-#{config.name}-confirmation-trigger" %}
@@ -39,7 +41,7 @@
                     </div>
                     <div class="col">
                         {% block edit %}
-                            {% if can('UpdateSspAssetPermissionPlugin') %}
+                            {% if can('UpdateSspAssetPermissionPlugin') and data.isUpdateAllowed %}
                                 <a
                                     href="{{ url('customer/asset/update', { reference: data.reference }) }}"
                                     title="{{ 'general.edit.button' | trans }}"
@@ -62,7 +64,7 @@
         {% include molecule('main-popup') with {
             data: {
                 title: 'ssp_asset.details_page.confirm_unassign_title' | trans,
-                content: block('confirmationUnassign'),
+                content: block('popupContent'),
             },
             attributes: {
                 'content-id': 'confirm-unassign',
@@ -72,27 +74,29 @@
     {% endblock %}
 {% endblock %}
 
-{% block confirmationUnassign %}
+{% block popupContent %}
     <div class="spacing-x">
-        <p>{{ 'ssp_asset.details_page.confirm_unassign_body' | trans }}</p>
+        <p>{{ (data.isUnassignmentAllowed ? 'ssp_asset.details_page.confirm_unassign_body' : 'ssp_asset.details_page.confirm_unassign_in_review') | trans }}</p>
 
-        <div class="grid grid--right">
-            <div class="col">
-                <button type="button" class="js-main-popup-close button button--hollow">
-                    {{ 'general.cancel.button' | trans }}
-                </button>
+        {% if data.isUnassignmentAllowed %}
+            <div class="grid grid--right">
+                <div class="col">
+                    <button type="button" class="js-main-popup-close button button--hollow">
+                        {{ 'general.cancel.button' | trans }}
+                    </button>
+                </div>
+                {% if data.unassignBusinessUnitForm %}
+                    {{ form_start(data.unassignBusinessUnitForm, {
+                        'action': path('customer/asset/update-relations', {'reference': data.reference})
+                    }) }}
+                        <div class="col spacing-left">
+                            <button class="button button--primary" {{ qa('unassign-ssp-asset') }}>
+                                {{ 'general.confirm.button' | trans }}
+                            </button>
+                        </div>
+                    {{ form_end(data.unassignBusinessUnitForm) }}
+                {% endif %}
             </div>
-            {% if data.unassignBusinessUnitForm %}
-                {{ form_start(data.unassignBusinessUnitForm, {
-                    'action': path('customer/asset/update-relations', {'reference': data.reference})
-                }) }}
-                    <div class="col spacing-left">
-                        <button class="button button--primary" {{ qa('unassign-ssp-asset') }}>
-                            {{ 'general.confirm.button' | trans }}
-                        </button>
-                    </div>
-                {{ form_end(data.unassignBusinessUnitForm) }}
-            {% endif %}
-        </div>
+        {% endif %}
     </div>
 {% endblock %}

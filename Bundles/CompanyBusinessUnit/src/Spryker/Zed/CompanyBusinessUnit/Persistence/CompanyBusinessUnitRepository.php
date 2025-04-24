@@ -291,6 +291,11 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
             $companyBusinessUnitQuery->setIgnoreCase(true);
         }
 
+        if ($criteriaFilterTransfer->getCompanyIds() !== []) {
+            $companyBusinessUnitQuery
+                ->filterByFkCompany_In($criteriaFilterTransfer->getCompanyIds());
+        }
+
         if ($criteriaFilterTransfer->getIdCompany()) {
             $companyBusinessUnitQuery->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
         }

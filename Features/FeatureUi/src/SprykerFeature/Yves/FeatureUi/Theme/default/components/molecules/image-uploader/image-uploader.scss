@@ -19,6 +19,7 @@
             max-width: 21.875rem;
             width: 100%;
 
+            &:focus-within,
             &:hover {
                 border-color: $setting-color-input-border-focus;
             }

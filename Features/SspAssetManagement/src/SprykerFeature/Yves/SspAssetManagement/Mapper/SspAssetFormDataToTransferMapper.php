@@ -39,7 +39,7 @@ class SspAssetFormDataToTransferMapper implements SspAssetFormDataToTransferMapp
                 ->setEncodedContent(base64_encode(gzencode($this->getFileContent($uploadedFile)) ?: ''));
         }
 
-        $sspAssetTransfer->getImageOrFail()->setDelete($this->shouldExistingAssetImageBeRemoved($sspAssetTransfer, $sspAssetForm));
+        $sspAssetTransfer->getImageOrFail()->setDelete($this->shouldExistingAssetImageBeRemoved($sspAssetForm));
 
         return $sspAssetTransfer;
     }
@@ -85,12 +85,11 @@ class SspAssetFormDataToTransferMapper implements SspAssetFormDataToTransferMapp
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
      * @param \Symfony\Component\Form\FormInterface $sspAssetForm
      *
      * @return bool
      */
-    protected function shouldExistingAssetImageBeRemoved(SspAssetTransfer $sspAssetTransfer, FormInterface $sspAssetForm): bool
+    protected function shouldExistingAssetImageBeRemoved(FormInterface $sspAssetForm): bool
     {
         $imageField = $sspAssetForm->get(SspAssetForm::FIELD_IMAGE);
 

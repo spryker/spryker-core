@@ -16,3 +16,9 @@ Settings,Einstellungen
 Confirm,Bestätigen
 Cancel,Abbrechen
 MB,MB
+Upload,Hochladen
+Remove,Löschen
+"Max up to %size%. Allowed file formats %format%","Maximal bis zu %size%. Erlaubte Dateiformate: %format%"
+"Upload image requirements","Anforderungen für das Hochladen von Bildern"
+"Confirm delete","Löschen bestätigen"
+"Are you sure you want to delete the image?","Sind Sie sicher, dass Sie das Bild löschen möchten?"

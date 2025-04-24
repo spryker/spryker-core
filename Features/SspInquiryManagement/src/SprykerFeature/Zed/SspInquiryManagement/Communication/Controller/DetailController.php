@@ -43,19 +43,19 @@ class DetailController extends AbstractController
     public function indexAction(Request $request)
     {
         $idSspInquiry = $this->castId($request->query->get(static::PARAM_ID_SSP_INQUIRY));
-         $sspInquiryCollectionTransfer = $this->getFacade()->getSspInquiryCollection(
-             (new SspInquiryCriteriaTransfer())->setSspInquiryConditions(
-                 (new SspInquiryConditionsTransfer())->addIdSspInquiry($idSspInquiry),
-             )->setInclude(
-                 (new SspInquiryIncludeTransfer())
+        $sspInquiryCollectionTransfer = $this->getFacade()->getSspInquiryCollection(
+            (new SspInquiryCriteriaTransfer())->setSspInquiryConditions(
+                (new SspInquiryConditionsTransfer())->addIdSspInquiry($idSspInquiry),
+            )->setInclude(
+                (new SspInquiryIncludeTransfer())
                     ->setWithCompanyUser(true)
                     ->setWithOrder(true)
                     ->setWithFiles(true)
                     ->setWithManualEvents(true)
                     ->setWithStatusHistory(true)
                     ->setWithComments(true),
-             ),
-         );
+            ),
+        );
 
         if ($sspInquiryCollectionTransfer->getSspInquiries()->count() === 0) {
             $this->addErrorMessage(static::MESSAGE_SSP_INQUIRY_NOT_FOUND_ERROR);

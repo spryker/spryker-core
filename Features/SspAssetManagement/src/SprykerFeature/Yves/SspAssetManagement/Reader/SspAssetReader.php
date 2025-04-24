@@ -66,6 +66,10 @@ class SspAssetReader implements SspAssetReaderInterface
 
         $sspAssetCriteriaTransfer->getIncludeOrFail()->setWithCompanyBusinessUnit(true);
 
+        $sspAssetCriteriaTransfer->getSspAssetConditionsOrFail()->setStatuses(
+            $this->sspAssetManagementConfig->getStatusesByAllowedAction(SspAssetManagementConfig::ACTION_VIEW),
+        );
+
         return $this->sspAssetManagementClient->getSspAssetCollection($sspAssetCriteriaTransfer);
     }
 

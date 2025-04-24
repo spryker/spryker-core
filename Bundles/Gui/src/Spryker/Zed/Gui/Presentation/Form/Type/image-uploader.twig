@@ -1,0 +1,126 @@
+{% macro renderAttributes(attributes) %}
+    {%- for name, value in attributes -%}
+        {%- if value is same as(true) -%}
+            {{-' ' ~ name-}}
+        {%- elseif value is not same as(false) -%}
+            {{-' ' ~ name-}}='{{-value-}}'
+        {%- endif -%}
+    {%- endfor -%}
+{%- endmacro -%}
+
+{% set attributes = {
+    'initial-image': image | default(null),
+    placeholder: assetsPath('img/image-placeholder.png'),
+    'data-id': "delete-image-uploader-#{random()}",
+} %}
+
+{% block uploader %}
+    <div class="image-uploader js-image-uploader" {{ _self.renderAttributes(attributes) }}>
+        {% block container %}
+            <div class="image-uploader__container">
+                {% block content %}
+                    {% block image %}
+                        {% set image = image | default(attributes.placeholder) %}
+
+                        <img
+                            alt="image-preview"
+                            src="{{ image }}"
+                            class="image-uploader__image js-image-uploader__image"
+                        >
+                    {% endblock %}
+
+                    {% block input %}
+                        <input
+                            class="image-uploader__input js-image-uploader__input"
+                            {{ _self.renderAttributes(inputAttrs) }}
+                            type="file"
+                        >
+                    {% endblock %}
+
+                    {% block button %}
+                        <label for="{{ inputAttrs.id }}" class="image-uploader__button btn btn-outlined">
+                            {{ 'Upload' | trans }}
+                        </label>
+                    {% endblock %}
+
+                    {% block delete %}
+                        {% set deleteClass = attributes['initial-image'] ?: 'js-image-uploader__delete hidden' %}
+
+                        <button
+                            {% if attributes['initial-image'] %}data-toggle="modal" data-target="#{{ attributes['data-id'] }}"{% endif %}
+                            type="button"
+                            title="{{ 'Remove' | trans }}"
+                            data-id="{{ attributes['data-id'] }}"
+                            class="{{ deleteClass }} image-uploader__delete btn btn-outline btn-danger"
+                        >
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                    {% endblock %}
+
+                    {% block spinner %}
+                        <span class="image-uploader__spinner">
+                            <i class="fa fa-spinner image-uploader__spinner-icon"></i>
+                        </span>
+                    {% endblock %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+
+        {% block info %}
+            <div class="image-uploader__info">
+                {{ 'Upload image requirements' | trans }}
+
+                {% block tooltip %}
+                    <span class="image-uploader__tooltip">
+                        {% block tooltipIcon %}
+                            <i class="fa fa-info-circle"></i>
+                        {% endblock %}
+
+                        {% block tooltipInfo %}
+                            <span
+                                class="image-uploader__tooltip-info"
+                                title="{{
+                                    'Max up to %size%. Allowed file formats %format%' | trans({
+                                        '%size%': inputAttrs.maxTotalSize | default(0),
+                                        '%format%': inputAttrs.acceptExtensions | default('') | split('.')
+                                            | reduce((carry, format) => "#{format | upper}", ''),
+                                    })
+                                }}"
+                            >
+                            </span>
+                        {% endblock %}
+                    </span>
+                {% endblock %}
+            </div>
+        {% endblock %}
+
+        {% block popup %}
+            {% embed '@Gui/Modal/confirmation-modal-window.twig' with {
+                id: attributes['data-id'],
+                title: 'Confirm delete',
+                message: 'Are you sure you want to delete the image?',
+            } only %}
+                {% block modal %}
+                    {% set footer %}
+                        <button type="button" class="btn btn--hollow" data-dismiss="modal">
+                            {{ 'Cancel' | trans }}
+                        </button>
+                        <button type="button" data-id="{{ id }}" class="js-image-uploader__delete btn" data-dismiss="modal">
+                            {{ 'Confirm' | trans }}
+                        </button>
+                    {% endset %}
+
+                    {{ parent() }}
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+
+        {% block deleteInput %}
+            <input
+                type="checkbox"
+                class="image-uploader__delete-input js-image-uploader__delete-input"
+                {{ _self.renderAttributes(deleteAttrs) }}
+            >
+        {% endblock %}
+    </div>
+{% endblock %}

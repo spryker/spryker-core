@@ -96,6 +96,7 @@
         <property name="assignedBusinessUnitCompanyId" type="int"/>
         <property name="searchText" type="string"/>
         <property name="fileIds" type="int[]" singular="idFile"/>
+        <property name="statuses" type="string[]" singular="status"/>
     </transfer>
 
     <transfer name="SspAssetInclude" strict="true">
@@ -165,6 +166,24 @@
 
     <transfer name="DashboardRequest">
         <property name="companyUser" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyCriteriaFilter">
+        <property name="companyIds" type="int[]" singular="companyId"/>
+    </transfer>
+
+    <transfer name="CompanyCollection">
+        <property name="companies" type="Company[]" singular="company"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="title" type="string"/>
+        <property name="template" type="string"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab"/>
     </transfer>
 
 </transfers>

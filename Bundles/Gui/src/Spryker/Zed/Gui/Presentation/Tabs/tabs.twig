@@ -11,7 +11,7 @@
     <ul class="nav nav-tabs">
         {% for tab in tabsViewTransfer.tabs %}
             {# @deprecated html attribute "data-toggle" is deprecated use "data-bs-toggle" instead #}
-            <li class="{% if tabsViewTransfer.activeTabName == tab.name %}active{% endif %} {% if tab.hasError %}error{% endif %}" data-bs-toggle="tab" data-bs-target="#tab-content-{{ tab.name }}" data-tab-content-id="tab-content-{{ tab.name }}">
+            <li class="{% if tabsViewTransfer.activeTabName == tab.name %}active{% endif %} {% if tab.hasError %}error{% endif %}" data-bs-toggle="tab" data-bs-target="#tab-content-{{ tab.name }}" data-tab-content-id="tab-content-{{ tab.name }}" data-qa="tab-{{ tab.name }}">
                 <a href="#tab-content-{{ tab.name }}" data-toggle="tab">{{ tab.title | trans }}</a>
             </li>
         {% endfor %}
@@ -19,7 +19,7 @@
 
     <div class="tab-content">
         {% for tab in tabsViewTransfer.tabs %}
-            <div id="tab-content-{{ tab.name }}" class="tab-pane {% if tabsViewTransfer.activeTabName == tab.name %}active{% endif %}">
+            <div id="tab-content-{{ tab.name }}" class="tab-pane {% if tabsViewTransfer.activeTabName == tab.name %}active{% endif %}" data-qa="tab-content-{{ tab.name }}">
                 <div class="panel-body">
                     {% include tab.template %}
                 </div>

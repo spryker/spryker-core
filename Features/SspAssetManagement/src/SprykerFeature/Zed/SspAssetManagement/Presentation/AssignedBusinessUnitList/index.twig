@@ -1,0 +1,5 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Companies' | trans } %}
+    {% block widget_content %}
+        {{ sspAssignedBusinessUnitsTable | raw }}
+    {% endblock %}
+{% endembed %}

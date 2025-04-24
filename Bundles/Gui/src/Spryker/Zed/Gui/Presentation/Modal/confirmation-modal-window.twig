@@ -7,7 +7,7 @@
         <button
             type="button"
             class="btn btn-danger safe-submit js-form-submitter"
-            data-submitter-form-name="{{ formName }}"
+            data-submitter-form-name="{{ formName | default }}"
         >
             {{ confirmButtonText | default('Confirm') | trans }}
         </button>

@@ -31,6 +31,27 @@ class SspAssetManagementConfig extends AbstractBundleConfig
     protected const PARAM_PER_PAGE = 'perPage';
 
     /**
+     * @var string
+     *
+     * @uses \SprykerFeature\Shared\SspAssetManagement\SspAssetManagementConfig::ACTION_VIEW
+     */
+    public const ACTION_VIEW = 'view';
+
+    /**
+     * @var string
+     *
+     * @uses \SprykerFeature\Shared\SspAssetManagement\SspAssetManagementConfig::ACTION_UPDATE
+     */
+    public const ACTION_UPDATE = 'update';
+
+    /**
+     * @var string
+     *
+     * @uses \SprykerFeature\Shared\SspAssetManagement\SspAssetManagementConfig::ACTION_UNASSIGN
+     */
+    public const ACTION_UNASSIGN = 'unassign';
+
+    /**
      * Specification:
      * - Returns allowed file extensions for file upload for ssp asset.
      *
@@ -80,7 +101,7 @@ class SspAssetManagementConfig extends AbstractBundleConfig
      */
     public function getDownloadChunkSize(): int
     {
-        return static::DOWNLOAD_CHUNK_SIZE;
+        return $this->getSharedConfig()->getDownloadChunkSize();
     }
 
     /**
@@ -133,5 +154,20 @@ class SspAssetManagementConfig extends AbstractBundleConfig
     public function getSspAssetCountPerPageList(): int
     {
         return 10;
+    }
+
+    /**
+     * Specification:
+     * - Returns the asset statuses that are allowed for a specific action.
+     *
+     * @api
+     *
+     * @param string $allowedAction
+     *
+     * @return array<string>
+     */
+    public function getStatusesByAllowedAction(string $allowedAction): array
+    {
+        return $this->getSharedConfig()->getStatusesByAllowedAction($allowedAction);
     }
 }

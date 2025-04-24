@@ -3,6 +3,7 @@
 
     <transfer name="CompanyBusinessUnitCriteriaFilter">
         <property name="idCompany" type="int"/>
+        <property name="companyIds" type="int[]" singular="companyId"/>
         <property name="idCompanyUser" type="int"/>
         <property name="filter" type="Filter"/>
         <property name="name" type="string"/>
@@ -29,6 +30,7 @@
         <property name="idCompanyBusinessUnit" type="int"/>
         <property name="fkCompany" type="int"/>
         <property name="name" type="string"/>
+        <property name="company" type="Company"/>
     </transfer>
 
     <transfer name="CompanyCollection">

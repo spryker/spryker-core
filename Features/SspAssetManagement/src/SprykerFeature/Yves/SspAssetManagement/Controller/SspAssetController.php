@@ -22,6 +22,7 @@ use SprykerFeature\Shared\SspAssetManagement\Plugin\Permission\UpdateSspAssetPer
 use SprykerFeature\Yves\SspAssetManagement\Form\SspAssetBusinessUnitRelationsForm;
 use SprykerFeature\Yves\SspAssetManagement\Form\SspAssetSearchForm;
 use SprykerFeature\Yves\SspAssetManagement\Plugin\Router\SspAssetRouteProviderPlugin;
+use SprykerFeature\Yves\SspAssetManagement\SspAssetManagementConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -30,6 +31,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * @method \SprykerFeature\Client\SspAssetManagement\SspAssetManagementClientInterface getClient()
  * @method \SprykerFeature\Yves\SspAssetManagement\SspAssetManagementFactory getFactory()
+ * @method \SprykerFeature\Yves\SspAssetManagement\SspAssetManagementConfig getConfig()
  */
 class SspAssetController extends AbstractController
 {
@@ -90,7 +92,11 @@ class SspAssetController extends AbstractController
 
         $sspAssetCriteriaTransfer = (new SspAssetCriteriaTransfer())
             ->setSspAssetConditions(
-                (new SspAssetConditionsTransfer())->addReference($sspAssetReference),
+                (new SspAssetConditionsTransfer())
+                    ->addReference($sspAssetReference)
+                    ->setStatuses(
+                        $this->getFactory()->getConfig()->getStatusesByAllowedAction(SspAssetManagementConfig::ACTION_VIEW),
+                    ),
             )
             ->setInclude(
                 (new SspAssetIncludeTransfer())
@@ -137,7 +143,14 @@ class SspAssetController extends AbstractController
                     SspAssetBusinessUnitRelationsForm::FIELD_BUSINESS_UNIT_ID => $companyUserTransfer->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail(),
                     SspAssetBusinessUnitRelationsForm::FIELD_ASSET_REFERENCE => $sspAssetReference,
                 ])->createView(),
-            ],
+                'isUnassignmentAllowed' => in_array(
+                    $sspAssetTransfer->getStatusOrFail(),
+                    $this->getFactory()->getConfig()->getStatusesByAllowedAction(SspAssetManagementConfig::ACTION_UNASSIGN),
+                ),
+                'isUpdateAllowed' => in_array(
+                    $sspAssetTransfer->getStatusOrFail(),
+                    $this->getFactory()->getConfig()->getStatusesByAllowedAction(SspAssetManagementConfig::ACTION_UPDATE),
+                )],
             [],
             '@SspAssetManagement/views/details/details.twig',
         );
@@ -235,6 +248,15 @@ class SspAssetController extends AbstractController
 
         if (!$sspAssetTransfer) {
             throw new NotFoundHttpException('ssp_asset.error.not_found');
+        }
+
+        if (
+            !in_array(
+                $sspAssetTransfer->getStatusOrFail(),
+                $this->getFactory()->getConfig()->getStatusesByAllowedAction(SspAssetManagementConfig::ACTION_UPDATE),
+            )
+        ) {
+            throw new AccessDeniedHttpException('ssp_asset.access.status.restricted');
         }
 
         $companyUserTransfer = $this->getFactory()
@@ -371,7 +393,7 @@ class SspAssetController extends AbstractController
             throw new AccessDeniedHttpException('ssp_asset.access.denied');
         }
 
-        $form = $this->getFactory()->createSspAssetBusinessUnitRelationsForm([]);
+        $form = $this->getFactory()->createSspAssetBusinessUnitRelationsForm();
 
         $form->handleRequest($request);
 
@@ -387,6 +409,10 @@ class SspAssetController extends AbstractController
 
             if (!$sspAssetTransfer) {
                 throw new NotFoundHttpException('ssp_asset.error.not_found');
+            }
+
+            if (!in_array($sspAssetTransfer->getStatusOrFail(), $this->getFactory()->getConfig()->getStatusesByAllowedAction(SspAssetManagementConfig::ACTION_UNASSIGN))) {
+                throw new AccessDeniedHttpException('ssp_asset.access.status.restricted');
             }
 
             $businessUnitIdToUnassign = (int)$formData[SspAssetBusinessUnitRelationsForm::FIELD_BUSINESS_UNIT_ID];

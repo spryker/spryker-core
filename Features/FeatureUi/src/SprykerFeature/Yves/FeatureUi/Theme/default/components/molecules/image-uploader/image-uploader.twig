@@ -15,7 +15,9 @@
     'initial-image': data.image | default(null),
     placeholder: publicPath('images/image-placeholder.png'),
     'loading-class': 'is-loading',
+    'hidden-class': 'is-hidden',
     'confirmation-trigger': "js-#{config.name}-confirmation-trigger",
+    'data-id': "delete-image-uploader-#{random()}",
 } %}
 
 {% block body %}
@@ -48,11 +50,13 @@
 
                 {% block delete %}
                     {% set deleteClass = attributes['initial-image'] ? attributes['confirmation-trigger'] : "#{config.jsName}__delete" %}
+                    {% set hidden = attributes['initial-image'] ?: 'hidden' %}
 
                     <button
                         type="button"
+                        data-id="{{ attributes['data-id'] }}"
                         title="{{ 'general.remove.button' | trans }}"
-                        class="{{ deleteClass }} {{ config.name }}__delete button button--hollow button--alert"
+                        class="{{ deleteClass }} {{ hidden }} {{ config.name }}__delete button button--hollow button--alert"
                     >
                         {% include atom('icon') with {
                             data: {
@@ -114,7 +118,7 @@
         {% include molecule('main-popup') with {
             data: {
                 title: 'ssp_asset.details.confirm_delete_title' | trans,
-                content: block('confirmationDelete'),
+                content: block('popupContent'),
             },
             attributes: {
                 'content-id': 'delete-confirmation',
@@ -132,7 +136,7 @@
     {% endblock %}
 {% endblock %}
 
-{% block confirmationDelete %}
+{% block popupContent %}
     <div class="spacing-x">
         <p>{{ 'ssp_asset.details.confirm_delete_body' | trans }}</p>
 
@@ -143,7 +147,7 @@
                 </button>
             </div>
             <div class="col">
-                <button type="button" class="js-main-popup-close {{ config.jsName }}__delete button">
+                <button type="button" data-id="{{ attributes['data-id'] }}" class="js-main-popup-close {{ config.jsName }}__delete button">
                     {{ 'general.confirm.button' | trans }}
                 </button>
             </div>

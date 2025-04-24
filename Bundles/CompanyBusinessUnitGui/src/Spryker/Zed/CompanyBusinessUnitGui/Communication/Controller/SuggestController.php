@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Controller;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Exception\Controller\InvalidIdException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -38,6 +39,11 @@ class SuggestController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_COMPANY = 'idCompany';
+
+    /**
+     * @var string
+     */
+    protected const PARAM_COMPANY_IDS = 'idsCompany';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -76,24 +82,38 @@ class SuggestController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Spryker\Zed\Kernel\Exception\Controller\InvalidIdException
+     *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer
      */
     protected function createCompanyBusinessUnitCriteriaFilterTransfer(Request $request): CompanyBusinessUnitCriteriaFilterTransfer
     {
         $suggestionName = (string)$request->query->get(static::PARAM_SUGGESTION) ?: null;
         $suggestionNameAlternative = (string)$request->query->get(static::PARAM_TERM) ?: null;
-        $idCompany = $this->castId($request->query->get(static::PARAM_ID_COMPANY));
 
         $limit = $this->getFactory()->getConfig()->getCompanyBusinessUnitSuggestionLimit();
 
-        $companyBusinessUnitCriteriaFilterTransfer = new CompanyBusinessUnitCriteriaFilterTransfer();
-        $filterTransfer = (new FilterTransfer())
-            ->setLimit($limit);
-
-        return $companyBusinessUnitCriteriaFilterTransfer
+        $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
             ->setName($suggestionName ?? $suggestionNameAlternative)
-            ->setIdCompany($idCompany)
-            ->setFilter($filterTransfer)
+            ->setFilter((new FilterTransfer())->setLimit($limit))
             ->setWithoutExpanders(true);
+
+        $idCompany = $request->query->has(static::PARAM_ID_COMPANY) ? $this->castId($request->query->get(static::PARAM_ID_COMPANY)) : null;
+
+        if ($idCompany) {
+            return $companyBusinessUnitCriteriaFilterTransfer->setIdCompany($idCompany);
+        }
+
+        if ($request->query->has(static::PARAM_COMPANY_IDS)) {
+            foreach (explode(',', (string)$request->query->get(static::PARAM_COMPANY_IDS)) as $idCompany) {
+                $companyBusinessUnitCriteriaFilterTransfer->addCompanyId($this->castId($idCompany));
+            }
+        }
+
+        if (!$companyBusinessUnitCriteriaFilterTransfer->getIdCompany() && !$companyBusinessUnitCriteriaFilterTransfer->getCompanyIds()) {
+            throw new InvalidIdException('idCompany or idsCompany parameter is required');
+        }
+
+        return $companyBusinessUnitCriteriaFilterTransfer;
     }
 }

@@ -84,6 +84,8 @@ class FileSspAssetWriter implements FileSspAssetWriterInterface
     {
         $fileUploadTransfer = $fileTransfer->getFileUploadOrFail();
 
+        $content = $fileTransfer->getFileContent() ?? $this->decodeFileContent($fileTransfer->getEncodedContentOrFail());
+
         $fileManagerDataTransfer = (new FileManagerDataTransfer())
             ->setFile((new FileTransfer())->setFileName($fileUploadTransfer->getClientOriginalName()))
             ->setFileInfo(
@@ -93,7 +95,7 @@ class FileSspAssetWriter implements FileSspAssetWriterInterface
                     ->setSize($fileUploadTransfer->getSize())
                     ->setStorageName($this->config->getStorageName()),
             )
-            ->setContent($this->decodeFileContent($fileTransfer->getEncodedContentOrFail()));
+            ->setContent($content);
 
         return $this->fileManagerFacade->saveFile($fileManagerDataTransfer);
     }
