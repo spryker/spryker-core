@@ -11,8 +11,10 @@ use Generated\Shared\Transfer\RedisConfigurationTransfer;
 use Generated\Shared\Transfer\RedisCredentialsTransfer;
 use Predis\Client;
 use Spryker\Client\Redis\Adapter\LoggableRedisAdapter;
+use Spryker\Client\Redis\Adapter\PredisCompressionAdapter;
 use Spryker\Client\Redis\Adapter\RedisAdapterInterface;
 use Spryker\Client\Redis\Adapter\VersionAgnosticPredisAdapter;
+use Spryker\Client\Redis\Compressor\CompressorInterface;
 use Spryker\Client\Redis\Exception\ConnectionConfigurationException;
 use Spryker\Client\Redis\RedisConfig;
 use Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceInterface;
@@ -32,23 +34,15 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
     protected const CONNECTION_OPTIONS = 'CONNECTION_OPTIONS';
 
     /**
-     * @var \Spryker\Client\Redis\RedisConfig
-     */
-    protected $redisConfig;
-
-    /**
-     * @var \Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceInterface
-     */
-    protected $utilEncodingService;
-
-    /**
      * @param \Spryker\Client\Redis\RedisConfig $redisConfig
      * @param \Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Client\Redis\Compressor\CompressorInterface $compressor
      */
-    public function __construct(RedisConfig $redisConfig, RedisToUtilEncodingServiceInterface $utilEncodingService)
-    {
-        $this->redisConfig = $redisConfig;
-        $this->utilEncodingService = $utilEncodingService;
+    public function __construct(
+        protected RedisConfig $redisConfig,
+        protected RedisToUtilEncodingServiceInterface $utilEncodingService,
+        protected CompressorInterface $compressor
+    ) {
     }
 
     /**
@@ -59,7 +53,7 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
     public function create(RedisConfigurationTransfer $redisConfigurationTransfer): RedisAdapterInterface
     {
         if (!$this->redisConfig->isDevelopmentMode()) {
-            return $this->createVersionAgnosticPredisAdapter($redisConfigurationTransfer);
+            return $this->createPredisCompressionAdapter($redisConfigurationTransfer);
         }
 
         return $this->createLoggablePredisAdapter($redisConfigurationTransfer);
@@ -82,10 +76,23 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
      *
      * @return \Spryker\Client\Redis\Adapter\RedisAdapterInterface
      */
+    protected function createPredisCompressionAdapter(RedisConfigurationTransfer $redisConfigurationTransfer): RedisAdapterInterface
+    {
+        return new PredisCompressionAdapter(
+            $this->createVersionAgnosticPredisAdapter($redisConfigurationTransfer),
+            $this->compressor,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $redisConfigurationTransfer
+     *
+     * @return \Spryker\Client\Redis\Adapter\RedisAdapterInterface
+     */
     protected function createLoggablePredisAdapter(RedisConfigurationTransfer $redisConfigurationTransfer): RedisAdapterInterface
     {
         return new LoggableRedisAdapter(
-            $this->createVersionAgnosticPredisAdapter($redisConfigurationTransfer),
+            $this->createPredisCompressionAdapter($redisConfigurationTransfer),
             $this->createRedisLogger($redisConfigurationTransfer),
         );
     }

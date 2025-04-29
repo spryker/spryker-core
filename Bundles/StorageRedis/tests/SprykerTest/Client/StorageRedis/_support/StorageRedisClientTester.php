@@ -5,13 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types=1);
+
 namespace SprykerTest\Client\StorageRedis;
 
 use Codeception\Actor;
 
 /**
- * @method void wantToTest($text)
+ * Inherited Methods
+ *
  * @method void wantTo($text)
+ * @method void wantToTest($text)
  * @method void execute($callable)
  * @method void expectTo($prediction)
  * @method void expect($prediction)
@@ -19,11 +23,15 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method void pause($vars = [])
  *
  * @SuppressWarnings(PHPMD)
  */
-class MultiCartClientTester extends Actor
+class StorageRedisClientTester extends Actor
 {
-    use _generated\MultiCartClientTesterActions;
+    use _generated\StorageRedisClientTesterActions;
+
+    /**
+     * Define custom actions here
+     */
 }

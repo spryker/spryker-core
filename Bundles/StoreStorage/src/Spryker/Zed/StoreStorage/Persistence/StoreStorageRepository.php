@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\StoreStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\StoreStorageCriteriaTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
 /**
  * @method \Spryker\Zed\StoreStorage\Persistence\StoreStoragePersistenceFactory getFactory()
@@ -50,6 +52,24 @@ class StoreStorageRepository extends AbstractRepository implements StoreStorageR
         }
 
         return $synchronizationDataTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param array<int> $storeListStorageIds
+     *
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
+     */
+    public function getStoreListStorageSynchronizationDataTransfers(FilterTransfer $filterTransfer, array $storeListStorageIds): array
+    {
+        $storeListStorageQuery = $this->getFactory()->createStoreListStorageQuery();
+        if ($storeListStorageIds) {
+            $storeListStorageQuery->filterByIdStoreListStorage_In($storeListStorageIds);
+        }
+
+        return $this->buildQueryFromCriteria($storeListStorageQuery, $filterTransfer)
+            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
+            ->find();
     }
 
     /**

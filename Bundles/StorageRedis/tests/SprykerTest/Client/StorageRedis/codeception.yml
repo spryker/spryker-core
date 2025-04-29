@@ -14,7 +14,7 @@ coverage:
 suites:
     Client:
         path: .
-        actor: MultiCartClientTester
+        actor: StorageRedisClientTester
         modules:
             enabled:
                 - Asserts

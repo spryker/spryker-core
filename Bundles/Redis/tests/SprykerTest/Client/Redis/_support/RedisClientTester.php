@@ -8,6 +8,9 @@
 namespace SprykerTest\Client\Redis;
 
 use Codeception\Actor;
+use ReflectionClass;
+use Spryker\Client\Redis\Adapter\RedisAdapterProvider;
+use Spryker\Client\Redis\Compressor\Strategy\CompressorStrategyInterface;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +29,60 @@ use Codeception\Actor;
 class RedisClientTester extends Actor
 {
     use _generated\RedisClientTesterActions;
+
+    /**
+     * @var string
+     */
+    public const KEY = 'redis:key';
+
+    /**
+     * @return void
+     */
+    public function resetClientPool(): void
+    {
+        $class = new ReflectionClass(RedisAdapterProvider::class);
+        $property = $class->getProperty('clientPool');
+        $property->setAccessible(true);
+        $property->setValue([]);
+    }
+
+    /**
+     * @return \Spryker\Client\Redis\Compressor\Strategy\CompressorStrategyInterface
+     */
+    public function createTestCompressorStrategy(): CompressorStrategyInterface
+    {
+        return new class implements CompressorStrategyInterface
+        {
+            /**
+             * @param mixed $value
+             *
+             * @return bool
+             */
+            public function isCompressed(mixed $value): bool
+            {
+                return str_starts_with($value, 'custom');
+            }
+
+            /**
+             * @param string $value
+             * @param int $level
+             *
+             * @return string|null
+             */
+            public function compress(string $value, int $level): ?string
+            {
+                return 'custom' . $value;
+            }
+
+            /**
+             * @param string $value
+             *
+             * @return string|null
+             */
+            public function decompress(string $value): ?string
+            {
+                return ltrim($value, 'custom');
+            }
+        };
+    }
 }

@@ -12,6 +12,9 @@ use Spryker\Client\Redis\Adapter\Factory\PredisAdapterFactory;
 use Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface;
 use Spryker\Client\Redis\Adapter\RedisAdapterProvider;
 use Spryker\Client\Redis\Adapter\RedisAdapterProviderInterface;
+use Spryker\Client\Redis\Compressor\Compressor;
+use Spryker\Client\Redis\Compressor\CompressorInterface;
+use Spryker\Client\Redis\Compressor\Strategy\ZlibCompressorStrategy;
 use Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceInterface;
 
 /**
@@ -37,7 +40,16 @@ class RedisFactory extends AbstractFactory
         return new PredisAdapterFactory(
             $this->getConfig(),
             $this->getUtilEncodingService(),
+            $this->createCompressor(),
         );
+    }
+
+    /**
+     * @return \Spryker\Client\Redis\Compressor\CompressorInterface
+     */
+    public function createCompressor(): CompressorInterface
+    {
+        return new Compressor($this->getConfig(), $this->getKeyValueCompressorStrategies());
     }
 
     /**
@@ -46,5 +58,15 @@ class RedisFactory extends AbstractFactory
     public function getUtilEncodingService(): RedisToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(RedisDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return array<\Spryker\Client\Redis\Compressor\Strategy\ZlibCompressorStrategy>
+     */
+    public function getKeyValueCompressorStrategies(): array
+    {
+        return [
+            new ZlibCompressorStrategy(),
+        ];
     }
 }
