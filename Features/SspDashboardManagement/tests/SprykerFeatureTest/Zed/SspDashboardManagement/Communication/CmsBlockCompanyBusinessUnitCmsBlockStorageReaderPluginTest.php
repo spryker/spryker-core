@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerFeatureTests\Zed\SspDashboardManagement\Communication;
+namespace SprykerFeatureTest\Zed\SspDashboardManagement\Communication;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsBlockRequestTransfer;
@@ -32,7 +32,7 @@ use SprykerFeature\Client\SspDashboardManagement\Storage\CmsBlockCompanyBusiness
 class CmsBlockCompanyBusinessUnitCmsBlockStorageReaderPluginTest extends Unit
 {
     /**
-     * @var \SprykerFeatureTests\Zed\SspDashboardManagement\SspDashboardManagementCommunicationTester
+     * @var \SprykerFeatureTest\Zed\SspDashboardManagement\SspDashboardManagementCommunicationTester
      */
     protected $tester;
 

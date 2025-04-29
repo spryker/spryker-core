@@ -7,6 +7,9 @@
     customer: _view.customer,
 } %}
 
+{% set canAccessInquiries = can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin') %}
+{% set canAccessAssets = can('ViewBusinessUnitSspAssetPermissionPlugin') or can('ViewCompanySspAssetPermissionPlugin') %}
+
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
@@ -26,7 +29,7 @@
 {% block customerContent %}
     <div class="box">
         {% block userInfo %}
-            <div class="spacing-bottom--small">
+            <div data-qa="welcome-block" class="spacing-bottom--small">
                 <div data-qa="user-info">
                     <strong class="title--h5">
                         {{ 'ssp_dashboard.general.welcome' | trans({
@@ -47,15 +50,12 @@
                 {% block statsCol %}
                     <div class="{{ colClasses }}">
                         {% block stats %}
-                            {% set canAccessInquiries = can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin') %}
-                            {% set canAccessAssets = can('ViewBusinessUnitSspAssetPermissionPlugin') or can('ViewCompanySspAssetPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin') %}
-
                             {% include molecule('stats-overview', 'SspDashboardManagement') with {
                                 class: 'box box--stretch box--dark',
                                 data: {
                                     stats: [
                                         {
-                                            title: 'dashboard.general.assets',
+                                            title: 'ssp_dashboard.general.ssp_assets',
                                             value: canAccessAssets and data.dashboard.dashboardComponentAssets is not empty ? data.dashboard.dashboardComponentAssets.sspAssetCollection.pagination.nbResults: 'ssp_dashboard.overview.not_applicable' | trans,
                                         },
                                         {
@@ -72,7 +72,7 @@
                 {% block representativesCol %}
                     {% set cmsSalesRep = spyCmsBlock({ companyUnitBlockName: 'sales-rep', companyUnit: data.customer.companyUserTransfer.companyBusinessUnit.idCompanyBusinessUnit }) | trim %}
 
-                    <div class="{{ colClasses }}">
+                    <div class="{{ colClasses }}" data-qa="sales-representative">
                         {% block representatives %}
                             {% if cmsSalesRep is not empty %}
                                 {{ cmsSalesRep | raw }}
@@ -85,12 +85,14 @@
             </div>
         {% endblock %}
 
-        {% block assets %}
-            {% set assetCollection = data.dashboard.dashboardComponentAssets ? data.dashboard.dashboardComponentAssets.sspAssetCollection : null %}
+        {% if canAccessAssets %}
+            {% block assets %}
+                {% set assetCollection = data.dashboard.dashboardComponentAssets ? data.dashboard.dashboardComponentAssets.sspAssetCollection : null %}
 
-            {% widget 'SspAssetListWidget' args [assetCollection] only %}
-            {% endwidget %}
-        {% endblock %}
+                {% widget 'SspAssetListWidget' args [assetCollection] only %}
+                {% endwidget %}
+            {% endblock %}
+        {% endif %}
 
         {% block news %}
             {# CMS_PLACEHOLDER_PROJECT_LEVEL #}

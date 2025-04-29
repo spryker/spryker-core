@@ -44,4 +44,8 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="CmsBlockGlossaryPlaceholderTranslation">
+        <property name="translation" type="string"/>
+    </transfer>
+
 </transfers>

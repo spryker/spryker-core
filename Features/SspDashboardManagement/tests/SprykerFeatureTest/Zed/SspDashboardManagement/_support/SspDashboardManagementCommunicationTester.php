@@ -5,9 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-declare(strict_types=1);
-
-namespace SprykerFeatureTests\Zed\SspDashboardManagement;
+namespace SprykerFeatureTest\Zed\SspDashboardManagement;
 
 use Codeception\Actor;
 

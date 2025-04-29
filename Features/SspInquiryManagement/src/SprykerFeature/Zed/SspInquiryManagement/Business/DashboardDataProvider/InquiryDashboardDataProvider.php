@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\SortTransfer;
 use Generated\Shared\Transfer\SspInquiryConditionsTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
 use Generated\Shared\Transfer\SspInquiryOwnerConditionGroupTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use SprykerFeature\Shared\SspInquiryManagement\Plugin\Permission\ViewBusinessUnitSspInquiryPermissionPlugin;
 use SprykerFeature\Shared\SspInquiryManagement\Plugin\Permission\ViewCompanySspInquiryPermissionPlugin;
@@ -80,9 +81,11 @@ class InquiryDashboardDataProvider implements InquiryDashboardDataProviderInterf
         }
 
         $sspInquiryConditionsTransfer = (new SspInquiryConditionsTransfer())
-            ->setFkStore($dashboardRequestTransfer->getStoreOrFail()->getIdStoreOrFail())
             ->setStatus($this->sspInquiryManagementConfig->getPendingStatus())
             ->setSspInquiryOwnerConditionGroup($sspInquiryOwnerConditionGroupTransfer);
+
+        $sspInquiryConditionsTransfer = $this->addStoreFilter($dashboardRequestTransfer->getStoreOrFail(), $sspInquiryConditionsTransfer);
+
         $sspInquiryCriteriaTransfer = (new SspInquiryCriteriaTransfer())
             ->setSspInquiryConditions($sspInquiryConditionsTransfer)
             ->setPagination(
@@ -106,5 +109,20 @@ class InquiryDashboardDataProvider implements InquiryDashboardDataProviderInterf
             ->setPendingItems($pendingItemsCount);
 
         return $dashboardResponseTransfer->setDashboardComponentInquiry($dashboardComponentInquiryTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\SspInquiryConditionsTransfer $sspInquiryConditionsTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspInquiryConditionsTransfer
+     */
+    public function addStoreFilter(StoreTransfer $storeTransfer, SspInquiryConditionsTransfer $sspInquiryConditionsTransfer): SspInquiryConditionsTransfer
+    {
+        if ($storeTransfer->getIdStore()) {
+            return $sspInquiryConditionsTransfer->setFkStore($storeTransfer->getIdStoreOrFail());
+        }
+
+        return $sspInquiryConditionsTransfer->setStoreName($storeTransfer->getName());
     }
 }

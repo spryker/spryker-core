@@ -28,9 +28,9 @@
                     {% for stat in data.stats %}
                         <div class="col col--with-gutter col--sm-12 col--lg-6 col--xl-4">
                             {% block stat %}
-                                <div class="{{ config.name }}__stat text-center">
-                                    <div class="{{ config.name }}__title">{{ stat.title | trans }}</div>
-                                    <strong class="{{ config.name }}__counter">{{ stat.value | default('ssp_dashboard.overview.not_applicable' | trans) }}</strong>
+                                <div class="{{ config.name }}__stat text-center" data-qa="stats-column">
+                                    <div class="{{ config.name }}__title" data-qa="stats-column-title">{{ stat.title | trans }}</div>
+                                    <strong class="{{ config.name }}__counter" data-qa="stats-column-counter">{{ stat.value | default('ssp_dashboard.overview.not_applicable' | trans) }}</strong>
                                 </div>
                             {% endblock %}
                         </div>

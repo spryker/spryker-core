@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerFeatureTests\Zed\SspDashboardManagement\Business;
+namespace SprykerFeatureTest\Zed\SspDashboardManagement\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DashboardRequestTransfer;
@@ -27,7 +27,7 @@ use SprykerFeature\Zed\SspDashboardManagement\SspDashboardManagementDependencyPr
 class FacadeTest extends Unit
 {
     /**
-     * @var \SprykerFeatureTests\Zed\SspDashboardManagement\SspDashboardManagementBusinessTester
+     * @var \SprykerFeatureTest\Zed\SspDashboardManagement\SspDashboardManagementBusinessTester
      */
     protected $tester;
 

@@ -12,12 +12,12 @@
 {% block body %}
     <div class="grid grid--middle">
         {% block title %}
-            <h5 class="{{ config.name }}__title spacing-right col">{{ data.title | trans }}</h5>
+            <h5 class="{{ config.name }}__title spacing-right col" data-qa="{{ qa ~ '-title' }}">{{ data.title | trans }}</h5>
         {% endblock %}
 
         {% block counter %}
             {% if data.counter %}
-                <span class="{{ config.name }}__counter col badge">{{ data.counter }}</span>
+                <span class="{{ config.name }}__counter col badge" data-qa="{{ qa ~ '-counter' }}">{{ data.counter }}</span>
             {% endif %}
         {% endblock %}
     </div>

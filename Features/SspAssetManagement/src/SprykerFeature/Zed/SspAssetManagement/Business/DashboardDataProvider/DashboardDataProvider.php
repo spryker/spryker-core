@@ -5,6 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace SprykerFeature\Zed\SspAssetManagement\Business\DashboardDataProvider;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -28,7 +30,7 @@ class DashboardDataProvider implements DashboardDataProviderInterface
     /**
      * @var string
      */
-    protected const SORT_CREATED_AT = 'createdAt';
+    protected const SORT_CREATED_AT = 'createdDate';
 
     /**
      * @var bool
@@ -62,6 +64,13 @@ class DashboardDataProvider implements DashboardDataProviderInterface
         DashboardResponseTransfer $dashboardResponseTransfer,
         DashboardRequestTransfer $dashboardRequestTransfer
     ): DashboardResponseTransfer {
+        if (
+            !$this->can(ViewCompanySspAssetPermissionPlugin::KEY, $dashboardRequestTransfer->getCompanyUserOrFail()->getIdCompanyUserOrFail())
+            && !$this->can(ViewBusinessUnitSspAssetPermissionPlugin::KEY, $dashboardRequestTransfer->getCompanyUserOrFail()->getIdCompanyUserOrFail())
+        ) {
+            return $dashboardResponseTransfer;
+        }
+
         $sspAssetCriteriaTransfer = (new SspAssetCriteriaTransfer())
             ->setSspAssetConditions(
                 (new SspAssetConditionsTransfer()),
@@ -83,10 +92,10 @@ class DashboardDataProvider implements DashboardDataProviderInterface
 
         $this->expandWithPermissions($sspAssetCriteriaTransfer, $dashboardRequestTransfer->getCompanyUserOrFail());
 
-        $fileAttachmentFileCollectionTransfer = $this->assetReader->getSspAssetCollection($sspAssetCriteriaTransfer);
+        $sspAssetCollectionTransfer = $this->assetReader->getSspAssetCollection($sspAssetCriteriaTransfer);
 
         $sspAssetCollectionTransfer = (new DashboardComponentAssetsTransfer())
-            ->setSspAssetCollection($fileAttachmentFileCollectionTransfer);
+            ->setSspAssetCollection($sspAssetCollectionTransfer);
 
         return $dashboardResponseTransfer->setDashboardComponentAssets($sspAssetCollectionTransfer);
     }

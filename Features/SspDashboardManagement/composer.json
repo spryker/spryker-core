@@ -22,6 +22,7 @@
     },
     "require-dev": {
         "spryker-shop/customer-page": "*",
+        "spryker/cms-block": "*",
         "spryker/code-sniffer": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"
@@ -32,7 +33,8 @@
     },
     "autoload": {
         "psr-4": {
-            "SprykerFeature\\": "src/SprykerFeature/"
+            "SprykerFeature\\": "src/SprykerFeature/",
+            "SprykerFeatureTest\\Zed\\SspDashboardManagement\\Helper\\": "tests/SprykerFeatureTest/Zed/SspDashboardManagement/_support/Helper/"
         }
     },
     "minimum-stability": "dev",

@@ -213,6 +213,13 @@ class SspInquiryManagementRepository extends AbstractRepository implements SspIn
              $sspInquiryQuery->filterByFkStore($sspInquiryConditions->getFkStore());
         }
 
+        if ($sspInquiryConditions->getStoreName() !== null) {
+            $sspInquiryQuery
+                ->useSpyStoreQuery()
+                    ->filterByName($sspInquiryConditions->getStoreName())
+                ->endUse();
+        }
+
         if ($sspInquiryConditions->getSspAssetIds() !== []) {
              $sspInquiryQuery
                  ->joinSpySspInquirySspAsset()

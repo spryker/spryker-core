@@ -1,4 +1,4 @@
-namespace: SprykerFeatureTests\Zed\SspDashboardManagement
+namespace: SprykerFeatureTest\Zed\SspDashboardManagement
 
 paths:
     tests: .
