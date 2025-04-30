@@ -16,7 +16,7 @@
         "spryker/mail-extension": "^1.0.0",
         "spryker/message-broker": "^1.2.1",
         "spryker/oms-extension": "^1.4.0",
-        "spryker/propel": "^3.28.0",
+        "spryker/propel": "^3.42.1",
         "spryker/propel-orm": "^1.16.0",
         "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0",
         "spryker/sales-extension": "^1.12.0",

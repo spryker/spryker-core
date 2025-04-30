@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Oms\Business\Util;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
+use ReflectionProperty;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Oms\Business\Reader\ReservationReaderInterface;
 use Spryker\Zed\Oms\Business\Util\Reservation;
@@ -68,6 +69,9 @@ class ReservationTest extends Unit
     public function testUpdateReservationGetsAllStores(): void
     {
         // Arrange
+        $reflectionProperty = new ReflectionProperty(Reservation::class, 'allStoreTransfersCache');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue(null, []);
         $reservationRequestTransfer = new ReservationRequestTransfer();
         $reservationReaderMock = $this->createReservationReaderMock();
         $storeTransfers = $this->tester->getLocator()->store()->facade()->getAllStores();

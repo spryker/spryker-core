@@ -53,6 +53,11 @@ class Reservation implements ReservationInterface
     protected $reservationHandlerTerminationAwareStrategyPlugins;
 
     /**
+     * @var list<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    protected static $allStoreTransfersCache = [];
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Reader\ReservationReaderInterface $reservationReader
      * @param array<\Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface> $reservationHandlerPlugins
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
@@ -103,7 +108,7 @@ class Reservation implements ReservationInterface
      */
     public function updateReservation(ReservationRequestTransfer $reservationRequestTransfer): void
     {
-        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+        foreach ($this->getAllStoreTransfersCache() as $storeTransfer) {
             $reservationRequestTransfer->setStore($storeTransfer);
 
             $reservationQuantity = $this->reservationReader->sumReservedProductQuantities($reservationRequestTransfer);
@@ -175,5 +180,18 @@ class Reservation implements ReservationInterface
         foreach ($this->reservationHandlerPlugins as $reservationHandlerPluginInterface) {
             $reservationHandlerPluginInterface->handle($sku);
         }
+    }
+
+    /**
+     * @return list<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    protected function getAllStoreTransfersCache(): array
+    {
+        if (static::$allStoreTransfersCache) {
+            return static::$allStoreTransfersCache;
+        }
+        static::$allStoreTransfersCache = $this->storeFacade->getAllStores();
+
+        return static::$allStoreTransfersCache;
     }
 }

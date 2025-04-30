@@ -33,11 +33,13 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class OrderStateMachine implements OrderStateMachineInterface
 {
     use DatabaseTransactionHandlerTrait;
+    use ActiveRecordBatchProcessorTrait;
 
     /**
      * @var string
@@ -916,21 +918,21 @@ class OrderStateMachine implements OrderStateMachineInterface
         $currentTime = new DateTime('now');
         $timeoutModel = clone $this->timeout;
 
-        foreach ($orderItems as $orderItem) {
-            $this->handleDatabaseTransaction(function () use ($orderItem, $processes, $sourceStateBuffer, $timeoutModel, $log, $currentTime) {
-                $this->executeSaveOrderItemTransaction(
-                    $orderItem,
-                    $processes,
-                    $sourceStateBuffer,
-                    $timeoutModel,
-                    $log,
-                    $currentTime,
-                );
-            });
-        }
+        $this->handleDatabaseTransaction(function () use ($orderItems, $processes, $sourceStateBuffer, $timeoutModel, $log, $currentTime) {
+            $this->executeBulkSaveOrderItemTransaction(
+                $orderItems,
+                $processes,
+                $sourceStateBuffer,
+                $timeoutModel,
+                $log,
+                $currentTime,
+            );
+        });
     }
 
     /**
+     * @deprecated Use {@link executeBulkSaveOrderItemTransaction()} instead.
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      * @param array $processes
      * @param array $sourceStateBuffer
@@ -961,6 +963,46 @@ class OrderStateMachine implements OrderStateMachineInterface
         $orderItem->save();
         $this->updateOmsReservation($process, $sourceState, $targetState, $orderItem);
         $log->save($orderItem);
+    }
+
+    /**
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItemEntities
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processes
+     * @param array<int, string> $sourceStateBuffer
+     * @param \Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface $timeoutModel
+     * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $log
+     * @param \DateTime $currentTime
+     *
+     * @return void
+     */
+    protected function executeBulkSaveOrderItemTransaction(
+        array $orderItemEntities,
+        array $processes,
+        array $sourceStateBuffer,
+        TimeoutInterface $timeoutModel,
+        TransitionLogInterface $log,
+        DateTime $currentTime
+    ) {
+        $indexedOrderItemEntities = [];
+        foreach ($orderItemEntities as $orderItemEntity) {
+            $process = $processes[$orderItemEntity->getProcess()->getName()];
+            $sourceState = $sourceStateBuffer[$orderItemEntity->getIdSalesOrderItem()];
+            $targetState = $orderItemEntity->getState()->getName();
+
+            if ($sourceState !== $targetState) {
+                $timeoutModel->dropOldTimeout($process, $sourceState, $orderItemEntity);
+                $timeoutModel->setNewTimeout($process, $orderItemEntity, $currentTime);
+            }
+            $indexedOrderItemEntities[$orderItemEntity->getIdSalesOrderItem()] = $orderItemEntity;
+            $this->persist($orderItemEntity);
+        }
+
+        $this->commit();
+
+        foreach ($indexedOrderItemEntities as $orderItemEntity) {
+            $this->updateOmsReservation($process, $sourceState, $targetState, $orderItemEntity);
+            $log->save($orderItemEntity);
+        }
     }
 
     /**

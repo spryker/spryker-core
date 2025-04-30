@@ -25,22 +25,23 @@ class OrderItemTransformer implements OrderItemTransformerInterface
 
         $quantity = $itemTransfer->getQuantity();
 
-        if ($quantity === 1) {
+        if ((int)$quantity === 1) {
             return $transformedItemsCollection->addItem($itemTransfer);
         }
 
-        for ($i = 1; $quantity >= $i; $i++) {
-            $transformedItemTransfer = new ItemTransfer();
-            $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
-            $transformedItemTransfer->setQuantity(1);
+        $transformedItemTransfer = new ItemTransfer();
+        $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
+        $transformedItemTransfer->setQuantity(1);
 
+        for ($i = 1; $quantity >= $i; $i++) {
+            $preparedTransformedItemTransfer = clone $transformedItemTransfer;
             $transformedProductOptions = new ArrayObject();
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 $transformedProductOptions->append($this->copyProductOptionTransfer($productOptionTransfer));
             }
 
-            $transformedItemTransfer->setProductOptions($transformedProductOptions);
-            $transformedItemsCollection->addItem($transformedItemTransfer);
+            $preparedTransformedItemTransfer->setProductOptions($transformedProductOptions);
+            $transformedItemsCollection->addItem($preparedTransformedItemTransfer);
         }
 
         return $transformedItemsCollection;

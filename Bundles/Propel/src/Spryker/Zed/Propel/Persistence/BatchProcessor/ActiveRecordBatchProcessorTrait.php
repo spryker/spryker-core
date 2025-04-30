@@ -189,6 +189,9 @@ trait ActiveRecordBatchProcessorTrait
     protected function postSave(array $entities, ConnectionInterface $connection): void
     {
         foreach ($entities as $entity) {
+            if (!$entity->isNew()) {
+                $entity->resetModified();
+            }
             $entity->postSave($connection);
         }
     }
@@ -266,6 +269,7 @@ trait ActiveRecordBatchProcessorTrait
             $connection->beginTransaction();
             foreach ($statements as $statement) {
                 $statement->execute();
+                $statement->closeCursor();
             }
             $connection->commit();
         } catch (Throwable $throwable) {
@@ -598,11 +602,11 @@ trait ActiveRecordBatchProcessorTrait
 
         foreach ($chunkEntities as $chunkEntity) {
             $keyIndex = 0;
-            $whereClauses = [];
-            $columnNamesForUpdateWithPdoPlaceholder = [];
             $sql = '';
             $values = [];
             foreach ($chunkEntity as $entity) {
+                $whereClauses = [];
+                $columnNamesForUpdateWithPdoPlaceholder = [];
                 $entityData = [];
                 $entity = $this->updateDateTimes($entity);
 
@@ -619,9 +623,9 @@ trait ActiveRecordBatchProcessorTrait
                     $columnNamesForUpdateWithPdoPlaceholder[] = sprintf('%s=:p%d', $this->quote($columnName, $tableMapClass), $index);
                 }
 
-                foreach ($idColumnValuesAndTypes as $primaryKeyColumnName => $valuesForUpdate) {
+                foreach ($idColumnValuesAndTypes as $primaryKeyColumnName => $valueForUpdate) {
                     $index = $keyIndex++;
-                    $entityData[$index] = $valuesForUpdate;
+                    $entityData[$index] = $valueForUpdate;
                     $whereClauses[] = sprintf('%s.%s=:p%d', $tableMapClass->getName(), $primaryKeyColumnName, $index);
                 }
 
