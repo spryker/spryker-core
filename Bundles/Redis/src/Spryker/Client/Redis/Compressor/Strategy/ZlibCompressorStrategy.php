@@ -31,7 +31,7 @@ class ZlibCompressorStrategy implements CompressorStrategyInterface
             return $value;
         }
 
-        $compressedValue = gzencode($value);
+        $compressedValue = gzencode($value, $level);
 
         return $compressedValue ?: null;
     }
