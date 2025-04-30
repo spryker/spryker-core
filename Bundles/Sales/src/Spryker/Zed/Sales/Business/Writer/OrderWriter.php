@@ -114,8 +114,8 @@ class OrderWriter implements OrderWriterInterface
 
         $orderConditionsTransfer = new OrderConditionsTransfer();
 
-        if ($orderCancelRequestTransfer->getIdSalesOrder()) {
-            $orderConditionsTransfer->addIdSalesOrder($idSalesOrder);
+        if ($idSalesOrder) {
+            $orderConditionsTransfer->addIdSalesOrder((int)$idSalesOrder);
         }
 
         if ($orderCancelRequestTransfer->getOrderReference()) {
