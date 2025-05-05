@@ -935,6 +935,7 @@
         "spryker/sales-product-connector": "*",
         "spryker/sales-quantity": "*",
         "spryker/sales-quantity-extension": "*",
+        "spryker/sales-quote-request-connector": "*",
         "spryker/sales-reclamation": "*",
         "spryker/sales-reclamation-gui": "*",
         "spryker/sales-return": "*",

@@ -42,6 +42,8 @@ use Spryker\Zed\SalesOrderAmendment\Business\Updater\SalesOrderAmendmentUpdater;
 use Spryker\Zed\SalesOrderAmendment\Business\Updater\SalesOrderAmendmentUpdaterInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\CartReorderValidator;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\CartReorderValidatorInterface;
+use Spryker\Zed\SalesOrderAmendment\Business\Validator\QuoteRequestValidator;
+use Spryker\Zed\SalesOrderAmendment\Business\Validator\QuoteRequestValidatorInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\Rules\SalesOrderAmendment\SalesOrderAmendmentExistsSalesOrderAmendmentValidatorRule;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\Rules\SalesOrderAmendment\SalesOrderAmendmentValidatorRuleInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\SalesOrderAmendmentValidator;
@@ -284,6 +286,14 @@ class SalesOrderAmendmentBusinessFactory extends AbstractBusinessFactory
         return new CartChecker(
             $this->createOrderReader(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendment\Business\Validator\QuoteRequestValidatorInterface
+     */
+    public function createQuoteRequestValidator(): QuoteRequestValidatorInterface
+    {
+        return new QuoteRequestValidator();
     }
 
     /**

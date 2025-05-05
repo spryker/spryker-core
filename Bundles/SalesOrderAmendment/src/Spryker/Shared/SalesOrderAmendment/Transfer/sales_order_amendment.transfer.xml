@@ -124,6 +124,7 @@
         <property name="orderReference" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="salesOrderAmendment" type="SalesOrderAmendment" strict="true"/>
+        <property name="quoteRequestVersionReference" type="string" strict="true"/>
     </transfer>
 
     <transfer name="ErrorCollection" strict="true">
@@ -240,6 +241,19 @@
 
     <transfer name="Customer">
         <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteRequestResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="QuoteRequest">
+        <property name="latestVersion" type="QuoteRequestVersion"/>
+    </transfer>
+
+    <transfer name="QuoteRequestVersion">
+        <property name="quote" type="Quote"/>
     </transfer>
 
 </transfers>

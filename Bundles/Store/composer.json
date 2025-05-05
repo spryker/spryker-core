@@ -7,6 +7,7 @@
         "php": ">=8.2",
         "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/application-extension": "^1.0.0",
+        "spryker/cart-reorder-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/log": "^1.0.0 || ^2.0.0 || ^3.0.0",
         "spryker/message-broker-extension": "^1.0.0",
@@ -15,7 +16,7 @@
         "spryker/quote-extension": "^1.4.0",
         "spryker/store-extension": "^1.0.0",
         "spryker/symfony": "^3.0.0",
-        "spryker/transfer": "^3.25.0",
+        "spryker/transfer": "^3.27.0",
         "spryker/zed-request": "^3.3.0",
         "spryker/zed-request-extension": "^1.1.0"
     },
