@@ -8,6 +8,7 @@
 namespace SprykerFeature\Zed\SspFileManagement\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
+use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
@@ -29,7 +30,17 @@ class FileMapper
             $fileTransfer = $this->mapEntityToTransfer($fileEntity);
             $fileTransfer = $this->addFileInfoTransfers($fileEntity, $fileTransfer);
 
-            $fileCollectionTransfer->addFile($fileTransfer);
+            $fileAttachmentTransfer = (new FileAttachmentTransfer())->setFile($fileTransfer);
+
+            if ($fileEntity->hasVirtualColumn(FileAttachmentTransfer::ENTITY_NAME)) {
+                $fileAttachmentTransfer->setEntityName($fileEntity->getVirtualColumn(FileAttachmentTransfer::ENTITY_NAME));
+            }
+
+            if ($fileEntity->hasVirtualColumn(FileAttachmentTransfer::ENTITY_ID)) {
+                $fileAttachmentTransfer->setEntityId($fileEntity->getVirtualColumn(FileAttachmentTransfer::ENTITY_ID));
+            }
+
+            $fileCollectionTransfer->addFileAttachment($fileAttachmentTransfer);
         }
 
         return $fileCollectionTransfer;

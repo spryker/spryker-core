@@ -7,12 +7,12 @@
 
 namespace SprykerFeature\Zed\SspFileManagement\Communication\Controller;
 
-use Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer;
+use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentConditionsTransfer;
 use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
-use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use SprykerFeature\Zed\SspFileManagement\Communication\Form\AttachFileForm;
+use SprykerFeature\Zed\SspFileManagement\Communication\Form\SspAssetAttachmentForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -31,6 +31,11 @@ class FileAttachController extends AbstractController
     /**
      * @var string
      */
+    protected const REQUEST_PARAM_SSP_ASSET_FILE_ATTACHMENT = 'sspAssetFileAttachment';
+
+    /**
+     * @var string
+     */
     protected const MESSAGE_FILE_ATTACHMENTS_CREATE_SUCCESS = 'File attachments have been created successfully.';
 
     /**
@@ -41,40 +46,52 @@ class FileAttachController extends AbstractController
     public function indexAction(Request $request): array|RedirectResponse
     {
         $idFile = $request->get(static::REQUEST_PARAM_ID_FILE);
-        $fileAttachmentConditionsTransfer = (new FileAttachmentConditionsTransfer())->addIdFile($idFile);
-        $fileAttachmentCriteriaTransfer = (new FileAttachmentCriteriaTransfer())
-            ->setFileAttachmentConditions($fileAttachmentConditionsTransfer);
         $fileAttachmentCollectionTransfer = $this->getFacade()
-            ->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
+            ->getFileAttachmentCollection((new FileAttachmentCriteriaTransfer())
+                ->setFileAttachmentConditions(
+                    (new FileAttachmentConditionsTransfer())->addIdFile($idFile),
+                ));
 
         $formData = $this->getFormDataFromRequest($request);
-
-        if ($formData === []) {
+        if (!$formData) {
             $formData = $this->getFactory()
                 ->createFileAttachmentMapper()
                 ->mapFileAttachmentCollectionTransferToFormData($fileAttachmentCollectionTransfer);
         }
 
-        $fileManagerDataTransfer = $this->getFactory()
-            ->getFileManagerFacade()
-            ->findFileByIdFile($idFile);
-
-        $dataProvider = $this->getFactory()->createFileAttachFormDataProvider();
-        $form = $this->getFactory()
+        $formDataProvider = $this->getFactory()->createFileAttachFormDataProvider();
+        $attachFileForm = $this->getFactory()
             ->createAttachFileForm(
-                $dataProvider->getData($formData),
-                $dataProvider->getOptions($fileAttachmentCollectionTransfer),
+                $formDataProvider->getData($formData),
+                $formDataProvider->getOptions($fileAttachmentCollectionTransfer),
             );
 
-        $form->handleRequest($request);
+        $assetFormDataProvider = $this->getFactory()->createAssetAttachmentFormDataProvider();
+        $sspAssetAttachmentForm = $this->getFactory()
+            ->createSspAssetAttachmentForm(
+                $assetFormDataProvider->getData($formData),
+                $assetFormDataProvider->getOptions($idFile),
+            );
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            return $this->processForm($form->getData(), $fileManagerDataTransfer, $idFile);
+        $tabsViewTransfer = $this->getFactory()->createFileAttachmentTabs()->createView();
+
+        $attachFileForm->handleRequest($request);
+        $sspAssetAttachmentForm->handleRequest($request);
+
+        if ($attachFileForm->isSubmitted() && $attachFileForm->isValid()) {
+            return $this->processForm($attachFileForm->getData(), $idFile, $fileAttachmentCollectionTransfer);
+        }
+
+        if ($sspAssetAttachmentForm->isSubmitted() && $sspAssetAttachmentForm->isValid()) {
+            return $this->processForm($sspAssetAttachmentForm->getData(), $idFile, $fileAttachmentCollectionTransfer);
         }
 
         return $this->viewResponse([
-            'form' => $form->createView(),
+            'fileAttachForm' => $attachFileForm->createView(),
+            'sspAssetFileAttachForm' => $sspAssetAttachmentForm->createView(),
             'urlSspFileManagementList' => Url::generate(static::URL_SSP_FILE_MANAGEMENT_LIST)->build(),
+            'tabsViewTransfer' => $tabsViewTransfer,
+            'idFile' => $idFile,
         ]);
     }
 
@@ -90,6 +107,7 @@ class FileAttachController extends AbstractController
         }
 
         $fileAttachmentFormData = $request->get(static::REQUEST_PARAM_FILE_ATTACHMENT);
+        $sspAssetFileAttachmentFormData = $request->get(static::REQUEST_PARAM_SSP_ASSET_FILE_ATTACHMENT);
         $formData = [];
 
         if ($fileAttachmentFormData) {
@@ -98,31 +116,39 @@ class FileAttachController extends AbstractController
             $formData[AttachFileForm::FIELD_COMPANY_BUSINESS_UNIT_IDS] = $fileAttachmentFormData[AttachFileForm::FIELD_COMPANY_BUSINESS_UNIT_IDS] ?? [];
         }
 
+        if ($sspAssetFileAttachmentFormData) {
+            $formData[SspAssetAttachmentForm::FIELD_ASSET_IDS] = $sspAssetFileAttachmentFormData[SspAssetAttachmentForm::FIELD_ASSET_IDS] ?? [];
+        }
+
         return $formData;
     }
 
     /**
      * @param array<string, mixed> $formData
-     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      * @param int $idFile
+     * @param \Generated\Shared\Transfer\FileAttachmentCollectionTransfer $currentFileAttachmentCollectionTransfer
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function processForm(array $formData, FileManagerDataTransfer $fileManagerDataTransfer, int $idFile): RedirectResponse
+    protected function processForm(array $formData, int $idFile, FileAttachmentCollectionTransfer $currentFileAttachmentCollectionTransfer): RedirectResponse
     {
-        $fileAttachmentCollectionTransfer = $this->getFactory()
-            ->createFileAttachmentMapper()
-            ->mapFormDataToFileAttachmentCollectionTransfer($formData, $fileManagerDataTransfer, $idFile);
+        $businessFormData = [
+            AttachFileForm::FIELD_COMPANY_IDS => $formData[AttachFileForm::FIELD_COMPANY_IDS] ?? null,
+            AttachFileForm::FIELD_COMPANY_USER_IDS => $formData[AttachFileForm::FIELD_COMPANY_USER_IDS] ?? null,
+            AttachFileForm::FIELD_COMPANY_BUSINESS_UNIT_IDS => $formData[AttachFileForm::FIELD_COMPANY_BUSINESS_UNIT_IDS] ?? null,
+            SspAssetAttachmentForm::FIELD_ASSET_IDS => $formData[SspAssetAttachmentForm::FIELD_ASSET_IDS] ?? null,
+        ];
 
-        $fileAttachmentCollectionRequestTransfer = (new FileAttachmentCollectionRequestTransfer())
-            ->setIdFile($idFile)
-            ->setFileAttachments($fileAttachmentCollectionTransfer->getFileAttachments());
+        $fileAttachmentCollectionRequestTransfer = $this->getFactory()
+            ->createFileAttachmentMapper()
+            ->mapFormDataToFileAttachmentCollectionTransfer($currentFileAttachmentCollectionTransfer, $businessFormData, $idFile);
 
         $this->getFacade()->saveFileAttachmentCollection($fileAttachmentCollectionRequestTransfer);
 
         $this->addSuccessMessage(static::MESSAGE_FILE_ATTACHMENTS_CREATE_SUCCESS);
-        $redirectUrl = Url::generate(static::URL_SSP_FILE_MANAGEMENT_LIST)->build();
 
-        return $this->redirectResponse($redirectUrl);
+        return $this->redirectResponse(
+            Url::generate(static::URL_SSP_FILE_MANAGEMENT_VIEW, [static::REQUEST_PARAM_ID_FILE => $idFile])->build(),
+        );
     }
 }

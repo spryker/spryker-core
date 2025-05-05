@@ -24,4 +24,11 @@ interface FilePermissionQueryStrategyInterface
      * @return string
      */
     public function getPermissionKey(): string;
+
+    /**
+     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
+     *
+     * @return bool
+     */
+    public function isApplicable(FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer): bool;
 }

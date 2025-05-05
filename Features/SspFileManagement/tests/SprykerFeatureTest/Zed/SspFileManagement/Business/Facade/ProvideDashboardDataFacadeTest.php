@@ -99,7 +99,7 @@ class ProvideDashboardDataFacadeTest extends Unit
 
         // Assert
         $this->assertIsObject($actualDashboardResponseTransfer->getDashboardComponentFiles());
-        $this->assertCount(1, $actualDashboardResponseTransfer->getDashboardComponentFiles()->getFileAttachmentFileCollection()->getFiles());
+        $this->assertCount(1, $actualDashboardResponseTransfer->getDashboardComponentFiles()->getFileAttachmentFileCollection()->getFileAttachments());
     }
 
     /**
@@ -139,6 +139,6 @@ class ProvideDashboardDataFacadeTest extends Unit
 
         // Assert
         $this->assertIsObject($actualDashboardResponseTransfer->getDashboardComponentFiles());
-        $this->assertCount(0, $actualDashboardResponseTransfer->getDashboardComponentFiles()->getFileAttachmentFileCollection()->getFiles());
+        $this->assertCount(0, $actualDashboardResponseTransfer->getDashboardComponentFiles()->getFileAttachmentFileCollection()->getFileAttachments());
     }
 }

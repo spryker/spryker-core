@@ -7,23 +7,23 @@
 
 namespace SprykerFeature\Zed\SspFileManagement\Communication\Mapper;
 
+use Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
-use Generated\Shared\Transfer\FileManagerDataTransfer;
 
 interface FileAttachmentMapperInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\FileAttachmentCollectionTransfer $currentFileAttachmentCollectionTransfer
      * @param array<string, mixed> $formData
-     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      * @param int $idFile
      *
-     * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
+     * @return \Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer
      */
     public function mapFormDataToFileAttachmentCollectionTransfer(
+        FileAttachmentCollectionTransfer $currentFileAttachmentCollectionTransfer,
         array $formData,
-        FileManagerDataTransfer $fileManagerDataTransfer,
         int $idFile
-    ): FileAttachmentCollectionTransfer;
+    ): FileAttachmentCollectionRequestTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\FileAttachmentCollectionTransfer $fileAttachmentCollectionTransfer

@@ -9,7 +9,6 @@ declare(strict_types = 1);
 
 namespace SprykerFeature\Zed\SspAssetManagement\Business\DashboardDataProvider;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\DashboardComponentAssetsTransfer;
 use Generated\Shared\Transfer\DashboardRequestTransfer;
 use Generated\Shared\Transfer\DashboardResponseTransfer;
@@ -21,6 +20,7 @@ use Generated\Shared\Transfer\SspAssetIncludeTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use SprykerFeature\Shared\SspAssetManagement\Plugin\Permission\ViewBusinessUnitSspAssetPermissionPlugin;
 use SprykerFeature\Shared\SspAssetManagement\Plugin\Permission\ViewCompanySspAssetPermissionPlugin;
+use SprykerFeature\Zed\SspAssetManagement\Business\Permission\SspAssetCustomerPermissionExpanderInterface;
 use SprykerFeature\Zed\SspAssetManagement\Business\Reader\SspAssetReaderInterface;
 
 class DashboardDataProvider implements DashboardDataProviderInterface
@@ -49,9 +49,12 @@ class DashboardDataProvider implements DashboardDataProviderInterface
 
     /**
      * @param \SprykerFeature\Zed\SspAssetManagement\Business\Reader\SspAssetReaderInterface $assetReader
+     * @param \SprykerFeature\Zed\SspAssetManagement\Business\Permission\SspAssetCustomerPermissionExpanderInterface $sspAssetCustomerPermissionExpander
      */
-    public function __construct(protected SspAssetReaderInterface $assetReader)
-    {
+    public function __construct(
+        protected SspAssetReaderInterface $assetReader,
+        protected SspAssetCustomerPermissionExpanderInterface $sspAssetCustomerPermissionExpander
+    ) {
     }
 
     /**
@@ -88,9 +91,10 @@ class DashboardDataProvider implements DashboardDataProviderInterface
                 (new SortTransfer())
                     ->setField(static::SORT_CREATED_AT)
                     ->setIsAscending(static::SORT_IS_ASCENDING),
-            );
+            )
+            ->setCompanyUser($dashboardRequestTransfer->getCompanyUserOrFail());
 
-        $this->expandWithPermissions($sspAssetCriteriaTransfer, $dashboardRequestTransfer->getCompanyUserOrFail());
+        $this->sspAssetCustomerPermissionExpander->expand($sspAssetCriteriaTransfer);
 
         $sspAssetCollectionTransfer = $this->assetReader->getSspAssetCollection($sspAssetCriteriaTransfer);
 
@@ -98,32 +102,5 @@ class DashboardDataProvider implements DashboardDataProviderInterface
             ->setSspAssetCollection($sspAssetCollectionTransfer);
 
         return $dashboardResponseTransfer->setDashboardComponentAssets($sspAssetCollectionTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCriteriaTransfer
-     */
-    public function expandWithPermissions(
-        SspAssetCriteriaTransfer $sspAssetCriteriaTransfer,
-        CompanyUserTransfer $companyUserTransfer
-    ): SspAssetCriteriaTransfer {
-        if (!$sspAssetCriteriaTransfer->getSspAssetConditions()) {
-            $sspAssetCriteriaTransfer->setSspAssetConditions(new SspAssetConditionsTransfer());
-        }
-
-        if ($this->can(ViewCompanySspAssetPermissionPlugin::KEY, $companyUserTransfer->getIdCompanyUserOrFail())) {
-            $sspAssetCriteriaTransfer->getSspAssetConditionsOrFail()->setAssignedBusinessUnitCompanyId($companyUserTransfer->getFkCompanyOrFail());
-
-            return $sspAssetCriteriaTransfer;
-        }
-
-        if ($this->can(ViewBusinessUnitSspAssetPermissionPlugin::KEY, $companyUserTransfer->getIdCompanyUserOrFail())) {
-            $sspAssetCriteriaTransfer->getSspAssetConditionsOrFail()->setAssignedBusinessUnitId($companyUserTransfer->getFkCompanyBusinessUnitOrFail());
-        }
-
-        return $sspAssetCriteriaTransfer;
     }
 }

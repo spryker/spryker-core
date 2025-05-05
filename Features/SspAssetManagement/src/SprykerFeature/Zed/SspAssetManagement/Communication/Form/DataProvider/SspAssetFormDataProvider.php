@@ -71,8 +71,8 @@ class SspAssetFormDataProvider implements SspAssetFormDataProviderInterface
      */
     public function getOptions(SspAssetTransfer $sspAssetTransfer): array
     {
-        $assignedBusinessUnits = $this->getAssignedBusinessUnits($sspAssetTransfer->getAssignments());
-        $assignedCompanies = $this->getAssignedCompanies($sspAssetTransfer->getAssignments());
+        $assignedBusinessUnits = $this->getAssignedBusinessUnits($sspAssetTransfer->getBusinessUnitAssignments());
+        $assignedCompanies = $this->getAssignedCompanies($sspAssetTransfer->getBusinessUnitAssignments());
 
         $companyBusinessUnitOwnerTransfer = $sspAssetTransfer->getCompanyBusinessUnit();
 
@@ -151,7 +151,7 @@ class SspAssetFormDataProvider implements SspAssetFormDataProviderInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\SspAssetAssignmentTransfer> $sspAssetAssignmentTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer> $sspAssetAssignmentTransfers
      *
      * @return array<string, int>
      */
@@ -169,7 +169,7 @@ class SspAssetFormDataProvider implements SspAssetFormDataProviderInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\SspAssetAssignmentTransfer> $sspAssetAssignmentTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer> $sspAssetAssignmentTransfers
      *
      * @return array<string, int>
      */

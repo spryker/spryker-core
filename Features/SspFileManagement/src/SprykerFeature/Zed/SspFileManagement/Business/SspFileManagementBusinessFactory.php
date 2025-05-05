@@ -20,6 +20,8 @@ use SprykerFeature\Zed\SspFileManagement\Persistence\QueryStrategy\CompanyBusine
 use SprykerFeature\Zed\SspFileManagement\Persistence\QueryStrategy\CompanyFileQueryStrategy;
 use SprykerFeature\Zed\SspFileManagement\Persistence\QueryStrategy\CompanyUserFileQueryStrategy;
 use SprykerFeature\Zed\SspFileManagement\Persistence\QueryStrategy\FilePermissionQueryStrategyInterface;
+use SprykerFeature\Zed\SspFileManagement\Persistence\QueryStrategy\ViewBusinessUnitSspAssetSspAssetFileQueryStrategy;
+use SprykerFeature\Zed\SspFileManagement\Persistence\QueryStrategy\ViewCompanySspAssetSspAssetFileQueryStrategy;
 
 /**
  * @method \SprykerFeature\Zed\SspFileManagement\SspFileManagementConfig getConfig()
@@ -45,6 +47,8 @@ class SspFileManagementBusinessFactory extends AbstractBusinessFactory
             $this->createCompanyUserFileQueryStrategy(),
             $this->createCompanyFileQueryStrategy(),
             $this->createCompanyBusinessUnitFileQueryStrategy(),
+            $this->createViewBusinessUnitSspAssetSspAssetFileQueryStrategy(),
+            $this->createViewCompanySspAssetSspAssetFileQueryStrategy(),
         ];
     }
 
@@ -70,6 +74,22 @@ class SspFileManagementBusinessFactory extends AbstractBusinessFactory
     public function createCompanyBusinessUnitFileQueryStrategy(): FilePermissionQueryStrategyInterface
     {
         return new CompanyBusinessUnitFileQueryStrategy();
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspFileManagement\Persistence\QueryStrategy\FilePermissionQueryStrategyInterface
+     */
+    public function createViewBusinessUnitSspAssetSspAssetFileQueryStrategy(): FilePermissionQueryStrategyInterface
+    {
+        return new ViewBusinessUnitSspAssetSspAssetFileQueryStrategy();
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspFileManagement\Persistence\QueryStrategy\ViewCompanySspAssetSspAssetFileQueryStrategy
+     */
+    public function createViewCompanySspAssetSspAssetFileQueryStrategy(): ViewCompanySspAssetSspAssetFileQueryStrategy
+    {
+        return new ViewCompanySspAssetSspAssetFileQueryStrategy();
     }
 
     /**

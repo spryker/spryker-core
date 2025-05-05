@@ -13,9 +13,11 @@ use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
+use Orm\Zed\SspAssetManagement\Persistence\Map\SpySspAssetTableMap;
 use Orm\Zed\SspFileManagement\Persistence\Map\SpyCompanyBusinessUnitFileTableMap;
 use Orm\Zed\SspFileManagement\Persistence\Map\SpyCompanyFileTableMap;
 use Orm\Zed\SspFileManagement\Persistence\Map\SpyCompanyUserFileTableMap;
+use Orm\Zed\SspFileManagement\Persistence\Map\SpySspAssetFileTableMap;
 use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Adapter\Pdo\PdoAdapter;
@@ -100,6 +102,11 @@ class FileViewDetailTable extends AbstractTable
      * @var string
      */
     protected const COL_ENTITY_TYPE_COMPANY_USER = '\'company_user\'';
+
+    /**
+     * @var string
+     */
+    protected const COL_ENTITY_TYPE_ASSET = '\'ssp_asset\'';
 
     /**
      * @var string
@@ -358,7 +365,7 @@ class FileViewDetailTable extends AbstractTable
                                 sprintf("CONCAT(%s, ' ', %s) LIKE ?", SpyCustomerTableMap::COL_FIRST_NAME, SpyCustomerTableMap::COL_LAST_NAME),
                                 $this->getSearchString(),
                             )
-                            ->combine(['firstAndLastNameCondition'], Criteria::LOGICAL_AND)
+                            ->combine(['firstAndLastNameCondition'])
                         ->endUse()
                     ->endUse()
             ->endUse()
@@ -393,6 +400,38 @@ class FileViewDetailTable extends AbstractTable
     /**
      * @param \Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
      *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
+     */
+    protected function prepareAssetFileQuery(
+        FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+    ): SpyFileQuery {
+        $fileQuery = $this->fileQuery::create();
+
+        $fileQuery
+            ->useSpySspAssetFileQuery()
+                ->filterByFkFile($this->idFile)
+                ->withColumn(SpyFileTableMap::COL_ID_FILE, static::COL_ID_FILE)
+                ->useSspAssetQuery()
+                    ->withColumn(SpySspAssetFileTableMap::COL_CREATED_AT, static::COL_ATTACHED_AT)
+                    ->withColumn(SpySspAssetTableMap::COL_ID_SSP_ASSET, static::COL_ENTITY_ID)
+                    ->withColumn(SpySspAssetTableMap::COL_NAME, static::COL_ENTITY_NAME)
+                    ->withColumn(static::COL_ENTITY_TYPE_ASSET, static::COL_ENTITY_TYPE)
+                ->endUse()
+            ->endUse()
+            ->select([
+                static::COL_ID_FILE,
+                static::COL_ATTACHED_AT,
+                static::COL_ENTITY_ID,
+                static::COL_ENTITY_NAME,
+                static::COL_ENTITY_TYPE,
+            ]);
+
+        return $fileQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+     *
      * @return array<int, array<int, mixed>|string>
      */
     protected function getFileUnionQuerySql(FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer): array
@@ -400,6 +439,7 @@ class FileViewDetailTable extends AbstractTable
         $companyFileParams = [];
         $companyBusinessUnitFileParams = [];
         $companyUserFileParams = [];
+        $assetFileParams = [];
         $unionParts = [];
 
         if (!$fileAttachmentFileViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentFileViewDetailTableCriteriaTransfer->getEntityType() === SspFileManagementConfig::ENTITY_TYPE_COMPANY) {
@@ -417,10 +457,15 @@ class FileViewDetailTable extends AbstractTable
             $unionParts[] = $companyUserFileQuery->createSelectSql($companyUserFileParams);
         }
 
+        if (!$fileAttachmentFileViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentFileViewDetailTableCriteriaTransfer->getEntityType() === SspFileManagementConfig::ENTITY_TYPE_SSP_ASSET) {
+            $assetFileQuery = $this->prepareAssetFileQuery($fileAttachmentFileViewDetailTableCriteriaTransfer);
+            $unionParts[] = $assetFileQuery->createSelectSql($assetFileParams);
+        }
+
         $unionSql = implode(' UNION ALL ', array_map(fn ($sql) => "($sql)", $unionParts));
 
         return [
-            $unionSql, [$companyFileParams, $companyBusinessUnitFileParams, $companyUserFileParams],
+            $unionSql, [$companyFileParams, $companyBusinessUnitFileParams, $companyUserFileParams, $assetFileParams],
         ];
     }
 

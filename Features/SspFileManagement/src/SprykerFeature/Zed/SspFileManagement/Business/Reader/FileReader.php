@@ -45,7 +45,7 @@ class FileReader implements FileReaderInterface
 
         $activeStrategies = [];
         foreach ($this->queryStrategies as $strategy) {
-            if ($this->can($strategy->getPermissionKey(), $idCompanyUser)) {
+            if ($this->can($strategy->getPermissionKey(), $idCompanyUser) && $strategy->isApplicable($fileAttachmentFileCriteriaTransfer)) {
                 $activeStrategies[] = $strategy;
             }
         }

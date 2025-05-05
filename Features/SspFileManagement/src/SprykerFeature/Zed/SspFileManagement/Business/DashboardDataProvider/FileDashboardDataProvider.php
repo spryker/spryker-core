@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentFileSearchConditionsTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\SortTransfer;
+use SprykerFeature\Shared\SspFileManagement\SspFileManagementConfig as SharedSspFileManagementConfig;
 use SprykerFeature\Zed\SspFileManagement\Business\Reader\FileReaderInterface;
 use SprykerFeature\Zed\SspFileManagement\SspFileManagementConfig;
 
@@ -65,7 +66,11 @@ class FileDashboardDataProvider implements FileDashboardDataProviderInterface
                 (new FileAttachmentFileSearchConditionsTransfer()),
             )
             ->setFileAttachmentFileConditions(
-                (new FileAttachmentFileConditionsTransfer()),
+                (new FileAttachmentFileConditionsTransfer())->setEntityTypes([
+                    SharedSspFileManagementConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT,
+                    SharedSspFileManagementConfig::ENTITY_TYPE_COMPANY,
+                    SharedSspFileManagementConfig::ENTITY_TYPE_COMPANY_USER,
+                ]),
             )
             ->setPagination(
                 (new PaginationTransfer())

@@ -8,11 +8,20 @@
 namespace SprykerFeatureTest\Zed\SspFileManagement\Business\Facade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer;
 use Generated\Shared\Transfer\FileAttachmentTransfer;
+use Generated\Shared\Transfer\FileTransfer;
+use Generated\Shared\Transfer\SspAssetTransfer;
+use Orm\Zed\SspFileManagement\Persistence\Base\SpyCompanyFileQuery;
+use Orm\Zed\SspFileManagement\Persistence\SpyCompanyBusinessUnitFileQuery;
+use Orm\Zed\SspFileManagement\Persistence\SpySspAssetFileQuery;
 use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemWriterPlugin;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Shared\SspFileManagement\SspFileManagementConfig;
+use SprykerFeature\Zed\SspFileManagement\Business\SspFileManagementFacadeInterface;
 use SprykerFeatureTest\Zed\SspFileManagement\SspFileManagementBusinessTester;
 
 /**
@@ -43,6 +52,8 @@ class SaveFileAttachmentCollectionFacadeTest extends Unit
      */
     public const PLUGIN_COLLECTION_FILESYSTEM_BUILDER = 'filesystem builder plugin collection';
 
+    protected SspFileManagementFacadeInterface|AbstractFacade $facade;
+
     /**
      * @return void
      */
@@ -53,164 +64,282 @@ class SaveFileAttachmentCollectionFacadeTest extends Unit
             new LocalFilesystemBuilderPlugin(),
         ]);
         $this->tester->ensureFileAttachmentTablesAreEmpty();
+        $this->facade = $this->tester->getFacade();
     }
 
     /**
+     * @dataProvider dataProvider
+     *
+     * @param array<string, mixed> $filesData
+     * @param array<string, mixed> $companiesData
+     * @param array<string, mixed> $sspAssetsData
+     * @param array<string, mixed> $businessUnitsData
+     * @param array<string, mixed> $existingFileAttachmentsData
+     * @param array<string, mixed> $fileAttachmentsToAdd
+     * @param array<string, mixed> $fileAttachmentsToRemove
+     * @param int $expectedFileAttachmentEntitiesCount
+     *
      * @return void
      */
-    public function testSaveFileAttachmentCollectionWithSingleAttachmentShouldSucceed(): void
-    {
+    public function testSaveFileAttachmentCollection(
+        array $filesData,
+        array $companiesData,
+        array $sspAssetsData,
+        array $businessUnitsData,
+        array $existingFileAttachmentsData,
+        array $fileAttachmentsToAdd,
+        array $fileAttachmentsToRemove,
+        int $expectedFileAttachmentEntitiesCount
+    ): void {
         // Arrange
-        $companyTransfer = $this->tester->haveCompany();
-        $fileTransfer = $this->tester->haveFile();
+        $files = [];
+        foreach ($filesData as $fileData) {
+            $files[$fileData['uuid']] = $this->tester->haveFile([
+                FileTransfer::UUID => $fileData['uuid'],
+            ]);
+        }
 
-        $fileAttachment = (new FileAttachmentTransfer())
-            ->setFile($fileTransfer)
-            ->setEntityId($companyTransfer->getIdCompany())
-            ->setEntityName(SspFileManagementConfig::ENTITY_TYPE_COMPANY);
+        $companies = [];
+        foreach ($companiesData as $companyData) {
+            $companies[$companyData['uuid']] = $this->tester->haveCompany([
+                CompanyTransfer::UUID => $companyData['uuid'],
+            ]);
+        }
 
-        $fileAttachmentCollectionRequestTransfer = (new FileAttachmentCollectionRequestTransfer())
-            ->setIdFile($fileTransfer->getIdFile())
-            ->addFileAttachment($fileAttachment);
+        $sspAssets = [];
+        foreach ($sspAssetsData as $sspAssetData) {
+            $sspAssets[$sspAssetData['reference']] = $this->tester->haveAsset([
+                SspAssetTransfer::REFERENCE => $sspAssetData['reference'],
+            ]);
+        }
+
+        $businessUnits = [];
+        foreach ($businessUnitsData as $businessUnitData) {
+            $businessUnits[$businessUnitData['uuid']] = $this->tester->haveCompanyBusinessUnit([
+                CompanyBusinessUnitTransfer::UUID => $businessUnitData['uuid'],
+                CompanyBusinessUnitTransfer::FK_COMPANY => $companies[$businessUnitData['companyUuid']]->getIdCompany(),
+                CompanyBusinessUnitTransfer::COMPANY => $companies[$businessUnitData['companyUuid']],
+            ]);
+        }
+
+        $fileAttachmentCollectionRequestTransfer = new FileAttachmentCollectionRequestTransfer();
+        foreach ($fileAttachmentsToAdd as $fileAttachmentToAdd) {
+            if (isset($fileAttachmentToAdd['companyUuid'])) {
+                $fileAttachmentCollectionRequestTransfer->addFileAttachmentToAdd((new FileAttachmentTransfer())
+                    ->setFile($files[$fileAttachmentToAdd['fileUuid']])
+                    ->setEntityId($companies[$fileAttachmentToAdd['companyUuid']]->getIdCompany())
+                    ->setEntityName(SspFileManagementConfig::ENTITY_TYPE_COMPANY));
+            }
+            if (isset($fileAttachmentToAdd['businessUnitUuid'])) {
+                $fileAttachmentCollectionRequestTransfer->addFileAttachmentToAdd((new FileAttachmentTransfer())
+                    ->setFile($files[$fileAttachmentToAdd['fileUuid']])
+                    ->setEntityId($businessUnits[$fileAttachmentToAdd['businessUnitUuid']]->getIdCompanyBusinessUnit())
+                    ->setEntityName(SspFileManagementConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT));
+            }
+            if (isset($fileAttachmentToAdd['sspAssetReference'])) {
+                $fileAttachmentCollectionRequestTransfer->addFileAttachmentToAdd((new FileAttachmentTransfer())
+                    ->setFile($files[$fileAttachmentToAdd['fileUuid']])
+                    ->setEntityId($sspAssets[$fileAttachmentToAdd['sspAssetReference']]->getIdSspAsset())
+                    ->setEntityName(SspFileManagementConfig::ENTITY_TYPE_SSP_ASSET));
+            }
+        }
+
+        foreach ($fileAttachmentsToRemove as $fileAttachmentToRemove) {
+            if (isset($fileAttachmentToRemove['companyUuid'])) {
+                $fileAttachmentCollectionRequestTransfer->addFileAttachmentToRemove((new FileAttachmentTransfer())
+                    ->setFile($files[$fileAttachmentToRemove['fileUuid']])
+                    ->setEntityId($companies[$fileAttachmentToRemove['companyUuid']]->getIdCompany())
+                    ->setEntityName(SspFileManagementConfig::ENTITY_TYPE_COMPANY));
+            }
+            if (isset($fileAttachmentToRemove['businessUnitUuid'])) {
+                $fileAttachmentCollectionRequestTransfer->addFileAttachmentToRemove((new FileAttachmentTransfer())
+                    ->setFile($files[$fileAttachmentToRemove['fileUuid']])
+                    ->setEntityId($businessUnits[$fileAttachmentToRemove['businessUnitUuid']]->getIdCompanyBusinessUnit())
+                    ->setEntityName(SspFileManagementConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT));
+            }
+        }
+
+        foreach ($existingFileAttachmentsData as $existingFileAttachmentData) {
+            if (isset($existingFileAttachmentData['companyUuid'])) {
+                $this->tester->haveFileAttachment([
+                    FileAttachmentTransfer::FILE => $files[$existingFileAttachmentData['fileUuid']],
+                    FileAttachmentTransfer::ENTITY_ID => $companies[$existingFileAttachmentData['companyUuid']]->getIdCompany(),
+                    FileAttachmentTransfer::ENTITY_NAME => SspFileManagementConfig::ENTITY_TYPE_COMPANY,
+                ]);
+            }
+            if (isset($existingFileAttachmentData['businessUnitUuid'])) {
+                $this->tester->haveFileAttachment([
+                    FileAttachmentTransfer::FILE => $files[$existingFileAttachmentData['fileUuid']],
+                    FileAttachmentTransfer::ENTITY_ID => $businessUnits[$existingFileAttachmentData['businessUnitUuid']]->getIdCompanyBusinessUnit(),
+                    FileAttachmentTransfer::ENTITY_NAME => SspFileManagementConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT,
+                ]);
+            }
+            if (isset($existingFileAttachmentData['sspAssetReference'])) {
+                $this->tester->haveFileAttachment([
+                    FileAttachmentTransfer::FILE => $files[$existingFileAttachmentData['fileUuid']],
+                    FileAttachmentTransfer::ENTITY_ID => $sspAssets[$existingFileAttachmentData['sspAssetReference']]->getIdSspAsset(),
+                    FileAttachmentTransfer::ENTITY_NAME => SspFileManagementConfig::ENTITY_TYPE_SSP_ASSET,
+                ]);
+            }
+        }
 
         // Act
-        $fileAttachmentCollectionResponseTransfer = $this->tester->getFacade()
-            ->saveFileAttachmentCollection($fileAttachmentCollectionRequestTransfer);
+        $this->facade->saveFileAttachmentCollection($fileAttachmentCollectionRequestTransfer);
 
         // Assert
-        $this->assertCount(1, $fileAttachmentCollectionResponseTransfer->getFileAttachments());
+        $fileAttachmentEntitiesCount = 0;
+        foreach ($files as $file) {
+            $fileAttachmentEntitiesCount += SpyCompanyFileQuery::create()->filterByFkFile($file->getIdFile())->count();
+            $fileAttachmentEntitiesCount += SpyCompanyBusinessUnitFileQuery::create()->filterByFkFile($file->getIdFile())->count();
+            $fileAttachmentEntitiesCount += SpySspAssetFileQuery::create()->filterByFkFile($file->getIdFile())->count();
+        }
+
+        $this->assertSame($expectedFileAttachmentEntitiesCount, $fileAttachmentEntitiesCount);
     }
 
     /**
-     * @return void
+     * @return array<string, array<string, mixed>>
      */
-    public function testSaveFileAttachmentCollectionWithMultipleAttachmentsShouldSucceed(): void
+    protected function dataProvider(): array
     {
-        // Arrange
-        $companyTransfer = $this->tester->haveCompany();
-        $fileTransfer = $this->tester->haveFile();
+        return [
+            'save file attachment collection with single attachment should succeed' => [
+                'filesData' => [
+                    ['uuid' => '12345678-1234-5678-1234-567812345678'],
+                ],
+                'companiesData' => [
+                    ['uuid' => '6789abcd-1234-5678-1234-56789abcdef0'],
+                ],
+                'sspAssetsData' => [],
+                'businessUnitsData' => [],
+                'existingFileAttachmentsData' => [],
+                'fileAttachmentsToAdd' => [
+                [
+                    'companyUuid' => '6789abcd-1234-5678-1234-56789abcdef0',
+                    'fileUuid' => '12345678-1234-5678-1234-567812345678',
+                ],
 
-        $fileAttachment1 = (new FileAttachmentTransfer())
-            ->setFile($fileTransfer)
-            ->setEntityId($companyTransfer->getIdCompany())
-            ->setEntityName(SspFileManagementConfig::ENTITY_TYPE_COMPANY);
+                ],
+                'fileAttachmentsToRemove' => [],
+                'expectedFileAttachmentEntitiesCount' => 1,
+            ],
+            'save file attachment collection with multiple attachments should succeed' => [
+                'filesData' => [
+                    ['uuid' => '12345678-1234-5678-1234-563812345678'],
+                ],
+                'companiesData' => [
+                    ['uuid' => '6789abcd-8590-5678-1234-56789abcdef0'],
+                ],
+                'sspAssetsData' => [
+                    ['reference' => '6789abcd-86-5678-1234-58w56jbcdef0'],
+                ],
+                'businessUnitsData' => [
+                    [
+                        'uuid' => '6789abcd-1234-5658-1234-56789abcdef0',
+                        'companyUuid' => '6789abcd-8590-5678-1234-56789abcdef0',
+                    ],
+                ],
+                'existingFileAttachmentsData' => [
+                    [
+                        'companyUuid' => '6789abcd-8590-5678-1234-56789abcdef0',
+                        'fileUuid' => '12345678-1234-5678-1234-563812345678',
+                    ],
+                    [
+                        'sspAssetReference' => '6789abcd-86-5678-1234-58w56jbcdef0',
+                        'fileUuid' => '12345678-1234-5678-1234-563812345678',
+                    ],
+                ],
+                'fileAttachmentsToAdd' => [
+                [
+                    'businessUnitUuid' => '6789abcd-1234-5658-1234-56789abcdef0',
+                    'fileUuid' => '12345678-1234-5678-1234-563812345678',
+                ],
+                    [
+                        'companyUuid' => '6789abcd-8590-5678-1234-56789abcdef0',
+                        'fileUuid' => '12345678-1234-5678-1234-563812345678',
+                    ],
 
-        $fileAttachment2 = (new FileAttachmentTransfer())
-            ->setFile($fileTransfer)
-            ->setEntityId($companyTransfer->getIdCompany())
-            ->setEntityName(SspFileManagementConfig::ENTITY_TYPE_COMPANY);
-
-        $fileAttachmentCollectionRequestTransfer = (new FileAttachmentCollectionRequestTransfer())
-            ->setIdFile($fileTransfer->getIdFile())
-            ->addFileAttachment($fileAttachment1)
-            ->addFileAttachment($fileAttachment2);
-
-        // Act
-        $fileAttachmentCollectionResponseTransfer = $this->tester->getFacade()
-            ->saveFileAttachmentCollection($fileAttachmentCollectionRequestTransfer);
-
-        // Assert
-        $this->assertCount(2, $fileAttachmentCollectionResponseTransfer->getFileAttachments());
-    }
-
-    /**
-     * @return void
-     */
-    public function testSaveFileAttachmentCollectionWhenExistingAttachmentsHaveOneLessRecord(): void
-    {
-        // Arrange
-        $companyTransfer1 = $this->tester->haveCompany();
-        $companyTransfer2 = $this->tester->haveCompany();
-        $companyTransfer3 = $this->tester->haveCompany();
-        $fileTransfer = $this->tester->haveFile();
-
-        $fileAttachment1 = $this->tester->haveFileAttachment([
-            FileAttachmentTransfer::FILE => $fileTransfer,
-            FileAttachmentTransfer::ENTITY_ID => $companyTransfer1->getIdCompany(),
-            FileAttachmentTransfer::ENTITY_NAME => SspFileManagementConfig::ENTITY_TYPE_COMPANY,
-        ]);
-
-        $fileAttachment2 = $this->tester->haveFileAttachment([
-            FileAttachmentTransfer::FILE => $fileTransfer,
-            FileAttachmentTransfer::ENTITY_ID => $companyTransfer2->getIdCompany(),
-            FileAttachmentTransfer::ENTITY_NAME => SspFileManagementConfig::ENTITY_TYPE_COMPANY,
-        ]);
-
-        $fileAttachment3 = (new FileAttachmentTransfer())
-            ->setFile($fileTransfer)
-            ->setEntityId($companyTransfer3->getIdCompany())
-            ->setEntityName(SspFileManagementConfig::ENTITY_TYPE_COMPANY);
-
-        $newCollectionRequest = (new FileAttachmentCollectionRequestTransfer())
-            ->setIdFile($fileTransfer->getIdFile())
-            ->addFileAttachment($fileAttachment1)
-            ->addFileAttachment($fileAttachment2)
-            ->addFileAttachment($fileAttachment3);
-
-        // Act
-        $fileAttachmentCollectionResponseTransfer = $this->tester->getFacade()
-            ->saveFileAttachmentCollection($newCollectionRequest);
-
-        // Assert
-        $this->assertCount(3, $fileAttachmentCollectionResponseTransfer->getFileAttachments());
-    }
-
-    /**
-     * @return void
-     */
-    public function testSaveFileAttachmentCollectionWhenExistingAttachmentsHaveDifferences(): void
-    {
-        // Arrange
-        $companyTransfer = $this->tester->haveCompany();
-        $fileTransfer = $this->tester->haveFile();
-        $newCompanyTransfer = $this->tester->haveCompany();
-
-        $this->tester->haveFileAttachment([
-            FileAttachmentTransfer::FILE => $fileTransfer,
-            FileAttachmentTransfer::ENTITY_ID => $companyTransfer->getIdCompany(),
-            FileAttachmentTransfer::ENTITY_NAME => SspFileManagementConfig::ENTITY_TYPE_COMPANY,
-        ]);
-
-        $newFileAttachment = (new FileAttachmentTransfer())
-            ->setFile($fileTransfer)
-            ->setEntityId($newCompanyTransfer->getIdCompany())
-            ->setEntityName(SspFileManagementConfig::ENTITY_TYPE_COMPANY);
-
-        $newCollectionRequest = (new FileAttachmentCollectionRequestTransfer())
-            ->setIdFile($fileTransfer->getIdFile())
-            ->addFileAttachment($newFileAttachment);
-
-        // Act
-        $fileAttachmentCollectionResponseTransfer = $this->tester->getFacade()
-            ->saveFileAttachmentCollection($newCollectionRequest);
-
-        // Assert
-        $this->assertCount(1, $fileAttachmentCollectionResponseTransfer->getFileAttachments());
-    }
-
-    /**
-     * @return void
-     */
-    public function testSaveFileAttachmentCollectionWhenExistingAttachmentsNotEmptyAndNewCollectionEmpty(): void
-    {
-        // Arrange
-        $companyTransfer = $this->tester->haveCompany();
-        $fileTransfer = $this->tester->haveFile();
-
-        $this->tester->haveFileAttachment([
-            FileAttachmentTransfer::FILE => $fileTransfer,
-            FileAttachmentTransfer::ENTITY_ID => $companyTransfer->getIdCompany(),
-            FileAttachmentTransfer::ENTITY_NAME => SspFileManagementConfig::ENTITY_TYPE_COMPANY,
-        ]);
-
-        $emptyCollectionRequest = (new FileAttachmentCollectionRequestTransfer())
-            ->setIdFile($fileTransfer->getIdFile());
-
-        // Act
-        $fileAttachmentCollectionResponseTransfer = $this->tester->getFacade()
-            ->saveFileAttachmentCollection($emptyCollectionRequest);
-
-        // Assert
-        $this->assertCount(0, $fileAttachmentCollectionResponseTransfer->getFileAttachments());
+                ],
+                'fileAttachmentsToRemove' => [],
+                'expectedFileAttachmentEntitiesCount' => 3,
+            ],
+            'save file attachment collection when existing attachments have one less record' => [
+                'filesData' => [
+                    ['uuid' => '12345678-1234-5678-1794-563812345678'],
+                ],
+                'companiesData' => [
+                    ['uuid' => '6789abcd-8590-5678-1234-56789jbcdef0'],
+                    ['uuid' => '6789abcd-e590-5678-1234-56789jbcdef0'],
+                    ['uuid' => '6t89abcd-e590-5678-1234-56789jbcdef0'],
+                ],
+                'sspAssetsData' => [],
+                'businessUnitsData' => [],
+                'existingFileAttachmentsData' => [
+                    [
+                        'companyUuid' => '6789abcd-8590-5678-1234-56789jbcdef0',
+                        'fileUuid' => '12345678-1234-5678-1794-563812345678',
+                    ],
+                    [
+                        'companyUuid' => '6t89abcd-e590-5678-1234-56789jbcdef0',
+                        'fileUuid' => '12345678-1234-5678-1794-563812345678',
+                    ],
+                ],
+                'fileAttachmentsToAdd' => [
+                    [
+                        'companyUuid' => '6789abcd-8590-5678-1234-56789jbcdef0',
+                        'fileUuid' => '12345678-1234-5678-1794-563812345678',
+                    ],
+                    [
+                        'companyUuid' => '6789abcd-e590-5678-1234-56789jbcdef0',
+                        'fileUuid' => '12345678-1234-5678-1794-563812345678',
+                    ],
+                ],
+                'fileAttachmentsToRemove' => [],
+                'expectedFileAttachmentEntitiesCount' => 3,
+            ],
+            'delete file attachment' => [
+                'filesData' => [
+                    ['uuid' => '12345678-ye34-5678-1794-563812345678'],
+                    ['uuid' => '12345678-pger-5678-1794-563812345678'],
+                ],
+                'companiesData' => [
+                    ['uuid' => '6789abcd-3e-5678-1234-56789jbcdef0'],
+                    ['uuid' => '6789abcd-3e-5678-7fre-56789jbcdef0'],
+                ],
+                'sspAssetsData' => [],
+                'businessUnitsData' => [
+                    [
+                        'companyUuid' => '6789abcd-3e-5678-7fre-56789jbcdef0',
+                        'uuid' => '6789abcd-8590-5678-1234-5og89jbcdef0',
+                    ],
+                ],
+                'existingFileAttachmentsData' => [
+                    [
+                        'companyUuid' => '6789abcd-3e-5678-1234-56789jbcdef0',
+                        'fileUuid' => '12345678-ye34-5678-1794-563812345678',
+                    ],
+                    [
+                        'companyUuid' => '6789abcd-3e-5678-7fre-56789jbcdef0',
+                        'fileUuid' => '12345678-ye34-5678-1794-563812345678',
+                    ],
+                    [
+                        'businessUnitUuid' => '6789abcd-8590-5678-1234-5og89jbcdef0',
+                        'fileUuid' => '12345678-ye34-5678-1794-563812345678',
+                    ],
+                    [
+                        'businessUnitUuid' => '6789abcd-8590-5678-1234-5og89jbcdef0',
+                        'fileUuid' => '12345678-pger-5678-1794-563812345678',
+                    ],
+                ],
+                'fileAttachmentsToAdd' => [],
+                'fileAttachmentsToRemove' => [
+                    [
+                        'companyUuid' => '6789abcd-3e-5678-7fre-56789jbcdef0',
+                        'fileUuid' => '12345678-ye34-5678-1794-563812345678',
+                    ],
+                ],
+                'expectedFileAttachmentEntitiesCount' => 3,
+            ],
+            ];
     }
 }

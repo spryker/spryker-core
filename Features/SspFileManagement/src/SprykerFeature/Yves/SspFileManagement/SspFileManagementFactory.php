@@ -38,15 +38,16 @@ class SspFileManagementFactory extends AbstractFactory
     }
 
     /**
+     * @param array<string, mixed> $data
      * @param string $localeName
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createFileSearchFilterForm(string $localeName): FormInterface
+    public function createFileSearchFilterForm(array $data, string $localeName): FormInterface
     {
         return $this->getFormFactory()->create(
             FileSearchFilterForm::class,
-            null,
+            $data,
             $this->createFileSearchFilterFormDataProvider()->getOptions($localeName),
         );
     }

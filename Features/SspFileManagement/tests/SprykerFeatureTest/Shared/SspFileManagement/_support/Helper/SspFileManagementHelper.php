@@ -14,6 +14,7 @@ use InvalidArgumentException;
 use Orm\Zed\SspFileManagement\Persistence\SpyCompanyBusinessUnitFileQuery;
 use Orm\Zed\SspFileManagement\Persistence\SpyCompanyFileQuery;
 use Orm\Zed\SspFileManagement\Persistence\SpyCompanyUserFileQuery;
+use Orm\Zed\SspFileManagement\Persistence\SpySspAssetFileQuery;
 use SprykerFeature\Shared\SspFileManagement\SspFileManagementConfig;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
@@ -40,6 +41,7 @@ class SspFileManagementHelper extends Module
             SspFileManagementConfig::ENTITY_TYPE_COMPANY => $this->createCompanyFileAttachment($idFile, $entityId),
             SspFileManagementConfig::ENTITY_TYPE_COMPANY_USER => $this->createCompanyUserFileAttachment($idFile, $entityId),
             SspFileManagementConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT => $this->createCompanyBusinessUnitFileAttachment($idFile, $entityId),
+            SspFileManagementConfig::ENTITY_TYPE_SSP_ASSET => $this->createSspAssetFileAttachment($idFile, $entityId),
             default => throw new InvalidArgumentException("Invalid entity type: $entityName"),
         };
 
@@ -119,6 +121,28 @@ class SspFileManagementHelper extends Module
     }
 
     /**
+     * @param int $idFile
+     * @param int $idSspAsset
+     *
+     * @return void
+     */
+    protected function createSspAssetFileAttachment(
+        int $idFile,
+        int $idSspAsset
+    ): void {
+        $sspAssetFileEntity = $this->createSspAssetFileQuery()
+            ->filterByFkFile($idFile)
+            ->filterByFkSspAsset($idSspAsset)
+            ->findOneOrCreate();
+
+        $sspAssetFileEntity->save();
+
+        $this->getDataCleanupHelper()->addCleanup(function () use ($sspAssetFileEntity): void {
+            $sspAssetFileEntity->delete();
+        });
+    }
+
+    /**
      * @return \Orm\Zed\SspFileManagement\Persistence\SpyCompanyFileQuery
      */
     public function createCompanyFileQuery(): SpyCompanyFileQuery
@@ -140,5 +164,13 @@ class SspFileManagementHelper extends Module
     public function createCompanyBusinessUnitFileQuery(): SpyCompanyBusinessUnitFileQuery
     {
         return SpyCompanyBusinessUnitFileQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\SspFileManagement\Persistence\SpySspAssetFileQuery
+     */
+    public function createSspAssetFileQuery(): SpySspAssetFileQuery
+    {
+        return SpySspAssetFileQuery::create();
     }
 }

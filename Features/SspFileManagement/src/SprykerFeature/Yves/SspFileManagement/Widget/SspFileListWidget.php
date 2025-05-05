@@ -10,15 +10,17 @@ namespace SprykerFeature\Yves\SspFileManagement\Widget;
 use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
-class DashboardFileWidget extends AbstractWidget
+class SspFileListWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer|null $fileAttachmentFileCollectionTransfer
+     * @param string|null $moreLink
      */
-    public function __construct(?FileAttachmentFileCollectionTransfer $fileAttachmentFileCollectionTransfer)
+    public function __construct(?FileAttachmentFileCollectionTransfer $fileAttachmentFileCollectionTransfer, ?string $moreLink = null)
     {
         $this->addParameter('totalItems', $fileAttachmentFileCollectionTransfer?->getPagination()?->getNbResults());
-        $this->addParameter('files', $fileAttachmentFileCollectionTransfer?->getFiles());
+        $this->addParameter('fileAttachments', $fileAttachmentFileCollectionTransfer?->getFileAttachments());
+        $this->addParameter('moreLink', $moreLink);
     }
 
     /**
@@ -26,7 +28,7 @@ class DashboardFileWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'DashboardFileWidget';
+        return 'SspFileListWidget';
     }
 
     /**

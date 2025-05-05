@@ -7,7 +7,9 @@
 
 namespace SprykerFeature\Zed\SspFileManagement\Communication\Plugin\FileManager;
 
-use Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer;
+use Generated\Shared\Transfer\FileAttachmentConditionsTransfer;
+use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
 use Generated\Shared\Transfer\FileCollectionTransfer;
 use Spryker\Zed\FileManagerExtension\Dependency\Plugin\FilePreDeletePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -34,9 +36,22 @@ class FileAttachmentFilePreDeletePlugin extends AbstractPlugin implements FilePr
     {
         $fileIds = $this->extractFileIds($fileCollectionTransfer);
 
-        $this->getFacade()->deleteFileAttachmentCollection(
-            (new FileAttachmentCollectionDeleteCriteriaTransfer())->setFileIds($fileIds),
-        );
+        foreach ($fileIds as $fileId) {
+            $fileAttachmentCollectionTransfer = $this->getFacade()
+                ->getFileAttachmentCollection((new FileAttachmentCriteriaTransfer())
+                    ->setFileAttachmentConditions(
+                        (new FileAttachmentConditionsTransfer())->addIdFile($fileId),
+                    ));
+
+            $fileAttachmentCollectionRequestTransfer = new FileAttachmentCollectionRequestTransfer();
+            $fileAttachmentCollectionRequestTransfer->setIdFile($fileId);
+
+            foreach ($fileAttachmentCollectionTransfer->getFileAttachments() as $fileAttachmentTransfer) {
+                $fileAttachmentCollectionRequestTransfer->addFileAttachmentToRemove($fileAttachmentTransfer);
+            }
+
+            $this->getFacade()->saveFileAttachmentCollection($fileAttachmentCollectionRequestTransfer);
+        }
 
         return $fileCollectionTransfer;
     }

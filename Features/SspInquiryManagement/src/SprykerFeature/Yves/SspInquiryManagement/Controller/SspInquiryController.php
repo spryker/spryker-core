@@ -49,6 +49,11 @@ class SspInquiryController extends AbstractController
     protected const PARAM_SSP_INQUIRY_REFERENCE = 'sspInquiryReference';
 
     /**
+     * @var string
+     */
+    protected const QUERY_PARAM_SSP_ASSET_REFERENCE = 'ssp-asset-reference';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $sspInquiryReference
      *
@@ -268,8 +273,8 @@ class SspInquiryController extends AbstractController
             ->createSspInquirySearchFormHandler()
             ->handleFormSubmit($sspInquirySearchForm, $sspInquiryCriteriaTransfer);
 
-        if ($request->query->has('ssp_asset_reference')) {
-            $sspInquiryConditionsTransfer->addSspAssetReference((string)$request->query->get('ssp_asset_reference'));
+        if ($request->query->has(static::QUERY_PARAM_SSP_ASSET_REFERENCE)) {
+            $sspInquiryConditionsTransfer->addSspAssetReference((string)$request->query->get(static::QUERY_PARAM_SSP_ASSET_REFERENCE));
         }
 
         $sspInquiryCollectionTransfer = $this->getFactory()->createSspInquiryReader()->getSspInquiryCollection(

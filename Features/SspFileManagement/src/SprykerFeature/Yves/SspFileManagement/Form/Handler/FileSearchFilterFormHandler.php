@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\SortTransfer;
 use SprykerFeature\Client\SspFileManagement\SspFileManagementClientInterface;
+use SprykerFeature\Shared\SspFileManagement\SspFileManagementConfig as SharedSspFileManagementConfig;
 use SprykerFeature\Yves\SspFileManagement\Form\FileSearchFilterForm;
 use SprykerFeature\Yves\SspFileManagement\Form\FileSearchFilterSubForm;
 use SprykerFeature\Yves\SspFileManagement\Formatter\TimeZoneFormatterInterface;
@@ -31,6 +32,11 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
      * @var string
      */
     protected const DEFAULT_ORDER_DIRECTION = 'ASC';
+
+    /**
+     * @var string
+     */
+    protected const QUERY_PARAM_SSP_ASSET_REFERENCE = 'ssp-asset-reference';
 
     /**
      * @param \SprykerFeature\Yves\SspFileManagement\Reader\CompanyUserReaderInterface $companyUserReader
@@ -58,11 +64,23 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
     ): FileAttachmentFileCollectionTransfer {
         $fileAttachmentFileCriteriaTransfer = $this->getFileAttachmentFileCriteriaTransfer($request);
 
+        $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()->setEntityTypes([
+            SharedSspFileManagementConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT,
+            SharedSspFileManagementConfig::ENTITY_TYPE_COMPANY,
+            SharedSspFileManagementConfig::ENTITY_TYPE_COMPANY_USER,
+        ]);
+
         $data = $request->query->all()[FileSearchFilterForm::FORM_NAME] ?? [];
         $isReset = $data[FileSearchFilterForm::FIELD_RESET] ?? null;
 
         if ($isReset) {
             return $this->getFileAttachmentFileCollection($fileAttachmentFileCriteriaTransfer);
+        }
+
+        if ($request->query->has(static::QUERY_PARAM_SSP_ASSET_REFERENCE)) {
+            $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()->addAssetReference(
+                (string)$request->query->get(static::QUERY_PARAM_SSP_ASSET_REFERENCE),
+            )->setEntityTypes([SharedSspFileManagementConfig::ENTITY_TYPE_SSP_ASSET]);
         }
 
         $fileSearchFilterForm->handleRequest($request);

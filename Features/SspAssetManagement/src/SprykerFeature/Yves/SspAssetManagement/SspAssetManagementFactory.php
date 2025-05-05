@@ -24,8 +24,6 @@ use SprykerFeature\Yves\SspAssetManagement\Mapper\SspAssetFormDataToTransferMapp
 use SprykerFeature\Yves\SspAssetManagement\Mapper\SspAssetFormDataToTransferMapperInterface;
 use SprykerFeature\Yves\SspAssetManagement\Permission\SspAssetCustomerPermissionChecker;
 use SprykerFeature\Yves\SspAssetManagement\Permission\SspAssetCustomerPermissionCheckerInterface;
-use SprykerFeature\Yves\SspAssetManagement\Permission\SspAssetCustomerPermissionExpander;
-use SprykerFeature\Yves\SspAssetManagement\Permission\SspAssetCustomerPermissionExpanderInterface;
 use SprykerFeature\Yves\SspAssetManagement\Reader\SspAssetReader;
 use SprykerFeature\Yves\SspAssetManagement\Reader\SspAssetReaderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -80,14 +78,6 @@ class SspAssetManagementFactory extends AbstractFactory
     public function createSspAssetCustomerPermissionChecker(): SspAssetCustomerPermissionCheckerInterface
     {
         return new SspAssetCustomerPermissionChecker();
-    }
-
-    /**
-     * @return \SprykerFeature\Yves\SspAssetManagement\Permission\SspAssetCustomerPermissionExpanderInterface
-     */
-    public function createSspAssetCustomerPermissionExpander(): SspAssetCustomerPermissionExpanderInterface
-    {
-        return new SspAssetCustomerPermissionExpander();
     }
 
     /**
@@ -156,7 +146,6 @@ class SspAssetManagementFactory extends AbstractFactory
         return new SspAssetReader(
             $this->getSspAssetManagementClient(),
             $this->getConfig(),
-            $this->createSspAssetCustomerPermissionExpander(),
         );
     }
 }

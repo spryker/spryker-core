@@ -14,3 +14,4 @@ parameters:
         - '#Call to function method_exists\(\) with .Twig\\\\Extension.* and .* will always evaluate to false.#'
         - '#Call to an undefined static method Twig\\Extension\\CoreExtension\:\:.+\(\).#'
     reportUnmatchedIgnoredErrors: false
+    treatPhpDocTypesAsCertain: false

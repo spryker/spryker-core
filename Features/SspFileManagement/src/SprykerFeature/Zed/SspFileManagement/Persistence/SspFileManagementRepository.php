@@ -47,11 +47,13 @@ class SspFileManagementRepository extends AbstractRepository implements SspFileM
         $companyFiles = $this->getCompanyFiles($fileAttachmentCriteriaTransfer);
         $companyUserFiles = $this->getCompanyUserFiles($fileAttachmentCriteriaTransfer);
         $companyBusinessUnitFiles = $this->getCompanyBusinessUnitFiles($fileAttachmentCriteriaTransfer);
+        $sspAssetFiles = $this->getSspAssetFiles($fileAttachmentCriteriaTransfer);
 
         $fileAttachmentTransfers = array_merge(
             $this->getFactory()->createCompanyFileMapper()->mapCompanyFileEntitiesToFileAttachmentTransfers($companyFiles),
             $this->getFactory()->createCompanyUserFileMapper()->mapCompanyUserFileEntitiesToFileAttachmentTransfers($companyUserFiles),
             $this->getFactory()->createCompanyBusinessUnitFileMapper()->mapCompanyBusinessUnitFileEntitiesToFileAttachmentTransfers($companyBusinessUnitFiles),
+            $this->getFactory()->createSspAssetFileMapper()->mapSspAssetFileEntitiesToFileAttachmentTransfers($sspAssetFiles),
         );
 
         return $fileAttachmentCollectionTransfer->setFileAttachments(new ArrayObject($fileAttachmentTransfers));
@@ -104,6 +106,25 @@ class SspFileManagementRepository extends AbstractRepository implements SspFileM
     {
         $query = $this->getFactory()
             ->createCompanyBusinessUnitFileQuery();
+
+        $idFiles = $fileAttachmentCriteriaTransfer->getFileAttachmentConditionsOrFail()->getIdFiles();
+
+        if ($idFiles !== null) {
+            $query->filterByFkFile_In($idFiles);
+        }
+
+        return $query->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SspFileManagement\Persistence\SpySspAssetFile>
+     */
+    protected function getSspAssetFiles(FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): ObjectCollection
+    {
+        $query = $this->getFactory()
+            ->createSspAssetFileQuery();
 
         $idFiles = $fileAttachmentCriteriaTransfer->getFileAttachmentConditionsOrFail()->getIdFiles();
 
@@ -258,7 +279,8 @@ class SspFileManagementRepository extends AbstractRepository implements SspFileM
     ): SpyFileQuery {
         $uuids = $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()->getUuids();
         if ($uuids !== []) {
-            $query->filterByUuid_In($uuids);
+            $query
+                ->filterByUuid_In($uuids);
         }
 
         return $query;

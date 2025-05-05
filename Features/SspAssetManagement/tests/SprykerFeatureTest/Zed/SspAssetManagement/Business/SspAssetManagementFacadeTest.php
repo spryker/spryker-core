@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\DashboardRequestTransfer;
 use Generated\Shared\Transfer\DashboardResponseTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\SortTransfer;
-use Generated\Shared\Transfer\SspAssetAssignmentTransfer;
+use Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspAssetConditionsTransfer;
@@ -221,7 +221,7 @@ class SspAssetManagementFacadeTest extends Unit
         $companyByKey = [];
         $businessUnitByKey = [];
         foreach ($sspAssets as $sspAssetData) {
-            $businessUnitAssignements = [];
+            $businessUnitAssignments = [];
             if (isset($sspAssetData['assignedCompanyBusinessUnits'])) {
                 foreach ($sspAssetData['assignedCompanyBusinessUnits'] as $assignedCompanyBusinessUnit) {
                     if (isset($assignedCompanyBusinessUnit['companyKey'])) {
@@ -246,8 +246,8 @@ class SspAssetManagementFacadeTest extends Unit
                             CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
                         ]);
                     }
-                    $businessUnitAssignements[] = [
-                        SspAssetAssignmentTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
+                    $businessUnitAssignments[] = [
+                        SspAssetBusinessUnitAssignmentTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
                     ];
 
                     $companyByKey[$companyTransfer->getKey()] = $companyTransfer;
@@ -260,7 +260,7 @@ class SspAssetManagementFacadeTest extends Unit
                 SspAssetTransfer::SERIAL_NUMBER => $sspAssetData['serialNumber'],
                 SspAssetTransfer::NOTE => $sspAssetData['note'],
                 SspAssetTransfer::COMPANY_BUSINESS_UNIT => $this->companyBusinessUnit,
-                SspAssetTransfer::ASSIGNMENTS => $businessUnitAssignements,
+                SspAssetTransfer::BUSINESS_UNIT_ASSIGNMENTS => $businessUnitAssignments,
             ]);
         }
 
@@ -310,9 +310,9 @@ class SspAssetManagementFacadeTest extends Unit
             $sspAssetTransfer = $sspAssetCollectionTransfer->getSspAssets()->offsetGet($key);
             $this->assertSame($expectedAsset['name'], $sspAssetTransfer->getName());
             $this->assertSame($expectedAsset['serialNumber'], $sspAssetTransfer->getSerialNumber());
-            $this->assertCount(count($expectedAsset['assignedCompanyBusinessUnits']), $sspAssetTransfer->getAssignments()->getIterator());
+            $this->assertCount(count($expectedAsset['assignedCompanyBusinessUnits']), $sspAssetTransfer->getBusinessUnitAssignments()->getIterator());
             foreach ($expectedAsset['assignedCompanyBusinessUnits'] as $index => $expectedCompanyBusinessUnit) {
-                $companyBusinessUnitEntity = SpyCompanyBusinessUnitQuery::create()->findOneByIdCompanyBusinessUnit($sspAssetTransfer->getAssignments()->offsetGet($index)->getCompanyBusinessUnit()->getIdCompanyBusinessUnit());
+                $companyBusinessUnitEntity = SpyCompanyBusinessUnitQuery::create()->findOneByIdCompanyBusinessUnit($sspAssetTransfer->getBusinessUnitAssignments()->offsetGet($index)->getCompanyBusinessUnit()->getIdCompanyBusinessUnit());
                 $this->assertSame($expectedCompanyBusinessUnit['key'], $companyBusinessUnitEntity->getKey());
             }
         }
@@ -323,6 +323,7 @@ class SspAssetManagementFacadeTest extends Unit
      */
     public function testSspAssetDashboardDataProviderPluginWillAddAssetToCollection(): void
     {
+        // Arrange
         $customerTransfer = $this->tester->haveCustomer();
         $companyTransfer = $this->tester->haveCompany();
 
@@ -331,7 +332,7 @@ class SspAssetManagementFacadeTest extends Unit
         ]);
         $businessUnitAssignments = [
             [
-                SspAssetAssignmentTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
+                SspAssetBusinessUnitAssignmentTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
             ],
         ];
 
@@ -343,9 +344,10 @@ class SspAssetManagementFacadeTest extends Unit
             SspAssetTransfer::SERIAL_NUMBER => $expectedSerialNumber,
             SspAssetTransfer::NOTE => $expectedNote,
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $this->companyBusinessUnit,
-            SspAssetTransfer::ASSIGNMENTS => $businessUnitAssignments,
+            SspAssetTransfer::BUSINESS_UNIT_ASSIGNMENTS => $businessUnitAssignments,
         ]);
 
+        // Act
         $dashboardResponseTransfer = (new SspAssetDashboardDataProviderPlugin())->provideDashboardData(
             (new DashboardResponseTransfer()),
             (new DashboardRequestTransfer())->setCompanyUser($this->tester->haveCompanyUser([
@@ -355,6 +357,7 @@ class SspAssetManagementFacadeTest extends Unit
             ])),
         );
 
+        // Assert
         $this->assertCount(1, $dashboardResponseTransfer->getDashboardComponentAssets()->getSspAssetCollection()->getSspAssets());
         $this->assertSame(
             1,

@@ -9,7 +9,7 @@ namespace SprykerFeatureTest\Zed\SspAssetManagement\Communication\Mapper;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\SspAssetAssignmentTransfer;
+use Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Mapper\SspAssetFormDataToTransferMapper;
@@ -67,20 +67,20 @@ class SspAssetFormDataToTransferMapperTest extends Unit
         );
 
         // Assert
-        $this->assertCount(count($expectedAddIds), $result->getAssignmentsToAdd());
-        $this->assertCount(count($expectedRemoveIds), $result->getAssignmentsToRemove());
+        $this->assertCount(count($expectedAddIds), $result->getBusinessUnitAssignmentsToAdd());
+        $this->assertCount(count($expectedRemoveIds), $result->getBusinessUnitAssignmentsToRemove());
 
         foreach ($expectedAddIds as $index => $expectedId) {
             $this->assertSame(
                 $expectedId,
-                $result->getAssignmentsToAdd()[$index]->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail(),
+                $result->getBusinessUnitAssignmentsToAdd()[$index]->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail(),
             );
         }
 
         foreach ($expectedRemoveIds as $index => $expectedId) {
             $this->assertSame(
                 $expectedId,
-                $result->getAssignmentsToRemove()[$index]->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail(),
+                $result->getBusinessUnitAssignmentsToRemove()[$index]->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail(),
             );
         }
     }
@@ -134,8 +134,8 @@ class SspAssetFormDataToTransferMapperTest extends Unit
         $sspAssetTransfer = new SspAssetTransfer();
 
         foreach ($businessUnitIds as $businessUnitId) {
-            $sspAssetTransfer->addAssignment(
-                (new SspAssetAssignmentTransfer())
+            $sspAssetTransfer->addBusinessUnitAssignment(
+                (new SspAssetBusinessUnitAssignmentTransfer())
                     ->setCompanyBusinessUnit(
                         (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($businessUnitId),
                     ),
@@ -151,7 +151,7 @@ class SspAssetFormDataToTransferMapperTest extends Unit
     protected function createSspAssetTransferWithNullAssignment(): SspAssetTransfer
     {
         $sspAssetTransfer = new SspAssetTransfer();
-        $sspAssetTransfer->addAssignment(new SspAssetAssignmentTransfer());
+        $sspAssetTransfer->addBusinessUnitAssignment(new SspAssetBusinessUnitAssignmentTransfer());
 
         return $sspAssetTransfer;
     }

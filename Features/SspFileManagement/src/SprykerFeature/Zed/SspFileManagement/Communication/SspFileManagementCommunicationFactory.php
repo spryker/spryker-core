@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\SspFileManagement\Communication;
 
 use Generated\Shared\Transfer\FileAttachmentFileTableCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer;
+use Generated\Shared\Transfer\SspAssetTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
@@ -19,13 +20,17 @@ use Spryker\Zed\FileManager\Business\FileManagerFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface;
 use Spryker\Zed\Translator\Business\TranslatorFacadeInterface;
+use SprykerFeature\Zed\SspAssetManagement\Business\SspAssetManagementFacadeInterface;
+use SprykerFeature\Zed\SspAssetManagement\SspAssetManagementDependencyProvider;
 use SprykerFeature\Zed\SspFileManagement\Communication\Form\AttachFileForm;
 use SprykerFeature\Zed\SspFileManagement\Communication\Form\DataProvider\FileAttachFormDataProvider;
 use SprykerFeature\Zed\SspFileManagement\Communication\Form\DataProvider\FileTableFilterFormDataProvider;
 use SprykerFeature\Zed\SspFileManagement\Communication\Form\DataProvider\FileViewDetailTableFilterFormDataProvider;
+use SprykerFeature\Zed\SspFileManagement\Communication\Form\DataProvider\SspAssetAttachmentFormDataProvider;
 use SprykerFeature\Zed\SspFileManagement\Communication\Form\DeleteFileForm;
 use SprykerFeature\Zed\SspFileManagement\Communication\Form\FileTableFilterForm;
 use SprykerFeature\Zed\SspFileManagement\Communication\Form\FileViewDetailTableFilterForm;
+use SprykerFeature\Zed\SspFileManagement\Communication\Form\SspAssetAttachmentForm;
 use SprykerFeature\Zed\SspFileManagement\Communication\Form\UnlinkFileForm;
 use SprykerFeature\Zed\SspFileManagement\Communication\Form\UploadFileForm;
 use SprykerFeature\Zed\SspFileManagement\Communication\Formatter\FileSizeFormatter;
@@ -42,8 +47,10 @@ use SprykerFeature\Zed\SspFileManagement\Communication\ReferenceGenerator\FileRe
 use SprykerFeature\Zed\SspFileManagement\Communication\ReferenceGenerator\FileReferenceGeneratorInterface;
 use SprykerFeature\Zed\SspFileManagement\Communication\Saver\FileSaver;
 use SprykerFeature\Zed\SspFileManagement\Communication\Saver\FileSaverInterface;
+use SprykerFeature\Zed\SspFileManagement\Communication\Table\AttachedSspAssetFileTable;
 use SprykerFeature\Zed\SspFileManagement\Communication\Table\FileTable;
 use SprykerFeature\Zed\SspFileManagement\Communication\Table\FileViewDetailTable;
+use SprykerFeature\Zed\SspFileManagement\Communication\Tabs\FileAttachmentTabs;
 use SprykerFeature\Zed\SspFileManagement\SspFileManagementDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
@@ -65,7 +72,7 @@ class SspFileManagementCommunicationFactory extends AbstractCommunicationFactory
         FileAttachmentFileTableCriteriaTransfer $fileAttachmentFileTableCriteriaTransfer
     ): FileTable {
         return new FileTable(
-            $this->getFilePropelQuery(),
+            $this->getFileQuery(),
             $this->createFileSizeFormatter(),
             $this->getDateTimeService(),
             $this->createTimeZoneFormatter(),
@@ -84,7 +91,7 @@ class SspFileManagementCommunicationFactory extends AbstractCommunicationFactory
         FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
     ): FileViewDetailTable {
         return new FileViewDetailTable(
-            $this->getFilePropelQuery(),
+            $this->getFileQuery(),
             $idFile,
             $this->getDateTimeService(),
             $this->createTimeZoneFormatter(),
@@ -244,6 +251,18 @@ class SspFileManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param array<mixed>|null $data
+     * @param array<mixed> $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createSspAssetAttachmentForm(?array $data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()
+            ->create(SspAssetAttachmentForm::class, $data, $options);
+    }
+
+    /**
      * @return \SprykerFeature\Zed\SspFileManagement\Communication\Mapper\FileAttachmentMapperInterface
      */
     public function createFileAttachmentMapper(): FileAttachmentMapperInterface
@@ -273,14 +292,6 @@ class SspFileManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getSequenceNumberFacade(): SequenceNumberFacadeInterface
     {
         return $this->getProvidedDependency(SspFileManagementDependencyProvider::FACADE_SEQUENCE_NUMBER);
-    }
-
-    /**
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
-    public function getFilePropelQuery(): SpyFileQuery
-    {
-        return $this->getProvidedDependency(SspFileManagementDependencyProvider::PROPEL_QUERY_FILE);
     }
 
     /**
@@ -329,5 +340,59 @@ class SspFileManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getDateTimeService(): UtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(SspFileManagementDependencyProvider::SERVICE_UTIL_DATE_TIME);
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspFileManagement\Communication\Tabs\FileAttachmentTabs
+     */
+    public function createFileAttachmentTabs(): FileAttachmentTabs
+    {
+        return new FileAttachmentTabs();
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspFileManagement\Communication\Form\DataProvider\SspAssetAttachmentFormDataProvider
+     */
+    public function createAssetAttachmentFormDataProvider(): SspAssetAttachmentFormDataProvider
+    {
+        return new SspAssetAttachmentFormDataProvider($this->getSspAssetManagementFacade());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
+     *
+     * @return \SprykerFeature\Zed\SspFileManagement\Communication\Table\AttachedSspAssetFileTable
+     */
+    public function createAttachedSspAssetFileTable(SspAssetTransfer $sspAssetTransfer): AttachedSspAssetFileTable
+    {
+        return new AttachedSspAssetFileTable(
+            $sspAssetTransfer,
+            $this->getFileQuery(),
+            $this->getUtilDateTimeService(),
+        );
+    }
+
+    /**
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
+     */
+    public function getFileQuery(): SpyFileQuery
+    {
+        return SpyFileQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
+     */
+    public function getUtilDateTimeService(): UtilDateTimeServiceInterface
+    {
+        return $this->getProvidedDependency(SspAssetManagementDependencyProvider::SERVICE_UTIL_DATE_TIME);
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspAssetManagement\Business\SspAssetManagementFacadeInterface
+     */
+    public function getSspAssetManagementFacade(): SspAssetManagementFacadeInterface
+    {
+        return $this->getProvidedDependency(SspFileManagementDependencyProvider::FACADE_SSP_ASSET_MANAGEMENT);
     }
 }

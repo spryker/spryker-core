@@ -1,0 +1,5 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Files' | trans } %}
+    {% block widget_content %}
+        {{ attachedFileTable | raw }}
+    {% endblock %}
+{% endembed %}

@@ -23,12 +23,6 @@ class CompanyUserFileQueryStrategy implements FilePermissionQueryStrategyInterfa
      */
     public function apply(SpyFileQuery $query, FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer): SpyFileQuery
     {
-        $entityTypes = $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()->getEntityTypes();
-
-        if ($entityTypes !== [] && !in_array(SspFileManagementConfig::ENTITY_TYPE_COMPANY_USER, $entityTypes, true)) {
-            return $query;
-        }
-
         $idCompanyUser = $fileAttachmentFileCriteriaTransfer->getCompanyUserOrFail()->getIdCompanyUser();
 
         $query
@@ -46,5 +40,17 @@ class CompanyUserFileQueryStrategy implements FilePermissionQueryStrategyInterfa
     public function getPermissionKey(): string
     {
         return ViewCompanyUserFilesPermissionPlugin::KEY;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
+     *
+     * @return bool
+     */
+    public function isApplicable(FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer): bool
+    {
+        $entityTypes = $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()->getEntityTypes();
+
+        return in_array(SspFileManagementConfig::ENTITY_TYPE_COMPANY_USER, $entityTypes, true);
     }
 }

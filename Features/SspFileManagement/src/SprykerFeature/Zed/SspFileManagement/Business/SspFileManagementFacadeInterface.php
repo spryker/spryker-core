@@ -7,7 +7,6 @@
 
 namespace SprykerFeature\Zed\SspFileManagement\Business;
 
-use Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
@@ -17,26 +16,6 @@ use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
 
 interface SspFileManagementFacadeInterface
 {
-    /**
-     * Specification:
-     * - Deletes a collection of file attachments from the persistent storage by delete criteria.
-     * - Uses `FileAttachmentCollectionDeleteCriteriaTransfer.fileIds` to filter file attachments by `fileIds`.
-     * - Uses `FileAttachmentCollectionDeleteCriteriaTransfer.companyIds` to filter file attachments by `companyIds`.
-     * - Uses `FileAttachmentCollectionDeleteCriteriaTransfer.companyUserIds` to filter file attachments by `companyUserIds`.
-     * - Uses `FileAttachmentCollectionDeleteCriteriaTransfer.companyBusinessUnitIds` to filter file attachments by `companyBusinessUnitIds`.
-     * - Sets validation errors in `FileAttachmentCollectionDeleteCriteriaTransfer.ErrorTransfer[]`.
-     * - Returns `FileAttachmentCollectionDeleteCriteriaTransfer`.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer $fileAttachmentCollectionDeleteCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer
-     */
-    public function deleteFileAttachmentCollection(
-        FileAttachmentCollectionDeleteCriteriaTransfer $fileAttachmentCollectionDeleteCriteriaTransfer
-    ): FileAttachmentCollectionResponseTransfer;
-
     /**
      * Specification:
      * - Saves a collection of file attachments to the storage.

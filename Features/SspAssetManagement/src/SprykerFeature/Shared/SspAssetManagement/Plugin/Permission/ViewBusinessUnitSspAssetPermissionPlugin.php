@@ -52,8 +52,8 @@ class ViewBusinessUnitSspAssetPermissionPlugin extends AbstractPlugin implements
          */
         $sspAssetTransfer = $context[static::CONTEXT_SSP_ASSET];
 
-        foreach ($sspAssetTransfer->getAssignments() as $sspAssetAssignmentTransfer) {
-            if ($sspAssetAssignmentTransfer->getCompanyBusinessUnit()?->getIdCompanyBusinessUnit() === $companyUserTransfer->getFkCompanyBusinessUnitOrFail()) {
+        foreach ($sspAssetTransfer->getBusinessUnitAssignments() as $sspAssetBusinessUnitAssignmentTransfer) {
+            if ($sspAssetBusinessUnitAssignmentTransfer->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail() === $companyUserTransfer->getFkCompanyBusinessUnitOrFail()) {
                 return true;
             }
         }

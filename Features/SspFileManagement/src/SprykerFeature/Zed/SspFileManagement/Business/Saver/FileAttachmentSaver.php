@@ -11,9 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer;
-use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
-use Generated\Shared\Transfer\FileAttachmentConditionsTransfer;
-use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use SprykerFeature\Shared\SspFileManagement\SspFileManagementConfig;
@@ -46,11 +43,7 @@ class FileAttachmentSaver implements FileAttachmentSaverInterface
             $this->executeSaveFileAttachmentCollectionTransaction($fileAttachmentCollectionRequestTransfer);
         });
 
-        $resultCollection = new FileAttachmentCollectionTransfer();
-        $resultCollection->setFileAttachments($fileAttachmentCollectionRequestTransfer->getFileAttachments());
-
-        return (new FileAttachmentCollectionResponseTransfer())
-            ->setFileAttachments($resultCollection->getFileAttachments());
+        return (new FileAttachmentCollectionResponseTransfer())->setFileAttachments($fileAttachmentCollectionRequestTransfer->getFileAttachmentsToAdd());
     }
 
     /**
@@ -61,119 +54,13 @@ class FileAttachmentSaver implements FileAttachmentSaverInterface
     public function executeSaveFileAttachmentCollectionTransaction(
         FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
     ): void {
-        $idFile = $fileAttachmentCollectionRequestTransfer->getIdFileOrFail();
-        $newCollectionMap = $this->createNewCollectionMap($fileAttachmentCollectionRequestTransfer->getFileAttachments());
-        $existingCollectionMap = $this->getExistingCollectionMap($idFile);
+        foreach ($fileAttachmentCollectionRequestTransfer->getFileAttachmentsToAdd() as $fileAttachmentTransfer) {
+            $this->entityManager->saveFileAttachment($fileAttachmentTransfer);
+        }
 
-        $entitiesToDelete = $this->findEntitiesToDelete($newCollectionMap, $existingCollectionMap);
-        $deleteCriteria = $this->createDeleteCriteria($entitiesToDelete);
+        $deleteCriteria = $this->createDeleteCriteria($fileAttachmentCollectionRequestTransfer->getFileAttachmentsToRemove());
 
         $this->entityManager->deleteFileAttachmentCollection($deleteCriteria);
-        $this->saveEntitiesToCreate($newCollectionMap, $existingCollectionMap);
-    }
-
-    /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileAttachmentTransfer> $fileAttachments
-     *
-     * @return array<string, array<int, \Generated\Shared\Transfer\FileAttachmentTransfer>>
-     */
-    protected function createNewCollectionMap(ArrayObject $fileAttachments): array
-    {
-        $collectionMap = [];
-
-        foreach ($fileAttachments as $fileAttachmentTransfer) {
-            $entityName = $fileAttachmentTransfer->getEntityNameOrFail();
-            $entityId = $fileAttachmentTransfer->getEntityIdOrFail();
-            $collectionMap[$entityName][$entityId] = $fileAttachmentTransfer;
-        }
-
-        return $collectionMap;
-    }
-
-    /**
-     * @param int $idFile
-     *
-     * @return array<string, array<int, \Generated\Shared\Transfer\FileAttachmentTransfer>>
-     */
-    protected function getExistingCollectionMap(int $idFile): array
-    {
-        $fileAttachmentCriteriaTransfer = (new FileAttachmentCriteriaTransfer())
-            ->setFileAttachmentConditions(
-                (new FileAttachmentConditionsTransfer())->addIdFile($idFile),
-            );
-
-        $existingCollection = $this->sspFileManagementRepository->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
-
-        $existingCollectionMap = [];
-        foreach ($existingCollection->getFileAttachments() as $fileAttachmentTransfer) {
-            $entityName = $fileAttachmentTransfer->getEntityNameOrFail();
-            $entityId = $fileAttachmentTransfer->getEntityIdOrFail();
-            $existingCollectionMap[$entityName][$entityId] = $fileAttachmentTransfer;
-        }
-
-        return $existingCollectionMap;
-    }
-
-    /**
-     * @param array<string, array<int, \Generated\Shared\Transfer\FileAttachmentTransfer>> $newCollectionMap
-     * @param array<string, array<int, \Generated\Shared\Transfer\FileAttachmentTransfer>> $existingCollectionMap
-     *
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\FileAttachmentTransfer>
-     */
-    protected function findEntitiesToDelete(
-        array $newCollectionMap,
-        array $existingCollectionMap
-    ): ArrayObject {
-        $collectionToDelete = new ArrayObject();
-
-        if (!$newCollectionMap) {
-            foreach ($existingCollectionMap as $entityCollection) {
-                foreach ($entityCollection as $fileAttachmentTransfer) {
-                    $collectionToDelete->append($fileAttachmentTransfer);
-                }
-            }
-
-            return $collectionToDelete;
-        }
-
-        foreach ($existingCollectionMap as $entityName => $existingEntities) {
-            $newEntities = $newCollectionMap[$entityName] ?? [];
-            $diffEntities = array_udiff(
-                $existingEntities,
-                $newEntities,
-                [$this, 'compareFileAttachments'],
-            );
-
-            foreach ($diffEntities as $fileAttachmentTransfer) {
-                $collectionToDelete->append($fileAttachmentTransfer);
-            }
-        }
-
-        return $collectionToDelete;
-    }
-
-    /**
-     * @param array<string, array<int, \Generated\Shared\Transfer\FileAttachmentTransfer>> $newCollectionMap
-     * @param array<string, array<int, \Generated\Shared\Transfer\FileAttachmentTransfer>> $existingCollectionMap
-     *
-     * @return void
-     */
-    protected function saveEntitiesToCreate(
-        array $newCollectionMap,
-        array $existingCollectionMap
-    ): void {
-        foreach ($newCollectionMap as $entityName => $newEntities) {
-            $existingEntities = $existingCollectionMap[$entityName] ?? [];
-            $newEntities = array_udiff(
-                $newEntities,
-                $existingEntities,
-                [$this, 'compareFileAttachments'],
-            );
-
-            foreach ($newEntities as $fileAttachmentTransfer) {
-                $this->entityManager->saveFileAttachment($fileAttachmentTransfer);
-            }
-        }
     }
 
     /**
@@ -190,6 +77,7 @@ class FileAttachmentSaver implements FileAttachmentSaverInterface
             SspFileManagementConfig::ENTITY_TYPE_COMPANY => 'addIdCompany',
             SspFileManagementConfig::ENTITY_TYPE_COMPANY_USER => 'addIdCompanyUser',
             SspFileManagementConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT => 'addIdCompanyBusinessUnit',
+            SspFileManagementConfig::ENTITY_TYPE_SSP_ASSET => 'addIdSspAsset',
         ];
 
         foreach ($collectionToDelete as $fileAttachmentTransfer) {

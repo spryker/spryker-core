@@ -68,6 +68,11 @@ class SspFileManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     /**
+     * @var string
+     */
+    public const FACADE_SSP_ASSET_MANAGEMENT = 'FACADE_SSP_ASSET_MANAGEMENT';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -84,6 +89,7 @@ class SspFileManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addSequenceNumberFacade($container);
         $container = $this->addUtilDateTimeService($container);
+        $container = $this->addSspAssetManagementFacade($container);
 
         return $container;
     }
@@ -223,6 +229,20 @@ class SspFileManagementDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSspAssetManagementFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_SSP_ASSET_MANAGEMENT, function (Container $container) {
+            return $container->getLocator()->sspAssetManagement()->facade();
         });
 
         return $container;

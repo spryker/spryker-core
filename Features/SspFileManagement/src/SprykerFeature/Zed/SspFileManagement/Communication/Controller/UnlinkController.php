@@ -8,7 +8,10 @@
 namespace SprykerFeature\Zed\SspFileManagement\Communication\Controller;
 
 use Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer;
+use Generated\Shared\Transfer\FileAttachmentTransfer;
+use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use SprykerFeature\Shared\SspFileManagement\SspFileManagementConfig;
 use SprykerFeature\Zed\SspFileManagement\Communication\Exception\InvalidEntityTypeException;
@@ -68,7 +71,14 @@ class UnlinkController extends AbstractController
             throw new InvalidEntityTypeException(static::ERROR_MESSAGE_INVALID_ENTITY_TYPE);
         }
 
-        $fileAttachmentCollectionResponseTransfer = $this->getFacade()->deleteFileAttachmentCollection($fileAttachmentCollectionDeleteCriteriaTransfer);
+        $fileAttachmentCollectionRequestTransfer = new FileAttachmentCollectionRequestTransfer();
+        $fileAttachmentCollectionRequestTransfer->setIdFile($idFile);
+        $fileAttachmentCollectionRequestTransfer->addFileAttachmentToRemove(
+            (new FileAttachmentTransfer())->setFile((new FileTransfer())->setIdFile($idFile))->setEntityName($entityType)->setEntityId($entityId),
+        );
+
+        $fileAttachmentCollectionResponseTransfer = $this->getFacade()->saveFileAttachmentCollection($fileAttachmentCollectionRequestTransfer);
+
         if ($fileAttachmentCollectionResponseTransfer->getErrors()->count() > 0) {
             $this->addErrorMessagesFromFileAttachmentCollectionResponse($fileAttachmentCollectionResponseTransfer);
 
@@ -112,6 +122,7 @@ class UnlinkController extends AbstractController
             SspFileManagementConfig::ENTITY_TYPE_COMPANY => $fileAttachmentCollectionDeleteCriteriaTransfer->addIdCompany($entityId),
             SspFileManagementConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT => $fileAttachmentCollectionDeleteCriteriaTransfer->addIdCompanyBusinessUnit($entityId),
             SspFileManagementConfig::ENTITY_TYPE_COMPANY_USER => $fileAttachmentCollectionDeleteCriteriaTransfer->addIdCompanyUser($entityId),
+            SspFileManagementConfig::ENTITY_TYPE_SSP_ASSET => $fileAttachmentCollectionDeleteCriteriaTransfer->addIdSspAsset($entityId),
             default => false,
         };
     }

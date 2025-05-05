@@ -52,8 +52,8 @@ class ViewCompanySspAssetPermissionPlugin extends AbstractPlugin implements Exec
          */
          $sspAssetTransfer = $context[static::CONTEXT_SSP_ASSET];
 
-        foreach ($sspAssetTransfer->getAssignments() as $sspAssetAssignmentTransfer) {
-            if ($sspAssetAssignmentTransfer->getCompanyBusinessUnit()?->getCompany()?->getIdCompany() === $companyUserTransfer->getFkCompany()) {
+        foreach ($sspAssetTransfer->getBusinessUnitAssignments() as $sspAssetBusinessUnitAssignmentTransfer) {
+            if ($sspAssetBusinessUnitAssignmentTransfer->getCompanyBusinessUnitOrFail()->getCompanyOrFail()->getIdCompanyOrFail() === $companyUserTransfer->getFkCompany()) {
                 return true;
             }
         }

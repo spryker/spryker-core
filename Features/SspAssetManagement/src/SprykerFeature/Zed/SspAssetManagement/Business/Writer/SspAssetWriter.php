@@ -86,7 +86,7 @@ class SspAssetWriter implements SspAssetWriterInterface
         }
 
         $businessUnitToDeleteGroupedBySspAssetId = [];
-        foreach ($sspAssetCollectionRequestTransfer->getAssignmentsToRemove() as $sspAssetAssignmentTransfer) {
+        foreach ($sspAssetCollectionRequestTransfer->getBusinessUnitAssignmentsToRemove() as $sspAssetAssignmentTransfer) {
             if ($sspAssetAssignmentTransfer->getCompanyBusinessUnit()?->getIdCompanyBusinessUnit() === $sspAssetAssignmentTransfer->getSspAssetOrFail()->getCompanyBusinessUnit()?->getIdCompanyBusinessUnit()) {
                 $sspAssetCollectionResponseTransfer->addError(
                     (new ErrorTransfer())->setMessage('ssp_asset.validation.cannot_remove_own_assignment'),
@@ -100,7 +100,7 @@ class SspAssetWriter implements SspAssetWriterInterface
         }
 
         $businessUnitToAddGroupedBySspAssetId = [];
-        foreach ($sspAssetCollectionRequestTransfer->getAssignmentsToAdd() as $sspAssetAssignmentTransfer) {
+        foreach ($sspAssetCollectionRequestTransfer->getBusinessUnitAssignmentsToAdd() as $sspAssetAssignmentTransfer) {
             if ($sspAssetAssignmentTransfer->getCompanyBusinessUnit()) {
                 $businessUnitToAddGroupedBySspAssetId[$sspAssetAssignmentTransfer->getSspAssetOrFail()->getIdSspAssetOrFail()][] = $sspAssetAssignmentTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnitOrFail();
             }
@@ -173,12 +173,12 @@ class SspAssetWriter implements SspAssetWriterInterface
 
             $sspAssetTransfer = $this->entityManager->createSspAsset($sspAssetTransfer);
 
-            if (!$sspAssetTransfer->getAssignments()->count()) {
+            if (!$sspAssetTransfer->getBusinessUnitAssignments()->count()) {
                 return $sspAssetTransfer;
             }
 
             $companyBusinessUnitIds = [];
-            foreach ($sspAssetTransfer->getAssignments() as $sspAssetAssignmentTransfer) {
+            foreach ($sspAssetTransfer->getBusinessUnitAssignments() as $sspAssetAssignmentTransfer) {
                 if (!$sspAssetAssignmentTransfer->getCompanyBusinessUnit()) {
                     continue;
                 }

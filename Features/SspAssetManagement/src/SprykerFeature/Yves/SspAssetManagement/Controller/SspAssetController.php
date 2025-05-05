@@ -8,7 +8,7 @@
 namespace SprykerFeature\Yves\SspAssetManagement\Controller;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\SspAssetAssignmentTransfer;
+use Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
@@ -102,13 +102,11 @@ class SspAssetController extends AbstractController
                 (new SspAssetIncludeTransfer())
                     ->setWithCompanyBusinessUnit(true)
                     ->setWithAssignedBusinessUnits(true)
-                    ->setWithSspInquiries(true),
+                    ->setWithSspInquiries(true)
+                    ->setWithFiles(true),
             );
 
-        $this->getFactory()->createSspAssetCustomerPermissionExpander()->expand(
-            $sspAssetCriteriaTransfer,
-            $companyUserTransfer,
-        );
+        $sspAssetCriteriaTransfer->setCompanyUser($companyUserTransfer);
 
         $sspAssetCollectionTransfer = $this->getClient()->getSspAssetCollection(
             $sspAssetCriteriaTransfer,
@@ -129,8 +127,8 @@ class SspAssetController extends AbstractController
         }
 
         $canBusinessUnitBeUnassigned = false;
-        foreach ($sspAssetTransfer->getAssignments() as $sspAssetAssignmentTransfer) {
-            if ($sspAssetAssignmentTransfer->getCompanyBusinessUnit()?->getIdCompanyBusinessUnit() === $companyUserTransfer->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnit()) {
+        foreach ($sspAssetTransfer->getBusinessUnitAssignments() as $sspAssetBusinessUnitAssignmentTransfer) {
+            if ($sspAssetBusinessUnitAssignmentTransfer->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail() === $companyUserTransfer->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnit()) {
                 $canBusinessUnitBeUnassigned = true;
             }
         }
@@ -189,8 +187,8 @@ class SspAssetController extends AbstractController
                 $sspAssetCreateForm->getData(),
             );
 
-            $sspAssetTransfer->addAssignment(
-                (new SspAssetAssignmentTransfer())->setCompanyBusinessUnit(
+            $sspAssetTransfer->addBusinessUnitAssignment(
+                (new SspAssetBusinessUnitAssignmentTransfer())->setCompanyBusinessUnit(
                     $companyUserTransfer->getCompanyBusinessUnit(),
                 ),
             );
@@ -306,9 +304,9 @@ class SspAssetController extends AbstractController
         }
 
         $currentCompanyBusinessUnitAssigment = null;
-        foreach ($sspAssetTransfer->getAssignments() as $sspAssetAssignmentTransfer) {
-            if ($sspAssetAssignmentTransfer->getCompanyBusinessUnit()?->getIdCompanyBusinessUnit() === $companyUserTransfer->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnit()) {
-                $currentCompanyBusinessUnitAssigment = $sspAssetAssignmentTransfer;
+        foreach ($sspAssetTransfer->getBusinessUnitAssignments() as $sspBusinessUnitAssetAssignmentTransfer) {
+            if ($sspBusinessUnitAssetAssignmentTransfer->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail() === $companyUserTransfer->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnit()) {
+                $currentCompanyBusinessUnitAssigment = $sspBusinessUnitAssetAssignmentTransfer;
             }
         }
 
@@ -427,8 +425,8 @@ class SspAssetController extends AbstractController
 
             $sspAssetCollectionResponseTransfer = $this->getClient()->updateSspAssetCollection(
                 (new SspAssetCollectionRequestTransfer())
-                    ->addAssignmentToRemove(
-                        (new SspAssetAssignmentTransfer())
+                    ->addBusinessUnitAssignmentToRemove(
+                        (new SspAssetBusinessUnitAssignmentTransfer())
                             ->setCompanyBusinessUnit(
                                 (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($businessUnitIdToUnassign),
                             )

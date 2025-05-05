@@ -28,7 +28,7 @@ class CompanyFileSaver implements FileAttachmentSaverInterface
     public function save(FileAttachmentTransfer $fileAttachmentTransfer): FileAttachmentTransfer
     {
         $companyFileEntity = $this->companyFileQuery
-            ->filterByIdCompanyFile($fileAttachmentTransfer->getEntityIdOrFail())
+            ->filterByFkCompany($fileAttachmentTransfer->getEntityIdOrFail())
             ->findOne();
 
         if ($companyFileEntity === null) {

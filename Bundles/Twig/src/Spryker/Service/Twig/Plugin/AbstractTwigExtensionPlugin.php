@@ -88,6 +88,10 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
      */
     public function getOperators(): array
     {
+        if (version_compare(Environment::VERSION, '3.21.0', '>=')) {
+            return [[], []];
+        }
+
         return [];
     }
 

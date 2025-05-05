@@ -69,31 +69,6 @@ class SspAssetManagementEntityManager extends AbstractEntityManager implements S
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     *
-     * @return void
-     */
-    public function createAssetToCompanyBusinessUnitRelations(
-        SspAssetTransfer $sspAssetTransfer
-    ): void {
-        if (!$sspAssetTransfer->getAssignments()->count()) {
-            return;
-        }
-
-        foreach ($sspAssetTransfer->getAssignments() as $sspAssetAssignmentTransfer) {
-            if (!$sspAssetAssignmentTransfer->getCompanyBusinessUnit()) {
-                continue;
-            }
-
-            $spySspAssetToCompanyBusinessUnit = new SpySspAssetToCompanyBusinessUnit();
-            $spySspAssetToCompanyBusinessUnit
-                ->setFkSspAsset($sspAssetTransfer->getIdSspAssetOrFail())
-                ->setFkCompanyBusinessUnit($sspAssetAssignmentTransfer->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail())
-                ->save();
-        }
-    }
-
-    /**
      * @param int $idSspAsset
      * @param array<int> $businessUnitIds
      *

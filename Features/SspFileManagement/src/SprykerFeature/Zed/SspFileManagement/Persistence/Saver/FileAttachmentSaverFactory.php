@@ -11,6 +11,7 @@ use InvalidArgumentException;
 use Orm\Zed\SspFileManagement\Persistence\SpyCompanyBusinessUnitFileQuery;
 use Orm\Zed\SspFileManagement\Persistence\SpyCompanyFileQuery;
 use Orm\Zed\SspFileManagement\Persistence\SpyCompanyUserFileQuery;
+use Orm\Zed\SspFileManagement\Persistence\SpySspAssetFileQuery;
 use SprykerFeature\Shared\SspFileManagement\SspFileManagementConfig;
 
 class FileAttachmentSaverFactory
@@ -22,6 +23,7 @@ class FileAttachmentSaverFactory
         SspFileManagementConfig::ENTITY_TYPE_COMPANY => CompanyFileSaver::class,
         SspFileManagementConfig::ENTITY_TYPE_COMPANY_USER => CompanyUserFileSaver::class,
         SspFileManagementConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT => CompanyBusinessUnitFileSaver::class,
+        SspFileManagementConfig::ENTITY_TYPE_SSP_ASSET => SspAssetFileSaver::class,
     ];
 
     /**
@@ -31,6 +33,7 @@ class FileAttachmentSaverFactory
         SspFileManagementConfig::ENTITY_TYPE_COMPANY => 'createCompanyFileQuery',
         SspFileManagementConfig::ENTITY_TYPE_COMPANY_USER => 'createCompanyUserFileQuery',
         SspFileManagementConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT => 'createCompanyBusinessUnitFileQuery',
+        SspFileManagementConfig::ENTITY_TYPE_SSP_ASSET => 'createSspAssetFileQuery',
     ];
 
     /**
@@ -55,6 +58,14 @@ class FileAttachmentSaverFactory
     protected function createCompanyUserFileQuery(): SpyCompanyUserFileQuery
     {
         return SpyCompanyUserFileQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\SspFileManagement\Persistence\SpySspAssetFileQuery
+     */
+    public function createSspAssetFileQuery(): SpySspAssetFileQuery
+    {
+        return SpySspAssetFileQuery::create();
     }
 
     /**

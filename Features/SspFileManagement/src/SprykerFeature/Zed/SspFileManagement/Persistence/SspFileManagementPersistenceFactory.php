@@ -12,11 +12,13 @@ use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\SspFileManagement\Persistence\SpyCompanyBusinessUnitFileQuery;
 use Orm\Zed\SspFileManagement\Persistence\SpyCompanyFileQuery;
 use Orm\Zed\SspFileManagement\Persistence\SpyCompanyUserFileQuery;
+use Orm\Zed\SspFileManagement\Persistence\SpySspAssetFileQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use SprykerFeature\Zed\SspFileManagement\Persistence\Propel\Mapper\CompanyBusinessUnitFileMapper;
 use SprykerFeature\Zed\SspFileManagement\Persistence\Propel\Mapper\CompanyFileMapper;
 use SprykerFeature\Zed\SspFileManagement\Persistence\Propel\Mapper\CompanyUserFileMapper;
 use SprykerFeature\Zed\SspFileManagement\Persistence\Propel\Mapper\FileMapper;
+use SprykerFeature\Zed\SspFileManagement\Persistence\Propel\Mapper\SspAssetFileMapper;
 use SprykerFeature\Zed\SspFileManagement\Persistence\Saver\FileAttachmentSaverFactory;
 use SprykerFeature\Zed\SspFileManagement\SspFileManagementDependencyProvider;
 
@@ -52,6 +54,14 @@ class SspFileManagementPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Orm\Zed\SspFileManagement\Persistence\SpySspAssetFileQuery
+     */
+    public function createSspAssetFileQuery(): SpySspAssetFileQuery
+    {
+        return SpySspAssetFileQuery::create();
+    }
+
+    /**
      * @return array<\Propel\Runtime\ActiveQuery\ModelCriteria>
      */
     public function getFileAttachmentQueryList(): array
@@ -60,6 +70,7 @@ class SspFileManagementPersistenceFactory extends AbstractPersistenceFactory
             $this->createCompanyFileQuery(),
             $this->createCompanyUserFileQuery(),
             $this->createCompanyBusinessUnitFileQuery(),
+            $this->createSspAssetFileQuery(),
         ];
     }
 
@@ -85,6 +96,14 @@ class SspFileManagementPersistenceFactory extends AbstractPersistenceFactory
     public function createCompanyUserFileMapper(): CompanyUserFileMapper
     {
         return new CompanyUserFileMapper();
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspFileManagement\Persistence\Propel\Mapper\SspAssetFileMapper
+     */
+    public function createSspAssetFileMapper(): SspAssetFileMapper
+    {
+        return new SspAssetFileMapper();
     }
 
     /**

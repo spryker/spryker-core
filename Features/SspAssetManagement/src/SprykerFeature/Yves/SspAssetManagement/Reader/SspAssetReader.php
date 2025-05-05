@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetIncludeTransfer;
 use SprykerFeature\Client\SspAssetManagement\SspAssetManagementClientInterface;
-use SprykerFeature\Yves\SspAssetManagement\Permission\SspAssetCustomerPermissionExpanderInterface;
 use SprykerFeature\Yves\SspAssetManagement\SspAssetManagementConfig;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -28,12 +27,10 @@ class SspAssetReader implements SspAssetReaderInterface
     /**
      * @param \SprykerFeature\Client\SspAssetManagement\SspAssetManagementClientInterface $sspAssetManagementClient
      * @param \SprykerFeature\Yves\SspAssetManagement\SspAssetManagementConfig $sspAssetManagementConfig
-     * @param \SprykerFeature\Yves\SspAssetManagement\Permission\SspAssetCustomerPermissionExpanderInterface $sspAssetCustomerPermissionExpander
      */
     public function __construct(
         protected SspAssetManagementClientInterface $sspAssetManagementClient,
-        protected SspAssetManagementConfig $sspAssetManagementConfig,
-        protected SspAssetCustomerPermissionExpanderInterface $sspAssetCustomerPermissionExpander
+        protected SspAssetManagementConfig $sspAssetManagementConfig
     ) {
     }
 
@@ -55,10 +52,7 @@ class SspAssetReader implements SspAssetReaderInterface
             $sspAssetCriteriaTransfer->setSspAssetConditions(new SspAssetConditionsTransfer());
         }
 
-        $this->sspAssetCustomerPermissionExpander->expand(
-            $sspAssetCriteriaTransfer,
-            $companyUserTransfer,
-        );
+        $sspAssetCriteriaTransfer->setCompanyUser($companyUserTransfer);
 
         if (!$sspAssetCriteriaTransfer->getInclude()) {
             $sspAssetCriteriaTransfer->setInclude(new SspAssetIncludeTransfer());

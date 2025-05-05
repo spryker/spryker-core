@@ -1,4 +1,4 @@
-{# @var data.files array<\Generated\Shared\Transfer\FileTransfer> #}
+{# @var data.fileAttachments array<\Generated\Shared\Transfer\FileAttachmentTransfer> #}
 {# @var data.fileSearchFilterForm \SprykerFeature\Yves\SspFileManagement\Form\FileSearchFilterForm #}
 
 {% extends template('page-layout-customer', 'CustomerPage') %}
@@ -7,7 +7,7 @@
     title: 'ssp_file_management.file_management' | trans,
     activePage: 'sspFileManagement',
     currentBreadcrumb: 'ssp_file_management.file_management' | trans,
-    files: _view.files,
+    fileAttachments: _view.fileAttachments,
     searchForm: _view.fileSearchFilterForm,
     pagination: {
         parameters: app.request.query.all(),
@@ -107,15 +107,15 @@
                 },
             ] %}
 
-            {% set rows = data.files | map(file => {
-                idFile: file.fileReference,
-                fileName: file.fileName,
-                fileType: file.fileInfo[0].extension,
-                createdAt: file.fileInfo[0].createdAt,
-                size: file.fileInfo[0].size | readable_bytesize,
+            {% set rows = data.fileAttachments | map(fileAttachment => {
+                idFile: fileAttachment.file.fileReference,
+                fileName: fileAttachment.file.fileName,
+                fileType: fileAttachment.file.fileInfo[0].extension,
+                createdAt: fileAttachment.file.fileInfo[0].createdAt,
+                size: fileAttachment.file.fileInfo[0].size | readable_bytesize,
                 actions: can('DownloadFilesPermissionPlugin')
                     ? [{
-                        url: path('ssp-file-management/download', { 'id-file': file.uuid }),
+                        url: path('ssp-file-management/download', { 'id-file': fileAttachment.file.uuid }),
                         label: 'ssp_file_management.file_management.table.actions.download',
                         qa: 'download-button',
                     }]

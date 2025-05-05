@@ -34,8 +34,9 @@
     </transfer>
 
     <transfer name="FileAttachmentCollectionRequest" strict="true">
-        <property name="fileAttachments" type="FileAttachment[]" singular="fileAttachment"/>
         <property name="idFile" type="int"/>
+        <property name="fileAttachmentsToAdd" type="FileAttachment[]" singular="fileAttachmentToAdd"/>
+        <property name="fileAttachmentsToRemove" type="FileAttachment[]" singular="fileAttachmentToRemove"/>
     </transfer>
 
     <transfer name="FileAttachmentCollectionResponse" strict="true">
@@ -49,6 +50,7 @@
         <property name="companyIds" type="int[]" singular="idCompany"/>
         <property name="companyUserIds" type="int[]" singular="idCompanyUser"/>
         <property name="companyBusinessUnitIds" type="int[]" singular="idCompanyBusinessUnit"/>
+        <property name="sspAssetIds" type="int[]" singular="idSspAsset"/>
     </transfer>
 
     <transfer name="FileAttachmentCriteria" strict="true">
@@ -215,11 +217,13 @@
         <property name="customer" type="Customer"/>
         <property name="idCompanyUser" type="int"/>
         <property name="fkCompany" type="int"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
         <property name="idCompanyBusinessUnit" type="int"/>
         <property name="name" type="string"/>
+        <property name="company" type="Company"/>
     </transfer>
 
     <transfer name="Customer">
@@ -240,6 +244,7 @@
         <property name="uuids" type="string[]" singular="uuid"/>
         <property name="entityTypes" type="string[]" singular="entityType"/>
         <property name="rangeCreatedAt" type="CriteriaRangeFilter"/>
+        <property name="assetReferences" type="string[]" singular="assetReference"/>
     </transfer>
 
     <transfer name="FileAttachmentFileSearchConditions" strict="true">
@@ -247,7 +252,7 @@
     </transfer>
 
     <transfer name="FileAttachmentFileCollection" strict="true">
-        <property name="files" type="File[]" singular="file"/>
+        <property name="fileAttachments" type="FileAttachment[]" singular="fileAttachment"/>
         <property name="pagination" type="Pagination"/>
         <property name="fileAttachmentFileTypeFilters" type="FileAttachmentFileTypeFilter[]" singular="fileAttachmentFileTypeFilter"/>
     </transfer>
@@ -267,6 +272,43 @@
 
     <transfer name="DashboardRequest">
         <property name="companyUser" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="SspAsset" strict="true">
+        <property name="idSspAsset" type="int"/>
+        <property name="name" type="string"/>
+        <property name="reference" type="string"/>
+        <property name="fileAttachmentFileCollection" type="FileAttachmentFileCollection"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="title" type="string"/>
+        <property name="template" type="string"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+    </transfer>
+
+    <transfer name="SspAssetCollection" strict="true">
+        <property name="sspAssets" type="SspAsset[]" singular="sspAsset"/>
+    </transfer>
+
+    <transfer name="SspAssetConditions" strict="true">
+        <property name="sspAssetIds" type="int[]" singular="idSspAsset"/>
+    </transfer>
+
+    <transfer name="SspAssetCriteria" strict="true">
+        <property name="sspAssetConditions" type="SspAssetConditions"/>
+        <property name="include" type="SspAssetInclude"/>
+        <property name="companyUser" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="SspAssetInclude" strict="true">
+        <property name="withCompanyBusinessUnit" type="bool"/>
+        <property name="withFiles" type="bool"/>
     </transfer>
 
 </transfers>

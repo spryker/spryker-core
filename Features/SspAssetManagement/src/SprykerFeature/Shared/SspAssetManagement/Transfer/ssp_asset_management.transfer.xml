@@ -14,9 +14,17 @@
         <property name="status" type="string"/>
         <property name="serialNumber" type="string"/>
         <property name="note" type="string"/>
-        <property name="assignments" type="SspAssetAssignment[]" singular="assignment"/>
+        <property name="businessUnitAssignments" type="SspAssetBusinessUnitAssignment[]" singular="businessUnitAssignment"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
         <property name="createdDate" type="string"/>
+        <property name="fileAttachmentFileCollection" type="FileAttachmentFileCollection"/>
+    </transfer>
+
+    <transfer name="FileAttachmentFileCollection" strict="true">
+        <property name="fileAttachments" type="FileAttachment[]" singular="fileAttachment"/>
+    </transfer>
+
+    <transfer name="FileAttachment" strict="true">
     </transfer>
 
     <transfer name="File">
@@ -39,6 +47,7 @@
 
     <transfer name="CompanyBusinessUnitCriteriaFilter">
         <property name="companyBusinessUnitIds" type="array" singular="companyBusinessUnitIds"/>
+        <property name="companyIds" type="int[]" singular="companyId"/>
     </transfer>
 
     <transfer name="FileManagerData">
@@ -64,7 +73,7 @@
         <property name="size" type="int"/>
     </transfer>
 
-    <transfer name="SspAssetAssignment" strict="true">
+    <transfer name="SspAssetBusinessUnitAssignment" strict="true">
         <property name="assignedAt" type="string"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
         <property name="sspAsset" type="SspAsset"/>
@@ -72,8 +81,8 @@
 
     <transfer name="SspAssetCollectionRequest" strict="true">
         <property name="sspAssets" type="SspAsset[]" singular="sspAsset"/>
-        <property name="assignmentsToRemove" type="SspAssetAssignment[]" singular="assignmentToRemove"/>
-        <property name="assignmentsToAdd" type="SspAssetAssignment[]" singular="assignmentToAdd"/>
+        <property name="businessUnitAssignmentsToRemove" type="SspAssetBusinessUnitAssignment[]" singular="businessUnitAssignmentToRemove"/>
+        <property name="businessUnitAssignmentsToAdd" type="SspAssetBusinessUnitAssignment[]" singular="businessUnitAssignmentToAdd"/>
     </transfer>
 
     <transfer name="SspAssetCollectionResponse" strict="true">
@@ -86,6 +95,7 @@
         <property name="sortCollection" type="Sort[]" singular="sort"/>
         <property name="pagination" type="Pagination"/>
         <property name="include" type="SspAssetInclude"/>
+        <property name="companyUser" type="CompanyUser"/>
     </transfer>
 
     <transfer name="SspAssetConditions" strict="true">
@@ -97,6 +107,7 @@
         <property name="searchText" type="string"/>
         <property name="fileIds" type="int[]" singular="idFile"/>
         <property name="statuses" type="string[]" singular="status"/>
+        <property name="imageFileIds" type="int[]" singular="idImageFile"/>
     </transfer>
 
     <transfer name="SspAssetInclude" strict="true">
@@ -104,6 +115,7 @@
         <property name="withImageFile" type="bool"/>
         <property name="withAssignedBusinessUnits" type="bool"/>
         <property name="withSspInquiries" type="bool"/>
+        <property name="withFiles" type="bool"/>
     </transfer>
 
     <transfer name="Sort">

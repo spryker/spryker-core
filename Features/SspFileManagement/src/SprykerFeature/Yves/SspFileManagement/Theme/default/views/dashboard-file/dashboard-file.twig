@@ -2,8 +2,9 @@
 
 {% define data = {
     totalItems: _widget.totalItems,
-    files: _widget.files,
-    canViewFiles: can('ViewFilesPermissionPlugin'),
+    fileAttachments: _widget.fileAttachments,
+    moreLink: _widget.moreLink | default(path('ssp-file-management')),
+    canViewFiles: can('ViewCompanyFilesPermissionPlugin') or can('ViewCompanyUserFilesPermissionPlugin') or can('ViewCompanyBusinessUnitFilesPermissionPlugin'),
 } %}
 
 {% block body %}
@@ -27,13 +28,13 @@
             },
         ] %}
 
-        {% set rows = (data.files | default([])) | map(file => {
-            name: file.fileName,
-            size: file.fileInfo[0].size | readable_bytesize,
-            type: file.fileInfo[0].extension,
+        {% set rows = (data.fileAttachments | default([])) | map(fileAttachment => {
+            name: fileAttachment.file.fileName,
+            size: fileAttachment.file.fileInfo[0].size | readable_bytesize,
+            type: fileAttachment.file.fileInfo[0].extension,
             actions: can('DownloadFilesPermissionPlugin')
             ? [{
-                url: path('ssp-file-management/download', {'id-file': file.uuid }),
+                url: path('ssp-file-management/download', {'id-file': fileAttachment.file.uuid }),
                 label: 'ssp_file_management.file_management.table.actions.download'
             }] : [],
         }) %}
@@ -46,7 +47,7 @@
                     columns: columns,
                     rows: rows,
                     emptyText: 'customer.account.no_files',
-                    moreLink: path('ssp-file-management'),
+                    moreLink: data.moreLink,
                 },
                 qa: 'dashboard-table-table-files',
             } only %}

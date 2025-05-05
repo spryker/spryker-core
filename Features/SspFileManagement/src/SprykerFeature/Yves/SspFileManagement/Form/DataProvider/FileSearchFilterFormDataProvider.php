@@ -84,7 +84,7 @@ class FileSearchFilterFormDataProvider
 
         $translatedEntityTypes = $this->glossaryStorageClient->translateBulk($translationKeys, $localeName);
         foreach ($this->sspFileManagementConfig->getEntityTypes() as $entityType) {
-            if (!$this->can(static::ENTITY_TO_PERMISSION_MAP[$entityType])) {
+            if (isset(static::ENTITY_TO_PERMISSION_MAP[$entityType]) && !$this->can(static::ENTITY_TO_PERMISSION_MAP[$entityType])) {
                 continue;
             }
 

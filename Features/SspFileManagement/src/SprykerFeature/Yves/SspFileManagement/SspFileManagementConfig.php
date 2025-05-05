@@ -8,6 +8,7 @@
 namespace SprykerFeature\Yves\SspFileManagement;
 
 use Spryker\Yves\Kernel\AbstractBundleConfig;
+use SprykerFeature\Shared\SspFileManagement\SspFileManagementConfig as SharedSspFileManagementConfig;
 
 /**
  * @method \SprykerFeature\Shared\SspFileManagement\SspFileManagementConfig getSharedConfig()
@@ -53,7 +54,11 @@ class SspFileManagementConfig extends AbstractBundleConfig
      */
     public function getEntityTypes(): array
     {
-        return $this->getSharedConfig()->getEntityTypes();
+        return [
+            SharedSspFileManagementConfig::ENTITY_TYPE_COMPANY_USER,
+            SharedSspFileManagementConfig::ENTITY_TYPE_COMPANY,
+            SharedSspFileManagementConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT,
+        ];
     }
 
     /**

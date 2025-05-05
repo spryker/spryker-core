@@ -6,6 +6,7 @@
     "require": {
         "php": ">=8.2",
         "spryker-feature/feature-ui": "^0.1.0",
+        "spryker-feature/ssp-asset-management": "^0.4.0",
         "spryker-shop/shop-application": "^1.0.0",
         "spryker/application": "^3.8.0",
         "spryker/company": "^1.0.0",

@@ -40,7 +40,7 @@ class SspAssetManagementFilePreDeletePlugin extends AbstractPlugin implements Fi
 
         $sspAssetCollection = $this->getFacade()->getSspAssetCollection(
             (new SspAssetCriteriaTransfer())->setSspAssetConditions(
-                (new SspAssetConditionsTransfer())->setFileIds($fileIds),
+                (new SspAssetConditionsTransfer())->setImageFileIds($fileIds),
             ),
         );
 

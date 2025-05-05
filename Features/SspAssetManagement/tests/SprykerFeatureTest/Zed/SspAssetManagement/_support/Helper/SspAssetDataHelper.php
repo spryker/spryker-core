@@ -55,7 +55,7 @@ class SspAssetDataHelper extends Module
         }
 
         $sspAssetEntity->save();
-        foreach ($sspAssetTransfer->getAssignments() as $assignment) {
+        foreach ($sspAssetTransfer->getBusinessUnitAssignments() as $assignment) {
             (new SpySspAssetToCompanyBusinessUnit())
                 ->setFkSspAsset($sspAssetEntity->getIdSspAsset())
                 ->setFkCompanyBusinessUnit($assignment->getCompanyBusinessUnit()->getIdCompanyBusinessUnit())

@@ -10,7 +10,7 @@ namespace SprykerFeature\Zed\SspAssetManagement\Persistence;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
-use Generated\Shared\Transfer\SspAssetAssignmentTransfer;
+use Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
@@ -99,8 +99,8 @@ class SspAssetManagementRepository extends AbstractRepository implements SspAsse
         foreach ($sspAssetCollectionTransfer->getSspAssets() as $sspAssetTransfer) {
             foreach ($sspAssetToCompanyBusinessUnitEntities as $sspAssetToCompanyBusinessUnit) {
                 if ($sspAssetToCompanyBusinessUnit->getFkSspAsset() === $sspAssetTransfer->getIdSspAsset()) {
-                    $sspAssetTransfer->addAssignment(
-                        (new SspAssetAssignmentTransfer())
+                    $sspAssetTransfer->addBusinessUnitAssignment(
+                        (new SspAssetBusinessUnitAssignmentTransfer())
                             ->setCompanyBusinessUnit(
                                 (new CompanyBusinessUnitTransfer())
                                     ->setIdCompanyBusinessUnit($sspAssetToCompanyBusinessUnit->getFkCompanyBusinessUnit())
@@ -169,15 +169,16 @@ class SspAssetManagementRepository extends AbstractRepository implements SspAsse
         }
 
         if ($sspAssetConditionsTransfer->getSearchText()) {
-            $searchText = '%' . $sspAssetConditionsTransfer->getSearchText() . '%';
-            $sspAssetQuery->where(
-                '(spy_ssp_asset.name LIKE ? OR spy_ssp_asset.reference LIKE ? OR spy_ssp_asset.serial_number LIKE ?)',
-                [$searchText, $searchText, $searchText],
-            );
+            $searchText = $sspAssetConditionsTransfer->getSearchText();
+            $sspAssetQuery->filterByName_Like($searchText)
+                ->_or()
+                ->filterByReference_Like($searchText)
+                ->_or()
+                ->filterBySerialNumber_Like($searchText);
         }
 
-        if ($sspAssetConditionsTransfer->getFileIds() !== []) {
-            $sspAssetQuery->filterByFkImageFile_In($sspAssetConditionsTransfer->getFileIds());
+        if ($sspAssetConditionsTransfer->getImageFileIds() !== []) {
+            $sspAssetQuery->filterByFkImageFile_In($sspAssetConditionsTransfer->getImageFileIds());
         }
 
         return $sspAssetQuery;

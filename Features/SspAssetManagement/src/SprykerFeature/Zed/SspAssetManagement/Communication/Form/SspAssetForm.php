@@ -190,6 +190,7 @@ class SspAssetForm extends AbstractType
         $this->addAssignedBusinessUnitDataListener($builder);
         $this->addBusinessUnitOwnerValidationListener($builder);
         $this->addCompanyAssignmentValidationListener($builder);
+        $this->addBusinessUnitAssignmentValidationListener($builder);
     }
 
     /**
@@ -529,13 +530,98 @@ class SspAssetForm extends AbstractType
     }
 
     /**
+     * Adds a validation listener to ensure that if a company is selected, at least one business unit of that company is selected too
+     *
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function addBusinessUnitAssignmentValidationListener(FormBuilderInterface $builder): void
+    {
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event): void {
+                $data = $event->getData();
+                $form = $event->getForm();
+
+                if (!isset($data[static::FIELD_ASSIGNED_COMPANIES]) || !$data[static::FIELD_ASSIGNED_COMPANIES]) {
+                    return;
+                }
+
+                if (!isset($data[static::FIELD_ASSIGNED_BUSINESS_UNITS]) || !$data[static::FIELD_ASSIGNED_BUSINESS_UNITS]) {
+                    return;
+                }
+
+                $assignedCompanyIds = array_map('intval', $data[static::FIELD_ASSIGNED_COMPANIES]);
+                $assignedBusinessUnitIds = array_map('intval', $data[static::FIELD_ASSIGNED_BUSINESS_UNITS]);
+
+                $companyBusinessUnitFacade = $this->getFactory()->getCompanyBusinessUnitFacade();
+                $businessUnitCollection = $companyBusinessUnitFacade->getCompanyBusinessUnitCollection(
+                    (new CompanyBusinessUnitCriteriaFilterTransfer())->setCompanyIds($assignedCompanyIds),
+                );
+
+                $companyBusinessUnits = [];
+                foreach ($businessUnitCollection->getCompanyBusinessUnits() as $businessUnit) {
+                    if ($businessUnit->getFkCompany() && $businessUnit->getIdCompanyBusinessUnit()) {
+                        $companyId = $businessUnit->getFkCompany();
+                        $businessUnitId = $businessUnit->getIdCompanyBusinessUnit();
+
+                        if (!isset($companyBusinessUnits[$companyId])) {
+                            $companyBusinessUnits[$companyId] = [];
+                        }
+
+                        $companyBusinessUnits[$companyId][] = $businessUnitId;
+                    }
+                }
+
+                $companyFacade = $this->getFactory()->getCompanyFacade();
+                $companiesWithoutBusinessUnits = [];
+
+                foreach ($assignedCompanyIds as $companyId) {
+                    $hasSelectedBusinessUnit = false;
+
+                    if (isset($companyBusinessUnits[$companyId])) {
+                        foreach ($companyBusinessUnits[$companyId] as $businessUnitId) {
+                            if (in_array($businessUnitId, $assignedBusinessUnitIds)) {
+                                $hasSelectedBusinessUnit = true;
+
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!$hasSelectedBusinessUnit) {
+                        $companyCollection = $companyFacade->getCompanyCollection(
+                            (new CompanyCriteriaFilterTransfer())->setCompanyIds([$companyId]),
+                        );
+
+                        if ($companyCollection->getCompanies()->count() > 0) {
+                            $company = $companyCollection->getCompanies()->offsetGet(0);
+                            $companiesWithoutBusinessUnits[] = $company->getName();
+                        }
+                    }
+                }
+
+                if ((bool)$companiesWithoutBusinessUnits) {
+                    $errorMessage = sprintf(
+                        'For each selected company, at least one of its business units must be selected. Missing business units for companies: %s.',
+                        implode(', ', $companiesWithoutBusinessUnits),
+                    );
+
+                    $form->addError(new FormError($errorMessage));
+                }
+            },
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
      *
      * @return array<int>
      */
     protected function extractBusinessUnitsFromTransfer(SspAssetTransfer $sspAssetTransfer): array
     {
-        $sspAssetAssignmentTransfers = $sspAssetTransfer->getAssignments();
+        $sspAssetAssignmentTransfers = $sspAssetTransfer->getBusinessUnitAssignments();
         if ($sspAssetAssignmentTransfers->count() === 0) {
             return [];
         }
@@ -558,7 +644,7 @@ class SspAssetForm extends AbstractType
      */
     protected function extractCompaniesFromTransfer(SspAssetTransfer $sspAssetTransfer): array
     {
-        $sspAssetAssignmentTransfers = $sspAssetTransfer->getAssignments();
+        $sspAssetAssignmentTransfers = $sspAssetTransfer->getBusinessUnitAssignments();
         if ($sspAssetAssignmentTransfers->count() === 0) {
             return [];
         }

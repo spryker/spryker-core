@@ -9,6 +9,7 @@ namespace SprykerFeatureTest\Zed\SspFileManagement\Business\Facade;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CriteriaRangeFilterTransfer;
 use Generated\Shared\Transfer\FileAttachmentFileConditionsTransfer;
 use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
@@ -16,9 +17,13 @@ use Generated\Shared\Transfer\FileAttachmentFileSearchConditionsTransfer;
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileTransfer;
+use Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer;
+use Generated\Shared\Transfer\SspAssetTransfer;
 use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemWriterPlugin;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Shared\SspFileManagement\SspFileManagementConfig;
+use SprykerFeature\Zed\SspFileManagement\Business\SspFileManagementFacadeInterface;
 use SprykerFeatureTest\Zed\SspFileManagement\SspFileManagementBusinessTester;
 
 /**
@@ -79,6 +84,8 @@ class GetFileAttachmentFileCollectionAccordingToPermissionsFacadeTest extends Un
      */
     protected SspFileManagementBusinessTester $tester;
 
+    protected SspFileManagementFacadeInterface|AbstractFacade $facade;
+
     /**
      * @return void
      */
@@ -89,6 +96,8 @@ class GetFileAttachmentFileCollectionAccordingToPermissionsFacadeTest extends Un
             new LocalFilesystemBuilderPlugin(),
         ]);
         $this->tester->ensureFileAttachmentTablesAreEmpty();
+
+        $this->facade = $this->tester->getFacade();
     }
 
     /**
@@ -116,14 +125,65 @@ class GetFileAttachmentFileCollectionAccordingToPermissionsFacadeTest extends Un
             ->setFileAttachmentFileSearchConditions(new FileAttachmentFileSearchConditionsTransfer());
 
         // Act
-        $fileAttachmentFileCollectionTransfer = $this->tester->getFacade()
-            ->getFileAttachmentFileCollectionAccordingToPermissions($fileAttachmentFileCriteriaTransfer);
+        $fileAttachmentFileCollectionTransfer = $this->facade->getFileAttachmentFileCollectionAccordingToPermissions($fileAttachmentFileCriteriaTransfer);
 
         // Assert
-        $this->assertCount(1, $fileAttachmentFileCollectionTransfer->getFiles());
+        $this->assertCount(1, $fileAttachmentFileCollectionTransfer->getFileAttachments());
         $this->assertSame(
             $fileTransfer->getIdFile(),
-            $fileAttachmentFileCollectionTransfer->getFiles()->offsetGet(0)->getIdFile(),
+            $fileAttachmentFileCollectionTransfer->getFileAttachments()->offsetGet(0)->getFile()->getIdFile(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetFilesAccordingToPermissionsReturnsFilesForSspAssetWithPermissions(): void
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany();
+        $fileTransfer = $this->tester->haveFile();
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyBusinessUnitTransfer::COMPANY => $companyTransfer,
+        ]);
+        $businessUnitTransfer->setCompany($companyTransfer);
+        $companyUserTransfer = $this->tester->createCompanyUser($companyTransfer);
+        $companyUserTransfer->setCompanyBusinessUnit($businessUnitTransfer);
+
+        $sspAssetTransfer = $this->tester->haveAsset([
+            SspAssetTransfer::BUSINESS_UNIT_ASSIGNMENTS =>
+           [ [SspAssetBusinessUnitAssignmentTransfer::COMPANY_BUSINESS_UNIT => $businessUnitTransfer]],
+        ]);
+
+        $this->tester->haveFileAttachment([
+            FileAttachmentTransfer::FILE => $fileTransfer,
+            FileAttachmentTransfer::ENTITY_ID => $companyTransfer->getIdCompany(),
+            FileAttachmentTransfer::ENTITY_NAME => SspFileManagementConfig::ENTITY_TYPE_COMPANY,
+        ]);
+
+        $this->tester->haveFileAttachment([
+            FileAttachmentTransfer::FILE => $fileTransfer,
+            FileAttachmentTransfer::ENTITY_ID => $sspAssetTransfer->getIdSspAsset(),
+            FileAttachmentTransfer::ENTITY_NAME => SspFileManagementConfig::ENTITY_TYPE_SSP_ASSET,
+        ]);
+
+        $fileAttachmentFileConditionsTransfer = (new FileAttachmentFileConditionsTransfer())
+            ->setEntityTypes([SspFileManagementConfig::ENTITY_TYPE_SSP_ASSET]);
+
+        $fileAttachmentFileCriteriaTransfer = (new FileAttachmentFileCriteriaTransfer())
+            ->setFileAttachmentFileConditions($fileAttachmentFileConditionsTransfer)
+            ->setCompanyUser($companyUserTransfer)
+            ->setFileAttachmentFileSearchConditions(new FileAttachmentFileSearchConditionsTransfer());
+
+        // Act
+        $fileAttachmentFileCollectionTransfer = $this->facade->getFileAttachmentFileCollectionAccordingToPermissions($fileAttachmentFileCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $fileAttachmentFileCollectionTransfer->getFileAttachments());
+        $this->assertSame(
+            $fileTransfer->getIdFile(),
+            $fileAttachmentFileCollectionTransfer->getFileAttachments()->offsetGet(0)->getFile()->getIdFile(),
         );
     }
 
@@ -141,12 +201,17 @@ class GetFileAttachmentFileCollectionAccordingToPermissionsFacadeTest extends Un
             ->setFileAttachmentFileConditions(new FileAttachmentFileConditionsTransfer())
             ->setFileAttachmentFileSearchConditions(new FileAttachmentFileSearchConditionsTransfer());
 
+        $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditions()->setEntityTypes([
+            SspFileManagementConfig::ENTITY_TYPE_COMPANY,
+            SspFileManagementConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT,
+            SspFileManagementConfig::ENTITY_TYPE_COMPANY_USER,
+        ]);
+
         // Act
-        $fileAttachmentFileCollectionTransfer = $this->tester->getFacade()
-            ->getFileAttachmentFileCollectionAccordingToPermissions($fileAttachmentFileCriteriaTransfer);
+        $fileAttachmentFileCollectionTransfer = $this->facade->getFileAttachmentFileCollectionAccordingToPermissions($fileAttachmentFileCriteriaTransfer);
 
         // Assert
-        $this->assertCount(0, $fileAttachmentFileCollectionTransfer->getFiles());
+        $this->assertCount(0, $fileAttachmentFileCollectionTransfer->getFileAttachments());
     }
 
     /**
@@ -181,15 +246,21 @@ class GetFileAttachmentFileCollectionAccordingToPermissionsFacadeTest extends Un
             ->setCompanyUser($companyUserTransfer)
             ->setFileAttachmentFileSearchConditions(new FileAttachmentFileSearchConditionsTransfer());
 
+        $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditions()->setEntityTypes([
+            SspFileManagementConfig::ENTITY_TYPE_COMPANY,
+            SspFileManagementConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT,
+            SspFileManagementConfig::ENTITY_TYPE_COMPANY_USER,
+        ]);
+
         // Act
-        $fileAttachmentFileCollectionTransfer = $this->tester->getFacade()
+        $fileAttachmentFileCollectionTransfer = $this->facade
             ->getFileAttachmentFileCollectionAccordingToPermissions($fileAttachmentFileCriteriaTransfer);
 
         // Assert
-        $this->assertCount(1, $fileAttachmentFileCollectionTransfer->getFiles());
+        $this->assertCount(1, $fileAttachmentFileCollectionTransfer->getFileAttachments());
         $this->assertSame(
             $fileTransfer->getIdFile(),
-            $fileAttachmentFileCollectionTransfer->getFiles()->offsetGet(0)->getIdFile(),
+            $fileAttachmentFileCollectionTransfer->getFileAttachments()->offsetGet(0)->getFile()->getIdFile(),
         );
     }
 
@@ -220,15 +291,21 @@ class GetFileAttachmentFileCollectionAccordingToPermissionsFacadeTest extends Un
             ->setCompanyUser($companyUserTransfer)
             ->setFileAttachmentFileSearchConditions(new FileAttachmentFileSearchConditionsTransfer());
 
+        $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditions()->setEntityTypes([
+            SspFileManagementConfig::ENTITY_TYPE_COMPANY,
+            SspFileManagementConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT,
+            SspFileManagementConfig::ENTITY_TYPE_COMPANY_USER,
+        ]);
+
         // Act
-        $fileAttachmentFileCollectionTransfer = $this->tester->getFacade()
+        $fileAttachmentFileCollectionTransfer = $this->facade
             ->getFileAttachmentFileCollectionAccordingToPermissions($fileAttachmentFileCriteriaTransfer);
 
         // Assert
-        $this->assertCount(1, $fileAttachmentFileCollectionTransfer->getFiles());
+        $this->assertCount(1, $fileAttachmentFileCollectionTransfer->getFileAttachments());
         $this->assertSame(
             $fileTransfer->getIdFile(),
-            $fileAttachmentFileCollectionTransfer->getFiles()->offsetGet(0)->getIdFile(),
+            $fileAttachmentFileCollectionTransfer->getFileAttachments()->offsetGet(0)->getFile()->getIdFile(),
         );
     }
 
@@ -275,17 +352,23 @@ class GetFileAttachmentFileCollectionAccordingToPermissionsFacadeTest extends Un
             ->setFileAttachmentFileConditions(new FileAttachmentFileConditionsTransfer())
             ->setFileAttachmentFileSearchConditions($fileAttachmentFileSearchConditionsTransfer);
 
+        $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditions()->setEntityTypes([
+            SspFileManagementConfig::ENTITY_TYPE_COMPANY,
+            SspFileManagementConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT,
+            SspFileManagementConfig::ENTITY_TYPE_COMPANY_USER,
+        ]);
+
         // Act
-        $fileAttachmentFileCollectionTransfer = $this->tester->getFacade()
+        $fileAttachmentFileCollectionTransfer = $this->facade
             ->getFileAttachmentFileCollectionAccordingToPermissions($fileAttachmentFileCriteriaTransfer);
 
         // Assert
-        $this->assertCount(2, $fileAttachmentFileCollectionTransfer->getFiles());
+        $this->assertCount(2, $fileAttachmentFileCollectionTransfer->getFileAttachments());
         $fileIds = array_map(
             function ($fileTransfer) {
-                return $fileTransfer->getIdFile();
+                return $fileTransfer->getFile()->getIdFile();
             },
-            $fileAttachmentFileCollectionTransfer->getFiles()->getArrayCopy(),
+            $fileAttachmentFileCollectionTransfer->getFileAttachments()->getArrayCopy(),
         );
         $this->assertContains($fileByNameTransfer->getIdFile(), $fileIds);
         $this->assertContains($fileByReferenceTransfer->getIdFile(), $fileIds);

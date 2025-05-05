@@ -22,6 +22,7 @@ class SspAssetTabs extends AbstractTabs
     {
         $this->addCompaniesTab($tabsViewTransfer);
         $this->addSspInquiriesTab($tabsViewTransfer);
+        $this->addAttachedFilesTab($tabsViewTransfer);
 
         return $tabsViewTransfer;
     }
@@ -54,6 +55,23 @@ class SspAssetTabs extends AbstractTabs
             ->setName('ssp-inquiries')
             ->setTitle('Inquiries')
             ->setTemplate('@SspAssetManagement/_partials/_tabs/tab-ssp-inquiries.twig');
+
+        $tabsViewTransfer->addTab($tabItemTransfer);
+
+        return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return $this
+     */
+    protected function addAttachedFilesTab(TabsViewTransfer $tabsViewTransfer)
+    {
+        $tabItemTransfer = (new TabItemTransfer())
+            ->setName('attached-files')
+            ->setTitle('Files')
+            ->setTemplate('@SspAssetManagement/_partials/_tabs/tab-attached-files.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

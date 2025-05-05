@@ -11,7 +11,7 @@ use Exception;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\FileUploadTransfer;
-use Generated\Shared\Transfer\SspAssetAssignmentTransfer;
+use Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Form\SspAssetForm;
@@ -60,27 +60,27 @@ class SspAssetFormDataToTransferMapper implements SspAssetFormDataToTransferMapp
         SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
     ): SspAssetCollectionRequestTransfer {
         $assignmentsToCompanyBusinessUnitMapping = [];
-        foreach ($sspAssetTransfer->getAssignments() as $initialAssignment) {
-            if ($initialAssignment->getCompanyBusinessUnit() === null) {
+        foreach ($sspAssetTransfer->getBusinessUnitAssignments() as $initialBusinessUnitAssignment) {
+            if ($initialBusinessUnitAssignment->getCompanyBusinessUnit() === null) {
                 continue;
             }
-            $assignmentsToCompanyBusinessUnitMapping[] = $initialAssignment->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail();
+            $assignmentsToCompanyBusinessUnitMapping[] = $initialBusinessUnitAssignment->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail();
         }
 
         $businessUnitIdsToAssign = array_diff($assignedBusinessUnitIds, $assignmentsToCompanyBusinessUnitMapping);
         $businessUnitIdsToUnAssign = array_diff($assignmentsToCompanyBusinessUnitMapping, $assignedBusinessUnitIds);
 
         foreach ($businessUnitIdsToAssign as $businessUnitIdToAssign) {
-            $sspAssetCollectionRequestTransfer->addAssignmentToAdd(
-                (new SspAssetAssignmentTransfer())
+            $sspAssetCollectionRequestTransfer->addBusinessUnitAssignmentToAdd(
+                (new SspAssetBusinessUnitAssignmentTransfer())
                     ->setCompanyBusinessUnit((new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($businessUnitIdToAssign))
                     ->setSspAsset($sspAssetTransfer),
             );
         }
 
         foreach ($businessUnitIdsToUnAssign as $businessUnitIdToUnAssign) {
-            $sspAssetCollectionRequestTransfer->addAssignmentToRemove(
-                (new SspAssetAssignmentTransfer())
+            $sspAssetCollectionRequestTransfer->addBusinessUnitAssignmentToRemove(
+                (new SspAssetBusinessUnitAssignmentTransfer())
                     ->setCompanyBusinessUnit((new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($businessUnitIdToUnAssign))
                     ->setSspAsset($sspAssetTransfer),
             );

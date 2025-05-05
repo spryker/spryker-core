@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Orm\Zed\SspFileManagement\Persistence\SpyCompanyBusinessUnitFileQuery;
 use Orm\Zed\SspFileManagement\Persistence\SpyCompanyFileQuery;
 use Orm\Zed\SspFileManagement\Persistence\SpyCompanyUserFileQuery;
+use Orm\Zed\SspFileManagement\Persistence\SpySspAssetFileQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -41,6 +42,10 @@ class SspFileManagementEntityManager extends AbstractEntityManager implements Ss
             $fileAttachmentQueryList = $this->applyFileAttachmentByCompanyBusinessUnitIdsCondition($fileAttachmentQueryList, $fileAttachmentCollectionDeleteCriteriaTransfer->getCompanyBusinessUnitIds());
         }
 
+        if ($fileAttachmentCollectionDeleteCriteriaTransfer->getSspAssetIds() !== []) {
+            $fileAttachmentQueryList = $this->applyFileAttachmentByAssetIdsCondition($fileAttachmentQueryList, $fileAttachmentCollectionDeleteCriteriaTransfer->getSspAssetIds());
+        }
+
         if ($fileAttachmentCollectionDeleteCriteriaTransfer->getFileIds() !== []) {
             $fileAttachmentQueryList = $this->applyFileAttachmentByFileIdsCondition(
                 $fileAttachmentQueryList,
@@ -53,11 +58,11 @@ class SspFileManagementEntityManager extends AbstractEntityManager implements Ss
     }
 
     /**
-     * @param list<\Orm\Zed\SspFileManagement\Persistence\SpyCompanyFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyBusinessUnitFileQuery> $fileAttachmentQueryList
+     * @param list<\Orm\Zed\SspFileManagement\Persistence\SpyCompanyFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyBusinessUnitFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpySspAssetFileQuery> $fileAttachmentQueryList
      * @param list<int> $fileIds
      * @param bool $applyOnlyToModifiedQueries
      *
-     * @return list<\Orm\Zed\SspFileManagement\Persistence\SpyCompanyFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyBusinessUnitFileQuery>
+     * @return list<\Orm\Zed\SspFileManagement\Persistence\SpyCompanyFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyBusinessUnitFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpySspAssetFileQuery>
      */
     protected function applyFileAttachmentByFileIdsCondition(
         array $fileAttachmentQueryList,
@@ -133,7 +138,26 @@ class SspFileManagementEntityManager extends AbstractEntityManager implements Ss
     }
 
     /**
-     * @param list<\Orm\Zed\SspFileManagement\Persistence\SpyCompanyFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyBusinessUnitFileQuery> $fileAttachmentQueryList
+     * @param list<\Orm\Zed\SspFileManagement\Persistence\SpyCompanyFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyBusinessUnitFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpySspAssetFileQuery> $fileAttachmentQueryList
+     * @param list<int> $assetIds
+     *
+     * @return list<\Orm\Zed\SspFileManagement\Persistence\SpyCompanyFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyBusinessUnitFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpySspAssetFileQuery>
+     */
+    protected function applyFileAttachmentByAssetIdsCondition(
+        array $fileAttachmentQueryList,
+        array $assetIds
+    ): array {
+        foreach ($fileAttachmentQueryList as $fileAttachmentQuery) {
+            if ($fileAttachmentQuery instanceof SpySspAssetFileQuery) {
+                $fileAttachmentQuery->filterByFkSspAsset_In($assetIds);
+            }
+        }
+
+        return $fileAttachmentQueryList;
+    }
+
+    /**
+     * @param list<\Orm\Zed\SspFileManagement\Persistence\SpyCompanyFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpyCompanyBusinessUnitFileQuery|\Orm\Zed\SspFileManagement\Persistence\SpySspAssetFileQuery> $fileAttachmentQueryList
      *
      * @return void
      */

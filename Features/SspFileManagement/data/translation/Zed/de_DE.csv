@@ -1,4 +1,5 @@
 Actions,Aktionen
+asset,Asset
 "Attach entity","Entität anhängen"
 "Attached To","Zugeordnet zu"
 Back,Zurück
@@ -27,6 +28,7 @@ company,Firmenname
 company_user,Firmenkontonutzer
 "Company Business Unit",Geschäftseinheit
 company_business_unit,Geschäftseinheit
+ssp_asset,Asset
 "Upload Files","Dateien hochladen"
 "Back to File List","Zur Dateiliste zurück"
 Upload,Hochladen

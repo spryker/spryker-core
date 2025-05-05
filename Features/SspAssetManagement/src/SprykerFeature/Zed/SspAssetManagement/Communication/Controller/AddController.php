@@ -7,15 +7,15 @@
 
 namespace SprykerFeature\Zed\SspAssetManagement\Communication\Controller;
 
-use Exception;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\SspAssetAssignmentTransfer;
+use Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Form\SspAssetForm;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Throwable;
 
 /**
  * @method \SprykerFeature\Zed\SspAssetManagement\Communication\SspAssetManagementCommunicationFactory getFactory()
@@ -90,8 +90,8 @@ class AddController extends AbstractController
         $sspAssetCollectionRequestTransfer->addSspAsset($sspAssetTransfer);
 
         foreach ($sspAssetForm->get(SspAssetForm::FIELD_ASSIGNED_BUSINESS_UNITS)->getData() as $businessUnitIdToAssign) {
-            $sspAssetTransfer->addAssignment(
-                (new SspAssetAssignmentTransfer())
+            $sspAssetTransfer->addBusinessUnitAssignment(
+                (new SspAssetBusinessUnitAssignmentTransfer())
                     ->setCompanyBusinessUnit((new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($businessUnitIdToAssign)),
             );
         }
@@ -99,7 +99,7 @@ class AddController extends AbstractController
         try {
             $sspAssetCollectionResponseTransfer = $this->getFacade()->createSspAssetCollection($sspAssetCollectionRequestTransfer);
             $this->addSuccessMessage(static::MESSAGE_SSP_ASSET_CREATE_SUCCESS);
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $this->addErrorMessage(static::MESSAGE_SSP_ASSET_CREATE_ERROR);
 
             return $this->redirectResponse(static::ROUTE_SSP_ASSET_LIST);

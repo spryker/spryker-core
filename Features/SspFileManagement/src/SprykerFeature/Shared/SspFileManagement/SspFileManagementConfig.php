@@ -42,6 +42,16 @@ class SspFileManagementConfig extends AbstractSharedConfig
     public const ENTITY_TYPE_COMPANY_BUSINESS_UNIT = 'company_business_unit';
 
     /**
+     * Specification:
+     * - Entity type for asset.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_TYPE_SSP_ASSET = 'ssp_asset';
+
+    /**
      * @uses \Spryker\Shared\UtilDateTime\UtilDateTimeConstants::DATE_TIME_ZONE
      *
      * @var string
@@ -66,6 +76,7 @@ class SspFileManagementConfig extends AbstractSharedConfig
             static::ENTITY_TYPE_COMPANY_USER,
             static::ENTITY_TYPE_COMPANY,
             static::ENTITY_TYPE_COMPANY_BUSINESS_UNIT,
+            static::ENTITY_TYPE_SSP_ASSET,
         ];
     }
 

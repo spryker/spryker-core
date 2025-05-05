@@ -103,13 +103,13 @@
                 {% set colClasses = 'col col--with-gutter col--sm-12 col--xl-6' %}
 
                 {% block tablesCols %}
-                    {% if can('ViewFilesPermissionPlugin') %}
+                    {% if can('ViewCompanyFilesPermissionPlugin') or can('ViewCompanyUserFilesPermissionPlugin') or can('ViewCompanyBusinessUnitFilesPermissionPlugin') %}
                         {% block filesCol %}
                             {% set fileAttachmentFileCollection = data.dashboard.dashboardComponentFiles ? data.dashboard.dashboardComponentFiles.fileAttachmentFileCollection : null %}
 
                             <div class="{{ colClasses }}">
                                 {% block files %}
-                                    {% widget 'DashboardFileWidget' args [fileAttachmentFileCollection] only %}
+                                    {% widget 'SspFileListWidget' args [fileAttachmentFileCollection] only %}
                                     {% endwidget %}
                                 {% endblock %}
                             </div>

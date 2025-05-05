@@ -3,7 +3,7 @@
 {% define data = {
     isActivePage: _widget.isActivePage,
     isVisible: _widget.isVisible,
-    canViewFiles: can('ViewFilesPermissionPlugin'),
+    canViewFiles: can('ViewCompanyFilesPermissionPlugin') or can('ViewCompanyUserFilesPermissionPlugin') or can('ViewCompanyBusinessUnitFilesPermissionPlugin'),
 } %}
 
 {% set itemClass = data.isActivePage ? ' menu__item--active' : '' %}

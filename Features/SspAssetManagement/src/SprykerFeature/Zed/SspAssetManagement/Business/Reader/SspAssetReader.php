@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException;
 use Spryker\Zed\FileManager\Business\FileManagerFacadeInterface;
+use SprykerFeature\Zed\SspAssetManagement\Business\Permission\SspAssetCustomerPermissionExpanderInterface;
 use SprykerFeature\Zed\SspAssetManagement\Persistence\SspAssetManagementRepositoryInterface;
 
 class SspAssetReader implements SspAssetReaderInterface
@@ -19,11 +20,13 @@ class SspAssetReader implements SspAssetReaderInterface
      * @param \SprykerFeature\Zed\SspAssetManagement\Persistence\SspAssetManagementRepositoryInterface $sspAssetManagementRepository
      * @param \Spryker\Zed\FileManager\Business\FileManagerFacadeInterface $fileManagerFacade
      * @param array<\SprykerFeature\Zed\SspAssetManagement\Dependency\Plugin\SspAssetManagementExpanderPluginInterface> $sspAssetExpanderPlugins
+     * @param \SprykerFeature\Zed\SspAssetManagement\Business\Permission\SspAssetCustomerPermissionExpanderInterface $sspAssetCustomerPermissionExpander
      */
     public function __construct(
         protected SspAssetManagementRepositoryInterface $sspAssetManagementRepository,
         protected FileManagerFacadeInterface $fileManagerFacade,
-        protected array $sspAssetExpanderPlugins
+        protected array $sspAssetExpanderPlugins,
+        protected SspAssetCustomerPermissionExpanderInterface $sspAssetCustomerPermissionExpander
     ) {
     }
 
@@ -34,7 +37,9 @@ class SspAssetReader implements SspAssetReaderInterface
      */
     public function getSspAssetCollection(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): SspAssetCollectionTransfer
     {
-        $sspAssetCollectionTransfer = $this->sspAssetManagementRepository->getSspAssetCollection($sspAssetCriteriaTransfer);
+        $sspAssetCollectionTransfer = $this->sspAssetManagementRepository->getSspAssetCollection(
+            $this->sspAssetCustomerPermissionExpander->expand($sspAssetCriteriaTransfer),
+        );
 
         foreach ($this->sspAssetExpanderPlugins as $sspAssetExpanderPlugin) {
             $sspAssetCollectionTransfer = $sspAssetExpanderPlugin->expand($sspAssetCollectionTransfer, $sspAssetCriteriaTransfer);

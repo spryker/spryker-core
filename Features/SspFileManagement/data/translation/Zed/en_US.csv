@@ -1,4 +1,5 @@
 Actions,Actions
+asset,Asset
 "Attach entity","Attach entity"
 "Attached To","Attached To"
 Back,Back
@@ -27,6 +28,7 @@ company,Company
 company_user,"Company user"
 "Company Business Unit","Company Business Unit"
 company_business_unit,"Company business unit"
+ssp_asset,Asset
 "Upload Files","Upload Files"
 "Back to File List","Back to File List"
 Upload,Upload

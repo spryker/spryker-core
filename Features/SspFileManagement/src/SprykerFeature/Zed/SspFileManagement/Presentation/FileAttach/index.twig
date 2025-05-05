@@ -15,9 +15,11 @@
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'File Attachment' | trans } %}
         {% block widget_content %}
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
+            {{ tabs(tabsViewTransfer, {
+                'fileAttachForm': fileAttachForm,
+                'sspAssetFileAttachForm': sspAssetFileAttachForm,
+                'idFile': idFile,
+            }) }}
         {% endblock %}
     {% endembed %}
 {% endblock %}

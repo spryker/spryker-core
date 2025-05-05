@@ -7,7 +7,6 @@
 
 namespace SprykerFeature\Zed\SspFileManagement\Business;
 
-use Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
@@ -23,23 +22,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class SspFileManagementFacade extends AbstractFacade implements SspFileManagementFacadeInterface
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer $fileAttachmentCollectionDeleteCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer
-     */
-    public function deleteFileAttachmentCollection(
-        FileAttachmentCollectionDeleteCriteriaTransfer $fileAttachmentCollectionDeleteCriteriaTransfer
-    ): FileAttachmentCollectionResponseTransfer {
-        return $this->getFactory()
-            ->createFileAttachmentDeleter()
-            ->deleteFileAttachmentCollection($fileAttachmentCollectionDeleteCriteriaTransfer);
-    }
-
     /**
      * {@inheritDoc}
      *

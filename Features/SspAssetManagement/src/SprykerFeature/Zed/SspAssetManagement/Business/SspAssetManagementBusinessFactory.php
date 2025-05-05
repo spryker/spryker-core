@@ -7,13 +7,14 @@
 
 namespace SprykerFeature\Zed\SspAssetManagement\Business;
 
-use Spryker\Service\FileManager\FileManagerServiceInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\FileManager\Business\FileManagerFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface;
 use SprykerFeature\Zed\SspAssetManagement\Business\DashboardDataProvider\DashboardDataProvider;
 use SprykerFeature\Zed\SspAssetManagement\Business\DashboardDataProvider\DashboardDataProviderInterface;
+use SprykerFeature\Zed\SspAssetManagement\Business\Permission\SspAssetCustomerPermissionExpander;
+use SprykerFeature\Zed\SspAssetManagement\Business\Permission\SspAssetCustomerPermissionExpanderInterface;
 use SprykerFeature\Zed\SspAssetManagement\Business\Reader\SspAssetReader;
 use SprykerFeature\Zed\SspAssetManagement\Business\Reader\SspAssetReaderInterface;
 use SprykerFeature\Zed\SspAssetManagement\Business\Validator\SspAssetValidator;
@@ -40,6 +41,7 @@ class SspAssetManagementBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getFileManagerFacade(),
             $this->getSspAssetManagementExpanderPlugins(),
+            $this->createSspAssetCustomerPermissionExpander(),
         );
     }
 
@@ -94,14 +96,6 @@ class SspAssetManagementBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Service\FileManager\FileManagerServiceInterface
-     */
-    public function getFileManagerService(): FileManagerServiceInterface // TODO: remove if not needed
-    {
-        return $this->getProvidedDependency(SspAssetManagementDependencyProvider::SERVICE_FILE_MANAGER);
-    }
-
-    /**
      * @return \Spryker\Zed\FileManager\Business\FileManagerFacadeInterface
      */
     public function getFileManagerFacade(): FileManagerFacadeInterface
@@ -122,6 +116,14 @@ class SspAssetManagementBusinessFactory extends AbstractBusinessFactory
      */
     public function createDashboardDataProvider(): DashboardDataProviderInterface
     {
-        return new DashboardDataProvider($this->createSspAssetReader());
+        return new DashboardDataProvider($this->createSspAssetReader(), $this->createSspAssetCustomerPermissionExpander());
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspAssetManagement\Business\Permission\SspAssetCustomerPermissionExpanderInterface
+     */
+    public function createSspAssetCustomerPermissionExpander(): SspAssetCustomerPermissionExpanderInterface
+    {
+        return new SspAssetCustomerPermissionExpander();
     }
 }
