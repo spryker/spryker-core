@@ -66,4 +66,12 @@ class MultiCartToQuoteFacadeBridge implements MultiCartToQuoteFacadeInterface
     {
         return $this->quoteFacade->findQuoteById($idQuote);
     }
+
+    /**
+     * @return string
+     */
+    public function getStorageStrategy(): string
+    {
+        return $this->quoteFacade->getStorageStrategy();
+    }
 }

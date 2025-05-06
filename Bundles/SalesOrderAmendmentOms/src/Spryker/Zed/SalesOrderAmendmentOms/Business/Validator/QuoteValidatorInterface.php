@@ -7,24 +7,11 @@
 
 namespace Spryker\Zed\SalesOrderAmendmentOms\Business\Validator;
 
-use Generated\Shared\Transfer\CartReorderResponseTransfer;
-use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteValidatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
-     * @param \Generated\Shared\Transfer\CartReorderResponseTransfer $cartReorderResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartReorderResponseTransfer
-     */
-    public function validateCartReorderQuote(
-        CartReorderTransfer $cartReorderTransfer,
-        CartReorderResponseTransfer $cartReorderResponseTransfer
-    ): CartReorderResponseTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer

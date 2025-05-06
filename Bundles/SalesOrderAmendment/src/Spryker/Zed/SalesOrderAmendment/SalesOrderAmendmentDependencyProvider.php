@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesOrderAmendment;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SalesOrderAmendment\Dependency\Facade\SalesOrderAmendmentToQuoteFacadeBridge;
 use Spryker\Zed\SalesOrderAmendment\Dependency\Facade\SalesOrderAmendmentToSalesFacadeBridge;
 use Spryker\Zed\SalesOrderAmendment\Dependency\Service\SalesOrderAmendmentToUtilEncodingServiceBridge;
 
@@ -83,6 +84,11 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_SALES = 'FACADE_SALES';
 
     /**
+     * @var string
+     */
+    public const FACADE_QUOTE = 'FACADE_QUOTE';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -91,6 +97,7 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addSalesFacade($container);
+        $container = $this->addQuoteFacade($container);
         $container = $this->addSalesOrderAmendmentExpanderPlugins($container);
         $container = $this->addSalesOrderAmendmentCreateValidationRulePlugins($container);
         $container = $this->addSalesOrderAmendmentPreCreatePlugins($container);
@@ -141,6 +148,20 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::FACADE_SALES, function (Container $container) {
             return new SalesOrderAmendmentToSalesFacadeBridge($container->getLocator()->sales()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_QUOTE, function (Container $container) {
+            return new SalesOrderAmendmentToQuoteFacadeBridge($container->getLocator()->quote()->facade());
         });
 
         return $container;

@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/SalesOrderAmendment/Dependency/Facade/SalesOrderAmendmentToQuoteFacadeBridge.php",
+        "description": "Bridges: Method `getStorageStrategy()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/SalesOrderAmendment/Dependency/Facade/SalesOrderAmendmentToSalesFacadeBridge.php",
         "description": "Bridges: Method `getOffsetPaginatedCustomerOrderList()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",

@@ -10,6 +10,7 @@ namespace Spryker\Zed\MultiCart;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeBridge;
+use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToPersistentCartFacadeBridge;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToStoreFacadeBridge;
 
@@ -39,6 +40,11 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_QUOTE = 'FACADE_QUOTE';
 
     /**
+     * @var string
+     */
+    public const FACADE_PERSISTENT_CART = 'FACADE_PERSISTENT_CART';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -49,6 +55,7 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteFacade($container);
         $container = $this->addMessengerFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addPersistentCartFacade($container);
 
         return $container;
     }
@@ -62,6 +69,7 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addMessengerFacade($container);
+        $container = $this->addQuoteFacade($container);
 
         return $container;
     }
@@ -103,6 +111,20 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new MultiCartToStoreFacadeBridge($container->getLocator()->store()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPersistentCartFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PERSISTENT_CART, function (Container $container) {
+            return new MultiCartToPersistentCartFacadeBridge($container->getLocator()->persistentCart()->facade());
         });
 
         return $container;

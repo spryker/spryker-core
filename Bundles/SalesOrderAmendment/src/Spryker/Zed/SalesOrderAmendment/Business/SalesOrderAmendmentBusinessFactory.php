@@ -50,6 +50,7 @@ use Spryker\Zed\SalesOrderAmendment\Business\Validator\SalesOrderAmendmentValida
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\SalesOrderAmendmentValidatorInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\Util\ErrorAdder;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\Util\ErrorAdderInterface;
+use Spryker\Zed\SalesOrderAmendment\Dependency\Facade\SalesOrderAmendmentToQuoteFacadeInterface;
 use Spryker\Zed\SalesOrderAmendment\Dependency\Facade\SalesOrderAmendmentToSalesFacadeInterface;
 use Spryker\Zed\SalesOrderAmendment\SalesOrderAmendmentDependencyProvider;
 
@@ -302,6 +303,14 @@ class SalesOrderAmendmentBusinessFactory extends AbstractBusinessFactory
     public function getSalesFacade(): SalesOrderAmendmentToSalesFacadeInterface
     {
         return $this->getProvidedDependency(SalesOrderAmendmentDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendment\Dependency\Facade\SalesOrderAmendmentToQuoteFacadeInterface
+     */
+    public function getQuoteFacade(): SalesOrderAmendmentToQuoteFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesOrderAmendmentDependencyProvider::FACADE_QUOTE);
     }
 
     /**

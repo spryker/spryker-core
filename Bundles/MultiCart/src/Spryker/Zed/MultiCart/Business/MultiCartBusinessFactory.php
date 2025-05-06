@@ -14,6 +14,8 @@ use Spryker\Zed\MultiCart\Business\Messenger\MultiCartMessenger;
 use Spryker\Zed\MultiCart\Business\Messenger\MultiCartMessengerInterface;
 use Spryker\Zed\MultiCart\Business\Model\QuoteNameResolver;
 use Spryker\Zed\MultiCart\Business\Model\QuoteNameResolverInterface;
+use Spryker\Zed\MultiCart\Business\Provider\CartReorderProvider;
+use Spryker\Zed\MultiCart\Business\Provider\CartReorderProviderInterface;
 use Spryker\Zed\MultiCart\Business\Quote\QuoteWriter;
 use Spryker\Zed\MultiCart\Business\Quote\QuoteWriterInterface;
 use Spryker\Zed\MultiCart\Business\Reader\QuoteCollectionReader;
@@ -21,6 +23,7 @@ use Spryker\Zed\MultiCart\Business\Reader\QuoteCollectionReaderInterface;
 use Spryker\Zed\MultiCart\Business\ResponseExpander\QuoteResponseExpander;
 use Spryker\Zed\MultiCart\Business\ResponseExpander\QuoteResponseExpanderInterface;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface;
+use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToPersistentCartFacadeInterface;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToStoreFacadeInterface;
 use Spryker\Zed\MultiCart\MultiCartDependencyProvider;
@@ -96,6 +99,14 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MultiCart\Business\Provider\CartReorderProviderInterface
+     */
+    public function createCartReorderProvider(): CartReorderProviderInterface
+    {
+        return new CartReorderProvider($this->getPersistentCartFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface
      */
     protected function getQuoteFacade(): MultiCartToQuoteFacadeInterface
@@ -117,5 +128,13 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): MultiCartToStoreFacadeInterface
     {
         return $this->getProvidedDependency(MultiCartDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToPersistentCartFacadeInterface
+     */
+    public function getPersistentCartFacade(): MultiCartToPersistentCartFacadeInterface
+    {
+        return $this->getProvidedDependency(MultiCartDependencyProvider::FACADE_PERSISTENT_CART);
     }
 }

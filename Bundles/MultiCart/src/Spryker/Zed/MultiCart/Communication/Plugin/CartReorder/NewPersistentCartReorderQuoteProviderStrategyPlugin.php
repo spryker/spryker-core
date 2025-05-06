@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCart\Communication\Plugin\CartReorder;
+namespace Spryker\Zed\MultiCart\Communication\Plugin\CartReorder;
 
 use Generated\Shared\Transfer\CartReorderRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -13,13 +13,12 @@ use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderS
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\PersistentCart\Communication\Plugin\CartReorder\ReplacePersistentCartReorderQuoteProviderStrategyPlugin} instead.
- *
- * @method \Spryker\Zed\PersistentCart\Business\PersistentCartFacadeInterface getFacade()
- * @method \Spryker\Zed\PersistentCart\PersistentCartConfig getConfig()
- * @method \Spryker\Zed\PersistentCart\Communication\PersistentCartCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MultiCart\Business\MultiCartFacadeInterface getFacade()
+ * @method \Spryker\Zed\MultiCart\Communication\MultiCartCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MultiCart\Business\MultiCartBusinessFactory getBusinessFactory()
+ * @method \Spryker\Zed\MultiCart\MultiCartConfig getConfig()
  */
-class PersistentCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin implements CartReorderQuoteProviderStrategyPluginInterface
+class NewPersistentCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin implements CartReorderQuoteProviderStrategyPluginInterface
 {
     /**
      * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
@@ -29,7 +28,13 @@ class PersistentCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin im
     protected const STORAGE_STRATEGY_DATABASE = 'database';
 
     /**
+     * @var string
+     */
+    protected const REORDER_STRATEGY_NEW = 'new';
+
+    /**
      * {@inheritDoc}
+     * - Checks if `CartReorderRequestTransfer.reorderStrategy` is set to `new`.
      * - Checks if the storage strategy is database.
      *
      * @api
@@ -40,6 +45,10 @@ class PersistentCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin im
      */
     public function isApplicable(CartReorderRequestTransfer $cartReorderRequestTransfer): bool
     {
+        if ($cartReorderRequestTransfer->getReorderStrategy() !== static::REORDER_STRATEGY_NEW) {
+            return false;
+        }
+
         $storageStrategy = $this->getFactory()
             ->getQuoteFacade()
             ->getStorageStrategy();
@@ -50,10 +59,8 @@ class PersistentCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin im
     /**
      * {@inheritDoc}
      * - Requires `CartReorderRequestTransfer.customerReference` to be set.
-     * - Finds customer quote by `CartReorderRequestTransfer.customerReference`.
-     * - Creates quote if it's not exists.
-     * - Removes items from the found quote.
-     * - Returns the found quote.
+     * - Creates new customer quote.
+     * - Returns the created quote.
      *
      * @api
      *
@@ -63,6 +70,8 @@ class PersistentCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin im
      */
     public function execute(CartReorderRequestTransfer $cartReorderRequestTransfer): QuoteTransfer
     {
-        return $this->getFacade()->getQuoteForCartReorder($cartReorderRequestTransfer);
+        return $this->getBusinessFactory()
+            ->createCartReorderProvider()
+            ->getQuoteForCartReorder($cartReorderRequestTransfer);
     }
 }

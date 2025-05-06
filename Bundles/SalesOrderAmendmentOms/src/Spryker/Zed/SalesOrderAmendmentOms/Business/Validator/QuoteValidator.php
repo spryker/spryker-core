@@ -7,26 +7,12 @@
 
 namespace Spryker\Zed\SalesOrderAmendmentOms\Business\Validator;
 
-use Generated\Shared\Transfer\CartReorderResponseTransfer;
-use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToOmsFacadeInterface;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
-    /**
-     * @var \Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToOmsFacadeInterface
-     */
-    protected SalesOrderAmendmentOmsToOmsFacadeInterface $omsFacade;
-
-    /**
-     * @var string
-     */
-    protected const GLOSSARY_KEY_VALIDATION_ORDER_NOT_AMENDABLE = 'sales_order_amendment_oms.validation.order_not_amendable';
-
     /**
      * @var string
      */
@@ -37,25 +23,6 @@ class QuoteValidator implements QuoteValidatorInterface
      */
     public function __construct(protected OrderValidatorInterface $orderValidator)
     {
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
-     * @param \Generated\Shared\Transfer\CartReorderResponseTransfer $cartReorderResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartReorderResponseTransfer
-     */
-    public function validateCartReorderQuote(
-        CartReorderTransfer $cartReorderTransfer,
-        CartReorderResponseTransfer $cartReorderResponseTransfer
-    ): CartReorderResponseTransfer {
-        if ($this->orderValidator->validateIsOrderAmendable($cartReorderTransfer->getQuoteOrFail()->getAmendmentOrderReferenceOrFail())) {
-            return $cartReorderResponseTransfer;
-        }
-
-        return $cartReorderResponseTransfer->addError(
-            (new ErrorTransfer())->setMessage(static::GLOSSARY_KEY_VALIDATION_ORDER_NOT_AMENDABLE),
-        );
     }
 
     /**

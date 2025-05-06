@@ -40,6 +40,11 @@
         <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
+    <transfer name="CartReorderRequest" strict="true">
+        <property name="orderReference" type="string"/>
+        <property name="isAmendment" type="bool"/>
+    </transfer>
+
     <transfer name="CartReorderResponse" strict="true">
         <property name="errors" type="Error[]" singular="error"/>
     </transfer>

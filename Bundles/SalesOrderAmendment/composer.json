@@ -15,7 +15,6 @@
         "spryker/price-extension": "^1.1.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/quote": "^2.0.0",
-        "spryker/quote-extension": "^1.0.0",
         "spryker/quote-request-extension": "^1.1.0",
         "spryker/sales": "^11.55.0",
         "spryker/sales-extension": "^1.3.0",

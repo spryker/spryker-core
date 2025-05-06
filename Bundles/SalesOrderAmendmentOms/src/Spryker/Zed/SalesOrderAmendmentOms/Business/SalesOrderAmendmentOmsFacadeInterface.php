@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesOrderAmendmentOms\Business;
 
-use Generated\Shared\Transfer\CartReorderResponseTransfer;
 use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
@@ -16,25 +15,6 @@ use Generated\Shared\Transfer\SalesOrderAmendmentTransfer;
 
 interface SalesOrderAmendmentOmsFacadeInterface
 {
-    /**
-     * Specification:
-     * - Requires `CartReorderTransfer.quote` to be set.
-     * - Requires `CartReorderTransfer.quote.amendmentOrderReference` to be set.
-     * - Validates if all order items are in order item state that has `amendable` flag.
-     * - Returns `ErrorCollectionTransfer` with error messages if validation fails.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
-     * @param \Generated\Shared\Transfer\CartReorderResponseTransfer $cartReorderResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartReorderResponseTransfer
-     */
-    public function validateCartReorder(
-        CartReorderTransfer $cartReorderTransfer,
-        CartReorderResponseTransfer $cartReorderResponseTransfer
-    ): CartReorderResponseTransfer;
-
     /**
      * Specification:
      * - Does nothing if `CartReorderTransfer.quote.amendmentOrderReference` is not set.

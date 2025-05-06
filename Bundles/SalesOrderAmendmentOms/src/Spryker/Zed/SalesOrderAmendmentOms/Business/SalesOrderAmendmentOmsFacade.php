@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesOrderAmendmentOms\Business;
 
-use Generated\Shared\Transfer\CartReorderResponseTransfer;
 use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
@@ -20,25 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class SalesOrderAmendmentOmsFacade extends AbstractFacade implements SalesOrderAmendmentOmsFacadeInterface
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
-     * @param \Generated\Shared\Transfer\CartReorderResponseTransfer $cartReorderResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartReorderResponseTransfer
-     */
-    public function validateCartReorder(
-        CartReorderTransfer $cartReorderTransfer,
-        CartReorderResponseTransfer $cartReorderResponseTransfer
-    ): CartReorderResponseTransfer {
-        return $this->getFactory()
-            ->createQuoteValidator()
-            ->validateCartReorderQuote($cartReorderTransfer, $cartReorderResponseTransfer);
-    }
-
     /**
      * {@inheritDoc}
      *

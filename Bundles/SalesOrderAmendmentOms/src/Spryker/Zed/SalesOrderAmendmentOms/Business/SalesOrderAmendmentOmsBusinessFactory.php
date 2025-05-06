@@ -18,6 +18,8 @@ use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OrderReader;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OrderReaderInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Triggerer\OmsEventTriggerer;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Triggerer\OmsEventTriggererInterface;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\CartReorderRequestValidator;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\CartReorderRequestValidatorInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\OrderValidator;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\OrderValidatorInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\QuoteValidator;
@@ -82,6 +84,14 @@ class SalesOrderAmendmentOmsBusinessFactory extends AbstractBusinessFactory
         return new SalesOrderAmendmentValidator(
             $this->createOrderReader(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\CartReorderRequestValidatorInterface
+     */
+    public function createCartReorderRequestValidator(): CartReorderRequestValidatorInterface
+    {
+        return new CartReorderRequestValidator($this->createOrderValidator());
     }
 
     /**

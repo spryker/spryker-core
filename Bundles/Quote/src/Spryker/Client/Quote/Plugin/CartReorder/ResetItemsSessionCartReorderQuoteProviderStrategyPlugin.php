@@ -7,17 +7,16 @@
 
 namespace Spryker\Client\Quote\Plugin\CartReorder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartReorderRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Client\Quote\Plugin\CartReorder\ResetItemsSessionCartReorderQuoteProviderStrategyPlugin} instead.
- *
  * @method \Spryker\Client\Quote\QuoteClientInterface getClient()
  */
-class SessionCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin implements CartReorderQuoteProviderStrategyPluginInterface
+class ResetItemsSessionCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin implements CartReorderQuoteProviderStrategyPluginInterface
 {
     /**
      * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_SESSION
@@ -44,6 +43,7 @@ class SessionCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin imple
     /**
      * {@inheritDoc}
      * - Gets the quote from the session.
+     * - Sets the quote items to an empty array.
      *
      * @api
      *
@@ -53,6 +53,6 @@ class SessionCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin imple
      */
     public function execute(CartReorderRequestTransfer $cartReorderRequestTransfer): QuoteTransfer
     {
-        return $this->getClient()->getQuote();
+        return $this->getClient()->getQuote()->setItems(new ArrayObject());
     }
 }

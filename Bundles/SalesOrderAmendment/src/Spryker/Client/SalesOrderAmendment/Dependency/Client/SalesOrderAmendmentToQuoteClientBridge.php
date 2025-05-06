@@ -31,4 +31,12 @@ class SalesOrderAmendmentToQuoteClientBridge implements SalesOrderAmendmentToQuo
     {
         return $this->quoteClient->getQuote();
     }
+
+    /**
+     * @return void
+     */
+    public function clearQuote(): void
+    {
+        $this->quoteClient->clearQuote();
+    }
 }

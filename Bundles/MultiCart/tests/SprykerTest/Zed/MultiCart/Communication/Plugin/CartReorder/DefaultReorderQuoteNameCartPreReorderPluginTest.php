@@ -61,7 +61,7 @@ class DefaultReorderQuoteNameCartPreReorderPluginTest extends Unit
             ->preReorder($cartReorderRequestTransfer, $cartReorderTransfer);
 
         // Assert
-        $this->assertSame('Reorder from Order DE--123', $cartReorderTransfer->getQuoteOrFail()->getName());
+        $this->assertSame('Cart from order DE--123', $cartReorderTransfer->getQuoteOrFail()->getName());
     }
 
     /**

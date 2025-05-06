@@ -30,7 +30,8 @@ class CartReorderRestRequestMapper implements CartReorderRestRequestMapperInterf
         CartReorderRequestTransfer $cartReorderRequestTransfer
     ): CartReorderRequestTransfer {
         $cartReorderRequestTransfer = $cartReorderRequestTransfer
-            ->setOrderReference($restCartReorderRequestAttributesTransfer->getOrderReferenceOrFail());
+            ->setOrderReference($restCartReorderRequestAttributesTransfer->getOrderReferenceOrFail())
+            ->setReorderStrategy($restCartReorderRequestAttributesTransfer->getReorderStrategy());
 
         return $this->executeRestCartReorderAttributesMapperPlugins($restCartReorderRequestAttributesTransfer, $cartReorderRequestTransfer);
     }

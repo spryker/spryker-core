@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace SprykerTest\Client\SalesOrderAmendment;
 
 use Codeception\Actor;
+use Spryker\Client\SalesOrderAmendment\SalesOrderAmendmentClientInterface;
 
 /**
  * Inherited Methods
@@ -32,6 +33,10 @@ class SalesOrderAmendmentClientTester extends Actor
     use _generated\SalesOrderAmendmentClientTesterActions;
 
     /**
-     * Define custom actions here
+     * @return \Spryker\Client\SalesOrderAmendment\SalesOrderAmendmentClientInterface
      */
+    public function getClient(): SalesOrderAmendmentClientInterface
+    {
+        return $this->getLocator()->salesOrderAmendment()->client();
+    }
 }

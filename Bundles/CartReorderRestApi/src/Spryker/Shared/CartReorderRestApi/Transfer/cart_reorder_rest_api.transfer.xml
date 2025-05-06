@@ -3,11 +3,13 @@
 
     <transfer name="RestCartReorderRequestAttributes" strict="true">
         <property name="orderReference" type="string" restRequestParameter="required"/>
+        <property name="reorderStrategy" type="string" restRequestParameter="required"/>
     </transfer>
 
     <transfer name="CartReorderRequest" strict="true">
         <property name="orderReference" type="string"/>
         <property name="customerReference" type="string"/>
+        <property name="reorderStrategy" type="string"/>
     </transfer>
 
     <transfer name="Quote">

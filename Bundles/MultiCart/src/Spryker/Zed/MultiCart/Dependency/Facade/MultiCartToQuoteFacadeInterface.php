@@ -41,4 +41,9 @@ interface MultiCartToQuoteFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * @return string
+     */
+    public function getStorageStrategy(): string;
 }

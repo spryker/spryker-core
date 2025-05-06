@@ -57,7 +57,7 @@ class AmendmentQuoteNameCartPreReorderPluginTest extends Unit
         $cartReorderTransfer = (new CartReorderTransfer())
             ->setQuote((new QuoteTransfer())->setName(static::FAKE_QUOTE_NAME));
 
-        // Arrange
+        // Act
         $cartReorderTransfer = (new AmendmentQuoteNameCartPreReorderPlugin())
             ->preReorder($cartReorderRequestTransfer, $cartReorderTransfer);
 
@@ -78,7 +78,7 @@ class AmendmentQuoteNameCartPreReorderPluginTest extends Unit
         $cartReorderTransfer = (new CartReorderTransfer())
             ->setQuote((new QuoteTransfer())->setName(static::FAKE_QUOTE_NAME));
 
-        // Arrange
+        // Act
         $cartReorderTransfer = (new AmendmentQuoteNameCartPreReorderPlugin())
             ->preReorder($cartReorderRequestTransfer, $cartReorderTransfer);
 
@@ -98,7 +98,7 @@ class AmendmentQuoteNameCartPreReorderPluginTest extends Unit
         $cartReorderTransfer = (new CartReorderTransfer())
             ->setQuote((new QuoteTransfer())->setName(static::FAKE_QUOTE_NAME));
 
-        // Arrange
+        // Act
         $cartReorderTransfer = (new AmendmentQuoteNameCartPreReorderPlugin())
             ->preReorder($cartReorderRequestTransfer, $cartReorderTransfer);
 

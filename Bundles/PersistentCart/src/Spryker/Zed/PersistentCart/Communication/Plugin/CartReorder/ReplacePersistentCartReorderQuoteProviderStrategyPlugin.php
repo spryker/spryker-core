@@ -13,13 +13,11 @@ use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderS
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\PersistentCart\Communication\Plugin\CartReorder\ReplacePersistentCartReorderQuoteProviderStrategyPlugin} instead.
- *
  * @method \Spryker\Zed\PersistentCart\Business\PersistentCartFacadeInterface getFacade()
  * @method \Spryker\Zed\PersistentCart\PersistentCartConfig getConfig()
  * @method \Spryker\Zed\PersistentCart\Communication\PersistentCartCommunicationFactory getFactory()
  */
-class PersistentCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin implements CartReorderQuoteProviderStrategyPluginInterface
+class ReplacePersistentCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin implements CartReorderQuoteProviderStrategyPluginInterface
 {
     /**
      * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
@@ -29,7 +27,13 @@ class PersistentCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin im
     protected const STORAGE_STRATEGY_DATABASE = 'database';
 
     /**
+     * @var string
+     */
+    protected const REORDER_STRATEGY_REPLACE = 'replace';
+
+    /**
      * {@inheritDoc}
+     * - Checks if `CartReorderRequestTransfer.reorderStrategy` is set and equals to `replace`.
      * - Checks if the storage strategy is database.
      *
      * @api
@@ -40,6 +44,13 @@ class PersistentCartReorderQuoteProviderStrategyPlugin extends AbstractPlugin im
      */
     public function isApplicable(CartReorderRequestTransfer $cartReorderRequestTransfer): bool
     {
+        if (
+            $cartReorderRequestTransfer->getReorderStrategy()
+            && $cartReorderRequestTransfer->getReorderStrategy() !== static::REORDER_STRATEGY_REPLACE
+        ) {
+            return false;
+        }
+
         $storageStrategy = $this->getFactory()
             ->getQuoteFacade()
             ->getStorageStrategy();

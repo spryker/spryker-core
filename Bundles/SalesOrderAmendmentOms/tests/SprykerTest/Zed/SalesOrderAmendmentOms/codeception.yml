@@ -38,4 +38,11 @@ suites:
             enabled:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper

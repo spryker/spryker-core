@@ -51,7 +51,7 @@ class OriginalSalesOrderItemGroupKeyCartReorderItemHydratorPluginTest extends Un
             ->setOrderItems(new ArrayObject($orderItems))
             ->setReorderItems(new ArrayObject($reorderItems));
 
-        // Arrange
+        // Act
         $cartReorderTransfer = (new OriginalSalesOrderItemGroupKeyCartReorderItemHydratorPlugin())
             ->hydrate($cartReorderTransfer);
 
@@ -76,7 +76,7 @@ class OriginalSalesOrderItemGroupKeyCartReorderItemHydratorPluginTest extends Un
         $cartReorderTransfer = (new CartReorderTransfer())
             ->setOrderItems(new ArrayObject($orderItems));
 
-        // Arrange
+        // Act
         $cartReorderTransfer = (new OriginalSalesOrderItemGroupKeyCartReorderItemHydratorPlugin())
             ->hydrate($cartReorderTransfer);
 

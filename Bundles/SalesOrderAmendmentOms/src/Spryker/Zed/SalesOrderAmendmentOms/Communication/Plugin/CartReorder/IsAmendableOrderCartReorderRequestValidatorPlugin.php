@@ -7,35 +7,38 @@
 
 namespace Spryker\Zed\SalesOrderAmendmentOms\Communication\Plugin\CartReorder;
 
+use Generated\Shared\Transfer\CartReorderRequestTransfer;
 use Generated\Shared\Transfer\CartReorderResponseTransfer;
-use Generated\Shared\Transfer\CartReorderTransfer;
-use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface;
+use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderRequestValidatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsConfig getConfig()
  * @method \Spryker\Zed\SalesOrderAmendmentOms\Business\SalesOrderAmendmentOmsFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesOrderAmendmentOms\Business\SalesOrderAmendmentOmsBusinessFactory getBusinessFactory()
  */
-class IsAmendableOrderCartReorderValidatorRulePlugin extends AbstractPlugin implements CartReorderValidatorPluginInterface
+class IsAmendableOrderCartReorderRequestValidatorPlugin extends AbstractPlugin implements CartReorderRequestValidatorPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Requires `CartReorderTransfer.quote` to be set.
-     * - Requires `CartReorderTransfer.quote.amendmentOrderReference` to be set.
+     * - Does nothing if `CartReorderRequestTransfer.isAmendment` is not `true`.
+     * - Requires `CartReorderRequestTransfer.orderReference` to be set.
      * - Validates if all order items are in order item state that has `amendable` flag.
-     * - Returns `ErrorCollectionTransfer` with error messages if validation fails.
+     * - Returns `CartReorderResponseTransfer` with error messages if validation fails.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
      * @param \Generated\Shared\Transfer\CartReorderResponseTransfer $cartReorderResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CartReorderResponseTransfer
      */
     public function validate(
-        CartReorderTransfer $cartReorderTransfer,
+        CartReorderRequestTransfer $cartReorderRequestTransfer,
         CartReorderResponseTransfer $cartReorderResponseTransfer
     ): CartReorderResponseTransfer {
-        return $this->getFacade()->validateCartReorder($cartReorderTransfer, $cartReorderResponseTransfer);
+        return $this->getBusinessFactory()
+            ->createCartReorderRequestValidator()
+            ->validate($cartReorderRequestTransfer, $cartReorderResponseTransfer);
     }
 }
