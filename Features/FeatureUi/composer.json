@@ -4,7 +4,8 @@
     "description": "FeatureUi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2"
+        "php": ">=8.2",
+        "spryker/kernel": "^3.75.0"
     },
     "require-dev": {
         "spryker-shop/customer-page": "*",
