@@ -63,17 +63,7 @@ class CountryFacadeTest extends Unit
     /**
      * @var string
      */
-    protected const ISO2_COUNTRY_CH = 'CH';
-
-    /**
-     * @var string
-     */
     protected const COUNTRY_NAME_DE = 'Germany';
-
-    /**
-     * @var string
-     */
-    protected const COUNTRY_NAME_SW = 'Switzerland';
 
     /**
      * @var string
@@ -101,6 +91,8 @@ class CountryFacadeTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->tester->ensureCountryStoreDatabaseTableIsEmpty();
 
         $this->countryFacade = new CountryFacade();
     }
@@ -296,11 +288,11 @@ class CountryFacadeTest extends Unit
 
         // Assert
         $this->assertEqualsCanonicalizing(
-            [static::COUNTRY_NAME_DE, static::COUNTRY_NAME_SW],
+            [static::COUNTRY_NAME_DE],
             array_values($storeTransfers[$storeTransfer->getIdStoreOrFail()]->getCountryNames()),
         );
         $this->assertEqualsCanonicalizing(
-            [static::ISO2_COUNTRY_DE, static::ISO2_COUNTRY_CH],
+            [static::ISO2_COUNTRY_DE],
             array_values($storeTransfers[$storeTransfer->getIdStoreOrFail()]->getCountries()),
         );
     }
