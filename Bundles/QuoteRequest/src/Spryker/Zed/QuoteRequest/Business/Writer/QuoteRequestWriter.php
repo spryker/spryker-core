@@ -167,14 +167,13 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             return $quoteRequestResponseTransfer;
         }
 
-        $quoteRequestTransfer = $this->createQuoteRequestTransfer($quoteRequestTransfer, $customerReference);
-
         $quoteRequestVersionTransfer = $quoteRequestTransfer->requireLatestVersion()->getLatestVersion();
 
         if ($quoteRequestVersionTransfer->getQuote() === null || !$quoteRequestVersionTransfer->getQuote()->getItems()->count()) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY);
         }
 
+        $quoteRequestTransfer = $this->createQuoteRequestTransfer($quoteRequestTransfer, $customerReference);
         $quoteRequestVersionTransfer = $this->quoteRequestVersionSanitizer->recalculateQuoteRequestVersionQuote($quoteRequestVersionTransfer);
         $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
 

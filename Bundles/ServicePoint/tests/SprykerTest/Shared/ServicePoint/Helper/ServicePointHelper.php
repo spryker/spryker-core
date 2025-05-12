@@ -206,6 +206,9 @@ class ServicePointHelper extends Module
         $servicePointEntity = $this->getServicePointQuery()->findOneByIdServicePoint($idServicePoint);
 
         if ($servicePointEntity) {
+            if ($servicePointEntity->getServicePointStores()) {
+                $servicePointEntity->getServicePointStores()->delete();
+            }
             $servicePointEntity->delete();
         }
     }

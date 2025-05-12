@@ -202,6 +202,18 @@ class QuoteRequestBusinessTester extends Actor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequest
+     *
+     * @return void
+     */
+    public function addCleanupQuoteRequest(QuoteRequestTransfer $quoteRequest): void
+    {
+        $this->addCleanup(function () use ($quoteRequest): void {
+            $this->getFacade()->deleteQuoteRequestsByIdCompanyUser($quoteRequest->getCompanyUser()->getIdCompanyUser());
+        });
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -213,9 +225,15 @@ class QuoteRequestBusinessTester extends Actor
     ): QuoteRequestTransfer {
         $quoteRequestTransfer = $this->haveQuoteRequestInDraftStatus($companyUserTransfer, $quoteTransfer);
 
-        return $this->getFacade()
+        $quoteRequest = $this->getFacade()
             ->sendQuoteRequestToUser($this->createFilterTransfer($quoteRequestTransfer))
             ->getQuoteRequest();
+
+        $this->addCleanup(function () use ($quoteRequest): void {
+            $this->getFacade()->deleteQuoteRequestsByIdCompanyUser($quoteRequest->getCompanyUser()->getIdCompanyUser());
+        });
+
+        return $quoteRequest;
     }
 
     /**
@@ -272,9 +290,15 @@ class QuoteRequestBusinessTester extends Actor
             $isLatestVersionVisible,
         );
 
-        return $this->getFacade()
+        $quoteRequest = $this->getFacade()
             ->sendQuoteRequestToCompanyUser($this->createFilterTransfer($quoteRequestTransfer))
             ->getQuoteRequest();
+
+        $this->addCleanup(function () use ($quoteRequestTransfer): void {
+            $this->getFacade()->deleteQuoteRequestsByIdCompanyUser($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser());
+        });
+
+        return $quoteRequest;
     }
 
     /**

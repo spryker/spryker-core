@@ -57,7 +57,7 @@ class TransactionHelper extends Module
         parent::_before($test);
 
         try {
-            $reflectionMethod = new ReflectionMethod($test, $test->getName());
+            $reflectionMethod = new ReflectionMethod($test->getTestCase(), $test->getName());
             $docBlock = $reflectionMethod->getDocComment();
 
             if (strpos($docBlock, '@disableTransaction') !== false) {

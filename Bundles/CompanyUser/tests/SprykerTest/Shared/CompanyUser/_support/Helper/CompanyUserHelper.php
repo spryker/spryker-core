@@ -14,6 +14,7 @@ use Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface;
 use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 use Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeBridge;
 use SprykerTest\Shared\Customer\Helper\CustomerDataHelperTrait;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
@@ -22,6 +23,7 @@ class CompanyUserHelper extends Module
 {
     use DependencyHelperTrait;
     use LocatorHelperTrait;
+    use DataCleanupHelperTrait;
     use BusinessHelperTrait;
     use CustomerDataHelperTrait;
 
@@ -45,6 +47,11 @@ class CompanyUserHelper extends Module
         if ($companyRoles) {
             $this->assignCompanyRolesToCompanyUser($companyUserTransfer, $companyRoles);
         }
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($companyUserTransfer): void {
+            $this->debug(sprintf('Deleting Company User Id: %s', $companyUserTransfer->getIdCompanyUser()));
+            $this->createCompanyUserFacade()->deleteCompanyUser($companyUserTransfer);
+        });
 
         return $companyUserTransfer;
     }

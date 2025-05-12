@@ -77,6 +77,7 @@ class CreateQuoteRequestTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester->getFacade()->createQuoteRequest($quoteRequestTransfer);
         $storedQuoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
+        $this->tester->addCleanupQuoteRequest($storedQuoteRequestTransfer);
 
         // Assert
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
