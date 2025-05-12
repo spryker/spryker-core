@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StockCriteriaTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StockResponseTransfer;
+use Generated\Shared\Transfer\StockStoreCollectionTransfer;
+use Generated\Shared\Transfer\StockStoreCriteriaTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
@@ -468,5 +470,19 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
         return $this->getFactory()
             ->createStockReader()
             ->getStockCollection($stockCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockStoreCriteriaTransfer $stockStoreCollectionCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockStoreCollectionTransfer
+     */
+    public function getStockStoreCollection(StockStoreCriteriaTransfer $stockStoreCollectionCriteriaTransfer): StockStoreCollectionTransfer
+    {
+        return $this->getRepository()->getStockStoreCollection($stockStoreCollectionCriteriaTransfer);
     }
 }

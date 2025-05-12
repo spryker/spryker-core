@@ -189,4 +189,16 @@
     <transfer name="ProductAbstract">
     </transfer>
 
+    <transfer name="StockStoreCollection">
+        <property name="stockStores" type="StockStore[]" singular="stockStore"/>
+    </transfer>
+
+    <transfer name="StockStore">
+        <property name="fkStore" type="int"/>
+        <property name="fkStock" type="int"/>
+    </transfer>
+
+    <transfer name="StockStoreCriteria">
+    </transfer>
+
 </transfers>

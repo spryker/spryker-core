@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductAvailabilityDataTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
+use Generated\Shared\Transfer\StockStoreCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Shared\Availability\AvailabilityConfig;
@@ -385,6 +386,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function getStockProductTransfersIndexedByIdStore(ProductAvailabilityDataTransfer $productAvailabilityDataTransfer): array
     {
+        $stockIdsGroupedByIdStore = $this->getStockIdsGroupedByIdStore();
         $stockProductsIndexedByStock = [];
         foreach ($productAvailabilityDataTransfer->getStockProducts() as $stockProductTransfer) {
             $stockProductsIndexedByStock[$stockProductTransfer->getFkStock()] = $stockProductTransfer;
@@ -393,7 +395,11 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $stockProductTransfersIndexedByIdStore = [];
         foreach ($productAvailabilityDataTransfer->getStocks() as $stockTransfer) {
             foreach ($stockTransfer->getStoreRelationOrFail()->getStores() as $storeTransfer) {
-                if (!isset($stockProductsIndexedByStock[$stockTransfer->getIdStock()])) {
+                if (!isset($stockProductsIndexedByStock[$stockTransfer->getIdStock()]) || !isset($stockIdsGroupedByIdStore[$storeTransfer->getIdStore()])) {
+                    continue;
+                }
+
+                if (!in_array($stockTransfer->getIdStock(), $stockIdsGroupedByIdStore[$storeTransfer->getIdStore()])) {
                     continue;
                 }
                 $stockProductTransfersIndexedByIdStore[(int)$storeTransfer->getIdStore()][] = $stockProductsIndexedByStock[$stockTransfer->getIdStock()];
@@ -595,5 +601,27 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         }
 
         return false;
+    }
+
+    /**
+     * @return array<int, array<int, int>>
+     */
+    protected function getStockIdsGroupedByIdStore(): array
+    {
+        $stockStoreCollectionTransfer = $this->stockFacade->getStockStoreCollection(new StockStoreCriteriaTransfer());
+        $stockIdsGroupedByIdStore = [];
+        /**
+         * @var \ArrayObject<int, \Generated\Shared\Transfer\StockStoreTransfer>|null $stockStoreTransfers
+         */
+        $stockStoreTransfers = $stockStoreCollectionTransfer->getStockStores();
+        if (!$stockStoreTransfers) {
+            return $stockIdsGroupedByIdStore;
+        }
+
+        foreach ($stockStoreTransfers as $stockStoreTransfer) {
+            $stockIdsGroupedByIdStore[(int)$stockStoreTransfer->getFkStore()][] = (int)$stockStoreTransfer->getFkStock();
+        }
+
+        return $stockIdsGroupedByIdStore;
     }
 }

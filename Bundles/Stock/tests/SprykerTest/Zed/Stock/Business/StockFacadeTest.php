@@ -13,6 +13,7 @@ use Generated\Shared\DataBuilder\StockBuilder;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StockStoreCriteriaTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -48,6 +49,11 @@ class StockFacadeTest extends Unit
      * @var string
      */
     protected const STORE_NAME_AT = 'AT';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_TEST_STORE = 'TEST_STORE';
 
     /**
      * @var string
@@ -957,6 +963,62 @@ class StockFacadeTest extends Unit
 
         // Assert
         $this->assertCount(count($availableStocksForStore), $stockCollectionTransfer->getStocks(), 'Stocks count does not match expected value.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStockStoreCollectionSuccessful(): void
+    {
+        // Arrange
+        $storeTransferDE = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_DE,
+        ]);
+        $storeTransferAT = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_AT,
+        ]);
+
+        $stockTransferDE = $this->tester->haveStock([StockTransfer::NAME => 'StockDE']);
+        $stockTransferAT = $this->tester->haveStock([StockTransfer::NAME => 'StockAT']);
+
+        $this->tester->haveStockStoreRelation($stockTransferDE, $storeTransferDE);
+        $this->tester->haveStockStoreRelation($stockTransferAT, $storeTransferAT);
+
+        // Act
+        $stockStoreCollectionTransfer = $this->stockFacade->getStockStoreCollection(new StockStoreCriteriaTransfer());
+
+        // Assert
+        $this->assertNotEmpty($stockStoreCollectionTransfer->getStockStores());
+        $stockIdsGroupedByIdStore = [];
+        foreach ($stockStoreCollectionTransfer->getStockStores() as $stockStoreTransfer) {
+            $stockIdsGroupedByIdStore[$stockStoreTransfer->getFkStore()][] = $stockStoreTransfer->getFkStock();
+        }
+
+        $this->assertTrue(isset($stockIdsGroupedByIdStore[$storeTransferDE->getIdStore()]));
+        $this->assertTrue(isset($stockIdsGroupedByIdStore[$storeTransferAT->getIdStore()]));
+        $this->assertTrue(in_array($stockTransferDE->getIdStock(), $stockIdsGroupedByIdStore[$storeTransferDE->getIdStore()]));
+        $this->assertTrue(in_array($stockTransferAT->getIdStock(), $stockIdsGroupedByIdStore[$storeTransferAT->getIdStore()]));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStockStoreCollectionWithoutRelation(): void
+    {
+        // Arrange
+        $storeTransferTest = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_TEST_STORE,
+        ]);
+
+        // Act
+        $stockStoreCollectionTransfer = $this->stockFacade->getStockStoreCollection(new StockStoreCriteriaTransfer());
+
+        // Assert
+        $stockIdsGroupedByIdStore = [];
+        foreach ($stockStoreCollectionTransfer->getStockStores() as $stockStoreTransfer) {
+            $stockIdsGroupedByIdStore[$stockStoreTransfer->getFkStore()][] = $stockStoreTransfer->getFkStock();
+        }
+        $this->assertFalse(isset($stockIdsGroupedByIdStore[$storeTransferTest->getIdStore()]));
     }
 
     /**

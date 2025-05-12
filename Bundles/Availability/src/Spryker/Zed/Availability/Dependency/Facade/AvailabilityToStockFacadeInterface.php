@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
+use Generated\Shared\Transfer\StockStoreCollectionTransfer;
+use Generated\Shared\Transfer\StockStoreCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
@@ -57,4 +59,11 @@ interface AvailabilityToStockFacadeInterface
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWhereProductStockIsDefined(string $sku): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\StockStoreCriteriaTransfer $stockStoreCollectionCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockStoreCollectionTransfer
+     */
+    public function getStockStoreCollection(StockStoreCriteriaTransfer $stockStoreCollectionCriteriaTransfer): StockStoreCollectionTransfer;
 }

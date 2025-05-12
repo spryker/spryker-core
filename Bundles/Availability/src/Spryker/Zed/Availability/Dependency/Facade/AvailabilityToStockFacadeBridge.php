@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
+use Generated\Shared\Transfer\StockStoreCollectionTransfer;
+use Generated\Shared\Transfer\StockStoreCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
@@ -85,5 +87,15 @@ class AvailabilityToStockFacadeBridge implements AvailabilityToStockFacadeInterf
     public function getStoresWhereProductStockIsDefined(string $sku): array
     {
         return $this->stockFacade->getStoresWhereProductStockIsDefined($sku);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockStoreCriteriaTransfer $stockStoreCollectionCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockStoreCollectionTransfer
+     */
+    public function getStockStoreCollection(StockStoreCriteriaTransfer $stockStoreCollectionCriteriaTransfer): StockStoreCollectionTransfer
+    {
+        return $this->stockFacade->getStockStoreCollection($stockStoreCollectionCriteriaTransfer);
     }
 }
