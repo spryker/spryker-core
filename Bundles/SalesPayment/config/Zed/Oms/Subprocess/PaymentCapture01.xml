@@ -20,7 +20,7 @@
             <event name="payment capture successful"/>
             <event name="payment capture failed"/>
             <event name="payment underpaid"/>
-            <event name="payment overpay checked"/>
+            <event name="payment overpay checked" manual="true"/>
             <event name="retry payment" manual="true"/>
             <event name="capture payment" manual="true"/>
             <event name="start payment capture" onEnter="true" command="Payment/Capture"/>
@@ -37,6 +37,11 @@
                 <source>payment capture pending</source>
                 <target>payment captured</target>
                 <event>payment capture successful</event>
+            </transition>
+
+            <transition happy="true" condition="Payment/IsCaptured">
+                <source>payment authorized</source>
+                <target>payment captured</target>
             </transition>
 
             <transition happy="true" condition="Payment/IsCaptured">

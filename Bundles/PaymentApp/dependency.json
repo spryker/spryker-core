@@ -1,5 +1,8 @@
 {
     "include": {
         "spryker/transfer": "Provides transfer objects definition with strict types."
+    },
+    "include-dev": {
+        "spryker/sales-payment": "Provides Sales Payment Helper"
     }
 }

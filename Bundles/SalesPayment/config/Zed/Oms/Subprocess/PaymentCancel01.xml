@@ -33,6 +33,11 @@
             </transition>
 
             <transition condition="Payment/IsCanceled">
+                <source>payment pending</source>
+                <target>payment cancelled</target>
+            </transition>
+
+            <transition condition="Payment/IsCanceled">
                 <source>payment cancellation pending</source>
                 <target>payment cancelled</target>
             </transition>

@@ -24,6 +24,7 @@
         "spryker/propel-orm": "*",
         "spryker/ramsey-uuid": "*",
         "spryker/sales": "*",
+        "spryker/sales-payment": "*",
         "spryker/shipment": "*",
         "spryker/testify": "*",
         "spryker/testify-async-api": "*"

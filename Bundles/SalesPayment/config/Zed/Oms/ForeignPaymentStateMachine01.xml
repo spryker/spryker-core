@@ -51,6 +51,11 @@
                 <target>payment failed</target>
             </transition>
 
+            <transition condition="Payment/IsCaptured">
+                <source>payment pending</source>
+                <target>payment captured</target>
+            </transition>
+
             <transition happy="true">
                 <source>payment authorized</source>
                 <target>payment capture ready</target>
