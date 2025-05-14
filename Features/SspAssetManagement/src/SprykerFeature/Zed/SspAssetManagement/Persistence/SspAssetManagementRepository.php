@@ -57,7 +57,7 @@ class SspAssetManagementRepository extends AbstractRepository implements SspAsse
                     ->mapSpySspAssetEntityToSspAssetTransferIncludes(
                         $sspAssetEntity,
                         $sspAssetTransfer,
-                        $sspAssetCriteriaTransfer->getInclude(),
+                        $sspAssetCriteriaTransfer->getIncludeOrFail(),
                     );
             }
 
@@ -80,16 +80,16 @@ class SspAssetManagementRepository extends AbstractRepository implements SspAsse
             ->endUse();
 
         if ($sspAssetCriteriaTransfer->getSspAssetConditions()) {
-            if ($sspAssetCriteriaTransfer->getSspAssetConditions()->getAssignedBusinessUnitId()) {
+            if ($sspAssetCriteriaTransfer->getSspAssetConditionsOrFail()->getAssignedBusinessUnitId()) {
                 $sspAssetToCompanyBusinessUnitQuery->filterByFkCompanyBusinessUnit(
-                    $sspAssetCriteriaTransfer->getSspAssetConditions()->getAssignedBusinessUnitId(),
+                    $sspAssetCriteriaTransfer->getSspAssetConditionsOrFail()->getAssignedBusinessUnitId(),
                 );
             }
 
-            if ($sspAssetCriteriaTransfer->getSspAssetConditions()->getAssignedBusinessUnitCompanyId()) {
+            if ($sspAssetCriteriaTransfer->getSspAssetConditionsOrFail()->getAssignedBusinessUnitCompanyId()) {
                 $sspAssetToCompanyBusinessUnitQuery
                     ->useSpyCompanyBusinessUnitQuery()
-                        ->filterByFkCompany($sspAssetCriteriaTransfer->getSspAssetConditions()->getAssignedBusinessUnitCompanyId())
+                        ->filterByFkCompany($sspAssetCriteriaTransfer->getSspAssetConditionsOrFail()->getAssignedBusinessUnitCompanyId())
                     ->endUse();
             }
         }
@@ -169,7 +169,7 @@ class SspAssetManagementRepository extends AbstractRepository implements SspAsse
         }
 
         if ($sspAssetConditionsTransfer->getSearchText()) {
-            $searchText = $sspAssetConditionsTransfer->getSearchText();
+            $searchText = $sspAssetConditionsTransfer->getSearchTextOrFail();
             $sspAssetQuery->filterByName_Like($searchText)
                 ->_or()
                 ->filterByReference_Like($searchText)
@@ -243,5 +243,33 @@ class SspAssetManagementRepository extends AbstractRepository implements SspAsse
         $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
 
         return $paginationModel->getResults();
+    }
+
+    /**
+     * @param array<int> $salesOrderItemIds
+     *
+     * @return array<int, \Generated\Shared\Transfer\SspAssetTransfer>
+     */
+    public function getSspAssetsIndexedByIdSalesOrderItem(array $salesOrderItemIds): array
+    {
+        if (!$salesOrderItemIds) {
+            return [];
+        }
+
+        $salesOrderItemSspAssetQuery = $this->getFactory()
+            ->getSalesOrderItemSspAssetQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds);
+
+        $salesOrderItemSspAssetEntities = $salesOrderItemSspAssetQuery->find();
+        $sspAssetsIndexedByIdSalesOrderItem = [];
+
+        foreach ($salesOrderItemSspAssetEntities as $salesOrderItemSspAssetEntity) {
+            $sspAssetTransfer = new SspAssetTransfer();
+            $sspAssetTransfer->fromArray($salesOrderItemSspAssetEntity->toArray(), true);
+
+            $sspAssetsIndexedByIdSalesOrderItem[(int)$salesOrderItemSspAssetEntity->getFkSalesOrderItem()] = $sspAssetTransfer;
+        }
+
+        return $sspAssetsIndexedByIdSalesOrderItem;
     }
 }

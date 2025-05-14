@@ -31,7 +31,7 @@ class ShipmentTypeChecker implements ShipmentTypeCheckerInterface
 
         $shipmentType = reset($shipmentTypes);
 
-        return $shipmentType->getKey() === $this->sspServiceManagementConfig::SHIPMENT_TYPE_ON_SITE_SERVICE;
+        return $shipmentType->getKey() === $this->sspServiceManagementConfig::SHIPMENT_TYPE_IN_CENTER_SERVICE;
     }
 
     /**
@@ -48,5 +48,23 @@ class ShipmentTypeChecker implements ShipmentTypeCheckerInterface
         $shipmentType = reset($shipmentTypes);
 
         return $shipmentType->getKey() === $this->sspServiceManagementConfig::SHIPMENT_TYPE_DELIVERY;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer> $shipmentTypes
+     *
+     * @return bool
+     */
+    public function hasShipmentTypeWithRequiredLocation(array $shipmentTypes): bool
+    {
+        $servicePointRequiredShipmentTypeKeys = $this->sspServiceManagementConfig->getServicePointRequiredShipmentTypeKeys();
+
+        foreach ($shipmentTypes as $shipmentType) {
+            if (in_array($shipmentType->getKey(), $servicePointRequiredShipmentTypeKeys, true)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

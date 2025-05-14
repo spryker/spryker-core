@@ -596,8 +596,8 @@ class SspAssetForm extends AbstractType
                         );
 
                         if ($companyCollection->getCompanies()->count() > 0) {
-                            $company = $companyCollection->getCompanies()->offsetGet(0);
-                            $companiesWithoutBusinessUnits[] = $company->getName();
+                            $company = $companyCollection->getCompanies()->getIterator()->current();
+                            $companiesWithoutBusinessUnits[] = $company->getNameOrFail();
                         }
                     }
                 }

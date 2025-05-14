@@ -45,7 +45,7 @@ class SspAssetReader implements SspAssetReaderInterface
             $sspAssetCollectionTransfer = $sspAssetExpanderPlugin->expand($sspAssetCollectionTransfer, $sspAssetCriteriaTransfer);
         }
 
-        if ($sspAssetCriteriaTransfer->getInclude() && $sspAssetCriteriaTransfer->getInclude()->getWithImageFile()) {
+        if ($sspAssetCriteriaTransfer->getInclude() !== null && $sspAssetCriteriaTransfer->getIncludeOrFail()->getWithImageFile()) {
             $sspAssetCollectionTransfer = $this->expandWithFile($sspAssetCollectionTransfer);
         }
 

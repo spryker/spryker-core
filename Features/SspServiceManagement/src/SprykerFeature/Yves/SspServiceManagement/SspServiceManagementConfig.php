@@ -19,7 +19,7 @@ class SspServiceManagementConfig extends AbstractBundleConfig
      *
      * @var string
      */
-    public const SHIPMENT_TYPE_ON_SITE_SERVICE = 'on-site-service';
+    public const SHIPMENT_TYPE_IN_CENTER_SERVICE = 'in-center-service';
 
     /**
      * @api
@@ -29,6 +29,13 @@ class SspServiceManagementConfig extends AbstractBundleConfig
      * @var string
      */
     public const SHIPMENT_TYPE_DELIVERY = 'delivery';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
+    public const SHIPMENT_TYPE_ON_SITE_SERVICE = 'on-site-service';
 
     /**
      * @var string
@@ -46,7 +53,7 @@ class SspServiceManagementConfig extends AbstractBundleConfig
     public function getServicePointRequiredShipmentTypeKeys(): array
     {
         return [
-            static::SHIPMENT_TYPE_ON_SITE_SERVICE,
+            static::SHIPMENT_TYPE_IN_CENTER_SERVICE,
         ];
     }
 
@@ -71,8 +78,26 @@ class SspServiceManagementConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getProductServiveTypeName(): string
+    public function getProductServiceTypeName(): string
     {
-        return $this->getSharedConfig()->getProductServiveTypeName();
+        return $this->getSharedConfig()->getProductServiceTypeName();
+    }
+
+    /**
+     * Specification:
+     * - Returns the shipment type keys in the order they should be displayed.
+     * - Shipment types not in this list will be displayed after the ones in this list.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getShipmentTypeSortOrder(): array
+    {
+        return [
+            static::SHIPMENT_TYPE_DELIVERY,
+            static::SHIPMENT_TYPE_IN_CENTER_SERVICE,
+            static::SHIPMENT_TYPE_ON_SITE_SERVICE,
+        ];
     }
 }

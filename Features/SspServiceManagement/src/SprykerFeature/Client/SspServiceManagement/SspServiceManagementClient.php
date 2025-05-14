@@ -50,4 +50,21 @@ class SspServiceManagementClient extends AbstractClient implements SspServiceMan
             ->createSspServiceManagementStub()
             ->updateSalesOrderItemCollection($salesOrderItemCollectionRequestTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function cancelSalesOrderItemCollection(
+        SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+    ): SalesOrderItemCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSspServiceManagementStub()
+            ->cancelSalesOrderItemCollection($salesOrderItemCollectionRequestTransfer);
+    }
 }

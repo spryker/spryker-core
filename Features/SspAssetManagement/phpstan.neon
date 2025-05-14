@@ -1,2 +1,5 @@
 parameters:
     level: 8
+    ignoreErrors:
+        - '#has parameter \$sspAssetAssignmentTransfers with generic class ArrayObject#'
+        - '#has parameter \$sspAssets with generic class ArrayObject#'

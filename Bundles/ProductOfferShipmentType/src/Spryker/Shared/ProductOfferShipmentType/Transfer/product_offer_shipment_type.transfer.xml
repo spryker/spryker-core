@@ -10,6 +10,8 @@
     <transfer name="ProductOfferShipmentTypeConditions" strict="true">
         <property name="productOfferShipmentTypeIds" type="int[]" singular="idProductOfferShipmentType"/>
         <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+        <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
+        <property name="shipmentTypeNames" type="string[]" singular="shipmentTypeName"/>
         <property name="shipmentTypeIds" type="int[]" singular="idShipmentType"/>
         <property name="groupByIdProductOffer" type="bool"/>
     </transfer>

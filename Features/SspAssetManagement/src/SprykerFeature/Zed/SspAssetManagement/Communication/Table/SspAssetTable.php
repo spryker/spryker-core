@@ -172,12 +172,18 @@ class SspAssetTable extends AbstractTable
      */
     protected function formatRow(array $item): array
     {
+        $assetImage = null;
+
+        if (isset($item[SpySspAssetTableMap::COL_FK_IMAGE_FILE])) {
+            $assetImage = $this->sspAssetFormDataProvider->getAssetImageUrl(
+                (new SspAssetTransfer())->setImage(new FileTransfer())
+                    ->setReference($item[SpySspAssetTableMap::COL_REFERENCE]),
+            );
+        }
+
         return [
             SpySspAssetTableMap::COL_REFERENCE => $item[SpySspAssetTableMap::COL_REFERENCE],
-            static::COL_IMAGE => isset($item[SpySspAssetTableMap::COL_FK_IMAGE_FILE]) ? sprintf('<img src="%s" width="100px">', $this->sspAssetFormDataProvider->getAssetImageUrl(
-                (new SspAssetTransfer())->setImage(new FileTransfer())
-                ->setReference($item[SpySspAssetTableMap::COL_REFERENCE]),
-            )) : '',
+            static::COL_IMAGE => $assetImage ? sprintf('<img src="%s" width="100px">', $assetImage) : '',
             SpySspAssetTableMap::COL_NAME => $item[SpySspAssetTableMap::COL_NAME],
             SpySspAssetTableMap::COL_SERIAL_NUMBER => $item[SpySspAssetTableMap::COL_SERIAL_NUMBER],
             SpySspAssetTableMap::COL_STATUS => $this->sspAssetManagementConfig->getAssetStatuses()[$item[SpySspAssetTableMap::COL_STATUS]] ?? 'N/A',

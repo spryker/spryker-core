@@ -43,6 +43,11 @@ class SspAssetRouteProviderPlugin extends AbstractRouteProviderPlugin
     public const ROUTE_NAME_ASSET_UPDATE_RELATIONS = 'customer/asset/update-relations';
 
     /**
+     * @var string
+     */
+    public const ROUTE_NAME_ASSET_SEARCH = 'customer/ssp-asset-management/search';
+
+    /**
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
@@ -55,6 +60,7 @@ class SspAssetRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addAssetListRoute($routeCollection);
         $routeCollection = $this->addViewAssetImageRoute($routeCollection);
         $routeCollection = $this->addUnassignBusinessUnitRoute($routeCollection);
+        $routeCollection = $this->addAssetSearchRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -133,6 +139,19 @@ class SspAssetRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildPostRoute('customer/asset/update-relations', 'SspAssetManagement', 'SspAsset', 'updateBusinessUnitRelationAction');
         $routeCollection->add(static::ROUTE_NAME_ASSET_UPDATE_RELATIONS, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addAssetSearchRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('customer/ssp-asset-management/search', 'SspAssetManagement', 'SspAsset', 'searchAction');
+        $routeCollection->add(static::ROUTE_NAME_ASSET_SEARCH, $route);
 
         return $routeCollection;
     }

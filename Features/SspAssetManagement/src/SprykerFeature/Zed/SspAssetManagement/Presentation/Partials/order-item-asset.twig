@@ -1,0 +1,11 @@
+{% if orderItem.sspAsset is not empty %}
+    <div class="variant-details">
+        <h3>{{ 'Asset Information' | trans }}</h3>
+        <div>
+            {{ 'Name' | trans }}: {{ orderItem.sspAsset.name }}
+        </div>
+        <div>
+            {{ 'Serial Number' | trans }}: {{ orderItem.sspAsset.serialNumber }}
+        </div>
+    </div>
+{% endif %}

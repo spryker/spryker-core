@@ -29,8 +29,8 @@ class SspServiceManagementConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getProductServiveTypeName(): string
+    public function getProductServiceTypeName(): string
     {
-        return 'service';
+        return 'Service';
     }
 }

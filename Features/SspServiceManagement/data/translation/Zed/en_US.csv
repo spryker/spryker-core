@@ -48,7 +48,11 @@ Service,Service
 "Back to Order","Back to Order"
 "Order Item Details","Order Item Details"
 SKU,SKU
-"Product Abstract Types","Product Abstract Types"
-"Select product abstract types","Select product abstract types"
+"Product Types","Product Types"
+"Select product types","Select product types"
 "Current State","Current State"
 "Scheduled At:","Scheduled At:"
+"Service with ID ""%id%"" does not exist.","Service with ID ""%id%"" does not exist."
+N/A,N/A
+"View Service","View Service"
+Created,Created

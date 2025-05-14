@@ -16,7 +16,9 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemMetadataTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\SspServiceManagement\Persistence\Map\SpyProductShipmentTypeTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -68,6 +70,29 @@ class SspServiceManagementRepository extends AbstractRepository implements SspSe
 
         /** @var array<int, list<int>> $groupedShipmentTypeIds */
         return $groupedShipmentTypeIds;
+    }
+
+    /**
+     * @param list<int> $productConcreteIds
+     * @param string $shipmentTypeName
+     *
+     * @return array<int, list<int>>
+     */
+    public function getProductIdsWithShipmentType(array $productConcreteIds, string $shipmentTypeName): array
+    {
+        $productShipmentTypeEntities = $this->getFactory()
+            ->createProductShipmentTypeQuery()
+            ->useSpyShipmentTypeQuery()
+                ->filterByName($shipmentTypeName)
+            ->endUse()
+            ->filterByFkProduct_In($productConcreteIds)
+            ->select(SpyProductShipmentTypeTableMap::COL_FK_PRODUCT)
+            ->find();
+
+        /** @var array<int, list<int>> $productConcreteIdsWithShipmentType */
+        $productConcreteIdsWithShipmentType = $productShipmentTypeEntities->getData();
+
+        return $productConcreteIdsWithShipmentType;
     }
 
     /**
@@ -140,14 +165,6 @@ class SspServiceManagementRepository extends AbstractRepository implements SspSe
     }
 
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function getSalesOrderItemPropelQuery(): SpySalesOrderItemQuery
-    {
-        return $this->getFactory()->createSalesOrderItemQuery();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
@@ -160,7 +177,7 @@ class SspServiceManagementRepository extends AbstractRepository implements SspSe
 
         $query->useSpySalesOrderItemProductAbstractTypeQuery()
             ->useSpySalesProductAbstractTypeQuery()
-                ->filterByName($this->getFactory()->getConfig()->getProductServiveTypeName())
+                ->filterByName($this->getFactory()->getConfig()->getProductServiceTypeName())
             ->endUse();
 
         $query = $this->joinOrderData($query);
@@ -320,7 +337,8 @@ class SspServiceManagementRepository extends AbstractRepository implements SspSe
     protected function applySorting(SpySalesOrderItemQuery $query, SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SpySalesOrderItemQuery
     {
         if (count($sspServiceCriteriaTransfer->getSortCollection()) === 0) {
-            return $query->orderBy(static::FIELD_SCHEDULED_AT, Criteria::DESC);
+            return $query->orderBy(static::FIELD_SCHEDULED_AT, Criteria::DESC)
+                ->orderBy(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, Criteria::ASC);
         }
 
         foreach ($sspServiceCriteriaTransfer->getSortCollection() as $sortTransfer) {
@@ -332,6 +350,8 @@ class SspServiceManagementRepository extends AbstractRepository implements SspSe
                 $query->orderBy($this->getSortFieldMapping()[$sortTransfer->getField()], $direction);
             }
         }
+
+        $query->orderBy(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, Criteria::ASC);
 
         return $query;
     }
@@ -363,5 +383,54 @@ class SspServiceManagementRepository extends AbstractRepository implements SspSe
             ->joinWithProductAbstractType()
             ->find()
             ->getData();
+    }
+
+    /**
+     * @param array<int> $salesOrderItemIds
+     *
+     * @return array<int, array<string>>
+     */
+    public function getProductTypesGroupedBySalesOrderItemIds(array $salesOrderItemIds): array
+    {
+        if (!$salesOrderItemIds) {
+            return [];
+        }
+
+        $salesOrderItemProductAbstractTypeQuery = $this->getFactory()
+            ->createSalesOrderItemProductAbstractTypeQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->joinWithSpySalesProductAbstractType();
+
+        $salesOrderItemProductAbstractTypeEntities = $salesOrderItemProductAbstractTypeQuery->find();
+
+        return $this->groupProductTypesBySalesOrderItemId($salesOrderItemProductAbstractTypeEntities);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\SspServiceManagement\Persistence\SpySalesOrderItemProductAbstractType> $salesOrderItemProductAbstractTypeEntities
+     *
+     * @return array<int, array<string>>
+     */
+    protected function groupProductTypesBySalesOrderItemId(Collection $salesOrderItemProductAbstractTypeEntities): array
+    {
+        $productTypesBySalesOrderItemId = [];
+
+        foreach ($salesOrderItemProductAbstractTypeEntities as $salesOrderItemProductAbstractTypeEntity) {
+            /**
+             * @var \Orm\Zed\SspServiceManagement\Persistence\SpySalesOrderItemProductAbstractType $salesOrderItemProductAbstractTypeEntity
+             */
+            $idSalesOrderItem = $salesOrderItemProductAbstractTypeEntity->getFkSalesOrderItem();
+            $productTypeName = $salesOrderItemProductAbstractTypeEntity->getSpySalesProductAbstractType()->getName();
+
+            if (!isset($productTypesBySalesOrderItemId[$idSalesOrderItem])) {
+                $productTypesBySalesOrderItemId[$idSalesOrderItem] = [];
+            }
+
+            if (!in_array($productTypeName, $productTypesBySalesOrderItemId[$idSalesOrderItem])) {
+                $productTypesBySalesOrderItemId[$idSalesOrderItem][] = $productTypeName;
+            }
+        }
+
+        return $productTypesBySalesOrderItemId;
     }
 }

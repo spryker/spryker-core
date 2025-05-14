@@ -14,8 +14,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ProductOfferShipmentType\Business\ProductOfferShipmentTypeFacadeInterface;
+use SprykerFeature\Zed\SspServiceManagement\Business\Expander\ShipmentTypeItemExpander;
 use SprykerFeature\Zed\SspServiceManagement\Business\Reader\ShipmentTypeReaderInterface;
+use SprykerFeature\Zed\SspServiceManagement\Business\SspServiceManagementBusinessFactory;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Quote\SspShipmentTypeQuoteExpanderPlugin;
+use SprykerFeature\Zed\SspServiceManagement\Persistence\SspServiceManagementRepository;
 use SprykerFeatureTest\Zed\SspServiceManagement\SspServiceManagementCommunicationTester;
 
 /**
@@ -65,13 +69,27 @@ class SspShipmentTypeQuoteExpanderPluginTest extends Unit
     public function testExpandExpandsItemsWithShipmentType(): void
     {
         // Arrange
-        $businessFactory = $this->tester->mockFactoryMethod('createShipmentTypeReader', $this->createShipmentTypeReaderMock(
+        $shipmentTypeReaderMock = $this->createShipmentTypeReaderMock(
             [static::TEST_SHIPMENT_TYPE_UUID => $this->tester->createShipmentTypeTransfer()],
-        ));
+        );
+        $repository = new SspServiceManagementRepository();
+        $productOfferShipmentTypeFacade = $this->createMock(ProductOfferShipmentTypeFacadeInterface::class);
+
+        $shipmentTypeItemExpander = new ShipmentTypeItemExpander(
+            $shipmentTypeReaderMock,
+            $repository,
+            $productOfferShipmentTypeFacade,
+        );
+
+        $businessFactoryMock = $this->getMockBuilder(SspServiceManagementBusinessFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $businessFactoryMock->method('createShipmentTypeItemExpander')
+            ->willReturn($shipmentTypeItemExpander);
 
         $quoteTransfer = $this->createQuoteTransferWithShipmentType(static::TEST_SHIPMENT_TYPE_UUID);
         $shipmentTypeQuoteExpanderPlugin = new SspShipmentTypeQuoteExpanderPlugin();
-        $shipmentTypeQuoteExpanderPlugin->setBusinessFactory($businessFactory);
+        $shipmentTypeQuoteExpanderPlugin->setBusinessFactory($businessFactoryMock);
 
         // Act
         $resultQuoteTransfer = $shipmentTypeQuoteExpanderPlugin->expand($quoteTransfer);
@@ -99,14 +117,28 @@ class SspShipmentTypeQuoteExpanderPluginTest extends Unit
             'Default Shipment Type',
         );
 
-        $businessFactory = $this->tester->mockFactoryMethod('createShipmentTypeReader', $this->createShipmentTypeReaderMock(
+        $shipmentTypeReaderMock = $this->createShipmentTypeReaderMock(
             [],
             $defaultShipmentTypeTransfer,
-        ));
+        );
+        $repository = new SspServiceManagementRepository();
+        $productOfferShipmentTypeFacade = $this->createMock(ProductOfferShipmentTypeFacadeInterface::class);
+
+        $shipmentTypeItemExpander = new ShipmentTypeItemExpander(
+            $shipmentTypeReaderMock,
+            $repository,
+            $productOfferShipmentTypeFacade,
+        );
+
+        $businessFactoryMock = $this->getMockBuilder(SspServiceManagementBusinessFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $businessFactoryMock->method('createShipmentTypeItemExpander')
+            ->willReturn($shipmentTypeItemExpander);
 
         $quoteTransfer = $this->createQuoteTransferWithoutShipmentType();
         $shipmentTypeQuoteExpanderPlugin = new SspShipmentTypeQuoteExpanderPlugin();
-        $shipmentTypeQuoteExpanderPlugin->setBusinessFactory($businessFactory);
+        $shipmentTypeQuoteExpanderPlugin->setBusinessFactory($businessFactoryMock);
 
         // Act
         $resultQuoteTransfer = $shipmentTypeQuoteExpanderPlugin->expand($quoteTransfer);
@@ -125,20 +157,34 @@ class SspShipmentTypeQuoteExpanderPluginTest extends Unit
     public function testExpandDoesNothingWhenNoItemsProvided(): void
     {
         // Arrange
-        $businessFactory = $this->tester->mockFactoryMethod('createShipmentTypeReader', $this->createShipmentTypeReaderMock());
+        $shipmentTypeReaderMock = $this->createShipmentTypeReaderMock([]);
+        $repository = new SspServiceManagementRepository();
+        $productOfferShipmentTypeFacade = $this->createMock(ProductOfferShipmentTypeFacadeInterface::class);
+
+        $shipmentTypeItemExpander = new ShipmentTypeItemExpander(
+            $shipmentTypeReaderMock,
+            $repository,
+            $productOfferShipmentTypeFacade,
+        );
+
+        $businessFactoryMock = $this->getMockBuilder(SspServiceManagementBusinessFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $businessFactoryMock->method('createShipmentTypeItemExpander')
+            ->willReturn($shipmentTypeItemExpander);
 
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setItems(new ArrayObject());
         $quoteTransfer->setStore((new StoreTransfer())->setName(static::TEST_STORE_NAME));
 
         $shipmentTypeQuoteExpanderPlugin = new SspShipmentTypeQuoteExpanderPlugin();
-        $shipmentTypeQuoteExpanderPlugin->setBusinessFactory($businessFactory);
+        $shipmentTypeQuoteExpanderPlugin->setBusinessFactory($businessFactoryMock);
 
         // Act
         $resultQuoteTransfer = $shipmentTypeQuoteExpanderPlugin->expand($quoteTransfer);
 
         // Assert
-        $this->assertCount(0, $resultQuoteTransfer->getItems());
+        $this->assertSame($quoteTransfer, $resultQuoteTransfer);
     }
 
     /**
@@ -147,27 +193,40 @@ class SspShipmentTypeQuoteExpanderPluginTest extends Unit
     public function testExpandExpandsBundleItemsWithShipmentType(): void
     {
         // Arrange
-        $shipmentTypeTransfer = $this->tester->createShipmentTypeTransfer();
+        $quoteTransfer = $this->createQuoteTransferWithShipmentType(static::TEST_SHIPMENT_TYPE_UUID);
 
-        $businessFactory = $this->tester->mockFactoryMethod('createShipmentTypeReader', $this->createShipmentTypeReaderMock(
-            [static::TEST_SHIPMENT_TYPE_UUID => $shipmentTypeTransfer],
-        ));
+        $bundleItemTransfer = new ItemTransfer();
+        $bundleItemTransfer->setBundleItemIdentifier('test');
 
-        $itemTransfers = new ArrayObject([
-            (new ItemTransfer())->setShipmentType(
-                (new ShipmentTypeTransfer())->setUuid(static::TEST_SHIPMENT_TYPE_UUID),
-            )->setShipment(
-                (new ShipmentTransfer()),
-            ),
+        $shipmentTypeTransfer = new ShipmentTypeTransfer();
+        $shipmentTypeTransfer->setUuid(static::TEST_SHIPMENT_TYPE_UUID);
+        $bundleItemTransfer->setShipmentType($shipmentTypeTransfer);
+
+        $shipmentTransfer = new ShipmentTransfer();
+        $bundleItemTransfer->setShipment($shipmentTransfer);
+
+        $quoteTransfer->setBundleItems(new ArrayObject([$bundleItemTransfer]));
+
+        $shipmentTypeReaderMock = $this->createShipmentTypeReaderMock([
+            static::TEST_SHIPMENT_TYPE_UUID => $this->tester->createShipmentTypeTransfer(),
         ]);
+        $repository = new SspServiceManagementRepository();
+        $productOfferShipmentTypeFacade = $this->createMock(ProductOfferShipmentTypeFacadeInterface::class);
 
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setItems($itemTransfers);
-        $quoteTransfer->setStore((new StoreTransfer())->setName(static::TEST_STORE_NAME));
-        $quoteTransfer->setBundleItems($itemTransfers);
+        $shipmentTypeItemExpander = new ShipmentTypeItemExpander(
+            $shipmentTypeReaderMock,
+            $repository,
+            $productOfferShipmentTypeFacade,
+        );
+
+        $businessFactoryMock = $this->getMockBuilder(SspServiceManagementBusinessFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $businessFactoryMock->method('createShipmentTypeItemExpander')
+            ->willReturn($shipmentTypeItemExpander);
 
         $shipmentTypeQuoteExpanderPlugin = new SspShipmentTypeQuoteExpanderPlugin();
-        $shipmentTypeQuoteExpanderPlugin->setBusinessFactory($businessFactory);
+        $shipmentTypeQuoteExpanderPlugin->setBusinessFactory($businessFactoryMock);
 
         // Act
         $resultQuoteTransfer = $shipmentTypeQuoteExpanderPlugin->expand($quoteTransfer);
@@ -187,11 +246,25 @@ class SspShipmentTypeQuoteExpanderPluginTest extends Unit
     public function testExpandDoesNotExpandWhenShipmentTypeReaderReturnsNoResults(): void
     {
         // Arrange
-        $businessFactory = $this->tester->mockFactoryMethod('createShipmentTypeReader', $this->createShipmentTypeReaderMock([]));
+        $shipmentTypeReaderMock = $this->createShipmentTypeReaderMock([]);
+        $repository = new SspServiceManagementRepository();
+        $productOfferShipmentTypeFacade = $this->createMock(ProductOfferShipmentTypeFacadeInterface::class);
+
+        $shipmentTypeItemExpander = new ShipmentTypeItemExpander(
+            $shipmentTypeReaderMock,
+            $repository,
+            $productOfferShipmentTypeFacade,
+        );
+
+        $businessFactoryMock = $this->getMockBuilder(SspServiceManagementBusinessFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $businessFactoryMock->method('createShipmentTypeItemExpander')
+            ->willReturn($shipmentTypeItemExpander);
 
         $quoteTransfer = $this->createQuoteTransferWithShipmentType(static::TEST_SHIPMENT_TYPE_UUID);
         $shipmentTypeQuoteExpanderPlugin = new SspShipmentTypeQuoteExpanderPlugin();
-        $shipmentTypeQuoteExpanderPlugin->setBusinessFactory($businessFactory);
+        $shipmentTypeQuoteExpanderPlugin->setBusinessFactory($businessFactoryMock);
 
         // Act
         $resultQuoteTransfer = $shipmentTypeQuoteExpanderPlugin->expand($quoteTransfer);

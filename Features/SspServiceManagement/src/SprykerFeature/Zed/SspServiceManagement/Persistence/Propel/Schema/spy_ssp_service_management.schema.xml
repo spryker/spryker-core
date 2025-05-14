@@ -16,7 +16,7 @@
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
 
-        <foreign-key name="spy_product_shipment_type-fk_shipment_type" foreignTable="spy_shipment_type">
+        <foreign-key name="spy_product_shipment_type-fk_shipment_type" onDelete="CASCADE" foreignTable="spy_shipment_type">
             <reference local="fk_shipment_type" foreign="id_shipment_type"/>
         </foreign-key>
     </table>

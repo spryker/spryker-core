@@ -44,6 +44,7 @@
         "spryker-shop/customer-page": "*",
         "spryker/code-sniffer": "*",
         "spryker/company": "*",
+        "spryker/payment": "*",
         "spryker/propel": "*",
         "spryker/ramsey-uuid": "*",
         "spryker/shipment": "*",

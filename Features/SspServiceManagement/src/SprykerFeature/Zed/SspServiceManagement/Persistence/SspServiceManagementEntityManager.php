@@ -113,4 +113,23 @@ class SspServiceManagementEntityManager extends AbstractEntityManager implements
             $salesOrderItemProductAbstractTypeEntity->save();
         }
     }
+
+    /**
+     * @param int $idSalesOrderItem
+     * @param bool $isServiceDateTimeEnabled
+     *
+     * @return void
+     */
+    public function saveIsServiceDateTimeEnabledForSalesOrderItem(int $idSalesOrderItem, bool $isServiceDateTimeEnabled): void
+    {
+        $salesOrderItemEntity = $this->getFactory()
+            ->createSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem($idSalesOrderItem)
+            ->findOne();
+
+        if ($salesOrderItemEntity) {
+            $salesOrderItemEntity->setIsServiceDateTimeEnabled($isServiceDateTimeEnabled);
+            $salesOrderItemEntity->save();
+        }
+    }
 }

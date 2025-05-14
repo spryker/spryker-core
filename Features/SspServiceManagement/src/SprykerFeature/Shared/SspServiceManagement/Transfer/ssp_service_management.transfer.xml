@@ -40,8 +40,10 @@
 
     <transfer name="ProductConcreteStorage">
         <property name="shipmentTypeUuids" type="string[]" singular="shipmentTypeUuid" strict="true"/>
+        <property name="productTypes" type="string[]" singular="productType"/>
         <property name="idProductConcrete" type="int"/>
         <property name="isServiceDateTimeEnabled" type="bool"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="EventEntity">
@@ -52,7 +54,11 @@
         <property name="shipmentTypes" type="ShipmentTypeStorage[]" singular="shipmentType" strict="true"/>
         <property name="shipmentTypeUuids" type="string[]" singular="shipmentTypeUuid" strict="true"/>
         <property name="idProductConcrete" type="int"/>
+        <property name="productTypes" type="string[]" singular="productType"/>
         <property name="isServiceDateTimeEnabled" type="bool"/>
+        <property name="sku" type="string"/>
+        <property name="currentProductPrice" type="CurrentProductPrice"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="ProductStorageCriteria">
@@ -73,11 +79,20 @@
 
     <transfer name="ShipmentTypeStorage" strict="true">
         <property name="key" type="string"/>
+        <property name="name" type="string"/>
+        <property name="uuid" type="string"/>
+        <property name="serviceType" type="ServiceTypeStorage"/>
+    </transfer>
+
+    <transfer name="ServiceTypeStorage" strict="true">
+        <property name="key" type="string"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="Store">
         <property name="name" type="string"/>
         <property name="idStore" type="int"/>
+        <property name="timezone" type="string"/>
     </transfer>
 
     <transfer name="ItemMetadata">
@@ -126,8 +141,12 @@
         <property name="quantity" type="int"/>
         <property name="idProductAbstract" type="int"/>
         <property name="uuid" type="string"/>
+        <property name="isCancellable" type="bool"/>
         <property name="relatedBundleItemIdentifier" type="string"/>
         <property name="bundleItemIdentifier" type="string"/>
+        <property name="isServiceDateTimeEnabled" type="bool"/>
+        <property name="process" type="string"/>
+        <property name="id" type="int"/>
     </transfer>
 
     <transfer name="Service" strict="true">
@@ -234,9 +253,9 @@
 
     <transfer name="ServicePointConditions" strict="true">
         <property name="isActive" type="bool"/>
-        <property name="withAddressRelation" type="bool"/>
         <property name="uuids" type="string[]" singular="uuid"/>
         <property name="storeNames" type="string[]" singular="storeName"/>
+        <property name="withAddressRelation" type="bool"/>
     </transfer>
 
     <transfer name="ServicePointCriteria" strict="true">
@@ -295,6 +314,7 @@
     </transfer>
 
     <transfer name="ItemState">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ServiceType" strict="true">
@@ -399,6 +419,8 @@
 
     <transfer name="ProductOfferStorage">
         <property name="services" type="ServiceStorage[]" singular="service"/>
+        <property name="price" type="CurrentProductPrice"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="ServiceStorage" strict="true">
@@ -463,6 +485,43 @@
     </transfer>
 
     <transfer name="PageMap">
+    </transfer>
+
+    <transfer name="ProductOfferStorageCriteria">
+        <property name="productConcreteSkus" type="string[]" singular="productConcreteSku"/>
+    </transfer>
+
+    <transfer name="ShopContext">
+    </transfer>
+
+    <transfer name="ProductOfferStorageCollection">
+        <property name="productOffers" type="ProductOfferStorage[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="CurrentProductPrice">
+    </transfer>
+
+    <transfer name="ProductOfferShipmentTypeCriteria" strict="true">
+        <property name="productOfferShipmentTypeConditions" type="ProductOfferShipmentTypeConditions"/>
+    </transfer>
+
+    <transfer name="ProductOfferShipmentTypeConditions" strict="true">
+        <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
+        <property name="shipmentTypeNames" type="string[]" singular="shipmentTypeName"/>
+    </transfer>
+
+    <transfer name="ProductOfferShipmentTypeCollection" strict="true">
+        <property name="productOfferShipmentTypes" type="ProductOfferShipmentType[]" singular="productOfferShipmentType"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="ProductOfferShipmentType" strict="true">
+        <property name="shipmentTypes" type="ShipmentType[]" singular="shipmentType"/>
+        <property name="productOffer" type="ProductOffer"/>
     </transfer>
 
 </transfers>

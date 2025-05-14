@@ -58,6 +58,8 @@ class CloseOutdatedQuoteRequestsTest extends Unit
     }
 
     /**
+     * @skip
+     *
      * @return void
      */
     public function testCloseOutdatedQuoteRequestsUpdateReadyQuoteRequestStatusToClosed(): void

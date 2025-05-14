@@ -37,6 +37,11 @@ class SspAssetManagementDependencyProvider extends AbstractBundleDependencyProvi
     public const CLIENT_SSP_ASSET_MANAGEMENT = 'CLIENT_SSP_ASSET_MANAGEMENT';
 
     /**
+     * @var string
+     */
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -46,6 +51,7 @@ class SspAssetManagementDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addCompanyUserClient($container);
         $container = $this->addSspAssetManagementClient($container);
         $container = $this->addFileManagerService($container);
+        $container = $this->addCustomerClient($container);
 
         return $container;
     }
@@ -87,6 +93,20 @@ class SspAssetManagementDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::SERVICE_FILE_MANAGER, function (Container $container): FileManagerServiceInterface {
             return $container->getLocator()->fileManager()->service();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
+            return $container->getLocator()->customer()->client();
         });
 
         return $container;

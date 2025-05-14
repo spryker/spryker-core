@@ -7,7 +7,9 @@
 
 namespace SprykerFeature\Zed\SspAssetManagement\Persistence;
 
+use Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
+use Orm\Zed\SspAssetManagement\Persistence\SpySalesOrderItemSspAsset;
 use Orm\Zed\SspAssetManagement\Persistence\SpySspAsset;
 use Orm\Zed\SspAssetManagement\Persistence\SpySspAssetToCompanyBusinessUnit;
 use Orm\Zed\SspAssetManagement\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
@@ -66,6 +68,18 @@ class SspAssetManagementEntityManager extends AbstractEntityManager implements S
         return $this->getFactory()
             ->createAssetMapper()
             ->mapSpySspAssetEntityToSspAssetTransfer($spySspAssetEntity, $sspAssetTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer $salesOrderItemSspAssetTransfer
+     *
+     * @return void
+     */
+    public function createSalesOrderItemSspAsset(SalesOrderItemSspAssetTransfer $salesOrderItemSspAssetTransfer): void
+    {
+        $salesOrderItemSspAssetEntity = new SpySalesOrderItemSspAsset();
+        $salesOrderItemSspAssetEntity->fromArray($salesOrderItemSspAssetTransfer->toArray());
+        $salesOrderItemSspAssetEntity->save();
     }
 
     /**

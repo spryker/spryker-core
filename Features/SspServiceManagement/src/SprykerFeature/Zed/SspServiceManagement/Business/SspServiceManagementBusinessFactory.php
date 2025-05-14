@@ -18,10 +18,14 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\Event\Business\EventFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Payment\Business\PaymentFacadeInterface;
+use Spryker\Zed\Messenger\Business\MessengerFacadeInterface;
+use Spryker\Zed\Oms\Business\OmsFacadeInterface;
+use Spryker\Zed\ProductOfferShipmentType\Business\ProductOfferShipmentTypeFacadeInterface;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use Spryker\Zed\ServicePoint\Business\ServicePointFacadeInterface;
 use Spryker\Zed\ShipmentType\Business\ShipmentTypeFacadeInterface;
+use SprykerFeature\Zed\SspServiceManagement\Business\Canceler\OrderItemCanceler;
+use SprykerFeature\Zed\SspServiceManagement\Business\Canceler\OrderItemCancelerInterface;
 use SprykerFeature\Zed\SspServiceManagement\Business\DataImport\Step\ProductAbstractSkuToIdProductAbstractStep;
 use SprykerFeature\Zed\SspServiceManagement\Business\DataImport\Step\ProductAbstractToProductAbstractTypeWriterStep;
 use SprykerFeature\Zed\SspServiceManagement\Business\DataImport\Step\ProductAbstractTypeKeyToIdProductAbstractTypeStep;
@@ -29,6 +33,8 @@ use SprykerFeature\Zed\SspServiceManagement\Business\DataImport\Step\ProductAbst
 use SprykerFeature\Zed\SspServiceManagement\Business\DataImport\Step\ProductShipmentTypeWriterStep;
 use SprykerFeature\Zed\SspServiceManagement\Business\DataImport\Step\ProductSkuToIdProductStep;
 use SprykerFeature\Zed\SspServiceManagement\Business\DataImport\Step\ShipmentTypeKeyToIdShipmentTypeStep;
+use SprykerFeature\Zed\SspServiceManagement\Business\Expander\OrderItemProductTypeExpander;
+use SprykerFeature\Zed\SspServiceManagement\Business\Expander\OrderItemProductTypeExpanderInterface;
 use SprykerFeature\Zed\SspServiceManagement\Business\Expander\OrderItemScheduleExpander;
 use SprykerFeature\Zed\SspServiceManagement\Business\Expander\OrderItemScheduleExpanderInterface;
 use SprykerFeature\Zed\SspServiceManagement\Business\Expander\ProductAbstractTypeExpander;
@@ -39,6 +45,8 @@ use SprykerFeature\Zed\SspServiceManagement\Business\Expander\ServicePointItemEx
 use SprykerFeature\Zed\SspServiceManagement\Business\Expander\ServicePointItemExpanderInterface;
 use SprykerFeature\Zed\SspServiceManagement\Business\Expander\ShipmentTypeItemExpander;
 use SprykerFeature\Zed\SspServiceManagement\Business\Expander\ShipmentTypeItemExpanderInterface;
+use SprykerFeature\Zed\SspServiceManagement\Business\Filter\QuoteItemFilter;
+use SprykerFeature\Zed\SspServiceManagement\Business\Filter\QuoteItemFilterInterface;
 use SprykerFeature\Zed\SspServiceManagement\Business\Grouper\ShipmentTypeGrouper;
 use SprykerFeature\Zed\SspServiceManagement\Business\Grouper\ShipmentTypeGrouperInterface;
 use SprykerFeature\Zed\SspServiceManagement\Business\Reader\ProductShipmentTypeReader;
@@ -49,12 +57,14 @@ use SprykerFeature\Zed\SspServiceManagement\Business\Reader\ServiceReader;
 use SprykerFeature\Zed\SspServiceManagement\Business\Reader\ServiceReaderInterface;
 use SprykerFeature\Zed\SspServiceManagement\Business\Reader\ShipmentTypeReader;
 use SprykerFeature\Zed\SspServiceManagement\Business\Reader\ShipmentTypeReaderInterface;
-use SprykerFeature\Zed\SspServiceManagement\Business\Resolver\PaymentMethodKeyResolver;
-use SprykerFeature\Zed\SspServiceManagement\Business\Resolver\PaymentMethodKeyResolverInterface;
+use SprykerFeature\Zed\SspServiceManagement\Business\Resolver\PaymentMethodResolver;
+use SprykerFeature\Zed\SspServiceManagement\Business\Resolver\PaymentMethodResolverInterface;
 use SprykerFeature\Zed\SspServiceManagement\Business\Saver\ProductAbstractTypeSaver;
 use SprykerFeature\Zed\SspServiceManagement\Business\Saver\ProductAbstractTypeSaverInterface;
 use SprykerFeature\Zed\SspServiceManagement\Business\Saver\ProductShipmentTypeSaver;
 use SprykerFeature\Zed\SspServiceManagement\Business\Saver\ProductShipmentTypeSaverInterface;
+use SprykerFeature\Zed\SspServiceManagement\Business\Saver\ServiceDateTimeEnabledSaver;
+use SprykerFeature\Zed\SspServiceManagement\Business\Saver\ServiceDateTimeEnabledSaverInterface;
 use SprykerFeature\Zed\SspServiceManagement\Business\Storage\Expander\ShipmentTypeProductConcreteStorageExpander;
 use SprykerFeature\Zed\SspServiceManagement\Business\Storage\Expander\ShipmentTypeProductConcreteStorageExpanderInterface;
 use SprykerFeature\Zed\SspServiceManagement\Business\Updater\OrderItemScheduleUpdater;
@@ -79,6 +89,26 @@ class SspServiceManagementBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getEventFacade(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspServiceManagement\Business\Saver\ServiceDateTimeEnabledSaverInterface
+     */
+    public function createServiceDateTimeEnabledSaver(): ServiceDateTimeEnabledSaverInterface
+    {
+        return new ServiceDateTimeEnabledSaver(
+            $this->getEntityManager(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspServiceManagement\Business\Expander\OrderItemProductTypeExpanderInterface
+     */
+    public function createOrderItemProductTypeExpander(): OrderItemProductTypeExpanderInterface
+    {
+        return new OrderItemProductTypeExpander(
+            $this->getRepository(),
         );
     }
 
@@ -125,6 +155,17 @@ class SspServiceManagementBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentTypeProductConcreteStorageExpander(
             $this->createProductShipmentTypeReader(),
+            $this->getRepository(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspServiceManagement\Business\Resolver\PaymentMethodResolverInterface
+     */
+    public function createPaymentMethodResolver(): PaymentMethodResolverInterface
+    {
+        return new PaymentMethodResolver(
+            $this->getConfig(),
         );
     }
 
@@ -135,17 +176,7 @@ class SspServiceManagementBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderItemScheduleUpdater(
             $this->getSalesFacade(),
-            $this->createPaymentMethodKeyResolver(),
-        );
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SspServiceManagement\Business\Resolver\PaymentMethodKeyResolverInterface
-     */
-    public function createPaymentMethodKeyResolver(): PaymentMethodKeyResolverInterface
-    {
-        return new PaymentMethodKeyResolver(
-            $this->getPaymentFacade(),
+            $this->createPaymentMethodResolver(),
         );
     }
 
@@ -253,6 +284,8 @@ class SspServiceManagementBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentTypeItemExpander(
             $this->createShipmentTypeReader(),
+            $this->getRepository(),
+            $this->getProductOfferShipmentTypeFacade(),
         );
     }
 
@@ -285,30 +318,6 @@ class SspServiceManagementBusinessFactory extends AbstractBusinessFactory
         return new ServicePointReader(
             $this->getServicePointFacade(),
         );
-    }
-
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function getProductQuery(): SpyProductQuery
-    {
-        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::PROPEL_QUERY_PRODUCT);
-    }
-
-    /**
-     * @return \Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery
-     */
-    public function getShipmentTypeQuery(): SpyShipmentTypeQuery
-    {
-        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::PROPEL_QUERY_SHIPMENT_TYPE);
-    }
-
-    /**
-     * @return \Orm\Zed\SspServiceManagement\Persistence\SpyProductShipmentTypeQuery
-     */
-    public function getProductShipmentTypeQuery(): SpyProductShipmentTypeQuery
-    {
-        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::PROPEL_QUERY_PRODUCT_SHIPMENT_TYPE);
     }
 
     /**
@@ -392,11 +401,13 @@ class SspServiceManagementBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \SprykerFeature\Zed\SspServiceManagement\Business\Canceler\OrderItemCancelerInterface
      */
-    public function getProductAbstractQuery(): SpyProductAbstractQuery
+    public function createOrderItemCanceler(): OrderItemCancelerInterface
     {
-        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);
+        return new OrderItemCanceler(
+            $this->getOmsFacade(),
+        );
     }
 
     /**
@@ -416,6 +427,57 @@ class SspServiceManagementBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \SprykerFeature\Zed\SspServiceManagement\Business\Filter\QuoteItemFilterInterface
+     */
+    public function createQuoteItemFilter(): QuoteItemFilterInterface
+    {
+        return new QuoteItemFilter(
+            $this->getConfig(),
+            $this->getMessengerFacade(),
+        );
+    }
+
+     /**
+      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+      */
+    public function getProductQuery(): SpyProductQuery
+    {
+        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::PROPEL_QUERY_PRODUCT);
+    }
+
+    /**
+     * @return \Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery
+     */
+    public function getShipmentTypeQuery(): SpyShipmentTypeQuery
+    {
+        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::PROPEL_QUERY_SHIPMENT_TYPE);
+    }
+
+    /**
+     * @return \Orm\Zed\SspServiceManagement\Persistence\SpyProductShipmentTypeQuery
+     */
+    public function getProductShipmentTypeQuery(): SpyProductShipmentTypeQuery
+    {
+        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::PROPEL_QUERY_PRODUCT_SHIPMENT_TYPE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentType\Business\ProductOfferShipmentTypeFacadeInterface
+     */
+    public function getProductOfferShipmentTypeFacade(): ProductOfferShipmentTypeFacadeInterface
+    {
+        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::FACADE_PRODUCT_OFFER_SHIPMENT_TYPE);
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function getProductAbstractQuery(): SpyProductAbstractQuery
+    {
+        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
     public function getSalesFacade(): SalesFacadeInterface
@@ -424,18 +486,26 @@ class SspServiceManagementBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payment\Business\PaymentFacadeInterface
-     */
-    public function getPaymentFacade(): PaymentFacadeInterface
-    {
-        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::FACADE_PAYMENT);
-    }
-
-    /**
      * @return \Spryker\Zed\ServicePoint\Business\ServicePointFacadeInterface
      */
     public function getServicePointFacade(): ServicePointFacadeInterface
     {
         return $this->getProvidedDependency(SspServiceManagementDependencyProvider::FACADE_SERVICE_POINT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
+     */
+    public function getOmsFacade(): OmsFacadeInterface
+    {
+        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Messenger\Business\MessengerFacadeInterface
+     */
+    public function getMessengerFacade(): MessengerFacadeInterface
+    {
+        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::FACADE_MESSENGER);
     }
 }

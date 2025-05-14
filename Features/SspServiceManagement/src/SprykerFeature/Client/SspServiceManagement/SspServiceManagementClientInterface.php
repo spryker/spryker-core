@@ -43,4 +43,20 @@ interface SspServiceManagementClientInterface
     public function updateSalesOrderItemCollection(
         SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
     ): SalesOrderItemCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Cancels sales order items collection.
+     * - Uses Zed facade to perform the cancellation.
+     * - Returns a SalesOrderItemCollectionResponseTransfer with potential errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function cancelSalesOrderItemCollection(
+        SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+    ): SalesOrderItemCollectionResponseTransfer;
 }

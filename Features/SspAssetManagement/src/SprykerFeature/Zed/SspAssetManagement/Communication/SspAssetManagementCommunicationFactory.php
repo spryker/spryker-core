@@ -17,6 +17,12 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Company\Business\CompanyFacadeInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use SprykerFeature\Zed\SspAssetManagement\Business\Expander\SspAssetItemExpander;
+use SprykerFeature\Zed\SspAssetManagement\Business\Expander\SspAssetItemExpanderInterface;
+use SprykerFeature\Zed\SspAssetManagement\Communication\Expander\OrderItemSspAssetExpander;
+use SprykerFeature\Zed\SspAssetManagement\Communication\Expander\OrderItemSspAssetExpanderInterface;
+use SprykerFeature\Zed\SspAssetManagement\Communication\Extractor\SalesOrderItemIdExtractor;
+use SprykerFeature\Zed\SspAssetManagement\Communication\Extractor\SalesOrderItemIdExtractorInterface;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Form\DataProvider\SspAssetFilterFormDataProvider;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Form\DataProvider\SspAssetFilterFormDataProviderInterface;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Form\DataProvider\SspAssetFormDataProvider;
@@ -25,6 +31,8 @@ use SprykerFeature\Zed\SspAssetManagement\Communication\Form\SspAssetFilterForm;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Form\SspAssetForm;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Mapper\SspAssetFormDataToTransferMapper;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Mapper\SspAssetFormDataToTransferMapperInterface;
+use SprykerFeature\Zed\SspAssetManagement\Communication\Saver\SalesOrderItemSspAssetSaver;
+use SprykerFeature\Zed\SspAssetManagement\Communication\Saver\SalesOrderItemSspAssetSaverInterface;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Table\AssignedBusinessUnitTable;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Table\SspAssetTable;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Table\SspInquiryTable;
@@ -198,5 +206,45 @@ class SspAssetManagementCommunicationFactory extends AbstractCommunicationFactor
     public function getCompanyFacade(): CompanyFacadeInterface
     {
         return $this->getProvidedDependency(SspAssetManagementDependencyProvider::FACADE_COMPANY);
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspAssetManagement\Business\Expander\SspAssetItemExpanderInterface
+     */
+    public function createSspAssetItemExpander(): SspAssetItemExpanderInterface
+    {
+        return new SspAssetItemExpander(
+            $this->getRepository(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspAssetManagement\Communication\Saver\SalesOrderItemSspAssetSaverInterface
+     */
+    public function createSalesOrderItemSspAssetSaver(): SalesOrderItemSspAssetSaverInterface
+    {
+        return new SalesOrderItemSspAssetSaver(
+            $this->getEntityManager(),
+            $this->getRepository(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspAssetManagement\Communication\Extractor\SalesOrderItemIdExtractorInterface
+     */
+    public function createSalesOrderItemIdExtractor(): SalesOrderItemIdExtractorInterface
+    {
+        return new SalesOrderItemIdExtractor();
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspAssetManagement\Communication\Expander\OrderItemSspAssetExpanderInterface
+     */
+    public function createOrderItemSspAssetExpander(): OrderItemSspAssetExpanderInterface
+    {
+        return new OrderItemSspAssetExpander(
+            $this->getRepository(),
+            $this->createSalesOrderItemIdExtractor(),
+        );
     }
 }

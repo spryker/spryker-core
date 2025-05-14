@@ -9,6 +9,7 @@ namespace SprykerFeature\Yves\SspAssetManagement;
 
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Spryker\Client\CompanyUser\CompanyUserClientInterface;
+use Spryker\Client\Customer\CustomerClientInterface;
 use Spryker\Service\FileManager\FileManagerServiceInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerFeature\Client\SspAssetManagement\SspAssetManagementClientInterface;
@@ -147,5 +148,13 @@ class SspAssetManagementFactory extends AbstractFactory
             $this->getSspAssetManagementClient(),
             $this->getConfig(),
         );
+    }
+
+    /**
+     * @return \Spryker\Client\Customer\CustomerClientInterface
+     */
+    public function getCustomerClient(): CustomerClientInterface
+    {
+        return $this->getProvidedDependency(SspAssetManagementDependencyProvider::CLIENT_CUSTOMER);
     }
 }

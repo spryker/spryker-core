@@ -10,7 +10,6 @@ namespace SprykerFeature\Zed\SspServiceManagement\Persistence;
 use Generated\Shared\Transfer\ProductAbstractTypeCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 
 interface SspServiceManagementRepositoryInterface
 {
@@ -20,6 +19,14 @@ interface SspServiceManagementRepositoryInterface
      * @return array<int, list<int>>
      */
     public function getShipmentTypeIdsGroupedByIdProductConcrete(array $productConcreteIds): array;
+
+    /**
+     * @param list<int> $productConcreteIds
+     * @param string $shipmentTypeName
+     *
+     * @return array<int, list<int>>
+     */
+    public function getProductIdsWithShipmentType(array $productConcreteIds, string $shipmentTypeName): array;
 
     /**
      * @return \Generated\Shared\Transfer\ProductAbstractTypeCollectionTransfer
@@ -41,11 +48,6 @@ interface SspServiceManagementRepositoryInterface
     public function getProductAbstractTypesByProductAbstractIds(array $productAbstractIds): array;
 
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function getSalesOrderItemPropelQuery(): SpySalesOrderItemQuery;
-
-    /**
      * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
@@ -58,4 +60,11 @@ interface SspServiceManagementRepositoryInterface
      * @return array<\Orm\Zed\SspServiceManagement\Persistence\SpyProductAbstractToProductAbstractType>
      */
     public function findProductAbstractTypesByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param array<int> $salesOrderItemIds
+     *
+     * @return array<int, array<string>>
+     */
+    public function getProductTypesGroupedBySalesOrderItemIds(array $salesOrderItemIds): array;
 }

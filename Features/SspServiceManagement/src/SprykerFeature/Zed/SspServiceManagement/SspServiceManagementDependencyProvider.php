@@ -19,10 +19,11 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\Merchant\Business\MerchantFacadeInterface;
 use Spryker\Zed\MerchantStock\Business\MerchantStockFacadeInterface;
+use Spryker\Zed\Messenger\Business\MessengerFacadeInterface;
 use Spryker\Zed\Oms\Business\OmsFacadeInterface;
-use Spryker\Zed\Payment\Business\PaymentFacadeInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface;
+use Spryker\Zed\ProductOfferShipmentType\Business\ProductOfferShipmentTypeFacadeInterface;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use Spryker\Zed\ServicePoint\Business\ServicePointFacadeInterface;
 use Spryker\Zed\ShipmentType\Business\ShipmentTypeFacadeInterface;
@@ -76,17 +77,17 @@ class SspServiceManagementDependencyProvider extends AbstractBundleDependencyPro
     /**
      * @var string
      */
+    public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
 
     /**
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
-
-    /**
-     * @var string
-     */
-    public const FACADE_PAYMENT = 'FACADE_PAYMENT';
 
     /**
      * @var string
@@ -124,6 +125,16 @@ class SspServiceManagementDependencyProvider extends AbstractBundleDependencyPro
     public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_ABSTRACT';
 
     /**
+     * @var string
+     */
+    public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
+
+    /**
+     * @var string
+     */
+    public const FACADE_PRODUCT_OFFER_SHIPMENT_TYPE = 'FACADE_PRODUCT_OFFER_SHIPMENT_TYPE';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -143,6 +154,8 @@ class SspServiceManagementDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addProductPropelQuery($container);
         $container = $this->addProductImagePropelQuery($container);
         $container = $this->addSalesFacade($container);
+        $container = $this->addOmsFacade($container);
+        $container = $this->addUtilDateTimeService($container);
 
         return $container;
     }
@@ -155,6 +168,7 @@ class SspServiceManagementDependencyProvider extends AbstractBundleDependencyPro
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addProductOfferShipmentTypeFacade($container);
         $container = $this->addShipmentTypeFacade($container);
         $container = $this->addEventFacade($container);
         $container = $this->addProductPropelQuery($container);
@@ -162,9 +176,9 @@ class SspServiceManagementDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addProductShipmentTypeQuery($container);
         $container = $this->addProductAbstractQuery($container);
         $container = $this->addSalesFacade($container);
-        $container = $this->addPaymentFacade($container);
         $container = $this->addOmsFacade($container);
         $container = $this->addServicePointFacade($container);
+        $container = $this->addMessengerFacade($container);
 
         return $container;
     }
@@ -179,6 +193,8 @@ class SspServiceManagementDependencyProvider extends AbstractBundleDependencyPro
         parent::providePersistenceLayerDependencies($container);
 
         $container = $this->addOmsFacade($container);
+        $container = $this->addProductQuery($container);
+        $container = $this->addSalesOrderItemQuery($container);
 
         return $container;
     }
@@ -398,6 +414,20 @@ class SspServiceManagementDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addProductQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function (Container $container): SpyProductQuery {
+            return SpyProductQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addSalesFacade(Container $container): Container
     {
         $container->set(static::FACADE_SALES, static function (Container $container): SalesFacadeInterface {
@@ -412,10 +442,10 @@ class SspServiceManagementDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPaymentFacade(Container $container): Container
+    protected function addOmsFacade(Container $container): Container
     {
-        $container->set(static::FACADE_PAYMENT, static function (Container $container): PaymentFacadeInterface {
-            return $container->getLocator()->payment()->facade();
+        $container->set(static::FACADE_OMS, function (Container $container): OmsFacadeInterface {
+            return $container->getLocator()->oms()->facade();
         });
 
         return $container;
@@ -426,10 +456,38 @@ class SspServiceManagementDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addOmsFacade(Container $container): Container
+    protected function addMessengerFacade(Container $container): Container
     {
-        $container->set(static::FACADE_OMS, static function (Container $container): OmsFacadeInterface {
-            return $container->getLocator()->oms()->facade();
+        $container->set(static::FACADE_MESSENGER, function (Container $container): MessengerFacadeInterface {
+            return $container->getLocator()->messenger()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilDateTimeService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
+            return $container->getLocator()->utilDateTime()->service();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOfferShipmentTypeFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_OFFER_SHIPMENT_TYPE, function (Container $container): ProductOfferShipmentTypeFacadeInterface {
+            return $container->getLocator()->productOfferShipmentType()->facade();
         });
 
         return $container;

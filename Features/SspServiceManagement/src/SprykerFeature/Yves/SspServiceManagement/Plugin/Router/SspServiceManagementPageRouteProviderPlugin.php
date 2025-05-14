@@ -35,12 +35,22 @@ class SspServiceManagementPageRouteProviderPlugin extends AbstractRouteProviderP
     /**
      * @var string
      */
+    public const ROUTE_NAME_SSP_SERVICE_CANCEL = 'ssp-service/cancel-service';
+
+    /**
+     * @var string
+     */
     protected const PATTERN_CUSTOMER_SERVICE_LIST = '/customer/ssp-service';
 
     /**
      * @var string
      */
     protected const PATTERN_UPDATE_SERVICE_TIME = '/ssp-service/update-service-time';
+
+    /**
+     * @var string
+     */
+    protected const PATTERN_CANCEL_SERVICE = '/ssp-service/cancel-service';
 
     /**
      * {@inheritDoc}
@@ -58,6 +68,7 @@ class SspServiceManagementPageRouteProviderPlugin extends AbstractRouteProviderP
         $routeCollection = $this->addSspServiceManagementServicePointSearchRoute($routeCollection);
         $routeCollection = $this->addSspServiceManagementCustomerServiceListRoute($routeCollection);
         $routeCollection = $this->addSspServiceManagementUpdateServiceTimeRoute($routeCollection);
+        $routeCollection = $this->addSspServiceManagementCancelServiceRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -134,6 +145,26 @@ class SspServiceManagementPageRouteProviderPlugin extends AbstractRouteProviderP
             'updateServiceTimeAction',
         );
         $routeCollection->add(static::ROUTE_NAME_SSP_SERVICE_UPDATE_TIME, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerFeature\Yves\SspServiceManagement\Controller\SspServiceController::cancelServiceAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addSspServiceManagementCancelServiceRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute(
+            static::PATTERN_CANCEL_SERVICE,
+            'SspServiceManagement',
+            'SspService',
+            'cancelServiceAction',
+        );
+        $routeCollection->add(static::ROUTE_NAME_SSP_SERVICE_CANCEL, $route);
 
         return $routeCollection;
     }

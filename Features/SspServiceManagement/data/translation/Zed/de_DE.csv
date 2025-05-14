@@ -48,7 +48,11 @@ Service,Dienstleistung
 "Back to Order","Zurück zur Bestellung"
 "Order Item Details",Bestellpositionsdetails
 SKU,SKU
-"Product Abstract Types",Produktabstrakttypen
-"Select product abstract types","Produktabstrakttypen auswählen"
+"Product Types",Produktarten
+"Select product types","Produktarten auswählen"
 "Current State","Aktueller Status"
 "Scheduled At:","Geplant für:"
+"Service with ID ""%id%"" does not exist.","Dienstleistung mit ID ""%id%"" existiert nicht."
+N/A,N/A
+"View Service","Dienstleistung anzeigen"
+Created,Erstellt

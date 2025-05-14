@@ -18,4 +18,11 @@ interface SspAssetManagementRepositoryInterface
      * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
      */
     public function getSspAssetCollection(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): SspAssetCollectionTransfer;
+
+    /**
+     * @param array<int> $salesOrderItemIds
+     *
+     * @return array<int, \Generated\Shared\Transfer\SspAssetTransfer>
+     */
+    public function getSspAssetsIndexedByIdSalesOrderItem(array $salesOrderItemIds): array;
 }

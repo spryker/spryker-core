@@ -8,6 +8,8 @@
 namespace SprykerFeature\Yves\SspServiceManagement\Controller;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ShipmentTypeStorageConditionsTransfer;
+use Generated\Shared\Transfer\ShipmentTypeStorageCriteriaTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,6 +64,11 @@ class ServicePointWidgetContentController extends AbstractController
      * @var string
      */
     protected const VIEW_DATA_KEY_SHIPMENT_TYPE_UUID = 'shipmentTypeUuid';
+
+    /**
+     * @var string
+     */
+    protected const VIEW_IS_SERVICE_POINT_REQUIRED = 'isServicePointRequired';
 
     /**
      * @var string
@@ -127,13 +134,28 @@ class ServicePointWidgetContentController extends AbstractController
             ->setIsMerchantCheckSkipped(true),
         ];
 
+        $shipmentTypeUuid = $request->query->get(static::REQUEST_PARAM_SHIPMENT_TYPE_UUID);
+
+        /**
+         * @var \Generated\Shared\Transfer\ShipmentTypeStorageTransfer $shipmentTypeStorageTransfer
+         */
+        $shipmentTypeStorageTransfer = $this->getFactory()->getShipmentTypeStorageClient()->getShipmentTypeStorageCollection(
+            (new ShipmentTypeStorageCriteriaTransfer())
+                ->setShipmentTypeStorageConditions(
+                    (new ShipmentTypeStorageConditionsTransfer())
+                        ->setUuids([(string)$shipmentTypeUuid])
+                        ->setStoreName($this->getFactory()->getStoreClient()->getCurrentStore()->getName()),
+                ),
+        )->getShipmentTypeStorages()->getIterator()->current();
+
         return [
             static::VIEW_DATA_KEY_SERVICE_TYPE_KEY => $request->query->get(static::REQUEST_PARAM_SERVICE_TYPE_KEY),
             static::VIEW_DATA_KEY_SERVICE_TYPE_UUID => $request->query->get(static::REQUEST_PARAM_SERVICE_TYPE_UUID),
-            static::VIEW_DATA_KEY_SHIPMENT_TYPE_UUID => $request->query->get(static::REQUEST_PARAM_SHIPMENT_TYPE_UUID),
+            static::VIEW_DATA_KEY_SHIPMENT_TYPE_UUID => $shipmentTypeUuid,
             static::VIEW_DATA_KEY_ITEMS => $itemTransfers,
             static::VIEW_DATA_KEY_SKU => $sku,
             static::VIEW_DATA_KEY_QUANTITY => $quantity,
+            static::VIEW_IS_SERVICE_POINT_REQUIRED => in_array($shipmentTypeStorageTransfer->getKey(), $this->getFactory()->getConfig()->getServicePointRequiredShipmentTypeKeys()),
         ];
     }
 }

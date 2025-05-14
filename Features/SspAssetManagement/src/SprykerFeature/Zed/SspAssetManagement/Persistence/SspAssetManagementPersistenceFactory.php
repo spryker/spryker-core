@@ -7,6 +7,7 @@
 
 namespace SprykerFeature\Zed\SspAssetManagement\Persistence;
 
+use Orm\Zed\SspAssetManagement\Persistence\SpySalesOrderItemSspAssetQuery;
 use Orm\Zed\SspAssetManagement\Persistence\SpySspAssetQuery;
 use Orm\Zed\SspAssetManagement\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
@@ -38,6 +39,14 @@ class SspAssetManagementPersistenceFactory extends AbstractPersistenceFactory
     public function createSspAssetQuery(): SpySspAssetQuery
     {
         return SpySspAssetQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\SspAssetManagement\Persistence\SpySalesOrderItemSspAssetQuery
+     */
+    public function getSalesOrderItemSspAssetQuery(): SpySalesOrderItemSspAssetQuery
+    {
+        return SpySalesOrderItemSspAssetQuery::create();
     }
 
     /**

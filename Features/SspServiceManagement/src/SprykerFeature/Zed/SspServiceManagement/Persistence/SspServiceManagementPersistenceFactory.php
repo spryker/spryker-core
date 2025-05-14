@@ -83,18 +83,18 @@ class SspServiceManagementPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
-     */
-    public function getOmsFacade(): OmsFacadeInterface
-    {
-        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::FACADE_OMS);
-    }
-
-    /**
      * @return \SprykerFeature\Zed\SspServiceManagement\Persistence\Mapper\SspServiceMapper
      */
     public function createSspServiceMapper(): SspServiceMapper
     {
         return new SspServiceMapper($this->getOmsFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
+     */
+    public function getOmsFacade(): OmsFacadeInterface
+    {
+        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::FACADE_OMS);
     }
 }

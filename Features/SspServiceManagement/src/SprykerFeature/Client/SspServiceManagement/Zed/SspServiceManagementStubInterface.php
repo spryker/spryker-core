@@ -29,4 +29,13 @@ interface SspServiceManagementStubInterface
     public function updateSalesOrderItemCollection(
         SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
     ): SalesOrderItemCollectionResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function cancelSalesOrderItemCollection(
+        SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+    ): SalesOrderItemCollectionResponseTransfer;
 }

@@ -118,13 +118,13 @@ class UpdateController extends AbstractController
                 sprintf(
                     '/ssp-asset-management/update?%s=%d',
                     static::PARAM_ID_SSP_ASSET,
-                    $sspAssetTransfer->getIdSspAsset(),
+                    $sspAssetTransfer->getIdSspAssetOrFail(),
                 ),
             );
         }
 
         $this->addSuccessMessage(static::MESSAGE_SSP_ASSET_UPDATE_SUCCESS);
 
-        return $this->redirectResponse(sprintf(static::ROUTE_SSP_ASSET_DETAIL, $sspAssetTransfer->getIdSspAsset()));
+        return $this->redirectResponse(sprintf(static::ROUTE_SSP_ASSET_DETAIL, $sspAssetTransfer->getIdSspAssetOrFail()));
     }
 }

@@ -12,15 +12,27 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \SprykerFeature\Yves\SspServiceManagement\SspServiceManagementFactory getFactory()
+ * @method \SprykerFeature\Yves\SspServiceManagement\SspServiceManagementConfig getConfig()()
  */
 class SspServiceChangeScheduledTimeLinkWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
+    protected const PARAMETER_ORDER_ITEM = 'orderItem';
+
+    /**
+     * @var string
+     */
+    protected const PARAMETER_IS_VISIBLE = 'isVisible';
+
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      */
     public function __construct(ItemTransfer $itemTransfer)
     {
-        $this->addParameter('orderItem', $itemTransfer);
+        $this->addOrderItemParameter($itemTransfer);
+        $this->addIsVisibleParameter($itemTransfer);
     }
 
     /**
@@ -45,5 +57,28 @@ class SspServiceChangeScheduledTimeLinkWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@SspServiceManagement/views/service-change-scheduled-time-link/service-change-scheduled-time-link.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function addIsVisibleParameter(ItemTransfer $itemTransfer): void
+    {
+        $isService = in_array($this->getConfig()->getProductServiceTypeName(), $itemTransfer->getProductTypes());
+        $isVisible = $isService && $itemTransfer->getIsServiceDateTimeEnabled();
+
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, $isVisible);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function addOrderItemParameter(ItemTransfer $itemTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_ORDER_ITEM, $itemTransfer);
     }
 }

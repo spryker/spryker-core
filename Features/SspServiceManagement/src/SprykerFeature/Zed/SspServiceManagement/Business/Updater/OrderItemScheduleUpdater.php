@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
-use SprykerFeature\Zed\SspServiceManagement\Business\Resolver\PaymentMethodKeyResolverInterface;
+use SprykerFeature\Zed\SspServiceManagement\Business\Resolver\PaymentMethodResolverInterface;
 
 class OrderItemScheduleUpdater implements OrderItemScheduleUpdaterInterface
 {
@@ -34,11 +34,11 @@ class OrderItemScheduleUpdater implements OrderItemScheduleUpdaterInterface
 
     /**
      * @param \Spryker\Zed\Sales\Business\SalesFacadeInterface $salesFacade
-     * @param \SprykerFeature\Zed\SspServiceManagement\Business\Resolver\PaymentMethodKeyResolverInterface $paymentMethodKeyResolver
+     * @param \SprykerFeature\Zed\SspServiceManagement\Business\Resolver\PaymentMethodResolverInterface $paymentMethodResolver
      */
     public function __construct(
         protected SalesFacadeInterface $salesFacade,
-        protected PaymentMethodKeyResolverInterface $paymentMethodKeyResolver
+        protected PaymentMethodResolverInterface $paymentMethodResolver
     ) {
     }
 
@@ -64,8 +64,9 @@ class OrderItemScheduleUpdater implements OrderItemScheduleUpdaterInterface
         }
 
         $paymentTransfer = $orderTransfer->getPayments()->offsetGet(0);
-        $paymentMethodKey = $this->paymentMethodKeyResolver->resolvePaymentMethodKey($paymentTransfer);
-        $paymentTransfer->setPaymentSelection($paymentMethodKey);
+        $paymentMethod = $this->paymentMethodResolver->resolvePaymentMethod($itemTransfer, $paymentTransfer);
+
+        $paymentTransfer->setPaymentSelection($paymentMethod);
 
         $quoteTransfer = (new QuoteTransfer())
             ->setPayments(new ArrayObject([$paymentTransfer]))

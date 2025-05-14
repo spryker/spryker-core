@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductOfferShipmentType\Persistence;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferShipmentTypeCriteriaTransfer;
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOfferShipmentType\Persistence\Map\SpyProductOfferShipmentTypeTableMap;
 use Orm\Zed\ProductOfferShipmentType\Persistence\SpyProductOfferShipmentTypeQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -56,10 +57,12 @@ class ProductOfferShipmentTypeRepository extends AbstractRepository implements P
     ): ProductOfferShipmentTypeCollectionTransfer {
         $productOfferShipmentTypeQuery = $this->getFactory()
             ->createProductOfferShipmentTypeQuery()
+            ->leftJoinProductOffer()
             ->select([
                 SpyProductOfferShipmentTypeTableMap::COL_ID_PRODUCT_OFFER_SHIPMENT_TYPE,
                 SpyProductOfferShipmentTypeTableMap::COL_FK_PRODUCT_OFFER,
                 SpyProductOfferShipmentTypeTableMap::COL_FK_SHIPMENT_TYPE,
+                SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
             ]);
         $productOfferShipmentTypeQuery = $this->applyProductOfferShipmentTypeFilters(
             $productOfferShipmentTypeQuery,
@@ -112,13 +115,25 @@ class ProductOfferShipmentTypeRepository extends AbstractRepository implements P
             $productOfferShipmentTypeQuery->filterByFkProductOffer_In($productOfferShipmentTypeConditionsTransfer->getProductOfferIds());
         }
 
+        if ($productOfferShipmentTypeConditionsTransfer->getProductOfferReferences() !== []) {
+            $productOfferShipmentTypeQuery->useProductOfferQuery()
+                ->filterByProductOfferReference_In($productOfferShipmentTypeConditionsTransfer->getProductOfferReferences())
+            ->endUse();
+        }
+
         if ($productOfferShipmentTypeConditionsTransfer->getShipmentTypeIds() !== []) {
             $productOfferShipmentTypeQuery->filterByFkShipmentType_In($productOfferShipmentTypeConditionsTransfer->getShipmentTypeIds());
         }
 
+        if ($productOfferShipmentTypeConditionsTransfer->getShipmentTypeNames() !== []) {
+            $productOfferShipmentTypeQuery->useShipmentTypeQuery()
+                ->filterByName_In($productOfferShipmentTypeConditionsTransfer->getShipmentTypeNames())
+            ->endUse();
+        }
+
         if ($productOfferShipmentTypeConditionsTransfer->getGroupByIdProductOffer()) {
             $productOfferShipmentTypeQuery
-                ->select(SpyProductOfferShipmentTypeTableMap::COL_FK_PRODUCT_OFFER)
+                ->select([SpyProductOfferShipmentTypeTableMap::COL_FK_PRODUCT_OFFER, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE])
                 ->withColumn(sprintf('GROUP_CONCAT(%s)', SpyProductOfferShipmentTypeTableMap::COL_FK_SHIPMENT_TYPE), static::SHIPMENT_TYPE_IDS_GROUPED)
                 ->groupByFkProductOffer();
         }

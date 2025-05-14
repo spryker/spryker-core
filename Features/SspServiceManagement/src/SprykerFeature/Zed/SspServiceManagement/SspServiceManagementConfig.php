@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use SprykerFeature\Shared\SspServiceManagement\SspServiceManagementConstants;
 use SprykerFeature\Zed\SspServiceManagement\Business\Exception\DefaultMerchantNotConfiguredException;
 
 /**
@@ -167,8 +168,24 @@ class SspServiceManagementConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getProductServiveTypeName(): string
+    public function getProductServiceTypeName(): string
     {
-        return $this->getSharedConfig()->getProductServiveTypeName();
+        return $this->getSharedConfig()->getProductServiceTypeName();
+    }
+
+    /**
+     * @example The format of returned array is:
+     * [
+     *    'PAYMENT_METHOD_1' => StateMachineProcess_1',
+     *    'PAYMENT_METHOD_2' => StateMachineProcess_2',
+     * ]
+     *
+     * @api
+     *
+     * @return array<string, string>
+     */
+    public function getPaymentMethodStatemachineProcessMapping(): array
+    {
+        return $this->get(SspServiceManagementConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING, []);
     }
 }

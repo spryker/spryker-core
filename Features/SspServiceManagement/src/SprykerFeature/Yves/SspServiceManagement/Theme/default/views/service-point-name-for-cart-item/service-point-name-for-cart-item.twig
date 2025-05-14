@@ -2,9 +2,17 @@
 
 {% define data = {
     servicePointName: _widget.servicePointName,
-    isVisible: _widget.servicePointName is not empty,
+    scheduledAt: _widget.scheduledAt
 } %}
 
 {% block body %}
-    <div><strong>{{ 'ssp_service_management.cart_item.service_point.name' | trans }}</strong>: {{ data.servicePointName }}</div>
+    {% if data.servicePointName %}
+      <div><strong>{{ 'ssp_service_management.cart_item.service_point.name' | trans }}</strong>: {{ data.servicePointName }}</div>
+    {% endif %}
+    
+    {% if data.scheduledAt %}
+        <div class="service-point-scheduled-time">
+            <strong>{{ 'ssp_service_management.cart_item.scheduled_at' | trans }}</strong>: {{ data.scheduledAt | formatDateTime }}
+        </div>
+    {% endif %}
 {% endblock %}

@@ -63,6 +63,7 @@ interface ProductOfferShipmentTypeFacadeInterface
      * - Does not expand `ProductOfferShipmentTypeTransfers` with product offer and shipment type data.
      * - Uses `ProductOfferShipmentTypeCriteriaTransfer.ProductOfferShipmentTypeConditions.productOfferShipmentTypeIds` to filter by product offer shipment type IDs.
      * - Uses `ProductOfferShipmentTypeCriteriaTransfer.ProductOfferShipmentTypeConditions.productOfferIds` to filter by product offer IDs.
+     * - Uses `ProductOfferShipmentTypeCriteriaTransfer.ProductOfferShipmentTypeConditions.productOfferReferences` to filter by product offer references.
      * - Uses `ProductOfferShipmentTypeCriteriaTransfer.ProductOfferShipmentTypeConditions.shipmentTypeIds` to filter by shipment type IDs.
      * - Uses `ProductOfferShipmentTypeCriteriaTransfer.ProductOfferShipmentTypeConditions.groupByIdProductOffer` to group shipment type IDs by product offer ID.
      * - Uses `ProductOfferShipmentTypeCriteriaTransfer.sort.field` to set the 'order by' field.
@@ -86,6 +87,7 @@ interface ProductOfferShipmentTypeFacadeInterface
      * - Requires `ProductOfferShipmentTypeIteratorCriteriaTransfer.productOfferShipmentTypeIteratorConditions` to be set.
      * - Iterates over product offer shipment type entities retrieved from Persistence according to criteria filters.
      * - Uses `ProductOfferShipmentTypeIteratorCriteriaTransfer.productOfferShipmentTypeIteratorConditions.productOfferIds` to filter by product offer IDs.
+     * - Uses `ProductOfferShipmentTypeCriteriaTransfer.ProductOfferShipmentTypeConditions.productOfferReferences` to filter by product offer references.
      * - Uses `ProductOfferShipmentTypeIteratorCriteriaTransfer.productOfferShipmentTypeIteratorConditions.productOfferApprovalStatuses` to filter by product offer approval statuses.
      * - Uses `ProductOfferShipmentTypeIteratorCriteriaTransfer.productOfferShipmentTypeIteratorConditions.isActiveProductOffer` to filter by product offer active status.
      * - Uses `ProductOfferShipmentTypeIteratorCriteriaTransfer.productOfferShipmentTypeIteratorConditions.isActiveShipmentType` to filter by shipment type active status.

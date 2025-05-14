@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemMetadataTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use SprykerFeature\Yves\SspServiceManagement\Plugin\CartPage\ServiceDateTimePreAddToCartPlugin;
-use SprykerFeature\Yves\SspServiceManagement\Widget\ShipmentTypeServicePointSelectorWidget;
+use SprykerFeature\Yves\SspServiceManagement\Widget\SspShipmentTypeServicePointSelectorWidget;
 use SprykerFeatureTest\Yves\SspServiceManagement\SspServiceManagementYvesTester;
 
 /**
@@ -42,7 +42,7 @@ class ServiceDateTimePreAddToCartPluginTest extends Unit
         // Arrange
         $itemTransfer = new ItemTransfer();
         $params = [
-            ShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_ITEM_METADATA_SCHEDULED_AT => static::TEST_SCHEDULED_AT,
+            SspShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_ITEM_METADATA_SCHEDULED_AT => static::TEST_SCHEDULED_AT,
         ];
 
         // Act
@@ -64,7 +64,7 @@ class ServiceDateTimePreAddToCartPluginTest extends Unit
         $itemTransfer = (new ItemTransfer())->setMetadata($itemMetadataTransfer);
 
         $params = [
-            ShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_ITEM_METADATA_SCHEDULED_AT => static::TEST_SCHEDULED_AT,
+            SspShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_ITEM_METADATA_SCHEDULED_AT => static::TEST_SCHEDULED_AT,
         ];
 
         // Act
@@ -101,7 +101,7 @@ class ServiceDateTimePreAddToCartPluginTest extends Unit
         // Arrange
         $itemTransfer = new ItemTransfer();
         $params = [
-            ShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_ITEM_METADATA_SCHEDULED_AT => '',
+            SspShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_ITEM_METADATA_SCHEDULED_AT => '',
         ];
 
         // Act
@@ -120,7 +120,7 @@ class ServiceDateTimePreAddToCartPluginTest extends Unit
         // Arrange
         $itemTransfer = new ItemTransfer();
         $params = [
-            ShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_ITEM_METADATA_SCHEDULED_AT => null,
+            SspShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_ITEM_METADATA_SCHEDULED_AT => null,
         ];
 
         // Act

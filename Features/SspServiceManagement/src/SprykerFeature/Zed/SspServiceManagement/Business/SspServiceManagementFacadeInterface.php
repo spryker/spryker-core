@@ -101,4 +101,23 @@ interface SspServiceManagementFacadeInterface
     public function importProductAbstractToProductAbstractType(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer;
+
+    /**
+     * Specification:
+     * - Cancels a collection of sales order items.
+     * - Requires `SalesOrderItemCollectionRequestTransfer.items` to be set.
+     * - Validates that the order items collection is not empty.
+     * - Validates that the order exists and returns error if not found.
+     * - Cancels the sales order items by triggering the cancel event in the state machine.
+     * - Returns `SalesOrderItemCollectionResponseTransfer` with canceled items or error information.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function cancelSalesOrderItemCollection(
+        SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+    ): SalesOrderItemCollectionResponseTransfer;
 }

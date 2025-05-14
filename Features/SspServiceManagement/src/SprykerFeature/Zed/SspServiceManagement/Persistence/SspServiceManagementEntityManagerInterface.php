@@ -50,4 +50,12 @@ interface SspServiceManagementEntityManagerInterface
      * @return void
      */
     public function saveSalesOrderItemProductType(int $idSalesOrderItem, string $productTypeName): void;
+
+    /**
+     * @param int $idSalesOrderItem
+     * @param bool $isServiceDateTimeEnabled
+     *
+     * @return void
+     */
+    public function saveIsServiceDateTimeEnabledForSalesOrderItem(int $idSalesOrderItem, bool $isServiceDateTimeEnabled): void;
 }

@@ -58,4 +58,23 @@ class SspServiceManagementStub implements SspServiceManagementStubInterface
 
         return $salesOrderItemCollectionResponseTransfer;
     }
+
+    /**
+     * @uses \SprykerFeature\Zed\SspServiceManagement\Communication\Controller\GatewayController::cancelSalesOrderItemCollectionAction()
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function cancelSalesOrderItemCollection(
+        SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+    ): SalesOrderItemCollectionResponseTransfer {
+        /** @var \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer $salesOrderItemCollectionResponseTransfer */
+        $salesOrderItemCollectionResponseTransfer = $this->zedRequestClient->call(
+            '/ssp-service-management/gateway/cancel-sales-order-item-collection',
+            $salesOrderItemCollectionRequestTransfer,
+        );
+
+        return $salesOrderItemCollectionResponseTransfer;
+    }
 }

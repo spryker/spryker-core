@@ -13,10 +13,13 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemMetadataTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use SprykerFeature\Zed\SspServiceManagement\Communication\Controller\ViewController;
+use SprykerFeature\Zed\SspServiceManagement\SspServiceManagementConfig;
 
 class ServiceTable extends AbstractTable
 {
@@ -48,17 +51,12 @@ class ServiceTable extends AbstractTable
     /**
      * @var string
      */
-    protected const HEADER_CREATED_AT = 'Created At';
+    protected const HEADER_CREATED_AT = 'Created';
 
     /**
      * @var string
      */
     protected const COL_ORDER_REFERENCE = 'order_reference';
-
-    /**
-     * @var string
-     */
-    protected const COL_CUSTOMER = 'customer';
 
     /**
      * @var string
@@ -93,6 +91,11 @@ class ServiceTable extends AbstractTable
     /**
      * @var string
      */
+    protected const COL_ACTIONS = 'Actions';
+
+    /**
+     * @var string
+     */
     protected const COL_ID_SALES_ORDER = 'id_sales_order';
 
     /**
@@ -115,10 +118,22 @@ class ServiceTable extends AbstractTable
     protected const URL_SALES_ORDER_DETAIL_PAGE = '/sales/detail';
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $salesOrderItemQuery
+     * @uses \SprykerFeature\Zed\SspServiceManagement\Communication\Controller\ViewController::indexAction()
+     *
+     * @var string
      */
-    public function __construct(protected SpySalesOrderItemQuery $salesOrderItemQuery)
-    {
+    protected const URL_SSP_SERVICE_MANAGEMENT_VIEW = '/ssp-service-management/view';
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $salesOrderItemQuery
+     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
+     * @param \SprykerFeature\Zed\SspServiceManagement\SspServiceManagementConfig $sspServiceManagementConfig
+     */
+    public function __construct(
+        protected SpySalesOrderItemQuery $salesOrderItemQuery,
+        protected UtilDateTimeServiceInterface $utilDateTimeService,
+        protected SspServiceManagementConfig $sspServiceManagementConfig
+    ) {
     }
 
     /**
@@ -144,22 +159,27 @@ class ServiceTable extends AbstractTable
     {
         return [
             static::COL_ORDER_REFERENCE => static::HEADER_ORDER_REFERENCE,
-            static::COL_CUSTOMER => static::HEADER_CUSTOMER,
+            static::COL_FIRST_NAME => static::HEADER_CUSTOMER,
             static::COL_COMPANY => static::HEADER_COMPANY,
             static::COL_SERVICE => static::HEADER_SERVICE,
             static::COL_SCHEDULED_AT => static::HEADER_TIME_AND_DATE,
             static::COL_CREATED_AT => static::HEADER_CREATED_AT,
+            static::COL_ACTIONS => static::COL_ACTIONS,
         ];
     }
 
     /**
-     * @return list<string>
+     * @return array<int|string, string>
      */
     protected function getSortableColumns(): array
     {
         return [
             static::COL_ORDER_REFERENCE,
+            static::COL_FIRST_NAME,
+            static::COL_COMPANY,
+            static::COL_SERVICE,
             static::COL_SCHEDULED_AT,
+            static::COL_CREATED_AT,
         ];
     }
 
@@ -183,6 +203,7 @@ class ServiceTable extends AbstractTable
     {
         return [
             static::COL_ORDER_REFERENCE,
+            static::COL_ACTIONS,
         ];
     }
 
@@ -209,7 +230,11 @@ class ServiceTable extends AbstractTable
      */
     protected function prepareQuery(): SpySalesOrderItemQuery
     {
-        $query = $this->salesOrderItemQuery->useSpySalesOrderItemProductAbstractTypeExistsQuery()->endUse();
+        $query = $this->salesOrderItemQuery->useSpySalesOrderItemProductAbstractTypeQuery()
+            ->useSpySalesProductAbstractTypeQuery()
+                ->filterByName($this->sspServiceManagementConfig->getProductServiceTypeName())
+            ->endUse()
+            ->endUse();
 
         // @phpstan-ignore-next-line
         return $this->joinOrderData($query);
@@ -225,24 +250,24 @@ class ServiceTable extends AbstractTable
         // @phpstan-ignore-next-line
         return $query
             ->useMetadataQuery(null, Criteria::LEFT_JOIN)
-                ->withColumn(SpySalesOrderItemMetadataTableMap::COL_SCHEDULED_AT, static::COL_SCHEDULED_AT)
+            ->withColumn(SpySalesOrderItemMetadataTableMap::COL_SCHEDULED_AT, static::COL_SCHEDULED_AT)
             ->endUse()
             ->useOrderQuery()
-                ->withColumn(SpySalesOrderTableMap::COL_ORDER_REFERENCE, static::COL_ORDER_REFERENCE)
-                ->withColumn(SpySalesOrderTableMap::COL_ID_SALES_ORDER, static::COL_ID_SALES_ORDER)
-                ->addJoin(
-                    SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE,
-                    SpyCustomerTableMap::COL_CUSTOMER_REFERENCE,
-                    Criteria::LEFT_JOIN,
-                )
-                ->addJoin(
-                    SpySalesOrderTableMap::COL_COMPANY_UUID,
-                    SpyCompanyTableMap::COL_UUID,
-                    Criteria::LEFT_JOIN,
-                )
-                ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::COL_FIRST_NAME)
-                ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::COL_LAST_NAME)
-                ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY)
+            ->withColumn(SpySalesOrderTableMap::COL_ORDER_REFERENCE, static::COL_ORDER_REFERENCE)
+            ->withColumn(SpySalesOrderTableMap::COL_ID_SALES_ORDER, static::COL_ID_SALES_ORDER)
+            ->addJoin(
+                SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE,
+                SpyCustomerTableMap::COL_CUSTOMER_REFERENCE,
+                Criteria::LEFT_JOIN,
+            )
+            ->addJoin(
+                SpySalesOrderTableMap::COL_COMPANY_UUID,
+                SpyCompanyTableMap::COL_UUID,
+                Criteria::LEFT_JOIN,
+            )
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::COL_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::COL_LAST_NAME)
+            ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY)
             ->endUse()
             ->withColumn(SpySalesOrderItemTableMap::COL_NAME, static::COL_SERVICE)
             ->withColumn(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, static::COL_ID_SALES_ORDER_ITEM)
@@ -262,14 +287,15 @@ class ServiceTable extends AbstractTable
                 $item[static::COL_ID_SALES_ORDER],
                 $item[static::COL_ID_SALES_ORDER_ITEM],
             ),
-            static::COL_CUSTOMER => $this->formatCustomerName(
+            static::COL_FIRST_NAME => $this->formatCustomerName(
                 $item[static::COL_FIRST_NAME],
                 $item[static::COL_LAST_NAME],
             ),
             static::COL_COMPANY => $item[static::COL_COMPANY],
             static::COL_SERVICE => $item[static::COL_SERVICE],
-            static::COL_SCHEDULED_AT => $item[static::COL_SCHEDULED_AT],
-            static::COL_CREATED_AT => $item[static::COL_CREATED_AT],
+            static::COL_SCHEDULED_AT => $this->utilDateTimeService->formatDateTime($item[static::COL_SCHEDULED_AT]),
+            static::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[static::COL_CREATED_AT]),
+            static::COL_ACTIONS => $this->buildLinks($item),
         ];
     }
 
@@ -304,5 +330,27 @@ class ServiceTable extends AbstractTable
     protected function formatCustomerName(string $firstName, string $lastName): string
     {
         return sprintf('%s %s', $firstName, $lastName);
+    }
+
+    /**
+     * @param array<mixed> $item
+     *
+     * @return string
+     */
+    protected function buildLinks(array $item): string
+    {
+        $buttons = [];
+
+        $buttons[] = $this->generateViewButton(
+            Url::generate(static::URL_SSP_SERVICE_MANAGEMENT_VIEW, [
+                ViewController::REQUEST_PARAM_ID_SALES_ORDER_ITEM => $item[static::COL_ID_SALES_ORDER_ITEM],
+            ]),
+            'View',
+            [
+                'data-qa' => 'view-button',
+            ],
+        );
+
+        return implode(' ', $buttons);
     }
 }

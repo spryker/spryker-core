@@ -10,14 +10,17 @@ namespace SprykerFeature\Zed\SspServiceManagement\Business\Storage\Expander;
 use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use SprykerFeature\Zed\SspServiceManagement\Business\Reader\ProductShipmentTypeReaderInterface;
+use SprykerFeature\Zed\SspServiceManagement\Persistence\SspServiceManagementRepositoryInterface;
 
 class ShipmentTypeProductConcreteStorageExpander implements ShipmentTypeProductConcreteStorageExpanderInterface
 {
     /**
      * @param \SprykerFeature\Zed\SspServiceManagement\Business\Reader\ProductShipmentTypeReaderInterface $productShipmentTypeReader
+     * @param \SprykerFeature\Zed\SspServiceManagement\Persistence\SspServiceManagementRepositoryInterface $serviceManagementRepository
      */
     public function __construct(
-        protected ProductShipmentTypeReaderInterface $productShipmentTypeReader
+        protected ProductShipmentTypeReaderInterface $productShipmentTypeReader,
+        protected SspServiceManagementRepositoryInterface $serviceManagementRepository
     ) {
     }
 
@@ -34,9 +37,42 @@ class ShipmentTypeProductConcreteStorageExpander implements ShipmentTypeProductC
         }
 
         $productConcreteIds = $this->extractProductConcreteIds($productConcreteStorageTransfers);
+        $productAbstractIds = $this->extractProductAbstractIds($productConcreteStorageTransfers);
+
+        $productAbstractTypeTransfers = $this->serviceManagementRepository->getProductAbstractTypesByProductAbstractIds($productAbstractIds);
+
+        $this->expandProductsWithProductTypes($productConcreteStorageTransfers, $productAbstractTypeTransfers);
+
         $shipmentTypesGroupedByIdProductConcrete = $this->productShipmentTypeReader->getShipmentTypesGroupedByIdProductConcrete($productConcreteIds);
 
         return $this->expandProductsWithShipmentTypeUuids($productConcreteStorageTransfers, $shipmentTypesGroupedByIdProductConcrete);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteStorageTransfer> $productConcreteStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractTypeTransfer> $productAbstractTypeTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteStorageTransfer>
+     */
+    protected function expandProductsWithProductTypes(array $productConcreteStorageTransfers, array $productAbstractTypeTransfers): array
+    {
+        $productAbstractTypeNamesIndexedByIdProductAbstract = [];
+
+        foreach ($productAbstractTypeTransfers as $productAbstractTypeTransfer) {
+            foreach ($productAbstractTypeTransfer->getFkProductAbstracts() as $fkProductAbstract) {
+                $productAbstractTypeNamesIndexedByIdProductAbstract[$fkProductAbstract][] = $productAbstractTypeTransfer->getName();
+            }
+        }
+
+        foreach ($productConcreteStorageTransfers as $productConcreteStorageTransfer) {
+            /**
+             * @var array<string>|null $productTypes
+             */
+            $productTypes = $productAbstractTypeNamesIndexedByIdProductAbstract[$productConcreteStorageTransfer->getIdProductAbstractOrFail()] ?? [];
+            $productConcreteStorageTransfer->setProductTypes($productTypes);
+        }
+
+        return $productConcreteStorageTransfers;
     }
 
     /**
@@ -48,6 +84,19 @@ class ShipmentTypeProductConcreteStorageExpander implements ShipmentTypeProductC
     {
         return array_map(
             static fn (ProductConcreteStorageTransfer $productConcreteStorageTransfer): int => $productConcreteStorageTransfer->getIdProductConcreteOrFail(),
+            $productConcreteStorageTransfers,
+        );
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\ProductConcreteStorageTransfer> $productConcreteStorageTransfers
+     *
+     * @return list<int>
+     */
+    protected function extractProductAbstractIds(array $productConcreteStorageTransfers): array
+    {
+        return array_map(
+            static fn (ProductConcreteStorageTransfer $productConcreteStorageTransfer): int => $productConcreteStorageTransfer->getIdProductAbstractOrFail(),
             $productConcreteStorageTransfers,
         );
     }

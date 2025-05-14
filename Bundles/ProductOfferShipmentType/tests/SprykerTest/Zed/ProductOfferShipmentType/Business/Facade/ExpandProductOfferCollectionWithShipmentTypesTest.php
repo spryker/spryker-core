@@ -96,8 +96,15 @@ class ExpandProductOfferCollectionWithShipmentTypesTest extends Unit
         // Assert
         $this->assertCount(2, $expandedProductOfferTransfer1->getShipmentTypes());
         $this->assertCount(1, $expandedProductOfferTransfer2->getShipmentTypes());
-        $this->assertEquals($shipmentTypeTransfer1, $expandedProductOfferTransfer1->getShipmentTypes()->offsetGet(0));
-        $this->assertEquals($shipmentTypeTransfer2, $expandedProductOfferTransfer1->getShipmentTypes()->offsetGet(1));
+
+        foreach ($expandedProductOfferTransfer1->getShipmentTypes() as $shipmentTypeTransfer) {
+            if ($shipmentTypeTransfer->getUuid() === $shipmentTypeTransfer1->getUuid()) {
+                $this->assertEquals($shipmentTypeTransfer1, $shipmentTypeTransfer);
+            }
+            if ($shipmentTypeTransfer->getUuid() === $shipmentTypeTransfer2->getUuid()) {
+                $this->assertEquals($shipmentTypeTransfer2, $shipmentTypeTransfer);
+            }
+        }
         $this->assertEquals($shipmentTypeTransfer3, $expandedProductOfferTransfer2->getShipmentTypes()->offsetGet(0));
     }
 

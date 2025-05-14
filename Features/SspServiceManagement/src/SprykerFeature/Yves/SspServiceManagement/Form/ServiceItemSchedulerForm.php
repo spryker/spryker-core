@@ -8,8 +8,9 @@
 namespace SprykerFeature\Yves\SspServiceManagement\Form;
 
 use DateTime;
+use DateTimeZone;
 use Generated\Shared\Transfer\ItemTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -32,6 +33,11 @@ class ServiceItemSchedulerForm extends AbstractType
      * @var string
      */
     protected const FIELD_LABEL_SCHEDULED_AT = 'Date and time';
+
+    /**
+     * @var string
+     */
+    protected const DATE_TIME_FORMAT_HTML5 = 'Y-m-d\TH:i';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -63,10 +69,17 @@ class ServiceItemSchedulerForm extends AbstractType
      */
     protected function addScheduledAtField(FormBuilderInterface $builder)
     {
+        $currentStoreTimezone = $this->getFactory()
+            ->getStoreClient()
+            ->getCurrentStore()
+            ->getTimezoneOrFail();
+
         $builder->add(static::FIELD_SCHEDULED_AT, DateTimeType::class, [
             'label' => static::FIELD_LABEL_SCHEDULED_AT,
             'widget' => 'single_text',
             'required' => true,
+            'model_timezone' => 'UTC',
+            'view_timezone' => $currentStoreTimezone,
             'constraints' => [
                 new NotBlank(),
                 new GreaterThan([
@@ -76,6 +89,7 @@ class ServiceItemSchedulerForm extends AbstractType
             ],
             'attr' => [
                 'data-qa' => 'reschedule-date',
+                'min' => (new DateTime('now', new DateTimeZone($currentStoreTimezone)))->format(static::DATE_TIME_FORMAT_HTML5),
             ],
             'property_path' => 'metadata.scheduledAt',
         ]);

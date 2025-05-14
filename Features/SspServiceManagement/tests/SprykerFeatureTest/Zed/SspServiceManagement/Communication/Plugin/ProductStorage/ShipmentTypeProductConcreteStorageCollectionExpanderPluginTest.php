@@ -42,7 +42,7 @@ class ShipmentTypeProductConcreteStorageCollectionExpanderPluginTest extends Uni
     public function testExpandShouldExpandProductConcreteWithShipmentTypeUuids(): void
     {
         // Arrange
-        $productConcreteTransfer = $this->tester->haveProduct();
+        $productConcreteTransfer = $this->tester->haveFullProduct();
         $shipmentTypeTransfer = $this->tester->haveShipmentType();
         $productConcreteTransfer = $this->tester->addShipmentTypesToProduct(
             $productConcreteTransfer,
@@ -50,7 +50,8 @@ class ShipmentTypeProductConcreteStorageCollectionExpanderPluginTest extends Uni
         );
 
         $productConcreteStorageTransfer = (new ProductConcreteStorageTransfer())
-            ->setIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
+            ->setIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
+            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstractOrFail());
 
         // Act
         $expandedProductConcreteStorageTransfers = (new ShipmentTypeProductConcreteStorageCollectionExpanderPlugin())
@@ -71,9 +72,10 @@ class ShipmentTypeProductConcreteStorageCollectionExpanderPluginTest extends Uni
     public function testExpandShouldNotExpandProductConcreteWithoutShipmentTypes(): void
     {
         // Arrange
-        $productConcreteTransfer = $this->tester->haveProduct();
+        $productConcreteTransfer = $this->tester->haveFullProduct();
         $productConcreteStorageTransfer = (new ProductConcreteStorageTransfer())
-            ->setIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
+            ->setIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
+            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstractOrFail());
 
         // Act
         $expandedProductConcreteStorageTransfers = (new ShipmentTypeProductConcreteStorageCollectionExpanderPlugin())
@@ -90,8 +92,8 @@ class ShipmentTypeProductConcreteStorageCollectionExpanderPluginTest extends Uni
     public function testExpandShouldExpandOnlyWithRelatedShipmentTypes(): void
     {
         // Arrange
-        $firstProductConcreteTransfer = $this->tester->haveProduct();
-        $secondProductConcreteTransfer = $this->tester->haveProduct();
+        $firstProductConcreteTransfer = $this->tester->haveFullProduct();
+        $secondProductConcreteTransfer = $this->tester->haveFullProduct();
         $shipmentTypeTransfer = $this->tester->haveShipmentType();
 
         $firstProductConcreteTransfer = $this->tester->addShipmentTypesToProduct(
@@ -100,9 +102,12 @@ class ShipmentTypeProductConcreteStorageCollectionExpanderPluginTest extends Uni
         );
 
         $firstProductConcreteStorageTransfer = (new ProductConcreteStorageTransfer())
-            ->setIdProductConcrete($firstProductConcreteTransfer->getIdProductConcreteOrFail());
+            ->setIdProductConcrete($firstProductConcreteTransfer->getIdProductConcreteOrFail())
+            ->setIdProductAbstract($firstProductConcreteTransfer->getFkProductAbstractOrFail());
+
         $secondProductConcreteStorageTransfer = (new ProductConcreteStorageTransfer())
-            ->setIdProductConcrete($secondProductConcreteTransfer->getIdProductConcreteOrFail());
+            ->setIdProductConcrete($secondProductConcreteTransfer->getIdProductConcreteOrFail())
+            ->setIdProductAbstract($secondProductConcreteTransfer->getFkProductAbstractOrFail());
 
         // Act
         $expandedProductConcreteStorageTransfers = (new ShipmentTypeProductConcreteStorageCollectionExpanderPlugin())

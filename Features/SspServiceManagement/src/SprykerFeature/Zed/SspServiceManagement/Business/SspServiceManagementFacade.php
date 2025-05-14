@@ -116,4 +116,21 @@ class SspServiceManagementFacade extends AbstractFacade implements SspServiceMan
     {
         return $this->getRepository()->getProductAbstractTypeCollection();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function cancelSalesOrderItemCollection(
+        SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+    ): SalesOrderItemCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createOrderItemCanceler()
+            ->cancelSalesOrderItemCollection($salesOrderItemCollectionRequestTransfer);
+    }
 }

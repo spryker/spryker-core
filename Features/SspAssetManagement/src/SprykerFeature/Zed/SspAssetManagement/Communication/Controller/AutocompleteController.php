@@ -91,12 +91,17 @@ class AutocompleteController extends AbstractController
         $autocompleteData = ['results' => []];
 
         foreach ($sspAssetCollectionTransfer->getSspAssets() as $sspAssetTransfer) {
+            $businessUnitName = $sspAssetTransfer->getCompanyBusinessUnit() ? $sspAssetTransfer->getCompanyBusinessUnit()->getNameOrFail() : '';
+            $companyName = $sspAssetTransfer->getCompanyBusinessUnit() && $sspAssetTransfer->getCompanyBusinessUnit()->getCompany()
+                ? $sspAssetTransfer->getCompanyBusinessUnit()->getCompany()->getNameOrFail()
+                : '';
+
             $text = sprintf(
                 '%s, %s (%s, %s)',
-                $sspAssetTransfer->getName(),
-                $sspAssetTransfer->getReference(),
-                $sspAssetTransfer->getCompanyBusinessUnit()?->getName(),
-                $sspAssetTransfer->getCompanyBusinessUnit()?->getCompany()?->getName(),
+                $sspAssetTransfer->getNameOrFail(),
+                $sspAssetTransfer->getReferenceOrFail(),
+                $businessUnitName,
+                $companyName,
             );
 
             $autocompleteData['results'][] = [

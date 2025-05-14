@@ -10,9 +10,9 @@ namespace SprykerFeature\Yves\SspServiceManagement\Provider;
 interface ShipmentTypeOptionsProviderInterface
 {
     /**
-     * @param array<\Generated\Shared\Transfer\ShipmentTypeTransfer> $shipmentTypeTransfers
+     * @param array<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer> $shipmentTypeStorageTransfers
      *
      * @return array<int, array<string, mixed>>
      */
-    public function provideShipmentTypeOptions(array $shipmentTypeTransfers): array;
+    public function provideShipmentTypeOptions(array $shipmentTypeStorageTransfers): array;
 }

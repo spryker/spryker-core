@@ -10,17 +10,27 @@ namespace SprykerFeature\Zed\SspServiceManagement\Business\Expander;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferShipmentTypeConditionsTransfer;
+use Generated\Shared\Transfer\ProductOfferShipmentTypeCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
+use Spryker\Zed\ProductOfferShipmentType\Business\ProductOfferShipmentTypeFacadeInterface;
 use SprykerFeature\Zed\SspServiceManagement\Business\Reader\ShipmentTypeReaderInterface;
+use SprykerFeature\Zed\SspServiceManagement\Persistence\SspServiceManagementRepositoryInterface;
 
 class ShipmentTypeItemExpander implements ShipmentTypeItemExpanderInterface
 {
     /**
      * @param \SprykerFeature\Zed\SspServiceManagement\Business\Reader\ShipmentTypeReaderInterface $shipmentTypeReader
+     * @param \SprykerFeature\Zed\SspServiceManagement\Persistence\SspServiceManagementRepositoryInterface $sspServiceManagementRepository
+     * @param \Spryker\Zed\ProductOfferShipmentType\Business\ProductOfferShipmentTypeFacadeInterface $productOfferShipmentTypeFacade
      */
-    public function __construct(protected ShipmentTypeReaderInterface $shipmentTypeReader)
-    {
+    public function __construct(
+        protected ShipmentTypeReaderInterface $shipmentTypeReader,
+        protected SspServiceManagementRepositoryInterface $sspServiceManagementRepository,
+        protected ProductOfferShipmentTypeFacadeInterface $productOfferShipmentTypeFacade
+    ) {
     }
 
     /**
@@ -84,6 +94,19 @@ class ShipmentTypeItemExpander implements ShipmentTypeItemExpanderInterface
         [$itemsWithShipmentType, $itemsWithoutShipmentType, $shipmentTypeUuids] = $this->groupItemsByShipmentType($itemTransfers);
 
         $this->expandExistingShipmentTypes($itemsWithShipmentType, $shipmentTypeUuids, $storeName);
+
+        if (!$itemsWithoutShipmentType) {
+            return;
+        }
+
+        $defaultShipmentType = $this->shipmentTypeReader->getDefaultShipmentType($storeName);
+
+        if (!$defaultShipmentType) {
+            return;
+        }
+
+        $this->expandProductsWithDefaultShipmentType($itemsWithoutShipmentType, $defaultShipmentType);
+        $this->expandProductOffersWithDefaultShipmentType($itemsWithoutShipmentType, $defaultShipmentType);
     }
 
     /**
@@ -128,19 +151,193 @@ class ShipmentTypeItemExpander implements ShipmentTypeItemExpanderInterface
             return;
         }
 
-        $shipmentTypeTransfersByUuid = $this->shipmentTypeReader->getShipmentTypesIndexedByUuids(
+        $shipmentTypeTransfersByUuid = $this->getShipmentTypeTransfersByUuid($shipmentTypeUuids, $storeName);
+        if (!$shipmentTypeTransfersByUuid) {
+            return;
+        }
+
+        foreach ($itemsWithShipmentType as $itemTransfer) {
+            $this->assignShipmentTypeToItem($itemTransfer, $shipmentTypeTransfersByUuid);
+        }
+    }
+
+    /**
+     * @param array<string> $shipmentTypeUuids
+     * @param string $storeName
+     *
+     * @return array<string, \Generated\Shared\Transfer\ShipmentTypeTransfer>
+     */
+    protected function getShipmentTypeTransfersByUuid(array $shipmentTypeUuids, string $storeName): array
+    {
+        return $this->shipmentTypeReader->getShipmentTypesIndexedByUuids(
             array_unique($shipmentTypeUuids),
             $storeName,
         );
+    }
 
-        foreach ($itemsWithShipmentType as $itemTransfer) {
-            $shipmentTypeUuid = $itemTransfer->getShipmentTypeOrFail()->getUuidOrFail();
-            if (!isset($shipmentTypeTransfersByUuid[$shipmentTypeUuid])) {
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array<string, \Generated\Shared\Transfer\ShipmentTypeTransfer> $shipmentTypeTransfersByUuid
+     *
+     * @return void
+     */
+    protected function assignShipmentTypeToItem(
+        ItemTransfer $itemTransfer,
+        array $shipmentTypeTransfersByUuid
+    ): void {
+        $shipmentTypeUuid = $itemTransfer->getShipmentTypeOrFail()->getUuidOrFail();
+        if (!isset($shipmentTypeTransfersByUuid[$shipmentTypeUuid])) {
+            return;
+        }
+
+        $shipmentTypeTransfer = $shipmentTypeTransfersByUuid[$shipmentTypeUuid];
+        $itemTransfer->setShipmentType($shipmentTypeTransfer);
+        $this->setShipmentTypeUuid($itemTransfer, $shipmentTypeTransfer);
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemsWithoutShipmentType
+     * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $defaultShipmentTypeTransfer
+     *
+     * @return void
+     */
+    protected function expandProductsWithDefaultShipmentType(array $itemsWithoutShipmentType, ShipmentTypeTransfer $defaultShipmentTypeTransfer): void
+    {
+        $productConcreteIds = [];
+        foreach ($itemsWithoutShipmentType as $itemWithoutShipmentType) {
+            if ($itemWithoutShipmentType->getProductOfferReference()) {
                 continue;
             }
 
-            $itemTransfer->setShipmentType($shipmentTypeTransfersByUuid[$shipmentTypeUuid]);
-            $this->setShipmentTypeUuid($itemTransfer, $shipmentTypeTransfersByUuid[$shipmentTypeUuid]);
+            if (!$itemWithoutShipmentType->getId()) {
+                continue;
+            }
+
+            $productConcreteIds[] = $itemWithoutShipmentType->getId();
+        }
+
+        $productConcreteIdsWithDefaultShipmentType = $this->sspServiceManagementRepository->getProductIdsWithShipmentType($productConcreteIds, $defaultShipmentTypeTransfer->getNameOrFail());
+
+        foreach ($itemsWithoutShipmentType as $itemWithoutShipmentType) {
+            if (!in_array($itemWithoutShipmentType->getId(), $productConcreteIdsWithDefaultShipmentType)) {
+                continue;
+            }
+
+            $itemWithoutShipmentType->setShipmentType($defaultShipmentTypeTransfer);
+            $this->setShipmentTypeUuid($itemWithoutShipmentType, $defaultShipmentTypeTransfer);
+        }
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemsWithoutShipmentType
+     * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $defaultShipmentTypeTransfer
+     *
+     * @return void
+     */
+    protected function expandProductOffersWithDefaultShipmentType(array $itemsWithoutShipmentType, ShipmentTypeTransfer $defaultShipmentTypeTransfer): void
+    {
+        $productOfferReferences = $this->extractProductOfferReferences($itemsWithoutShipmentType);
+        if (!$productOfferReferences) {
+            return;
+        }
+
+        $productOfferShipmentTypeCollection = $this->getProductOfferShipmentTypeCollection(
+            $productOfferReferences,
+            $defaultShipmentTypeTransfer,
+        );
+
+        $productOfferReferencesWithDefaultShipmentType = $this->extractProductOfferReferencesWithDefaultShipmentType(
+            $productOfferShipmentTypeCollection,
+        );
+
+        $this->assignDefaultShipmentTypeToProductOfferItems(
+            $itemsWithoutShipmentType,
+            $productOfferReferencesWithDefaultShipmentType,
+            $defaultShipmentTypeTransfer,
+        );
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemsWithoutShipmentType
+     *
+     * @return list<string>
+     */
+    protected function extractProductOfferReferences(array $itemsWithoutShipmentType): array
+    {
+        $productOfferReferences = [];
+
+        foreach ($itemsWithoutShipmentType as $itemWithoutShipmentType) {
+            if (!$itemWithoutShipmentType->getProductOfferReference()) {
+                continue;
+            }
+
+            $productOfferReferences[] = $itemWithoutShipmentType->getProductOfferReferenceOrFail();
+        }
+
+        return $productOfferReferences;
+    }
+
+    /**
+     * @param list<string> $productOfferReferences
+     * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $defaultShipmentTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer
+     */
+    protected function getProductOfferShipmentTypeCollection(
+        array $productOfferReferences,
+        ShipmentTypeTransfer $defaultShipmentTypeTransfer
+    ): ProductOfferShipmentTypeCollectionTransfer {
+        return $this->productOfferShipmentTypeFacade->getProductOfferShipmentTypeCollection(
+            (new ProductOfferShipmentTypeCriteriaTransfer())
+                ->setProductOfferShipmentTypeConditions(
+                    (new ProductOfferShipmentTypeConditionsTransfer())
+                        ->setProductOfferReferences($productOfferReferences)
+                        ->addShipmentTypeName($defaultShipmentTypeTransfer->getNameOrFail()),
+                ),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer $productOfferShipmentTypeCollection
+     *
+     * @return list<string>
+     */
+    protected function extractProductOfferReferencesWithDefaultShipmentType(
+        ProductOfferShipmentTypeCollectionTransfer $productOfferShipmentTypeCollection
+    ): array {
+        $productOfferReferencesWithDefaultShipmentType = [];
+
+        foreach ($productOfferShipmentTypeCollection->getProductOfferShipmentTypes() as $productOfferShipmentTypeTransfer) {
+            if ($productOfferShipmentTypeTransfer->getProductOffer() === null) {
+                continue;
+            }
+
+            $productOfferReferencesWithDefaultShipmentType[] = $productOfferShipmentTypeTransfer->getProductOfferOrFail()
+                ->getProductOfferReferenceOrFail();
+        }
+
+        return $productOfferReferencesWithDefaultShipmentType;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemsWithoutShipmentType
+     * @param list<string> $productOfferReferencesWithDefaultShipmentType
+     * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $defaultShipmentTypeTransfer
+     *
+     * @return void
+     */
+    protected function assignDefaultShipmentTypeToProductOfferItems(
+        array $itemsWithoutShipmentType,
+        array $productOfferReferencesWithDefaultShipmentType,
+        ShipmentTypeTransfer $defaultShipmentTypeTransfer
+    ): void {
+        foreach ($itemsWithoutShipmentType as $itemWithoutShipmentType) {
+            if (!in_array($itemWithoutShipmentType->getProductOfferReference(), $productOfferReferencesWithDefaultShipmentType)) {
+                continue;
+            }
+
+            $itemWithoutShipmentType->setShipmentType($defaultShipmentTypeTransfer);
+            $this->setShipmentTypeUuid($itemWithoutShipmentType, $defaultShipmentTypeTransfer);
         }
     }
 

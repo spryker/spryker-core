@@ -41,6 +41,28 @@ export default class SspServicePointSelector extends Component {
         this.popup.dispatchEvent(new CustomEvent(EVENT_CLOSE_POPUP));
         this.location.innerHTML = detail.address;
         this.toggleContainer();
+        this.transferAttributes(detail);
+        this.changePriceVisibility(detail);
+    }
+
+    protected transferAttributes(detail: ServicePointEventDetail): void {
+        document.querySelector<HTMLInputElement>(this.hiddenUuidSelector).value =
+            detail.productOfferAvailability?.[0]?.servicePointUuid;
+        document.querySelector<HTMLInputElement>(this.hiddenOfferReferenceSelector).value =
+            detail.productOfferAvailability?.[0]?.productOfferReference;
+    }
+
+    protected changePriceVisibility(detail: ServicePointEventDetail): void {
+        document.querySelectorAll(`[${this.productDataOfferAttribute}]`)?.forEach((element: HTMLElement) => {
+            const value = element.getAttribute(this.productDataOfferAttribute);
+
+            if (value === detail.productOfferAvailability?.[0]?.productOfferReference) {
+                element.classList.remove(this.toggleClassName);
+                return;
+            }
+
+            element.classList.add(this.toggleClassName);
+        });
     }
 
     protected toggleContainer(): void {
@@ -54,5 +76,17 @@ export default class SspServicePointSelector extends Component {
 
     protected get toggleClassName(): string {
         return this.getAttribute('toggle-class-name');
+    }
+
+    protected get hiddenUuidSelector(): string {
+        return this.getAttribute('hidden-uuid-selector');
+    }
+
+    protected get hiddenOfferReferenceSelector(): string {
+        return this.getAttribute('hidden-offer-reference-selector');
+    }
+
+    protected get productDataOfferAttribute(): string {
+        return this.getAttribute('price-attribute');
     }
 }

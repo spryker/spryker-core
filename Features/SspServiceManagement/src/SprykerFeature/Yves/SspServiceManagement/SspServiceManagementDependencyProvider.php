@@ -66,6 +66,11 @@ class SspServiceManagementDependencyProvider extends AbstractBundleDependencyPro
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
+     * @var string
+     */
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
+    /**
      * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
      *
      * @var string
@@ -90,6 +95,7 @@ class SspServiceManagementDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addTwigService($container);
         $container = $this->addSalesClient($container);
         $container = $this->addGlossaryStorageClient($container);
+        $container = $this->addProductStorageClient($container);
 
         return $container;
     }
@@ -229,6 +235,20 @@ class SspServiceManagementDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return $container->getLocator()->glossaryStorage()->client();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
+            return $container->getLocator()->productStorage()->client();
         });
 
         return $container;

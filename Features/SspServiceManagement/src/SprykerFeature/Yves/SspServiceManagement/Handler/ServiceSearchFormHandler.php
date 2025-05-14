@@ -74,6 +74,8 @@ class ServiceSearchFormHandler implements ServiceSearchFormHandlerInterface
         SspServiceCriteriaTransfer $sspServiceCriteriaTransfer,
         ?string $productServiceTypeName = null
     ): SspServiceCriteriaTransfer {
+        $sspServiceCriteriaTransfer = $this->addProductTypeFilter($sspServiceCriteriaTransfer, $productServiceTypeName);
+
         if (!$serviceSearchForm->isSubmitted() || !$serviceSearchForm->isValid()) {
             $sspServiceCriteriaTransfer = $this->addCustomerFilter($sspServiceCriteriaTransfer);
 
@@ -85,6 +87,31 @@ class ServiceSearchFormHandler implements ServiceSearchFormHandlerInterface
         $sspServiceCriteriaTransfer = $this->handleSearchTypeInputs($serviceSearchFormData, $sspServiceCriteriaTransfer);
         $sspServiceCriteriaTransfer = $this->handleBusinessUnitTypeSubmit($serviceSearchFormData, $sspServiceCriteriaTransfer);
         $sspServiceCriteriaTransfer = $this->handleOrderInputs($serviceSearchFormData, $sspServiceCriteriaTransfer);
+
+        return $sspServiceCriteriaTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
+     * @param string|null $productType
+     *
+     * @return \Generated\Shared\Transfer\SspServiceCriteriaTransfer
+     */
+    protected function addProductTypeFilter(
+        SspServiceCriteriaTransfer $sspServiceCriteriaTransfer,
+        ?string $productType = null
+    ): SspServiceCriteriaTransfer {
+        if (!$productType) {
+            return $sspServiceCriteriaTransfer;
+        }
+
+        $sspServiceConditionsTransfer = $sspServiceCriteriaTransfer->getServiceConditions();
+        if (!$sspServiceConditionsTransfer) {
+            $sspServiceConditionsTransfer = new SspServiceConditionsTransfer();
+            $sspServiceCriteriaTransfer->setServiceConditions($sspServiceConditionsTransfer);
+        }
+
+        $sspServiceConditionsTransfer->setProductType($productType);
 
         return $sspServiceCriteriaTransfer;
     }

@@ -290,7 +290,7 @@ class SspAssetController extends AbstractController
                 $this->addSuccessMessage(static::GLOSSARY_KEY_ASSET_UPDATED);
 
                 return $this->redirectResponseInternal(SspAssetRouteProviderPlugin::ROUTE_NAME_ASSET_DETAILS, [
-                    'reference' => $sspAssetCollectionResponseTransfer->getSspAssets()->offsetGet(0)->getReference(),
+                    'reference' => $sspAssetCollectionResponseTransfer->getSspAssets()->getIterator()->current()->getReference(),
                 ]);
             }
 

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Spryker\Client\Store\StoreClientInterface;
 use SprykerFeature\Yves\SspServiceManagement\Reader\ShipmentTypeReaderInterface;
-use SprykerFeature\Yves\SspServiceManagement\Widget\ShipmentTypeServicePointSelectorWidget;
+use SprykerFeature\Yves\SspServiceManagement\Widget\SspShipmentTypeServicePointSelectorWidget;
 
 class ShipmentTypeExpander implements ShipmentTypeExpanderInterface
 {
@@ -33,11 +33,11 @@ class ShipmentTypeExpander implements ShipmentTypeExpanderInterface
      */
     public function expandItemTransferWithShipmentType(ItemTransfer $itemTransfer, array $params): ItemTransfer
     {
-        if (!isset($params[ShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_SHIPMENT_TYPE_UUID])) {
+        if (!isset($params[SspShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_SHIPMENT_TYPE_UUID])) {
             return $itemTransfer;
         }
 
-        $shipmentTypeUuid = $params[ShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_SHIPMENT_TYPE_UUID] ?: null;
+        $shipmentTypeUuid = $params[SspShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_SHIPMENT_TYPE_UUID] ?: null;
 
         if (!$shipmentTypeUuid) {
             return $itemTransfer;

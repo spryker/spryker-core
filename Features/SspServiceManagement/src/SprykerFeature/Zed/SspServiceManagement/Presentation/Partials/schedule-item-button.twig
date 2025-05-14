@@ -1,2 +1,4 @@
 {# @var orderItem \Generated\Shared\Transfer\ItemTransfer #}
-<a class="btn btn-primary" href="{{ url('/ssp-service-management/item-scheduler', {'id-sales-order-item': orderItem.idSalesOrderItem}) }}">{{ 'Update time' | trans }}</a>
+{% if productServiceTypeName in orderItem.productTypes %}
+    <a class="btn btn-primary" href="{{ url('/ssp-service-management/item-scheduler', {'id-sales-order-item': orderItem.idSalesOrderItem}) }}">{{ 'Update time' | trans }}</a>
+{% endif %}

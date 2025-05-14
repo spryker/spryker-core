@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
 use Spryker\Yves\Kernel\View\View;
+use SprykerFeature\Yves\SspServiceManagement\Form\SspServiceCancelForm;
 use SprykerFeature\Yves\SspServiceManagement\Plugin\Router\SspServiceManagementPageRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -25,6 +26,21 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class SspServiceController extends AbstractController
 {
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_CANCELLATION_ERROR = 'ssp_service_management.cancellation.error';
+
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_CANCELLATION_SUCCESS = 'ssp_service_management.cancellation.success';
+
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_CANCELLATION_ERROR_NO_ITEMS = 'ssp_service_management.cancellation.error.no_items';
+
     /**
      * @var string
      */
@@ -133,7 +149,7 @@ class SspServiceController extends AbstractController
             ->handleServiceSearchFormSubmit(
                 $serviceSearchForm,
                 $sspServiceCriteriaTransfer,
-                $this->getFactory()->getConfig()->getProductServiveTypeName(),
+                $this->getFactory()->getConfig()->getProductServiceTypeName(),
             );
     }
 
@@ -201,5 +217,54 @@ class SspServiceController extends AbstractController
             [],
             '@SspServiceManagement/views/update-service-time/update-service-time.twig',
         );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function cancelServiceAction(Request $request): RedirectResponse
+    {
+        if ($this->getFactory()->getCustomerClient()->isLoggedIn() === false) {
+            throw new NotFoundHttpException();
+        }
+
+        $sspServiceCancelForm = $this->getFactory()->getSspServiceCancelForm();
+        $sspServiceCancelForm->handleRequest($request);
+
+        $response = $this->redirectResponseInternal(SspServiceManagementPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_SERVICE_LIST);
+
+        if (!$sspServiceCancelForm->isSubmitted() || !$sspServiceCancelForm->isValid()) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CANCELLATION_ERROR);
+
+            return $response;
+        }
+
+        $formData = $sspServiceCancelForm->getData();
+        $orderItemUuid = $formData[SspServiceCancelForm::FIELD_ITEM_UUID];
+        $idSalesOrder = $formData[SspServiceCancelForm::FIELD_ID_SALES_ORDER];
+
+        $itemTransfer = $this->getFactory()
+            ->createOrderReader()
+            ->getOrderItem((int)$idSalesOrder, $orderItemUuid);
+
+        $salesOrderItemCollectionRequestTransfer = new SalesOrderItemCollectionRequestTransfer();
+        $salesOrderItemCollectionRequestTransfer->addItem($itemTransfer);
+
+        $salesOrderItemCollectionResponseTransfer = $this->getClient()
+            ->cancelSalesOrderItemCollection($salesOrderItemCollectionRequestTransfer);
+
+        if ($salesOrderItemCollectionResponseTransfer->getErrors()->count() > 0) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CANCELLATION_ERROR);
+
+            return $response;
+        }
+
+        $this->addSuccessMessage(static::GLOSSARY_KEY_CANCELLATION_SUCCESS);
+
+        return $response;
     }
 }

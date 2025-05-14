@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Store\StoreClientInterface;
 use SprykerFeature\Yves\SspServiceManagement\Plugin\CartPage\ShipmentTypePreAddToCartPlugin;
 use SprykerFeature\Yves\SspServiceManagement\Reader\ShipmentTypeReaderInterface;
-use SprykerFeature\Yves\SspServiceManagement\Widget\ShipmentTypeServicePointSelectorWidget;
+use SprykerFeature\Yves\SspServiceManagement\Widget\SspShipmentTypeServicePointSelectorWidget;
 use SprykerFeatureTest\Yves\SspServiceManagement\SspServiceManagementYvesTester;
 
 /**
@@ -84,7 +84,7 @@ class ShipmentTypePreAddToCartPluginTest extends Unit
 
         $itemTransfer = new ItemTransfer();
         $params = [
-            ShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_SHIPMENT_TYPE_UUID => static::TEST_SHIPMENT_TYPE_UUID,
+            SspShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_SHIPMENT_TYPE_UUID => static::TEST_SHIPMENT_TYPE_UUID,
         ];
 
         // Act
@@ -141,7 +141,7 @@ class ShipmentTypePreAddToCartPluginTest extends Unit
 
         $itemTransfer = new ItemTransfer();
         $params = [
-            ShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_SHIPMENT_TYPE_UUID => '',
+            SspShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_SHIPMENT_TYPE_UUID => '',
         ];
 
         // Act
@@ -176,7 +176,7 @@ class ShipmentTypePreAddToCartPluginTest extends Unit
 
         $itemTransfer = new ItemTransfer();
         $params = [
-            ShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_SHIPMENT_TYPE_UUID => static::TEST_SHIPMENT_TYPE_UUID,
+            SspShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_SHIPMENT_TYPE_UUID => static::TEST_SHIPMENT_TYPE_UUID,
         ];
 
         // Act
@@ -220,7 +220,7 @@ class ShipmentTypePreAddToCartPluginTest extends Unit
         $itemTransfer = (new ItemTransfer())->setShipment($initialShipmentTransfer);
 
         $params = [
-            ShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_SHIPMENT_TYPE_UUID => static::TEST_SHIPMENT_TYPE_UUID,
+            SspShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_SHIPMENT_TYPE_UUID => static::TEST_SHIPMENT_TYPE_UUID,
         ];
 
         // Act

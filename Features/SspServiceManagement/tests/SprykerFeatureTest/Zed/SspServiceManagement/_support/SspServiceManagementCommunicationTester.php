@@ -10,17 +10,21 @@ declare(strict_types=1);
 namespace SprykerFeatureTest\Zed\SspServiceManagement;
 
 use Codeception\Actor;
+use Exception;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\SspServiceManagement\Persistence\Map\SpyProductAbstractTypeTableMap;
 use Orm\Zed\SspServiceManagement\Persistence\Map\SpyProductShipmentTypeTableMap;
 use Orm\Zed\SspServiceManagement\Persistence\SpyProductAbstractToProductAbstractType;
 use Orm\Zed\SspServiceManagement\Persistence\SpyProductAbstractToProductAbstractTypeQuery;
 use Orm\Zed\SspServiceManagement\Persistence\SpyProductAbstractTypeQuery;
 use Orm\Zed\SspServiceManagement\Persistence\SpyProductShipmentTypeQuery;
+use Orm\Zed\SspServiceManagement\Persistence\SpySalesOrderItemProductAbstractTypeQuery;
+use Orm\Zed\SspServiceManagement\Persistence\SpySalesProductAbstractTypeQuery;
 
 /**
  * Inherited Methods
@@ -234,5 +238,53 @@ class SspServiceManagementCommunicationTester extends Actor
         $shipmentTypeTransfer->setName($name);
 
         return $shipmentTypeTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    public function cleanUpSalesOrderItemProductTypeRelations(): void
+    {
+        SpySalesOrderItemProductAbstractTypeQuery::create()->deleteAll();
+
+        SpySalesProductAbstractTypeQuery::create()
+            ->filterByName_In(['service', 'additional_type'])
+            ->delete();
+    }
+
+    /**
+     * @param string $productTypeName
+     * @param int $idSalesOrderItem
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
+    public function haveSalesOrderItemProductType(string $productTypeName, int $idSalesOrderItem): void
+    {
+        $salesOrderItem = SpySalesOrderItemQuery::create()
+            ->filterByIdSalesOrderItem($idSalesOrderItem)
+            ->findOne();
+
+        if (!$salesOrderItem) {
+            throw new Exception('Sales order item not found in database. ID: ' . $idSalesOrderItem);
+        }
+
+        $productType = SpySalesProductAbstractTypeQuery::create()
+            ->filterByName($productTypeName)
+            ->findOneOrCreate();
+
+        if ($productType->isNew() || $productType->isModified()) {
+            $productType->save();
+        }
+
+        $orderItemProductType = SpySalesOrderItemProductAbstractTypeQuery::create()
+            ->filterByFkSalesOrderItem($idSalesOrderItem)
+            ->filterByFkSalesProductAbstractType($productType->getIdSalesProductAbstractType())
+            ->findOneOrCreate();
+
+        if ($orderItemProductType->isNew() || $orderItemProductType->isModified()) {
+            $orderItemProductType->save();
+        }
     }
 }

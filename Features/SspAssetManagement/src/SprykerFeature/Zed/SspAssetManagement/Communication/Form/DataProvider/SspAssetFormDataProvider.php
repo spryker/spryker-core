@@ -151,7 +151,7 @@ class SspAssetFormDataProvider implements SspAssetFormDataProviderInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer> $sspAssetAssignmentTransfers
+     * @param \ArrayObject<\Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer> $sspAssetAssignmentTransfers
      *
      * @return array<string, int>
      */
@@ -169,7 +169,7 @@ class SspAssetFormDataProvider implements SspAssetFormDataProviderInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer> $sspAssetAssignmentTransfers
+     * @param \ArrayObject<\Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer> $sspAssetAssignmentTransfers
      *
      * @return array<string, int>
      */

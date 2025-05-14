@@ -2,66 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 25,
-            "line_to": 25,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'array<string, array<string, list<Generated\\Shared\\Transfer\\ItemTransfer>>>' for SprykerFeature\\Yves\\SspServiceManagement\\Grouper\\ItemShipmentTypeGrouper::groupItemsByShipmentType is incorrect, got 'array<string, non-empty-array<array-key, list<Generated\\Shared\\Transfer\\ItemTransfer>|string>>'",
-            "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Yves/SspServiceManagement/Grouper/ItemShipmentTypeGrouper.php",
-            "snippet": "     * @return array<string, array<string, list<\\Generated\\Shared\\Transfer\\ItemTransfer>>>",
-            "selected_text": "array<string, array<string, list<\\Generated\\Shared\\Transfer\\ItemTransfer>>>",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<string, non-empty-array<array-key, list<Generated\\Shared\\Transfer\\ItemTransfer>|string>>' does not match the declared return type 'array<string, array<string, list<Generated\\Shared\\Transfer\\ItemTransfer>>>' for SprykerFeature\\Yves\\SspServiceManagement\\Grouper\\ItemShipmentTypeGrouper::groupItemsByShipmentType",
-            "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Yves/SspServiceManagement/Grouper/ItemShipmentTypeGrouper.php",
-            "snippet": "        return $shipmentTypeGroups;",
-            "selected_text": "$shipmentTypeGroups",
-            "error_level": 6,
-            "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 122,
-            "line_to": 122,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of SprykerFeature\\Yves\\SspServiceManagement\\Checker\\ShipmentTypeCheckerInterface::hasOnlyServiceShipmentType expects array<array-key, Generated\\Shared\\Transfer\\ShipmentTypeStorageTransfer>, but array<Generated\\Shared\\Transfer\\ShipmentTypeStorageTransfer, mixed> provided",
-            "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Yves/SspServiceManagement/Widget/ShipmentTypeServicePointSelectorWidget.php",
-            "snippet": "            ->hasOnlyServiceShipmentType($shipmentTypeList);",
-            "selected_text": "$shipmentTypeList",
-            "error_level": 6,
-            "shortcode": 4
-        },
-        {
-            "severity": "error",
-            "line_from": 124,
-            "line_to": 124,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of SprykerFeature\\Yves\\SspServiceManagement\\Checker\\ShipmentTypeCheckerInterface::hasOnlyDeliveryShipmentType expects array<array-key, Generated\\Shared\\Transfer\\ShipmentTypeStorageTransfer>, but array<Generated\\Shared\\Transfer\\ShipmentTypeStorageTransfer, mixed> provided",
-            "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Yves/SspServiceManagement/Widget/ShipmentTypeServicePointSelectorWidget.php",
-            "snippet": "            ->hasOnlyDeliveryShipmentType($shipmentTypeList);",
-            "selected_text": "$shipmentTypeList",
-            "error_level": 6,
-            "shortcode": 4
-        },
-        {
-            "severity": "error",
-            "line_from": 128,
-            "line_to": 128,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of SprykerFeature\\Yves\\SspServiceManagement\\Widget\\ShipmentTypeServicePointSelectorWidget::addShipmentTypeOptionsParameter expects array<array-key, Generated\\Shared\\Transfer\\ShipmentTypeTransfer>, but array<Generated\\Shared\\Transfer\\ShipmentTypeStorageTransfer, mixed> provided",
-            "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Yves/SspServiceManagement/Widget/ShipmentTypeServicePointSelectorWidget.php",
-            "snippet": "        $this->addShipmentTypeOptionsParameter($shipmentTypeList);",
-            "selected_text": "$shipmentTypeList",
-            "error_level": 6,
-            "shortcode": 4
-        },
-        {
-            "severity": "error",
             "line_from": 163,
             "line_to": 163,
             "type": "InvalidArgument",
@@ -158,8 +98,8 @@
         },
         {
             "severity": "error",
-            "line_from": 38,
-            "line_to": 38,
+            "line_from": 48,
+            "line_to": 48,
             "type": "InvalidArgument",
             "message": "Argument 1 of SprykerFeature\\Zed\\SspServiceManagement\\Business\\Expander\\ShipmentTypeItemExpander::expandItemsWithShipmentType expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, but ArrayObject<Generated\\Shared\\Transfer\\ItemTransfer> provided",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Business/Expander/ShipmentTypeItemExpander.php",
@@ -170,8 +110,8 @@
         },
         {
             "severity": "error",
-            "line_from": 39,
-            "line_to": 39,
+            "line_from": 49,
+            "line_to": 49,
             "type": "InvalidArgument",
             "message": "Argument 1 of SprykerFeature\\Zed\\SspServiceManagement\\Business\\Expander\\ShipmentTypeItemExpander::expandItemsWithShipmentType expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, but ArrayObject<Generated\\Shared\\Transfer\\ItemTransfer> provided",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Business/Expander/ShipmentTypeItemExpander.php",
@@ -182,8 +122,32 @@
         },
         {
             "severity": "error",
-            "line_from": 56,
-            "line_to": 56,
+            "line_from": 53,
+            "line_to": 53,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of SprykerFeature\\Zed\\SspServiceManagement\\Business\\Expander\\ShipmentTypeItemExpander::expandBundleRelatedItems expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, but ArrayObject<Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Business/Expander/ShipmentTypeItemExpander.php",
+            "snippet": "                $cartChangeTransfer->getItems(),",
+            "selected_text": "$cartChangeTransfer->getItems()",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "InvalidArgument",
+            "message": "Argument 2 of SprykerFeature\\Zed\\SspServiceManagement\\Business\\Expander\\ShipmentTypeItemExpander::expandBundleRelatedItems expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, but ArrayObject<Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Business/Expander/ShipmentTypeItemExpander.php",
+            "snippet": "                $cartChangeTransfer->getQuoteOrFail()->getBundleItems(),",
+            "selected_text": "$cartChangeTransfer->getQuoteOrFail()->getBundleItems()",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 73,
+            "line_to": 73,
             "type": "InvalidArgument",
             "message": "Argument 1 of SprykerFeature\\Zed\\SspServiceManagement\\Business\\Expander\\ShipmentTypeItemExpander::expandItemsWithShipmentType expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, but ArrayObject<Generated\\Shared\\Transfer\\ItemTransfer> provided",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Business/Expander/ShipmentTypeItemExpander.php",
@@ -194,13 +158,49 @@
         },
         {
             "severity": "error",
-            "line_from": 57,
-            "line_to": 57,
+            "line_from": 74,
+            "line_to": 74,
             "type": "InvalidArgument",
             "message": "Argument 1 of SprykerFeature\\Zed\\SspServiceManagement\\Business\\Expander\\ShipmentTypeItemExpander::expandItemsWithShipmentType expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, but ArrayObject<Generated\\Shared\\Transfer\\ItemTransfer> provided",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Business/Expander/ShipmentTypeItemExpander.php",
             "snippet": "        $this->expandItemsWithShipmentType($quoteTransfer->getBundleItems(), $storeName);",
             "selected_text": "$quoteTransfer->getBundleItems()",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of SprykerFeature\\Zed\\SspServiceManagement\\Business\\Expander\\ShipmentTypeItemExpander::expandBundleRelatedItems expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, but ArrayObject<Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Business/Expander/ShipmentTypeItemExpander.php",
+            "snippet": "                $quoteTransfer->getItems(),",
+            "selected_text": "$quoteTransfer->getItems()",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "InvalidArgument",
+            "message": "Argument 2 of SprykerFeature\\Zed\\SspServiceManagement\\Business\\Expander\\ShipmentTypeItemExpander::expandBundleRelatedItems expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, but ArrayObject<Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Business/Expander/ShipmentTypeItemExpander.php",
+            "snippet": "                $quoteTransfer->getBundleItems(),",
+            "selected_text": "$quoteTransfer->getBundleItems()",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 219,
+            "line_to": 219,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of SprykerFeature\\Zed\\SspServiceManagement\\Persistence\\SspServiceManagementRepositoryInterface::getProductIdsWithShipmentType expects list<int>, but list<int|null> provided",
+            "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Business/Expander/ShipmentTypeItemExpander.php",
+            "snippet": "        $productConcreteIdsWithDefaultShipmentType = $this->sspServiceManagementRepository->getProductIdsWithShipmentType($productConcreteIds, $defaultShipmentTypeTransfer->getNameOrFail());",
+            "selected_text": "$productConcreteIds",
             "error_level": 6,
             "shortcode": 4
         },
@@ -242,18 +242,6 @@
         },
         {
             "severity": "error",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of ArrayObject::offsetGet expects Generated\\Shared\\Transfer\\PaymentMethodTransfer, but 0 provided",
-            "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Business/Resolver/PaymentMethodKeyResolver.php",
-            "snippet": "        $paymentMethodTransfer = $paymentMethodCollectionTransfer->getPaymentMethods()->offsetGet(0);",
-            "selected_text": "0",
-            "error_level": 6,
-            "shortcode": 4
-        },
-        {
-            "severity": "error",
             "line_from": 60,
             "line_to": 60,
             "type": "InvalidArgument",
@@ -278,8 +266,8 @@
         },
         {
             "severity": "error",
-            "line_from": 71,
-            "line_to": 71,
+            "line_from": 72,
+            "line_to": 72,
             "type": "InvalidArgument",
             "message": "Argument 1 of Generated\\Shared\\Transfer\\QuoteTransfer::setPayments expects ArrayObject<Generated\\Shared\\Transfer\\PaymentTransfer>, but ArrayObject<0, Generated\\Shared\\Transfer\\PaymentTransfer> provided",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Business/Updater/OrderItemScheduleUpdater.php",
@@ -470,8 +458,8 @@
         },
         {
             "severity": "error",
-            "line_from": 221,
-            "line_to": 221,
+            "line_from": 246,
+            "line_to": 246,
             "type": "InvalidReturnType",
             "message": "The declared return type 'Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemQuery' for SprykerFeature\\Zed\\SspServiceManagement\\Communication\\Table\\ServiceTable::joinOrderData is incorrect, got 'Orm\\Zed\\GiftCardBalance\\Persistence\\SpyGiftCardBalanceLogQuery&static|Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery&static|Orm\\Zed\\ManualOrderEntry\\Persistence\\SpyOrderSourceQuery&static|Orm\\Zed\\MerchantSalesOrder\\Persistence\\SpyMerchantSalesOrderQuery&static|Orm\\Zed\\Oms\\Persistence\\SpyOmsTransitionLogQuery&static|Orm\\Zed\\Payment\\Persistence\\SpySalesPaymentQuery&static|Orm\\Zed\\Refund\\Persistence\\SpyRefundQuery&static|Orm\\Zed\\SalesInvoice\\Persistence\\SpySalesOrderInvoiceQuery&static|Orm\\Zed\\SalesMerchantCommission\\Persistence\\SpySalesMerchantCommissionQuery&static|Orm\\Zed\\SalesPaymentMerchant\\Persistence\\SpySalesPaymentMerchantPayoutQuery&static|Orm\\Zed\\SalesPaymentMerchant\\Persistence\\SpySalesPaymentMerchantPayoutReversalQuery&static|Orm\\Zed\\SalesReclamation\\Persistence\\SpySalesReclamationQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesDiscountQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesExpenseQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderAddressQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderCommentQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderNoteQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderTotalsQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesShipmentQuery&static|Orm\\Zed\\SspInquiryManagement\\Persistence\\SpySspInquirySalesOrderQuery&static'",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Communication/Table/ServiceTable.php",
@@ -482,13 +470,13 @@
         },
         {
             "severity": "error",
-            "line_from": 226,
-            "line_to": 249,
+            "line_from": 251,
+            "line_to": 274,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'Orm\\Zed\\GiftCardBalance\\Persistence\\SpyGiftCardBalanceLogQuery&static|Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery&static|Orm\\Zed\\ManualOrderEntry\\Persistence\\SpyOrderSourceQuery&static|Orm\\Zed\\MerchantSalesOrder\\Persistence\\SpyMerchantSalesOrderQuery&static|Orm\\Zed\\Oms\\Persistence\\SpyOmsTransitionLogQuery&static|Orm\\Zed\\Payment\\Persistence\\SpySalesPaymentQuery&static|Orm\\Zed\\Refund\\Persistence\\SpyRefundQuery&static|Orm\\Zed\\SalesInvoice\\Persistence\\SpySalesOrderInvoiceQuery&static|Orm\\Zed\\SalesMerchantCommission\\Persistence\\SpySalesMerchantCommissionQuery&static|Orm\\Zed\\SalesPaymentMerchant\\Persistence\\SpySalesPaymentMerchantPayoutQuery&static|Orm\\Zed\\SalesPaymentMerchant\\Persistence\\SpySalesPaymentMerchantPayoutReversalQuery&static|Orm\\Zed\\SalesReclamation\\Persistence\\SpySalesReclamationQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesDiscountQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesExpenseQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderAddressQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderCommentQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderNoteQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderTotalsQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesShipmentQuery&static|Orm\\Zed\\SspInquiryManagement\\Persistence\\SpySspInquirySalesOrderQuery&static' does not match the declared return type 'Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemQuery' for SprykerFeature\\Zed\\SspServiceManagement\\Communication\\Table\\ServiceTable::joinOrderData",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Communication/Table/ServiceTable.php",
-            "snippet": "        return $query\n            ->useMetadataQuery(null, Criteria::LEFT_JOIN)\n                ->withColumn(SpySalesOrderItemMetadataTableMap::COL_SCHEDULED_AT, static::COL_SCHEDULED_AT)\n            ->endUse()\n            ->useOrderQuery()\n                ->withColumn(SpySalesOrderTableMap::COL_ORDER_REFERENCE, static::COL_ORDER_REFERENCE)\n                ->withColumn(SpySalesOrderTableMap::COL_ID_SALES_ORDER, static::COL_ID_SALES_ORDER)\n                ->addJoin(\n                    SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE,\n                    SpyCustomerTableMap::COL_CUSTOMER_REFERENCE,\n                    Criteria::LEFT_JOIN,\n                )\n                ->addJoin(\n                    SpySalesOrderTableMap::COL_COMPANY_UUID,\n                    SpyCompanyTableMap::COL_UUID,\n                    Criteria::LEFT_JOIN,\n                )\n                ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::COL_FIRST_NAME)\n                ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::COL_LAST_NAME)\n                ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY)\n            ->endUse()\n            ->withColumn(SpySalesOrderItemTableMap::COL_NAME, static::COL_SERVICE)\n            ->withColumn(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, static::COL_ID_SALES_ORDER_ITEM)\n            ->withColumn(SpySalesOrderItemTableMap::COL_CREATED_AT, static::COL_CREATED_AT);",
-            "selected_text": "$query\n            ->useMetadataQuery(null, Criteria::LEFT_JOIN)\n                ->withColumn(SpySalesOrderItemMetadataTableMap::COL_SCHEDULED_AT, static::COL_SCHEDULED_AT)\n            ->endUse()\n            ->useOrderQuery()\n                ->withColumn(SpySalesOrderTableMap::COL_ORDER_REFERENCE, static::COL_ORDER_REFERENCE)\n                ->withColumn(SpySalesOrderTableMap::COL_ID_SALES_ORDER, static::COL_ID_SALES_ORDER)\n                ->addJoin(\n                    SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE,\n                    SpyCustomerTableMap::COL_CUSTOMER_REFERENCE,\n                    Criteria::LEFT_JOIN,\n                )\n                ->addJoin(\n                    SpySalesOrderTableMap::COL_COMPANY_UUID,\n                    SpyCompanyTableMap::COL_UUID,\n                    Criteria::LEFT_JOIN,\n                )\n                ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::COL_FIRST_NAME)\n                ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::COL_LAST_NAME)\n                ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY)\n            ->endUse()\n            ->withColumn(SpySalesOrderItemTableMap::COL_NAME, static::COL_SERVICE)\n            ->withColumn(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, static::COL_ID_SALES_ORDER_ITEM)\n            ->withColumn(SpySalesOrderItemTableMap::COL_CREATED_AT, static::COL_CREATED_AT)",
+            "snippet": "        return $query\n            ->useMetadataQuery(null, Criteria::LEFT_JOIN)\n            ->withColumn(SpySalesOrderItemMetadataTableMap::COL_SCHEDULED_AT, static::COL_SCHEDULED_AT)\n            ->endUse()\n            ->useOrderQuery()\n            ->withColumn(SpySalesOrderTableMap::COL_ORDER_REFERENCE, static::COL_ORDER_REFERENCE)\n            ->withColumn(SpySalesOrderTableMap::COL_ID_SALES_ORDER, static::COL_ID_SALES_ORDER)\n            ->addJoin(\n                SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE,\n                SpyCustomerTableMap::COL_CUSTOMER_REFERENCE,\n                Criteria::LEFT_JOIN,\n            )\n            ->addJoin(\n                SpySalesOrderTableMap::COL_COMPANY_UUID,\n                SpyCompanyTableMap::COL_UUID,\n                Criteria::LEFT_JOIN,\n            )\n            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::COL_FIRST_NAME)\n            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::COL_LAST_NAME)\n            ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY)\n            ->endUse()\n            ->withColumn(SpySalesOrderItemTableMap::COL_NAME, static::COL_SERVICE)\n            ->withColumn(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, static::COL_ID_SALES_ORDER_ITEM)\n            ->withColumn(SpySalesOrderItemTableMap::COL_CREATED_AT, static::COL_CREATED_AT);",
+            "selected_text": "$query\n            ->useMetadataQuery(null, Criteria::LEFT_JOIN)\n            ->withColumn(SpySalesOrderItemMetadataTableMap::COL_SCHEDULED_AT, static::COL_SCHEDULED_AT)\n            ->endUse()\n            ->useOrderQuery()\n            ->withColumn(SpySalesOrderTableMap::COL_ORDER_REFERENCE, static::COL_ORDER_REFERENCE)\n            ->withColumn(SpySalesOrderTableMap::COL_ID_SALES_ORDER, static::COL_ID_SALES_ORDER)\n            ->addJoin(\n                SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE,\n                SpyCustomerTableMap::COL_CUSTOMER_REFERENCE,\n                Criteria::LEFT_JOIN,\n            )\n            ->addJoin(\n                SpySalesOrderTableMap::COL_COMPANY_UUID,\n                SpyCompanyTableMap::COL_UUID,\n                Criteria::LEFT_JOIN,\n            )\n            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::COL_FIRST_NAME)\n            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::COL_LAST_NAME)\n            ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY)\n            ->endUse()\n            ->withColumn(SpySalesOrderItemTableMap::COL_NAME, static::COL_SERVICE)\n            ->withColumn(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, static::COL_ID_SALES_ORDER_ITEM)\n            ->withColumn(SpySalesOrderItemTableMap::COL_CREATED_AT, static::COL_CREATED_AT)",
             "error_level": 6,
             "shortcode": 128
         }
@@ -580,8 +568,8 @@
         },
         {
             "severity": "info",
-            "line_from": 276,
-            "line_to": 276,
+            "line_from": 303,
+            "line_to": 303,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCompany on possibly null value",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Yves/SspServiceManagement/Handler/ServiceSearchFormHandler.php",
@@ -592,8 +580,8 @@
         },
         {
             "severity": "info",
-            "line_from": 280,
-            "line_to": 280,
+            "line_from": 307,
+            "line_to": 307,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getUuid on possibly null value",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Yves/SspServiceManagement/Handler/ServiceSearchFormHandler.php",
@@ -652,8 +640,8 @@
         },
         {
             "severity": "info",
-            "line_from": 91,
-            "line_to": 91,
+            "line_from": 128,
+            "line_to": 128,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getUuid on possibly null value",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Business/Expander/ShipmentTypeItemExpander.php",
@@ -661,6 +649,18 @@
             "selected_text": "getUuid",
             "error_level": 3,
             "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 387,
+            "line_to": 387,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $indexedBundleItems[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Business/Expander/ShipmentTypeItemExpander.php",
+            "snippet": "                $indexedBundleItems[$bundleItemTransfer->getBundleItemIdentifier()] = $bundleItemTransfer;",
+            "selected_text": "$indexedBundleItems",
+            "error_level": 3,
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -712,6 +712,18 @@
         },
         {
             "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getNameOrFail on possibly null value",
+            "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Communication/Plugin/Sales/SspServiceCancellableOrderItemExpanderPlugin.php",
+            "snippet": "        $stateName = $itemTransfer->getState()->getNameOrFail();",
+            "selected_text": "getNameOrFail",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 91,
             "line_to": 91,
             "type": "LessSpecificImplementedReturnType",
@@ -736,8 +748,8 @@
         },
         {
             "severity": "info",
-            "line_from": 215,
-            "line_to": 215,
+            "line_from": 240,
+            "line_to": 240,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of SprykerFeature\\Zed\\SspServiceManagement\\Communication\\Table\\ServiceTable::joinOrderData expects Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemQuery, but possibly different type Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemQuery|Orm\\Zed\\SspServiceManagement\\Persistence\\SpySalesProductAbstractTypeQuery provided",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Communication/Table/ServiceTable.php",
@@ -760,8 +772,8 @@
         },
         {
             "severity": "info",
-            "line_from": 236,
-            "line_to": 236,
+            "line_from": 253,
+            "line_to": 253,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getProductName on possibly null value",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Persistence/SspServiceManagementRepository.php",
@@ -772,8 +784,8 @@
         },
         {
             "severity": "info",
-            "line_from": 237,
-            "line_to": 237,
+            "line_from": 254,
+            "line_to": 254,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Persistence/SspServiceManagementRepository.php",
@@ -784,8 +796,8 @@
         },
         {
             "severity": "info",
-            "line_from": 241,
-            "line_to": 241,
+            "line_from": 258,
+            "line_to": 258,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Persistence/SspServiceManagementRepository.php",
@@ -796,8 +808,8 @@
         },
         {
             "severity": "info",
-            "line_from": 246,
-            "line_to": 246,
+            "line_from": 263,
+            "line_to": 263,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Persistence/SspServiceManagementRepository.php",
@@ -822,8 +834,8 @@
         },
         {
             "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
+            "line_from": 73,
+            "line_to": 73,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::setPayment has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Features/SspServiceManagement/src/SprykerFeature/Zed/SspServiceManagement/Business/Updater/OrderItemScheduleUpdater.php",
@@ -833,5 +845,5 @@
             "shortcode": 1
         }
     ],
-    "count": 69
+    "count": 70
 }

@@ -8,12 +8,16 @@
 namespace SprykerFeatureTest\Zed\SspInquiryManagement\Helper;
 
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
+use Orm\Zed\Payment\Persistence\SpySalesPayment;
+use Orm\Zed\Payment\Persistence\SpySalesPaymentMethodTypeQuery;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadataQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
+use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\Shipment\Communication\Plugin\Checkout\SalesOrderShipmentSavePlugin;
 use SprykerTest\Shared\Sales\Helper\SalesDataHelper as SprykerSalesDataHelper;
 
@@ -37,6 +41,12 @@ class SalesDataHelper extends SprykerSalesDataHelper
 
         $this->updateOrderItems($saveOrderTransfer);
         $this->saveSalesExpense($saveOrderTransfer->getIdSalesOrder());
+
+        $paymentMethod = array_flip((new SalesConfig())->getPaymentMethodStatemachineMapping())[$stateMachineProcessName] ?? null;
+
+        if ($paymentMethod) {
+            $this->saveSalesPayment($saveOrderTransfer->getIdSalesOrder(), $paymentMethod);
+        }
 
         return $saveOrderTransfer;
     }
@@ -99,6 +109,27 @@ class SalesDataHelper extends SprykerSalesDataHelper
         SpySalesShipmentQuery::create()
             ->findOneByFkSalesOrder($idSalesOrder)
             ->setFkSalesExpense($salesExpenseEntity->getIdSalesExpense())
+            ->save();
+    }
+
+    /**
+     * @param int $idSalesOrder
+     * @param string $paymentMethod
+     *
+     * @return void
+     */
+    protected function saveSalesPayment(int $idSalesOrder, string $paymentMethod): void
+    {
+        $paymentMethodEntity = SpyPaymentMethodQuery::create()->findOneByPaymentMethodKey($paymentMethod);
+        if (!$paymentMethodEntity) {
+            return;
+        }
+        $paymentProviderEntity = $paymentMethodEntity->getSpyPaymentProvider();
+        $salesPaymentMethodTypeEntity = SpySalesPaymentMethodTypeQuery::create()->findOneByPaymentProvider($paymentProviderEntity->getPaymentProviderKey());
+        (new SpySalesPayment())
+            ->setFkSalesOrder($idSalesOrder)
+            ->setFkSalesPaymentMethodType($salesPaymentMethodTypeEntity->getIdSalesPaymentMethodType())
+            ->setAmount(100)
             ->save();
     }
 }

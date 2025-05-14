@@ -46,8 +46,8 @@ class ProductAbstractTypeForm extends AbstractType
     protected function addProductAbstractTypeField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_PRODUCT_ABSTRACT_TYPES, Select2ComboBoxType::class, [
-            'label' => 'Product Abstract Types',
-            'placeholder' => 'Select product abstract types',
+            'label' => 'Product Types',
+            'placeholder' => 'Select product types',
             'required' => false,
             'multiple' => true,
             'choices' => $this->getProductAbstractTypeChoices(),

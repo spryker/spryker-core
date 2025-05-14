@@ -13,6 +13,7 @@ use Spryker\Client\Customer\CustomerClientInterface;
 use Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface;
 use Spryker\Client\Permission\PermissionClientInterface;
 use Spryker\Client\ProductOfferStorage\ProductOfferStorageClientInterface;
+use Spryker\Client\ProductStorage\ProductStorageClientInterface;
 use Spryker\Client\Sales\SalesClientInterface;
 use Spryker\Client\ServicePointSearch\ServicePointSearchClientInterface;
 use Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageClientInterface;
@@ -22,6 +23,8 @@ use SprykerFeature\Yves\SspServiceManagement\Checker\ShipmentTypeChecker;
 use SprykerFeature\Yves\SspServiceManagement\Checker\ShipmentTypeCheckerInterface;
 use SprykerFeature\Yves\SspServiceManagement\Expander\ProductOfferExpander;
 use SprykerFeature\Yves\SspServiceManagement\Expander\ProductOfferExpanderInterface;
+use SprykerFeature\Yves\SspServiceManagement\Expander\ServiceDateTimeEnabledExpander;
+use SprykerFeature\Yves\SspServiceManagement\Expander\ServiceDateTimeEnabledExpanderInterface;
 use SprykerFeature\Yves\SspServiceManagement\Expander\ServiceDateTimeExpander;
 use SprykerFeature\Yves\SspServiceManagement\Expander\ServiceDateTimeExpanderInterface;
 use SprykerFeature\Yves\SspServiceManagement\Expander\ServicePointExpander;
@@ -29,8 +32,12 @@ use SprykerFeature\Yves\SspServiceManagement\Expander\ServicePointExpanderInterf
 use SprykerFeature\Yves\SspServiceManagement\Expander\ShipmentTypeExpander;
 use SprykerFeature\Yves\SspServiceManagement\Expander\ShipmentTypeExpanderInterface;
 use SprykerFeature\Yves\SspServiceManagement\Form\DataProvider\ServiceSearchFormDataProvider;
+use SprykerFeature\Yves\SspServiceManagement\Form\DataProvider\SspServiceCancelFormDataProvider;
 use SprykerFeature\Yves\SspServiceManagement\Form\ServiceItemSchedulerForm;
 use SprykerFeature\Yves\SspServiceManagement\Form\ServiceSearchForm;
+use SprykerFeature\Yves\SspServiceManagement\Form\SspServiceCancelForm;
+use SprykerFeature\Yves\SspServiceManagement\Grouper\AddressFormItemShipmentTypeGrouper;
+use SprykerFeature\Yves\SspServiceManagement\Grouper\AddressFormItemShipmentTypeGrouperInterface;
 use SprykerFeature\Yves\SspServiceManagement\Grouper\ItemShipmentTypeGrouper;
 use SprykerFeature\Yves\SspServiceManagement\Grouper\ItemShipmentTypeGrouperInterface;
 use SprykerFeature\Yves\SspServiceManagement\Handler\ServiceSearchFormHandler;
@@ -39,10 +46,16 @@ use SprykerFeature\Yves\SspServiceManagement\Provider\ShipmentTypeOptionsProvide
 use SprykerFeature\Yves\SspServiceManagement\Provider\ShipmentTypeOptionsProviderInterface;
 use SprykerFeature\Yves\SspServiceManagement\Reader\OrderReader;
 use SprykerFeature\Yves\SspServiceManagement\Reader\OrderReaderInterface;
+use SprykerFeature\Yves\SspServiceManagement\Reader\ProductOfferReader;
+use SprykerFeature\Yves\SspServiceManagement\Reader\ProductOfferReaderInterface;
 use SprykerFeature\Yves\SspServiceManagement\Reader\ServicePointReader;
 use SprykerFeature\Yves\SspServiceManagement\Reader\ServicePointReaderInterface;
 use SprykerFeature\Yves\SspServiceManagement\Reader\ShipmentTypeReader;
 use SprykerFeature\Yves\SspServiceManagement\Reader\ShipmentTypeReaderInterface;
+use SprykerFeature\Yves\SspServiceManagement\Resolver\ShopContextResolver;
+use SprykerFeature\Yves\SspServiceManagement\Resolver\ShopContextResolverInterface;
+use SprykerFeature\Yves\SspServiceManagement\Sorter\ShipmentTypeGroupSorter;
+use SprykerFeature\Yves\SspServiceManagement\Sorter\ShipmentTypeGroupSorterInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,6 +71,27 @@ class SspServiceManagementFactory extends AbstractFactory
      * @var string
      */
     protected const FORM_FACTORY = 'FORM_FACTORY';
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getSspServiceCancelForm(?ItemTransfer $itemTransfer = null): FormInterface
+    {
+        $dataProvider = $this->createSspServiceCancelFormDataProvider();
+        $data = $dataProvider->getData($itemTransfer);
+
+        return $this->getFormFactory()->create(SspServiceCancelForm::class, $data);
+    }
+
+    /**
+     * @return \SprykerFeature\Yves\SspServiceManagement\Form\DataProvider\SspServiceCancelFormDataProvider
+     */
+    public function createSspServiceCancelFormDataProvider(): SspServiceCancelFormDataProvider
+    {
+        return new SspServiceCancelFormDataProvider();
+    }
 
     /**
      * @return \Symfony\Component\Form\FormInterface
@@ -83,30 +117,6 @@ class SspServiceManagementFactory extends AbstractFactory
             $this->getCompanyBusinessUnitClient(),
             $this->getPermissionClient(),
         );
-    }
-
-    /**
-     * @return \Spryker\Client\Customer\CustomerClientInterface
-     */
-    public function getCustomerClient(): CustomerClientInterface
-    {
-        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::CLIENT_CUSTOMER);
-    }
-
-    /**
-     * @return \Spryker\Client\CompanyBusinessUnit\CompanyBusinessUnitClientInterface
-     */
-    public function getCompanyBusinessUnitClient(): CompanyBusinessUnitClientInterface
-    {
-        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT);
-    }
-
-    /**
-     * @return \Spryker\Client\Permission\PermissionClientInterface
-     */
-    public function getPermissionClient(): PermissionClientInterface
-    {
-        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::CLIENT_PERMISSION);
     }
 
     /**
@@ -157,6 +167,7 @@ class SspServiceManagementFactory extends AbstractFactory
     {
         return new ShipmentTypeOptionsProvider(
             $this->getConfig(),
+            $this->createShipmentTypeGroupSorter(),
         );
     }
 
@@ -200,19 +211,43 @@ class SspServiceManagementFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerFeature\Yves\SspServiceManagement\Expander\ServiceDateTimeEnabledExpanderInterface
+     */
+    public function createServiceDateTimeEnabledExpander(): ServiceDateTimeEnabledExpanderInterface
+    {
+        return new ServiceDateTimeEnabledExpander(
+            $this->getProductStorageClient(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Yves\SspServiceManagement\Sorter\ShipmentTypeGroupSorterInterface
+     */
+    public function createShipmentTypeGroupSorter(): ShipmentTypeGroupSorterInterface
+    {
+        return new ShipmentTypeGroupSorter($this->getConfig());
+    }
+
+    /**
      * @return \SprykerFeature\Yves\SspServiceManagement\Grouper\ItemShipmentTypeGrouperInterface
      */
     public function createItemShipmentTypeGrouper(): ItemShipmentTypeGrouperInterface
     {
-        return new ItemShipmentTypeGrouper($this->getConfig());
+        return new ItemShipmentTypeGrouper(
+            $this->getConfig(),
+            $this->createShipmentTypeGroupSorter(),
+        );
     }
 
     /**
-     * @return \Spryker\Client\Sales\SalesClientInterface
+     * @return \SprykerFeature\Yves\SspServiceManagement\Grouper\AddressFormItemShipmentTypeGrouperInterface
      */
-    public function getSalesClient(): SalesClientInterface
+    public function createAddressFormItemShipmentTypeGrouper(): AddressFormItemShipmentTypeGrouperInterface
     {
-        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::CLIENT_SALES);
+        return new AddressFormItemShipmentTypeGrouper(
+            $this->getConfig(),
+            $this->createShipmentTypeGroupSorter(),
+        );
     }
 
     /**
@@ -247,6 +282,40 @@ class SspServiceManagementFactory extends AbstractFactory
     public function createResponse(string $searchResults): Response
     {
         return new Response($searchResults);
+    }
+
+    /**
+     * @return \SprykerFeature\Yves\SspServiceManagement\Reader\OrderReaderInterface
+     */
+    public function createOrderReader(): OrderReaderInterface
+    {
+        return new OrderReader(
+            $this->getSalesClient(),
+            $this->getCustomerClient(),
+            $this->getGlossaryStorageClient(),
+            $this->getLocale(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Yves\SspServiceManagement\Resolver\ShopContextResolverInterface
+     */
+    public function createShopContextResolver(): ShopContextResolverInterface
+    {
+        return new ShopContextResolver(
+            $this->getContainer(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Yves\SspServiceManagement\Reader\ProductOfferReaderInterface
+     */
+    public function createProductOfferReader(): ProductOfferReaderInterface
+    {
+        return new ProductOfferReader(
+            $this->getProductOfferStorageClient(),
+            $this->createShopContextResolver(),
+        );
     }
 
     /**
@@ -298,23 +367,50 @@ class SspServiceManagementFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerFeature\Yves\SspServiceManagement\Reader\OrderReaderInterface
+     * @return string
      */
-    public function createOrderReader(): OrderReaderInterface
+    public function getLocale(): string
     {
-        return new OrderReader(
-            $this->getSalesClient(),
-            $this->getCustomerClient(),
-            $this->getGlossaryStorageClient(),
-            $this->getLocale(),
-        );
+        return $this->getTwigEnvironment()->getGlobals()['app']['locale'];
     }
 
     /**
-     * @return string
+     * @return \Spryker\Client\ProductStorage\ProductStorageClientInterface
      */
-    protected function getLocale(): string
+    public function getProductStorageClient(): ProductStorageClientInterface
     {
-        return $this->getTwigEnvironment()->getGlobals()['app']['locale'];
+        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+        /**
+         * @return \Spryker\Client\Customer\CustomerClientInterface
+         */
+    public function getCustomerClient(): CustomerClientInterface
+    {
+        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Client\CompanyBusinessUnit\CompanyBusinessUnitClientInterface
+     */
+    public function getCompanyBusinessUnitClient(): CompanyBusinessUnitClientInterface
+    {
+        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT);
+    }
+
+    /**
+     * @return \Spryker\Client\Permission\PermissionClientInterface
+     */
+    public function getPermissionClient(): PermissionClientInterface
+    {
+        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::CLIENT_PERMISSION);
+    }
+
+    /**
+     * @return \Spryker\Client\Sales\SalesClientInterface
+     */
+    public function getSalesClient(): SalesClientInterface
+    {
+        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::CLIENT_SALES);
     }
 }

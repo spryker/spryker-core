@@ -1,0 +1,29 @@
+{# @var productOffer \Generated\Shared\Transfer\ProductOfferStorageTransfer #}
+{# @var data.product \Generated\Shared\Transfer\ProductViewTransfer #}
+
+{% extends template('widget') %}
+
+{% define data = {
+    productOffers: _widget.productOffers,
+    product: _widget.product,
+} %}
+
+{% block template %}
+		{% block content %}
+			{% block defaultProductPrice %}
+                <div {% if data.product.productOfferReference %}data-product-price-offer="{{ data.product.productOfferReference }}"{% endif %}>
+				    {% widget 'CurrentProductPriceVolumeWidget' args [data.product.currentProductPrice] only %}{% endwidget %}
+                </div>
+			{% endblock %}
+
+			{% block productOfferPriceList %}
+				{% if data.productOffers %}
+					{% for productOffer in data.productOffers | filter(productOffer => productOffer.productOfferReference != data.product.productOfferReference)  %}
+						<div class="is-hidden" data-product-price-offer="{{ productOffer.productOfferReference }}">
+						    {% widget 'CurrentProductPriceVolumeWidget' args [productOffer.price] only %}{% endwidget %}
+                        </div>
+					{% endfor %}
+				{% endif %}
+			{% endblock %}
+		{% endblock %}
+{% endblock %}

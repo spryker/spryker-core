@@ -48,7 +48,7 @@ class AssignedBusinessUnitTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
-        $config->setUrl(sprintf('table?%s=%s', static::PARAM_ID_SSP_ASSET, $this->sspAssetTransfer->getIdSspAsset()));
+        $config->setUrl(sprintf('table?%s=%s', static::PARAM_ID_SSP_ASSET, $this->sspAssetTransfer->getIdSspAssetOrFail()));
 
         $config = $this->setHeader($config);
 

@@ -40,4 +40,15 @@ class GatewayController extends AbstractGatewayController
     ): SalesOrderItemCollectionResponseTransfer {
         return $this->getFacade()->updateSalesOrderItemCollection($salesOrderItemCollectionRequestTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
+     */
+    public function cancelSalesOrderItemCollectionAction(
+        SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
+    ): SalesOrderItemCollectionResponseTransfer {
+        return $this->getFacade()->cancelSalesOrderItemCollection($salesOrderItemCollectionRequestTransfer);
+    }
 }

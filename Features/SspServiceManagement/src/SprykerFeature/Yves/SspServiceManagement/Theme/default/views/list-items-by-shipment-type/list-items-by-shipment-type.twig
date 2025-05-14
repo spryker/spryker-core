@@ -9,7 +9,8 @@
         {% block group %}
             <div>
                 {% block title %}
-                    <div class="title--h4">{{ group.name }}</div>
+                    {% set groupName = 'shipment_type.name.shipment_type_' ~ group.name %}
+                    <div class="title--h4">{{ groupName | trans }}</div>
                 {% endblock %}
 
                 {% block items %}

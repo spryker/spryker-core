@@ -7,6 +7,7 @@
 
 namespace SprykerFeature\Zed\SspAssetManagement\Persistence;
 
+use Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 
 interface SspAssetManagementEntityManagerInterface
@@ -24,6 +25,13 @@ interface SspAssetManagementEntityManagerInterface
      * @return \Generated\Shared\Transfer\SspAssetTransfer
      */
     public function updateSspAsset(SspAssetTransfer $sspAssetTransfer): SspAssetTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer $salesOrderItemSspAssetTransfer
+     *
+     * @return void
+     */
+    public function createSalesOrderItemSspAsset(SalesOrderItemSspAssetTransfer $salesOrderItemSspAssetTransfer): void;
 
     /**
      * @param int $idSspAsset

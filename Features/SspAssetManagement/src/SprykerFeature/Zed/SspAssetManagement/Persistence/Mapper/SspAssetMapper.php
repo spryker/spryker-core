@@ -54,7 +54,11 @@ class SspAssetMapper implements SspAssetMapperInterface
     ): SspAssetTransfer {
         $sspAssetTransfer->fromArray($spySspAssetEntity->toArray(), true);
         if ($spySspAssetEntity->getCreatedAt()) {
-            $sspAssetTransfer->setCreatedDate($spySspAssetEntity->getCreatedAt()->format('Y-m-d H:i:s'));
+            /**
+             * @var \DateTime $createdAt
+             */
+            $createdAt = $spySspAssetEntity->getCreatedAt();
+            $sspAssetTransfer->setCreatedDate($createdAt->format('Y-m-d H:i:s'));
         }
 
         if ($spySspAssetEntity->getFkImageFile()) {
@@ -85,8 +89,13 @@ class SspAssetMapper implements SspAssetMapperInterface
         SspAssetIncludeTransfer $sspAssetIncludeTransfer
     ): SspAssetTransfer {
         if ($sspAssetIncludeTransfer->getWithCompanyBusinessUnit() && $spySspAssetEntity->getSpyCompanyBusinessUnit()) {
+            /**
+             * @var \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit $companyBusinessUnit
+             */
+            $companyBusinessUnit = $spySspAssetEntity->getSpyCompanyBusinessUnit();
+
             $sspAssetTransfer->setCompanyBusinessUnit(
-                (new CompanyBusinessUnitTransfer())->fromArray($spySspAssetEntity->getSpyCompanyBusinessUnit()->toArray(), true),
+                (new CompanyBusinessUnitTransfer())->fromArray($companyBusinessUnit->toArray(), true),
             );
         }
 

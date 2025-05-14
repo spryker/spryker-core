@@ -12,16 +12,22 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Merchant\Business\MerchantFacadeInterface;
 use Spryker\Zed\MerchantStock\Business\MerchantStockFacadeInterface;
+use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use Spryker\Zed\ServicePoint\Business\ServicePointFacadeInterface;
 use Spryker\Zed\ShipmentType\Business\ShipmentTypeFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
+use SprykerFeature\Zed\SspServiceManagement\Business\Expander\OrderItemProductTypeExpander;
+use SprykerFeature\Zed\SspServiceManagement\Business\Expander\OrderItemProductTypeExpanderInterface;
+use SprykerFeature\Zed\SspServiceManagement\Business\Saver\ServiceDateTimeEnabledSaver;
+use SprykerFeature\Zed\SspServiceManagement\Business\Saver\ServiceDateTimeEnabledSaverInterface;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Expander\ProductAbstractTypeExpander;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Expander\ProductAbstractTypeExpanderInterface;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Form\CreateOfferForm;
@@ -254,6 +260,8 @@ class SspServiceManagementCommunicationFactory extends AbstractCommunicationFact
     {
         return new ServiceTable(
             $this->getSalesOrderItemPropelQuery(),
+            $this->getDateTimeService(),
+            $this->getConfig(),
         );
     }
 
@@ -295,6 +303,36 @@ class SspServiceManagementCommunicationFactory extends AbstractCommunicationFact
     public function createProductAbstractTypeExpander(): ProductAbstractTypeExpanderInterface
     {
         return new ProductAbstractTypeExpander(
+            $this->getRepository(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspServiceManagement\Communication\Saver\SalesOrderItemProductTypesSaverInterface
+     */
+    public function createSalesOrderItemProductTypesSaver(): SalesOrderItemProductTypesSaverInterface
+    {
+        return new SalesOrderItemProductTypesSaver(
+            $this->getEntityManager(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspServiceManagement\Business\Saver\ServiceDateTimeEnabledSaverInterface
+     */
+    public function createServiceDateTimeEnabledSaver(): ServiceDateTimeEnabledSaverInterface
+    {
+        return new ServiceDateTimeEnabledSaver(
+            $this->getEntityManager(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspServiceManagement\Business\Expander\OrderItemProductTypeExpanderInterface
+     */
+    public function createOrderItemProductTypeExpander(): OrderItemProductTypeExpanderInterface
+    {
+        return new OrderItemProductTypeExpander(
             $this->getRepository(),
         );
     }
@@ -380,6 +418,14 @@ class SspServiceManagementCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
+     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
+     */
+    public function getOmsFacade(): OmsFacadeInterface
+    {
+        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::FACADE_OMS);
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantStock\Business\MerchantStockFacadeInterface
      */
     public function getMerchantStockFacade(): MerchantStockFacadeInterface
@@ -396,12 +442,10 @@ class SspServiceManagementCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
-     * @return \SprykerFeature\Zed\SspServiceManagement\Communication\Saver\SalesOrderItemProductTypesSaverInterface
+     * @return \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
-    public function createSalesOrderItemProductTypesSaver(): SalesOrderItemProductTypesSaverInterface
+    public function getDateTimeService(): UtilDateTimeServiceInterface
     {
-        return new SalesOrderItemProductTypesSaver(
-            $this->getEntityManager(),
-        );
+        return $this->getProvidedDependency(SspServiceManagementDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
 }

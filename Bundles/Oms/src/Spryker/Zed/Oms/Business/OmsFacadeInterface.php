@@ -635,8 +635,6 @@ interface OmsFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
      * @param string $processName
      * @param string $stateName
      *

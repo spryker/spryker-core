@@ -22,4 +22,11 @@ interface ShipmentTypeCheckerInterface
      * @return bool
      */
     public function hasOnlyDeliveryShipmentType(array $shipmentTypes): bool;
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer> $shipmentTypes
+     *
+     * @return bool
+     */
+    public function hasShipmentTypeWithRequiredLocation(array $shipmentTypes): bool;
 }

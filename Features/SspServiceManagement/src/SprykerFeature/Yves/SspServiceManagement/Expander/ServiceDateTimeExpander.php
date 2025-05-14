@@ -9,7 +9,7 @@ namespace SprykerFeature\Yves\SspServiceManagement\Expander;
 
 use Generated\Shared\Transfer\ItemMetadataTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use SprykerFeature\Yves\SspServiceManagement\Widget\ShipmentTypeServicePointSelectorWidget;
+use SprykerFeature\Yves\SspServiceManagement\Widget\SspShipmentTypeServicePointSelectorWidget;
 
 class ServiceDateTimeExpander implements ServiceDateTimeExpanderInterface
 {
@@ -21,11 +21,11 @@ class ServiceDateTimeExpander implements ServiceDateTimeExpanderInterface
      */
     public function expandItemTransferWithServiceDateTime(ItemTransfer $itemTransfer, array $params): ItemTransfer
     {
-        if (!isset($params[ShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_ITEM_METADATA_SCHEDULED_AT])) {
+        if (!isset($params[SspShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_ITEM_METADATA_SCHEDULED_AT])) {
             return $itemTransfer;
         }
 
-        $scheduledAt = $params[ShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_ITEM_METADATA_SCHEDULED_AT] ?: null;
+        $scheduledAt = $params[SspShipmentTypeServicePointSelectorWidget::DEFAULT_FORM_FIELD_ITEM_METADATA_SCHEDULED_AT] ?: null;
 
         if (!$scheduledAt) {
             return $itemTransfer;

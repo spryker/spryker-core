@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferShipmentTypeTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOfferShipmentType\Persistence\Map\SpyProductOfferShipmentTypeTableMap;
 use Propel\Runtime\Collection\ArrayCollection;
 use Spryker\Zed\ProductOfferShipmentType\Persistence\ProductOfferShipmentTypeRepository;
@@ -50,9 +51,11 @@ class ProductOfferShipmentTypeMapper
         ProductOfferShipmentTypeTransfer $productOfferShipmentTypeTransfer
     ): ProductOfferShipmentTypeTransfer {
         $productOfferShipmentTypeTransfer->setProductOffer(
-            (new ProductOfferTransfer())->setIdProductOffer(
-                (int)$productOfferShipmentData[SpyProductOfferShipmentTypeTableMap::COL_FK_PRODUCT_OFFER],
-            ),
+            (new ProductOfferTransfer())
+                ->setIdProductOffer(
+                    (int)$productOfferShipmentData[SpyProductOfferShipmentTypeTableMap::COL_FK_PRODUCT_OFFER],
+                )
+                ->setProductOfferReference((string)$productOfferShipmentData[SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE]),
         );
 
         if (!isset($productOfferShipmentData[ProductOfferShipmentTypeRepository::SHIPMENT_TYPE_IDS_GROUPED])) {

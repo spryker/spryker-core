@@ -11,13 +11,19 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ProductOfferShipmentType\Business\ProductOfferShipmentTypeFacadeInterface;
 use Spryker\Zed\ShipmentType\Business\ShipmentTypeFacadeInterface;
+use SprykerFeature\Zed\SspServiceManagement\Business\Expander\ShipmentTypeItemExpander;
 use SprykerFeature\Zed\SspServiceManagement\Business\Reader\ShipmentTypeReaderInterface;
+use SprykerFeature\Zed\SspServiceManagement\Business\SspServiceManagementBusinessFactory;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Cart\SspShipmentTypeItemExpanderPlugin;
+use SprykerFeature\Zed\SspServiceManagement\Persistence\SspServiceManagementRepository;
+use SprykerFeature\Zed\SspServiceManagement\Persistence\SspServiceManagementRepositoryInterface;
 use SprykerFeatureTest\Zed\SspServiceManagement\SspServiceManagementCommunicationTester;
 
 /**
@@ -67,13 +73,10 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
     public function testExpandItemsExpandsItemsWithShipmentType(): void
     {
         // Arrange
-        $businessFactory = $this->tester->mockFactoryMethod('createShipmentTypeReader', $this->createShipmentTypeReaderMock(
-            [static::TEST_SHIPMENT_TYPE_UUID => $this->tester->createShipmentTypeTransfer()],
-        ));
-
         $cartChangeTransfer = $this->createCartChangeTransferWithShipmentType(static::TEST_SHIPMENT_TYPE_UUID);
-        $shipmentTypeItemExpanderPlugin = new SspShipmentTypeItemExpanderPlugin();
-        $shipmentTypeItemExpanderPlugin->setBusinessFactory($businessFactory);
+        $shipmentTypeItemExpanderPlugin = $this->createPluginWithMockFactory([
+            static::TEST_SHIPMENT_TYPE_UUID => $this->tester->createShipmentTypeTransfer(),
+        ]);
 
         // Act
         $resultCartChangeTransfer = $shipmentTypeItemExpanderPlugin->expandItems($cartChangeTransfer);
@@ -101,24 +104,14 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
             'Default Shipment Type',
         );
 
-        $businessFactory = $this->tester->mockFactoryMethod('createShipmentTypeReader', $this->createShipmentTypeReaderMock(
-            [],
-            $defaultShipmentTypeTransfer,
-        ));
-
         $cartChangeTransfer = $this->createCartChangeTransferWithoutShipmentType();
-        $shipmentTypeItemExpanderPlugin = new SspShipmentTypeItemExpanderPlugin();
-        $shipmentTypeItemExpanderPlugin->setBusinessFactory($businessFactory);
+        $shipmentTypeItemExpanderPlugin = $this->createPluginWithMockFactory([], $defaultShipmentTypeTransfer);
 
         // Act
         $resultCartChangeTransfer = $shipmentTypeItemExpanderPlugin->expandItems($cartChangeTransfer);
 
         // Assert
-        $itemTransfer = $resultCartChangeTransfer->getItems()[0];
-        $this->assertNotNull($itemTransfer->getShipmentType());
-        $this->assertSame(static::DEFAULT_SHIPMENT_TYPE_UUID, $itemTransfer->getShipmentTypeOrFail()->getUuidOrFail());
-        $this->assertSame(2, $itemTransfer->getShipmentTypeOrFail()->getIdShipmentType());
-        $this->assertSame('Default Shipment Type', $itemTransfer->getShipmentTypeOrFail()->getName());
+        $this->assertShipmentTypeItem($resultCartChangeTransfer->getItems()[0], static::DEFAULT_SHIPMENT_TYPE_UUID, 2, 'Default Shipment Type');
     }
 
     /**
@@ -127,22 +120,17 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
     public function testExpandItemsDoesNothingWhenNoItemsProvided(): void
     {
         // Arrange
-        $businessFactory = $this->tester->mockFactoryMethod('createShipmentTypeReader', $this->createShipmentTypeReaderMock());
-
         $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->setQuote((new QuoteTransfer())->setStore(new StoreTransfer()));
         $cartChangeTransfer->setItems(new ArrayObject());
-        $cartChangeTransfer->setQuote(
-            (new QuoteTransfer())->setStore((new StoreTransfer())->setName(static::TEST_STORE_NAME)),
-        );
 
-        $shipmentTypeItemExpanderPlugin = new SspShipmentTypeItemExpanderPlugin();
-        $shipmentTypeItemExpanderPlugin->setBusinessFactory($businessFactory);
+        $shipmentTypeItemExpanderPlugin = $this->createPluginWithMockFactory([]);
 
         // Act
         $resultCartChangeTransfer = $shipmentTypeItemExpanderPlugin->expandItems($cartChangeTransfer);
 
         // Assert
-        $this->assertCount(0, $resultCartChangeTransfer->getItems());
+        $this->assertSame($cartChangeTransfer, $resultCartChangeTransfer);
     }
 
     /**
@@ -152,10 +140,6 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
     {
         // Arrange
         $shipmentTypeTransfer = $this->tester->createShipmentTypeTransfer();
-
-        $businessFactory = $this->tester->mockFactoryMethod('createShipmentTypeReader', $this->createShipmentTypeReaderMock(
-            [static::TEST_SHIPMENT_TYPE_UUID => $shipmentTypeTransfer],
-        ));
 
         $itemTransfers = new ArrayObject([
             (new ItemTransfer())->setShipmentType(
@@ -170,12 +154,14 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
 
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setStore((new StoreTransfer())->setName(static::TEST_STORE_NAME));
+        $quoteTransfer->setItems($itemTransfers); // Also setting items on the quote
         $quoteTransfer->setBundleItems($itemTransfers);
 
         $cartChangeTransfer->setQuote($quoteTransfer);
 
-        $shipmentTypeItemExpanderPlugin = new SspShipmentTypeItemExpanderPlugin();
-        $shipmentTypeItemExpanderPlugin->setBusinessFactory($businessFactory);
+        $shipmentTypeItemExpanderPlugin = $this->createPluginWithMockFactory([
+            static::TEST_SHIPMENT_TYPE_UUID => $shipmentTypeTransfer,
+        ]);
 
         // Act
         $resultCartChangeTransfer = $shipmentTypeItemExpanderPlugin->expandItems($cartChangeTransfer);
@@ -195,14 +181,11 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
     public function testExpandItemsDoesNotExpandWhenShipmentTypeReaderReturnsNoResults(): void
     {
         // Arrange
-        $businessFactory = $this->tester->mockFactoryMethod('createShipmentTypeReader', $this->createShipmentTypeReaderMock([]));
-
         $cartChangeTransfer = $this->createCartChangeTransferWithShipmentType(static::TEST_SHIPMENT_TYPE_UUID);
-        $shipmentTypeItemExpanderPlugin = new SspShipmentTypeItemExpanderPlugin();
+        $shipmentTypeItemExpanderPlugin = $this->createPluginWithMockFactory([]);
 
         // Act
         $resultCartChangeTransfer = $shipmentTypeItemExpanderPlugin->expandItems($cartChangeTransfer);
-        $shipmentTypeItemExpanderPlugin->setBusinessFactory($businessFactory);
 
         // Assert
         $itemTransfer = $resultCartChangeTransfer->getItems()[0];
@@ -213,6 +196,158 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testExpandItemsExpandsProductItemsWithDefaultShipmentTypeWhenNoShipmentTypeProvided(): void
+    {
+        // Arrange
+        $defaultShipmentType = (new ShipmentTypeTransfer())
+            ->setUuid(static::DEFAULT_SHIPMENT_TYPE_UUID)
+            ->setIdShipmentType(2)
+            ->setName('Default Shipment Type');
+
+        $itemTransfer = (new ItemTransfer())
+            ->setId(123)
+            ->setSku('test-product-sku')
+            ->setShipment(new ShipmentTransfer());
+
+        $items = new ArrayObject([$itemTransfer]);
+        $quoteTransfer = (new QuoteTransfer())
+            ->setStore((new StoreTransfer())->setName(static::TEST_STORE_NAME))
+            ->setItems($items)
+            ->setBundleItems(new ArrayObject());
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->setItems($items)
+            ->setQuote($quoteTransfer);
+
+        $shipmentTypeReader = $this->createMock(ShipmentTypeReaderInterface::class);
+        $shipmentTypeReader->method('getDefaultShipmentType')
+            ->with(static::TEST_STORE_NAME)
+            ->willReturn($defaultShipmentType);
+
+        $repository = $this->createMock(SspServiceManagementRepositoryInterface::class);
+        $repository->method('getProductIdsWithShipmentType')
+            ->with([$itemTransfer->getId()], $defaultShipmentType->getNameOrFail())
+            ->willReturn([$itemTransfer->getId()]);
+
+        $shipmentTypeItemExpander = $this->getMockBuilder(ShipmentTypeItemExpander::class)
+            ->setConstructorArgs([
+                $shipmentTypeReader,
+                $repository,
+                $this->createMock(ProductOfferShipmentTypeFacadeInterface::class),
+            ])
+            ->onlyMethods([])
+            ->getMock();
+
+        $businessFactoryMock = $this->getMockBuilder(SspServiceManagementBusinessFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $businessFactoryMock->method('createShipmentTypeItemExpander')
+            ->willReturn($shipmentTypeItemExpander);
+
+        $plugin = new SspShipmentTypeItemExpanderPlugin();
+        $plugin->setBusinessFactory($businessFactoryMock);
+
+        // Act
+        $resultCartChangeTransfer = $plugin->expandItems($cartChangeTransfer);
+
+        // Assert
+        $resultItem = $resultCartChangeTransfer->getItems()[0];
+        $this->assertNotNull($resultItem->getShipmentType(), 'Product item should have shipment type set');
+        $this->assertSame($defaultShipmentType->getUuidOrFail(), $resultItem->getShipmentTypeOrFail()->getUuidOrFail());
+        $this->assertSame($defaultShipmentType->getIdShipmentType(), $resultItem->getShipmentTypeOrFail()->getIdShipmentType());
+        $this->assertSame($defaultShipmentType->getName(), $resultItem->getShipmentTypeOrFail()->getName());
+        $this->assertSame(
+            $defaultShipmentType->getUuidOrFail(),
+            $resultItem->getShipmentOrFail()->getShipmentTypeUuid(),
+            'Shipment type UUID should be set on the shipment transfer as well',
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandItemsExpandsProductOfferItemsWithDefaultShipmentTypeWhenNoShipmentTypeProvided(): void
+    {
+        // Arrange
+        $defaultShipmentType = (new ShipmentTypeTransfer())
+            ->setUuid(static::DEFAULT_SHIPMENT_TYPE_UUID)
+            ->setIdShipmentType(2)
+            ->setName('Default Shipment Type');
+
+        $productOfferReference = 'test-product-offer';
+        $itemTransfer = (new ItemTransfer())
+            ->setId(456)
+            ->setProductOfferReference($productOfferReference)
+            ->setShipment(new ShipmentTransfer());
+
+        $items = new ArrayObject([$itemTransfer]);
+        $quoteTransfer = (new QuoteTransfer())
+            ->setStore((new StoreTransfer())->setName(static::TEST_STORE_NAME))
+            ->setItems($items)
+            ->setBundleItems(new ArrayObject());
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->setItems($items)
+            ->setQuote($quoteTransfer);
+
+        $shipmentTypeReader = $this->createMock(ShipmentTypeReaderInterface::class);
+        $shipmentTypeReader->method('getDefaultShipmentType')
+            ->with(static::TEST_STORE_NAME)
+            ->willReturn($defaultShipmentType);
+
+        $productOfferFacade = $this->createMock(ProductOfferShipmentTypeFacadeInterface::class);
+
+        $emptyCollection = new ProductOfferShipmentTypeCollectionTransfer();
+        $emptyCollection->setProductOfferShipmentTypes(new ArrayObject()); // Empty array object
+
+        $productOfferFacade->expects($this->once())
+            ->method('getProductOfferShipmentTypeCollection')
+            ->willReturn($emptyCollection);
+
+        $shipmentTypeItemExpander = new ShipmentTypeItemExpander(
+            $shipmentTypeReader,
+            $this->createMock(SspServiceManagementRepositoryInterface::class),
+            $productOfferFacade,
+        );
+
+        $modifiedExpander = $this->getMockBuilder(ShipmentTypeItemExpander::class)
+            ->setConstructorArgs([
+                $shipmentTypeReader,
+                $this->createMock(SspServiceManagementRepositoryInterface::class),
+                $productOfferFacade,
+            ])
+            ->onlyMethods(['extractProductOfferReferencesWithDefaultShipmentType'])
+            ->getMock();
+
+        $modifiedExpander->method('extractProductOfferReferencesWithDefaultShipmentType')
+            ->willReturn([$productOfferReference]);
+
+        $businessFactoryMock = $this->getMockBuilder(SspServiceManagementBusinessFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $businessFactoryMock->method('createShipmentTypeItemExpander')
+            ->willReturn($modifiedExpander);
+
+        $plugin = new SspShipmentTypeItemExpanderPlugin();
+        $plugin->setBusinessFactory($businessFactoryMock);
+
+        // Act
+        $resultCartChangeTransfer = $plugin->expandItems($cartChangeTransfer);
+
+        // Assert
+        $resultItem = $resultCartChangeTransfer->getItems()[0];
+        $this->assertNotNull($resultItem->getShipmentType(), 'Product offer item should have shipment type set');
+        $this->assertSame($defaultShipmentType->getUuidOrFail(), $resultItem->getShipmentTypeOrFail()->getUuidOrFail());
+        $this->assertSame($defaultShipmentType->getIdShipmentType(), $resultItem->getShipmentTypeOrFail()->getIdShipmentType());
+        $this->assertSame($defaultShipmentType->getName(), $resultItem->getShipmentTypeOrFail()->getName());
+        $this->assertSame(
+            $defaultShipmentType->getUuidOrFail(),
+            $resultItem->getShipmentOrFail()->getShipmentTypeUuid(),
+            'Shipment type UUID should be set on the shipment transfer as well',
+        );
+    }
+
+    /**
      * @param string|null $shipmentTypeUuid
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
@@ -220,22 +355,17 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
     protected function createCartChangeTransferWithShipmentType(?string $shipmentTypeUuid = null): CartChangeTransfer
     {
         $cartChangeTransfer = new CartChangeTransfer();
-        $itemTransfer = new ItemTransfer();
+        $itemTransfer = $this->createItemTransfer($shipmentTypeUuid);
 
-        if ($shipmentTypeUuid) {
-            $shipmentTypeTransfer = new ShipmentTypeTransfer();
-            $shipmentTypeTransfer->setUuid($shipmentTypeUuid);
-            $itemTransfer->setShipmentType($shipmentTypeTransfer);
-        }
+        $items = new ArrayObject([$itemTransfer]);
+        $cartChangeTransfer->setItems($items);
 
-        $shipmentTransfer = new ShipmentTransfer();
-        $itemTransfer->setShipment($shipmentTransfer);
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setStore((new StoreTransfer())->setName(static::TEST_STORE_NAME));
+        $quoteTransfer->setItems($items);
+        $quoteTransfer->setBundleItems(new ArrayObject());
 
-        $cartChangeTransfer->setItems(new ArrayObject([$itemTransfer]));
-        $cartChangeTransfer->setQuote(
-            (new QuoteTransfer())->setStore((new StoreTransfer())->setName(static::TEST_STORE_NAME))
-                ->setBundleItems(new ArrayObject()),
-        );
+        $cartChangeTransfer->setQuote($quoteTransfer);
 
         return $cartChangeTransfer;
     }
@@ -246,12 +376,14 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
     protected function createCartChangeTransferWithoutShipmentType(): CartChangeTransfer
     {
         $cartChangeTransfer = new CartChangeTransfer();
-        $itemTransfer = new ItemTransfer();
+        $itemTransfer = $this->createItemTransfer();
 
-        $cartChangeTransfer->setItems(new ArrayObject([$itemTransfer]));
+        $items = new ArrayObject([$itemTransfer]);
+        $cartChangeTransfer->setItems($items);
         $cartChangeTransfer->setQuote(
             (new QuoteTransfer())->setStore((new StoreTransfer())->setName(static::TEST_STORE_NAME))
-                ->setBundleItems(new ArrayObject()),
+                ->setBundleItems(new ArrayObject())
+                ->setItems($items),
         );
 
         return $cartChangeTransfer;
@@ -286,5 +418,91 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
             ->willReturn($defaultShipmentType);
 
         return $shipmentTypeReaderMock;
+    }
+
+    /**
+     * @param array<string, \Generated\Shared\Transfer\ShipmentTypeTransfer> $shipmentTypesByUuid
+     * @param \Generated\Shared\Transfer\ShipmentTypeTransfer|null $defaultShipmentType
+     * @param \SprykerFeature\Zed\SspServiceManagement\Persistence\SspServiceManagementRepositoryInterface|null $repository
+     * @param \Spryker\Zed\ProductOfferShipmentType\Business\ProductOfferShipmentTypeFacadeInterface|null $productOfferShipmentTypeFacade
+     *
+     * @return \SprykerFeature\Zed\SspServiceManagement\Business\SspServiceManagementBusinessFactory
+     */
+    protected function createMockBusinessFactory(
+        array $shipmentTypesByUuid = [],
+        ?ShipmentTypeTransfer $defaultShipmentType = null,
+        ?SspServiceManagementRepositoryInterface $repository = null,
+        ?ProductOfferShipmentTypeFacadeInterface $productOfferShipmentTypeFacade = null
+    ): SspServiceManagementBusinessFactory {
+        $shipmentTypeReaderMock = $this->createShipmentTypeReaderMock($shipmentTypesByUuid, $defaultShipmentType);
+        $repository = $repository ?? new SspServiceManagementRepository();
+        $productOfferShipmentTypeFacade = $productOfferShipmentTypeFacade ?? $this->createMock(ProductOfferShipmentTypeFacadeInterface::class);
+
+        $shipmentTypeItemExpander = new ShipmentTypeItemExpander(
+            $shipmentTypeReaderMock,
+            $repository,
+            $productOfferShipmentTypeFacade,
+        );
+
+        $businessFactoryMock = $this->getMockBuilder(SspServiceManagementBusinessFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $businessFactoryMock->method('createShipmentTypeItemExpander')
+            ->willReturn($shipmentTypeItemExpander);
+
+        return $businessFactoryMock;
+    }
+
+    /**
+     * @param string|null $shipmentTypeUuid
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createItemTransfer(?string $shipmentTypeUuid = null): ItemTransfer
+    {
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setId(mt_rand(1, 1000)); // Set a random ID to avoid null value exceptions
+
+        if ($shipmentTypeUuid) {
+            $shipmentTypeTransfer = new ShipmentTypeTransfer();
+            $shipmentTypeTransfer->setUuid($shipmentTypeUuid);
+            $itemTransfer->setShipmentType($shipmentTypeTransfer);
+
+            $shipmentTransfer = new ShipmentTransfer();
+            $shipmentTransfer->setShipmentTypeUuid($shipmentTypeUuid); // Set UUID on shipment as well
+            $itemTransfer->setShipment($shipmentTransfer);
+        } else {
+            $shipmentTransfer = new ShipmentTransfer();
+            $itemTransfer->setShipment($shipmentTransfer);
+        }
+
+        return $itemTransfer;
+    }
+
+    /**
+     * @param array<string, \Generated\Shared\Transfer\ShipmentTypeTransfer> $shipmentTypesByUuid
+     * @param \Generated\Shared\Transfer\ShipmentTypeTransfer|null $defaultShipmentType
+     * @param \SprykerFeature\Zed\SspServiceManagement\Persistence\SspServiceManagementRepositoryInterface|null $repository
+     * @param \Spryker\Zed\ProductOfferShipmentType\Business\ProductOfferShipmentTypeFacadeInterface|null $productOfferShipmentTypeFacade
+     *
+     * @return \SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Cart\SspShipmentTypeItemExpanderPlugin
+     */
+    protected function createPluginWithMockFactory(
+        array $shipmentTypesByUuid = [],
+        ?ShipmentTypeTransfer $defaultShipmentType = null,
+        ?SspServiceManagementRepositoryInterface $repository = null,
+        ?ProductOfferShipmentTypeFacadeInterface $productOfferShipmentTypeFacade = null
+    ): SspShipmentTypeItemExpanderPlugin {
+        $businessFactoryMock = $this->createMockBusinessFactory(
+            $shipmentTypesByUuid,
+            $defaultShipmentType,
+            $repository,
+            $productOfferShipmentTypeFacade,
+        );
+
+        $shipmentTypeItemExpanderPlugin = new SspShipmentTypeItemExpanderPlugin();
+        $shipmentTypeItemExpanderPlugin->setBusinessFactory($businessFactoryMock);
+
+        return $shipmentTypeItemExpanderPlugin;
     }
 }

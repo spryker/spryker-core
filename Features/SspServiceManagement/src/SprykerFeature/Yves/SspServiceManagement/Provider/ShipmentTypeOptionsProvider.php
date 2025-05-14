@@ -7,6 +7,7 @@
 
 namespace SprykerFeature\Yves\SspServiceManagement\Provider;
 
+use SprykerFeature\Yves\SspServiceManagement\Sorter\ShipmentTypeGroupSorterInterface;
 use SprykerFeature\Yves\SspServiceManagement\SspServiceManagementConfig;
 
 class ShipmentTypeOptionsProvider implements ShipmentTypeOptionsProviderInterface
@@ -43,33 +44,36 @@ class ShipmentTypeOptionsProvider implements ShipmentTypeOptionsProviderInterfac
 
     /**
      * @param \SprykerFeature\Yves\SspServiceManagement\SspServiceManagementConfig $sspServiceManagementConfig
+     * @param \SprykerFeature\Yves\SspServiceManagement\Sorter\ShipmentTypeGroupSorterInterface $shipmentTypeGroupSorter
      */
-    public function __construct(protected SspServiceManagementConfig $sspServiceManagementConfig)
-    {
+    public function __construct(
+        protected SspServiceManagementConfig $sspServiceManagementConfig,
+        protected ShipmentTypeGroupSorterInterface $shipmentTypeGroupSorter
+    ) {
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ShipmentTypeTransfer> $shipmentTypeTransfers
+     * @param array<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer> $shipmentTypeStorageTransfers
      *
      * @return array<int, array<string, mixed>>
      */
-    public function provideShipmentTypeOptions(array $shipmentTypeTransfers): array
+    public function provideShipmentTypeOptions(array $shipmentTypeStorageTransfers): array
     {
         $servicePointRequiredShipmentTypeKeys = $this->sspServiceManagementConfig->getServicePointRequiredShipmentTypeKeys();
         $isServicePointRequiredMap = array_combine($servicePointRequiredShipmentTypeKeys, $servicePointRequiredShipmentTypeKeys);
 
         $options = [];
-        foreach ($shipmentTypeTransfers as $shipmentTypeTransfer) {
-            $options[] = [
-                static::OPTION_LABEL => $shipmentTypeTransfer->getNameOrFail(),
-                static::OPTION_VALUE => $shipmentTypeTransfer->getUuidOrFail(),
-                static::OPTION_SHIPMENT_TYPE_UUID => $shipmentTypeTransfer->getUuidOrFail(),
-                static::OPTION_SERVICE_TYPE_KEY => $shipmentTypeTransfer->getServiceType()?->getKey(),
-                static::OPTION_SERVICE_TYPE_UUID => $shipmentTypeTransfer->getServiceType()?->getUuid(),
-                static::OPTION_IS_SERVICE_POINT_REQUIRED => $isServicePointRequiredMap[$shipmentTypeTransfer->getKeyOrFail()] ?? false,
+        foreach ($shipmentTypeStorageTransfers as $shipmentTypeStorageTransfer) {
+            $options[$shipmentTypeStorageTransfer->getKeyOrFail()] = [
+                static::OPTION_LABEL => $shipmentTypeStorageTransfer->getNameOrFail(),
+                static::OPTION_VALUE => $shipmentTypeStorageTransfer->getUuidOrFail(),
+                static::OPTION_SHIPMENT_TYPE_UUID => $shipmentTypeStorageTransfer->getUuidOrFail(),
+                static::OPTION_SERVICE_TYPE_KEY => $shipmentTypeStorageTransfer->getServiceType()?->getKey(),
+                static::OPTION_SERVICE_TYPE_UUID => $shipmentTypeStorageTransfer->getServiceType()?->getUuid(),
+                static::OPTION_IS_SERVICE_POINT_REQUIRED => $isServicePointRequiredMap[$shipmentTypeStorageTransfer->getKeyOrFail()] ?? false,
             ];
         }
 
-        return $options;
+        return array_values($this->shipmentTypeGroupSorter->sortShipmentTypeGroups($options));
     }
 }
