@@ -25,6 +25,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRepositoryInterface
 {
     /**
+     * @var array<string, \Generated\Shared\Transfer\CompanyRoleCollectionTransfer>
+     */
+    protected static array $companyRoleCollectionCache = [];
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
@@ -224,6 +229,11 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     public function getCompanyRoleCollection(
         CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
     ): CompanyRoleCollectionTransfer {
+        $hash = md5($this->recursiveImplode($companyRoleCriteriaFilterTransfer->toArray(), ','));
+        if (isset(static::$companyRoleCollectionCache[$hash])) {
+            return static::$companyRoleCollectionCache[$hash];
+        }
+
         $query = $this->getFactory()
             ->createCompanyRoleQuery();
 
@@ -248,6 +258,8 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         }
 
         $collectionTransfer->setPagination($companyRoleCriteriaFilterTransfer->getPagination());
+
+        static::$companyRoleCollectionCache[$hash] = $collectionTransfer;
 
         return $collectionTransfer;
     }
@@ -430,5 +442,26 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         }
 
         return $this->prepareCompanyRoleTransfer($companyRoleEntity);
+    }
+
+    /**
+     * @param array $array
+     * @param string $glue
+     *
+     * @return string
+     */
+    protected function recursiveImplode(array $array, string $glue = ','): string
+    {
+        $result = [];
+
+        foreach ($array as $value) {
+            if (is_array($value)) {
+                $result[] = $this->recursiveImplode($value, $glue);
+            } else {
+                $result[] = (string)$value;
+            }
+        }
+
+        return implode($glue, $result);
     }
 }

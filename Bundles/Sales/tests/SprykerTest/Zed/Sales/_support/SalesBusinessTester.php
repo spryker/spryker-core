@@ -24,6 +24,7 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -41,6 +42,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\Oms\OmsConfig;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface;
 
 /**
  * @method void wantToTest($text)
@@ -405,5 +407,53 @@ class SalesBusinessTester extends Actor
     protected function getOmsOrderItemStateHistoryQuery(): SpyOmsOrderItemStateHistoryQuery
     {
         return SpyOmsOrderItemStateHistoryQuery::create();
+    }
+
+    /**
+     * @param string$hashColumn
+     *
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface
+     */
+    public function createHashGeneratorExpanderPlugin(string $hashColumn): OrderItemExpanderPreSavePluginInterface
+    {
+        return new class ($hashColumn) implements OrderItemExpanderPreSavePluginInterface {
+            private string $hashColumn;
+
+            /**
+             * @param string $hashColumn
+             */
+            public function __construct(string $hashColumn)
+            {
+                $this->hashColumn = $hashColumn;
+            }
+
+            /**
+             * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+             * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+             * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+             *
+             * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
+             */
+            public function expandOrderItem(
+                QuoteTransfer $quoteTransfer,
+                ItemTransfer $itemTransfer,
+                SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+            ): SpySalesOrderItemEntityTransfer {
+                $hashValue = md5(uniqid(implode(
+                    '-',
+                    array_filter(
+                        $salesOrderItemEntityTransfer->toArray(false),
+                        function ($elements) {
+                            return is_int($elements) || is_string($elements);
+                        },
+                    ),
+                )));
+
+                $salesOrderItemEntityTransfer->{'set' . $this->hashColumn}($hashValue);
+                $salesOrderItemEntityTransfer->setOrderItemReference($hashValue);
+
+                return $salesOrderItemEntityTransfer;
+            }
+        };
     }
 }

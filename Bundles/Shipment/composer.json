@@ -17,7 +17,7 @@
         "spryker/oms-extension": "^1.0.0",
         "spryker/price": "^5.5.0",
         "spryker/propel-orm": "^1.0.0",
-        "spryker/sales": "^11.55.0",
+        "spryker/sales": "^11.63.0",
         "spryker/sales-extension": "^1.6.0",
         "spryker/sales-order-amendment-extension": "^1.1.0",
         "spryker/session": "^3.0.0 || ^4.0.0",

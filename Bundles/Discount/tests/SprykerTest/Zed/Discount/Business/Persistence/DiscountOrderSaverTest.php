@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
+use Orm\Zed\Sales\Persistence\SpySalesDiscount;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
@@ -123,14 +125,17 @@ class DiscountOrderSaverTest extends Unit
      */
     public function testSaveDiscountMustSaveSalesDiscountCodesIfUsedCodesPresent(): void
     {
-        $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode']);
+        $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode', 'getSalesDiscountEntityCollection']);
         $discountSaver->expects($this->once())
             ->method('persistSalesDiscount');
-        $discountSaver->expects($this->exactly(1))
+        $discountSaver->expects($this->once())
             ->method('persistSalesDiscountCode');
-        $discountSaver->expects($this->exactly(1))
+        $discountSaver->expects($this->once())
             ->method('getDiscountVoucherEntityByCode')
-            ->will($this->returnCallback([$this, 'getDiscountVoucherEntityByCode']));
+            ->willReturnCallback([$this, 'getDiscountVoucherEntityByCode']);
+        $discountSaver->expects($this->once())
+            ->method('getSalesDiscountEntityCollection')
+            ->willReturnCallback([$this, 'getDiscountEntityCollectionByCode']);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setVoucherCode(static::USED_CODE_1);
@@ -154,14 +159,17 @@ class DiscountOrderSaverTest extends Unit
      */
     public function testSaveDiscountMustNotSaveSalesDiscountCodesIfUsedCodeCanNotBeFound(): void
     {
-        $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode']);
+        $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode', 'getSalesDiscountEntityCollection']);
         $discountSaver->expects($this->once())
             ->method('persistSalesDiscount');
         $discountSaver->expects($this->never())
             ->method('persistSalesDiscountCode');
         $discountSaver->expects($this->once())
             ->method('getDiscountVoucherEntityByCode')
-            ->will($this->returnValue(false));
+            ->willReturn(false);
+        $discountSaver->expects($this->once())
+            ->method('getSalesDiscountEntityCollection')
+            ->willReturnCallback([$this, 'getDiscountEntityCollectionByCode']);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setVoucherCode(static::USED_CODE_1);
@@ -190,6 +198,14 @@ class DiscountOrderSaverTest extends Unit
         $discountVoucherEntity->setVoucherPool($discountVoucherPoolEntity);
 
         return $discountVoucherEntity;
+    }
+
+    /**
+     * @return \Propel\Runtime\Collection\Collection
+     */
+    public function getDiscountEntityCollectionByCode(): Collection
+    {
+        return new Collection([new SpySalesDiscount()]);
     }
 
     /**

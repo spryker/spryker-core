@@ -78,6 +78,13 @@ interface SalesEntityManagerInterface
     public function saveSalesOrderItems(SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer): SpySalesOrderItemEntityTransfer;
 
     /**
+     * @param list<\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer> $salesOrderItemEntityTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer>
+     */
+    public function saveSalesOrderItemsBatch(array $salesOrderItemEntityTransfers): array;
+
+    /**
      * @param int $idSalesOrderAddress
      *
      * @return void

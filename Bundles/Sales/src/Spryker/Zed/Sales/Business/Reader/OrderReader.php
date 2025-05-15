@@ -44,7 +44,9 @@ class OrderReader implements OrderReaderInterface
     {
         $orderTransfer = $this->salesRepository->getSalesOrderDetails($orderFilterTransfer);
         $orderTransfer = $this->expandOrderTransferWithOrderTotals($orderTransfer);
-        $orderTransfer = $this->expandOrderTransferWithUniqueProductsQuantity($orderTransfer, $orderFilterTransfer);
+        if ($orderFilterTransfer->getWithUniqueProductCount() !== false) {
+            $orderTransfer = $this->expandOrderTransferWithUniqueProductsQuantity($orderTransfer, $orderFilterTransfer);
+        }
         $orderTransfer = $this->executeHydrateOrderPlugins($orderTransfer);
 
         return $orderTransfer;

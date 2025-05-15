@@ -21,6 +21,7 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\Util\PropelDateTime;
 use Spryker\Zed\Propel\Exception\StatementNotPreparedException;
+use Spryker\Zed\Propel\Persistence\BatchEntityPostSaveInterface;
 use Spryker\Zed\Propel\PropelConfig;
 use Throwable;
 
@@ -90,7 +91,7 @@ trait ActiveRecordBatchProcessorTrait
         $this->insertEntities($this->entitiesToInsert);
         $this->updateEntities($this->entitiesToUpdate);
 
-        $this->clear();
+        $this->resetEntitiesForCommit();
 
         return true;
     }
@@ -103,7 +104,7 @@ trait ActiveRecordBatchProcessorTrait
         $this->insertIdenticalEntities($this->entitiesToInsert);
         $this->updateEntities($this->entitiesToUpdate);
 
-        $this->clear();
+        $this->resetEntitiesForCommit();
 
         return true;
     }
@@ -118,12 +119,13 @@ trait ActiveRecordBatchProcessorTrait
         foreach ($entitiesToInsert as $entityClassName => $entities) {
             $connection = $this->getWriteConnection($entityClassName);
 
-            $entities = $this->preSave($entities, $connection);
-            $entities = $this->preInsert($entities, $connection);
+            $entities = $this->executeEntitiesPreSave($entities, $connection);
+            $entities = $this->executePreInsert($entities, $connection);
             $statements = $this->buildInsertStatements($entityClassName, $entities);
             $this->executeStatements($statements, $entityClassName, 'insert');
-            $this->postInsert($entities, $connection);
-            $this->postSave($entities, $connection);
+            $this->postSaveEntityProcession($entities, $connection);
+            $this->executePostInsert($entities, $connection);
+            $this->executePostSave($entities, $connection);
         }
     }
 
@@ -138,11 +140,12 @@ trait ActiveRecordBatchProcessorTrait
     {
         foreach ($entitiesToInsert as $entityClassName => $entities) {
             $connection = $this->getWriteConnection($entityClassName);
-            $entities = $this->preSave($entities, $connection);
-            $entities = $this->preInsert($entities, $connection);
+            $entities = $this->executeEntitiesPreSave($entities, $connection);
+            $entities = $this->executePreInsert($entities, $connection);
             $statement = $this->buildInsertStatementIdentical($entityClassName, $entities);
             $this->executeStatements([$statement], $entityClassName, 'insert');
-            $this->postInsert($entities, $connection);
+            $this->postSaveEntityProcession($entities, $connection);
+            $this->executePostInsert($entities, $connection);
         }
     }
 
@@ -156,12 +159,13 @@ trait ActiveRecordBatchProcessorTrait
         foreach ($entitiesToUpdate as $entityClassName => $entities) {
             $connection = $this->getWriteConnection($entityClassName);
 
-            $entities = $this->preSave($entities, $connection);
-            $entities = $this->preUpdate($entities, $connection);
+            $entities = $this->executeEntitiesPreSave($entities, $connection);
+            $entities = $this->executePreUpdate($entities, $connection);
             $statements = $this->buildUpdateStatements($entityClassName, $entities);
             $this->executeStatements($statements, $entityClassName, 'update');
-            $this->postUpdate($entities, $connection);
-            $this->postSave($entities, $connection);
+            $this->postSaveEntityProcession($entities, $connection);
+            $this->executePostUpdate($entities, $connection);
+            $this->executePostSave($entities, $connection);
         }
     }
 
@@ -171,11 +175,11 @@ trait ActiveRecordBatchProcessorTrait
      *
      * @return array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
-    protected function preSave(array $entities, ConnectionInterface $connection): array
+    protected function executeEntitiesPreSave(array $entities, ConnectionInterface $connection): array
     {
-        array_filter($entities, function (ActiveRecordInterface $entity) use ($connection) {
-            return $entity->preSave($connection);
-        });
+        foreach ($entities as $entity) {
+            $entity->preSave($connection);
+        }
 
         return $entities;
     }
@@ -186,12 +190,19 @@ trait ActiveRecordBatchProcessorTrait
      *
      * @return void
      */
-    protected function postSave(array $entities, ConnectionInterface $connection): void
+    protected function executePostSave(array $entities, ConnectionInterface $connection): void
     {
-        foreach ($entities as $entity) {
-            if (!$entity->isNew()) {
-                $entity->resetModified();
+        $entity = $entities[0];
+        if ($entity instanceof BatchEntityPostSaveInterface) {
+            foreach ($entities as $entity) {
+                $entity->batchPostSave();
             }
+            $entity->recursiveCommit();
+
+            return;
+        }
+
+        foreach ($entities as $entity) {
             $entity->postSave($connection);
         }
     }
@@ -202,7 +213,7 @@ trait ActiveRecordBatchProcessorTrait
      *
      * @return array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
-    protected function preInsert(array $entities, ConnectionInterface $connection): array
+    protected function executePreInsert(array $entities, ConnectionInterface $connection): array
     {
         array_filter($entities, function (ActiveRecordInterface $entity) use ($connection) {
             return $entity->preInsert($connection);
@@ -217,7 +228,7 @@ trait ActiveRecordBatchProcessorTrait
      *
      * @return void
      */
-    protected function postInsert(array $entities, ConnectionInterface $connection): void
+    protected function executePostInsert(array $entities, ConnectionInterface $connection): void
     {
         foreach ($entities as $entity) {
             $entity->postInsert($connection);
@@ -230,7 +241,7 @@ trait ActiveRecordBatchProcessorTrait
      *
      * @return array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
-    protected function preUpdate(array $entities, ConnectionInterface $connection): array
+    protected function executePreUpdate(array $entities, ConnectionInterface $connection): array
     {
         array_filter($entities, function (ActiveRecordInterface $entity) use ($connection) {
             return $entity->preUpdate($connection);
@@ -245,10 +256,24 @@ trait ActiveRecordBatchProcessorTrait
      *
      * @return void
      */
-    protected function postUpdate(array $entities, ConnectionInterface $connection): void
+    protected function executePostUpdate(array $entities, ConnectionInterface $connection): void
     {
         foreach ($entities as $entity) {
             $entity->postUpdate($connection);
+        }
+    }
+
+    /**
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $entities
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
+     *
+     * @return void
+     */
+    protected function postSaveEntityProcession(array $entities, ConnectionInterface $connection): void
+    {
+        foreach ($entities as $entity) {
+            $entity->resetModified();
+            $entity->setNew(false);
         }
     }
 
@@ -302,7 +327,7 @@ trait ActiveRecordBatchProcessorTrait
     /**
      * @return void
      */
-    protected function clear(): void
+    protected function resetEntitiesForCommit(): void
     {
         $this->entitiesToInsert = [];
         $this->entitiesToUpdate = [];

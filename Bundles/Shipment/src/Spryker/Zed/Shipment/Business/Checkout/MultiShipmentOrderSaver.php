@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business\Checkout;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -159,20 +160,18 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
      */
     protected function saveSalesOrderShipmentTransaction(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
-        $orderFilterTransfer = (new OrderFilterTransfer())->setSalesOrderId($saveOrderTransfer->getIdSalesOrder());
-        $orderTransfer = $this->salesFacade->getOrder($orderFilterTransfer);
+        $orderTransfer = $this->getOrderTransfer($saveOrderTransfer, $quoteTransfer);
         $shipmentGroups = $this->shipmentService->groupItemsByShipment($saveOrderTransfer->getOrderItems());
         $orderTransfer = $this->addShipmentExpensesFromQuoteToOrder($quoteTransfer, $orderTransfer);
 
         foreach ($shipmentGroups as $shipmentGroupTransfer) {
-            $shipmentGroupTransfer = $this->saveSalesShipment(
+            $this->saveSalesShipment(
                 $orderTransfer,
                 $shipmentGroupTransfer,
                 $saveOrderTransfer,
             );
-
-            $this->addShipmentToQuoteItems($shipmentGroupTransfer, $quoteTransfer);
         }
+        $this->addShipmentToQuoteItems($shipmentGroups->getArrayCopy(), $quoteTransfer);
     }
 
     /**
@@ -222,17 +221,25 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param list<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupTransfers
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function addShipmentToQuoteItems(ShipmentGroupTransfer $shipmentGroupTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function addShipmentToQuoteItems(array $shipmentGroupTransfers, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        $shipmentGroupTransfersIndexedByHash = [];
+        foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
+            $shipmentGroupTransfersIndexedByHash[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer;
+        }
+
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($this->shipmentService->getShipmentHashKey($itemTransfer->getShipment()) !== $shipmentGroupTransfer->getHash()) {
+            $itemHash = $this->shipmentService->getShipmentHashKey($itemTransfer->getShipment());
+            if (!isset($shipmentGroupTransfersIndexedByHash[$itemHash])) {
                 continue;
             }
+
+            $shipmentGroupTransfer = $shipmentGroupTransfersIndexedByHash[$itemHash];
 
             if (!$shipmentGroupTransfer->getShipment()->getIdSalesShipment()) {
                 continue;
@@ -397,5 +404,28 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrderTransfer(SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer): OrderTransfer
+    {
+        if ($saveOrderTransfer->getOrder() !== null && $saveOrderTransfer->getOrder()->getShippingAddress() !== null) {
+            return $saveOrderTransfer->getOrder();
+        }
+
+        if ($quoteTransfer->getOriginalOrder() !== null && $quoteTransfer->getOriginalOrder()->getShippingAddress() !== null) {
+            $quoteTransfer->getOriginalOrder()->setExpenses(new ArrayObject());
+
+            return $quoteTransfer->getOriginalOrder();
+        }
+
+        $orderFilterTransfer = (new OrderFilterTransfer())->setSalesOrderId($saveOrderTransfer->getIdSalesOrder());
+
+        return $this->salesFacade->getOrder($orderFilterTransfer);
     }
 }

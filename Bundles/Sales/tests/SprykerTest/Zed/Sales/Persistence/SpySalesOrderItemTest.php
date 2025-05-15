@@ -49,6 +49,7 @@ class SpySalesOrderItemTest extends Unit
             ->willReturn($this->createMockedOmsOrderItemSateHistoryEntity());
 
         $salesOrderItemEntityMock->setFkOmsOrderItemState(1);
+        $salesOrderItemEntityMock->setIdSalesOrderItem(1);
         $salesOrderItemEntityMock->save();
     }
 

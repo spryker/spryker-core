@@ -21,6 +21,7 @@ use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterfac
 use Spryker\Zed\Sales\Business\StateMachineResolver\OrderStateMachineResolverInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface;
+use Spryker\Zed\Sales\SalesConfig;
 
 class OrderItemsSaver implements OrderItemsSaverInterface
 {
@@ -61,6 +62,8 @@ class OrderItemsSaver implements OrderItemsSaverInterface
      */
     protected $orderStateMachineResolver;
 
+    protected SalesConfig $salesConfig;
+
     /**
      * @var \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemInitialStateProviderPluginInterface>>
      */
@@ -73,6 +76,7 @@ class OrderItemsSaver implements OrderItemsSaverInterface
      * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface> $orderItemsPostSavePlugins
      * @param \Spryker\Zed\Sales\Business\StateMachineResolver\OrderStateMachineResolverInterface $orderStateMachineResolver
      * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemInitialStateProviderPluginInterface>> $orderItemInitialStateProviderPluginStrategyResolver
+     * @param \Spryker\Zed\Sales\SalesConfig $salesConfig
      */
     public function __construct(
         SalesToOmsInterface $omsFacade,
@@ -80,7 +84,8 @@ class OrderItemsSaver implements OrderItemsSaverInterface
         SalesEntityManagerInterface $entityManager,
         array $orderItemsPostSavePlugins,
         OrderStateMachineResolverInterface $orderStateMachineResolver,
-        StrategyResolverInterface $orderItemInitialStateProviderPluginStrategyResolver
+        StrategyResolverInterface $orderItemInitialStateProviderPluginStrategyResolver,
+        SalesConfig $salesConfig
     ) {
         $this->omsFacade = $omsFacade;
         $this->salesOrderSaverPluginExecutor = $salesOrderSaverPluginExecutor;
@@ -88,6 +93,7 @@ class OrderItemsSaver implements OrderItemsSaverInterface
         $this->orderItemsPostSavePlugins = $orderItemsPostSavePlugins;
         $this->orderStateMachineResolver = $orderStateMachineResolver;
         $this->orderItemInitialStateProviderPluginStrategyResolver = $orderItemInitialStateProviderPluginStrategyResolver;
+        $this->salesConfig = $salesConfig;
     }
 
     /**
@@ -119,8 +125,45 @@ class OrderItemsSaver implements OrderItemsSaverInterface
         SaveOrderTransfer $saveOrderTransfer,
         ?bool $skipOrderItemsPostSavePlugins = false
     ): SaveOrderTransfer {
-        $itemTransfers = $quoteTransfer->getItems();
+        $itemTransfers = $this->saveOrderItemsStrategy($quoteTransfer, $saveOrderTransfer);
 
+        $quoteTransfer->setItems($itemTransfers);
+        $saveOrderTransfer = $this->copyQuoteItemsToSaveOrderItems($saveOrderTransfer, $quoteTransfer);
+
+        if ($skipOrderItemsPostSavePlugins) {
+            return $saveOrderTransfer;
+        }
+
+        return $this->executeOrderItemsPostSavePlugins($saveOrderTransfer, $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
+     */
+    public function saveOrderItemsStrategy(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): ArrayObject
+    {
+        // Optimized save logic depends on the presence of a unique identifier (e.g., OrderItemReference).
+        // As this module does not expose such an identifier, a conditional check is introduced
+        // to maintain backward compatibility and minimize installation complexity.
+        if ($this->salesConfig->getItemHashColumn() !== '') {
+            return $this->saveItemsBatch($quoteTransfer, $saveOrderTransfer);
+        }
+
+        return $this->saveItemsIndividually($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
+     */
+    protected function saveItemsIndividually(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): ArrayObject
+    {
+        $itemTransfers = $quoteTransfer->getItems();
         $initialOmsOrderItemStateEntityTransfer = $this->getInitialStateEntityTransfer($quoteTransfer, $saveOrderTransfer);
         foreach ($itemTransfers as $itemTransfer) {
             $this->assertItemRequirements($itemTransfer);
@@ -136,14 +179,45 @@ class OrderItemsSaver implements OrderItemsSaverInterface
             }
         }
 
-        $quoteTransfer->setItems($itemTransfers);
-        $saveOrderTransfer = $this->copyQuoteItemsToSaveOrderItems($saveOrderTransfer, $quoteTransfer);
+        return $itemTransfers;
+    }
 
-        if ($skipOrderItemsPostSavePlugins) {
-            return $saveOrderTransfer;
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
+     */
+    protected function saveItemsBatch(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): ArrayObject
+    {
+        $itemTransfers = $quoteTransfer->getItems();
+
+        $uniqueItemHashColumn = $this->salesConfig->getItemHashColumn();
+
+        $initialOmsOrderItemStateEntityTransfer = $this->getInitialStateEntityTransfer($quoteTransfer, $saveOrderTransfer);
+        $salesOrderItemEntityTransferList = [];
+        $groupedItems = [];
+        foreach ($itemTransfers as $itemTransfer) {
+            $this->assertItemRequirements($itemTransfer);
+
+            $salesOrderItemEntityTransfer = new SpySalesOrderItemEntityTransfer();
+            $salesOrderItemEntityTransfer = $this->hydrateSalesOrderItemEntityTransfer($saveOrderTransfer, $quoteTransfer, $salesOrderItemEntityTransfer, $itemTransfer, $initialOmsOrderItemStateEntityTransfer);
+            $salesOrderItemEntityTransfer = $this->executeOrderItemExpanderPreSavePlugins($quoteTransfer, $itemTransfer, $salesOrderItemEntityTransfer);
+            $salesOrderItemEntityTransferList[] = $salesOrderItemEntityTransfer;
+            $groupedItems[$salesOrderItemEntityTransfer->{'get' . $uniqueItemHashColumn . 'orFail'}()] = $itemTransfer;
         }
 
-        return $this->executeOrderItemsPostSavePlugins($saveOrderTransfer, $quoteTransfer);
+        $salesOrderItemEntityTransferList = $this->entityManager->saveSalesOrderItemsBatch($salesOrderItemEntityTransferList);
+        foreach ($salesOrderItemEntityTransferList as $salesOrderItemEntityTransfer) {
+            $itemTransfer = $groupedItems[$salesOrderItemEntityTransfer->{'get' . $uniqueItemHashColumn}()];
+            $itemTransfer->fromArray($salesOrderItemEntityTransfer->toArray(), true);
+
+            if ($salesOrderItemEntityTransfer->getTaxRate()) {
+                $itemTransfer->setTaxRate($salesOrderItemEntityTransfer->getTaxRate()->toFloat());
+            }
+        }
+
+        return $itemTransfers;
     }
 
     /**

@@ -14,9 +14,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Orm\Zed\Oms\Persistence\Base\SpyOmsOrderItemState;
-use PHPUnit\Framework\MockObject\MockObject;
+use ReflectionClass;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
+use Spryker\Zed\Sales\Persistence\SalesPersistenceFactory;
 use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface;
@@ -39,9 +40,9 @@ use SprykerTest\Zed\Sales\SalesBusinessTester;
 class SaveSalesOrderItemsTest extends Unit
 {
     /**
-     * @var int
+     * @var float
      */
-    protected const TAX_RATE_DEFAULT = 10;
+    protected const TAX_RATE_DEFAULT = 10.0;
 
     /**
      * @var \SprykerTest\Zed\Sales\SalesBusinessTester
@@ -62,15 +63,21 @@ class SaveSalesOrderItemsTest extends Unit
 
         $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
         $this->salesFacade = $this->tester->getFacade();
-        $this->mockSalesConfig();
     }
 
     /**
+     * @dataProvider getHashColumnDataProvider
+     *
+     * @param string $hashColumn
+     *
      * @return void
      */
-    public function testReturnsItemsWithTaxRateAsFloat(): void
+    public function testReturnsItemsWithTaxRateAsFloat(string $hashColumn): void
     {
         // Arrange
+        $this->mockSalesConfig($hashColumn);
+        $this->addOrderItemExpanderPreSavePlugins($hashColumn);
+
         $this->tester->createInitialState();
         $saveOrderTransfer = new SaveOrderTransfer();
         $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
@@ -78,7 +85,6 @@ class SaveSalesOrderItemsTest extends Unit
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setTaxRate(static::TAX_RATE_DEFAULT);
         }
-
         $this->salesFacade->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
 
         // Act
@@ -92,11 +98,18 @@ class SaveSalesOrderItemsTest extends Unit
     }
 
     /**
+     * @dataProvider getHashColumnDataProvider
+     *
+     * @param string $hashColumn
+     *
      * @return void
      */
-    public function testReturnsItemsWithoutTaxRate(): void
+    public function testReturnsItemsWithoutTaxRate(string $hashColumn): void
     {
         // Arrange
+        $this->mockSalesConfig($hashColumn);
+        $this->addOrderItemExpanderPreSavePlugins($hashColumn);
+
         $this->tester->createInitialState();
         $saveOrderTransfer = new SaveOrderTransfer();
         $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
@@ -116,14 +129,17 @@ class SaveSalesOrderItemsTest extends Unit
      * @dataProvider saveSalesOrderItemsPluginProvider
      *
      * @param string $dependencyKey
-     * @param \PHPUnit\Framework\MockObject\MockObject $plugin
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface> $plugins
+     * @param string $hashColumn
      *
      * @return void
      */
-    public function testShouldExecute(string $dependencyKey, MockObject $plugin): void
+    public function testShouldExecute(string $dependencyKey, array $plugins, string $hashColumn): void
     {
         // Assert
-        $this->tester->setDependency($dependencyKey, [$plugin]);
+        $this->mockSalesConfig($hashColumn);
+        $this->addOrderItemExpanderPreSavePlugins($hashColumn);
+        $this->tester->setDependency($dependencyKey, $plugins);
 
         // Arrange
         $this->tester->createInitialState();
@@ -136,11 +152,17 @@ class SaveSalesOrderItemsTest extends Unit
     }
 
     /**
+     * @dataProvider getHashColumnDataProvider
+     *
+     * @param string $hashColumn
+     *
      * @return void
      */
-    public function testShouldExecuteOrderItemInitialStateProviderPluginStack(): void
+    public function testShouldExecuteOrderItemInitialStateProviderPluginStack(string $hashColumn): void
     {
         // Assert
+        $this->mockSalesConfig($hashColumn);
+        $this->addOrderItemExpanderPreSavePlugins($hashColumn);
         $omsOrderItemStateEntity = $this->tester->createInitialState();
         $this->tester->setDependency(
             SalesDependencyProvider::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER,
@@ -164,11 +186,35 @@ class SaveSalesOrderItemsTest extends Unit
         return [
             'order item expander pre save plugin stack' => [
                 SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS,
-                $this->getOrderItemExpanderPreSavePluginMock(),
+                [
+                    $this->getOrderItemExpanderPreSavePluginMock(),
+                ],
+                'hashColumn' => '',
+            ],
+            'order items post save plugin stack (hash column)' => [
+                SalesDependencyProvider::PLUGINS_ORDER_ITEMS_POST_SAVE,
+                [$this->getOrderItemsPostSavePluginMock()],
+                'hashColumn' => 'OrderItemReference',
             ],
             'order items post save plugin stack' => [
                 SalesDependencyProvider::PLUGINS_ORDER_ITEMS_POST_SAVE,
-                $this->getOrderItemsPostSavePluginMock(),
+                [$this->getOrderItemsPostSavePluginMock()],
+                'hashColumn' => '',
+            ],
+        ];
+    }
+
+    /**
+     * @return array<string, array<string, string>>
+     */
+    public function getHashColumnDataProvider(): array
+    {
+        return [
+            'test with a hash column' => [
+                'hashColumn' => 'OrderItemReference',
+            ],
+            'test without a hash column' => [
+                'hashColumn' => '',
             ],
         ];
     }
@@ -236,16 +282,50 @@ class SaveSalesOrderItemsTest extends Unit
     }
 
     /**
+     * @param string $hashColumn
+     *
      * @return void
      */
-    protected function mockSalesConfig(): void
+    protected function mockSalesConfig(string $hashColumn): void
     {
         $businessFactory = new SalesBusinessFactory();
+        $persistenceFactory = new SalesPersistenceFactory();
 
-        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->onlyMethods(['determineProcessForOrderItem'])->getMock();
+        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->onlyMethods([
+            'determineProcessForOrderItem',
+            'getItemHashColumn',
+        ])->getMock();
         $salesConfigMock->method('determineProcessForOrderItem')->willReturn(BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $salesConfigMock->method('getItemHashColumn')->willReturn($hashColumn);
+
+        $reflection = new ReflectionClass($this->salesFacade);
+        $method = $reflection->getMethod('getEntityManager');
+        $method->setAccessible(true);
+
+        $entityManager = $method->invoke($this->salesFacade, 'getEntityManager');
+        $persistenceFactory->setConfig($salesConfigMock);
+        $entityManager->setFactory($persistenceFactory);
 
         $businessFactory->setConfig($salesConfigMock);
+        $businessFactory->setEntityManager($entityManager);
         $this->salesFacade->setFactory($businessFactory);
+    }
+
+    /**
+     * @param string $hashColumn
+     *
+     * @return void
+     */
+    protected function addOrderItemExpanderPreSavePlugins(string $hashColumn): void
+    {
+        if ($hashColumn === '') {
+            return;
+        }
+        $this->tester->setDependency(
+            SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS,
+            [
+                $this->tester->createHashGeneratorExpanderPlugin($hashColumn),
+            ],
+        );
     }
 }

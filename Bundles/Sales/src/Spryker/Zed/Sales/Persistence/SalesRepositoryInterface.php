@@ -105,6 +105,13 @@ interface SalesRepositoryInterface
     public function getOrderCollection(OrderCriteriaTransfer $orderCriteriaTransfer): OrderCollectionTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderWithoutItems(OrderFilterTransfer $orderFilterTransfer): ?OrderTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
      *
      * @return list<\Generated\Shared\Transfer\ExpenseTransfer>

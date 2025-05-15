@@ -332,4 +332,17 @@ class SalesConfig extends AbstractBundleConfig
     {
         return static::UNIQUE_RANDOM_ID_ORDER_REFERENCE_SPLIT_LENGTH;
     }
+
+    /**
+     * Specification:
+     * - Defines the column used in order batch save as a unique identifier. This column must contain unique values and can be used for hashing or indexing purposes.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getItemHashColumn(): string
+    {
+        return '';
+    }
 }

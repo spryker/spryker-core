@@ -7,21 +7,14 @@
 
 namespace Spryker\Zed\SalesOrderAmendment\Dependency\Facade;
 
-use Generated\Shared\Transfer\OrderListRequestTransfer;
-use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderFilterTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
 
 interface SalesOrderAmendmentToSalesFacadeInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    public function getOffsetPaginatedCustomerOrderList(OrderListRequestTransfer $orderListRequestTransfer): OrderListTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
      *
@@ -48,4 +41,11 @@ interface SalesOrderAmendmentToSalesFacadeInterface
     public function deleteSalesOrderItemCollection(
         SalesOrderItemCollectionDeleteCriteriaTransfer $salesOrderItemCollectionDeleteCriteriaTransfer
     ): SalesOrderItemCollectionResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrder(OrderFilterTransfer $orderFilterTransfer): OrderTransfer;
 }

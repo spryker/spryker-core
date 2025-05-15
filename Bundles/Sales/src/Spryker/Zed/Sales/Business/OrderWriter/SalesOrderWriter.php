@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Business\OrderWriter;
 
 use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\SpySalesOrderAddressEntityTransfer;
@@ -344,6 +345,8 @@ class SalesOrderWriter implements SalesOrderWriterInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $saveOrderTransfer->addOrderItem(clone $itemTransfer);
         }
+        // to improve performance in OrderPostSavePlugins.
+        $saveOrderTransfer->setOrder((new OrderTransfer())->fromArray($salesOrderEntityTransfer->toArray(), true));
 
         return $saveOrderTransfer->fromArray($salesOrderEntityTransfer->toArray(), true);
     }

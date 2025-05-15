@@ -494,6 +494,29 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderWithoutItems(OrderFilterTransfer $orderFilterTransfer): ?OrderTransfer
+    {
+        $orderFilterTransfer->requireSalesOrderId();
+
+        $salesOrderEntity = $this->getFactory()
+            ->createSalesOrderQuery()
+            ->filterByIdSalesOrder($orderFilterTransfer->getSalesOrderId())
+            ->findOne();
+
+        if ($salesOrderEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createSalesOrderMapper()
+            ->mapSalesOrderEntityToSalesOrderTransfer($salesOrderEntity, new OrderTransfer());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
      *
      * @return list<\Generated\Shared\Transfer\ExpenseTransfer>
@@ -582,6 +605,12 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     {
         if ($orderFilterTransfer->getSalesOrderId()) {
             $salesOrderQuery->filterByIdSalesOrder($orderFilterTransfer->getSalesOrderId());
+        }
+        if ($orderFilterTransfer->getCustomerReference()) {
+            $salesOrderQuery->filterByCustomerReference($orderFilterTransfer->getCustomerReference());
+        }
+        if ($orderFilterTransfer->getOrderReference()) {
+            $salesOrderQuery->filterByOrderReference($orderFilterTransfer->getOrderReference());
         }
 
         return $salesOrderQuery;

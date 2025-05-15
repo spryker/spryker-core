@@ -9,8 +9,7 @@ namespace Spryker\Zed\Sales\Business\Validator\Rule\SalesOrderItem;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
-use Generated\Shared\Transfer\OrderConditionsTransfer;
-use Generated\Shared\Transfer\OrderCriteriaTransfer;
+use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Business\Validator\Rule\TerminationAwareValidatorRuleInterface;
 use Spryker\Zed\Sales\Business\Validator\Util\ErrorAdderInterface;
@@ -18,6 +17,11 @@ use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
 class SalesOrderItemRelationValidatorRule implements SalesOrderItemValidatorRuleInterface, TerminationAwareValidatorRuleInterface
 {
+ /**
+  * @var array <\Generated\Shared\Transfer\OrderTransfer>
+  */
+    protected static array $salesOrderCache = [];
+
     /**
      * @var string
      */
@@ -74,14 +78,19 @@ class SalesOrderItemRelationValidatorRule implements SalesOrderItemValidatorRule
      */
     protected function findOrder(ArrayObject $itemTransfers): ?OrderTransfer
     {
-        $orderConditionsTransfer = (new OrderConditionsTransfer())
-            ->setWithOrderExpanderPlugins(false)
-            ->addIdSalesOrder($itemTransfers->offsetGet(0)->getFkSalesOrderOrFail());
+        $idSalesOrder = $itemTransfers->offsetGet(0)->getFkSalesOrderOrFail();
 
-        return $this->salesRepository
-            ->getOrderCollection((new OrderCriteriaTransfer())->setOrderConditions($orderConditionsTransfer))
-            ->getOrders()
-            ->getIterator()
-            ->current();
+        if (isset(static::$salesOrderCache[$idSalesOrder])) {
+            return static::$salesOrderCache[$idSalesOrder];
+        }
+
+        $orderFilterTransfer = (new OrderFilterTransfer())->setSalesOrderId($idSalesOrder);
+
+        $salesOrderTransfer = $this->salesRepository
+            ->findOrderWithoutItems($orderFilterTransfer);
+
+        static::$salesOrderCache[$idSalesOrder] = $salesOrderTransfer;
+
+        return $salesOrderTransfer;
     }
 }

@@ -15,7 +15,7 @@
         "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/money": "^2.0.0",
         "spryker/oms": "^10.3.0 || ^11.0.0",
-        "spryker/propel": "^3.0.0",
+        "spryker/propel": "^3.43.0",
         "spryker/propel-orm": "^1.16.0",
         "spryker/sales-extension": "^1.12.0",
         "spryker/sales-order-amendment-extension": "^1.1.0",

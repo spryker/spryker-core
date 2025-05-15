@@ -262,6 +262,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getOrderItemsPostSavePlugins(),
             $this->createOrderStateMachineResolver(),
             $this->createOrderItemInitialStateProviderPluginStrategyResolver(),
+            $this->getConfig(),
         );
     }
 

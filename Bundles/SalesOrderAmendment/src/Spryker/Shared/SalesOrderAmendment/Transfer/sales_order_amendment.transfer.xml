@@ -204,11 +204,6 @@
         <property name="code" type="string"/>
     </transfer>
 
-    <transfer name="OrderListRequest">
-        <property name="orderReferences" type="string[]" singular="orderReference"/>
-        <property name="customerReference" type="string"/>
-    </transfer>
-
     <transfer name="OrderList">
         <property name="orders" type="Order[]" singular="order"/>
     </transfer>
@@ -254,6 +249,12 @@
 
     <transfer name="QuoteRequestVersion">
         <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="OrderFilter">
+        <property name="customerReference" type="string" strict="true"/>
+        <property name="orderReference" type="string" strict="true"/>
+        <property name="withUniqueProductCount" type="bool" strict="true"/>
     </transfer>
 
 </transfers>

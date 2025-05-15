@@ -19,12 +19,15 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesPersistenceFactory getFactory()
  */
 class SalesEntityManager extends AbstractEntityManager implements SalesEntityManagerInterface
 {
+    use ActiveRecordBatchProcessorTrait;
+
     /**
      * @var string
      */
@@ -180,6 +183,92 @@ class SalesEntityManager extends AbstractEntityManager implements SalesEntityMan
     }
 
     /**
+     * @param list<\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer> $salesOrderItemEntityTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer>
+     */
+    public function saveSalesOrderItemsBatch(array $salesOrderItemEntityTransfers): array
+    {
+        $existingSalesOrderItems = $this->getExistingSalesOrderItems($salesOrderItemEntityTransfers);
+
+        return $this->updateOrCreateSalesOrderItems($salesOrderItemEntityTransfers, $existingSalesOrderItems);
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer> $salesOrderItemEntityTransfers
+     *
+     * @return array<int, \Orm\Zed\Sales\Persistence\SpySalesOrderItem>
+     */
+    protected function getExistingSalesOrderItems(array $salesOrderItemEntityTransfers): array
+    {
+        $itemIds = [];
+        foreach ($salesOrderItemEntityTransfers as $salesOrderItemEntityTransfer) {
+            if ($salesOrderItemEntityTransfer->getIdSalesOrderItem()) {
+                $itemIds[] = $salesOrderItemEntityTransfer->getIdSalesOrderItem();
+            }
+        }
+
+        if (!$itemIds) {
+            return [];
+        }
+
+        $existingSalesOrderItemEntities = $this->getFactory()
+            ->createSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem_In($itemIds)
+            ->find();
+
+        $result = [];
+        foreach ($existingSalesOrderItemEntities as $salesOrderItemEntity) {
+            $result[$salesOrderItemEntity->getIdSalesOrderItem()] = $salesOrderItemEntity;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer> $salesOrderItemEntityTransfers
+     * @param array<int, \Orm\Zed\Sales\Persistence\SpySalesOrderItem> $existingSalesOrderItems
+     *
+     * @return list<\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer>
+     */
+    protected function updateOrCreateSalesOrderItems(array $salesOrderItemEntityTransfers, array $existingSalesOrderItems): array
+    {
+        $mapper = $this->getFactory()->createSalesOrderItemMapper();
+        $result = [];
+
+        $salesOrderItemEntityTransfersIndexedByItemHash = [];
+        $newSalesOrderItemEntityHashes = [];
+        $idSalesOrder = null;
+        $uniqueItemHashColumn = $this->getFactory()->getConfig()->getItemHashColumn();
+        foreach ($salesOrderItemEntityTransfers as $orderItemEntityTransfer) {
+            $salesOrderItem = $existingSalesOrderItems[$orderItemEntityTransfer->getIdSalesOrderItem()] ?? new SpySalesOrderItem();
+            $salesOrderItem = $mapper->mapSalesOrderItemEntityTransferToSalesOrderItemEntity($orderItemEntityTransfer, $salesOrderItem);
+            $salesOrderItemEntityTransfersIndexedByItemHash[$orderItemEntityTransfer->{'get' . $uniqueItemHashColumn . 'orFail'}()] = $orderItemEntityTransfer;
+
+            if (!isset($existingSalesOrderItems[$orderItemEntityTransfer->getIdSalesOrderItem()])) {
+                $newSalesOrderItemEntityHashes[] = $orderItemEntityTransfer->{'get' . $uniqueItemHashColumn}();
+            }
+
+            $idSalesOrder = $orderItemEntityTransfer->getFkSalesOrder();
+
+            $this->persist($salesOrderItem);
+        }
+
+        $this->commit();
+
+        $salesOrderItemEntities = $this->reSaveNewSalesOrderItemsBatch($idSalesOrder, $newSalesOrderItemEntityHashes);
+
+        foreach (array_merge($salesOrderItemEntities, $existingSalesOrderItems) as $salesOrderItemEntity) {
+            $result[] = $mapper->mapSalesOrderItemEntityToSalesOrderItemEntityTransfer(
+                $salesOrderItemEntityTransfersIndexedByItemHash[$salesOrderItemEntity->{'get' . $uniqueItemHashColumn}()],
+                $salesOrderItemEntity,
+            );
+        }
+
+        return $result;
+    }
+
+    /**
      * @param list<int> $salesExpenseIds
      *
      * @return void
@@ -233,5 +322,36 @@ class SalesEntityManager extends AbstractEntityManager implements SalesEntityMan
             ->createSalesOrderItemQuery()
             ->filterByIdSalesOrderItem_In($salesOrderItemIds)
             ->delete();
+    }
+
+    /**
+     * @param int $idSalesOrder
+     * @param array<int, string> $newSalesOrderItemEntityHashes
+     *
+     * @return array<int, \Orm\Zed\Sales\Persistence\SpySalesOrderItem>
+     */
+    public function reSaveNewSalesOrderItemsBatch(int $idSalesOrder, array $newSalesOrderItemEntityHashes): array
+    {
+        if (!$newSalesOrderItemEntityHashes) {
+            return [];
+        }
+        $uniqueItemHashColumn = $this->getFactory()->getConfig()->getItemHashColumn();
+        $salesOrderItemEntities = $this->getFactory()
+            ->createSalesOrderItemQuery()
+            ->filterByFkSalesOrder($idSalesOrder)
+            ->{'filterBy' . $uniqueItemHashColumn . '_In'}($newSalesOrderItemEntityHashes)
+            ->find();
+
+        /** @var \Spryker\Zed\Sales\Persistence\Propel\AbstractSpySalesOrderItem $salesOrderItemEntity */
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
+            // The entity could not have some values from behaviors after the first batch save, so we have to save one more time for all entities.
+            $salesOrderItemEntity->preUpdate();
+            $salesOrderItemEntity->setStatusChanged();
+            $this->persist($salesOrderItemEntity);
+        }
+
+        $this->commit();
+
+        return $salesOrderItemEntities->getArrayCopy();
     }
 }

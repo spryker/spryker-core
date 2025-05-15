@@ -50,11 +50,10 @@ class SalesProductConnectorEntityManager extends AbstractEntityManager implement
     {
         $salesOrderItemMetadataMapper = $this->getFactory()->createSalesOrderItemMetadataMapper();
 
+        $salesOrderItemMetadataEntityGroupedById = $this->getExistingMetadataEntitiesIndexedBySalesOrderItemId($quoteTransfer);
+
         foreach ($quoteTransfer->getItems() as $item) {
-            $salesOrderItemMetadataEntity = $this->getFactory()
-                ->createProductMetadataQuery()
-                ->filterByFkSalesOrderItem($item->getIdSalesOrderItemOrFail())
-                ->findOneOrCreate();
+            $salesOrderItemMetadataEntity = $salesOrderItemMetadataEntityGroupedById[$item->getIdSalesOrderItemOrFail()] ?? null;
 
             $salesOrderItemMetadataEntity = $salesOrderItemMetadataMapper->mapItemTransferToSalesOrderItemMetadataEntity(
                 $item,
@@ -80,5 +79,30 @@ class SalesProductConnectorEntityManager extends AbstractEntityManager implement
             ->createProductMetadataQuery()
             ->filterByFkSalesOrderItem_In($salesOrderItemIds)
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata>
+     */
+    protected function getExistingMetadataEntitiesIndexedBySalesOrderItemId(QuoteTransfer $quoteTransfer): array
+    {
+        $salesOrderItemIds = [];
+        foreach ($quoteTransfer->getItems() as $item) {
+            $salesOrderItemIds[] = $item->getIdSalesOrderItemOrFail();
+        }
+
+        $salesOrderItemMetadataEntityCollection = $this->getFactory()
+            ->createProductMetadataQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->find();
+
+        $salesOrderItemMetadataEntityGroupedById = [];
+        foreach ($salesOrderItemMetadataEntityCollection as $salesOrderItemMetadataEntity) {
+            $salesOrderItemMetadataEntityGroupedById[$salesOrderItemMetadataEntity->getFkSalesOrderItem()] = $salesOrderItemMetadataEntity;
+        }
+
+        return $salesOrderItemMetadataEntityGroupedById;
     }
 }

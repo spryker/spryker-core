@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
+use SprykerTest\Zed\CompanyRole\CompanyRoleBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -42,7 +43,7 @@ class CompanyRoleFacadeTest extends Unit
     /**
      * @var \SprykerTest\Zed\CompanyRole\CompanyRoleBusinessTester
      */
-    protected $tester;
+    protected CompanyRoleBusinessTester $tester;
 
     /**
      * @return void
@@ -271,9 +272,9 @@ class CompanyRoleFacadeTest extends Unit
     public function testGetCompanyRoleCollectionShouldReturnCollectionByIdCompanyCriteria(): void
     {
         // Arrange
-        $companyRoleTransfer = $this->tester->createCompanyRoleWithPermission();
+        $companyUserWithPermissionTransfer = $this->tester->createCompanyUserWithPermission();
         $criteriaFilterTransfer = (new CompanyRoleCriteriaFilterTransfer())
-            ->setIdCompany($companyRoleTransfer->getFkCompany());
+            ->setIdCompany($companyUserWithPermissionTransfer->getFkCompany());
 
         // Act
         $companyRoleCollectionTransfer = $this->tester->getFacade()

@@ -14,9 +14,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use ReflectionClass;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
+use Spryker\Zed\Sales\Persistence\SalesPersistenceFactory;
 use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemCollectionPostCreatePluginInterface;
@@ -75,17 +77,22 @@ class CreateSalesOrderItemCollectionByQuoteTest extends Unit
 
         $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
         $this->salesFacade = $this->tester->getFacade();
-        $this->mockSalesConfig();
 
         $this->tester->createInitialState();
     }
 
     /**
+     * @dataProvider getHashColumnDataProvider
+     *
+     * @param string $hashColumn
+     *
      * @return void
      */
-    public function testShouldPersistSalesOrderItemEntity(): void
+    public function testShouldPersistSalesOrderItemEntity(string $hashColumn): void
     {
         // Arrange
+        $this->mockSalesConfig($hashColumn);
+        $this->addOrderItemExpanderPreSavePlugins($hashColumn);
         $quoteTransfer = $this->prepareQuoteWithOneItem();
 
         $salesOrderItemCollectionRequestTransfer = (new SalesOrderItemCollectionRequestTransfer())
@@ -107,11 +114,17 @@ class CreateSalesOrderItemCollectionByQuoteTest extends Unit
     }
 
     /**
+     * @dataProvider getHashColumnDataProvider
+     *
+     * @param string $hashColumn
+     *
      * @return void
      */
-    public function testShouldThrowsExceptionWhenQuoteIsNotSet(): void
+    public function testShouldThrowsExceptionWhenQuoteIsNotSet(string $hashColumn): void
     {
         // Assert
+        $this->mockSalesConfig($hashColumn);
+        $this->addOrderItemExpanderPreSavePlugins($hashColumn);
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Arrange
@@ -126,11 +139,17 @@ class CreateSalesOrderItemCollectionByQuoteTest extends Unit
     }
 
     /**
+     * @dataProvider getHashColumnDataProvider
+     *
+     * @param string $hashColumn
+     *
      * @return void
      */
-    public function testShouldThrowsExceptionWhenSalesOrderIdIsNotSet(): void
+    public function testShouldThrowsExceptionWhenSalesOrderIdIsNotSet(string $hashColumn): void
     {
         // Assert
+        $this->mockSalesConfig($hashColumn);
+        $this->addOrderItemExpanderPreSavePlugins($hashColumn);
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Arrange
@@ -145,11 +164,17 @@ class CreateSalesOrderItemCollectionByQuoteTest extends Unit
     }
 
     /**
+     * @dataProvider getHashColumnDataProvider
+     *
+     * @param string $hashColumn
+     *
      * @return void
      */
-    public function testShouldNotPersistSalesOrderItemEntityWithWrongIdSalesOrder(): void
+    public function testShouldNotPersistSalesOrderItemEntityWithWrongIdSalesOrder(string $hashColumn): void
     {
         // Arrange
+        $this->mockSalesConfig($hashColumn);
+        $this->addOrderItemExpanderPreSavePlugins($hashColumn);
         $quoteTransfer = $this->prepareQuoteWithOneItem();
         $quoteTransfer->getItems()->offsetGet(0)->setFkSalesOrder(static::FAKE_ID_SALES_ORDER);
 
@@ -169,11 +194,17 @@ class CreateSalesOrderItemCollectionByQuoteTest extends Unit
     }
 
     /**
+     * @dataProvider getHashColumnDataProvider
+     *
+     * @param string $hashColumn
+     *
      * @return void
      */
-    public function testShouldNotPersistSalesOrderItemEntityWithItemFromAnotherOrder(): void
+    public function testShouldNotPersistSalesOrderItemEntityWithItemFromAnotherOrder(string $hashColumn): void
     {
         // Arrange
+        $this->mockSalesConfig($hashColumn);
+        $this->addOrderItemExpanderPreSavePlugins($hashColumn);
         $quoteTransfer = $this->prepareQuoteWithOneItem();
         $quoteTransfer->addItem((new ItemTransfer())->setFkSalesOrder(static::FAKE_ID_SALES_ORDER));
 
@@ -193,11 +224,17 @@ class CreateSalesOrderItemCollectionByQuoteTest extends Unit
     }
 
     /**
+     * @dataProvider getHashColumnDataProvider
+     *
+     * @param string $hashColumn
+     *
      * @return void
      */
-    public function testShouldExecutesalesOrderItemsPreCreatePluginStack(): void
+    public function testShouldExecutesalesOrderItemsPreCreatePluginStack(string $hashColumn): void
     {
         // Assert
+        $this->mockSalesConfig($hashColumn);
+        $this->addOrderItemExpanderPreSavePlugins($hashColumn);
         $this->tester->setDependency(
             SalesDependencyProvider::PLUGINS_ORDER_ITEMS_PRE_CREATE,
             [
@@ -216,11 +253,17 @@ class CreateSalesOrderItemCollectionByQuoteTest extends Unit
     }
 
     /**
+     * @dataProvider getHashColumnDataProvider
+     *
+     * @param string $hashColumn
+     *
      * @return void
      */
-    public function testShouldExecuteSalesOrderItemCollectionPostCreatePluginStack(): void
+    public function testShouldExecuteSalesOrderItemCollectionPostCreatePluginStack(string $hashColumn): void
     {
         // Assert
+        $this->mockSalesConfig($hashColumn);
+        $this->addOrderItemExpanderPreSavePlugins($hashColumn);
         $this->tester->setDependency(
             SalesDependencyProvider::PLUGINS_ORDER_ITEM_COLLECTION_POST_CREATE,
             [
@@ -236,6 +279,21 @@ class CreateSalesOrderItemCollectionByQuoteTest extends Unit
 
         // Act
         $this->salesFacade->createSalesOrderItemCollectionByQuote($salesOrderItemCollectionRequestTransfer);
+    }
+
+    /**
+     * @return array<string, array<string, string>>
+     */
+    public function getHashColumnDataProvider(): array
+    {
+        return [
+            'test with a hash column' => [
+                'hashColumn' => 'OrderItemReference',
+            ],
+            'test without a hash column' => [
+                'hashColumn' => '',
+            ],
+        ];
     }
 
     /**
@@ -293,16 +351,50 @@ class CreateSalesOrderItemCollectionByQuoteTest extends Unit
     }
 
     /**
+     * @param string $hashColumn
+     *
      * @return void
      */
-    protected function mockSalesConfig(): void
+    protected function mockSalesConfig(string $hashColumn): void
     {
         $businessFactory = new SalesBusinessFactory();
+        $persistenceFactory = new SalesPersistenceFactory();
 
-        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->onlyMethods(['determineProcessForOrderItem'])->getMock();
+        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->onlyMethods([
+            'determineProcessForOrderItem',
+            'getItemHashColumn',
+        ])->getMock();
         $salesConfigMock->method('determineProcessForOrderItem')->willReturn(BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $salesConfigMock->method('getItemHashColumn')->willReturn($hashColumn);
+
+        $reflection = new ReflectionClass($this->salesFacade);
+        $method = $reflection->getMethod('getEntityManager');
+        $method->setAccessible(true);
+
+        $entityManager = $method->invoke($this->salesFacade, 'getEntityManager');
+        $persistenceFactory->setConfig($salesConfigMock);
+        $entityManager->setFactory($persistenceFactory);
 
         $businessFactory->setConfig($salesConfigMock);
+        $businessFactory->setEntityManager($entityManager);
         $this->salesFacade->setFactory($businessFactory);
+    }
+
+    /**
+     * @param string $hashColumn
+     *
+     * @return void
+     */
+    protected function addOrderItemExpanderPreSavePlugins(string $hashColumn): void
+    {
+        if ($hashColumn === '') {
+            return;
+        }
+        $this->tester->setDependency(
+            SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS,
+            [
+                $this->tester->createHashGeneratorExpanderPlugin($hashColumn),
+            ],
+        );
     }
 }

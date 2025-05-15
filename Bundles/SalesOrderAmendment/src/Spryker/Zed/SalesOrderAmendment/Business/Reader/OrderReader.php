@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\SalesOrderAmendment\Business\Reader;
 
-use Generated\Shared\Transfer\OrderListRequestTransfer;
+use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\SalesOrderAmendment\Dependency\Facade\SalesOrderAmendmentToSalesFacadeInterface;
 
 class OrderReader implements OrderReaderInterface
@@ -28,14 +29,15 @@ class OrderReader implements OrderReaderInterface
      */
     public function findCustomerOrder(string $orderReference, string $customerReference): ?OrderTransfer
     {
-        $orderListRequestTransfer = (new OrderListRequestTransfer())
-            ->addOrderReference($orderReference)
-            ->setCustomerReference($customerReference);
+        $orderFilterTransfer = (new OrderFilterTransfer())
+            ->setOrderReference($orderReference)
+            ->setCustomerReference($customerReference)
+            ->setWithUniqueProductCount(false);
 
-        return $this->salesFacade
-            ->getOffsetPaginatedCustomerOrderList($orderListRequestTransfer)
-            ->getOrders()
-            ->getIterator()
-            ->current();
+        try {
+            return $this->salesFacade->getOrder($orderFilterTransfer);
+        } catch (InvalidSalesOrderException $e) {
+            return null;
+        }
     }
 }

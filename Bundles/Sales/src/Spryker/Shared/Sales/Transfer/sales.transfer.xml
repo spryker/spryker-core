@@ -289,6 +289,7 @@
     <transfer name="SaveOrder">
         <property name="idSalesOrder" type="int"/>
         <property name="orderReference" type="string"/>
+        <property name="order" type="Order" strict="true"/>
         <property name="orderItems" type="Item[]" singular="orderItem"/>
     </transfer>
 
@@ -459,6 +460,9 @@
 
     <transfer name="OrderFilter">
         <property name="salesOrderId" type="int"/>
+        <property name="customerReference" type="string" strict="true"/>
+        <property name="orderReference" type="string" strict="true"/>
+        <property name="withUniqueProductCount" type="bool" strict="true"/>
         <property name="filter" type="Filter"/>
     </transfer>
 

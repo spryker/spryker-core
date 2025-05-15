@@ -148,6 +148,7 @@
         <property name="currency" type="Currency"/>
         <property name="store" type="Store"/>
         <property name="skipRecalculation" type="bool" strict="true"/>
+        <property name="originalOrder" type="Order" strict="true"/>
     </transfer>
 
     <transfer name="Item">
@@ -162,6 +163,7 @@
         <property name="orderItems" type="Item[]" singular="orderItem"/>
         <property name="orderExpenses" type="Expense[]" singular="orderExpense"/>
         <property name="orderReference" type="string"/>
+        <property name="order" type="Order" strict="true"/>
     </transfer>
 
     <transfer name="Expense">
