@@ -43,6 +43,8 @@ class TaxIdValidationController extends AbstractController
         RestRequestInterface $restRequest,
         RestTaxAppValidationAttributesTransfer $restTaxAppValidationAttributesTransfer
     ): RestResponseInterface {
-        return $this->getFactory()->createTaxIdValidator()->validate($restTaxAppValidationAttributesTransfer);
+        $locale = $restRequest->getMetadata()->getLocale();
+
+        return $this->getFactory()->createTaxIdValidator()->validate($restTaxAppValidationAttributesTransfer, $locale);
     }
 }

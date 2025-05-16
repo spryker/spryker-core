@@ -8,6 +8,7 @@
 namespace Spryker\Glue\TaxAppRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\TaxAppRestApi\Dependency\TaxAppRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\TaxAppRestApi\Dependency\TaxAppRestApiToTaxAppClientInterface;
 use Spryker\Glue\TaxAppRestApi\Processor\Validator\TaxIdValidator;
 use Spryker\Glue\TaxAppRestApi\Processor\Validator\TaxIdValidatorInterface;
@@ -19,7 +20,11 @@ class TaxAppRestApiFactory extends AbstractFactory
      */
     public function createTaxIdValidator(): TaxIdValidatorInterface
     {
-        return new TaxIdValidator($this->getResourceBuilder(), $this->getTaxAppClient());
+        return new TaxIdValidator(
+            $this->getResourceBuilder(),
+            $this->getTaxAppClient(),
+            $this->getGlossaryStorageClient(),
+        );
     }
 
     /**
@@ -28,5 +33,13 @@ class TaxAppRestApiFactory extends AbstractFactory
     public function getTaxAppClient(): TaxAppRestApiToTaxAppClientInterface
     {
         return $this->getProvidedDependency(TaxAppRestApiDependencyProvider::CLIENT_TAX_APP);
+    }
+
+    /**
+     * @return \Spryker\Glue\TaxAppRestApi\Dependency\TaxAppRestApiToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): TaxAppRestApiToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(TaxAppRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

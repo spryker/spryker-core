@@ -28,6 +28,21 @@ class TaxIdValidator implements TaxIdValidatorInterface
     protected const HEADER_AUTHORIZATION = 'Authorization';
 
     /**
+     * @var string
+     */
+    protected const CONTENT_KEY_CODE = 'code';
+
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_TAX_APP_IS_DISABLED = 'tax_app.vertex.tax-app-disabled';
+
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_TAX_VALIDATOR_IS_UNAVAILABLE = 'tax_app.vertex.tax-validator-unavailable';
+
+    /**
      * @param \Spryker\Zed\TaxApp\Business\Config\ConfigReaderInterface $configReader
      * @param \Spryker\Zed\TaxApp\Business\AccessTokenProvider\AccessTokenProviderInterface $accessTokenProvider
      * @param \Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToKernelAppFacadeInterface $kernelAppFacade
@@ -60,7 +75,7 @@ class TaxIdValidator implements TaxIdValidatorInterface
             !$taxAppConfigTransfer->getApiUrls() ||
             !$taxAppConfigTransfer->getApiUrls()->getTaxIdValidationUrl()
         ) {
-            return $this->createTaxAppValidationResponseTransfer(false, TaxAppConfig::MESSAGE_TAX_APP_IS_DISABLED);
+            return $this->createTaxAppValidationResponseTransfer(false, TaxAppConfig::MESSAGE_TAX_APP_IS_DISABLED, static::GLOSSARY_KEY_TAX_APP_IS_DISABLED);
         }
 
         $acpHttpResponseTransfer = $this->kernelAppFacade->makeRequest(
@@ -71,22 +86,20 @@ class TaxIdValidator implements TaxIdValidatorInterface
                 ->setHeaders([static::HEADER_AUTHORIZATION => $this->accessTokenProvider->getAccessToken()]),
         );
         if ($acpHttpResponseTransfer->getHttpStatusCode() !== Response::HTTP_OK && $acpHttpResponseTransfer->getContent() === null) {
-            return $this->createTaxAppValidationResponseTransfer(false, TaxAppConfig::MESSAGE_TAX_VALIDATOR_IS_UNAVAILABLE);
+            return $this->createTaxAppValidationResponseTransfer(false, TaxAppConfig::MESSAGE_TAX_VALIDATOR_IS_UNAVAILABLE, static::GLOSSARY_KEY_TAX_VALIDATOR_IS_UNAVAILABLE);
         }
 
         $content = (array)$this->utilEncodingService->decodeJson((string)$acpHttpResponseTransfer->getContent(), true);
 
         if (!$content) {
-            return $this->createTaxAppValidationResponseTransfer(false, TaxAppConfig::MESSAGE_TAX_VALIDATOR_IS_UNAVAILABLE);
+            return $this->createTaxAppValidationResponseTransfer(false, TaxAppConfig::MESSAGE_TAX_VALIDATOR_IS_UNAVAILABLE, static::GLOSSARY_KEY_TAX_VALIDATOR_IS_UNAVAILABLE);
         }
+        $content = $acpHttpResponseTransfer->getHttpStatusCode() === Response::HTTP_OK ? $content : current($content);
+        $messageKey = $content[static::CONTENT_KEY_CODE] ?? null;
         $taxAppValidationResponseTransfer = (new TaxAppValidationResponseTransfer())
+            ->setMessageKey($messageKey)
             ->setIsValid(false)
-            ->fromArray(
-                $acpHttpResponseTransfer->getHttpStatusCode() === Response::HTTP_OK ?
-                    $content :
-                    current($content),
-                true,
-            );
+            ->fromArray($content, true);
 
         if ($taxAppValidationResponseTransfer->getIsValid() === true) {
             $this->entityManager->saveTaxIdValidationHistory(
@@ -103,14 +116,19 @@ class TaxIdValidator implements TaxIdValidatorInterface
 
     /**
      * @param bool $isValid
-     * @param string|null $message
+     * @param string $message
+     * @param string $messageKey
      *
      * @return \Generated\Shared\Transfer\TaxAppValidationResponseTransfer
      */
-    protected function createTaxAppValidationResponseTransfer(bool $isValid = true, ?string $message = null): TaxAppValidationResponseTransfer
-    {
+    protected function createTaxAppValidationResponseTransfer(
+        bool $isValid,
+        string $message,
+        string $messageKey
+    ): TaxAppValidationResponseTransfer {
         return (new TaxAppValidationResponseTransfer())
             ->setIsValid($isValid)
+            ->setMessageKey($messageKey)
             ->setMessage($message);
     }
 }

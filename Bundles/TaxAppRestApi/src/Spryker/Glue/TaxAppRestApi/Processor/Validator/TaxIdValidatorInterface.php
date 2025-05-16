@@ -14,8 +14,9 @@ interface TaxIdValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestTaxAppValidationAttributesTransfer $restTaxAppValidationAttributesTransfer
+     * @param string $locale
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function validate(RestTaxAppValidationAttributesTransfer $restTaxAppValidationAttributesTransfer): RestResponseInterface;
+    public function validate(RestTaxAppValidationAttributesTransfer $restTaxAppValidationAttributesTransfer, string $locale): RestResponseInterface;
 }

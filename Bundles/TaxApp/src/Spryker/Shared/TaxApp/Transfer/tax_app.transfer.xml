@@ -314,6 +314,7 @@
         <property name="isValid" type="bool"/>
         <property name="message" type="string"/>
         <property name="additionalInfo" type="string"/>
+        <property name="messageKey" type="string"/>
     </transfer>
 
     <transfer name="TaxIdValidationHistory" strict="true">

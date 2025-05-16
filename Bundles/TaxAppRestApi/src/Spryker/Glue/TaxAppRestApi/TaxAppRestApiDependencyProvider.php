@@ -9,6 +9,8 @@ namespace Spryker\Glue\TaxAppRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Glue\TaxAppRestApi\Dependency\TaxAppRestApiToGlossaryStorageClientBridge;
+use Spryker\Glue\TaxAppRestApi\Dependency\TaxAppRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\TaxAppRestApi\Dependency\TaxAppRestApiToTaxAppClientBridge;
 
 /**
@@ -22,6 +24,11 @@ class TaxAppRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_TAX_APP = 'CLIENT_TAX_APP';
 
     /**
+     * @var string
+     */
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -30,6 +37,7 @@ class TaxAppRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideDependencies($container);
         $container = $this->addTaxAppClient($container);
+        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -44,6 +52,22 @@ class TaxAppRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::CLIENT_TAX_APP, function (Container $container) {
             return new TaxAppRestApiToTaxAppClientBridge(
                 $container->getLocator()->taxApp()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container): TaxAppRestApiToGlossaryStorageClientInterface {
+            return new TaxAppRestApiToGlossaryStorageClientBridge(
+                $container->getLocator()->glossaryStorage()->client(),
             );
         });
 
