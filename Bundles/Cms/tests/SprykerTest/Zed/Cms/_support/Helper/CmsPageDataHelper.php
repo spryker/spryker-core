@@ -46,6 +46,23 @@ class CmsPageDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
+    public function haveCmsPagePublished(array $seedData = []): CmsPageTransfer
+    {
+        $cmsPageTransfer = $this->haveCmsPage($seedData);
+
+        $cmsGlossaryTransfer = $this->getCmsFacade()->findPageGlossaryAttributes($cmsPageTransfer->getFkPage());
+        $this->getCmsFacade()->saveCmsGlossary($cmsGlossaryTransfer);
+
+        $this->getCmsFacade()->publishWithVersion($cmsPageTransfer->getFkPage());
+
+        return $cmsPageTransfer;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
     protected function generateLocalizedCmsPageTransfer(array $seedData = []): CmsPageTransfer
     {
         $cmsPageTransfer = (new CmsPageBuilder($seedData))->build();
