@@ -28,7 +28,6 @@ Tabs.prototype.checkErrors = function () {
         } else {
             var tabHeader = self.tabsContainer.find('.nav-tabs li[data-tab-content-id="' + tab.id + '"]');
         }
-        var tabHeader = self.tabsContainer.find('.nav-tabs li[data-bs-target="' + tab.id + '"]');
 
         if (hasError) {
             tabHeader.addClass('error');
