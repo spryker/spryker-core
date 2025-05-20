@@ -9,10 +9,12 @@ namespace SprykerTest\Yves\SessionRedis\Plugin\Session;
 
 use Codeception\Test\Unit;
 use Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientInterface;
+use Spryker\Shared\SessionRedis\Handler\SessionHandlerRedis;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerRedisLocking;
 use Spryker\Shared\SessionRedis\SessionRedisConfig;
-use Spryker\Yves\SessionRedis\Plugin\Session\SessionHandlerRedisLockingProviderPlugin;
+use Spryker\Yves\SessionRedis\Plugin\Session\SessionHandlerConfigurableRedisLockingProviderPlugin;
 use Spryker\Yves\SessionRedis\SessionRedisDependencyProvider;
+use Spryker\Yves\SessionRedisExtension\Dependency\Plugin\SessionRedisLockingExclusionConditionPluginInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -23,13 +25,13 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * @group SessionRedis
  * @group Plugin
  * @group Session
- * @group SessionHandlerRedisLockingProviderPluginTest
+ * @group SessionHandlerConfigurableRedisLockingProviderPluginTest
  * Add your own group annotations below this line
  */
-class SessionHandlerRedisLockingProviderPluginTest extends Unit
+class SessionHandlerConfigurableRedisLockingProviderPluginTest extends Unit
 {
     /**
-     * @var \Spryker\Yves\SessionRedis\Plugin\Session\SessionHandlerRedisLockingProviderPlugin
+     * @var \Spryker\Yves\SessionRedis\Plugin\Session\SessionHandlerConfigurableRedisLockingProviderPlugin
      */
     protected $sessionHandlerPlugin;
 
@@ -49,7 +51,7 @@ class SessionHandlerRedisLockingProviderPluginTest extends Unit
         $this->tester->setDependency(SessionRedisDependencyProvider::CLIENT_REDIS, $redisClientMock);
         $this->tester->setDependency(SessionRedisDependencyProvider::REQUEST_STACK, new RequestStack());
 
-        $this->sessionHandlerPlugin = new SessionHandlerRedisLockingProviderPlugin();
+        $this->sessionHandlerPlugin = new SessionHandlerConfigurableRedisLockingProviderPlugin();
     }
 
     /**
@@ -57,15 +59,39 @@ class SessionHandlerRedisLockingProviderPluginTest extends Unit
      */
     public function testHasCorrectSessionHandlerName(): void
     {
-        $this->assertSame($this->getSharedConfig()->getSessionHandlerRedisLockingName(), $this->sessionHandlerPlugin->getSessionHandlerName());
+        $this->assertSame(
+            $this->getSharedConfig()->getSessionHandlerConfigurableRedisLockingName(),
+            $this->sessionHandlerPlugin->getSessionHandlerName(),
+        );
     }
 
     /**
      * @return void
      */
-    public function testPluginReturnsCorrectSessionHandler(): void
+    public function testPluginReturnsCorrectLockingSessionHandler(): void
     {
         $this->assertInstanceOf(SessionHandlerRedisLocking::class, $this->sessionHandlerPlugin->getSessionHandler());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPluginReturnsCorrectNonLockingSessionHandler(): void
+    {
+        $sessionRedisLockingExclusionConditionPluginMock = $this->getMockBuilder(SessionRedisLockingExclusionConditionPluginInterface::class)
+            ->getMock();
+
+        $sessionRedisLockingExclusionConditionPluginMock->method('checkCondition')
+            ->willReturn(true);
+
+        $this->tester->setDependency(
+            SessionRedisDependencyProvider::PLUGINS_SESSION_REDIS_LOCKING_EXCLUSION_CONDITION,
+            [
+                $sessionRedisLockingExclusionConditionPluginMock,
+            ],
+        );
+
+        $this->assertInstanceOf(SessionHandlerRedis::class, $this->sessionHandlerPlugin->getSessionHandler());
     }
 
     /**

@@ -12,15 +12,14 @@ use Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPlug
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Yves\SessionRedis\Plugin\Session\SessionHandlerConfigurableRedisLockingProviderPlugin} instead.
- *
  * @method \Spryker\Yves\SessionRedis\SessionRedisFactory getFactory()
- * @method \Spryker\Yves\SessionRedis\SessionRedisConfig getConfig()()
+ * @method \Spryker\Yves\SessionRedis\SessionRedisConfig getConfig()
  */
-class SessionHandlerRedisLockingProviderPlugin extends AbstractPlugin implements SessionHandlerProviderPluginInterface
+class SessionHandlerConfigurableRedisLockingProviderPlugin extends AbstractPlugin implements SessionHandlerProviderPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Gets a string identifier for configurable Redis session handler with locking mechanism.
      *
      * @api
      *
@@ -28,11 +27,12 @@ class SessionHandlerRedisLockingProviderPlugin extends AbstractPlugin implements
      */
     public function getSessionHandlerName(): string
     {
-        return $this->getConfig()->getSessionHandlerRedisLockingName();
+        return $this->getConfig()->getSessionHandlerConfigurableRedisLockingName();
     }
 
     /**
      * {@inheritDoc}
+     * - Gets an instance of the configurable Redis session handler with locking mechanism.
      *
      * @api
      *
@@ -40,6 +40,6 @@ class SessionHandlerRedisLockingProviderPlugin extends AbstractPlugin implements
      */
     public function getSessionHandler(): SessionHandlerInterface
     {
-        return $this->getFactory()->createSessionHandlerRedisLocking();
+        return $this->getFactory()->createSessionHandlerConfigurableRedisLocking();
     }
 }

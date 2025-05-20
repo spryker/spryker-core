@@ -26,6 +26,11 @@ use Spryker\Shared\SessionRedis\Saver\SessionEntitySaverInterface;
 use Spryker\Shared\SessionRedis\Validator\SessionEntityValidator;
 use Spryker\Shared\SessionRedis\Validator\SessionEntityValidatorInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\SessionRedis\Checker\BotSessionRedisLockingExclusionChecker;
+use Spryker\Yves\SessionRedis\Checker\BotSessionRedisLockingExclusionCheckerInterface;
+use Spryker\Yves\SessionRedis\Checker\UrlSessionRedisLockingExclusionChecker;
+use Spryker\Yves\SessionRedis\Checker\UrlSessionRedisLockingExclusionCheckerInterface;
+use Spryker\Yves\SessionRedis\Resolver\SessionHandlerResolver;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -107,6 +112,28 @@ class SessionRedisFactory extends AbstractFactory
     /**
      * @return \SessionHandlerInterface
      */
+    public function createSessionHandlerConfigurableRedisLocking(): SessionHandlerInterface
+    {
+        return $this->createSessionHandlerResolver()->resolveConfigurableRedisLockingSessionHandler(
+            $this->createSessionRedisWrapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Yves\SessionRedis\Resolver\SessionHandlerResolver
+     */
+    public function createSessionHandlerResolver(): SessionHandlerResolver
+    {
+        return new SessionHandlerResolver(
+            $this->getRequestStack(),
+            $this->createSessionHandlerFactory(),
+            $this->getSessionRedisLockingExclusionConditionPlugins(),
+        );
+    }
+
+    /**
+     * @return \SessionHandlerInterface
+     */
     public function createSessionHandlerRedisWriteOnlyLocking(): SessionHandlerInterface
     {
         return $this->createSessionHandlerFactory()->createSessionHandlerRedisWriteOnlyLocking(
@@ -153,6 +180,26 @@ class SessionRedisFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Yves\SessionRedis\Checker\UrlSessionRedisLockingExclusionCheckerInterface
+     */
+    public function createUrlSessionRedisLockingExclusionChecker(): UrlSessionRedisLockingExclusionCheckerInterface
+    {
+        return new UrlSessionRedisLockingExclusionChecker(
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Yves\SessionRedis\Checker\BotSessionRedisLockingExclusionCheckerInterface
+     */
+    public function createBotSessionRedisLockingExclusionChecker(): BotSessionRedisLockingExclusionCheckerInterface
+    {
+        return new BotSessionRedisLockingExclusionChecker(
+            $this->getConfig(),
+        );
+    }
+
+    /**
      * @return \Symfony\Component\HttpFoundation\RequestStack
      */
     public function getRequestStack(): RequestStack
@@ -182,5 +229,13 @@ class SessionRedisFactory extends AbstractFactory
     public function getSessionRedisLifeTimeCalculatorPlugins(): array
     {
         return $this->getProvidedDependency(SessionRedisDependencyProvider::PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR);
+    }
+
+    /**
+     * @return array<\Spryker\Yves\SessionRedisExtension\Dependency\Plugin\SessionRedisLockingExclusionConditionPluginInterface>
+     */
+    public function getSessionRedisLockingExclusionConditionPlugins(): array
+    {
+        return $this->getProvidedDependency(SessionRedisDependencyProvider::PLUGINS_SESSION_REDIS_LOCKING_EXCLUSION_CONDITION);
     }
 }

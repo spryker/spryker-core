@@ -40,4 +40,10 @@
         <property name="isSuccessfull" type="bool"/>
     </transfer>
 
+    <transfer name="RedisLockingSessionHandlerCondition" strict="true">
+        <property name="requestUri" type="string"/>
+        <property name="requestMethod" type="string"/>
+        <property name="requestHeaders" type="array" singular="requestHeader"/>
+    </transfer>
+
 </transfers>

@@ -4,4 +4,7 @@
     <transfer name="HttpRequest">
     </transfer>
 
+    <transfer name="RedisLockingSessionHandlerCondition" strict="true">
+    </transfer>
+
 </transfers>

@@ -44,6 +44,11 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
     protected const REQUEST_STACK_CONTAINER_KEY = 'request_stack';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_SESSION_REDIS_LOCKING_EXCLUSION_CONDITION = 'PLUGINS_CONFIGURABLE_REDIS_LOCKING_SESSION_HANDLER_CONDITION';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -54,6 +59,7 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRedisClient($container);
         $container = $this->addSessionRedisLifeTimeCalculatorPlugins($container);
         $container = $this->addRequestStack($container);
+        $container = $this->addSessionRedisLockingExclusionConditionPlugins($container);
 
         return $container;
     }
@@ -119,9 +125,31 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSessionRedisLockingExclusionConditionPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SESSION_REDIS_LOCKING_EXCLUSION_CONDITION, function () {
+            return $this->getSessionRedisLockingExclusionConditionPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Shared\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface>
      */
     protected function getSessionRedisLifeTimeCalculatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Yves\SessionRedisExtension\Dependency\Plugin\SessionRedisLockingExclusionConditionPluginInterface>
+     */
+    protected function getSessionRedisLockingExclusionConditionPlugins(): array
     {
         return [];
     }

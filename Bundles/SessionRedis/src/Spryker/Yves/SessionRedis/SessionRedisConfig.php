@@ -104,11 +104,54 @@ class SessionRedisConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use {@link \Spryker\Yves\SessionRedis\SessionRedisConfig::getSessionHandlerConfigurableRedisLockingName()} instead.
+     *
      * @return string
      */
     public function getSessionHandlerRedisLockingName(): string
     {
         return $this->getSharedConfig()->getSessionHandlerRedisLockingName();
+    }
+
+    /**
+     * Specification:
+     * - Returns a string identifier for the configurable Redis session handler with locking mechanism.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getSessionHandlerConfigurableRedisLockingName(): string
+    {
+        return $this->getSharedConfig()->getSessionHandlerConfigurableRedisLockingName();
+    }
+
+    /**
+     * Specification:
+     * - Returns URL patterns that are excluded from Redis locking.
+     * - These patterns are used to identify requests that don't require session locking.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getSessionRedisLockingExcludedUrlPatterns(): array
+    {
+        return [];
+    }
+
+    /**
+     * Specification:
+     * - Returns user agent strings used to identify bot traffic.
+     * - Bot traffic is excluded from Redis session locking for better performance.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getSessionRedisLockingExcludedBotUserAgents(): array
+    {
+        return [];
     }
 
     /**

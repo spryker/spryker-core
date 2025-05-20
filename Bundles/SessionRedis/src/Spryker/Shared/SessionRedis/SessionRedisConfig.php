@@ -22,6 +22,17 @@ class SessionRedisConfig extends AbstractSharedConfig
     public const SESSION_HANDLER_REDIS_LOCKING = 'redis_locking';
 
     /**
+     * Specification:
+     * - Defines a string identifier for the configurable Redis session handler with locking mechanism.
+     * - Used as a key to identify this specific type of session handler.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const SESSION_HANDLER_CONFIGURABLE_REDIS_LOCKING = 'configurable_redis_locking';
+
+    /**
      * @var string
      */
     public const SESSION_HANDLER_REDIS_WRITE_ONLY_LOCKING = 'redis_write_only_locking';
@@ -49,6 +60,19 @@ class SessionRedisConfig extends AbstractSharedConfig
     public function getSessionHandlerRedisLockingName(): string
     {
         return static::SESSION_HANDLER_REDIS_LOCKING;
+    }
+
+    /**
+     * Specification:
+     * - Returns a string identifier for the configurable Redis session handler with locking mechanism.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getSessionHandlerConfigurableRedisLockingName(): string
+    {
+        return static::SESSION_HANDLER_CONFIGURABLE_REDIS_LOCKING;
     }
 
     /**
