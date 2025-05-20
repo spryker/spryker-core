@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantStorage\Persistence;
 
 use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
+use Generator;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -47,6 +48,8 @@ class MerchantStorageRepository extends AbstractRepository implements MerchantSt
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\MerchantStorage\Persistence\MerchantStorageRepository::getSitemapGeneratorUrls()} instead.
+     *
      * @param string $storeName
      *
      * @return array<\Generated\Shared\Transfer\SitemapUrlTransfer>
@@ -71,5 +74,35 @@ class MerchantStorageRepository extends AbstractRepository implements MerchantSt
         } while ($merchantStorageEntities->count() === static::SITEMAP_QUERY_LIMIT);
 
         return array_merge(...$sitemapUrlTransfers);
+    }
+
+    /**
+     * @param string $storeName
+     * @param int $limit
+     *
+     * @return \Generator
+     */
+    public function getSitemapGeneratorUrls(string $storeName, int $limit): Generator
+    {
+        $offset = 0;
+        $merchantStorageQuery = $this->getFactory()
+            ->createMerchantStorageQuery()
+            ->filterByStore($storeName)
+            ->orderByIdMerchantStorage()
+            ->limit($limit)
+            ->offset($offset);
+        $sitemapUrlTransfers = [];
+        $merchantStorageMapper = $this->getFactory()->createMerchantStorageMapper();
+
+        do {
+            $offset += $limit;
+            $merchantStorageEntities = $merchantStorageQuery->find();
+
+            yield $merchantStorageMapper->mapMerchantStorageEntitiesToSitemapUrlTransfers($merchantStorageEntities);
+
+            $merchantStorageQuery->offset($offset);
+        } while ($merchantStorageEntities->count() === $limit);
+
+        yield [];
     }
 }

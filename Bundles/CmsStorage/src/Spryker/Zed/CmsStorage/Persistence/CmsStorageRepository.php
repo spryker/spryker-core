@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\CmsStorage\Persistence;
 
+use Generator;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -22,6 +23,8 @@ class CmsStorageRepository extends AbstractRepository implements CmsStorageRepos
     protected const SITEMAP_QUERY_LIMIT = 1000;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\CmsStorage\Persistence\CmsStorageRepositoryInterface::getSitemapGeneratorUrls()} instead.
+     *
      * @param string $storeName
      *
      * @return array<\Generated\Shared\Transfer\SitemapUrlTransfer>
@@ -46,5 +49,35 @@ class CmsStorageRepository extends AbstractRepository implements CmsStorageRepos
         } while ($cmsPageStorageEntities->count() === static::SITEMAP_QUERY_LIMIT);
 
         return array_merge(...$sitemapUrlTransfers);
+    }
+
+    /**
+     * @param string $storeName
+     * @param int $limit
+     *
+     * @return \Generator
+     */
+    public function getSitemapGeneratorUrls(string $storeName, int $limit): Generator
+    {
+        $offset = 0;
+        $cmsPageStorageQuery = $this->getFactory()
+            ->createSpyCmsStorageQuery()
+            ->filterByStore($storeName)
+            ->orderByIdCmsPageStorage()
+            ->limit($limit)
+            ->offset($offset);
+        $sitemapUrlTransfers = [];
+        $cmsStorageMapper = $this->getFactory()->createCmsStorageMapper();
+
+        do {
+            $offset += $limit;
+            $cmsPageStorageEntities = $cmsPageStorageQuery->find();
+
+            yield $cmsStorageMapper->mapCmsPageStorageEntitiesToSitemapUrlTransfers($cmsPageStorageEntities);
+
+            $cmsPageStorageQuery->offset($offset);
+        } while ($cmsPageStorageEntities->count() === $limit);
+
+        yield [];
     }
 }

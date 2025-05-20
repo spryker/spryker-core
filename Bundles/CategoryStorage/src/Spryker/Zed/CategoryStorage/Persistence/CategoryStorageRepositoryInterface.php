@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CategoryStorage\Persistence;
 
+use Generator;
+
 interface CategoryStorageRepositoryInterface
 {
     /**
@@ -28,9 +30,19 @@ interface CategoryStorageRepositoryInterface
     public function getCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(int $offset, int $limit, array $categoryTreeStorageIds): array;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface::getSitemapGeneratorUrls()} instead.
+     *
      * @param string $storeName
      *
      * @return array<\Generated\Shared\Transfer\SitemapUrlTransfer>
      */
     public function getSitemapUrls(string $storeName): array;
+
+    /**
+     * @param string $storeName
+     * @param int $limit
+     *
+     * @return \Generator
+     */
+    public function getSitemapGeneratorUrls(string $storeName, int $limit): Generator;
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductStorage\Persistence;
 
+use Generator;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -92,6 +93,8 @@ class ProductStorageRepository extends AbstractRepository implements ProductStor
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductStorage\Persistence\ProductStorageRepositoryInterface::getSitemapGeneratorUrls()} instead.
+     *
      * @param string $storeName
      *
      * @return array<\Generated\Shared\Transfer\SitemapUrlTransfer>
@@ -116,5 +119,35 @@ class ProductStorageRepository extends AbstractRepository implements ProductStor
         } while ($productAbstractStorageEntities->count() === static::SITEMAP_QUERY_LIMIT);
 
         return array_merge(...$sitemapUrlTransfers);
+    }
+
+    /**
+     * @param string $storeName
+     * @param int $limit
+     *
+     * @return \Generator
+     */
+    public function getSitemapGeneratorUrls(string $storeName, int $limit): Generator
+    {
+        $offset = 0;
+        $productAbstractStorageQuery = $this->getFactory()
+            ->createSpyProductAbstractStorageQuery()
+            ->filterByStore($storeName)
+            ->orderByIdProductAbstractStorage()
+            ->limit($limit)
+            ->offset($offset);
+        $sitemapUrlTransfers = [];
+        $productStorageMapper = $this->getFactory()->createProductStorageMapper();
+
+        do {
+            $offset += $limit;
+            $productAbstractStorageEntities = $productAbstractStorageQuery->find();
+
+            yield $productStorageMapper->mapProductAbstractStorageEntitiesToSitemapUrlTransfers($productAbstractStorageEntities);
+
+            $productAbstractStorageQuery->offset($offset);
+        } while ($productAbstractStorageEntities->count() === $limit);
+
+        yield [];
     }
 }

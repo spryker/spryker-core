@@ -9,6 +9,8 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\ProductStorage\Persistence;
 
+use Generator;
+
 /**
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStoragePersistenceFactory getFactory()
  */
@@ -29,9 +31,19 @@ interface ProductStorageRepositoryInterface
     public function getProductConcretesCountByIdProductAbstracts(array $idProductAbstract): array;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductStorage\Persistence\ProductStorageRepositoryInterface::getSitemapGeneratorUrls()} instead.
+     *
      * @param string $storeName
      *
      * @return array<\Generated\Shared\Transfer\SitemapUrlTransfer>
      */
     public function getSitemapUrls(string $storeName): array;
+
+    /**
+     * @param string $storeName
+     * @param int $limit
+     *
+     * @return \Generator
+     */
+    public function getSitemapGeneratorUrls(string $storeName, int $limit): Generator;
 }

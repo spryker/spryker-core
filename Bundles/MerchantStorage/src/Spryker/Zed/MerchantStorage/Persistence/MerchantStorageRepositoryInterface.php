@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantStorage\Persistence;
 
 use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
+use Generator;
 use Propel\Runtime\Collection\ObjectCollection;
 
 interface MerchantStorageRepositoryInterface
@@ -22,9 +23,19 @@ interface MerchantStorageRepositoryInterface
     ): ObjectCollection;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\MerchantStorage\Persistence\MerchantStorageRepositoryInterface::getSitemapGeneratorUrls()} instead.
+     *
      * @param string $storeName
      *
      * @return array<\Generated\Shared\Transfer\SitemapUrlTransfer>
      */
     public function getSitemapUrls(string $storeName): array;
+
+    /**
+     * @param string $storeName
+     * @param int $limit
+     *
+     * @return \Generator
+     */
+    public function getSitemapGeneratorUrls(string $storeName, int $limit): Generator;
 }

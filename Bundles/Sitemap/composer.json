@@ -8,7 +8,7 @@
         "spryker/file-system": "^2.0.0",
         "spryker/flysystem": "^3.0.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/sitemap-extension": "^1.0.0",
+        "spryker/sitemap-extension": "^1.1.0",
         "spryker/store": "^1.19.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.27.0"

@@ -41,7 +41,7 @@ class SitemapBusinessFactory extends AbstractBusinessFactory
             $this->createXmlGenerator(),
             $this->getFileSystemService(),
             $this->getConfig(),
-            $this->getSitemapDataProviderPlugins(),
+            $this->getSitemapGeneratorDataProviderPlugins(),
         );
     }
 
@@ -62,10 +62,10 @@ class SitemapBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\SitemapExtension\Dependency\Plugin\SitemapDataProviderPluginInterface>
+     * @return array<\Spryker\Zed\SitemapExtension\Dependency\Plugin\SitemapGeneratorDataProviderPluginInterface>
      */
-    public function getSitemapDataProviderPlugins(): array
+    public function getSitemapGeneratorDataProviderPlugins(): array
     {
-        return $this->getProvidedDependency(SitemapDependencyProvider::PLUGINS_SITEMAP_DATA_PROVIDER);
+        return $this->getProvidedDependency(SitemapDependencyProvider::PLUGINS_SITEMAP_GENERATOR_DATA_PROVIDER);
     }
 }

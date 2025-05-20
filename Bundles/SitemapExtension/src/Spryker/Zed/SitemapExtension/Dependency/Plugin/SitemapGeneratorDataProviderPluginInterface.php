@@ -7,13 +7,9 @@
 
 namespace Spryker\Zed\SitemapExtension\Dependency\Plugin;
 
-/**
- * @deprecated Use {@link \Spryker\Zed\SitemapExtension\Dependency\Plugin\SitemapGeneratorDataProviderPluginInterface} instead.
- * Will be removed in the next major release.
- *
- * Implement this plugin interface to provide additional URLs for the sitemap.
- */
-interface SitemapDataProviderPluginInterface
+use Generator;
+
+interface SitemapGeneratorDataProviderPluginInterface
 {
     /**
      * Specification:
@@ -28,13 +24,15 @@ interface SitemapDataProviderPluginInterface
 
     /**
      * Specification:
-     * - Returns an array of URL related data to be included in the sitemap.
+     * - Returns a generator of arrays of URL related data to be included in the sitemap.
+     * - It has to return an empty array as the last element to demonstrate the end of the generator.
      *
      * @api
      *
      * @param string $storeName
+     * @param int $chunkSizePerIteration
      *
-     * @return array<\Generated\Shared\Transfer\SitemapUrlTransfer>
+     * @return \Generator
      */
-    public function getSitemapUrls(string $storeName): array;
+    public function getSitemapUrls(string $storeName, int $chunkSizePerIteration): Generator;
 }

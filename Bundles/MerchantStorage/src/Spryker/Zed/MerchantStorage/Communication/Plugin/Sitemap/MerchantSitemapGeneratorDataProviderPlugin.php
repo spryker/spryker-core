@@ -7,18 +7,17 @@
 
 namespace Spryker\Zed\MerchantStorage\Communication\Plugin\Sitemap;
 
+use Generator;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SitemapExtension\Dependency\Plugin\SitemapDataProviderPluginInterface;
+use Spryker\Zed\SitemapExtension\Dependency\Plugin\SitemapGeneratorDataProviderPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\MerchantStorage\Communication\Plugin\Sitemap\MerchantSitemapGeneratorDataProviderPlugin} instead
- *
  * @method \Spryker\Zed\MerchantStorage\Persistence\MerchantStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantStorage\MerchantStorageConfig getConfig()
  * @method \Spryker\Zed\MerchantStorage\Business\MerchantStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantStorage\Communication\MerchantStorageCommunicationFactory getFactory()
  */
-class MerchantSitemapDataProviderPlugin extends AbstractPlugin implements SitemapDataProviderPluginInterface
+class MerchantSitemapGeneratorDataProviderPlugin extends AbstractPlugin implements SitemapGeneratorDataProviderPluginInterface
 {
     /**
      * @var string
@@ -44,11 +43,12 @@ class MerchantSitemapDataProviderPlugin extends AbstractPlugin implements Sitema
      * @api
      *
      * @param string $storeName
+     * @param int $limit
      *
-     * @return array<\Generated\Shared\Transfer\SitemapUrlTransfer>
+     * @return \Generator
      */
-    public function getSitemapUrls(string $storeName): array
+    public function getSitemapUrls(string $storeName, int $limit): Generator
     {
-        return $this->getRepository()->getSitemapUrls($storeName);
+        return $this->getRepository()->getSitemapGeneratorUrls($storeName, $limit);
     }
 }

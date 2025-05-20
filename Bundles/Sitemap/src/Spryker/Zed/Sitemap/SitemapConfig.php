@@ -21,6 +21,11 @@ class SitemapConfig extends AbstractBundleConfig
     protected const SITEMAP_URL_LIMIT = 50000;
 
     /**
+     * @var int
+     */
+    protected const SITEMAP_GENERATOR_ENTITY_LIMIT = 5000;
+
+    /**
      * Specification:
      * - Returns the maximum number of URLs that can be added to a sitemap.
      *
@@ -103,5 +108,18 @@ class SitemapConfig extends AbstractBundleConfig
         }
 
         return null;
+    }
+
+    /**
+     * Specification:
+     * - Returns the maximum number of entities that generator must return per one iteration.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getGeneratorEnitityLimit(): int
+    {
+        return static::SITEMAP_GENERATOR_ENTITY_LIMIT;
     }
 }

@@ -11,13 +11,16 @@ use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemDeleteTransfer;
 use Generated\Shared\Transfer\FileSystemListTransfer;
 use Spryker\Shared\Sitemap\SitemapConstants;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\Sitemap\Dependency\Facade\SitemapToStoreFacadeInterface;
 use Spryker\Zed\Sitemap\Dependency\Service\SitemapToFileSystemServiceInterface;
 use Spryker\Zed\Sitemap\SitemapConfig;
-use Spryker\Zed\SitemapExtension\Dependency\Plugin\SitemapDataProviderPluginInterface;
+use Spryker\Zed\SitemapExtension\Dependency\Plugin\SitemapGeneratorDataProviderPluginInterface;
 
 class SitemapGenerator implements SitemapGeneratorInterface
 {
+    use InstancePoolingTrait;
+
     /**
      * @var int
      */
@@ -38,15 +41,16 @@ class SitemapGenerator implements SitemapGeneratorInterface
      * @param \Spryker\Zed\Sitemap\Business\Generator\XmlGeneratorInterface $xmlGenerator
      * @param \Spryker\Zed\Sitemap\Dependency\Service\SitemapToFileSystemServiceInterface $fileSystemService
      * @param \Spryker\Zed\Sitemap\SitemapConfig $sitemapConfig
-     * @param array<\Spryker\Zed\SitemapExtension\Dependency\Plugin\SitemapDataProviderPluginInterface> $sitemapDataProviderPlugins
+     * @param array<\Spryker\Zed\SitemapExtension\Dependency\Plugin\SitemapGeneratorDataProviderPluginInterface> $sitemapGeneratorDataProviderPlugins
      */
     public function __construct(
         protected SitemapToStoreFacadeInterface $storeFacade,
         protected XmlGeneratorInterface $xmlGenerator,
         protected SitemapToFileSystemServiceInterface $fileSystemService,
         protected SitemapConfig $sitemapConfig,
-        protected array $sitemapDataProviderPlugins
+        protected array $sitemapGeneratorDataProviderPlugins
     ) {
+        $this->disableInstancePooling();
     }
 
     /**
@@ -59,51 +63,94 @@ class SitemapGenerator implements SitemapGeneratorInterface
         foreach ($storeTransfers as $storeTransfer) {
             $storeName = $storeTransfer->getNameOrFail();
             $yvesHost = $this->getBaseUrl($storeName);
+            $fileNames = [];
 
-            $sitemapXmlContentIndexedByFileName = [];
-
-            foreach ($this->sitemapDataProviderPlugins as $sitemapDataProviderPlugin) {
-                $sitemapXmlContentIndexedByFileName += $this->getSitemapXmlContentIndexedByFileName($sitemapDataProviderPlugin, $storeName, $yvesHost);
+            foreach ($this->sitemapGeneratorDataProviderPlugins as $plugin) {
+                $fileNames = array_merge(
+                    $fileNames,
+                    $this->getPaginatedSitemapXmlContentIndexedByFileName($plugin, $storeName, $yvesHost),
+                );
             }
 
-            $sitemapXmlContentIndexedByFileName[SitemapConstants::SITEMAP_INDEX_FILE_NAME] = $this->xmlGenerator->generateSitemapIndexXmlContent(
-                array_keys($sitemapXmlContentIndexedByFileName),
+            $indexContent = $this->xmlGenerator->generateSitemapIndexXmlContent(
+                $fileNames,
                 $yvesHost,
             );
 
-            $this->saveSitemapFiles($sitemapXmlContentIndexedByFileName, $storeName);
+            $this->writeFile(SitemapConstants::SITEMAP_INDEX_FILE_NAME, $indexContent, $storeName);
+            $fileNames[] = SitemapConstants::SITEMAP_INDEX_FILE_NAME;
+
+            $this->removeOutdatedSitemapFiles($fileNames, $storeName);
         }
     }
 
     /**
-     * @param \Spryker\Zed\SitemapExtension\Dependency\Plugin\SitemapDataProviderPluginInterface $sitemapDataProviderPlugin
+     * @param \Spryker\Zed\SitemapExtension\Dependency\Plugin\SitemapGeneratorDataProviderPluginInterface $sitemapGeneratorDataProviderPlugin
      * @param string $storeName
      * @param string $yvesHost
      *
      * @return array<string>
      */
-    protected function getSitemapXmlContentIndexedByFileName(
-        SitemapDataProviderPluginInterface $sitemapDataProviderPlugin,
+    protected function getPaginatedSitemapXmlContentIndexedByFileName(
+        SitemapGeneratorDataProviderPluginInterface $sitemapGeneratorDataProviderPlugin,
         string $storeName,
         string $yvesHost
     ): array {
-        $entityType = $sitemapDataProviderPlugin->getEntityType();
-        $sitemapUrlTransfers = $sitemapDataProviderPlugin->getSitemapUrls($storeName);
-        $sitemapUrlTransfersGroupedByIdEntity = $this->groupSitemapUrlTransfersByIdEntity($sitemapUrlTransfers);
+        $entityType = $sitemapGeneratorDataProviderPlugin->getEntityType();
         $sitemapPageNumber = 1;
-        $sitemapXmlContentIndexedByFileName = [];
         $chunkSize = max(1, (int)$this->sitemapConfig->getSitemapUrlLimit());
+        $generatorEntityLimit = max(1, (int)$this->sitemapConfig->getGeneratorEnitityLimit());
+        $fileNames = [];
+        $sitemapUrlTransfers = [];
 
-        foreach (array_chunk($sitemapUrlTransfers, $chunkSize) as $sitemapUrlTransfersChunk) {
-            $fileName = $this->generateSitemapFileName($entityType, $sitemapPageNumber++);
-            $sitemapXmlContentIndexedByFileName[$fileName] = $this->xmlGenerator->generateSitemapXmlContent(
-                $sitemapUrlTransfersChunk,
-                $sitemapUrlTransfersGroupedByIdEntity,
-                $yvesHost,
-            );
+        foreach ($sitemapGeneratorDataProviderPlugin->getSitemapUrls($storeName, $generatorEntityLimit) as $sitemapUrlPaginatedTransfers) {
+            $sitemapUrlTransfers = array_merge($sitemapUrlTransfers, $sitemapUrlPaginatedTransfers);
+
+            while (count($sitemapUrlTransfers) >= $chunkSize) {
+                $sitemapUrlChunk = array_slice($sitemapUrlTransfers, 0, $chunkSize);
+                $sitemapUrlTransfers = array_slice($sitemapUrlTransfers, $chunkSize);
+
+                $fileNames[] = $this->writeSitemapChunk($entityType, $sitemapPageNumber++, $sitemapUrlChunk, $yvesHost, $storeName);
+            }
         }
 
-        return $sitemapXmlContentIndexedByFileName;
+        if ($sitemapUrlTransfers) {
+            $fileNames[] = $this->writeSitemapChunk($entityType, $sitemapPageNumber++, $sitemapUrlTransfers, $yvesHost, $storeName);
+        }
+
+        return $fileNames;
+    }
+
+    /**
+     * @param string $entityType
+     * @param int $pageNumber
+     * @param array<\Generated\Shared\Transfer\SitemapUrlTransfer> $sitemapUrlTransfers
+     * @param string $yvesHost
+     * @param string $storeName
+     *
+     * @return string
+     */
+    protected function writeSitemapChunk(
+        string $entityType,
+        int $pageNumber,
+        array $sitemapUrlTransfers,
+        string $yvesHost,
+        string $storeName
+    ): string {
+        $fileName = $this->generateSitemapFileName($entityType, $pageNumber);
+
+        $content = $this->xmlGenerator->generateSitemapXmlContent(
+            $sitemapUrlTransfers,
+            $this->groupSitemapUrlTransfersByIdEntity($sitemapUrlTransfers),
+            $yvesHost,
+        );
+
+        $this->writeFile($fileName, $content, $storeName);
+
+        unset($content);
+        gc_collect_cycles();
+
+        return $fileName;
     }
 
     /**
@@ -137,28 +184,6 @@ class SitemapGenerator implements SitemapGeneratorInterface
         }
 
         return $sitemapUrlTransfersGroupedByIdEntity;
-    }
-
-    /**
-     * @param array<string, string> $sitemapXmlContentIndexedByFileName
-     * @param string $storeName
-     *
-     * @return void
-     */
-    protected function saveSitemapFiles(array $sitemapXmlContentIndexedByFileName, string $storeName): void
-    {
-        foreach ($sitemapXmlContentIndexedByFileName as $fileName => $content) {
-            $this->writeFile($fileName, $content, $storeName);
-        }
-
-        foreach ($this->getExistingSitemapFiles($storeName) as $fileSystemResourceTransfer) {
-            $existingFileName = ltrim($fileSystemResourceTransfer->getPathOrFail(), $storeName . DIRECTORY_SEPARATOR);
-            if (isset($sitemapXmlContentIndexedByFileName[$existingFileName])) {
-                continue;
-            }
-
-            $this->deleteFile($fileSystemResourceTransfer->getPathOrFail());
-        }
     }
 
     /**
@@ -237,5 +262,23 @@ class SitemapGenerator implements SitemapGeneratorInterface
             $this->sitemapConfig->getBaseUrlYvesPort() === static::PORT_HTTPS ? 'https' : 'http',
             $yvesHost,
         );
+    }
+
+    /**
+     * @param array<string> $validFileNames
+     * @param string $storeName
+     *
+     * @return void
+     */
+    protected function removeOutdatedSitemapFiles(array $validFileNames, string $storeName): void
+    {
+        $existingFiles = $this->getExistingSitemapFiles($storeName);
+
+        foreach ($existingFiles as $resourceTransfer) {
+            $existingFileName = ltrim($resourceTransfer->getPathOrFail(), $storeName . DIRECTORY_SEPARATOR);
+            if (!in_array($existingFileName, $validFileNames, true)) {
+                $this->deleteFile($resourceTransfer->getPathOrFail());
+            }
+        }
     }
 }

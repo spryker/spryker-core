@@ -32,7 +32,7 @@ class SitemapDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const PLUGINS_SITEMAP_DATA_PROVIDER = 'PLUGINS_SITEMAP_DATA_PROVIDER';
+    public const PLUGINS_SITEMAP_GENERATOR_DATA_PROVIDER = 'PLUGINS_SITEMAP_GENERATOR_DATA_PROVIDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -45,7 +45,7 @@ class SitemapDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addFileSystemService($container);
         $container = $this->addStoreFacade($container);
-        $container = $this->addSitemapDataProviderPlugins($container);
+        $container = $this->addSitemapGeneratorDataProviderPlugins($container);
 
         return $container;
     }
@@ -87,19 +87,19 @@ class SitemapDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSitemapDataProviderPlugins(Container $container): Container
+    protected function addSitemapGeneratorDataProviderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_SITEMAP_DATA_PROVIDER, function (): array {
-            return $this->getSitemapDataProviderPlugins();
+        $container->set(static::PLUGINS_SITEMAP_GENERATOR_DATA_PROVIDER, function (): array {
+            return $this->getSitemapGeneratorDataProviderPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return array<\Spryker\Zed\SitemapExtension\Dependency\Plugin\SitemapDataProviderPluginInterface>
+     * @return array<\Spryker\Zed\SitemapExtension\Dependency\Plugin\SitemapGeneratorDataProviderPluginInterface>
      */
-    protected function getSitemapDataProviderPlugins(): array
+    protected function getSitemapGeneratorDataProviderPlugins(): array
     {
         return [];
     }

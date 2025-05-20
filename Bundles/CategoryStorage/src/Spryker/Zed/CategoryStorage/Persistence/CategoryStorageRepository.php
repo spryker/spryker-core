@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generator;
 use Orm\Zed\CategoryStorage\Persistence\Map\SpyCategoryNodeStorageTableMap;
 use Orm\Zed\CategoryStorage\Persistence\Map\SpyCategoryTreeStorageTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -66,6 +67,8 @@ class CategoryStorageRepository extends AbstractRepository implements CategorySt
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepository::getSitemapGeneratorUrls()} instead.
+     *
      * @param string $storeName
      *
      * @return array<\Generated\Shared\Transfer\SitemapUrlTransfer>
@@ -90,6 +93,36 @@ class CategoryStorageRepository extends AbstractRepository implements CategorySt
         } while ($categoryNodeStorageEntities->count() === static::SITEMAP_QUERY_LIMIT);
 
         return array_merge(...$sitemapUrlTransfers);
+    }
+
+    /**
+     * @param string $storeName
+     * @param int $limit
+     *
+     * @return \Generator
+     */
+    public function getSitemapGeneratorUrls(string $storeName, int $limit): Generator
+    {
+        $offset = 0;
+        $categoryNodeStorageQuery = $this->getFactory()
+            ->createSpyCategoryNodeStorageQuery()
+            ->filterByStore($storeName)
+            ->orderByIdCategoryNodeStorage()
+            ->limit($limit)
+            ->offset($offset);
+        $sitemapUrlTransfers = [];
+        $categoryNodeStorageMapper = $this->getFactory()->createCategoryNodeStorageMapper();
+
+        do {
+            $offset += $limit;
+            $categoryNodeStorageEntities = $categoryNodeStorageQuery->find();
+
+            yield $categoryNodeStorageMapper->mapCategoryNodeStorageEntitiesToSitemapUrlTransfers($categoryNodeStorageEntities);
+
+            $categoryNodeStorageQuery->offset($offset);
+        } while ($categoryNodeStorageEntities->count() === $limit);
+
+        yield [];
     }
 
     /**
