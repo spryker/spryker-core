@@ -72,7 +72,8 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
                 continue;
             }
 
-            $productViewTransferList[] = clone $productViewTransfer->fromArray($concreteProductViewTransfer->modifiedToArray());
+            $productViewTransfer = clone $productViewTransfer;
+            $productViewTransferList[] = $productViewTransfer->fromArray($concreteProductViewTransfer->modifiedToArray());
         }
 
         return array_filter($productViewTransferList);
