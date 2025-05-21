@@ -9,6 +9,7 @@ namespace Spryker\Zed\Propel\Communication;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigurator;
 use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface;
@@ -32,6 +33,8 @@ use Symfony\Component\Console\Command\Command;
  */
 class PropelCommunicationFactory extends AbstractCommunicationFactory
 {
+    use LoggerTrait;
+
     /**
      * @var string
      */
@@ -47,7 +50,13 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
             $this->createStreamHandler(),
         );
 
-        return [$defaultLogger];
+        $loggers = [$defaultLogger];
+
+        if ($this->getConfig()->isSharedLoggerEnabled()) {
+            $loggers[] = $this->getLogger();
+        }
+
+        return $loggers;
     }
 
     /**

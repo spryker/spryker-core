@@ -333,4 +333,17 @@ class PropelConfig extends AbstractBundleConfig
     {
         return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
     }
+
+    /**
+     * Specification:
+     * - If true, adds additional shared logger that will send all Propel logs to the same destination as regular logs.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isSharedLoggerEnabled(): bool
+    {
+        return false;
+    }
 }
