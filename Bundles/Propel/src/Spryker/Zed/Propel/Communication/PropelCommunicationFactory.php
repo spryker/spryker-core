@@ -9,6 +9,7 @@ namespace Spryker\Zed\Propel\Communication;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Spryker\Shared\Log\LoggerFactory;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigurator;
 use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface;
@@ -32,32 +33,13 @@ use Symfony\Component\Console\Command\Command;
  */
 class PropelCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @var string
-     */
-    public const LOGGER_NAME = 'defaultLogger';
 
     /**
      * @return array<\Monolog\Logger>
      */
     public function createLogger()
     {
-        $defaultLogger = new Logger(static::LOGGER_NAME);
-        $defaultLogger->pushHandler(
-            $this->createStreamHandler(),
-        );
-
-        return [$defaultLogger];
-    }
-
-    /**
-     * @return \Monolog\Handler\StreamHandler
-     */
-    protected function createStreamHandler()
-    {
-        return new StreamHandler(
-            $this->getConfig()->getLogPath(),
-        );
+        return [LoggerFactory::getInstance()];
     }
 
     /**
