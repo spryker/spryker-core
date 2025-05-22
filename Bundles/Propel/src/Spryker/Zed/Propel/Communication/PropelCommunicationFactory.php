@@ -53,7 +53,9 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
         $loggers = [$defaultLogger];
 
         if ($this->getConfig()->isSharedLoggerEnabled()) {
-            $loggers[] = $this->getLogger();
+            /** @var \Monolog\Logger $sharedLogger */
+            $sharedLogger = $this->getLogger();
+            $loggers[] = $sharedLogger;
         }
 
         return $loggers;
