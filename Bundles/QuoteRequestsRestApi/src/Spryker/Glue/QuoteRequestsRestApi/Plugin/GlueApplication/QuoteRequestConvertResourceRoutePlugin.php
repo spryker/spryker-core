@@ -7,18 +7,18 @@
 
 namespace Spryker\Glue\QuoteRequestsRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestQuoteRequestSendAttributesTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestConvertAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig;
 
-class QuoteRequestSendResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
+class QuoteRequestConvertResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Configures available actions for `quote-request-send-to-user` resource.
+     * - Configures available actions for `quote-request-convert-to-quote` resource.
      *
      * @api
      *
@@ -43,7 +43,7 @@ class QuoteRequestSendResourceRoutePlugin extends AbstractPlugin implements Reso
      */
     public function getResourceType(): string
     {
-        return QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUEST_SEND_TO_USER;
+        return QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUEST_CONVERT_TO_QUOTE;
     }
 
     /**
@@ -55,7 +55,7 @@ class QuoteRequestSendResourceRoutePlugin extends AbstractPlugin implements Reso
      */
     public function getController(): string
     {
-        return 'quote-request-send-resource';
+        return 'quote-request-convert-resource';
     }
 
     /**
@@ -67,7 +67,7 @@ class QuoteRequestSendResourceRoutePlugin extends AbstractPlugin implements Reso
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestQuoteRequestSendAttributesTransfer::class;
+        return RestQuoteRequestConvertAttributesTransfer::class;
     }
 
     /**

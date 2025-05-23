@@ -19,33 +19,15 @@ use Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder\QuoteRe
 class QuoteRequestAgentReader implements QuoteRequestAgentReaderInterface
 {
     /**
-     * @var \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\Client\QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface
-     */
-    protected $quoteRequestAgentClient;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\RestResource\QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface
-     */
-    protected $quoteRequestsRestApiResource;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface
-     */
-    protected $quoteRequestRestResponseBuilder;
-
-    /**
      * @param \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\Client\QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface $quoteRequestAgentClient
      * @param \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\RestResource\QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface $quoteRequestsRestApiResource
      * @param \Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
      */
     public function __construct(
-        QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface $quoteRequestAgentClient,
-        QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface $quoteRequestsRestApiResource,
-        QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
+        protected QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface $quoteRequestAgentClient,
+        protected QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface $quoteRequestsRestApiResource,
+        protected QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
     ) {
-        $this->quoteRequestAgentClient = $quoteRequestAgentClient;
-        $this->quoteRequestsRestApiResource = $quoteRequestsRestApiResource;
-        $this->quoteRequestRestResponseBuilder = $quoteRequestRestResponseBuilder;
     }
 
     /**
@@ -59,21 +41,16 @@ class QuoteRequestAgentReader implements QuoteRequestAgentReaderInterface
             ->setQuoteRequestReference($restRequest->getResource()->getId())
             ->setWithVersions(true);
 
-        $quoteRequestTransfer = $this->quoteRequestAgentClient
-            ->findQuoteRequest($quoteRequestFilterTransfer);
+        $quoteRequestTransfer = $this->quoteRequestAgentClient->findQuoteRequest($quoteRequestFilterTransfer);
 
-        if ($quoteRequestTransfer === null) {
+        if (!$quoteRequestTransfer) {
             return $this->quoteRequestRestResponseBuilder->createQuoteRequestNotFoundErrorResponse();
         }
 
-        $quoteRequestResponseTransfer = (new QuoteRequestResponseTransfer())
-            ->setQuoteRequest($quoteRequestTransfer);
-
-        return $this->quoteRequestsRestApiResource
-            ->createQuoteRequestRestResponse(
-                $quoteRequestResponseTransfer,
-                $restRequest->getMetadata()->getLocale(),
-            );
+        return $this->quoteRequestsRestApiResource->createQuoteRequestRestResponse(
+            (new QuoteRequestResponseTransfer())->setQuoteRequest($quoteRequestTransfer),
+            $restRequest,
+        );
     }
 
     /**
@@ -83,8 +60,7 @@ class QuoteRequestAgentReader implements QuoteRequestAgentReaderInterface
      */
     public function getQuoteRequestCollectionByFilter(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setWithVersions(true);
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())->setWithVersions(true);
 
         $page = $restRequest->getPage();
         if ($page !== null) {
@@ -99,10 +75,9 @@ class QuoteRequestAgentReader implements QuoteRequestAgentReaderInterface
         $quoteRequestOverviewCollectionTransfer = $this->quoteRequestAgentClient
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
 
-        return $this->quoteRequestsRestApiResource
-            ->createQuoteRequestCollectionRestResponse(
-                $quoteRequestOverviewCollectionTransfer,
-                $restRequest->getMetadata()->getLocale(),
-            );
+        return $this->quoteRequestsRestApiResource->createQuoteRequestCollectionRestResponse(
+            $quoteRequestOverviewCollectionTransfer,
+            $restRequest,
+        );
     }
 }

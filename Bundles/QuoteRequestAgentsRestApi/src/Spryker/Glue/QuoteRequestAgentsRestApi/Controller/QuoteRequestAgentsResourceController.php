@@ -22,14 +22,24 @@ class QuoteRequestAgentsResourceController extends AbstractController
      *          "summary": [
      *              "Retrieves a quote request by reference."
      *          ],
-     *          "parameters": [{
-     *              "ref": "acceptLanguage"
-     *          }],
+     *          "parameters": [
+     *              {
+     *                  "ref": "acceptLanguage"
+     *              },
+     *              {
+     *                  "name": "version",
+     *                  "in": "query",
+     *                  "required": false,
+     *                  "description": "Version of the quote request."
+     *              }
+     *          ],
+     *          "isIdNullable": false,
      *          "responses": {
      *              "404": "Quote request not found.",
      *              "403": "Unauthorized request.",
      *              "400": "Bad request."
-     *          }
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer"
      *     },
      *     "getCollection": {
      *          "summary": [
@@ -38,9 +48,10 @@ class QuoteRequestAgentsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *     "responses": {
+     *          "responses": {
      *              "403": "Unauthorized request."
-     *          }
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer"
      *     }
      * })
      *
@@ -70,11 +81,21 @@ class QuoteRequestAgentsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
+     *          "requestAttributesClassName": "\\Generated\\Shared\\Transfer\\RestAgentQuoteRequestsRequestAttributesTransfer",
+     *          "attributes": {
+     *              "companyUserUuid": {
+     *                  "type": "string",
+     *                  "required": true,
+     *                  "description": "Company user UUID for whom the quote request is being created."
+     *              }
+     *          },
+     *          "isIdNullable": true,
      *          "responses": {
-     *              "400": "Bad request",
+     *              "400": "Bad request.",
      *              "403": "Unauthorized request.",
      *              "422": "Unprocessable entity."
-     *          }
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer"
      *     }
      * })
      *
@@ -93,17 +114,42 @@ class QuoteRequestAgentsResourceController extends AbstractController
      * @Glue({
      *     "patch": {
      *          "summary": [
-     *              "Updates a quote request as a agent."
+     *              "Updates a quote request as an agent."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *     "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
+     *          "requestAttributesClassName": "\\Generated\\Shared\\Transfer\\RestAgentQuoteRequestsRequestAttributesTransfer",
+     *          "attributes": {
+     *              "metadata": {
+     *                  "type": "object",
+     *                  "required": false,
+     *                  "description": "Additional metadata for the quote request."
+     *              },
+     *              "validUntil": {
+     *                  "type": "string",
+     *                  "required": false,
+     *                  "description": "Date until which the quote is valid."
+     *              },
+     *              "isLatestVersionVisible": {
+     *                  "type": "boolean",
+     *                  "required": false,
+     *                  "description": "Indicates if the latest version should be visible to the customer."
+     *              },
+     *              "unitPriceMap": {
+     *                  "type": "object",
+     *                  "required": false,
+     *                  "description": "Map of groupKeys to their unit prices."
+     *              }
+     *          },
+     *          "isIdNullable": false,
      *          "responses": {
      *              "400": "Quote request id is missing.",
      *              "403": "Unauthorized request.",
-     *              "404": "Quote request not found."
-     *          }
+     *              "404": "Quote request not found.",
+     *              "422": "Unprocessable entity."
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer"
      *     }
      * })
      *

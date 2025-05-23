@@ -20,17 +20,19 @@ class QuoteRequestAgentsSendResourceController extends AbstractController
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Sends the quote request."
+     *              "Sends the quote request to customer."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
+     *          "requestAttributesClassName": "\\Generated\\Shared\\Transfer\\RestAgentQuoteRequestSendAttributesTransfer",
      *          "responses": {
-     *              "204": "Quote request sent.",
      *              "400": "Bad request",
      *              "403": "Unauthorized request.",
      *              "422": "Unprocessable entity."
-     *          }
+     *          },
+     *           "isIdNullable": false,
+     *           "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer"
      *     }
      * })
      *

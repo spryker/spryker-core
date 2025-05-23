@@ -19,19 +19,21 @@
         <property name="customer" type="Customer"/>
     </transfer>
 
-    <transfer name="RestAgentQuoteRequestsRequestAttributes">
-        <property name="companyUserUuid" type="string"/>
-        <property name="cartUuid" type="string"/>
+    <transfer name="RestAgentQuoteRequestsRequestAttributes" strict="true">
+        <property name="companyUserUuid" type="string" restRequestParameter="yes"/>
         <property name="metadata" type="array" singular="metadata" restRequestParameter="yes"/>
+        <property name="unitPriceMap" type="array" singular="unitPriceMap" restRequestParameter="yes"/>
+        <property name="validUntil" type="string" restRequestParameter="yes"/>
+        <property name="isLatestVersionVisible" type="bool" restRequestParameter="yes"/>
     </transfer>
 
-    <transfer name="RestAgentQuoteRequestCancelAttributes">
+    <transfer name="RestAgentQuoteRequestCancelAttributes" strict="true">
     </transfer>
 
-    <transfer name="RestAgentQuoteRequestReviseAttributes">
+    <transfer name="RestAgentQuoteRequestReviseAttributes" strict="true">
     </transfer>
 
-    <transfer name="RestAgentQuoteRequestSendAttributes">
+    <transfer name="RestAgentQuoteRequestSendAttributes" strict="true">
     </transfer>
 
     <transfer name="Customer">
@@ -52,6 +54,8 @@
         <property name="uuid" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="customer" type="Customer"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
@@ -90,6 +94,15 @@
 
     <transfer name="QuoteError">
         <property name="errorIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="groupKey" type="string"/>
+        <property name="sourceUnitGrossPrice" type="int"/>
+        <property name="sourceUnitNetPrice" type="int"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestsAttributes">
     </transfer>
 
 </transfers>

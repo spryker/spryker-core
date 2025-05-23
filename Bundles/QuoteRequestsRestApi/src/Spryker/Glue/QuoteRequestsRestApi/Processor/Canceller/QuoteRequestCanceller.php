@@ -7,36 +7,24 @@
 
 namespace Spryker\Glue\QuoteRequestsRestApi\Processor\Canceller;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface;
+use Spryker\Glue\QuoteRequestsRestApi\Processor\Builder\QuoteRequestFilterBuilderInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface;
-use Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig;
 
 class QuoteRequestCanceller implements QuoteRequestCancellerInterface
 {
     /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface
-     */
-    protected $quoteRequestRestResponseBuilder;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface
-     */
-    protected $quoteRequestClient;
-
-    /**
      * @param \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient
      * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
+     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Builder\QuoteRequestFilterBuilderInterface $quoteRequestFilterBuilder
      */
     public function __construct(
-        QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient,
-        QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
+        protected QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient,
+        protected QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
+        protected QuoteRequestFilterBuilderInterface $quoteRequestFilterBuilder
     ) {
-        $this->quoteRequestClient = $quoteRequestClient;
-        $this->quoteRequestRestResponseBuilder = $quoteRequestRestResponseBuilder;
     }
 
     /**
@@ -46,42 +34,21 @@ class QuoteRequestCanceller implements QuoteRequestCancellerInterface
      */
     public function cancelQuoteRequest(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $parentResource = $restRequest->findParentResourceByType(QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS);
-        if (!$parentResource || $parentResource->getId() === null) {
+        $quoteRequestFilterTransfer = $this->quoteRequestFilterBuilder->buildFilterFromRequest($restRequest, true);
+        if (!$quoteRequestFilterTransfer) {
             return $this->quoteRequestRestResponseBuilder->createQuoteRequestReferenceMissingErrorResponse();
         }
 
-        $quoteRequestFilterTransfer = $this->createQuoteRequestFilterTransfer();
-        $quoteRequestFilterTransfer->setQuoteRequestReference($parentResource->getId());
-
-        $restUserTransfer = $restRequest->getRestUser();
-        if ($restUserTransfer) {
-            $companyUserTransfer = (new CompanyUserTransfer())
-                ->setIdCompanyUser($restUserTransfer->getIdCompanyUser());
-
-            $quoteRequestFilterTransfer
-                ->setCompanyUser($companyUserTransfer)
-                ->setIdCompanyUser($restUserTransfer->getIdCompanyUser());
-        }
-
+        $quoteRequestFilterTransfer->setWithVersions(true);
         $quoteRequestResponseTransfer = $this->quoteRequestClient->cancelQuoteRequest($quoteRequestFilterTransfer);
 
         if ($quoteRequestResponseTransfer->getIsSuccessful()) {
-            return $this->quoteRequestRestResponseBuilder->createNoContentResponse();
+            return $this->quoteRequestRestResponseBuilder->createQuoteRequestRestResponse(
+                $quoteRequestResponseTransfer,
+                $restRequest,
+            );
         }
 
-        if ($quoteRequestResponseTransfer->getQuoteRequest() === null) {
-            return $this->quoteRequestRestResponseBuilder->createQuoteRequestNotFoundErrorResponse();
-        }
-
-        return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse(($quoteRequestResponseTransfer->getMessages())->getArrayCopy());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteRequestFilterTransfer
-     */
-    protected function createQuoteRequestFilterTransfer(): QuoteRequestFilterTransfer
-    {
-        return new QuoteRequestFilterTransfer();
+        return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse($quoteRequestResponseTransfer);
     }
 }

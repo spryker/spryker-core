@@ -24,41 +24,17 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
     protected const MAPPING_TYPE_UUID = 'uuid';
 
     /**
-     * @var \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\Client\QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface
-     */
-    protected $quoteRequestAgentClient;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\Client\QuoteRequestAgentsRestApiToCompanyUserStorageClientInterface
-     */
-    protected $companyUserStorageClient;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\RestResource\QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface
-     */
-    protected $quoteRequestsRestApiResource;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface
-     */
-    protected $quoteRequestRestResponseBuilder;
-
-    /**
      * @param \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\Client\QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface $quoteRequestAgentClient
      * @param \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\Client\QuoteRequestAgentsRestApiToCompanyUserStorageClientInterface $companyUserStorageClient
      * @param \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\RestResource\QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface $quoteRequestsRestApiResource
      * @param \Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
      */
     public function __construct(
-        QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface $quoteRequestAgentClient,
-        QuoteRequestAgentsRestApiToCompanyUserStorageClientInterface $companyUserStorageClient,
-        QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface $quoteRequestsRestApiResource,
-        QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
+        protected QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface $quoteRequestAgentClient,
+        protected QuoteRequestAgentsRestApiToCompanyUserStorageClientInterface $companyUserStorageClient,
+        protected QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface $quoteRequestsRestApiResource,
+        protected QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
     ) {
-        $this->quoteRequestAgentClient = $quoteRequestAgentClient;
-        $this->companyUserStorageClient = $companyUserStorageClient;
-        $this->quoteRequestsRestApiResource = $quoteRequestsRestApiResource;
-        $this->quoteRequestRestResponseBuilder = $quoteRequestRestResponseBuilder;
     }
 
     /**
@@ -76,26 +52,21 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
         );
 
         if (!$companyUserStorageTransfer) {
-            return $this->quoteRequestRestResponseBuilder
-                ->createCompanyUserNotFoundErrorResponse();
+            return $this->quoteRequestRestResponseBuilder->createCompanyUserNotFoundErrorResponse();
         }
 
-        $companyUserTransfer = (new CompanyUserTransfer())
-            ->fromArray($companyUserStorageTransfer->toArray(), true);
-
         $quoteRequestTransfer = (new QuoteRequestTransfer())
-            ->setCompanyUser($companyUserTransfer);
+            ->setCompanyUser((new CompanyUserTransfer())->fromArray($companyUserStorageTransfer->toArray(), true));
 
         $quoteRequestResponseTransfer = $this->quoteRequestAgentClient->createQuoteRequest($quoteRequestTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
-            return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse($quoteRequestResponseTransfer->getMessages());
+            return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse($quoteRequestResponseTransfer);
         }
 
-        return $this->quoteRequestsRestApiResource
-            ->createQuoteRequestRestResponse(
-                $quoteRequestResponseTransfer,
-                $restRequest->getMetadata()->getLocale(),
-            );
+        return $this->quoteRequestsRestApiResource->createQuoteRequestRestResponse(
+            $quoteRequestResponseTransfer,
+            $restRequest,
+        );
     }
 }

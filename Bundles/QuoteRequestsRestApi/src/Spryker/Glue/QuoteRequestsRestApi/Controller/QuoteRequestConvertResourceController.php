@@ -14,25 +14,25 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiFactory getFactory()
  */
-class QuoteRequestReviseResourceController extends AbstractController
+class QuoteRequestConvertResourceController extends AbstractController
 {
     /**
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Revises the quote request."
+     *              "Converts the quote request to cart."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "requestAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestReviseAttributesTransfer",
+     *          "requestAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestConvertAttributesTransfer",
      *          "responses": {
      *              "400": "Bad request",
      *              "403": "Unauthorized request.",
      *              "422": "Unprocessable entity."
      *          },
      *           "isIdNullable": false,
-     *           "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer"
+     *           "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestCartsAttributesTransfer"
      *     }
      * })
      *
@@ -43,7 +43,7 @@ class QuoteRequestReviseResourceController extends AbstractController
     public function postAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createQuoteRequestReviser()
-            ->reviseQuoteRequest($restRequest);
+            ->createQuoteRequestConverter()
+            ->convertQuoteRequestToCart($restRequest);
     }
 }

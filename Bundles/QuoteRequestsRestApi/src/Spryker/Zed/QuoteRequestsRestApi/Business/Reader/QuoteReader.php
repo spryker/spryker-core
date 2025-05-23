@@ -15,16 +15,11 @@ use Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade\QuoteRequestsRestApiToCar
 class QuoteReader implements QuoteReaderInterface
 {
     /**
-     * @var \Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade\QuoteRequestsRestApiToCartsRestApiFacadeInterface
-     */
-    protected $cartsRestApiFacade;
-
-    /**
      * @param \Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade\QuoteRequestsRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
      */
-    public function __construct(QuoteRequestsRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade)
-    {
-        $this->cartsRestApiFacade = $cartsRestApiFacade;
+    public function __construct(
+        protected QuoteRequestsRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
+    ) {
     }
 
     /**

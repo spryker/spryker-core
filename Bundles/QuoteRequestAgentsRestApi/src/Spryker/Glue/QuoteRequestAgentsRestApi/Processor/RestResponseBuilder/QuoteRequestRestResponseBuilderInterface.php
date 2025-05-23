@@ -7,17 +7,17 @@
 
 namespace Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder;
 
-use ArrayObject;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface QuoteRequestRestResponseBuilderInterface
 {
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
+     * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedErrorResponse(ArrayObject $messageTransfers): RestResponseInterface;
+    public function createFailedErrorResponse(QuoteRequestResponseTransfer $quoteRequestResponseTransfer): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -33,11 +33,6 @@ interface QuoteRequestRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createQuoteRequestReferenceMissingErrorResponse(): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createNoContentResponse(): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

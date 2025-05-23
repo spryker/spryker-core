@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder;
 
-use ArrayObject;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -18,37 +18,24 @@ use Symfony\Component\HttpFoundation\Response;
 class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilderInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestAgentsRestApi\QuoteRequestAgentsRestApiConfig
-     */
-    protected $quoteRequestAgentsRestApiConfig;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\QuoteRequestAgentsRestApi\QuoteRequestAgentsRestApiConfig $quoteRequestAgentsRestApiConfig
      */
     public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        QuoteRequestAgentsRestApiConfig $quoteRequestAgentsRestApiConfig
+        protected RestResourceBuilderInterface $restResourceBuilder,
+        protected QuoteRequestAgentsRestApiConfig $quoteRequestAgentsRestApiConfig
     ) {
-        $this->restResourceBuilder = $restResourceBuilder;
-        $this->quoteRequestAgentsRestApiConfig = $quoteRequestAgentsRestApiConfig;
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
+     * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedErrorResponse(ArrayObject $messageTransfers): RestResponseInterface
+    public function createFailedErrorResponse(QuoteRequestResponseTransfer $quoteRequestResponseTransfer): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        foreach ($messageTransfers as $messageTransfer) {
+        foreach ($quoteRequestResponseTransfer->getMessages() as $messageTransfer) {
             $restErrorMessageTransfer = $this->mapMessageToRestErrorMessage(
                 $messageTransfer,
                 new RestErrorMessageTransfer(),
@@ -138,16 +125,6 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
         return $this->restResourceBuilder
             ->createRestResponse()
             ->addError($restErrorMessageTransfer);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createNoContentResponse(): RestResponseInterface
-    {
-        return $this->restResourceBuilder
-            ->createRestResponse()
-            ->setStatus(Response::HTTP_NO_CONTENT);
     }
 
     /**

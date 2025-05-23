@@ -8,14 +8,17 @@
 namespace Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface;
 use Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,45 +26,26 @@ use Symfony\Component\HttpFoundation\Response;
 class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilderInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface
-     */
-    protected $quoteRequestMapper;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig
-     */
-    protected $quoteRequestsRestApiConfig;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface $quoteRequestMapper
      * @param \Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig $quoteRequestsRestApiConfig
      */
     public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        QuoteRequestMapperInterface $quoteRequestMapper,
-        QuoteRequestsRestApiConfig $quoteRequestsRestApiConfig
+        protected RestResourceBuilderInterface $restResourceBuilder,
+        protected QuoteRequestMapperInterface $quoteRequestMapper,
+        protected QuoteRequestsRestApiConfig $quoteRequestsRestApiConfig
     ) {
-        $this->restResourceBuilder = $restResourceBuilder;
-        $this->quoteRequestMapper = $quoteRequestMapper;
-        $this->quoteRequestsRestApiConfig = $quoteRequestsRestApiConfig;
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\MessageTransfer> $messageTransfers
+     * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedErrorResponse(array $messageTransfers): RestResponseInterface
+    public function createFailedErrorResponse(QuoteRequestResponseTransfer $quoteRequestResponseTransfer): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        foreach ($messageTransfers as $messageTransfer) {
+        foreach ($quoteRequestResponseTransfer->getMessages() as $messageTransfer) {
             $restErrorMessageTransfer = $this->mapMessageTransferToRestErrorMessageTransfer(
                 $messageTransfer,
                 new RestErrorMessageTransfer(),
@@ -74,21 +58,44 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createFailedQuoteErrorResponse(QuoteResponseTransfer $quoteResponseTransfer): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+        foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
+            $restErrorMessageTransfer = $this->mapQuoteErrorTransferToRestErrorMessageTransfer(
+                $quoteErrorTransfer,
+                new RestErrorMessageTransfer(),
+            );
+
+            $restResponse->addError($restErrorMessageTransfer);
+        }
+
+        return $restResponse;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
-     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param bool $isLatestVersionVisible
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createQuoteRequestRestResponse(
         QuoteRequestResponseTransfer $quoteRequestResponseTransfer,
-        string $localeName
+        RestRequestInterface $restRequest,
+        bool $isLatestVersionVisible = true
     ): RestResponseInterface {
         $quoteRequestTransfers = [$quoteRequestResponseTransfer->getQuoteRequestOrFail()];
         $restQuoteRequestsAttributesTransfers = $this->quoteRequestMapper
             ->mapQuoteRequestTransfersToRestQuoteRequestsAttributesTransfers(
                 $quoteRequestTransfers,
                 [],
-                $localeName,
+                $restRequest,
+                $isLatestVersionVisible,
             );
 
         return $this->buildRestResponse(
@@ -99,20 +106,23 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
-     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param bool $isLatestVersionVisible
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createQuoteRequestCollectionRestResponse(
         QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer,
-        string $localeName
+        RestRequestInterface $restRequest,
+        bool $isLatestVersionVisible = true
     ): RestResponseInterface {
         $quoteRequestTransfers = ($quoteRequestCollectionTransfer->getQuoteRequests())->getArrayCopy();
         $restQuoteRequestsAttributesTransfers = $this->quoteRequestMapper
             ->mapQuoteRequestTransfersToRestQuoteRequestsAttributesTransfers(
                 $quoteRequestTransfers,
                 [],
-                $localeName,
+                $restRequest,
+                $isLatestVersionVisible,
             );
 
         return $this->buildRestResponse(
@@ -167,16 +177,6 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createNoContentResponse(): RestResponseInterface
-    {
-        return $this->restResourceBuilder
-            ->createRestResponse()
-            ->setStatus(Response::HTTP_NO_CONTENT);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
      * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
      *
@@ -197,6 +197,29 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
         }
 
         return $this->createErrorMessageTransfer($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function mapQuoteErrorTransferToRestErrorMessageTransfer(
+        QuoteErrorTransfer $quoteErrorTransfer,
+        RestErrorMessageTransfer $restErrorMessageTransfer
+    ): RestErrorMessageTransfer {
+        $errorIdentifier = $quoteErrorTransfer->getMessage();
+
+        $errorIdentifierToRestErrorMapping = $this->quoteRequestsRestApiConfig->getErrorIdentifierToRestErrorMapping();
+        if ($errorIdentifier && isset($errorIdentifierToRestErrorMapping[$errorIdentifier])) {
+            return $restErrorMessageTransfer->fromArray(
+                $errorIdentifierToRestErrorMapping[$errorIdentifier],
+                true,
+            );
+        }
+
+        return $this->createQuoteErrorMessageTransfer($quoteErrorTransfer);
     }
 
     /**
@@ -262,5 +285,18 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
             ->setCode(QuoteRequestsRestApiConfig::RESPONSE_CODE_QUOTE_REQUEST_VALIDATION)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->setDetail($messageTransfer->getMessage() ?? QuoteRequestsRestApiConfig::RESPONSE_PROBLEM_CREATING_QUOTE_REQUEST_DESCRIPTION);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createQuoteErrorMessageTransfer(QuoteErrorTransfer $quoteErrorTransfer): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode(QuoteRequestsRestApiConfig::RESPONSE_CODE_QUOTE_REQUEST_VALIDATION)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail($quoteErrorTransfer->getMessage() ?? QuoteRequestsRestApiConfig::RESPONSE_PROBLEM_CREATING_QUOTE_REQUEST_DESCRIPTION);
     }
 }

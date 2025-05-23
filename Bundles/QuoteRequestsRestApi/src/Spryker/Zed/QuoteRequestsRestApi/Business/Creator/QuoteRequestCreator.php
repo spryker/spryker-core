@@ -16,33 +16,15 @@ use Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade\QuoteRequestsRestApiToQuo
 class QuoteRequestCreator implements QuoteRequestCreatorInterface
 {
     /**
-     * @var \Spryker\Zed\QuoteRequestsRestApi\Business\Reader\QuoteReaderInterface
-     */
-    protected $quoteReader;
-
-    /**
-     * @var \Spryker\Zed\QuoteRequestsRestApi\Business\Mapper\QuoteRequestResponseMapperInterface
-     */
-    protected $quoteRequestResponseMapper;
-
-    /**
-     * @var \Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade\QuoteRequestsRestApiToQuoteRequestFacadeInterface
-     */
-    protected $quoteRequestFacade;
-
-    /**
      * @param \Spryker\Zed\QuoteRequestsRestApi\Business\Reader\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\QuoteRequestsRestApi\Business\Mapper\QuoteRequestResponseMapperInterface $quoteRequestResponseMapper
      * @param \Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade\QuoteRequestsRestApiToQuoteRequestFacadeInterface $quoteRequestFacade
      */
     public function __construct(
-        QuoteReaderInterface $quoteReader,
-        QuoteRequestResponseMapperInterface $quoteRequestResponseMapper,
-        QuoteRequestsRestApiToQuoteRequestFacadeInterface $quoteRequestFacade
+        protected QuoteReaderInterface $quoteReader,
+        protected QuoteRequestResponseMapperInterface $quoteRequestResponseMapper,
+        protected QuoteRequestsRestApiToQuoteRequestFacadeInterface $quoteRequestFacade
     ) {
-        $this->quoteReader = $quoteReader;
-        $this->quoteRequestResponseMapper = $quoteRequestResponseMapper;
-        $this->quoteRequestFacade = $quoteRequestFacade;
     }
 
     /**

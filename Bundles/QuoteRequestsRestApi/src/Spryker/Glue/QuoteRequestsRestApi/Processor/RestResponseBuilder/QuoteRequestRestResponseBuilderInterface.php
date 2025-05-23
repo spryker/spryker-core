@@ -9,37 +9,50 @@ namespace Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface QuoteRequestRestResponseBuilderInterface
 {
     /**
-     * @param array<\Generated\Shared\Transfer\MessageTransfer> $messageTransfers
+     * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedErrorResponse(array $messageTransfers): RestResponseInterface;
+    public function createFailedErrorResponse(QuoteRequestResponseTransfer $quoteRequestResponseTransfer): RestResponseInterface;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createFailedQuoteErrorResponse(QuoteResponseTransfer $quoteResponseTransfer): RestResponseInterface;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
-     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param bool $isLatestVersionVisible
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createQuoteRequestRestResponse(
         QuoteRequestResponseTransfer $quoteRequestResponseTransfer,
-        string $localeName
+        RestRequestInterface $restRequest,
+        bool $isLatestVersionVisible = true
     ): RestResponseInterface;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
-     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param bool $isLatestVersionVisible
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createQuoteRequestCollectionRestResponse(
         QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer,
-        string $localeName
+        RestRequestInterface $restRequest,
+        bool $isLatestVersionVisible = true
     ): RestResponseInterface;
 
     /**
@@ -56,9 +69,4 @@ interface QuoteRequestRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createQuoteRequestReferenceMissingErrorResponse(): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createNoContentResponse(): RestResponseInterface;
 }

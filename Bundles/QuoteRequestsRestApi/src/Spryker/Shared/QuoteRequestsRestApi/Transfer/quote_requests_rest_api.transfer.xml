@@ -9,15 +9,31 @@
         <property name="validUntil" type="string"/>
         <property name="versions" type="string[]" singular="version"/>
         <property name="shownVersion" type="RestQuoteRequestVersion"/>
+        <property name="customer" type="RestQuoteRequestCustomer" strict="true"/>
     </transfer>
 
-    <transfer name="RestQuoteRequestCancelAttributes">
+    <transfer name="RestQuoteRequestCustomer" strict="true">
+        <property name="idCustomer" type="int"/>
+        <property name="email" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="idCompanyUser" type="int"/>
+        <property name="idCompany" type="int"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
     </transfer>
 
-    <transfer name="RestQuoteRequestReviseAttributes">
+    <transfer name="RestQuoteRequestCancelAttributes" strict="true">
     </transfer>
 
-    <transfer name="RestQuoteRequestSendAttributes">
+    <transfer name="RestQuoteRequestReviseAttributes" strict="true">
+    </transfer>
+
+    <transfer name="RestQuoteRequestSendAttributes" strict="true">
+    </transfer>
+
+    <transfer name="RestQuoteRequestConvertAttributes" strict="true">
     </transfer>
 
     <transfer name="RestQuoteRequestVersion">
@@ -28,8 +44,8 @@
         <property name="cart" type="RestQuoteRequestsCart"/>
     </transfer>
 
-    <transfer name="RestQuoteRequestsRequestAttributes">
-        <property name="cartUuid" type="string" restRequestParameter="required"/>
+    <transfer name="RestQuoteRequestsRequestAttributes" strict="true">
+        <property name="cartUuid" type="string" restRequestParameter="yes"/>
         <property name="metadata" type="array" singular="metadata" restRequestParameter="yes"/>
     </transfer>
 
@@ -42,7 +58,7 @@
         <property name="items" type="RestQuoteRequestItem[]" singular="item"/>
     </transfer>
 
-    <transfer name="RestQuoteRequestsTotals">
+    <transfer name="RestQuoteRequestsTotals" strict="true">
         <property name="expenseTotal" type="int"/>
         <property name="discountTotal" type="int"/>
         <property name="taxTotal" type="int"/>
@@ -81,9 +97,10 @@
         <property name="abstractSku" type="string"/>
         <property name="amount" type="int"/>
         <property name="calculations" type="RestQuoteRequestsCalculations"/>
+        <property name="unitPrice" type="int" strict="true"/>
     </transfer>
 
-    <transfer name="RestQuoteRequestsCalculations">
+    <transfer name="RestQuoteRequestsCalculations" strict="true">
         <property name="unitPrice" type="int"/>
         <property name="sumPrice" type="int"/>
 
@@ -146,6 +163,8 @@
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
         <property name="customer" type="Customer"/>
+        <property name="fkCompany" type="int"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
     </transfer>
 
     <transfer name="RestUser">
@@ -172,6 +191,8 @@
         <property name="quoteRequestVersions" type="QuoteRequestVersion[]" singular="quoteRequestVersion"/>
         <property name="latestVersion" type="QuoteRequestVersion"/>
         <property name="quoteRequestReference" type="string"/>
+        <property name="isLatestVersionVisible" type="bool"/>
+        <property name="latestVisibleVersion" type="QuoteRequestVersion"/>
     </transfer>
 
     <transfer name="QuoteRequestVersion">
@@ -218,6 +239,10 @@
         <property name="quoteRequestReference" type="string"/>
         <property name="pagination" type="Pagination"/>
         <property name="withVersions" type="bool"/>
+    </transfer>
+
+    <transfer name="RestCartsAttributes">
+        <property name="isLocked" type="bool" strict="true"/>
     </transfer>
 
 </transfers>

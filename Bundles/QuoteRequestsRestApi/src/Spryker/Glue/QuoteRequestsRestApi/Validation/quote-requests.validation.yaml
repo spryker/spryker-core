@@ -1,0 +1,7 @@
+quote-requests:
+    post:
+        cartUuid:
+            - NotBlank
+    patch:
+        cartUuid:
+            - NotBlank

@@ -8,35 +8,25 @@
 namespace Spryker\Glue\QuoteRequestAgentsRestApi\Processor\Sender;
 
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\Client\QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface;
+use Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\RestResource\QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface;
 use Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface;
 use Spryker\Glue\QuoteRequestAgentsRestApi\QuoteRequestAgentsRestApiConfig;
 
 class QuoteRequestSender implements QuoteRequestSenderInterface
 {
     /**
-     * @var \Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface
-     */
-    protected $quoteRequestRestResponseBuilder;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\Client\QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface
-     */
-    protected $quoteRequestAgentClient;
-
-    /**
      * @param \Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
      * @param \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\Client\QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface $quoteRequestAgentClient
+     * @param \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\RestResource\QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface $quoteRequestsRestApiResource
      */
     public function __construct(
-        QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
-        QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface $quoteRequestAgentClient
+        protected QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
+        protected QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface $quoteRequestAgentClient,
+        protected QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface $quoteRequestsRestApiResource
     ) {
-        $this->quoteRequestRestResponseBuilder = $quoteRequestRestResponseBuilder;
-        $this->quoteRequestAgentClient = $quoteRequestAgentClient;
     }
 
     /**
@@ -51,25 +41,19 @@ class QuoteRequestSender implements QuoteRequestSenderInterface
             return $this->quoteRequestRestResponseBuilder->createQuoteRequestReferenceMissingErrorResponse();
         }
 
-        $quoteRequestFilterTransfer = $this->createQuoteRequestFilterTransfer($parentResource);
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setQuoteRequestReference($parentResource->getId())
+            ->setWithVersions(true);
 
         $quoteRequestResponseTransfer = $this->quoteRequestAgentClient->sendQuoteRequestToCustomer($quoteRequestFilterTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
-            return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse(($quoteRequestResponseTransfer->getMessages()));
+            return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse($quoteRequestResponseTransfer);
         }
 
-        return $this->quoteRequestRestResponseBuilder->createNoContentResponse();
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $parentResource
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestFilterTransfer
-     */
-    protected function createQuoteRequestFilterTransfer(RestResourceInterface $parentResource): QuoteRequestFilterTransfer
-    {
-        return (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($parentResource->getId());
+        return $this->quoteRequestsRestApiResource->createQuoteRequestRestResponse(
+            $quoteRequestResponseTransfer,
+            $restRequest,
+        );
     }
 }

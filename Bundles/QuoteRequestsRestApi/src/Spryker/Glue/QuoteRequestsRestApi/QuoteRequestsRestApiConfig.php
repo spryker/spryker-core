@@ -31,7 +31,12 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
     /**
      * @var string
      */
-    public const RESOURCE_QUOTE_REQUEST_SEND_TO_CUSTOMER = 'quote-request-send-to-customer';
+    public const RESOURCE_QUOTE_REQUEST_SEND_TO_USER = 'quote-request-send-to-user';
+
+    /**
+     * @var string
+     */
+    public const RESOURCE_QUOTE_REQUEST_CONVERT_TO_QUOTE = 'quote-request-convert-to-quote';
 
     /**
      * @uses \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestTerminator::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS
@@ -67,6 +72,13 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_IS_NOT_APPLICABLE = 'quote_request.validation.error.is_not_applicable';
+
+    /**
+     * @uses \Spryker\Client\QuoteRequestAgent\Converter::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS
+     *
+     * @var string
+     */
+    protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
 
     /**
      * @uses \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestMetadataValidator::MAX_LENGTH_METADATA_PURCHASE_ORDER_NUMBER
@@ -246,6 +258,11 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_QUOTE_REQUEST_VALIDATION,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_QUOTE_REQUEST_VALIDATION,
+            ],
+            static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_QUOTE_REQUEST_WRONG_STATUS,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_QUOTE_REQUEST_WRONG_STATUS,
             ],
         ];
     }

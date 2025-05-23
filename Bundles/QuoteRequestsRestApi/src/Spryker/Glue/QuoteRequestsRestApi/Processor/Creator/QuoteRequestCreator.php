@@ -18,41 +18,17 @@ use Spryker\Glue\QuoteRequestsRestApi\Processor\Validator\QuoteRequestValidatorI
 class QuoteRequestCreator implements QuoteRequestCreatorInterface
 {
     /**
-     * @var \Spryker\Client\QuoteRequestsRestApi\QuoteRequestsRestApiClientInterface
-     */
-    protected $quoteRequestsRestApiClient;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface
-     */
-    protected $quoteRequestRestResponseBuilder;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface
-     */
-    protected $quoteRequestMapper;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\Validator\QuoteRequestValidatorInterface
-     */
-    protected $quoteRequestValidator;
-
-    /**
      * @param \Spryker\Client\QuoteRequestsRestApi\QuoteRequestsRestApiClientInterface $quoteRequestsRestApiClient
      * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
      * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface $quoteRequestMapper
      * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Validator\QuoteRequestValidatorInterface $quoteRequestValidator
      */
     public function __construct(
-        QuoteRequestsRestApiClientInterface $quoteRequestsRestApiClient,
-        QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
-        QuoteRequestMapperInterface $quoteRequestMapper,
-        QuoteRequestValidatorInterface $quoteRequestValidator
+        protected QuoteRequestsRestApiClientInterface $quoteRequestsRestApiClient,
+        protected QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
+        protected QuoteRequestMapperInterface $quoteRequestMapper,
+        protected QuoteRequestValidatorInterface $quoteRequestValidator
     ) {
-        $this->quoteRequestsRestApiClient = $quoteRequestsRestApiClient;
-        $this->quoteRequestRestResponseBuilder = $quoteRequestRestResponseBuilder;
-        $this->quoteRequestMapper = $quoteRequestMapper;
-        $this->quoteRequestValidator = $quoteRequestValidator;
     }
 
     /**
@@ -62,23 +38,23 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
      */
     public function createQuoteRequest(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $quoteRequestTransfer = $this->quoteRequestMapper
-            ->mapRestRequestToQuoteRequestTransfer($restRequest, new QuoteRequestTransfer());
+        $quoteRequestTransfer = $this->quoteRequestMapper->mapRestRequestToQuoteRequestTransfer(
+            $restRequest,
+            new QuoteRequestTransfer(),
+        );
 
         if (!$this->quoteRequestValidator->validateDeliveryDate($quoteRequestTransfer)) {
             return $this->quoteRequestRestResponseBuilder->createDeliveryDateIsNotValidErrorResponse();
         }
 
         $quoteRequestResponseTransfer = $this->quoteRequestsRestApiClient->createQuoteRequest($quoteRequestTransfer);
-
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
-            return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse($quoteRequestResponseTransfer->getMessages()->getArrayCopy());
+            return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse($quoteRequestResponseTransfer);
         }
 
-        return $this->quoteRequestRestResponseBuilder
-            ->createQuoteRequestRestResponse(
-                $quoteRequestResponseTransfer,
-                $restRequest->getMetadata()->getLocale(),
-            );
+        return $this->quoteRequestRestResponseBuilder->createQuoteRequestRestResponse(
+            $quoteRequestResponseTransfer,
+            $restRequest,
+        );
     }
 }

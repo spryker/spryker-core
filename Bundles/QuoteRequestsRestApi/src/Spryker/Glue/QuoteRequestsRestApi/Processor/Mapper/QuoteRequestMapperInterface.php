@@ -16,14 +16,16 @@ interface QuoteRequestMapperInterface
     /**
      * @param array<\Generated\Shared\Transfer\QuoteRequestTransfer> $quoteRequestTransfers
      * @param array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer> $restQuoteRequestsAttributesTransfers
-     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param bool $isLatestVersionVisible
      *
      * @return array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer>
      */
     public function mapQuoteRequestTransfersToRestQuoteRequestsAttributesTransfers(
         array $quoteRequestTransfers,
         array $restQuoteRequestsAttributesTransfers,
-        string $localeName
+        RestRequestInterface $restRequest,
+        bool $isLatestVersionVisible = true
     ): array;
 
     /**

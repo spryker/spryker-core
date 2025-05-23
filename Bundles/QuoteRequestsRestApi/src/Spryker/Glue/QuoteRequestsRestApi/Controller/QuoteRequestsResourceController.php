@@ -23,15 +23,24 @@ class QuoteRequestsResourceController extends AbstractController
      *          "summary": [
      *              "Retrieves a quote request by reference."
      *          ],
-     *          "parameters": [{
-     *              "ref": "acceptLanguage"
-     *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
+     *          "parameters": [
+     *              {
+     *                  "ref": "acceptLanguage"
+     *              },
+     *              {
+     *                  "name": "version",
+     *                  "in": "query",
+     *                  "required": false,
+     *                  "description": "Version of the quote request."
+     *              }
+     *          ],
+     *          "isIdNullable": false,
      *          "responses": {
      *              "404": "Quote request not found.",
      *              "403": "Unauthorized request.",
      *              "400": "Bad request."
-     *          }
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer"
      *     },
      *     "getCollection": {
      *          "summary": [
@@ -40,11 +49,10 @@ class QuoteRequestsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
      *          "responses": {
-     *              "403": "Unauthorized request.",
-     *              "400": "Bad request."
-     *          }
+     *              "403": "Unauthorized request."
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer"
      *     }
      * })
      *
@@ -74,12 +82,26 @@ class QuoteRequestsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
+     *          "requestAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
+     *          "attributes": {
+     *              "cartUuid": {
+     *                  "type": "string",
+     *                  "required": true,
+     *                  "description": "UUID of the cart."
+     *              },
+     *              "metadata": {
+     *                   "type": "object",
+     *                   "required": false,
+     *                   "description": "Additional metadata for the quote request."
+     *               }
+     *          },
+     *          "isIdNullable": true,
      *          "responses": {
-     *              "400": "Bad request",
+     *              "400": "Bad request.",
      *              "403": "Unauthorized request.",
      *              "422": "Unprocessable entity."
-     *          }
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer"
      *     }
      * })
      *
@@ -103,12 +125,27 @@ class QuoteRequestsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
+     *          "requestAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
+     *          "attributes": {
+     *              "cartUuid": {
+     *                   "type": "string",
+     *                   "required": true,
+     *                   "description": "UUID of the cart."
+     *               },
+     *              "metadata": {
+     *                    "type": "object",
+     *                    "required": false,
+     *                    "description": "Additional metadata for the quote request."
+     *                }
+     *          },
+     *          "isIdNullable": false,
      *          "responses": {
      *              "400": "Quote request id is missing.",
      *              "403": "Unauthorized request.",
-     *              "404": "Quote request not found."
-     *          }
+     *              "404": "Quote request not found.",
+     *              "422": "Unprocessable entity."
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer"
      *     }
      * })
      *

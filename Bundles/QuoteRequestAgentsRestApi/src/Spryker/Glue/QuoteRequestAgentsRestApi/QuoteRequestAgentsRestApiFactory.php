@@ -32,7 +32,6 @@ use Spryker\Glue\QuoteRequestAgentsRestApi\Processor\Validator\QuoteRequestValid
 
 /**
  * @method \Spryker\Glue\QuoteRequestAgentsRestApi\QuoteRequestAgentsRestApiConfig getConfig()
- * @method \Spryker\Client\QuoteRequestAgentsRestApi\QuoteRequestAgentsRestApiClientInterface getClient()
  */
 class QuoteRequestAgentsRestApiFactory extends AbstractFactory
 {
@@ -59,7 +58,6 @@ class QuoteRequestAgentsRestApiFactory extends AbstractFactory
             $this->getQuoteRequestsRestApiResource(),
             $this->createQuoteRequestRestResponseBuilder(),
             $this->createQuoteRequestMapper(),
-            $this->getClient(),
             $this->createQuoteRequestValidator(),
         );
     }
@@ -127,6 +125,7 @@ class QuoteRequestAgentsRestApiFactory extends AbstractFactory
         return new QuoteRequestCanceller(
             $this->getQuoteRequestAgentClient(),
             $this->createQuoteRequestRestResponseBuilder(),
+            $this->getQuoteRequestsRestApiResource(),
         );
     }
 
@@ -150,6 +149,7 @@ class QuoteRequestAgentsRestApiFactory extends AbstractFactory
         return new QuoteRequestSender(
             $this->createQuoteRequestRestResponseBuilder(),
             $this->getQuoteRequestAgentClient(),
+            $this->getQuoteRequestsRestApiResource(),
         );
     }
 

@@ -86,4 +86,14 @@ class QuoteRequestAgentsRestApiToQuoteRequestAgentClientBridge implements QuoteR
     {
         return $this->quoteRequestAgentClient->sendQuoteRequestToCustomer($quoteRequestFilterTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestAgentClient->updateQuoteRequest($quoteRequestTransfer);
+    }
 }

@@ -7,45 +7,28 @@
 
 namespace Spryker\Glue\QuoteRequestsRestApi\Processor\Reader;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface;
+use Spryker\Glue\QuoteRequestsRestApi\Processor\Builder\QuoteRequestFilterBuilderInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface;
 
 class QuoteRequestReader implements QuoteRequestReaderInterface
 {
     /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface
-     */
-    protected $quoteRequestClient;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface
-     */
-    protected $quoteRequestRestResponseBuilder;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface
-     */
-    protected $quoteRequestMapper;
-
-    /**
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestsRestApiToQuoteRequestClient
+     * @param \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient
      * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
      * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface $quoteRequestMapper
+     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Builder\QuoteRequestFilterBuilderInterface $quoteRequestFilterBuilder
      */
     public function __construct(
-        QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestsRestApiToQuoteRequestClient,
-        QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
-        QuoteRequestMapperInterface $quoteRequestMapper
+        protected QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient,
+        protected QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
+        protected QuoteRequestMapperInterface $quoteRequestMapper,
+        protected QuoteRequestFilterBuilderInterface $quoteRequestFilterBuilder
     ) {
-        $this->quoteRequestClient = $quoteRequestsRestApiToQuoteRequestClient;
-        $this->quoteRequestRestResponseBuilder = $quoteRequestRestResponseBuilder;
-        $this->quoteRequestMapper = $quoteRequestMapper;
     }
 
     /**
@@ -55,33 +38,21 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
      */
     public function getQuoteRequest(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($restRequest->getResource()->getId())
-            ->setWithVersions(true);
+        /** @var \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer */
+        $quoteRequestFilterTransfer = $this->quoteRequestFilterBuilder->buildFilterFromRequest($restRequest);
+        $quoteRequestFilterTransfer->setWithVersions(true);
 
-        $restUserTransfer = $restRequest->getRestUser();
-        if ($restUserTransfer) {
-            $companyUserTransfer = (new CompanyUserTransfer())
-                ->setIdCompanyUser($restUserTransfer->getIdCompanyUser());
+        $quoteRequestResponseTransfer = $this->quoteRequestClient->getQuoteRequest($quoteRequestFilterTransfer);
 
-            $quoteRequestFilterTransfer->setCompanyUser($companyUserTransfer);
-        }
-
-        $quoteRequestResponseTransfer = $this->quoteRequestClient
-            ->getQuoteRequest($quoteRequestFilterTransfer);
-
-        if (
-            !$quoteRequestResponseTransfer->getIsSuccessful()
-            || $quoteRequestResponseTransfer->getQuoteRequest() === null
-        ) {
+        if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
             return $this->quoteRequestRestResponseBuilder->createQuoteRequestNotFoundErrorResponse();
         }
 
-        return $this->quoteRequestRestResponseBuilder
-            ->createQuoteRequestRestResponse(
-                $quoteRequestResponseTransfer,
-                $restRequest->getMetadata()->getLocale(),
-            );
+        return $this->quoteRequestRestResponseBuilder->createQuoteRequestRestResponse(
+            $quoteRequestResponseTransfer,
+            $restRequest,
+            false,
+        );
     }
 
     /**
@@ -91,15 +62,9 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
      */
     public function getQuoteRequestCollection(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $quoteRequestFilterTransfer = new QuoteRequestFilterTransfer();
-
-        $restUserTransfer = $restRequest->getRestUser();
-        if ($restUserTransfer) {
-            $companyUserTransfer = (new CompanyUserTransfer())
-                ->setIdCompanyUser($restUserTransfer->getIdCompanyUser());
-
-            $quoteRequestFilterTransfer->setCompanyUser($companyUserTransfer);
-        }
+        /** @var \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer */
+        $quoteRequestFilterTransfer = $this->quoteRequestFilterBuilder->buildFilterFromRequest($restRequest);
+        $quoteRequestFilterTransfer->setWithVersions(true);
 
         $paginationTransfer = new PaginationTransfer();
         if ($restRequest->getPage() !== null) {
@@ -115,7 +80,8 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
 
         return $this->quoteRequestRestResponseBuilder->createQuoteRequestCollectionRestResponse(
             $quoteRequestCollectionTransfer,
-            $restRequest->getMetadata()->getLocale(),
+            $restRequest,
+            false,
         );
     }
 }

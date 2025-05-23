@@ -7,36 +7,24 @@
 
 namespace Spryker\Glue\QuoteRequestsRestApi\Processor\Reviser;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface;
+use Spryker\Glue\QuoteRequestsRestApi\Processor\Builder\QuoteRequestFilterBuilderInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface;
-use Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig;
 
 class QuoteRequestReviser implements QuoteRequestReviserInterface
 {
     /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface
-     */
-    protected $quoteRequestRestResponseBuilder;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface
-     */
-    protected $quoteRequestClient;
-
-    /**
      * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
      * @param \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient
+     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Builder\QuoteRequestFilterBuilderInterface $quoteRequestFilterBuilder
      */
     public function __construct(
-        QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
-        QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient
+        protected QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
+        protected QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient,
+        protected QuoteRequestFilterBuilderInterface $quoteRequestFilterBuilder
     ) {
-        $this->quoteRequestRestResponseBuilder = $quoteRequestRestResponseBuilder;
-        $this->quoteRequestClient = $quoteRequestClient;
     }
 
     /**
@@ -46,41 +34,21 @@ class QuoteRequestReviser implements QuoteRequestReviserInterface
      */
     public function reviseQuoteRequest(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $parentResource = $restRequest->findParentResourceByType(QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS);
-        if (!$parentResource || $parentResource->getId() === null) {
+        $quoteRequestFilterTransfer = $this->quoteRequestFilterBuilder->buildFilterFromRequest($restRequest, true);
+        if (!$quoteRequestFilterTransfer) {
             return $this->quoteRequestRestResponseBuilder->createQuoteRequestReferenceMissingErrorResponse();
         }
 
-        $quoteRequestFilterTransfer = $this->createQuoteRequestFilterTransfer();
-        $quoteRequestFilterTransfer->setQuoteRequestReference($parentResource->getId());
-
-        $restUserTransfer = $restRequest->getRestUser();
-        if ($restUserTransfer) {
-            $companyUserTransfer = (new CompanyUserTransfer())
-                ->setIdCompanyUser($restUserTransfer->getIdCompanyUser());
-
-            $quoteRequestFilterTransfer
-                ->setCompanyUser($companyUserTransfer)
-                ->setIdCompanyUser($restUserTransfer->getIdCompanyUser());
-        }
-
+        $quoteRequestFilterTransfer->setWithVersions(true);
         $quoteRequestResponseTransfer = $this->quoteRequestClient->reviseQuoteRequest($quoteRequestFilterTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
-            return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse($quoteRequestResponseTransfer->getMessages()->getArrayCopy());
+            return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse($quoteRequestResponseTransfer);
         }
 
         return $this->quoteRequestRestResponseBuilder->createQuoteRequestRestResponse(
             $quoteRequestResponseTransfer,
-            $restRequest->getMetadata()->getLocale(),
+            $restRequest,
         );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteRequestFilterTransfer
-     */
-    protected function createQuoteRequestFilterTransfer(): QuoteRequestFilterTransfer
-    {
-        return new QuoteRequestFilterTransfer();
     }
 }

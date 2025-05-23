@@ -12,49 +12,58 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestCustomerTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestsCartTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestsRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestsTotalsTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestVersionTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig;
 
 class QuoteRequestMapper implements QuoteRequestMapperInterface
 {
     /**
-     * @var array<\Spryker\Glue\QuoteRequestsRestApiExtension\Dependency\Plugin\RestQuoteRequestAttributesExpanderPluginInterface>
+     * @var string
      */
-    protected $restQuoteRequestAttributesExpanderPlugins;
+    protected const FIELD_FILTER_VERSION = 'version';
 
     /**
-     * @param array<\Spryker\Glue\QuoteRequestsRestApiExtension\Dependency\Plugin\RestQuoteRequestAttributesExpanderPluginInterface> $restQuoteRequestAttributesExpanderPlugins
+     * @param list<\Spryker\Glue\QuoteRequestsRestApiExtension\Dependency\Plugin\RestQuoteRequestAttributesExpanderPluginInterface> $restQuoteRequestAttributesExpanderPlugins
      */
-    public function __construct(array $restQuoteRequestAttributesExpanderPlugins)
+    public function __construct(protected array $restQuoteRequestAttributesExpanderPlugins)
     {
-        $this->restQuoteRequestAttributesExpanderPlugins = $restQuoteRequestAttributesExpanderPlugins;
     }
 
     /**
      * @param array<\Generated\Shared\Transfer\QuoteRequestTransfer> $quoteRequestTransfers
      * @param array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer> $restQuoteRequestsAttributesTransfers
-     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param bool $isLatestVersionVisible
      *
      * @return array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer>
      */
     public function mapQuoteRequestTransfersToRestQuoteRequestsAttributesTransfers(
         array $quoteRequestTransfers,
         array $restQuoteRequestsAttributesTransfers,
-        string $localeName
+        RestRequestInterface $restRequest,
+        bool $isLatestVersionVisible = true
     ): array {
         foreach ($quoteRequestTransfers as $quoteRequestTransfer) {
             $restQuoteRequestsAttributesTransfer = $this->mapQuoteRequestTransferToRestQuoteRequestsAttributesTransfer(
                 $quoteRequestTransfer,
                 new RestQuoteRequestsAttributesTransfer(),
+                $restRequest,
+                $isLatestVersionVisible,
             );
             $restQuoteRequestsAttributesTransfers[] = $restQuoteRequestsAttributesTransfer;
         }
 
-        return $this->expandRestQuoteRequestsAttributesTransfers($quoteRequestTransfers, $restQuoteRequestsAttributesTransfers, $localeName);
+        return $this->expandRestQuoteRequestsAttributesTransfers(
+            $quoteRequestTransfers,
+            $restQuoteRequestsAttributesTransfers,
+            $restRequest->getMetadata()->getLocale(),
+        );
     }
 
     /**
@@ -72,7 +81,7 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         $restUserTransfer = $restRequestTransfer->getRestUser();
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setUuid($quoteRequestsRequestAttributesTransfer->getCartUuid());
+            ->setUuid($quoteRequestsRequestAttributesTransfer->getCartUuidOrFail());
 
         if ($restUserTransfer !== null) {
             $companyUserTransfer = (new CompanyUserTransfer())
@@ -97,16 +106,73 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestQuoteRequestsRequestAttributesTransfer $restQuoteRequestsRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    public function mapRestQuoteRequestsRequestAttributesTransferToQuoteRequestTransfer(
+        RestQuoteRequestsRequestAttributesTransfer $restQuoteRequestsRequestAttributesTransfer,
+        QuoteRequestTransfer $quoteRequestTransfer
+    ): QuoteRequestTransfer {
+        $quoteRequestVersionTransfer = $quoteRequestTransfer->getLatestVersionOrFail();
+
+        if ($restQuoteRequestsRequestAttributesTransfer->getMetadata()) {
+            $quoteRequestVersionTransfer->setMetadata($restQuoteRequestsRequestAttributesTransfer->getMetadata());
+        }
+
+        if ($restQuoteRequestsRequestAttributesTransfer->getCartUuid()) {
+            $quoteRequestVersionTransfer->setQuote(
+                (new QuoteTransfer())->setUuid($restQuoteRequestsRequestAttributesTransfer->getCartUuidOrFail()),
+            );
+        }
+
+        return $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\RestQuoteRequestCustomerTransfer $restQuoteRequestCustomerTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestQuoteRequestCustomerTransfer
+     */
+    protected function mapQuoteRequestTransferToRestQuoteRequestCustomerTransfer(
+        QuoteRequestTransfer $quoteRequestTransfer,
+        RestQuoteRequestCustomerTransfer $restQuoteRequestCustomerTransfer
+    ): RestQuoteRequestCustomerTransfer {
+        if (!$quoteRequestTransfer->getCompanyUser()) {
+            return $restQuoteRequestCustomerTransfer;
+        }
+        if ($quoteRequestTransfer->getCompanyUser()->getCustomer()) {
+            $restQuoteRequestCustomerTransfer->fromArray(
+                $quoteRequestTransfer->getCompanyUser()->getCustomer()->toArray(),
+                true,
+            );
+        }
+
+        $restQuoteRequestCustomerTransfer
+            ->setIdCompanyUser($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser())
+            ->setIdCompany($quoteRequestTransfer->getCompanyUser()->getFkCompany())
+            ->setIdCompanyBusinessUnit($quoteRequestTransfer->getCompanyUser()->getFkCompanyBusinessUnit());
+
+        return $restQuoteRequestCustomerTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      * @param \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer $restQuoteRequestsAttributesTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param bool $isLatestVersionVisible
      *
      * @return \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer
      */
     protected function mapQuoteRequestTransferToRestQuoteRequestsAttributesTransfer(
         QuoteRequestTransfer $quoteRequestTransfer,
-        RestQuoteRequestsAttributesTransfer $restQuoteRequestsAttributesTransfer
+        RestQuoteRequestsAttributesTransfer $restQuoteRequestsAttributesTransfer,
+        RestRequestInterface $restRequest,
+        bool $isLatestVersionVisible
     ): RestQuoteRequestsAttributesTransfer {
-        $quoteRequestVersionTransfer = $quoteRequestTransfer->getLatestVersion();
+        $quoteRequestVersionTransfer = $this->findConcreteVersion($quoteRequestTransfer, $restRequest, $isLatestVersionVisible);
         if (!$quoteRequestVersionTransfer) {
             return $restQuoteRequestsAttributesTransfer;
         }
@@ -121,11 +187,18 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
                 new RestQuoteRequestsCartTransfer(),
             ));
 
-        $restQuoteRequestsAttributesTransfer->fromArray($quoteRequestTransfer->toArray(), true)
-            ->setShownVersion($restQuoteRequestVersionTransfer);
+        $restQuoteRequestCustomerTransfer = $this->mapQuoteRequestTransferToRestQuoteRequestCustomerTransfer(
+            $quoteRequestTransfer,
+            new RestQuoteRequestCustomerTransfer(),
+        );
+
+        $restQuoteRequestsAttributesTransfer
+            ->fromArray($quoteRequestTransfer->toArray(), true)
+            ->setShownVersion($restQuoteRequestVersionTransfer)
+            ->setCustomer($restQuoteRequestCustomerTransfer);
 
         $restQuoteRequestsAttributesTransfer->setVersions(
-            $this->getQuoteRequestVersions($quoteRequestTransfer),
+            $this->getQuoteRequestVersions($quoteRequestTransfer, $isLatestVersionVisible),
         );
 
         return $restQuoteRequestsAttributesTransfer;
@@ -133,13 +206,24 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param bool $isLatestVersionVisible
      *
-     * @return array<string>
+     * @return list<string>
      */
-    protected function getQuoteRequestVersions(QuoteRequestTransfer $quoteRequestTransfer): array
-    {
+    protected function getQuoteRequestVersions(
+        QuoteRequestTransfer $quoteRequestTransfer,
+        bool $isLatestVersionVisible
+    ): array {
+        $quoteRequestVersionTransfers = $quoteRequestTransfer
+            ->getQuoteRequestVersions()
+            ->getArrayCopy();
+
+        if (!$isLatestVersionVisible && !$quoteRequestTransfer->getIsLatestVersionVisible()) {
+            array_shift($quoteRequestVersionTransfers);
+        }
+
         $quoteRequestVersions = [];
-        foreach ($quoteRequestTransfer->getQuoteRequestVersions() as $quoteRequestVersion) {
+        foreach ($quoteRequestVersionTransfers as $quoteRequestVersion) {
             if ($quoteRequestVersion->getVersionReference() !== null) {
                 $quoteRequestVersions[] = $quoteRequestVersion->getVersionReferenceOrFail();
             }
@@ -193,12 +277,10 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
             $restQuoteRequestsCartTransfer->setStore($storeTransfer->getName());
         }
 
-        $restQuoteRequestsCartTransfer = $this->mapTotalsTransferToRestQuoteRequestsTotalsTransfer(
+        return $this->mapTotalsTransferToRestQuoteRequestsTotalsTransfer(
             $quoteTransfer,
             $restQuoteRequestsCartTransfer,
         );
-
-        return $restQuoteRequestsCartTransfer;
     }
 
     /**
@@ -216,35 +298,49 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
             return $restQuoteRequestsCartTransfer;
         }
 
-        $restQuoteRequestsTotalsTransfer = new RestQuoteRequestsTotalsTransfer();
-        $restQuoteRequestsTotalsTransfer->fromArray($totalsTransfer->toArray(), true);
-        $restQuoteRequestsCartTransfer->setTotals($restQuoteRequestsTotalsTransfer);
-
-        return $restQuoteRequestsCartTransfer;
+        return $restQuoteRequestsCartTransfer->setTotals(
+            (new RestQuoteRequestsTotalsTransfer())->fromArray($totalsTransfer->toArray(), true),
+        );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsRequestAttributesTransfer $restQuoteRequestsRequestAttributesTransfer
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param bool $isLatestVersionVisible
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
      */
-    public function mapRestQuoteRequestsRequestAttributesTransferToQuoteRequestTransfer(
-        RestQuoteRequestsRequestAttributesTransfer $restQuoteRequestsRequestAttributesTransfer,
-        QuoteRequestTransfer $quoteRequestTransfer
-    ): QuoteRequestTransfer {
-        $quoteTransfer = (new QuoteTransfer())
-            ->setUuid($restQuoteRequestsRequestAttributesTransfer->getCartUuid());
+    protected function findConcreteVersion(
+        QuoteRequestTransfer $quoteRequestTransfer,
+        RestRequestInterface $restRequest,
+        bool $isLatestVersionVisible
+    ): ?QuoteRequestVersionTransfer {
+        $selectedVersion = null;
+        if ($restRequest->hasFilters(QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS)) {
+            foreach ($restRequest->getFiltersByResource(QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS) as $glueFilterTransfer) {
+                if ($glueFilterTransfer->getField() === static::FIELD_FILTER_VERSION) {
+                    $selectedVersion = $glueFilterTransfer->getValue();
 
-        if ($quoteRequestTransfer->getLatestVersion() === null) {
-            return $quoteRequestTransfer;
+                    break;
+                }
+            }
         }
 
-        $quoteRequestVersionTransfer = ($quoteRequestTransfer->getLatestVersion())
-            ->setMetadata($restQuoteRequestsRequestAttributesTransfer->getMetadata())
-            ->setQuote($quoteTransfer);
+        if (!$selectedVersion) {
+            return $isLatestVersionVisible ? $quoteRequestTransfer->getLatestVersion() : $quoteRequestTransfer->getLatestVisibleVersion();
+        }
 
-        return $quoteRequestTransfer
-            ->setLatestVersion($quoteRequestVersionTransfer);
+        $quoteRequestVersionTransfers = $quoteRequestTransfer->getQuoteRequestVersions()->getArrayCopy();
+        if (count($quoteRequestVersionTransfers) !== 1 && !$isLatestVersionVisible) {
+            array_shift($quoteRequestVersionTransfers);
+        }
+
+        foreach ($quoteRequestVersionTransfers as $quoteRequestVersionTransfer) {
+            if ($quoteRequestVersionTransfer->getVersionReference() === $selectedVersion) {
+                return $quoteRequestVersionTransfer;
+            }
+        }
+
+        return null;
     }
 }

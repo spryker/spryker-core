@@ -11,31 +11,22 @@ use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\Client\QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface;
+use Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\RestResource\QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface;
 use Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface;
 use Spryker\Glue\QuoteRequestAgentsRestApi\QuoteRequestAgentsRestApiConfig;
 
 class QuoteRequestCanceller implements QuoteRequestCancellerInterface
 {
     /**
-     * @var \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\Client\QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface
-     */
-    protected $quoteRequestAgentClient;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface
-     */
-    protected $quoteRequestRestResponseBuilder;
-
-    /**
      * @param \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\Client\QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface $quoteRequestAgentClient
      * @param \Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
+     * @param \Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\RestResource\QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface $quoteRequestsRestApiResource
      */
     public function __construct(
-        QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface $quoteRequestAgentClient,
-        QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
+        protected QuoteRequestAgentsRestApiToQuoteRequestAgentClientInterface $quoteRequestAgentClient,
+        protected QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
+        protected QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface $quoteRequestsRestApiResource
     ) {
-        $this->quoteRequestAgentClient = $quoteRequestAgentClient;
-        $this->quoteRequestRestResponseBuilder = $quoteRequestRestResponseBuilder;
     }
 
     /**
@@ -51,18 +42,18 @@ class QuoteRequestCanceller implements QuoteRequestCancellerInterface
         }
 
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($parentResource->getId());
+            ->setQuoteRequestReference($parentResource->getId())
+            ->setWithVersions(true);
 
         $quoteRequestResponseTransfer = $this->quoteRequestAgentClient->cancelQuoteRequest($quoteRequestFilterTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
-            return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse(($quoteRequestResponseTransfer->getMessages()));
+            return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse($quoteRequestResponseTransfer);
         }
 
-        if ($quoteRequestResponseTransfer->getQuoteRequest() === null) {
-            return $this->quoteRequestRestResponseBuilder->createQuoteRequestNotFoundErrorResponse();
-        }
-
-        return $this->quoteRequestRestResponseBuilder->createNoContentResponse();
+        return $this->quoteRequestsRestApiResource->createQuoteRequestRestResponse(
+            $quoteRequestResponseTransfer,
+            $restRequest,
+        );
     }
 }

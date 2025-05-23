@@ -7,14 +7,12 @@
 
 namespace Spryker\Glue\QuoteRequestsRestApi\Processor\Updater;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
-use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestsRequestAttributesTransfer;
 use Spryker\Client\QuoteRequestsRestApi\QuoteRequestsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface;
+use Spryker\Glue\QuoteRequestsRestApi\Processor\Builder\QuoteRequestFilterBuilderInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\Validator\QuoteRequestValidatorInterface;
@@ -22,49 +20,21 @@ use Spryker\Glue\QuoteRequestsRestApi\Processor\Validator\QuoteRequestValidatorI
 class QuoteRequestUpdater implements QuoteRequestUpdaterInterface
 {
     /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface
-     */
-    protected $quoteRequestClient;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface
-     */
-    protected $quoteRequestRestResponseBuilder;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface
-     */
-    protected $quoteRequestMapper;
-
-    /**
-     * @var \Spryker\Client\QuoteRequestsRestApi\QuoteRequestsRestApiClientInterface
-     */
-    protected $quoteRequestsRestApiClient;
-
-    /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\Validator\QuoteRequestValidatorInterface
-     */
-    protected $quoteRequestValidator;
-
-    /**
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestsRestApiToQuoteRequestClient
+     * @param \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient
      * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
      * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface $quoteRequestMapper
      * @param \Spryker\Client\QuoteRequestsRestApi\QuoteRequestsRestApiClientInterface $quoteRequestsRestApiClient
      * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Validator\QuoteRequestValidatorInterface $quoteRequestValidator
+     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Builder\QuoteRequestFilterBuilderInterface $quoteRequestFilterBuilder
      */
     public function __construct(
-        QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestsRestApiToQuoteRequestClient,
-        QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
-        QuoteRequestMapperInterface $quoteRequestMapper,
-        QuoteRequestsRestApiClientInterface $quoteRequestsRestApiClient,
-        QuoteRequestValidatorInterface $quoteRequestValidator
+        protected QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient,
+        protected QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
+        protected QuoteRequestMapperInterface $quoteRequestMapper,
+        protected QuoteRequestsRestApiClientInterface $quoteRequestsRestApiClient,
+        protected QuoteRequestValidatorInterface $quoteRequestValidator,
+        protected QuoteRequestFilterBuilderInterface $quoteRequestFilterBuilder
     ) {
-        $this->quoteRequestClient = $quoteRequestsRestApiToQuoteRequestClient;
-        $this->quoteRequestRestResponseBuilder = $quoteRequestRestResponseBuilder;
-        $this->quoteRequestMapper = $quoteRequestMapper;
-        $this->quoteRequestsRestApiClient = $quoteRequestsRestApiClient;
-        $this->quoteRequestValidator = $quoteRequestValidator;
     }
 
     /**
@@ -77,18 +47,20 @@ class QuoteRequestUpdater implements QuoteRequestUpdaterInterface
         RestRequestInterface $restRequest,
         RestQuoteRequestsRequestAttributesTransfer $restQuoteRequestsRequestAttributesTransfer
     ): RestResponseInterface {
-        $quoteRequestResponseTransfer = $this->getQuoteRequest($restRequest);
-        if (
-            !$quoteRequestResponseTransfer->getIsSuccessful()
-            || $quoteRequestResponseTransfer->getQuoteRequest() === null
-        ) {
+        /** @var \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer */
+        $quoteRequestFilterTransfer = $this->quoteRequestFilterBuilder->buildFilterFromRequest($restRequest);
+        $quoteRequestFilterTransfer->setWithVersions(true);
+
+        $quoteRequestResponseTransfer = $this->quoteRequestClient->getQuoteRequest($quoteRequestFilterTransfer);
+
+        if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
             return $this->quoteRequestRestResponseBuilder->createQuoteRequestNotFoundErrorResponse();
         }
 
         $quoteRequestTransfer = $this->quoteRequestMapper
             ->mapRestQuoteRequestsRequestAttributesTransferToQuoteRequestTransfer(
                 $restQuoteRequestsRequestAttributesTransfer,
-                $quoteRequestResponseTransfer->getQuoteRequest(),
+                $quoteRequestResponseTransfer->getQuoteRequestOrFail(),
             );
 
         if (!$this->quoteRequestValidator->validateDeliveryDate($quoteRequestTransfer)) {
@@ -98,36 +70,12 @@ class QuoteRequestUpdater implements QuoteRequestUpdaterInterface
         $quoteRequestResponseTransfer = $this->quoteRequestsRestApiClient->updateQuoteRequest($quoteRequestTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
-            return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse($quoteRequestResponseTransfer->getMessages()->getArrayCopy());
+            return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse($quoteRequestResponseTransfer);
         }
 
-        return $this->quoteRequestRestResponseBuilder
-            ->createQuoteRequestRestResponse(
-                $quoteRequestResponseTransfer,
-                $restRequest->getMetadata()->getLocale(),
-            );
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    protected function getQuoteRequest(RestRequestInterface $restRequest): QuoteRequestResponseTransfer
-    {
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($restRequest->getResource()->getId())
-            ->setWithVersions(true);
-
-        $restUserTransfer = $restRequest->getRestUser();
-        if ($restUserTransfer) {
-            $companyUserTransfer = (new CompanyUserTransfer())
-                ->setIdCompanyUser($restUserTransfer->getIdCompanyUser());
-
-            $quoteRequestFilterTransfer->setCompanyUser($companyUserTransfer);
-        }
-
-        return $this->quoteRequestClient
-            ->getQuoteRequest($quoteRequestFilterTransfer);
+        return $this->quoteRequestRestResponseBuilder->createQuoteRequestRestResponse(
+            $quoteRequestResponseTransfer,
+            $restRequest,
+        );
     }
 }

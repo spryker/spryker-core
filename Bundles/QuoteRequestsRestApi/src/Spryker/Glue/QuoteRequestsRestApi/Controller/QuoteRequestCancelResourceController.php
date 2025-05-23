@@ -25,12 +25,14 @@ class QuoteRequestCancelResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
+     *          "requestAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestCancelAttributesTransfer",
      *          "responses": {
-     *              "204": "Quote request canceled.",
      *              "400": "Bad request",
      *              "403": "Unauthorized request.",
      *              "422": "Unprocessable entity."
-     *          }
+     *          },
+     *           "isIdNullable": false,
+     *           "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer"
      *     }
      * })
      *

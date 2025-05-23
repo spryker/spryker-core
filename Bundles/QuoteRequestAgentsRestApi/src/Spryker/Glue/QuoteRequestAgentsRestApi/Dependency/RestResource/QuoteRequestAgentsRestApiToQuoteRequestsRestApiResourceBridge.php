@@ -10,6 +10,7 @@ namespace Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\RestResource;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceBridge implements QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface
 {
@@ -28,33 +29,33 @@ class QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceBridge implements Q
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
-     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createQuoteRequestRestResponse(
         QuoteRequestResponseTransfer $quoteRequestResponseTransfer,
-        string $localeName
+        RestRequestInterface $restRequest
     ): RestResponseInterface {
         return $this->quoteRequestsRestApiResource->createQuoteRequestRestResponse(
             $quoteRequestResponseTransfer,
-            $localeName,
+            $restRequest,
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
-     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createQuoteRequestCollectionRestResponse(
         QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer,
-        string $localeName
+        RestRequestInterface $restRequest
     ): RestResponseInterface {
         return $this->quoteRequestsRestApiResource->createQuoteRequestCollectionRestResponse(
             $quoteRequestCollectionTransfer,
-            $localeName,
+            $restRequest,
         );
     }
 }
