@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelper;
@@ -144,6 +145,41 @@ class ProductTableTest extends Unit
             $this->buildExpectedRow($productAbstractTransfer2->getIdProductAbstract(), $productAbstractTransfer2->getSku(), static::PRODUCT_NAME[static::LOCALE_NAME_DE]),
         ];
         $this->assertEqualsCanonicalizing($expectedProductTableData, $productTableData);
+    }
+
+    /**
+     * @group testFetchDataShouldReturnProductsWhenSearchingByConcreteProductSkuAndFeatureIsEnabled
+     *
+     * @return void
+     */
+    public function testFetchDataShouldReturnProductsWhenSearchingByConcreteProductSkuAndFeatureIsEnabled(): void
+    {
+        // Arrange
+        $abstractSku = 'abstract-test-sku';
+        $concreteSku = 'concrete-test-sku';
+
+        $this->tester->haveProduct(
+            [
+                ProductConcreteTransfer::SKU => $concreteSku,
+            ],
+            [
+                ProductAbstractTransfer::ID_PRODUCT_ABSTRACT => static::ID_PRODUCT_ABSTRACT,
+                ProductAbstractTransfer::SKU => $abstractSku,
+            ],
+        );
+
+        $this->tester->mockConfigMethod('isConcreteSkuSearchInProductTableEnabled', true);
+        $productTable = $this->createProductTableMock($this->localeTransfers[static::LOCALE_NAME_DE]);
+
+        $productTable->setSearchTerm($concreteSku);
+
+        // Act
+        $productTableData = $productTable->fetchData();
+
+        // Assert
+        $this->assertEquals(static::ID_PRODUCT_ABSTRACT, $productTableData[0][ProductTableMock::COL_ID_PRODUCT_ABSTRACT]);
+
+        $this->assertEquals($abstractSku, $productTableData[0][ProductTableMock::COL_SKU]);
     }
 
     /**
@@ -294,6 +330,7 @@ class ProductTableTest extends Unit
             [],
             [],
             [],
+            $this->tester->getFactory()->getConfig(),
         );
     }
 

@@ -9,12 +9,16 @@ namespace Spryker\Zed\ProductManagement\Communication\Table;
 
 use Generated\Shared\Transfer\ButtonCollectionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use PDO;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Propel;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -22,6 +26,7 @@ use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface;
+use Spryker\Zed\ProductManagement\ProductManagementConfig;
 
 class ProductTable extends AbstractProductTable
 {
@@ -71,6 +76,11 @@ class ProductTable extends AbstractProductTable
     public const COL_PRODUCT_TYPES = 'product_types';
 
     /**
+     * @var string
+     */
+    public const COL_CONCRETE_SKU = 'concrete_sku';
+
+    /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $productQueryQueryContainer;
@@ -116,6 +126,11 @@ class ProductTable extends AbstractProductTable
     protected $productTableActionExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\ProductManagementConfig
+     */
+    protected ProductManagementConfig $productManagementConfig;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface $productTypeHelper
@@ -125,6 +140,7 @@ class ProductTable extends AbstractProductTable
      * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableConfigurationExpanderPluginInterface> $productTableConfigurationExpanderPlugins
      * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataBulkExpanderPluginInterface> $productTableDataBulkExpanderPlugins
      * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableActionExpanderPluginInterface> $productTableActionExpanderPlugins
+     * @param \Spryker\Zed\ProductManagement\ProductManagementConfig $productManagementConfig
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -135,7 +151,8 @@ class ProductTable extends AbstractProductTable
         array $productTableDataExpanderPlugins,
         array $productTableConfigurationExpanderPlugins,
         array $productTableDataBulkExpanderPlugins,
-        array $productTableActionExpanderPlugins
+        array $productTableActionExpanderPlugins,
+        ProductManagementConfig $productManagementConfig
     ) {
         $this->productQueryQueryContainer = $productQueryContainer;
         $this->localeTransfer = $localeTransfer;
@@ -146,6 +163,7 @@ class ProductTable extends AbstractProductTable
         $this->productTableConfigurationExpanderPlugins = $productTableConfigurationExpanderPlugins;
         $this->productTableDataBulkExpanderPlugins = $productTableDataBulkExpanderPlugins;
         $this->productTableActionExpanderPlugins = $productTableActionExpanderPlugins;
+        $this->productManagementConfig = $productManagementConfig;
     }
 
     /**
@@ -181,11 +199,17 @@ class ProductTable extends AbstractProductTable
             static::COL_ACTIONS,
         ]);
 
-        $config->setSearchable([
+        $searchable = [
             SpyProductAbstractTableMap::COL_SKU,
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
             SpyTaxSetTableMap::COL_NAME,
-        ]);
+        ];
+
+        if ($this->isConcreteSkuSearchEnabled()) {
+            $searchable[] = SpyProductTableMap::COL_SKU;
+        }
+
+        $config->setSearchable($searchable);
 
         $config->setSortable([
             static::COL_ID_PRODUCT_ABSTRACT,
@@ -199,6 +223,52 @@ class ProductTable extends AbstractProductTable
         $config = $this->executeProductTableConfigurationExpanderPlugins($config);
 
         return $config;
+    }
+
+    /**
+     * @param string $searchPattern
+     * @param string $value
+     * @param string $filter
+     * @param string $conditionParameter
+     *
+     * @return string
+     */
+    protected function buildCondition(
+        string $searchPattern,
+        string $value,
+        string $filter,
+        string $conditionParameter
+    ): string {
+        if (
+            $this->isConcreteSkuSearchEnabled()
+            && $value === SpyProductTableMap::COL_SKU
+        ) {
+            return $this->buildConditionWithStrictSearch($value, $filter, $conditionParameter);
+        }
+
+        return parent::buildCondition($searchPattern, $value, $filter, $conditionParameter);
+    }
+
+    /**
+     * @param string $value
+     * @param string $filter
+     * @param string $conditionParameter
+     *
+     * @return string
+     */
+    protected function buildConditionWithStrictSearch(
+        string $value,
+        string $filter,
+        string $conditionParameter
+    ): string {
+        return parent::buildCondition(
+            $this->getStrictSearchPatternByDriverName(
+                Propel::getConnection()->getAttribute(PDO::ATTR_DRIVER_NAME),
+            ),
+            $value,
+            $filter,
+            str_replace('%', '', $conditionParameter),
+        );
     }
 
     /**
@@ -520,13 +590,30 @@ class ProductTable extends AbstractProductTable
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function expandPropelQuery(ModelCriteria $query): ModelCriteria
+    protected function expandPropelQuery(SpyProductAbstractQuery $query): ModelCriteria
     {
+        if ($this->isConcreteSkuSearchEnabled()) {
+            $query = $this->addConcreteProductSkuSearch($query);
+        }
+
         return $this->productManagementRepository->expandQuery($query);
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     *
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
+     */
+    protected function addConcreteProductSkuSearch(SpyProductAbstractQuery $query): SpyProductAbstractQuery
+    {
+        $query->distinct()
+              ->leftJoinSpyProduct();
+
+        return $query;
     }
 
     /**
@@ -558,5 +645,17 @@ class ProductTable extends AbstractProductTable
         }
 
         return $productData;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isConcreteSkuSearchEnabled(): bool
+    {
+        $searchTerm = $this->getSearchTerm();
+
+        return isset($searchTerm['value'])
+                && $searchTerm['value'] !== ''
+                && $this->productManagementConfig->isConcreteSkuSearchInProductTableEnabled();
     }
 }

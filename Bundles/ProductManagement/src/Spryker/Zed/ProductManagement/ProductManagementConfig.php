@@ -78,4 +78,17 @@ class ProductManagementConfig extends AbstractBundleConfig
     {
         return static::PRICE_TYPE_DEFAULT;
     }
+
+    /**
+     * @api
+     *
+     * Specification:
+     * - Returns whether the concrete SKU search in the product table is enabled.
+     *
+     * @return bool
+     */
+    public function isConcreteSkuSearchInProductTableEnabled(): bool
+    {
+        return false;
+    }
 }

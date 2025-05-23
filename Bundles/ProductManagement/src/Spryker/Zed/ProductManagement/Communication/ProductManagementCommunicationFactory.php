@@ -379,6 +379,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductTableConfigurationExpanderPlugins(),
             $this->getProductTableDataBulkExpanderPlugins(),
             $this->getProductTableActionExpanderPlugins(),
+            $this->getConfig(),
         );
     }
 

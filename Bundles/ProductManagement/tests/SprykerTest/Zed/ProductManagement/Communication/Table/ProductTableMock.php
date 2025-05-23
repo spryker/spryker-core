@@ -13,6 +13,21 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductTableMock extends ProductTable
 {
     /**
+     * @var string|null
+     */
+    protected $searchTerm;
+
+    /**
+     * @param string $searchTerm
+     *
+     * @return void
+     */
+    public function setSearchTerm(string $searchTerm): void
+    {
+        $this->searchTerm = $searchTerm;
+    }
+
+    /**
      * @return array
      */
     public function fetchData(): array
@@ -25,6 +40,12 @@ class ProductTableMock extends ProductTable
      */
     protected function getRequest(): Request
     {
-        return new Request();
+        $request = new Request();
+
+        if ($this->searchTerm !== null) {
+            $request->query->set('search', ['value' => $this->searchTerm]);
+        }
+
+        return $request;
     }
 }
