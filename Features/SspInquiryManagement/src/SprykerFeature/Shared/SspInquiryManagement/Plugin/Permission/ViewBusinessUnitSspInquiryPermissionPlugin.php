@@ -7,61 +7,15 @@
 
 namespace SprykerFeature\Shared\SspInquiryManagement\Plugin\Permission;
 
-use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
-class ViewBusinessUnitSspInquiryPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
+class ViewBusinessUnitSspInquiryPermissionPlugin extends AbstractPlugin implements PermissionPluginInterface
 {
     /**
      * @var string
      */
     public const KEY = 'ViewBusinessUnitSspInquiryPermissionPlugin';
-
-    /**
-     * @var string
-     */
-    public const CONTEXT_COMPANY_USER = 'company_user';
-
-    /**
-     * @var string
-     */
-    public const CONTEXT_SSP_INQUIRY = 'ssp_inquiry';
-
-    /**
-     * {@inheritDoc}
-     * - Checks if the company user has access to the ssp inquiry withing the specific company business unit.
-     *
-     * @param array<string, mixed> $configuration
-     * @param array<mixed>|string|int|null $context
-     *
-     * @return bool
-     */
-    public function can(array $configuration, $context = null): bool
-    {
-        if (!isset($context[static::CONTEXT_COMPANY_USER], $context[static::CONTEXT_SSP_INQUIRY])) {
-            return true;
-        }
-
-        /**
-         * @var \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-         */
-        $companyUserTransfer = $context[static::CONTEXT_COMPANY_USER];
-
-        /**
-         * @var \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-         */
-         $sspInquiryTransfer = $context[static::CONTEXT_SSP_INQUIRY];
-
-        return $companyUserTransfer->getFkCompanyBusinessUnit() === $sspInquiryTransfer->getCompanyUserOrFail()->getFkCompanyBusinessUnit();
-    }
-
-    /**
-     * @return array<mixed>
-     */
-    public function getConfigurationSignature(): array
-    {
-        return [];
-    }
 
     /**
      * @return string

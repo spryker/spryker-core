@@ -9,20 +9,20 @@ namespace SprykerFeature\Zed\SspInquiryManagement\Business\Reader;
 
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
-use Spryker\Zed\Kernel\PermissionAwareTrait;
+use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\SspInquiryCriteriaExpanderInterface;
 use SprykerFeature\Zed\SspInquiryManagement\Persistence\SspInquiryManagementRepositoryInterface;
 
 class SspInquiryReader implements SspInquiryReaderInterface
 {
-    use PermissionAwareTrait;
-
     /**
      * @param \SprykerFeature\Zed\SspInquiryManagement\Persistence\SspInquiryManagementRepositoryInterface $sspInquiryManagementRepository
      * @param array<int, \SprykerFeature\Zed\SspInquiryManagement\Business\Expander\SspInquiryExpanderInterface> $sspInquiryExpanders
+     * @param \SprykerFeature\Zed\SspInquiryManagement\Business\Expander\SspInquiryCriteriaExpanderInterface $sspInquiryConditionExpander
      */
     public function __construct(
         protected SspInquiryManagementRepositoryInterface $sspInquiryManagementRepository,
-        protected array $sspInquiryExpanders
+        protected array $sspInquiryExpanders,
+        protected SspInquiryCriteriaExpanderInterface $sspInquiryConditionExpander
     ) {
     }
 
@@ -33,6 +33,8 @@ class SspInquiryReader implements SspInquiryReaderInterface
      */
     public function getSspInquiryCollection(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer
     {
+        $sspInquiryCriteriaTransfer = $this->sspInquiryConditionExpander->expandCriteriaBasedOnCompanyUserPermissions($sspInquiryCriteriaTransfer);
+
         $sspInquiryCollectionTransfer = $this->sspInquiryManagementRepository->getSspInquiryCollection($sspInquiryCriteriaTransfer);
         foreach ($this->sspInquiryExpanders as $sspInquiryExpander) {
             if (!$sspInquiryExpander->isApplicable($sspInquiryCriteriaTransfer)) {

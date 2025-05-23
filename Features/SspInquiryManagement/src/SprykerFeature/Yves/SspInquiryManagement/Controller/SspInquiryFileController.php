@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Transliterator;
 
@@ -56,7 +55,6 @@ class SspInquiryFileController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      * @throws \Exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -81,10 +79,6 @@ class SspInquiryFileController extends AbstractController
                 "Ssp Inquiry with provided Reference %s doesn't exist",
                 $sspInquiryReference,
             ));
-        }
-
-        if (!$this->getFactory()->createSspInquiryCustomerPermissionChecker()->canViewSspInquiry($sspInquiryTransfer, $customerTransfer->getCompanyUserTransferOrFail())) {
-            throw new AccessDeniedHttpException('ssp_inquiry.access.denied');
         }
 
         $idFile = null;

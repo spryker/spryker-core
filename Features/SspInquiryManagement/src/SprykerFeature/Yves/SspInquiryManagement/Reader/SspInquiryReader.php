@@ -70,8 +70,8 @@ class SspInquiryReader implements SspInquiryReaderInterface
                     ->addReference($reference)
                     ->setSspInquiryOwnerConditionGroup(
                         (new SspInquiryOwnerConditionGroupTransfer())
-                            ->setFkCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit())
-                            ->setFkCompany($companyUserTransfer->getFkCompany()),
+                            ->setIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit())
+                            ->setIdCompany($companyUserTransfer->getFkCompany()),
                     ),
               )
                 ->setInclude(

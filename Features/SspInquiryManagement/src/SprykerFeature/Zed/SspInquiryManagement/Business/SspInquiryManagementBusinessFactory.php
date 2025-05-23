@@ -33,6 +33,8 @@ use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\FileSspInquiryExpa
 use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\ManualEventsSspInquiryExpander;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\SalesOrderSspInquiryExpander;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\SspAssetSspInquiryExpander;
+use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\SspInquiryCriteriaExpander;
+use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\SspInquiryCriteriaExpanderInterface;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\SspInquiryExpanderInterface;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Expander\StatusHistorySspInquiryExpander;
 use SprykerFeature\Zed\SspInquiryManagement\Business\Hooks\PostCreate\FileSspInquiryPostCreateHook;
@@ -193,6 +195,7 @@ class SspInquiryManagementBusinessFactory extends AbstractBusinessFactory
         return new SspInquiryReader(
             $this->getRepository(),
             $this->getSspInquiryExpanders(),
+            $this->createSspInquiryConditionExpander(),
         );
     }
 
@@ -462,5 +465,13 @@ class SspInquiryManagementBusinessFactory extends AbstractBusinessFactory
     public function getSspAssetManagementFacade(): SspAssetManagementFacadeInterface
     {
         return $this->getProvidedDependency(SspInquiryManagementDependencyProvider::FACADE_SSP_ASSET_MANAGEMENT);
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspInquiryManagement\Business\Expander\SspInquiryCriteriaExpanderInterface
+     */
+    public function createSspInquiryConditionExpander(): SspInquiryCriteriaExpanderInterface
+    {
+        return new SspInquiryCriteriaExpander();
     }
 }

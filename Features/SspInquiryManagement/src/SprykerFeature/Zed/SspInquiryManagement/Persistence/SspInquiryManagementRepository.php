@@ -209,8 +209,8 @@ class SspInquiryManagementRepository extends AbstractRepository implements SspIn
              $sspInquiryQuery->filterByCreatedAt($sspInquiryConditions->getCreatedDateTo(), ModelCriteria::LESS_EQUAL);
         }
 
-        if ($sspInquiryConditions->getFkStore() !== null) {
-             $sspInquiryQuery->filterByFkStore($sspInquiryConditions->getFkStore());
+        if ($sspInquiryConditions->getIdStore() !== null) {
+             $sspInquiryQuery->filterByFkStore($sspInquiryConditions->getIdStore());
         }
 
         if ($sspInquiryConditions->getStoreName() !== null) {
@@ -255,26 +255,26 @@ class SspInquiryManagementRepository extends AbstractRepository implements SspIn
             $hasOwnerCondition = false;
             $companyUserQuery = $sspInquiryQuery->useSpyCompanyUserQuery();
 
-            if ($sspInquiryOwnerConditionGroup->getFkCompanyUser()) {
+            if ($sspInquiryOwnerConditionGroup->getCompanyUser()?->getIdCompanyUser()) {
                 $hasOwnerCondition = true;
-                $companyUserQuery->filterByIdCompanyUser($sspInquiryOwnerConditionGroup->getFkCompanyUser());
+                $companyUserQuery->filterByIdCompanyUser($sspInquiryOwnerConditionGroup->getCompanyUser()->getIdCompanyUser());
             }
 
-            if ($sspInquiryOwnerConditionGroup->getFkCompany()) {
+            if ($sspInquiryOwnerConditionGroup->getIdCompany()) {
                 if ($hasOwnerCondition) {
                     $companyUserQuery->_or();
                 }
 
                 $hasOwnerCondition = true;
-                $companyUserQuery->filterByFkCompany($sspInquiryOwnerConditionGroup->getFkCompany());
+                $companyUserQuery->filterByFkCompany($sspInquiryOwnerConditionGroup->getIdCompany());
             }
 
-            if ($sspInquiryOwnerConditionGroup->getFkCompanyBusinessUnit()) {
+            if ($sspInquiryOwnerConditionGroup->getIdCompanyBusinessUnit()) {
                 if ($hasOwnerCondition) {
                     $companyUserQuery->_or();
                 }
 
-                $companyUserQuery->filterByFkCompanyBusinessUnit($sspInquiryOwnerConditionGroup->getFkCompanyBusinessUnitOrFail());
+                $companyUserQuery->filterByFkCompanyBusinessUnit($sspInquiryOwnerConditionGroup->getIdCompanyBusinessUnitOrFail());
             }
 
             $companyUserQuery->endUse();

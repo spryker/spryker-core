@@ -58,7 +58,6 @@ class SspInquiryController extends AbstractController
      * @param string $sspInquiryReference
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -93,10 +92,6 @@ class SspInquiryController extends AbstractController
             || $sspInquiryTransfer->getCompanyUserOrFail()->getIdCompanyUserOrFail() !== $companyUserTransfer->getIdCompanyUser()
         ) {
             throw new NotFoundHttpException();
-        }
-
-        if (!$this->getFactory()->createSspInquiryCustomerPermissionChecker()->canViewSspInquiry($sspInquiryTransfer, $companyUserTransfer)) {
-            throw new AccessDeniedHttpException('ssp_inquiry.access.denied');
         }
 
          $sspInquiryCollectionResponseTransfer = $this->getClient()->cancelSspInquiryCollection(
@@ -256,16 +251,9 @@ class SspInquiryController extends AbstractController
                     ->setWithCompanyUser(true),
             );
 
-        $companyUserTransfer = $this->getFactory()->getCompanyUserClient()->findCompanyUser();
-
-        if (!$companyUserTransfer) {
-            throw new NotFoundHttpException('ssp_inquiry.error.company_user_not_found');
-        }
-
-        $sspInquiryConditionsTransfer = $this->getFactory()->createSspInquiryCustomerPermissionExpander()->extendSspInquiryCriteriaTransferWithPermissions(
-            $sspInquiryCriteriaTransfer->getSspInquiryConditionsOrFail(),
-            $companyUserTransfer,
-        );
+        $sspInquiryConditionsTransfer->getSspInquiryOwnerConditionGroupOrFail()->setCompanyUser($companyUserTransfer);
+        $sspInquiryConditionsTransfer->getSspInquiryOwnerConditionGroupOrFail()->setIdCompany($companyUserTransfer->getFkCompany());
+        $sspInquiryConditionsTransfer->getSspInquiryOwnerConditionGroupOrFail()->setIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit());
 
         $sspInquirySearchForm->handleRequest($request);
 
@@ -293,7 +281,6 @@ class SspInquiryController extends AbstractController
      * @param string $sspInquiryReference
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      *
      * @return array<string, mixed>
      */
@@ -312,10 +299,6 @@ class SspInquiryController extends AbstractController
                 'Ssp Inquiry with provided Reference %s was not found.',
                 $sspInquiryReference,
             ));
-        }
-
-        if (!$this->getFactory()->createSspInquiryCustomerPermissionChecker()->canViewSspInquiry($sspInquiryTransfer, $companyUserTransfer)) {
-            throw new AccessDeniedHttpException('ssp_inquiry.access.denied');
         }
 
         return [

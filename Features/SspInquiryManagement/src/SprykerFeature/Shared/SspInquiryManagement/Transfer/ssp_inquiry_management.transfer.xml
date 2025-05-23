@@ -72,16 +72,16 @@
         <property name="createdDateFrom" type="string"/>
         <property name="createdDateTo" type="string"/>
         <property name="sspInquiryOwnerConditionGroup" type="SspInquiryOwnerConditionGroup"/>
-        <property name="fkStore" type="int"/>
+        <property name="idStore" type="int"/>
         <property name="storeName" type="string"/>
         <property name="sspAssetIds" type="int[]" singular="idSspAsset"/>
         <property name="sspAssetReferences" type="string[]" singular="sspAssetReference"/>
     </transfer>
 
     <transfer name="SspInquiryOwnerConditionGroup">
-        <property name="fkCompanyBusinessUnit" type="int"/>
-        <property name="fkCompany" type="int"/>
-        <property name="fkCompanyUser" type="int"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="idCompany" type="int"/>
+        <property name="companyUser" type="CompanyUser"/>
     </transfer>
 
     <transfer name="Order">

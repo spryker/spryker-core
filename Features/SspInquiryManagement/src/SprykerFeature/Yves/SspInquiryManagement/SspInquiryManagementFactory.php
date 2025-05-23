@@ -29,10 +29,6 @@ use SprykerFeature\Yves\SspInquiryManagement\Handler\SspInquirySearchFormHandler
 use SprykerFeature\Yves\SspInquiryManagement\Handler\SspInquirySearchFormHandlerInterface;
 use SprykerFeature\Yves\SspInquiryManagement\Mapper\CreateSspInquiryFormDataToTransferMapper;
 use SprykerFeature\Yves\SspInquiryManagement\Mapper\CreateSspInquiryFormDataToTransferMapperInterface;
-use SprykerFeature\Yves\SspInquiryManagement\Permission\SspInquiryCustomerPermissionChecker;
-use SprykerFeature\Yves\SspInquiryManagement\Permission\SspInquiryCustomerPermissionCheckerInterface;
-use SprykerFeature\Yves\SspInquiryManagement\Permission\SspInquiryCustomerPermissionExpander;
-use SprykerFeature\Yves\SspInquiryManagement\Permission\SspInquiryCustomerPermissionExpanderInterface;
 use SprykerFeature\Yves\SspInquiryManagement\Reader\SspInquiryReader;
 use SprykerFeature\Yves\SspInquiryManagement\Reader\SspInquiryReaderInterface;
 use SprykerFeature\Yves\SspInquiryManagement\Twig\BytesExtension;
@@ -145,22 +141,6 @@ class SspInquiryManagementFactory extends AbstractFactory
     public function createCreateSspAssetSspInquiryFormExpander(): CreateSspInquiryFormExpanderInterface
     {
         return new CreateSspAssetSspInquiryFormExpander($this->getRequestStack());
-    }
-
-    /**
-     * @return \SprykerFeature\Yves\SspInquiryManagement\Permission\SspInquiryCustomerPermissionCheckerInterface
-     */
-    public function createSspInquiryCustomerPermissionChecker(): SspInquiryCustomerPermissionCheckerInterface
-    {
-        return new SspInquiryCustomerPermissionChecker();
-    }
-
-    /**
-     * @return \SprykerFeature\Yves\SspInquiryManagement\Permission\SspInquiryCustomerPermissionExpanderInterface
-     */
-    public function createSspInquiryCustomerPermissionExpander(): SspInquiryCustomerPermissionExpanderInterface
-    {
-        return new SspInquiryCustomerPermissionExpander();
     }
 
     /**

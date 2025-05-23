@@ -49,8 +49,8 @@ class SspInquirySspAssetManagementExpanderPlugin extends AbstractPlugin implemen
         }
 
         $sspInquiryOwnerConditionGroupTransfer = new SspInquiryOwnerConditionGroupTransfer();
-        $sspInquiryOwnerConditionGroupTransfer->setFkCompany($sspAssetCriteriaTransfer->getSspAssetConditionsOrFail()->getAssignedBusinessUnitCompanyId());
-        $sspInquiryOwnerConditionGroupTransfer->setFkCompanyBusinessUnit($sspAssetCriteriaTransfer->getSspAssetConditionsOrFail()->getAssignedBusinessUnitId());
+        $sspInquiryOwnerConditionGroupTransfer->setIdCompany($sspAssetCriteriaTransfer->getSspAssetConditionsOrFail()->getAssignedBusinessUnitCompanyId());
+        $sspInquiryOwnerConditionGroupTransfer->setIdCompanyBusinessUnit($sspAssetCriteriaTransfer->getSspAssetConditionsOrFail()->getAssignedBusinessUnitId());
 
         $sspAssetIds = [];
         foreach ($sspAssetCollectionTransfer->getSspAssets() as $sspAssetTransfer) {
