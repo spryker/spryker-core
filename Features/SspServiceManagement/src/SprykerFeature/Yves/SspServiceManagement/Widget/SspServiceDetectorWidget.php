@@ -5,25 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerFeature\Yves\SspServiceManagement\Plugin\Twig;
+namespace SprykerFeature\Yves\SspServiceManagement\Widget;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
-use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig\Environment;
-use Twig\TwigFunction;
+use LogicException;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \SprykerFeature\Yves\SspServiceManagement\SspServiceManagementFactory getFactory()
  * @method \SprykerFeature\Yves\SspServiceManagement\SspServiceManagementConfig getConfig()
  */
-class SspServiceDetectorTwigPlugin extends AbstractPlugin implements TwigPluginInterface
+class SspServiceDetectorWidget extends AbstractWidget
 {
     /**
      * @var string
      */
-    protected const FUNCTION_NAME_IS_SSP_SERVICE = 'isSspService';
+    protected const PARAMETER_IS_SERVICE = 'isService';
 
     /**
      * @var string
@@ -31,31 +28,39 @@ class SspServiceDetectorTwigPlugin extends AbstractPlugin implements TwigPluginI
     protected const PARAMETER_PRODUCT_ABSTRACT_TYPES = 'product-abstract-types';
 
     /**
-     * {@inheritDoc}
-     * - Extends Twig with `isSspService()` function.
-     *
-     * @api
-     *
-     * @param \Twig\Environment $twig
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Twig\Environment
+     * @param \Generated\Shared\Transfer\ProductViewTransfer|array<string|mixed> $productData
      */
-    public function extend(Environment $twig, ContainerInterface $container): Environment
+    public function __construct(array|ProductViewTransfer $productData)
     {
-        $twig->addFunction($this->getIsSspServiceFunction());
-
-        return $twig;
+        $this->addIsServiceParameter($productData);
     }
 
     /**
-     * @return \Twig\TwigFunction
+     * @param \Generated\Shared\Transfer\ProductViewTransfer|array<string|mixed> $productData
+     *
+     * @return void
      */
-    protected function getIsSspServiceFunction(): TwigFunction
+    protected function addIsServiceParameter(array|ProductViewTransfer $productData): void
     {
-        return new TwigFunction(static::FUNCTION_NAME_IS_SSP_SERVICE, function (array|ProductViewTransfer $productData): bool {
-            return $this->isSspService($productData);
-        });
+        $this->addParameter(static::PARAMETER_IS_SERVICE, $this->isSspService($productData));
+    }
+
+    /**
+     * @return string
+     */
+    public static function getName(): string
+    {
+        return 'SspServiceDetectorWidget';
+    }
+
+    /**
+     * @throws \LogicException
+     *
+     * @return string
+     */
+    public static function getTemplate(): string
+    {
+        throw new LogicException('This widget should only be used as service detector.');
     }
 
     /**
