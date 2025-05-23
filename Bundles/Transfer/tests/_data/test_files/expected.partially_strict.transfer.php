@@ -219,6 +219,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => false,
+            'is_primitive_array' => false,
         ],
         self::PROP_SCALAR_STRICT => [
             'type' => 'int',
@@ -231,6 +232,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => true,
+            'is_primitive_array' => false,
         ],
         self::PROP_DECIMAL => [
             'type' => 'Spryker\DecimalObject\Decimal',
@@ -243,6 +245,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => false,
+            'is_primitive_array' => false,
         ],
         self::PROP_DECIMAL_STRICT => [
             'type' => 'Spryker\DecimalObject\Decimal',
@@ -255,6 +258,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => true,
+            'is_primitive_array' => false,
         ],
         self::PROP_SIMPLE_ARRAY => [
             'type' => 'array',
@@ -267,6 +271,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => false,
+            'is_primitive_array' => false,
         ],
         self::PROP_SIMPLE_ARRAY_STRICT => [
             'type' => 'array',
@@ -279,6 +284,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => true,
+            'is_primitive_array' => false,
         ],
         self::PROP_DUMMY_ITEM => [
             'type' => 'Generated\Shared\Transfer\DummyItemTransfer',
@@ -291,6 +297,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => false,
+            'is_primitive_array' => false,
         ],
         self::PROP_DUMMY_ITEM_STRICT => [
             'type' => 'Generated\Shared\Transfer\DummyItemTransfer',
@@ -303,6 +310,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => true,
+            'is_primitive_array' => false,
         ],
         self::PROP_DUMMY_ITEM_COLLECTION => [
             'type' => 'Generated\Shared\Transfer\DummyItemTransfer',
@@ -315,6 +323,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => false,
+            'is_primitive_array' => false,
         ],
         self::PROP_DUMMY_ITEM_COLLECTION_STRICT => [
             'type' => 'Generated\Shared\Transfer\DummyItemTransfer',
@@ -327,6 +336,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => true,
+            'is_primitive_array' => false,
         ],
         self::PROP_TYPED_ARRAY => [
             'type' => 'string[]',
@@ -339,6 +349,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => false,
+            'is_primitive_array' => false,
         ],
         self::PROP_TYPED_ARRAY_STRICT => [
             'type' => 'string[]',
@@ -351,6 +362,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => true,
+            'is_primitive_array' => false,
         ],
         self::PROP_TYPED_ARRAY_ASSOC => [
             'type' => 'string[]',
@@ -363,6 +375,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
             'is_associative' => true,
             'is_nullable' => false,
             'is_strict' => false,
+            'is_primitive_array' => false,
         ],
         self::PROP_TYPED_ARRAY_ASSOC_STRICT => [
             'type' => 'string[]',
@@ -375,6 +388,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
             'is_associative' => true,
             'is_nullable' => false,
             'is_strict' => true,
+            'is_primitive_array' => false,
         ],
     ];
 

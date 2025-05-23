@@ -5,11 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace SprykerTest\Zed\Transfer\Business\Model;
 
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GeneratedNestedTransfer;
+use Generated\Shared\Transfer\GeneratedStrictTransfer;
 use Generated\Shared\Transfer\GeneratedTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Shared\Kernel\Transfer\Exception\InvalidStrictTypeException;
@@ -58,6 +61,7 @@ class GeneratedTransferTest extends Unit
         $targetDirectory = $this->getTargetDirectory();
 
         require_once($targetDirectory . 'GeneratedTransfer.php');
+        require_once($targetDirectory . 'GeneratedStrictTransfer.php');
         require_once($targetDirectory . 'GeneratedNestedTransfer.php');
     }
 
@@ -488,13 +492,15 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @param \Spryker\Zed\Transfer\TransferConfig|null $transferConfig
+     *
      * @return void
      */
-    protected function generateTransfer(): void
+    protected function generateTransfer(?TransferConfig $transferConfig = null): void
     {
         $definitionBuilder = $this->getDefinitionBuilder([
             codecept_data_dir('GeneratedTest/'),
-        ]);
+        ], $transferConfig);
 
         $messenger = $this->getMessenger();
         $generator = $this->getClassGenerator();
@@ -504,6 +510,7 @@ class GeneratedTransferTest extends Unit
 
         $this->assertFileExists($this->getTargetDirectory() . 'GeneratedTransfer.php');
         $this->assertFileExists($this->getTargetDirectory() . 'GeneratedNestedTransfer.php');
+        $this->assertFileExists($this->getTargetDirectory() . 'GeneratedStrictTransfer.php');
     }
 
     /**
@@ -766,6 +773,69 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testPrimitiveArrayRequirePropertyWillNotFailForNonStrictTransfersButForStrictOnes(): void
+    {
+        // Arrange
+        $transferConfigMock = $this->createMock(TransferConfig::class);
+        $transferConfigMock->method('isArrayRequireValidationEnabled')
+            ->willReturn(true);
+
+        // Act
+        $this->generateTransfer($transferConfigMock);
+
+        $generatedTransfer = new GeneratedTransfer();
+        $generatedStrictTransfer = new GeneratedStrictTransfer();
+
+        // Assert for non-strict transfer
+        $generatedTransfer->setTestStringArray(['string a', 'string b']);
+        $this->assertSame(['string a', 'string b'], $generatedTransfer->getTestStringArray());
+        $this->assertIsArray($generatedTransfer->getTestStringArray());
+
+        $generatedTransfer->requireTestStringArray();
+
+        $generatedTransfer->setTestStringArray([]);
+        $generatedTransfer->requireTestStringArray();
+
+        $generatedTransfer->setTestIntArray([]);
+        $generatedTransfer->requireTestIntArray();
+
+        $generatedTransfer->setTestArray([]);
+        $generatedTransfer->requireTestArray();
+
+        $generatedTransfer->setTestBoolArray([]);
+        $generatedTransfer->requireTestBoolArray();
+
+        // Assert for strict transfer
+        $generatedStrictTransfer->setTestStringArray(['string a', 'string b']);
+        $this->assertSame(['string a', 'string b'], $generatedStrictTransfer->getTestStringArray());
+        $this->assertIsArray($generatedStrictTransfer->getTestStringArray());
+
+        $generatedStrictTransfer->requireTestStringArray();
+
+        $generatedStrictTransfer->setTestStringArray([]);
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        $generatedStrictTransfer->requireTestStringArray();
+
+        $generatedStrictTransfer->setTestIntArray([]);
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        $generatedStrictTransfer->requireTestIntArray();
+
+        $generatedStrictTransfer->setTestArray([]);
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        $generatedStrictTransfer->requireTestArray();
+
+        $generatedStrictTransfer->setTestBoolArray([]);
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        $generatedStrictTransfer->requireTestBoolArray();
+    }
+
+    /**
      * @return array
      */
     public function associativeCollectionFromArrayProvider(): array
@@ -861,22 +931,24 @@ class GeneratedTransferTest extends Unit
 
     /**
      * @param array $sourceDirectories
+     * @param \Spryker\Zed\Transfer\TransferConfig|null $config
      *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
-    protected function getDefinitionBuilder(array $sourceDirectories): DefinitionBuilderInterface
+    protected function getDefinitionBuilder(array $sourceDirectories, ?TransferConfig $config = null): DefinitionBuilderInterface
     {
-        $config = new TransferConfig();
+        if (!$config) {
+            $config = new TransferConfig();
+        }
         $finder = new TransferDefinitionFinder($sourceDirectories);
         $normalizer = new DefinitionNormalizer();
         $loader = new TransferDefinitionLoader($finder, $normalizer, $config);
-        $definitionBuilder = new TransferDefinitionBuilder(
+
+        return new TransferDefinitionBuilder(
             $loader,
             new TransferDefinitionMerger($config, $this->getMessengerMock()),
             new ClassDefinition($config),
         );
-
-        return $definitionBuilder;
     }
 
     /**

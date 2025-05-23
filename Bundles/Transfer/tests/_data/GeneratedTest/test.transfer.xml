@@ -18,4 +18,19 @@
     <transfer name="GeneratedNested">
         <property name="name" type="string"/>
     </transfer>
+    <transfer name="GeneratedStrict" strict="true">
+        <property name="testString" type="string"/>
+        <property name="testStringArray" type="string[]"/>
+        <property name="testInt" type="int"/>
+        <property name="testIntArray" type="int[]"/>
+        <property name="testBool" type="bool"/>
+        <property name="testBoolArray" type="bool[]"/>
+        <property name="testArray" type="array"/>
+        <property name="testTransfer" type="Generated"/>
+        <property name="testTransfers" type="Generated[]" singular="transfer"/>
+        <property name="testTransferStrict" type="Generated" strict="true"/>
+        <property name="testDecimal" type="decimal"/>
+        <property name="associativeNestedTransfers" type="GeneratedNested[]" singular="associativeNestedTransfer" associative="true"/>
+        <property name="abstractAttributes" type="AbstractAttributes"/>
+    </transfer>
 </transfers>

@@ -253,6 +253,30 @@ class TransferGeneratorTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testArrayRequireShouldBeChecked(): void
+    {
+        $sourceDirectories = [
+            codecept_data_dir('test_files/Generated/'),
+        ];
+        $configMock = $this->getTransferConfigMock();
+        $configMock->method('isArrayRequireValidationEnabled')->willReturn(true);
+        $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $configMock);
+
+        $messenger = $this->getMessenger();
+        $generator = $this->getClassGenerator();
+
+        $transferGenerator = new TransferGenerator($messenger, $generator, $transferDefinitionBuilder);
+        $transferGenerator->execute();
+
+        $this->assertSame(
+            file_get_contents(codecept_data_dir('test_files/expected.arrayrequire.transfer.php')),
+            file_get_contents(codecept_data_dir('test_files/Generated/GeneratedTransfer.php')),
+        );
+    }
+
+    /**
      * @param string $expectedTransferFileName
      * @param string $actualTransferClassName
      * @param string $message

@@ -355,4 +355,19 @@ class TransferConfig extends AbstractBundleConfig
             'dataBuilderRule',
         ];
     }
+
+    /**
+     * Specification:
+     * - Controls whether primitive array validation fails on empty array.
+     * - When enabled, `require` methods will fail on empty array.
+     * - The change of this config requires transfer regeneration to take effect.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isArrayRequireValidationEnabled(): bool
+    {
+        return false;
+    }
 }

@@ -31,6 +31,7 @@
             'is_associative' => {{ property.is_associative ? 'true' : 'false' }},
             'is_nullable' => {{ property.nullable ? 'true' : 'false' }},
             'is_strict' => {{ property.is_strict ? 'true' : 'false' }},
+            'is_primitive_array' => {{ property.is_primitive_array ? 'true' : 'false' }},
         ],
     {% endfor -%}
 ];

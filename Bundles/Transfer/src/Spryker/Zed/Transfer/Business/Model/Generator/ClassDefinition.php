@@ -294,6 +294,7 @@ class ClassDefinition implements ClassDefinitionInterface
 
             $property[static::TYPE_FULLY_QUALIFIED] = $property['type'];
             $property['is_collection'] = false;
+            $property['is_primitive_array'] = false;
             $property['is_transfer'] = false;
             $property['is_value_object'] = false;
             $property['propertyConst'] = $this->getPropertyConstantName($property);
@@ -301,6 +302,10 @@ class ClassDefinition implements ClassDefinitionInterface
 
             if ($this->isTransferOrTransferArray($property['type'])) {
                 $property = $this->buildTransferPropertyDefinition($property);
+            }
+
+            if ($this->isArray($property) && $this->transferConfig->isArrayRequireValidationEnabled()) {
+                $property = $this->buildArrayPropertyDefinition($property);
             }
 
             if ($this->isValueObject($property)) {
@@ -340,6 +345,18 @@ class ClassDefinition implements ClassDefinitionInterface
         }
         $property['type'] .= 'Transfer';
         $property[static::TYPE_FULLY_QUALIFIED] .= $property['type'];
+
+        return $property;
+    }
+
+    /**
+     * @param array<string, mixed> $property
+     *
+     * @return array
+     */
+    protected function buildArrayPropertyDefinition(array $property): array
+    {
+        $property['is_primitive_array'] = true;
 
         return $property;
     }

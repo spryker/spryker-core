@@ -90,6 +90,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => false,
+            'is_primitive_array' => false,
         ],
         self::ARRAY_FIELD => [
             'type' => 'array',
@@ -102,6 +103,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => false,
+            'is_primitive_array' => false,
         ],
         self::TRANSFER_FIELD => [
             'type' => 'Generated\Shared\Transfer\DeprecatedFooBarTransfer',
@@ -114,6 +116,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => false,
+            'is_primitive_array' => false,
         ],
         self::TRANSFER_COLLECTION_FIELD => [
             'type' => 'Generated\Shared\Transfer\DeprecatedFooBarTransfer',
@@ -126,6 +129,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => false,
+            'is_primitive_array' => false,
         ],
     ];
 

@@ -86,6 +86,7 @@ class FooBarTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => false,
+            'is_primitive_array' => false,
         ],
         self::BLA => [
             'type' => 'int',
@@ -98,6 +99,7 @@ class FooBarTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => false,
+            'is_primitive_array' => false,
         ],
         self::STOCK => [
             'type' => 'Spryker\DecimalObject\Decimal',
@@ -110,6 +112,7 @@ class FooBarTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => false,
+            'is_primitive_array' => false,
         ],
         self::SELF_REFERENCE => [
             'type' => 'Generated\Shared\Transfer\FooBarTransfer',
@@ -122,6 +125,7 @@ class FooBarTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
             'is_strict' => false,
+            'is_primitive_array' => false,
         ],
     ];
 

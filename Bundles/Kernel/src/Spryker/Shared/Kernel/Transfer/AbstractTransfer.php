@@ -266,7 +266,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      */
     protected function assertPropertyIsSet($property): void
     {
-        if ($this->$property === null) {
+        if ($this->$property === null || (is_array($this->$property) && $this->transferMetadata[$property]['is_strict'] && $this->$property === [])) {
             throw new RequiredTransferPropertyException(sprintf(
                 'Missing required property "%s" for transfer %s.',
                 $property,
