@@ -101,7 +101,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     {
         $localeNames = [];
         foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
-            $localeNames = array_merge($localeNames, $storeTransfer->getAvailableLocaleIsoCodes());
+            $localeNames = array_merge($localeNames, array_values($storeTransfer->getAvailableLocaleIsoCodes()));
         }
 
         return array_unique($localeNames);

@@ -74,6 +74,32 @@ class CmsPageUrlBuilderTest extends CmsMocks
     }
 
     /**
+     * @return void
+     */
+    public function testGetPageUrlPrefixAsFullLocale(): void
+    {
+        // Arrange
+        $cmsConfigMock = $this->createCmsConfigMock();
+        $cmsConfigMock
+            ->method('appendPrefixToCmsPageUrl')
+            ->willReturn(true);
+
+        $cmsConfigMock
+            ->method('isFullLocaleNamesInUrlEnabled')
+            ->willReturn(true);
+
+        $cmsUrlBuilder = $this->createCmsUrlBuilder($cmsConfigMock);
+        $cmsPageAttributeTransfer = new CmsPageAttributesTransfer();
+        $cmsPageAttributeTransfer->setLocaleName('en_US');
+
+        // Act
+        $urlPrefix = $cmsUrlBuilder->getPageUrlPrefix($cmsPageAttributeTransfer);
+
+        // Assert
+        $this->assertSame('/en-us/', $urlPrefix);
+    }
+
+    /**
      * @param \Spryker\Zed\Cms\CmsConfig|null $cmsConfigMock
      *
      * @return \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder
@@ -84,6 +110,10 @@ class CmsPageUrlBuilderTest extends CmsMocks
             $cmsConfigMock = $this->createCmsConfigMock();
             $cmsConfigMock->method('appendPrefixToCmsPageUrl')
                 ->willReturn(true);
+
+            $cmsConfigMock
+                ->method('isFullLocaleNamesInUrlEnabled')
+                ->willReturn(false);
         }
 
         return new CmsPageUrlBuilder($cmsConfigMock);

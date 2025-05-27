@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\DataImport;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 /**
  * @method void wantToTest($text)
@@ -77,5 +79,15 @@ class DataImportBusinessTester extends Actor
             ->setName(static::TEST_EVENT_ENTITY_NAME)
             ->setForeignKeys([static::TEST_EVENT_ENTITY_FOREIGN_KEY])
             ->setModifiedColumns([static::TEST_EVENT_MODIFIED_COLUMN]);
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function buildStoreTransfer(array $seed = []): StoreTransfer
+    {
+        return (new StoreBuilder($seed))->build();
     }
 }

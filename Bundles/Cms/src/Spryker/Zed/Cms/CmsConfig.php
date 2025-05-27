@@ -136,6 +136,20 @@ class CmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Defines if full locale name in URL is enabled.
+     * - Full locale name in URL will be used instead of language code.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isFullLocaleNamesInUrlEnabled(): bool
+    {
+        return false;
+    }
+
+    /**
      * @return string
      */
     protected function getThemeName(): string

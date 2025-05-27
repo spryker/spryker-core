@@ -105,4 +105,18 @@ class CategoryConfig extends AbstractBundleConfig
             static::DEFAULT_IS_CLOSURE_TABLE_EVENTS_ENABLED,
         );
     }
+
+    /**
+     * Specification:
+     * - Defines if full locale name in URL is enabled.
+     * - Full locale name in URL will be used instead of language code.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isFullLocaleNamesInUrlEnabled(): bool
+    {
+        return false;
+    }
 }

@@ -25,6 +25,8 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoryUrlUpdater(): CategoryUrlUpdaterInterface
     {
-        return new CategoryUrlUpdater();
+        return new CategoryUrlUpdater(
+            $this->getConfig(),
+        );
     }
 }

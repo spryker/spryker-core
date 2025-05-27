@@ -9,9 +9,20 @@ namespace Spryker\Zed\Category\Communication\Updater;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
+use Spryker\Zed\Category\CategoryConfig;
 
 class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
 {
+    protected CategoryConfig $categoryConfig;
+
+    /**
+     * @param \Spryker\Zed\Category\CategoryConfig $categoryConfig
+     */
+    public function __construct(CategoryConfig $categoryConfig)
+    {
+        $this->categoryConfig = $categoryConfig;
+    }
+
     /**
      * @param array $paths
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -20,15 +31,29 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
      */
     public function updateCategoryUrlPath(array $paths, LocaleTransfer $localeTransfer): array
     {
-        $languageIdentifier = $this->getLanguageIdentifierFromLocale($localeTransfer);
+        $urlLocalizedPrefix = $this->getUrlLocalizedPrefix($localeTransfer);
         array_unshift(
             $paths,
             [
-                UrlPathGenerator::CATEGORY_NAME => $languageIdentifier,
+                UrlPathGenerator::CATEGORY_NAME => $urlLocalizedPrefix,
             ],
         );
 
         return $paths;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    protected function getUrlLocalizedPrefix(LocaleTransfer $localeTransfer): string
+    {
+        if (!$this->categoryConfig->isFullLocaleNamesInUrlEnabled()) {
+            return $this->getLanguageIdentifierFromLocale($localeTransfer);
+        }
+
+        return str_replace('_', '-', strtolower($localeTransfer->getLocaleNameOrFail()));
     }
 
     /**

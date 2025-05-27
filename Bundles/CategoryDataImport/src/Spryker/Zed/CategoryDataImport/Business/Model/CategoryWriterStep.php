@@ -22,6 +22,7 @@ use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\CategoryDataImport\Business\Exception\CategoryTemplateNotFoundException;
 use Spryker\Zed\CategoryDataImport\Business\Model\Reader\CategoryReaderInterface;
+use Spryker\Zed\CategoryDataImport\CategoryDataImportConfig;
 use Spryker\Zed\CategoryDataImport\Dependency\Facade\CategoryDataImportToUrlFacadeInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -84,15 +85,23 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
     protected $urlFacade;
 
     /**
+     * @var \Spryker\Zed\CategoryDataImport\CategoryDataImportConfig
+     */
+    protected CategoryDataImportConfig $categoryDataImportConfig;
+
+    /**
      * @param \Spryker\Zed\CategoryDataImport\Business\Model\Reader\CategoryReaderInterface $categoryReader
      * @param \Spryker\Zed\CategoryDataImport\Dependency\Facade\CategoryDataImportToUrlFacadeInterface $urlFacade
+     * @param \Spryker\Zed\CategoryDataImport\CategoryDataImportConfig $categoryDataImportConfig
      */
     public function __construct(
         CategoryReaderInterface $categoryReader,
-        CategoryDataImportToUrlFacadeInterface $urlFacade
+        CategoryDataImportToUrlFacadeInterface $urlFacade,
+        CategoryDataImportConfig $categoryDataImportConfig
     ) {
         $this->categoryReader = $categoryReader;
         $this->urlFacade = $urlFacade;
+        $this->categoryDataImportConfig = $categoryDataImportConfig;
     }
 
     /**
@@ -190,7 +199,7 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
         $urls = [];
         foreach ($categoryEntity->getAttributes() as $categoryAttributesEntity) {
             $idLocale = $categoryAttributesEntity->getFkLocale();
-            $languageIdentifier = $this->getLanguageIdentifier($idLocale, $dataSet);
+            $languageIdentifier = $this->getUrlPrefix($idLocale, $dataSet);
             $urlPathParts = [$languageIdentifier];
             if (!$categoryNodeEntity->getIsRoot()) {
                 $parentUrl = $this->categoryReader->getParentUrl(
@@ -260,7 +269,31 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
      *
      * @return string
      */
-    protected function getLanguageIdentifier($idLocale, DataSetInterface $dataSet)
+    protected function getUrlPrefix(int $idLocale, DataSetInterface $dataSet): string
+    {
+        if (!$this->categoryDataImportConfig->isFullLocaleNamesInUrlEnabled()) {
+            return $this->getLanguageIdentifier($idLocale, $dataSet);
+        }
+
+        $locales = $dataSet[AddLocalesStep::KEY_LOCALES];
+        foreach ($locales as $localeName => $localeId) {
+            if ($idLocale === $localeId) {
+                return str_replace('_', '-', strtolower($localeName));
+            }
+        }
+
+        throw new Exception(sprintf('Could not find locale for id "%d"', $idLocale));
+    }
+
+    /**
+     * @param int $idLocale
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @throws \Exception
+     *
+     * @return string
+     */
+    protected function getLanguageIdentifier(int $idLocale, DataSetInterface $dataSet): string
     {
         $locales = $dataSet[AddLocalesStep::KEY_LOCALES];
         foreach ($locales as $localeName => $localeId) {

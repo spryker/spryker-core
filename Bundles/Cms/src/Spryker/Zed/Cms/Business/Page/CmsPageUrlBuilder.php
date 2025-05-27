@@ -64,9 +64,23 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
             return '';
         }
 
+        return '/' . $this->resolvePrefix($cmsPageAttributesTransfer) . '/';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     *
+     * @return string
+     */
+    protected function resolvePrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer): string
+    {
         $cmsPageAttributesTransfer->requireLocaleName();
 
-        return '/' . $this->extractLanguageCode($cmsPageAttributesTransfer->getLocaleName()) . '/';
+        $prefix = $this->cmsConfig->isFullLocaleNamesInUrlEnabled()
+            ? str_replace('_', '-', strtolower($cmsPageAttributesTransfer->getLocaleName()))
+            : $this->extractLanguageCode($cmsPageAttributesTransfer->getLocaleName());
+
+        return strtolower($prefix);
     }
 
     /**

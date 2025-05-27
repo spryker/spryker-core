@@ -44,6 +44,7 @@ class CategoryDataImportBusinessFactory extends DataImportBusinessFactory
                 new CategoryWriterStep(
                     $this->createCategoryRepository(),
                     $this->getUrlFacade(),
+                    $this->getConfig(),
                 ),
             );
 
