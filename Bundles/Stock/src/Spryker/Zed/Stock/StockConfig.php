@@ -20,4 +20,17 @@ class StockConfig extends AbstractBundleConfig
      * @var string
      */
     public const TOUCH_STOCK_PRODUCT = 'stock-product';
+
+    /**
+     * Specification:
+     * - For controlling stock related entities update, for example when only name has changed the stock update won't trigger product stock relation update.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isConditionalStockUpdateApplied(): bool
+    {
+        return false;
+    }
 }

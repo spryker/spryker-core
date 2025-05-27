@@ -16,6 +16,11 @@ class StockProductUpdater implements StockProductUpdaterInterface
     use TransactionTrait;
 
     /**
+     * @var int
+     */
+    protected const STOCK_PRODUCT_BATCH_SIZE = 200;
+
+    /**
      * @var \Spryker\Zed\Stock\Persistence\StockRepositoryInterface
      */
     protected $stockRepository;
@@ -54,10 +59,21 @@ class StockProductUpdater implements StockProductUpdaterInterface
      */
     protected function executeUpdateStockProductsRelatedToStockTransaction(StockTransfer $stockTransfer): void
     {
-        $stockProducts = $this->stockRepository->getStockProductsByIdStock($stockTransfer->getIdStock());
-        foreach ($stockProducts as $stockProductTransfer) {
-            $this->handleStockUpdatePlugins($stockProductTransfer->getSku());
-        }
+        $offset = 0;
+
+        do {
+            $stockProductTransfers = $this->stockRepository->getStockProductsByIdStock($stockTransfer->getIdStockOrFail(), $offset, static::STOCK_PRODUCT_BATCH_SIZE);
+
+            if (count($stockProductTransfers) === 0) {
+                break;
+            }
+
+            foreach ($stockProductTransfers as $stockProductTransfer) {
+                $this->handleStockUpdatePlugins($stockProductTransfer->getSkuOrFail());
+            }
+
+            $offset += static::STOCK_PRODUCT_BATCH_SIZE;
+        } while (count($stockProductTransfers) === static::STOCK_PRODUCT_BATCH_SIZE);
     }
 
     /**

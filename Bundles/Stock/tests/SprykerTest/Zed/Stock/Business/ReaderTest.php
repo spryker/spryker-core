@@ -30,6 +30,16 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 class ReaderTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const WAREHOUSE_1 = 'test_warehouse1';
+
+    /**
+     * @var string
+     */
+    protected const WAREHOUSE_2 = 'test_warehouse2';
+
+    /**
      * @var \Spryker\Zed\Stock\Business\StockFacade
      */
     protected $stockFacade;
@@ -95,16 +105,17 @@ class ReaderTest extends Unit
             ->save();
 
         $stockType1 = SpyStockQuery::create()
-            ->filterByName('warehouse1')
+            ->filterByName(static::WAREHOUSE_1)
             ->findOneOrCreate();
-        $stockType1->setName('warehouse1')
+
+        $stockType1->setName(static::WAREHOUSE_1)
             ->save();
 
         $stockType2 = SpyStockQuery::create()
-            ->filterByName('warehouse2')
+            ->filterByName(static::WAREHOUSE_2)
             ->findOneOrCreate();
 
-        $stockType2->setName('warehouse2')
+        $stockType2->setName(static::WAREHOUSE_2)
             ->save();
 
         $stockProduct1 = SpyStockProductQuery::create()

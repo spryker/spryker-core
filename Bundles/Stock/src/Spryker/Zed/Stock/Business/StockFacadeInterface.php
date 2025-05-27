@@ -354,10 +354,11 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Updates stock.
-     *  - Updates stock store relationships.
      *  - Persists stock entity to database.
-     *  - Touches the newly created stock.
+     *  - Updates product stocks, stock store relationships, and touches stock, conditionally based on {@link StockConfig::isConditionalStockUpdateApplied()}.
+     *  - Executes {@link \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface} plugin stack
+     * conditionally based on {@link StockConfig::isConditionalStockUpdateApplied()} when stock is activated/deactivated or store relation is changed,
+     * executed in a batch with configurable size.
      *  - Executes {@link \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface} plugin stack.
      *
      * @api

@@ -130,16 +130,24 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
 
     /**
      * @param int $idStock
+     * @param int|null $offset
+     * @param int|null $limit
      *
      * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
-    public function getStockProductsByIdStock(int $idStock): array
+    public function getStockProductsByIdStock(int $idStock, ?int $offset = null, ?int $limit = null): array
     {
         $stockProductQuery = $this->getFactory()
             ->createStockProductQuery()
             ->leftJoinWithStock()
             ->leftJoinWithSpyProduct()
             ->filterByFkStock($idStock);
+
+        if ($offset !== null && $limit !== null) {
+            $stockProductQuery
+                ->offset($offset)
+                ->limit($limit);
+        }
 
         return $this->getFactory()
             ->createStockProductMapper()

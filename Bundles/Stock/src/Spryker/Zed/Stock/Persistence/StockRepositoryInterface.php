@@ -53,10 +53,12 @@ interface StockRepositoryInterface
 
     /**
      * @param int $idStock
+     * @param int|null $offset
+     * @param int|null $limit
      *
      * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
-    public function getStockProductsByIdStock(int $idStock): array;
+    public function getStockProductsByIdStock(int $idStock, ?int $offset = null, ?int $limit = null): array;
 
     /**
      * @param int $idStock

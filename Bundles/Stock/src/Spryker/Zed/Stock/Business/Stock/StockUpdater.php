@@ -9,14 +9,17 @@ namespace Spryker\Zed\Stock\Business\Stock;
 
 use Generated\Shared\Transfer\StockResponseTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Stock\Business\StockProduct\StockProductUpdaterInterface;
-use Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Spryker\Zed\Stock\Persistence\StockEntityManagerInterface;
-use Throwable;
+use Spryker\Zed\Stock\Persistence\StockRepositoryInterface;
+use Spryker\Zed\Stock\StockConfig;
 
 class StockUpdater implements StockUpdaterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var string
      */
@@ -43,9 +46,9 @@ class StockUpdater implements StockUpdaterInterface
     protected $stockProductUpdater;
 
     /**
-     * @var \Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface
+     * @var \Spryker\Zed\Stock\Persistence\StockRepositoryInterface
      */
-    protected $connection;
+    protected StockRepositoryInterface $stockRepository;
 
     /**
      * @var array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface>
@@ -53,56 +56,47 @@ class StockUpdater implements StockUpdaterInterface
     protected $stockPostUpdatePlugins;
 
     /**
+     * @var \Spryker\Zed\Stock\StockConfig
+     */
+    protected StockConfig $stockConfig;
+
+    /**
      * @param \Spryker\Zed\Stock\Persistence\StockEntityManagerInterface $stockEntityManager
+     * @param \Spryker\Zed\Stock\Persistence\StockRepositoryInterface $stockRepository
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface $touchFacade
      * @param \Spryker\Zed\Stock\Business\Stock\StockStoreRelationshipUpdaterInterface $stockStoreRelationshipUpdater
      * @param \Spryker\Zed\Stock\Business\StockProduct\StockProductUpdaterInterface $stockProductUpdater
-     * @param \Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface $connection
+     * @param \Spryker\Zed\Stock\StockConfig $stockConfig
      * @param array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface> $stockPostUpdatePlugins
      */
     public function __construct(
         StockEntityManagerInterface $stockEntityManager,
+        StockRepositoryInterface $stockRepository,
         StockToTouchInterface $touchFacade,
         StockStoreRelationshipUpdaterInterface $stockStoreRelationshipUpdater,
         StockProductUpdaterInterface $stockProductUpdater,
-        StockToConnectionInterface $connection,
+        StockConfig $stockConfig,
         array $stockPostUpdatePlugins
     ) {
         $this->stockEntityManager = $stockEntityManager;
+        $this->stockRepository = $stockRepository;
         $this->touchFacade = $touchFacade;
         $this->stockStoreRelationshipUpdater = $stockStoreRelationshipUpdater;
-        $this->connection = $connection;
         $this->stockProductUpdater = $stockProductUpdater;
         $this->stockPostUpdatePlugins = $stockPostUpdatePlugins;
+        $this->stockConfig = $stockConfig;
     }
 
     /**
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
      *
-     * @throws \Throwable
-     *
      * @return \Generated\Shared\Transfer\StockResponseTransfer
      */
     public function updateStock(StockTransfer $stockTransfer): StockResponseTransfer
     {
-        $this->connection->beginTransaction();
-
-        try {
-            $stockResponseTransfer = $this->executeUpdateStockTransaction($stockTransfer);
-            if (!$stockResponseTransfer->getIsSuccessful()) {
-                $this->connection->rollBack();
-
-                return $stockResponseTransfer;
-            }
-
-            $this->connection->commit();
-
-            return $stockResponseTransfer;
-        } catch (Throwable $exception) {
-            $this->connection->rollBack();
-
-            throw $exception;
-        }
+        return $this->getTransactionHandler()->handleTransaction(function () use ($stockTransfer) {
+            return $this->executeUpdateStockTransaction($stockTransfer);
+        });
     }
 
     /**
@@ -112,16 +106,32 @@ class StockUpdater implements StockUpdaterInterface
      */
     protected function executeUpdateStockTransaction(StockTransfer $stockTransfer): StockResponseTransfer
     {
-        $stockTransfer->requireIdStock();
+        $existingStockTransfer = $this->findExistingStockRecord($stockTransfer);
+        if ($existingStockTransfer === null) {
+            return (new StockResponseTransfer())
+                ->setIsSuccessful(false);
+        }
 
         $stockTransfer = $this->stockEntityManager->saveStock($stockTransfer);
-        $this->stockStoreRelationshipUpdater->updateStockStoreRelationshipsForStock(
-            $stockTransfer->getIdStock(),
-            $stockTransfer->getStoreRelation(),
-        );
 
-        $this->insertActiveTouchRecordStockType($stockTransfer);
-        $this->stockProductUpdater->updateStockProductsRelatedToStock($stockTransfer);
+        $isConditionalStockUpdateApplied = $this->stockConfig->isConditionalStockUpdateApplied();
+        if (
+            !$isConditionalStockUpdateApplied || /** @phpstan-ignore-next-line */
+            ($isConditionalStockUpdateApplied && $this->hasStoreRelationChanged($existingStockTransfer, $stockTransfer))
+        ) {
+            $this->stockStoreRelationshipUpdater->updateStockStoreRelationshipsForStock(
+                $stockTransfer->getIdStock(),
+                $stockTransfer->getStoreRelation(),
+            );
+        }
+
+        if (
+            !$isConditionalStockUpdateApplied || /** @phpstan-ignore-next-line */
+            ($isConditionalStockUpdateApplied && !$this->isOnlyNameChanged($existingStockTransfer, $stockTransfer))
+        ) {
+            $this->insertActiveTouchRecordStockType($stockTransfer);
+            $this->stockProductUpdater->updateStockProductsRelatedToStock($stockTransfer);
+        }
 
         return $this->executeStockPostUpdatePlugins($stockTransfer);
     }
@@ -158,5 +168,89 @@ class StockUpdater implements StockUpdaterInterface
         return (new StockResponseTransfer())
             ->setStock($stockTransfer)
             ->setIsSuccessful(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    protected function findExistingStockRecord(StockTransfer $stockTransfer): ?StockTransfer
+    {
+        $existingStockTransfer = $this->stockRepository->findStockById((int)$stockTransfer->getIdStockOrFail());
+
+        if ($existingStockTransfer === null) {
+            return null;
+        }
+
+        $storeRelation = $this->stockRepository->getStoreRelationByIdStock((int)$existingStockTransfer->getIdStockOrFail());
+        $existingStockTransfer->setStoreRelation($storeRelation);
+
+        return $existingStockTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockTransfer $existingStockTransfer
+     * @param \Generated\Shared\Transfer\StockTransfer $newStockTransfer
+     *
+     * @return list<string>
+     */
+    protected function getChangedProperties(StockTransfer $existingStockTransfer, StockTransfer $newStockTransfer): array
+    {
+        $changedProperties = [];
+
+        $existingStockData = $existingStockTransfer->toArray(true, true);
+        $newStockData = $newStockTransfer->toArray(true, true);
+
+        foreach ($existingStockData as $property => $value) {
+            // Not strict comparison because integer values could be string when set from the request.
+            if ($value == $newStockData[$property]) {
+                continue;
+            }
+
+            if ($property === StockTransfer::STORE_RELATION) {
+                $existingStoreRelation = $existingStockTransfer->getStoreRelation();
+                $newStoreRelation = $newStockTransfer->getStoreRelation();
+
+                if (
+                    $existingStoreRelation !== null && $newStoreRelation !== null
+                    && $existingStoreRelation->getIdStores() !== $newStoreRelation->getIdStores()
+                ) {
+                    $changedProperties[] = $property;
+                }
+
+                continue;
+            }
+
+            $changedProperties[] = $property;
+        }
+
+        return $changedProperties;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockTransfer $existingStockTransfer
+     * @param \Generated\Shared\Transfer\StockTransfer $newStockTransfer
+     *
+     * @return bool
+     */
+    protected function isOnlyNameChanged(StockTransfer $existingStockTransfer, StockTransfer $newStockTransfer): bool
+    {
+        $changedProperties = $this->getChangedProperties($existingStockTransfer, $newStockTransfer);
+
+        return count($changedProperties) === 1 && in_array(StockTransfer::NAME, $changedProperties, true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockTransfer $existingStockTransfer
+     * @param \Generated\Shared\Transfer\StockTransfer $newStockTransfer
+     *
+     * @return bool
+     */
+    protected function hasStoreRelationChanged(StockTransfer $existingStockTransfer, StockTransfer $newStockTransfer): bool
+    {
+        $changedProperties = $this->getChangedProperties($existingStockTransfer, $newStockTransfer);
+
+        return in_array(StockTransfer::STORE_RELATION, $changedProperties, true);
     }
 }

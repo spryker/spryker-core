@@ -27,6 +27,16 @@ use Spryker\Zed\Stock\Business\StockFacade;
 class CalculatorTest extends Unit
 {
     /**
+     * @var string
+     */
+    public const WAREHOUSE_1 = 'test_warehouse1';
+
+    /**
+     * @var string
+     */
+    public const WAREHOUSE_2 = 'test_warehouse2';
+
+    /**
      * @var \Spryker\Zed\Stock\Business\StockFacade
      */
     protected $stockFacade;
@@ -108,15 +118,15 @@ class CalculatorTest extends Unit
         $this->productEntity = $product;
 
         $this->stockEntity1 = SpyStockQuery::create()
-            ->filterByName('warehouse1')
+            ->filterByName(static::WAREHOUSE_1)
             ->findOneOrCreate();
 
-        $this->stockEntity1->setName('warehouse1')->save();
+        $this->stockEntity1->setName(static::WAREHOUSE_1)->save();
 
         $this->stockEntity2 = SpyStockQuery::create()
-            ->filterByName('warehouse2')
+            ->filterByName(static::WAREHOUSE_2)
             ->findOneOrCreate();
-        $this->stockEntity2->setName('warehouse2')->save();
+        $this->stockEntity2->setName(static::WAREHOUSE_2)->save();
 
         $stockProduct1 = SpyStockProductQuery::create()
             ->filterByFkStock($this->stockEntity1->getIdStock())
@@ -143,18 +153,18 @@ class CalculatorTest extends Unit
     protected function setupStockProductEntity(): void
     {
         $this->stockEntity1 = SpyStockQuery::create()
-            ->filterByName('warehouse1')
+            ->filterByName(static::WAREHOUSE_1)
             ->findOneOrCreate();
 
         $this->stockEntity1
-            ->setName('warehouse1')->save();
+            ->setName(static::WAREHOUSE_1)->save();
 
         $this->stockEntity2 = SpyStockQuery::create()
-            ->filterByName('warehouse2')
+            ->filterByName(static::WAREHOUSE_2)
             ->findOneOrCreate();
 
         $this->stockEntity2
-            ->setName('warehouse2')->save();
+            ->setName(static::WAREHOUSE_2)->save();
 
         $stockProduct1 = SpyStockProductQuery::create()
             ->filterByFkStock($this->stockEntity1->getIdStock())

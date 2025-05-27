@@ -107,10 +107,11 @@ class StockBusinessFactory extends AbstractBusinessFactory
     {
         return new StockUpdater(
             $this->getEntityManager(),
+            $this->getRepository(),
             $this->getTouchFacade(),
             $this->createStockStoreRelationshipUpdater(),
             $this->createStockProductUpdater(),
-            $this->getConnection(),
+            $this->getConfig(),
             $this->getStockPostUpdatePlugins(),
         );
     }

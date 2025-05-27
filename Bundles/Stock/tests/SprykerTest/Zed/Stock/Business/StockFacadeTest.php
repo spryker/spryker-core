@@ -26,6 +26,12 @@ use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
+use Spryker\Zed\Stock\Business\Stock\StockStoreRelationshipUpdaterInterface;
+use Spryker\Zed\Stock\Business\Stock\StockUpdater;
+use Spryker\Zed\Stock\Business\StockProduct\StockProductUpdaterInterface;
+use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
+use Spryker\Zed\Stock\Persistence\StockEntityManager;
+use Spryker\Zed\Stock\Persistence\StockRepository;
 
 /**
  * Auto-generated group annotations
@@ -955,7 +961,7 @@ class StockFacadeTest extends Unit
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $this->tester->haveStockStoreRelation($this->stockTransfer1, $storeTransfer);
 
-        $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())->addStoreName(static::STORE_NAME_DE);
+        $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())->addStoreName(static::STORE_NAME_DE)->setIsActive(true);
 
         // Act
         $stockCollectionTransfer = $this->stockFacade->getStocksByStockCriteriaFilter($stockCriteriaFilterTransfer);
@@ -1019,6 +1025,139 @@ class StockFacadeTest extends Unit
             $stockIdsGroupedByIdStore[$stockStoreTransfer->getFkStore()][] = $stockStoreTransfer->getFkStock();
         }
         $this->assertFalse(isset($stockIdsGroupedByIdStore[$storeTransferTest->getIdStore()]));
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStockShouldNotUpdateStockProductsAndStoreRelationWhenOnlyNameChanged(): void
+    {
+        // Arrange
+        $this->tester->mockConfigMethod('isConditionalStockUpdateApplied', true);
+        $originStockTransfer = $this->tester->haveStock();
+        $originStockTransfer->setName('Changed Name');
+
+        $touchFacade = $this->getMockBuilder(StockToTouchInterface::class)
+            ->onlyMethods(['touchActive'])
+            ->getMock();
+        $touchFacade->expects($this->never())->method('touchActive');
+
+        $stockProductUpdater = $this->getMockBuilder(StockProductUpdaterInterface::class)
+            ->onlyMethods(['updateStockProductsRelatedToStock'])
+            ->getMock();
+        $stockProductUpdater->expects($this->never())->method('updateStockProductsRelatedToStock');
+
+        $stockStoreRelationshipUpdater = $this->getMockBuilder(StockStoreRelationshipUpdaterInterface::class)
+            ->onlyMethods(['updateStockStoreRelationshipsForStock'])
+            ->getMock();
+        $stockStoreRelationshipUpdater->expects($this->never())->method('updateStockStoreRelationshipsForStock');
+
+        // Mock the createStockUpdater method
+        $this->tester->mockFactoryMethod('createStockUpdater', new StockUpdater(
+            new StockEntityManager(),
+            new StockRepository(),
+            $touchFacade,
+            $stockStoreRelationshipUpdater,
+            $stockProductUpdater,
+            $this->tester->getModuleConfig(),
+            [],
+        ));
+
+        // Act
+        $response = $this->tester->getFacade()->updateStock($originStockTransfer);
+
+        // Assert
+        $this->assertTrue($response->getIsSuccessful());
+        $this->assertSame('Changed Name', $response->getStock()->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStockShouldUpdateStockProductsWhenIsActiveChanged(): void
+    {
+        // Arrange
+        $this->tester->mockConfigMethod('isConditionalStockUpdateApplied', true);
+        $originStockTransfer = $this->tester->haveStock();
+        $originStockTransfer->setIsActive(!$originStockTransfer->getIsActive());
+
+        $touchFacade = $this->getMockBuilder(StockToTouchInterface::class)
+            ->onlyMethods(['touchActive'])
+            ->getMock();
+        $touchFacade->expects($this->once())->method('touchActive');
+
+        $stockProductUpdater = $this->getMockBuilder(StockProductUpdaterInterface::class)
+            ->onlyMethods(['updateStockProductsRelatedToStock'])
+            ->getMock();
+        $stockProductUpdater->expects($this->once())->method('updateStockProductsRelatedToStock');
+
+        $stockStoreRelationshipUpdater = $this->getMockBuilder(StockStoreRelationshipUpdaterInterface::class)->getMock();
+
+        // Mock the createStockUpdater method
+        $this->tester->mockFactoryMethod('createStockUpdater', new StockUpdater(
+            new StockEntityManager(),
+            new StockRepository(),
+            $touchFacade,
+            $stockStoreRelationshipUpdater,
+            $stockProductUpdater,
+            $this->tester->getModuleConfig(),
+            [],
+        ));
+
+        // Act
+        $response = $this->tester->getFacade()->updateStock($originStockTransfer);
+
+        // Assert
+        $this->assertTrue($response->getIsSuccessful());
+        $this->assertSame($originStockTransfer->getIsActive(), $response->getStock()->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStockShouldUpdateStoreRelationWhenStoreRelationChanged(): void
+    {
+        // Arrange
+        $this->tester->mockConfigMethod('isConditionalStockUpdateApplied', true);
+        $originStockTransfer = $this->tester->haveStock();
+        $storeRelationTransfer = (new StoreRelationTransfer())->setIdStores([$this->storeTransfer->getIdStore()]);
+        $originStockTransfer->setStoreRelation($storeRelationTransfer);
+
+        $touchFacade = $this->getMockBuilder(StockToTouchInterface::class)
+            ->onlyMethods(['touchActive'])
+            ->getMock();
+        $touchFacade->expects($this->once())->method('touchActive');
+
+        $stockProductUpdater = $this->getMockBuilder(StockProductUpdaterInterface::class)
+            ->onlyMethods(['updateStockProductsRelatedToStock'])
+            ->getMock();
+        $stockProductUpdater->expects($this->once())->method('updateStockProductsRelatedToStock');
+
+        $stockStoreRelationshipUpdater = $this->getMockBuilder(StockStoreRelationshipUpdaterInterface::class)
+            ->onlyMethods(['updateStockStoreRelationshipsForStock'])
+            ->getMock();
+        $stockStoreRelationshipUpdater->expects($this->once())->method('updateStockStoreRelationshipsForStock');
+
+        // Mock the createStockUpdater method
+        $this->tester->mockFactoryMethod('createStockUpdater', new StockUpdater(
+            new StockEntityManager(),
+            new StockRepository(),
+            $touchFacade,
+            $stockStoreRelationshipUpdater,
+            $stockProductUpdater,
+            $this->tester->getModuleConfig(),
+            [],
+        ));
+
+        // Act
+        $response = $this->tester->getFacade()->updateStock($originStockTransfer);
+
+        // Assert
+        $this->assertTrue($response->getIsSuccessful());
+        $this->assertEquals(
+            $storeRelationTransfer->getIdStores(),
+            $response->getStock()->getStoreRelation()->getIdStores(),
+        );
     }
 
     /**
