@@ -10,8 +10,10 @@ namespace SprykerFeature\Zed\SspFileManagement\Persistence\QueryStrategy;
 use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
-use Orm\Zed\SspFileManagement\Persistence\Map\SpySspAssetFileTableMap;
+use Orm\Zed\SspFileManagement\Persistence\SpySspAssetFileQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Adapter\Pdo\PgsqlAdapter;
+use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use SprykerFeature\Shared\SspAssetManagement\Plugin\Permission\ViewBusinessUnitSspAssetPermissionPlugin;
 use SprykerFeature\Shared\SspAssetManagement\Plugin\Permission\ViewCompanySspAssetPermissionPlugin;
@@ -46,10 +48,12 @@ class ViewBusinessUnitSspAssetSspAssetFileQueryStrategy implements FilePermissio
                     ->endUse()
                 ->endUse()
             ->endUse()
+            ->withColumn('entity_name', FileAttachmentTransfer::ENTITY_NAME)
+            ->withColumn('entity_id', FileAttachmentTransfer::ENTITY_ID)
             ->addSelectQuery(
-                (new Criteria())
-                ->addSelectColumn("'ssp_asset' AS " . FileAttachmentTransfer::ENTITY_NAME)
-                ->addSelectColumn(SpySspAssetFileTableMap::COL_FK_SSP_ASSET . ' AS ' . FileAttachmentTransfer::ENTITY_ID),
+                SpySspAssetFileQuery::create()
+                    ->withColumn(Propel::getAdapter() instanceof PgsqlAdapter ? "'ssp_asset'::text" : "'ssp_asset'", 'entity_name')
+                    ->withColumn('fk_ssp_asset', 'entity_id'),
                 'ssp_asset_query',
                 false,
             );
