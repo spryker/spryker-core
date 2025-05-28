@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Communication\Table;
 
+use Generated\Shared\Transfer\OrderTableCriteriaTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
@@ -75,6 +76,11 @@ class OrdersTable extends AbstractTable
     protected const FULL_NAME_SEARCHABLE_FIELD_PATTERN = 'CONCAT(%s,\'%s\',%s)';
 
     /**
+     * @var string
+     */
+    protected const URL_TABLE = '/table';
+
+    /**
      * @var \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface
      */
     protected $queryBuilder;
@@ -105,6 +111,11 @@ class OrdersTable extends AbstractTable
     protected $salesTablePlugins;
 
     /**
+     * @var \Generated\Shared\Transfer\OrderTableCriteriaTransfer|null
+     */
+    protected $orderTableCriteriaTransfer;
+
+    /**
      * @param \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface $queryBuilder
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface $sanitizeService
@@ -129,6 +140,16 @@ class OrdersTable extends AbstractTable
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTableCriteriaTransfer $orderTableCriteriaTransfer
+     *
+     * @return void
+     */
+    public function applyCriteria(OrderTableCriteriaTransfer $orderTableCriteriaTransfer): void
+    {
+        $this->orderTableCriteriaTransfer = $orderTableCriteriaTransfer;
+    }
+
+    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
@@ -147,9 +168,22 @@ class OrdersTable extends AbstractTable
         $config->setDefaultSortColumnIndex(0);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
+        $config->setUrl($this->getTableUrl());
+
         $this->persistFilters($config);
 
         return $config;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTableUrl(): string
+    {
+        return Url::generate(
+            static::URL_TABLE,
+            $this->getRequest()->query->all(),
+        );
     }
 
     /**
@@ -376,7 +410,46 @@ class OrdersTable extends AbstractTable
         $idOrderItemItemState = $this->request->query->getInt(static::ID_ORDER_ITEM_STATE);
         $filter = (string)$this->request->query->get(static::FILTER) ?: null;
 
-        return $this->queryBuilder->buildQuery($idOrderItemProcess, $idOrderItemItemState, $filter);
+        $query = $this->queryBuilder->buildQuery($idOrderItemProcess, $idOrderItemItemState, $filter);
+
+        if ($this->orderTableCriteriaTransfer) {
+            $query = $this->applyOrderTableCriteriaFilters($query, $this->orderTableCriteriaTransfer);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $query
+     * @param \Generated\Shared\Transfer\OrderTableCriteriaTransfer $orderTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function applyOrderTableCriteriaFilters($query, OrderTableCriteriaTransfer $orderTableCriteriaTransfer)
+    {
+        if ($orderTableCriteriaTransfer->getStatuses()) {
+            $query->useItemQuery()
+                    ->useStateQuery()
+                        ->filterByName_In($orderTableCriteriaTransfer->getStatuses())
+                    ->endUse()
+                ->endUse();
+
+            $query->groupByIdSalesOrder();
+        }
+
+        if ($orderTableCriteriaTransfer->getStores()) {
+            $query->filterByStore_In($orderTableCriteriaTransfer->getStores());
+        }
+
+        if ($orderTableCriteriaTransfer->getOrderDateFrom()) {
+            $query->filterByCreatedAt(['min' => $orderTableCriteriaTransfer->getOrderDateFrom()], Criteria::GREATER_EQUAL);
+        }
+
+        if ($orderTableCriteriaTransfer->getOrderDateTo()) {
+            $query->filterByCreatedAt(['max' => $orderTableCriteriaTransfer->getOrderDateTo()], Criteria::LESS_EQUAL);
+        }
+
+        return $query;
     }
 
     /**

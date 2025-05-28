@@ -147,9 +147,16 @@
         <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
+    <transfer name="StoreCollection">
+        <property name="stores" type="Store[]" singular="store"/>
+    </transfer>
+
     <transfer name="Store">
         <property name="idStore" type="int"/>
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="StoreCriteria">
     </transfer>
 
     <transfer name="DiscountCalculator">
@@ -325,6 +332,14 @@
 
     <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
         <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="DiscountTableCriteria" strict="true">
+        <property name="status" type="bool"/>
+        <property name="types" type="string[]" singular="type"/>
+        <property name="stores" type="string[]" singular="store"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
     </transfer>
 
 </transfers>

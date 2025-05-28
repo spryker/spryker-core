@@ -1,0 +1,19 @@
+{# @var form \Symfony\Component\Form\FormView #}
+
+{% block table_filter_form %}
+    <div class="table-filter-container spacing-bottom">
+        {{ form_start(form, {attr: {class: 'table-filter-form', id: 'sales-filter-form'}}) }}
+        <div class="row">
+            {% for field in form.children %}
+                <div class="col-md-6 col-lg-3">
+                    {{ form_row(field) }}
+                </div>
+            {% endfor %}
+        </div>
+        <div>
+            <button class="btn btn-outline spacing-right">{{ 'Apply filters' | trans }}</button>
+            <a href="{{ url('/sales/index') }}" class="btn btn-link">{{ 'Reset filters' | trans }}</a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

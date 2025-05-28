@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Table;
 
+use Generated\Shared\Transfer\MerchantTableCriteriaTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantStoreTableMap;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
@@ -37,6 +38,16 @@ class MerchantTable extends AbstractTable
      * @var string
      */
     public const COL_STORES = 'stores';
+
+    /**
+     * @var string
+     */
+    protected const URL_TABLE = '/table';
+
+    /**
+     * @var \Generated\Shared\Transfer\MerchantTableCriteriaTransfer|null
+     */
+    protected ?MerchantTableCriteriaTransfer $applicableMerchantTableCriteriaTransfer = null;
 
     /**
      * @var array<string, string>
@@ -115,6 +126,16 @@ class MerchantTable extends AbstractTable
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantTableCriteriaTransfer $merchantTableCriteriaTransfer
+     *
+     * @return void
+     */
+    public function applyCriteria(MerchantTableCriteriaTransfer $merchantTableCriteriaTransfer): void
+    {
+        $this->applicableMerchantTableCriteriaTransfer = $merchantTableCriteriaTransfer;
+    }
+
+    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
@@ -122,6 +143,7 @@ class MerchantTable extends AbstractTable
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config = $this->setHeader($config);
+        $config->setUrl($this->getTableUrl());
 
         $config->setSortable([
             SpyMerchantTableMap::COL_ID_MERCHANT,
@@ -223,12 +245,42 @@ class MerchantTable extends AbstractTable
             ->useSpyMerchantStoreQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinSpyStore()
                 ->withColumn(
-                    sprintf('GROUP_CONCAT(%s)', SpyStoreTableMap::COL_NAME),
+                    $this->prepareStoresSubQuery(),
                     static::COL_STORES,
                 )
             ->endUse();
 
+        $this->applyMerchantTableCriteriaFilters();
+
         return $this->merchantQuery;
+    }
+
+    /**
+     * @return void
+     */
+    protected function applyMerchantTableCriteriaFilters(): void
+    {
+        if (!$this->applicableMerchantTableCriteriaTransfer) {
+            return;
+        }
+
+        if ($this->applicableMerchantTableCriteriaTransfer->getStatus() !== null) {
+            $this->merchantQuery->filterByIsActive($this->applicableMerchantTableCriteriaTransfer->getStatus());
+        }
+
+        if ($this->applicableMerchantTableCriteriaTransfer->getStores()) {
+            $this->merchantQuery
+                ->useSpyMerchantStoreQuery()
+                    ->useSpyStoreQuery()
+                        ->filterByName_In($this->applicableMerchantTableCriteriaTransfer->getStores())
+                    ->endUse()
+                ->endUse();
+        }
+
+        if ($this->applicableMerchantTableCriteriaTransfer->getApprovalStatuses()) {
+            $this->merchantQuery
+                ->filterByStatus_In($this->applicableMerchantTableCriteriaTransfer->getApprovalStatuses());
+        }
     }
 
     /**
@@ -430,5 +482,37 @@ class MerchantTable extends AbstractTable
         }
 
         return implode(' ', $storeLabels);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTableUrl(): string
+    {
+        return Url::generate(
+            static::URL_TABLE,
+            $this->getRequest()->query->all(),
+        );
+    }
+
+    /**
+     * @return string
+     */
+    protected function prepareStoresSubQuery(): string
+    {
+        if (!$this->applicableMerchantTableCriteriaTransfer?->getStores()) {
+            return sprintf('GROUP_CONCAT(%s)', SpyStoreTableMap::COL_NAME);
+        }
+
+        return sprintf(
+            '(SELECT GROUP_CONCAT(%s) FROM %s INNER JOIN %s ON %s = %s WHERE %s = %s)',
+            SpyStoreTableMap::COL_NAME,
+            SpyStoreTableMap::TABLE_NAME,
+            SpyMerchantStoreTableMap::TABLE_NAME,
+            SpyMerchantStoreTableMap::COL_FK_STORE,
+            SpyStoreTableMap::COL_ID_STORE,
+            SpyMerchantStoreTableMap::COL_FK_MERCHANT,
+            SpyMerchantTableMap::COL_ID_MERCHANT,
+        );
     }
 }

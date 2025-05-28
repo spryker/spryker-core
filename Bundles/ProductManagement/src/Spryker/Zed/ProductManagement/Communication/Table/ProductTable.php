@@ -9,17 +9,19 @@ namespace Spryker\Zed\ProductManagement\Communication\Table;
 
 use Generated\Shared\Transfer\ButtonCollectionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
+use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use PDO;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Propel;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Shared\ProductManagement\ProductStatusEnum;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
@@ -131,6 +133,11 @@ class ProductTable extends AbstractProductTable
     protected ProductManagementConfig $productManagementConfig;
 
     /**
+     * @var \Generated\Shared\Transfer\ProductTableCriteriaTransfer|null
+     */
+    protected ?ProductTableCriteriaTransfer $productTableCriteriaTransfer = null;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface $productTypeHelper
@@ -164,6 +171,18 @@ class ProductTable extends AbstractProductTable
         $this->productTableDataBulkExpanderPlugins = $productTableDataBulkExpanderPlugins;
         $this->productTableActionExpanderPlugins = $productTableActionExpanderPlugins;
         $this->productManagementConfig = $productManagementConfig;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     *
+     * @return $this
+     */
+    public function applyCriteria(ProductTableCriteriaTransfer $productTableCriteriaTransfer)
+    {
+        $this->productTableCriteriaTransfer = $productTableCriteriaTransfer;
+
+        return $this;
     }
 
     /**
@@ -301,6 +320,7 @@ class ProductTable extends AbstractProductTable
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
             ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET);
 
+        $query = $this->expandQueryWithFilterConditions($query);
         $query = $this->expandPropelQuery($query);
 
         /** @var \Propel\Runtime\Collection\ObjectCollection $queryResults */
@@ -314,6 +334,67 @@ class ProductTable extends AbstractProductTable
         );
 
         return $this->formatProductAbstractIds($productAbstractCollection);
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    protected function expandQueryWithFilterConditions(SpyProductAbstractQuery $productAbstractQuery): SpyProductAbstractQuery
+    {
+        if ($this->productTableCriteriaTransfer === null) {
+            return $productAbstractQuery;
+        }
+        $productAbstractQuery = $this->expandQueryWithStatusFilter($productAbstractQuery);
+        $productAbstractQuery = $this->expandQueryWithStoreFilter($productAbstractQuery);
+
+        return $productAbstractQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    protected function expandQueryWithStatusFilter(SpyProductAbstractQuery $productAbstractQuery): SpyProductAbstractQuery
+    {
+        $status = $this->productTableCriteriaTransfer->getStatus();
+
+        if (!$status) {
+            return $productAbstractQuery;
+        }
+
+        $booleanStatus = $status === ProductStatusEnum::ACTIVE->value;
+        $productAbstractQuery
+            ->useSpyProductQuery()
+                ->filterByIsActive($booleanStatus)
+                ->groupByFkProductAbstract()
+            ->endUse();
+
+        return $productAbstractQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    protected function expandQueryWithStoreFilter(SpyProductAbstractQuery $productAbstractQuery): SpyProductAbstractQuery
+    {
+        $stores = $this->productTableCriteriaTransfer->getStores();
+
+        if (!$stores) {
+            return $productAbstractQuery;
+        }
+
+        $productAbstractQuery
+            ->useSpyProductAbstractStoreQuery()
+                ->filterByFkStore_In($stores)
+                ->groupByFkProductAbstract()
+            ->endUse();
+
+        return $productAbstractQuery;
     }
 
     /**
@@ -590,7 +671,7 @@ class ProductTable extends AbstractProductTable
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
@@ -604,9 +685,9 @@ class ProductTable extends AbstractProductTable
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      *
-     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function addConcreteProductSkuSearch(SpyProductAbstractQuery $query): SpyProductAbstractQuery
     {

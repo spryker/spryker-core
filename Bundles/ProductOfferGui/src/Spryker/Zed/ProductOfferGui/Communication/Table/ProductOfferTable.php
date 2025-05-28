@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferGui\Communication\Table;
 
+use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -18,6 +19,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\ProductOfferGui\ProductOfferGuiConfig as SharedProductOfferGuiConfig;
+use Spryker\Shared\ProductOfferGui\ProductOfferStatusEnum;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductOfferGui\Communication\Form\ApprovalStatusForm;
@@ -96,6 +98,11 @@ class ProductOfferTable extends AbstractTable
     protected $productOfferTableExpanderPlugins;
 
     /**
+     * @var \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer|null
+     */
+    protected ?ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer = null;
+
+    /**
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $productOfferQuery
      * @param \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferFacadeInterface $productOfferFacade
@@ -114,6 +121,18 @@ class ProductOfferTable extends AbstractTable
         $this->productOfferFacade = $productOfferFacade;
         $this->repository = $repository;
         $this->productOfferTableExpanderPlugins = $productOfferTableExpanderPlugins;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+     *
+     * @return $this
+     */
+    public function applyCriteria(ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer)
+    {
+        $this->productOfferTableCriteriaTransfer = $productOfferTableCriteriaTransfer;
+
+        return $this;
     }
 
     /**
@@ -197,6 +216,10 @@ class ProductOfferTable extends AbstractTable
             $this->buildQueryCriteriaTransfer(),
         );
 
+        if ($this->productOfferTableCriteriaTransfer) {
+            $this->applyFiltersCriteria();
+        }
+
         $this->total = $this->productOfferQuery->count();
 
         /** @var literal-string $where */
@@ -210,7 +233,7 @@ class ProductOfferTable extends AbstractTable
             ->useSpyProductOfferStoreQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinSpyStore()
                 ->withColumn(
-                    sprintf('GROUP_CONCAT(%s)', SpyStoreTableMap::COL_NAME),
+                    $this->prepareStoresSubQuery(),
                     static::COL_STORES,
                 )
             ->endUse()
@@ -224,6 +247,61 @@ class ProductOfferTable extends AbstractTable
             );
 
         return $this->productOfferQuery;
+    }
+
+    /**
+     * @return void
+     */
+    protected function applyFiltersCriteria(): void
+    {
+        $this->applyStatusFilters();
+        $this->applyApprovalStatusFilters();
+        $this->applyStoreFilters();
+    }
+
+    /**
+     * @return void
+     */
+    protected function applyStatusFilters(): void
+    {
+        $status = $this->productOfferTableCriteriaTransfer->getStatus();
+        if (!$status) {
+            return;
+        }
+
+        $booleanStatus = $status === ProductOfferStatusEnum::ACTIVE->value;
+
+        $this->productOfferQuery->filterByIsActive($booleanStatus);
+    }
+
+    /**
+     * @return void
+     */
+    protected function applyApprovalStatusFilters(): void
+    {
+        $approvalStatuses = $this->productOfferTableCriteriaTransfer->getApprovalStatuses();
+        if (!$approvalStatuses) {
+            return;
+        }
+
+        $this->productOfferQuery->filterByApprovalStatus_In($approvalStatuses);
+    }
+
+    /**
+     * @return void
+     */
+    protected function applyStoreFilters(): void
+    {
+        $stores = $this->productOfferTableCriteriaTransfer->getStores();
+        if (!$stores) {
+            return;
+        }
+
+        $this->productOfferQuery
+            ->groupByIdProductOffer()
+            ->useSpyProductOfferStoreQuery()
+                ->filterByFkStore_In($stores)
+            ->endUse();
     }
 
     /**
@@ -387,5 +465,26 @@ class ProductOfferTable extends AbstractTable
     protected function countTotal(ModelCriteria $query): int
     {
         return $this->total;
+    }
+
+    /**
+     * @return string
+     */
+    protected function prepareStoresSubQuery(): string
+    {
+        if (!$this->productOfferTableCriteriaTransfer?->getStores()) {
+            return sprintf('GROUP_CONCAT(%s)', SpyStoreTableMap::COL_NAME);
+        }
+
+        return sprintf(
+            '(SELECT GROUP_CONCAT(%s) FROM %s INNER JOIN %s ON %s = %s WHERE %s = %s)',
+            SpyStoreTableMap::COL_NAME,
+            SpyStoreTableMap::TABLE_NAME,
+            SpyProductOfferStoreTableMap::TABLE_NAME,
+            SpyProductOfferStoreTableMap::COL_FK_STORE,
+            SpyStoreTableMap::COL_ID_STORE,
+            SpyProductOfferStoreTableMap::COL_FK_PRODUCT_OFFER,
+            SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER,
+        );
     }
 }

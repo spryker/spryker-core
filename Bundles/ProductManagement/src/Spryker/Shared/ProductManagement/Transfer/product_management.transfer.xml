@@ -11,9 +11,16 @@
         <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
+    <transfer name="StoreCollection">
+        <property name="stores" type="Store[]" singular="store"/>
+    </transfer>
+
     <transfer name="Store">
         <property name="name" type="string"/>
         <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="StoreCriteria">
     </transfer>
 
     <transfer name="MoneyValue">
@@ -205,6 +212,11 @@
     </transfer>
 
     <transfer name="TaxRateCollection">
+    </transfer>
+
+    <transfer name="ProductTableCriteria" strict="true">
+        <property name="status" type="string"/>
+        <property name="stores" type="int[]" singular="store"/>
     </transfer>
 
 </transfers>

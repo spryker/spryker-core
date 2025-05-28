@@ -13,10 +13,12 @@ use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Spryker\Zed\Discount\Communication\AmountFormatter\DiscountAmountFormatter;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\DiscountFormDataProvider;
+use Spryker\Zed\Discount\Communication\Form\DataProvider\TableFilterFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DeleteVoucherCodeForm;
 use Spryker\Zed\Discount\Communication\Form\DiscountForm;
 use Spryker\Zed\Discount\Communication\Form\DiscountVisibilityForm;
+use Spryker\Zed\Discount\Communication\Form\TableFilterForm;
 use Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformer;
@@ -301,5 +303,29 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function getMoneyCollectionFormTypePlugin(): FormTypeInterface
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_MONEY_COLLECTION_FORM_TYPE);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createTableFilterForm(): FormInterface
+    {
+        $tableFilterFormDataProvider = $this->createTableFilterFormDataProvider();
+
+        return $this->getFormFactory()->create(
+            TableFilterForm::class,
+            $tableFilterFormDataProvider->getData(),
+            $tableFilterFormDataProvider->getOptions(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Communication\Form\DataProvider\TableFilterFormDataProvider
+     */
+    public function createTableFilterFormDataProvider(): TableFilterFormDataProvider
+    {
+        return new TableFilterFormDataProvider(
+            $this->getStoreFacade(),
+        );
     }
 }

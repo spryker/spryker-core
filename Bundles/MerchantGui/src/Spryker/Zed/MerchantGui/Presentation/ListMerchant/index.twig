@@ -1,3 +1,4 @@
+{# @var tableFilterForm \Symfony\Component\Form\FormView #}
 {% extends '@Gui/layout/layout.twig' %}
 
 {% set widget_title = 'Overview of Merchants' | trans %}
@@ -10,11 +11,13 @@
 {% endblock %}
 
 {% block content %}
-    {% embed '@Gui/Partials/widget.twig' %}
+    {% embed '@Gui/Partials/widget.twig' with { merchantTableFilterForm: merchantTableFilterForm } %}
         {% block widget_title -%}
             <h5>{{ 'List of Merchants' | trans}}</h5>
         {%- endblock %}
         {% block widget_content %}
+            {% include '@MerchantGui/_partials/merchant-table-filter-form.twig' with { form: merchantTableFilterForm } %}
+
             {{ merchants | raw }}
         {% endblock %}
     {% endembed %}

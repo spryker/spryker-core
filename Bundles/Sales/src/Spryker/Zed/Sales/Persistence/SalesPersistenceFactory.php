@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery;
@@ -27,6 +28,7 @@ use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQuer
 use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilderInterface;
 use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchQueryJoinQueryBuilder;
 use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchQueryJoinQueryBuilderInterface;
+use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
@@ -156,5 +158,13 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
     public function getSalesQueryContainer(): SalesQueryContainerInterface
     {
         return $this->getQueryContainer();
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery
+     */
+    public function getOmsOrderItemStatePropelQuery(): SpyOmsOrderItemStateQuery
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PROPEL_QUERY_OMS_ORDER_ITEM_STATE);
     }
 }

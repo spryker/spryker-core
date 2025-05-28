@@ -6,7 +6,7 @@
     "require": {
         "php": ">=8.2",
         "spryker/availability-gui-extension": "^1.0.0",
-        "spryker/gui": "^3.45.0",
+        "spryker/gui": "^3.61.0",
         "spryker/kernel": "^3.52.0",
         "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/merchant": "^3.0.0",
@@ -15,8 +15,10 @@
         "spryker/product-offer-gui-extension": "^0.1.0 || ^1.0.0",
         "spryker/product-option-gui-extension": "^1.0.0",
         "spryker/propel-orm": "^1.0.0",
-        "spryker/store": "^1.1.0",
+        "spryker/store": "^1.21.0",
         "spryker/symfony": "^3.0.0",
+        "spryker/transfer": "^3.27.0",
+        "spryker/translator": "^1.1.0",
         "spryker/url": "^3.0.0",
         "spryker/util-text": "^1.1.0"
     },

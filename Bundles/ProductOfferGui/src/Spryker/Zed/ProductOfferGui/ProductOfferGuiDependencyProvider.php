@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleFacadeBridge;
 use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductFacadeBridge;
 use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferFacadeBridge;
+use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToStoreFacadeBridge;
+use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToTranslatorFacadeBridge;
 
 /**
  * @method \Spryker\Zed\ProductOfferGui\ProductOfferGuiConfig getConfig()
@@ -33,6 +35,16 @@ class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
+
+    /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
+     * @var string
+     */
+    public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     /**
      * @var string
@@ -66,6 +78,8 @@ class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacade($container);
         $container = $this->addProductFacade($container);
         $container = $this->addProductOfferFacade($container);
+        $container = $this->addStoreFacade($container);
+        $container = $this->addTranslatorFacade($container);
         $container = $this->addProductOfferListActionViewDataExpanderPlugins($container);
         $container = $this->addProductOfferTableExpanderPlugins($container);
         $container = $this->addProductOfferViewSectionPlugins($container);
@@ -111,6 +125,34 @@ class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
             return new ProductOfferGuiToProductOfferFacadeBridge($container->getLocator()->productOffer()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new ProductOfferGuiToStoreFacadeBridge($container->getLocator()->store()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTranslatorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
+            return new ProductOfferGuiToTranslatorFacadeBridge($container->getLocator()->translator()->facade());
         });
 
         return $container;

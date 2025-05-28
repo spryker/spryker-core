@@ -104,3 +104,11 @@ Generate,Generate
 Priority,Priority
 "Enter an integer %min%-%max%.","Enter an integer %min%-%max%."
 "If you need to create different values for the same currency in different stores - please create different discounts per store.","If you need to create different values for the same currency in different stores - please create different discounts per store."
+Status,Status
+Type,Type
+Store,Store
+"Select Stores","Select Stores"
+"Select Types","Select Types"
+"Valid from","Valid from"
+"Valid to","Valid to"
+"Cart rule","Cart rule"

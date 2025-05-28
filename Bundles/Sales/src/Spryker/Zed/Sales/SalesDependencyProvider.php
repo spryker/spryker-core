@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales;
 
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationBridge;
@@ -18,6 +19,7 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToStoreBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToTranslatorBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilUuidGeneratorBridge;
@@ -75,7 +77,17 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_LOCALE = 'PROPEL_QUERY_LOCALE';
+
+    /**
+     * @var string
+     */
+    public const PROPEL_QUERY_OMS_ORDER_ITEM_STATE = 'PROPEL_QUERY_OMS_ORDER_ITEM_STATE';
 
     /**
      * @var string
@@ -288,6 +300,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSalesTablePlugins($container);
         $container = $this->addOrderItemsTableExpanderPlugins($container);
         $container = $this->addCsrfProviderService($container);
+        $container = $this->addStoreFacade($container);
+        $container = $this->addTranslatorFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = $this->addOmsOrderItemStatePropelQuery($container);
 
         return $container;
     }
@@ -507,6 +533,21 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addOmsOrderItemStatePropelQuery(Container $container): Container
+    {
+        $container->set(
+            static::PROPEL_QUERY_OMS_ORDER_ITEM_STATE,
+            $container->factory(fn () => SpyOmsOrderItemStateQuery::create()),
+        );
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addUtilSanitizeService(Container $container)
     {
         $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
@@ -526,6 +567,21 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::FACADE_CALCULATION, function (Container $container) {
             return new SalesToCalculationBridge($container->getLocator()->calculation()->facade());
         });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTranslatorFacade(Container $container): Container
+    {
+        $container->set(
+            static::FACADE_TRANSLATOR,
+            fn (Container $container) => new SalesToTranslatorBridge($container->getLocator()->translator()->facade()),
+        );
 
         return $container;
     }

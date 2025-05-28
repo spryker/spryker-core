@@ -119,4 +119,9 @@ interface SalesRepositoryInterface
     public function getSalesExpensesBySalesExpenseCollectionDeleteCriteria(
         SalesExpenseCollectionDeleteCriteriaTransfer $salesExpenseCollectionDeleteCriteriaTransfer
     ): array;
+
+    /**
+     * @return list<string>
+     */
+    public function getOmsOrderItemStates(): array;
 }

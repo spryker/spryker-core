@@ -19,6 +19,8 @@
             <h5>{{ 'List of Offers' | trans}}</h5>
         {%- endblock %}
         {% block widget_content %}
+            {% include '@ProductOfferGui/_partials/table-filter-form.twig' with { form: tableFilterForm, externalFields: externalFields } %}
+
             {{ productOfferTable | raw }}
         {% endblock %}
     {% endembed %}

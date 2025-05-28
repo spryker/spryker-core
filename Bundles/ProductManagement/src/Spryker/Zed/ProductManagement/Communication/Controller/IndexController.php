@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
@@ -23,33 +25,54 @@ class IndexController extends AbstractController
     public const ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
-     * @return array
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array<string, mixed>
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $productTable = $this
-            ->getFactory()
-            ->createProductTable();
+        $productTableCriteriaTransfer = $this->handleTableFilter($request);
+        $table = $this->getFactory()->createProductTable()->applyCriteria($productTableCriteriaTransfer);
 
-        $viewData = $this->executeProductAbstractListActionViewDataExpanderPlugins([
-            'productTable' => $productTable->render(),
-        ]);
+        $viewData = [
+            'externalFields' => $this->getFactory()->getConfig()->getProductTableFilterFormExternalFieldNames(),
+            'tableFilterForm' => $this->getFactory()->createTableFilterForm($productTableCriteriaTransfer, $this->getFactory()->createTableFilterFormDataProvider()->getOptions())->createView(),
+            'productTable' => $table->render(),
+        ];
+
+        $viewData = $this->executeProductAbstractListActionViewDataExpanderPlugins($viewData);
 
         return $this->viewResponse($viewData);
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction()
+    public function tableAction(Request $request)
     {
-        $productTable = $this
-            ->getFactory()
-            ->createProductTable();
+        $productTableCriteriaTransfer = $this->handleTableFilter($request);
+        $table = $this->getFactory()->createProductTable();
+        $table->applyCriteria($productTableCriteriaTransfer);
 
         return $this->jsonResponse(
-            $productTable->fetchData(),
+            $table->fetchData(),
         );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\ProductTableCriteriaTransfer
+     */
+    protected function handleTableFilter(Request $request): ProductTableCriteriaTransfer
+    {
+        $productTableCriteriaTransfer = (new ProductTableCriteriaTransfer())->fromArray($request->query->all(), true);
+        $tableFilterFormDataProvider = $this->getFactory()->createTableFilterFormDataProvider();
+        $tableFilterForm = $this->getFactory()->createTableFilterForm($productTableCriteriaTransfer, $tableFilterFormDataProvider->getOptions());
+
+        return $tableFilterForm->handleRequest($request)->getData();
     }
 
     /**

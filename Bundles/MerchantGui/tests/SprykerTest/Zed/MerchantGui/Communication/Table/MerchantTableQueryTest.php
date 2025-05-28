@@ -16,6 +16,8 @@ use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterfa
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 use Twig\Loader\ChainLoader;
 use Twig\Loader\LoaderInterface;
@@ -48,6 +50,11 @@ class MerchantTableQueryTest extends Unit
     protected const SERVICE_FORM_FACTORY = 'form.factory';
 
     /**
+     * @var string
+     */
+    protected const SERVICE_REQUEST_STACK = 'request_stack';
+
+    /**
      * @var \SprykerTest\Zed\MerchantGui\MerchantGuiCommunicationTester
      */
     protected $tester;
@@ -61,6 +68,7 @@ class MerchantTableQueryTest extends Unit
 
         $this->registerTwigServiceMock();
         $this->registerFormFactoryServiceMock();
+        $this->registerRequestStack();
     }
 
     /**
@@ -118,6 +126,16 @@ class MerchantTableQueryTest extends Unit
     protected function registerFormFactoryServiceMock(): void
     {
         $this->tester->getContainer()->set(static::SERVICE_FORM_FACTORY, $this->getFormFactoryMock());
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerRequestStack(): void
+    {
+        $requestStack = new RequestStack();
+        $requestStack->push(Request::create('/'));
+        $this->tester->getContainer()->set(static::SERVICE_REQUEST_STACK, $requestStack);
     }
 
     /**

@@ -17,8 +17,16 @@
         <property name="abstractSku" type="string"/>
     </transfer>
 
+    <transfer name="StoreCollection">
+        <property name="stores" type="Store[]" singular="store"/>
+    </transfer>
+
     <transfer name="Store">
         <property name="name" type="string"/>
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="StoreCriteria">
     </transfer>
 
     <transfer name="ProductAbstract">
@@ -48,6 +56,12 @@
         <property name="condition" type="string"/>
         <property name="left" type="array" singular="left"/>
         <property name="right" type="array" singular="right"/>
+    </transfer>
+
+    <transfer name="ProductOfferTableCriteria" strict="true">
+        <property name="status" type="string"/>
+        <property name="approvalStatuses" type="string[]" singular="approvalStatus"/>
+        <property name="stores" type="string[]" singular="store"/>
     </transfer>
 
 </transfers>

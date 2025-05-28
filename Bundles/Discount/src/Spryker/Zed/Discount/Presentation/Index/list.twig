@@ -11,7 +11,11 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Discount List' | trans } %}
 
         {% block widget_content %}
-               {{ discountsTable | raw }}
+            {% include '@Discount/Partials/table-filter-form.twig' with {
+                form: discountsTableFilterForm,
+            } %}
+
+            {{ discountsTable | raw }}
         {% endblock %}
 
     {% endembed %}

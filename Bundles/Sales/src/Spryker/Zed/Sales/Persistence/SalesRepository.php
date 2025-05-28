@@ -22,6 +22,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\SalesExpenseCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -539,6 +540,19 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         return $this->getFactory()
             ->createSalesExpenseMapper()
             ->mapSalesExpenseEntitiesToExpenseTransfers($salesExpenseEntities, []);
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function getOmsOrderItemStates(): array
+    {
+        return $this->getFactory()
+            ->getOmsOrderItemStatePropelQuery()
+            ->select([SpyOmsOrderItemStateTableMap::COL_NAME])
+            ->orderBy(SpyOmsOrderItemStateTableMap::COL_ID_OMS_ORDER_ITEM_STATE)
+            ->find()
+            ->getData();
     }
 
     /**

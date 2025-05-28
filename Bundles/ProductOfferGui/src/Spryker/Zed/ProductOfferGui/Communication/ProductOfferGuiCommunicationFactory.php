@@ -7,13 +7,19 @@
 
 namespace Spryker\Zed\ProductOfferGui\Communication;
 
+use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductOfferGui\Communication\Form\DataProvider\TableFilterFormDataProvider;
+use Spryker\Zed\ProductOfferGui\Communication\Form\TableFilterForm;
 use Spryker\Zed\ProductOfferGui\Communication\Table\ProductOfferTable;
 use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductFacadeInterface;
 use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferFacadeInterface;
+use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToStoreFacadeInterface;
+use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferGui\ProductOfferGuiDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\ProductOfferGui\ProductOfferGuiConfig getConfig()
@@ -32,6 +38,30 @@ class ProductOfferGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductOfferFacade(),
             $this->getRepository(),
             $this->getProductOfferTableExpanderPlugins(),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+     * @param array<mixed> $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createTableFilterForm(
+        ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer,
+        array $formOptions = []
+    ): FormInterface {
+        return $this->getFormFactory()->create(TableFilterForm::class, $productOfferTableCriteriaTransfer, $formOptions);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGui\Communication\Form\DataProvider\TableFilterFormDataProvider
+     */
+    public function createTableFilterFormDataProvider(): TableFilterFormDataProvider
+    {
+        return new TableFilterFormDataProvider(
+            $this->getProductOfferFacade(),
+            $this->getStoreFacade(),
         );
     }
 
@@ -57,6 +87,14 @@ class ProductOfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getProductOfferFacade(): ProductOfferGuiToProductOfferFacadeInterface
     {
         return $this->getProvidedDependency(ProductOfferGuiDependencyProvider::FACADE_PRODUCT_OFFER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductOfferGuiToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOfferGuiDependencyProvider::FACADE_STORE);
     }
 
     /**
@@ -89,5 +127,13 @@ class ProductOfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getProductOfferViewSectionPlugins(): array
     {
         return $this->getProvidedDependency(ProductOfferGuiDependencyProvider::PLUGINS_PRODUCT_OFFER_VIEW_SECTION);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToTranslatorFacadeInterface
+     */
+    public function getTranslatorFacade(): ProductOfferGuiToTranslatorFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOfferGuiDependencyProvider::FACADE_TRANSLATOR);
     }
 }

@@ -46,4 +46,23 @@ class ProductOfferGuiConfig extends AbstractBundleConfig
      * @var string
      */
     public const URL_VIEW = '/product-offer-gui/view';
+
+    /**
+     * @var list<string>
+     */
+    protected const PRODUCT_OFFER_TABLE_FILTER_FORM_EXTERNAL_FIELD_NAMES = [];
+
+    /**
+     * Specification:
+     * - Returns list of external filter field names for product offer table filter form.
+     * - Specified field names will not override the GET parameters added by default filters.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getProductOfferTableFilterFormExternalFieldNames(): array
+    {
+        return static::PRODUCT_OFFER_TABLE_FILTER_FORM_EXTERNAL_FIELD_NAMES;
+    }
 }

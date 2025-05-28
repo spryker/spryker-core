@@ -1,3 +1,5 @@
+{# @var tableFilterForm \Symfony\Component\Form\FormView #}
+
 {% extends '@Sales/Layout/layout.twig' %}
 
 {% block section_title %}
@@ -13,6 +15,8 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'List of orders' | trans } %}
 
         {% block widget_content %}
+
+            {% include '@Sales/Partials/table-filter-form.twig' with { form: ordersTableFilterForm } %}
 
             {{ orders | raw }}
 

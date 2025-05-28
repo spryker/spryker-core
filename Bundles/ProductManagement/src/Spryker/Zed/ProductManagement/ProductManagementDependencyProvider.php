@@ -25,6 +25,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBrid
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTaxBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTranslatorFacadeBridge;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingBridge;
 use Spryker\Zed\ProductManagement\Exception\MissingMoneyTypePluginException;
 use Spryker\Zed\ProductManagement\Exception\MissingStoreRelationFormTypePluginException;
@@ -108,6 +109,11 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
+     * @var string
+     */
+    public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     /**
      * @var string
@@ -419,6 +425,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductVariantTableActionExpanderPlugins($container);
         $container = $this->addProductAbstractTransferMapperPlugins($container);
         $container = $this->addProductAbstractFormDataProviderExpanderPlugins($container);
+        $container = $this->addTranslatorFacade($container);
 
         return $container;
     }
@@ -1001,5 +1008,19 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     protected function getProductAbstractFormDataProviderExpanderPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTranslatorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
+            return new ProductManagementToTranslatorFacadeBridge($container->getLocator()->translator()->facade());
+        });
+
+        return $container;
     }
 }

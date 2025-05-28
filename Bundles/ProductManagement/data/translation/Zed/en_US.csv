@@ -106,3 +106,8 @@ Price,Price
 select,select
 "Product name","Product name"
 Types,Types
+"Select Status","Select Status"
+"Select Stores","Select Stores"
+"Apply filters","Apply filters"
+"Reset filters","Reset filters"
+"Variant Status","Variant Status"

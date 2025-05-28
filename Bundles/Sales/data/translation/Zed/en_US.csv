@@ -103,3 +103,11 @@ returned,Returned
 "return canceled","Return canceled"
 "shipped to customer","Shipped to customer"
 invoice-generate,"Generate invoice"
+Status,Status
+Store,Store
+"Order date from","Order date from"
+"Order date to","Order date to"
+"Select Stores","Select Stores"
+"Select Statuses","Select Statuses"
+"Reset filters","Reset filters"
+"Apply filters","Apply filters"

@@ -15,6 +15,8 @@ use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
+use Spryker\Zed\Sales\Communication\Form\DataProvider\TableFilterFormDataProvider;
+use Spryker\Zed\Sales\Communication\Form\TableFilterForm;
 use Spryker\Zed\Sales\Communication\Table\CustomerOrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilder;
@@ -23,6 +25,7 @@ use Spryker\Zed\Sales\Communication\TableExpander\OrderItemsTableExpanderInterfa
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesSplit\Communication\Form\DataProvider\OrderItemSplitDataProvider;
 use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
@@ -235,6 +238,22 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface
+     */
+    public function getStoreFacade()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToTranslatorInterface
+     */
+    public function getTranslatorFacade()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    /**
      * @return array
      */
     public function getSalesDetailExternalBlocksUrls()
@@ -264,5 +283,39 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function getCsrfTokenManager(): CsrfTokenManagerInterface
     {
         return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createTableFilterForm(): FormInterface
+    {
+        $dataProvider = $this->createTableFilterFormDataProvider();
+
+        return $this->getFormFactory()->create(
+            TableFilterForm::class,
+            $dataProvider->getData(),
+            $dataProvider->getOptions(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Communication\Form\DataProvider\TableFilterFormDataProvider
+     */
+    protected function createTableFilterFormDataProvider(): TableFilterFormDataProvider
+    {
+        return new TableFilterFormDataProvider(
+            $this->getQueryContainer(),
+            $this->getStoreFacade(),
+            $this->getRepository(),
+        );
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery
+     */
+    protected function getOmsOrderItemStatePropelQuery()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PROPEL_QUERY_OMS_ORDER_ITEM_STATE);
     }
 }

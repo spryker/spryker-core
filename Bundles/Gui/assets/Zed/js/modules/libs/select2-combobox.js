@@ -11,6 +11,7 @@ function select2combobox(selector) {
         var disablePlaceholder = $selectElement.data('disable-placeholder');
         var clearInitial = $selectElement.data('clear-initial');
         var clearable = $selectElement.data('clearable');
+        var disableSearch = $selectElement.data('disable-search');
         var minimumInputLengthValue = Number($selectElement.data('minimum-input-length'));
         var parentFieldSelectors = $selectElement.data('depends-on-field')?.split(',');
         var $parentFields = parentFieldSelectors?.map((parentFieldSelector) => $(parentFieldSelector));
@@ -141,6 +142,13 @@ function select2combobox(selector) {
                     ? ''
                     : $selectElement.find('option:first').text(),
                 allowClear: true,
+            };
+        }
+
+        if (disableSearch) {
+            select2InitOptions = {
+                ...select2InitOptions,
+                minimumResultsForSearch: Infinity,
             };
         }
 

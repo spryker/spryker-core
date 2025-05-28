@@ -221,6 +221,20 @@ $(document).ready(function () {
         minimumInputLength: 1,
     });
 
+    document.querySelectorAll('.spryker-form-select2combobox--table-filter-form').forEach((select) => {
+        const selectConfig = {};
+
+        if (select.dataset.clearable) {
+            selectConfig.allowClear = true;
+        }
+
+        if (select.dataset.disableSearch) {
+            selectConfig.minimumResultsForSearch = Infinity;
+        }
+
+        $(select).select2(selectConfig);
+    });
+
     $('.attribute_metadata_checkbox').each(function () {
         var $checkbox = $(this);
         var $input = $checkbox.parents('.attribute_metadata_row').find('.attribute_metadata_value');

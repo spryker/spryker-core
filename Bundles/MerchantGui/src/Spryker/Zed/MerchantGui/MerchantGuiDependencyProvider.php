@@ -14,6 +14,10 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantGui\Communication\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToLocaleFacadeBridge;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeBridge;
+use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToStoreFacadeBridge;
+use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToStoreFacadeInterface;
+use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToTranslatorFacadeBridge;
+use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToTranslatorFacadeInterface;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToUrlFacadeBridge;
 
 /**
@@ -40,6 +44,16 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
+    /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
+     * @var string
+     */
+    public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     /**
      * @var string
@@ -105,6 +119,8 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMerchantFormTabsExpanderPlugins($container);
         $container = $this->addUrlFacade($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addStoreFacade($container);
+        $container = $this->addTranslatorFacade($container);
         $container = $this->addMerchantUpdateFormViewExpanderPlugins($container);
         $container = $this->addMerchantViewFormViewExpanderPlugins($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
@@ -261,6 +277,34 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_URL, function (Container $container) {
             return new MerchantGuiToUrlFacadeBridge($container->getLocator()->url()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container): MerchantGuiToStoreFacadeInterface {
+            return new MerchantGuiToStoreFacadeBridge($container->getLocator()->store()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTranslatorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_TRANSLATOR, function (Container $container): MerchantGuiToTranslatorFacadeInterface {
+            return new MerchantGuiToTranslatorFacadeBridge($container->getLocator()->translator()->facade());
         });
 
         return $container;

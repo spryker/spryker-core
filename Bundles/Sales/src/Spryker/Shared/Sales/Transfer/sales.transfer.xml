@@ -437,8 +437,15 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="StoreCollection">
+        <property name="stores" type="Store[]" singular="store"/>
+    </transfer>
+
     <transfer name="Store">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="StoreCriteria">
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundle">
@@ -595,6 +602,13 @@
         <property name="size" type="int"/>
         <property name="splitLength" type="int"/>
         <property name="splitSeparator" type="string"/>
+    </transfer>
+
+    <transfer name="OrderTableCriteria" strict="true">
+        <property name="statuses" type="string[]" singular="status"/>
+        <property name="stores" type="string[]" singular="store"/>
+        <property name="orderDateFrom" type="string"/>
+        <property name="orderDateTo" type="string"/>
     </transfer>
 
 </transfers>

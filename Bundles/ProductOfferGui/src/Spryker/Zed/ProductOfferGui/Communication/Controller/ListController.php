@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductOfferGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductOfferGui\Communication\ProductOfferGuiCommunicationFactory getFactory()
@@ -17,27 +19,42 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ListController extends AbstractController
 {
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return array<string, mixed>
      */
-    public function indexAction(): array
+    public function indexAction(Request $request): array
     {
-        $productOfferTable = $this->getFactory()
-            ->createProductOfferTable();
+        $productOfferTableCriteriaTransfer = (new ProductOfferTableCriteriaTransfer())->fromArray($request->query->all(), true);
+        $tableFilterFormDataProvider = $this->getFactory()->createTableFilterFormDataProvider();
+        $tableFilterForm = $this->getFactory()->createTableFilterForm($productOfferTableCriteriaTransfer, $tableFilterFormDataProvider->getOptions());
+        $productOfferTableCriteriaTransfer = $tableFilterForm->handleRequest($request)->getData();
+
+        $productOfferTable = $this->getFactory()->createProductOfferTable()->applyCriteria($productOfferTableCriteriaTransfer);
 
         $viewData = $this->executeProductOfferListActionViewDataExpanderPlugins([
             'productOfferTable' => $productOfferTable->render(),
+            'tableFilterForm' => $tableFilterForm->createView(),
+            'externalFields' => $this->getFactory()->getConfig()->getProductOfferTableFilterFormExternalFieldNames(),
         ]);
 
         return $this->viewResponse($viewData);
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction(): JsonResponse
+    public function tableAction(Request $request): JsonResponse
     {
-        $productOfferTable = $this->getFactory()
-            ->createProductOfferTable();
+        $productOfferTableCriteriaTransfer = (new ProductOfferTableCriteriaTransfer())->fromArray($request->query->all(), true);
+        $tableFilterFormDataProvider = $this->getFactory()->createTableFilterFormDataProvider();
+        $tableFilterForm = $this->getFactory()->createTableFilterForm($productOfferTableCriteriaTransfer, $tableFilterFormDataProvider->getOptions());
+        $productOfferTableCriteriaTransfer = $tableFilterForm->handleRequest($request)->getData();
+
+        $productOfferTable = $this->getFactory()->createProductOfferTable();
+        $productOfferTable->applyCriteria($productOfferTableCriteriaTransfer);
 
         return $this->jsonResponse($productOfferTable->fetchData());
     }

@@ -40,6 +40,25 @@ class ProductManagementConfig extends AbstractBundleConfig
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
     /**
+     * @var list<string>
+     */
+    protected const PRODUCT_TABLE_FILTER_FORM_EXTERNAL_FIELD_NAMES = [];
+
+    /**
+     * Specification:
+     * - Returns list of external filter field names for product table filter form.
+     * - Specified field names will not override the GET parameters added by default filters.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getProductTableFilterFormExternalFieldNames(): array
+    {
+        return static::PRODUCT_TABLE_FILTER_FORM_EXTERNAL_FIELD_NAMES;
+    }
+
+    /**
      * @api
      *
      * @return string

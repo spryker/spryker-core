@@ -88,9 +88,10 @@ class CustomerOrdersTable extends OrdersTable
     protected function configure(TableConfiguration $config)
     {
         $this->baseUrl = static::CUSTOMER_ORDERS_TABLE_BASE_URL;
+        $config = parent::configure($config);
         $config->setUrl(sprintf(static::CUSTOMER_ORDERS_TABLE_URL, SalesConfig::PARAM_CUSTOMER_REFERENCE, $this->customerReference));
 
-        return parent::configure($config);
+        return $config;
     }
 
     /**

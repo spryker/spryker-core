@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantGui\Communication;
 
+use Generated\Shared\Transfer\MerchantTableCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -14,9 +15,11 @@ use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\MerchantGui\Communication\Expander\MerchantListDataExpander;
 use Spryker\Zed\MerchantGui\Communication\Expander\MerchantListDataExpanderInterface;
 use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueUrl;
+use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantFilterFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantCreateForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantStatusForm;
+use Spryker\Zed\MerchantGui\Communication\Form\MerchantTableFilterForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantViewForm;
 use Spryker\Zed\MerchantGui\Communication\Form\ToggleActiveMerchantForm;
@@ -24,6 +27,8 @@ use Spryker\Zed\MerchantGui\Communication\Table\MerchantTable;
 use Spryker\Zed\MerchantGui\Communication\Tabs\MerchantFormTabs;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToLocaleFacadeInterface;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
+use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToStoreFacadeInterface;
+use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToTranslatorFacadeInterface;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToUrlFacadeInterface;
 use Spryker\Zed\MerchantGui\MerchantGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
@@ -57,6 +62,18 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getMerchantCreateForm(?MerchantTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(MerchantCreateForm::class, $data, $options);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTableCriteriaTransfer|null $merchantTableCriteriaTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createMerchantTableFilterForm(?MerchantTableCriteriaTransfer $merchantTableCriteriaTransfer = null): FormInterface
+    {
+        $merchantTableFilterFormDataProvider = $this->createMerchantTableFilterFormDataProvider();
+
+        return $this->getFormFactory()->create(MerchantTableFilterForm::class, $merchantTableCriteriaTransfer, $merchantTableFilterFormDataProvider->getOptions());
     }
 
     /**
@@ -239,5 +256,31 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreRelationFormTypePlugin(): FormTypeInterface
     {
         return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToTranslatorFacadeInterface
+     */
+    public function getTranslatorFacade(): MerchantGuiToTranslatorFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantGuiDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToStoreFacadeInterface
+     */
+    public function getStoreFacade(): MerchantGuiToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantGuiDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantFilterFormDataProvider
+     */
+    protected function createMerchantTableFilterFormDataProvider(): MerchantFilterFormDataProvider
+    {
+        return new MerchantFilterFormDataProvider(
+            $this->getStoreFacade(),
+        );
     }
 }

@@ -236,23 +236,40 @@ class IndexController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return array
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
+        $tableFilterForm = $this->getFactory()->createTableFilterForm();
+
+        $discountTableCriteriaTransfer = $tableFilterForm->handleRequest($request)->getData();
+
+        /** @var \Spryker\Zed\Discount\Communication\Table\DiscountsTable $table */
         $table = $this->getFactory()->createDiscountsTable();
+        $table->applyCriteria($discountTableCriteriaTransfer);
 
         return [
             'discountsTable' => $table->render(),
+            'discountsTableFilterForm' => $tableFilterForm->createView(),
         ];
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function listTableAction()
+    public function listTableAction(Request $request)
     {
+        $tableFilterForm = $this->getFactory()->createTableFilterForm();
+
+        $discountTableCriteriaTransfer = $tableFilterForm->handleRequest($request)->getData();
+
+        /** @var \Spryker\Zed\Discount\Communication\Table\DiscountsTable $table */
         $table = $this->getFactory()->createDiscountsTable();
+        $table->applyCriteria($discountTableCriteriaTransfer);
 
         return $this->jsonResponse(
             $table->fetchData(),

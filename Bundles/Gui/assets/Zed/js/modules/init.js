@@ -19,6 +19,7 @@ import { Dropzone } from './libs/dropzone';
 import { FormSubmitter } from './libs/form-submitter';
 import { DatePicker } from './libs/datepicker';
 import { ImageUploader } from './libs/image-uploader';
+import FormWithExternalFields from './form-with-external-fields';
 
 var dataTablesSearchDelay = function () {
     var dataTablesWrapper = $('.dataTables_wrapper');
@@ -66,6 +67,12 @@ $(document).ready(function () {
 
     /* Draw data tables */
     $('.gui-table-data').on('error.dt', dataTable.onError).dataTable(dataTable.defaultConfiguration);
+
+    $('.gui-table-data').on('init.dt', function (e, settings) {
+        const wrapper = $(e.target).closest('.dataTables_wrapper');
+        const searchInput = wrapper.find('.dataTables_filter input[type="search"]');
+        searchInput.attr('data-qa', 'table-search');
+    });
 
     $('.gui-table-data').on('draw.dt', function (e, settings) {
         var windowWidth = $(document).width(),
@@ -249,6 +256,7 @@ $(document).ready(function () {
     new Dropzone();
     new FormSubmitter();
     new ImageUploader();
+    new FormWithExternalFields();
 });
 
 $(window).on('load', function () {

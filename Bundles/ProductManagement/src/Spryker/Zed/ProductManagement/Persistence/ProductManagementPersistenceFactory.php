@@ -24,8 +24,6 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
  */
 class ProductManagementPersistenceFactory extends AbstractPersistenceFactory
 {
-    //to be removed
-
     /**
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
      */

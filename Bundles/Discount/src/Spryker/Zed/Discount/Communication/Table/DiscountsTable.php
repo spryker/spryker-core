@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Table;
 
+use Generated\Shared\Transfer\DiscountTableCriteriaTransfer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
@@ -16,6 +17,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Traversable;
 
 class DiscountsTable extends AbstractTable
@@ -121,13 +123,47 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DiscountTableCriteriaTransfer $discountTableCriteriaTransfer
+     *
+     * @return void
+     */
+    public function applyCriteria(DiscountTableCriteriaTransfer $discountTableCriteriaTransfer): void
+    {
+        if ($discountTableCriteriaTransfer->getStatus() !== null) {
+            $this->discountQuery->filterByIsActive($discountTableCriteriaTransfer->getStatus());
+        }
+
+        if ($discountTableCriteriaTransfer->getTypes()) {
+            $this->discountQuery->filterByDiscountType_In($discountTableCriteriaTransfer->getTypes());
+        }
+
+        if ($discountTableCriteriaTransfer->getStores()) {
+            $this->discountQuery->useSpyDiscountStoreQuery()
+                    ->useSpyStoreQuery()
+                        ->filterByIdStore_In($discountTableCriteriaTransfer->getStores())
+                    ->endUse()
+                ->endUse();
+
+            $this->discountQuery->groupByIdDiscount();
+        }
+
+        if ($discountTableCriteriaTransfer->getValidFrom()) {
+            $this->discountQuery->filterByValidTo($discountTableCriteriaTransfer->getValidFrom(), Criteria::GREATER_EQUAL);
+        }
+
+        if ($discountTableCriteriaTransfer->getValidTo()) {
+            $this->discountQuery->filterByValidFrom($discountTableCriteriaTransfer->getValidTo(), Criteria::LESS_EQUAL);
+        }
+    }
+
+    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
-        $url = Url::generate('list-table')->build();
+        $url = Url::generate('list-table', $this->getRequest()->query->all())->build();
         $config->setUrl($url);
 
         $config->setHeader([

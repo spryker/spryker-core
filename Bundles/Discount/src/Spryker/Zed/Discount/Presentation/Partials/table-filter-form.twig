@@ -1,0 +1,31 @@
+{# @var form \Symfony\Component\Form\FormView #}
+
+{% block table_filter_form %}
+    <div class="table-filter-container spacing-bottom">
+        {{ form_start(form, {attr: {class: 'table-filter-form', id: 'discount-filter-form'}}) }}
+        <div class="row">
+            <div class="col-md-6 col-lg-3">
+                {{ form_row(form.status) }}
+            </div>
+            <div class="col-md-6 col-lg-3">
+                {{ form_row(form.types) }}
+            </div>
+            <div class="col-md-6 col-lg-3">
+                {{ form_row(form.stores) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-3">
+                {{ form_row(form.validFrom) }}
+            </div>
+            <div class="col-md-6 col-lg-3">
+                {{ form_row(form.validTo) }}
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-outline spacing-right">{{ 'Apply filters' | trans }}</button>
+            <a href="{{ url('/discount/index/list') }}" class="btn btn-link">{{ 'Reset filters' | trans }}</a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

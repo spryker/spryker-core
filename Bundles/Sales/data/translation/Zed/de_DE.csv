@@ -103,3 +103,11 @@ returned,Retourniert
 "return canceled","Retoure wurde abgebrochen"
 "shipped to customer","An den Kunden versandt"
 invoice-generate,"Rechnung generieren"
+Status,Status
+Store,Lager
+"Order date from","Datum von"
+"Order date to","Datum bis"
+"Select Stores","Stores auswählen"
+"Select Statuses","Status auswählen"
+"Reset filters","Filter zurücksetzen"
+"Apply filters","Filter anwenden"

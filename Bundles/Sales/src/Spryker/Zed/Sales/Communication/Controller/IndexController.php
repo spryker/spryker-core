@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
@@ -18,26 +20,48 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 class IndexController extends AbstractController
 {
     /**
-     * @return array
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array<string, mixed>
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $table = $this->getFactory()->createOrdersTable();
+        [$table, $tableFilterForm] = $this->prepareTableWithFilterForm($request);
 
         return [
             'orders' => $table->render(),
+            'ordersTableFilterForm' => $tableFilterForm->createView(),
         ];
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction()
+    public function tableAction(Request $request): JsonResponse
     {
-        $table = $this->getFactory()->createOrdersTable();
+        [$table] = $this->prepareTableWithFilterForm($request);
 
         return $this->jsonResponse(
             $table->fetchData(),
         );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function prepareTableWithFilterForm(Request $request): array
+    {
+        $tableFilterForm = $this->getFactory()
+            ->createTableFilterForm()
+            ->handleRequest($request);
+
+        $table = $this->getFactory()->createOrdersTable();
+        $table->applyCriteria($tableFilterForm->getData());
+
+        return [$table, $tableFilterForm];
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication;
 
+use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\Price\ProductMoneyCollectionDataProvider;
@@ -14,10 +15,12 @@ use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductConcret
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductConcreteFormEditDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAddDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEditDataProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\TableFilterFormDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
+use Spryker\Zed\ProductManagement\Communication\Form\TableFilterForm;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductAttributeHelper;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductAttributeHelperInterface;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelper;
@@ -43,7 +46,9 @@ use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapp
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBundleInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductCategoryInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTranslatorFacadeInterface;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
@@ -365,7 +370,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Gui\Communication\Table\AbstractTable
+     * @return \Spryker\Zed\ProductManagement\Communication\Table\ProductTable
      */
     public function createProductTable()
     {
@@ -533,6 +538,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     protected function getStoreFacade(): ProductManagementToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTranslatorFacadeInterface
+     */
+    public function getTranslatorFacade(): ProductManagementToTranslatorFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_TRANSLATOR);
     }
 
     /**
@@ -742,5 +755,30 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductAbstractTransferMapperPlugins(): array
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_TRANSFER_MAPPER);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createTableFilterForm(ProductTableCriteriaTransfer $productTableCriteriaTransfer, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            TableFilterForm::class,
+            $productTableCriteriaTransfer,
+            $options,
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\TableFilterFormDataProvider
+     */
+    public function createTableFilterFormDataProvider(): TableFilterFormDataProvider
+    {
+        return new TableFilterFormDataProvider(
+            $this->getStoreFacade(),
+        );
     }
 }
