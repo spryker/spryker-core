@@ -8,8 +8,6 @@ if [[ ! -d "$root_dir" ]]; then
   exit 1
 fi
 
-echo "🔍 Check module codeception.yml под $root_dir"
-
 modules=()
 for dir in "$root_dir"/*/; do
     yml_file="$dir/codeception.yml"
@@ -17,26 +15,16 @@ for dir in "$root_dir"/*/; do
     module_name=$(basename "$module_path")
 
     if [[ -f "$yml_file" ]]; then
-        if [[ -d "$module_path/tests/SprykerTest/Zed/codeception.yml" ]]; then
-            if ! grep -qE "tests/SprykerTest/Zed/$module_name" "$yml_file"; then
-                modules+=("$module_name")
+        layerNames=("Zed" "Glue" "Client" "Shared" "Yves")
+
+        for layerName in "${layerNames[@]}"; do
+            if [[ -f "$module_path/tests/SprykerTest/$layerName/$module_name/codeception.yml" ]]; then
+                if  ! grep -qE "tests/SprykerTest/$layerName/$module_name" "$yml_file" && \
+                    ! grep -qE "tests/SprykerTest/.*/$module_name" "$yml_file"; then
+                    modules+=("$module_name")
+                fi
             fi
-        fi
-        if [[ -d "$module_path/tests/SprykerTest/Glue/codeception.yml" ]]; then
-            if ! grep -qE "tests/SprykerTest/Glue/$module_name" "$yml_file"; then
-                modules+=("$module_name")
-            fi
-        fi
-        if [[ -d "$module_path/tests/SprykerTest/Client/codeception.yml" ]]; then
-            if ! grep -qE "tests/SprykerTest/Client/$module_name" "$yml_file"; then
-                modules+=("$module_name")
-            fi
-        fi
-        if [[ -d "$module_path/tests/SprykerTest/Shared/codeception.yml" ]]; then
-            if ! grep -qE "tests/SprykerTest/Shared/$module_name" "$yml_file"; then
-                modules+=("$module_name")
-            fi
-        fi
+        done
     fi
 done
 RED='\033[0;31m'
@@ -44,7 +32,7 @@ NC='\033[0m'
 
 if [ -n "$modules" ]; then
     echo -e "${RED}"
-    echo "Update include section in module codeception.yml for:" >&2
+    echo "Needs to update include section in module codeception.yml for:" >&2
     printf "%s\n" "${modules[@]}" | sort | uniq
     echo -e "${NC}"
     exit 1

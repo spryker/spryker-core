@@ -1,6 +1,10 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/Locale
+    - tests/SprykerTest/Glue/Locale
+    - tests/SprykerTest/Service/Locale
+    - tests/SprykerTest/Shared/Locale
+    - tests/SprykerTest/Yves/Locale
 paths:
     tests: tests
     support: .

@@ -1,6 +1,7 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/Store
+    - tests/SprykerTest/Shared/Store
 paths:
     tests: tests
     support: .

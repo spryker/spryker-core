@@ -1,6 +1,7 @@
 namespace: CustomerNote
 include:
     - tests/SprykerTest/Zed/CustomerNote
+    - tests/SprykerTest/Shared/CustomerNote
 paths:
     tests: tests
     output: tests/_output

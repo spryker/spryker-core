@@ -1,6 +1,7 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/ProductBundleStorage
+    - tests/SprykerTest/Client/ProductBundleStorage
 paths:
     tests: tests/
     output: tests/_output/

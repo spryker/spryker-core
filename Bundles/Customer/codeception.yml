@@ -3,6 +3,7 @@ include:
     - tests/SprykerTest/Zed/Customer
     - tests/SprykerTest/Client/Customer
     - tests/SprykerTest/Yves/Customer
+    - tests/SprykerTest/Shared/Customer
 
 paths:
     tests: tests

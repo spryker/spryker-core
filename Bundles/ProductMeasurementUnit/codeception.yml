@@ -1,6 +1,7 @@
 namespace: ProductMeasurementUnit
 include:
     - tests/SprykerTest/Zed/ProductMeasurementUnit
+    - tests/SprykerTest/Shared/ProductMeasurementUnit
 paths:
     tests: tests
     output: tests/_output

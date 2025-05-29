@@ -1,6 +1,7 @@
 namespace: ProductRelation
 include:
     - tests/SprykerTest/Zed/ProductRelation
+    - tests/SprykerTest/Shared/ProductRelation
 paths:
     tests: tests
     output: tests/_output

@@ -1,6 +1,7 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/Console
+    - tests/SprykerTest/Glue/Console
 paths:
     tests: tests
     support: .

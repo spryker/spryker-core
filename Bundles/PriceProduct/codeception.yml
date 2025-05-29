@@ -3,6 +3,7 @@ include:
     - tests/SprykerTest/Zed/PriceProduct
     - tests/SprykerTest/Service/PriceProduct
     - tests/SprykerTest/Client/PriceProduct
+    - tests/SprykerTest/Shared/PriceProduct
 paths:
     tests: tests
     support: .

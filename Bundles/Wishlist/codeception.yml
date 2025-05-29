@@ -1,6 +1,7 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/Wishlist
+    - tests/SprykerTest/Shared/Wishlist
 paths:
     tests: tests
     support: .

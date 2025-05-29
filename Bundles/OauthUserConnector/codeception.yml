@@ -1,6 +1,7 @@
 namespace: OauthUserConnector
 include:
     - tests/SprykerTest/Zed/OauthUserConnector
+    - tests/SprykerTest/Glue/OauthUserConnector
 paths:
     tests: tests
     output: tests/_output

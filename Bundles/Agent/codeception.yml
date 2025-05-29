@@ -1,6 +1,7 @@
 namespace: Agent
 include:
     - tests/SprykerTest/Zed/Agent
+    - tests/SprykerTest/Client/Agent
 paths:
     tests: tests
     output: tests/_output

@@ -16,7 +16,7 @@ extensions:
     enabled: [\SprykerTest\Shared\Testify\Helper\WebDriverHelper]
     config:
         \SprykerTest\Shared\Testify\Helper\WebDriverHelper:
-            suites: [ 'Presentation' ]
+            suites: ['Presentation']
             path: '%SPRYKER_TEST_WEB_DRIVER_BIN%'
             whitelisted-ips: ''
             webdriver-port: '%SPRYKER_TEST_WEB_DRIVER_PORT%'
@@ -26,7 +26,7 @@ extensions:
             browser: '%SPRYKER_TEST_IN_BROWSER%'
             capabilities:
                 'goog:chromeOptions':
-                    args: [ '--headless', '--no-sandbox', '--disable-dev-shm-usage' ]
+                    args: ['--headless', '--no-sandbox', '--disable-dev-shm-usage']
                     binary: '%SPRYKER_TEST_BROWSER_BIN%'
 params:
     - tests/default.yml

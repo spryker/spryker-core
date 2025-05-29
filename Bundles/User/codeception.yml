@@ -1,6 +1,7 @@
 namespace: User
 include:
     - tests/SprykerTest/Zed/User
+    - tests/SprykerTest/Shared/User
 paths:
     tests: tests
     output: tests/_output

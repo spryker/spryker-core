@@ -1,6 +1,7 @@
 namespace: ProductOfferServicePointStorage
 include:
     - tests/SprykerTest/Zed/ProductOfferServicePointStorage
+    - tests/SprykerTest/Client/ProductOfferServicePointStorage
 paths:
     tests: tests/
     output: tests/_output/

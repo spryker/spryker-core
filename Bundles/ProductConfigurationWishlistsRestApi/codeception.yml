@@ -1,6 +1,7 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/ProductConfigurationWishlistsRestApi
+    - tests/SprykerTest/Glue/ProductConfigurationWishlistsRestApi
 paths:
     tests: tests/
     output: tests/_output/
