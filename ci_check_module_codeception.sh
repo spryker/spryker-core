@@ -2,9 +2,14 @@
 
 set -e
 root_dir="$1"
+test_namespace="$2"
 
 if [[ ! -d "$root_dir" ]]; then
   echo "Specify an existing folder with modules"
+  exit 1
+fi
+if [[ -z "$test_namespace" ]]; then
+  echo "Specify a testing namespace"
   exit 1
 fi
 
@@ -16,11 +21,10 @@ for dir in "$root_dir"/*/; do
 
     if [[ -f "$yml_file" ]]; then
         layerNames=("Zed" "Glue" "Client" "Shared" "Yves")
-
         for layerName in "${layerNames[@]}"; do
-            if [[ -f "$module_path/tests/SprykerTest/$layerName/$module_name/codeception.yml" ]]; then
-                if  ! grep -qE "tests/SprykerTest/$layerName/$module_name" "$yml_file" && \
-                    ! grep -qE "tests/SprykerTest/.*/$module_name" "$yml_file"; then
+            if [[ -f "$module_path/tests/$test_namespace/$layerName/$module_name/codeception.yml" ]]; then
+                if  ! grep -qE "tests/$test_namespace/$layerName/$module_name" "$yml_file" && \
+                    ! grep -qE "tests/$test_namespace/.*/$module_name" "$yml_file"; then
                     modules+=("$module_name")
                 fi
             fi
