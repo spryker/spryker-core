@@ -1,6 +1,6 @@
 namespace: AgentSecurityBlockerMerchantPortalGui
 include:
-    - tests/SprykerTest/Zed/AgentSecurityBlockerBackofficeGui
+    - tests/SprykerTest/Zed/AgentSecurityBlockerMerchantPortalGui
 paths:
     tests: tests
     output: tests/_output

@@ -1,5 +1,7 @@
 namespace: OauthCodeFlow
 actor: Tester
+include:
+    - tests/SprykerTest/Zed/OauthCodeFlow
 paths:
     tests: tests
     output: tests/_output

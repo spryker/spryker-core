@@ -39,3 +39,13 @@
             - 'bash ci_check_touched_modules.sh'
             - 'echo "Finished checking touched modules"'
         shell: 'BASH'
+      - action: 'Module codeception include checker'
+        type: 'BUILD'
+        docker_image_name: 'spryker/php'
+        docker_image_tag: '8.3'
+        execute_commands:
+            - 'chmod +x *.sh'
+            - 'bash ci_check_module_codeception.sh Bundles'
+            - 'bash ci_check_module_codeception.sh Features'
+            - 'echo "Finished checking touched modules"'
+        shell: 'BASH'

@@ -1,10 +1,13 @@
 namespace: SprykerTest
+include:
+    - tests/SprykerTest/Zed/StoreGui
 paths:
     tests: tests/
     log: tests/_output/
     data: tests/_data/
     support: tests/_support/
     envs: tests/_envs/
+    output: tests/_output
 settings:
     suite_class: \PHPUnit\Framework\TestSuite
     colors: true

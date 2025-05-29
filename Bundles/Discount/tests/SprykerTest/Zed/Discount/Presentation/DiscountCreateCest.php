@@ -24,17 +24,6 @@ class DiscountCreateCest
 {
     /**
      * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
-     *
-     * @return void
-     */
-    public function _before(DiscountPresentationTester $i): void
-    {
-        $i->amZed();
-        $i->amLoggedInUser();
-    }
-
-    /**
-     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
      *
      * @return void
@@ -67,6 +56,8 @@ class DiscountCreateCest
      */
     public function createInvalidDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage): void
     {
+        $i->amZed();
+        $i->amLoggedInUser();
         $createPage->createDiscount(DiscountCreatePage::EMPTY_DISCOUNT, ['name' => null]);
         $i->dontSee($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
         $i->seeInCurrentUrl($createPage::URL);

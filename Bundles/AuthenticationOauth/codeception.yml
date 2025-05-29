@@ -1,5 +1,7 @@
 namespace: AuthenticationOauth
-actor: Tester
+include:
+    - tests/SprykerTest/Zed/AuthenticationOauth
+    - tests/SprykerTest/Client/AuthenticationOauth
 paths:
     tests: tests
     output: tests/_output
