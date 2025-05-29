@@ -11,8 +11,9 @@ interface SpecificationBuilderInterface
 {
     /**
      * @param string $queryString
+     * @param array<mixed> $metadata
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
-    public function buildFromQueryString($queryString);
+    public function buildFromQueryString($queryString, array $metadata = []);
 }

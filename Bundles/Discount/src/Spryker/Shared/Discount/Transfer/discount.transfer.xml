@@ -108,6 +108,7 @@
         <property name="operator" type="string"/>
         <property name="value" type="string"/>
         <property name="acceptedTypes" type="array" singular="acceptedTypes"/>
+        <property name="metadata" type="array" singular="metadata" strict="true"/>
     </transfer>
 
     <transfer name="VoucherCreateInfo">

@@ -29,6 +29,11 @@ class Discount implements DiscountInterface
     /**
      * @var string
      */
+    protected const METADATA_KEY_ID_DISCOUNT = 'id_discount';
+
+    /**
+     * @var string
+     */
     protected const ITEM_QUANTITY_DECISION_RULE = 'item-quantity';
 
     /**
@@ -263,8 +268,9 @@ class Discount implements DiscountInterface
         $isDiscountApplicable = false;
 
         try {
+            $metadata = [static::METADATA_KEY_ID_DISCOUNT => $discountEntity->getIdDiscount()];
             /** @var \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $compositeSpecification */
-            $compositeSpecification = $this->decisionRuleBuilder->buildFromQueryString($queryString);
+            $compositeSpecification = $this->decisionRuleBuilder->buildFromQueryString($queryString, $metadata);
 
             $minimumItemAmount = $discountEntity->getMinimumItemAmount();
             $matchedProductAmount = 0;

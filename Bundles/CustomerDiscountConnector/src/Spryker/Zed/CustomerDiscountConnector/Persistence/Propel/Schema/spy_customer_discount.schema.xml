@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CustomerDiscountConnector\Persistence" package="src.Orm.Zed.CustomerDiscountConnector.Persistence">
+
+    <table name="spy_customer_discount" idMethod="native">
+        <column name="id_customer_discount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_customer" type="INTEGER" required="true"/>
+        <column name="fk_discount" type="INTEGER" required="true"/>
+
+        <foreign-key name="spy_customer_discount-fk_customer" foreignTable="spy_customer" phpName="Customer">
+            <reference local="fk_customer" foreign="id_customer"/>
+        </foreign-key>
+
+        <foreign-key name="spy_customer_discount-fk_discount" foreignTable="spy_discount" phpName="Discount" onDelete="CASCADE">
+            <reference local="fk_discount" foreign="id_discount"/>
+        </foreign-key>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_customer_discount_pk_seq"/>
+    </table>
+
+</database>
