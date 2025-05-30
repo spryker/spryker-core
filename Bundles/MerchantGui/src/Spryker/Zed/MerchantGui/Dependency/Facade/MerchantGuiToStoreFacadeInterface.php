@@ -7,15 +7,10 @@
 
 namespace Spryker\Zed\MerchantGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreCollectionTransfer;
-use Generated\Shared\Transfer\StoreCriteriaTransfer;
-
 interface MerchantGuiToStoreFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StoreCriteriaTransfer $storeCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreCollectionTransfer
+     * @return list<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getStoreCollection(StoreCriteriaTransfer $storeCriteriaTransfer): StoreCollectionTransfer;
+    public function getAllStores(): array;
 }

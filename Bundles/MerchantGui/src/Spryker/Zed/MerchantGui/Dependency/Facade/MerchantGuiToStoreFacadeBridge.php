@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\MerchantGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreCollectionTransfer;
-use Generated\Shared\Transfer\StoreCriteriaTransfer;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 class MerchantGuiToStoreFacadeBridge implements MerchantGuiToStoreFacadeInterface
@@ -27,12 +25,10 @@ class MerchantGuiToStoreFacadeBridge implements MerchantGuiToStoreFacadeInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreCriteriaTransfer $storeCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreCollectionTransfer
+     * @return list<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getStoreCollection(StoreCriteriaTransfer $storeCriteriaTransfer): StoreCollectionTransfer
+    public function getAllStores(): array
     {
-        return $this->storeFacade->getStoreCollection($storeCriteriaTransfer);
+        return $this->storeFacade->getAllStores();
     }
 }

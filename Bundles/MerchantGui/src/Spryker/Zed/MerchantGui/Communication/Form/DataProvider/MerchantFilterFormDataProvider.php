@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\StoreCriteriaTransfer;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToStoreFacadeInterface;
 
 class MerchantFilterFormDataProvider
@@ -72,10 +71,10 @@ class MerchantFilterFormDataProvider
      */
     protected function getStoreChoices(): array
     {
-        $storeCollection = $this->storeFacade->getStoreCollection(new StoreCriteriaTransfer());
+        $storeTransfers = $this->storeFacade->getAllStores();
         $storeChoices = [];
 
-        foreach ($storeCollection->getStores() as $storeTransfer) {
+        foreach ($storeTransfers as $storeTransfer) {
             $storeName = $storeTransfer->getNameOrFail();
             $storeChoices[$storeName] = $storeName;
         }

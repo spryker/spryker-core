@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\DiscountTableCriteriaTransfer;
-use Generated\Shared\Transfer\StoreCriteriaTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface;
 
@@ -84,10 +83,10 @@ class TableFilterFormDataProvider
      */
     protected function getStoreChoices(): array
     {
-        $storeCollection = $this->storeFacade->getStoreCollection(new StoreCriteriaTransfer());
+        $storeTransfers = $this->storeFacade->getAllStores();
         $storeChoices = [];
 
-        foreach ($storeCollection->getStores() as $storeTransfer) {
+        foreach ($storeTransfers as $storeTransfer) {
             $storeChoices[$storeTransfer->getNameOrFail()] = $storeTransfer->getIdStoreOrFail();
         }
 

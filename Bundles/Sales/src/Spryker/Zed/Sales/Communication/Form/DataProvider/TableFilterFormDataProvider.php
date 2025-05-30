@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Sales\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\OrderTableCriteriaTransfer;
-use Generated\Shared\Transfer\StoreCriteriaTransfer;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
@@ -76,10 +75,10 @@ class TableFilterFormDataProvider
      */
     protected function getStoreChoices(): array
     {
-        $storeCollection = $this->storeFacade->getStoreCollection(new StoreCriteriaTransfer());
+        $storeTransfers = $this->storeFacade->getAllStores();
         $storeChoices = [];
 
-        foreach ($storeCollection->getStores() as $storeTransfer) {
+        foreach ($storeTransfers as $storeTransfer) {
             $storeName = $storeTransfer->getNameOrFail();
             $storeChoices[$storeName] = $storeName;
         }

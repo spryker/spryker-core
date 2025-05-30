@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\StoreCriteriaTransfer;
 use Spryker\Shared\ProductOfferGui\ProductOfferApprovalStatusEnum;
 use Spryker\Shared\ProductOfferGui\ProductOfferStatusEnum;
 use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferFacadeInterface;
@@ -79,9 +78,9 @@ class TableFilterFormDataProvider
     public function getStoreChoices(): array
     {
         $storeChoices = [];
-        $storeCollectionTransfer = $this->storeFacade->getStoreCollection(new StoreCriteriaTransfer());
+        $storeTransfers = $this->storeFacade->getAllStores();
 
-        foreach ($storeCollectionTransfer->getStores() as $storeTransfer) {
+        foreach ($storeTransfers as $storeTransfer) {
             $storeChoices[$storeTransfer->getName()] = $storeTransfer->getIdStoreOrFail();
         }
 

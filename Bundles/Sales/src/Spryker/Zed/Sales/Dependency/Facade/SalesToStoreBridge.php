@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreCollectionTransfer;
-use Generated\Shared\Transfer\StoreCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 class SalesToStoreBridge implements SalesToStoreInterface
@@ -35,12 +33,10 @@ class SalesToStoreBridge implements SalesToStoreInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreCriteriaTransfer $storeCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreCollectionTransfer
+     * @return list<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getStoreCollection(StoreCriteriaTransfer $storeCriteriaTransfer): StoreCollectionTransfer
+    public function getAllStores(): array
     {
-        return $this->storeFacade->getStoreCollection($storeCriteriaTransfer);
+        return $this->storeFacade->getAllStores();
     }
 }

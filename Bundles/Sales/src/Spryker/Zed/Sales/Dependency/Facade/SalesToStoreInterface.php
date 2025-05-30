@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreCollectionTransfer;
-use Generated\Shared\Transfer\StoreCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface SalesToStoreInterface
@@ -19,9 +17,7 @@ interface SalesToStoreInterface
     public function getCurrentStore(): StoreTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\StoreCriteriaTransfer $storeCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreCollectionTransfer
+     * @return list<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getStoreCollection(StoreCriteriaTransfer $storeCriteriaTransfer): StoreCollectionTransfer;
+    public function getAllStores(): array;
 }
