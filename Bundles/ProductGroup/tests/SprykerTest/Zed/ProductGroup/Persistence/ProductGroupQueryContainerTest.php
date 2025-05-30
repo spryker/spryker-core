@@ -12,6 +12,7 @@ use Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery;
 use Orm\Zed\ProductGroup\Persistence\SpyProductGroupQuery;
 use Spryker\Zed\ProductGroup\Persistence\ProductGroupPersistenceFactory;
 use Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainer;
+use SprykerTest\Zed\ProductGroup\ProductGroupPersistenceTester;
 
 /**
  * Auto-generated group annotations
@@ -25,6 +26,8 @@ use Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainer;
  */
 class ProductGroupQueryContainerTest extends Unit
 {
+    protected ProductGroupPersistenceTester $tester;
+
     /**
      * @return void
      */
@@ -33,6 +36,7 @@ class ProductGroupQueryContainerTest extends Unit
         $productGroupQueryContainer = new ProductGroupQueryContainer();
         $productGroupQueryContainer->setFactory(new ProductGroupPersistenceFactory());
         $query = $productGroupQueryContainer->queryAllProductAbstractGroups();
+//        $query = $this->tester->getFactory()->createProductGroupQuery()->queryAllProductAbstractGroups();
 
         $this->assertInstanceOf(SpyProductAbstractGroupQuery::class, $query);
     }

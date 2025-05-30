@@ -2,6 +2,7 @@ namespace: SprykerTest
 include:
     - tests/SprykerTest/AsyncApi/Asset
     - tests/SprykerTest/Zed/Asset
+    - tests/SprykerTest/Shared/Asset
 paths:
     tests: tests/
     output: tests/_output/

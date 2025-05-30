@@ -11,9 +11,12 @@
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
+        "spryker/application": "*",
         "spryker/calculation": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/currency": "*",
+        "spryker/locale": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
         "spryker/store": "*",

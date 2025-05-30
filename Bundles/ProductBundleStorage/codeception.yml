@@ -1,6 +1,7 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/ProductBundleStorage
+    - tests/SprykerTest/Client/ProductBundleStorage
 paths:
     tests: tests/
     output: tests/_output/
@@ -12,10 +13,3 @@ settings:
     colors: true
     memory_limit: 1024M
     log: true
-extensions:
-    enabled:
-        - SprykerTest\Shared\Testify\Helper\WebDriverHelper
-    config:
-        SprykerTest\Shared\Testify\Helper\WebDriverHelper:
-            suites:
-                - Presentation

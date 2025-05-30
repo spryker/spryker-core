@@ -1,5 +1,7 @@
 namespace: Authentication
-actor: Tester
+include:
+    - tests/SprykerTest/Zed/Authentication
+    - tests/SprykerTest/Client/Authentication
 paths:
     tests: tests
     output: tests/_output

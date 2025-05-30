@@ -1,6 +1,10 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/Locale
+    - tests/SprykerTest/Glue/Locale
+    - tests/SprykerTest/Service/Locale
+    - tests/SprykerTest/Shared/Locale
+    - tests/SprykerTest/Yves/Locale
 paths:
     tests: tests
     support: .
@@ -12,6 +16,3 @@ settings:
     colors: true
     memory_limit: 1024M
     log: true
-extensions:
-    enabled: [SprykerTest\Shared\Testify\Helper\WebDriverHelper]
-    config: { SprykerTest\Shared\Testify\Helper\WebDriverHelper: { suites: [Presentation] } }

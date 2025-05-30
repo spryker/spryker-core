@@ -1,7 +1,11 @@
 namespace: SprykerTest
+include:
+    - tests/SprykerTest/Zed/MultiFactorAuth
+    - tests/SprykerTest/Shared/MultiFactorAuth
 paths:
     tests: tests/
     log: tests/_output/
+    output: tests/_output
     data: tests/_data/
     support: tests/_support/
     envs: tests/_envs/

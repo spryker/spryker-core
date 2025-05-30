@@ -1,6 +1,7 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/ServicePointSearch
+    - tests/SprykerTest/Client/ServicePointSearch
 paths:
     tests: tests/
     output: tests/_output/

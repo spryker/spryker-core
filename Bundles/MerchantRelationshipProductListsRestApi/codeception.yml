@@ -1,6 +1,7 @@
 namespace: MerchantRelationshipProductListsRestApi
 include:
     - tests/SprykerTest/Zed/MerchantRelationshipProductListsRestApi
+    - tests/SprykerTest/Glue/MerchantRelationshipProductListsRestApi
 paths:
     tests: tests
     output: tests/_output

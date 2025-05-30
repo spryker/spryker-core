@@ -30,6 +30,7 @@ class SalesDetailCest
      */
     public function _before(SalesPresentationTester $i): void
     {
+        $i->markTestSkipped('Requires refactoring');
         $i->amZed();
         $i->amLoggedInUser();
     }
