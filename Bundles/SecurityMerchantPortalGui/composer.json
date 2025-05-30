@@ -18,7 +18,7 @@
         "spryker/transfer": "^3.27.0",
         "spryker/user-merchant-portal-gui-extension": "^1.0.0",
         "spryker/validator": "^1.6.0",
-        "spryker/zed-ui": "^3.0.0"
+        "spryker/zed-ui": "^3.3.0"
     },
     "require-dev": {
         "spryker/acl": "*",

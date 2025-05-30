@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { EditConcreteProductImageSetsComponent } from './edit-concrete-product-image-sets.component';
@@ -20,7 +20,7 @@ describe('EditConcreteProductImageSetsComponent', () => {
     let component: TestComponent;
     let fixture: ComponentFixture<TestComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [EditConcreteProductImageSetsComponent, TestComponent],
             schemas: [NO_ERRORS_SCHEMA],

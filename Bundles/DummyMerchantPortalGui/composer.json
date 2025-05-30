@@ -8,7 +8,7 @@
         "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/kernel": "^3.33.0",
         "spryker/symfony": "^3.0.0",
-        "spryker/zed-ui": "^3.0.0"
+        "spryker/zed-ui": "^3.3.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*"

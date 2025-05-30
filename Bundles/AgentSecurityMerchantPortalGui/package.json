@@ -3,13 +3,13 @@
     "version": "0.0.1",
     "private": true,
     "peerDependencies": {
-        "@angular/common": "^17.3.0",
-        "@angular/core": "^17.3.0"
+        "@angular/common": ">=17.3.0 <19.0.0",
+        "@angular/core": ">=17.3.0 <19.0.0"
     },
     "dependencies": {
-        "@spryker/card": "^2.0.0",
-        "@spryker/logo": "^2.0.0",
-        "@spryker/styles": "^2.0.0",
-        "@spryker/web-components": "^2.0.0"
+        "@spryker/card": "^2.0.2",
+        "@spryker/logo": "^2.0.2",
+        "@spryker/styles": "^2.0.11",
+        "@spryker/web-components": "^2.0.9"
     }
 }

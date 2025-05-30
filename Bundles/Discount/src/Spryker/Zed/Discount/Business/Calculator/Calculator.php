@@ -257,11 +257,13 @@ class Calculator implements CalculatorInterface
 
         try {
             $collectorQueryString = $discountTransfer->getCollectorQueryString();
+            $metadata = ['id_discount' => $discountTransfer->getIdDiscount()];
 
             /** @var \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $collectorComposite */
             $collectorComposite = $this->collectorBuilder
                 ->buildFromQueryString(
                     $collectorQueryString,
+                    $metadata,
                 );
 
             return $collectorComposite->collect($quoteTransfer);

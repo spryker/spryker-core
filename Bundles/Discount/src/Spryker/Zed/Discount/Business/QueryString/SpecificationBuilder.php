@@ -82,31 +82,36 @@ class SpecificationBuilder implements SpecificationBuilderInterface
 
     /**
      * @param string $queryString
+     * @param array<mixed> $metadata
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
-    public function buildFromQueryString($queryString)
+    public function buildFromQueryString($queryString, array $metadata = [])
     {
         $tokens = $this->tokenizer->tokenizeQueryString($queryString);
+        $currentTokenIndex = 0;
+        $parenthesisDepth = 0;
 
-        return $this->buildTree($tokens);
+        return $this->buildTree($tokens, $currentTokenIndex, $parenthesisDepth, $metadata);
     }
 
     /**
      * @param array<string> $tokens
      * @param int $currentTokenIndex
      * @param int $parenthesisDepth
+     * @param array<mixed> $metadata
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
-    protected function buildTree(array $tokens, &$currentTokenIndex = 0, &$parenthesisDepth = 0)
+    protected function buildTree(array $tokens, &$currentTokenIndex = 0, &$parenthesisDepth = 0, array $metadata = [])
     {
         $leftNode = null;
         $compositeNode = null;
         $lastLogicalComparator = null;
         $clauseTransfer = new ClauseTransfer();
+        $clauseTransfer->setMetadata($metadata);
 
         $countTokens = count($tokens);
 
@@ -117,7 +122,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
                 case $token === static::OPEN_PARENTHESIS:
                     $parenthesisDepth++;
                     $currentTokenIndex++;
-                    $childTree = $this->buildTree($tokens, $currentTokenIndex, $parenthesisDepth);
+                    $childTree = $this->buildTree($tokens, $currentTokenIndex, $parenthesisDepth, $metadata);
 
                     if ($leftNode === null) {
                         $leftNode = $childTree;
@@ -140,6 +145,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
                     break;
                 case $this->isField($token):
                     $clauseTransfer = new ClauseTransfer();
+                    $clauseTransfer->setMetadata($metadata);
                     $this->setClauseField($token, $clauseTransfer);
 
                     break;

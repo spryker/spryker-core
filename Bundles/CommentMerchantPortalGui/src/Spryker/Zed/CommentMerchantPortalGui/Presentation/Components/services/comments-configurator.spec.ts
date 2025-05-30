@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 import { Injectable, NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { CommentsConfiguratorService } from './comments-configurator';
+import { provideHttpClient } from '@angular/common/http';
 
 @Injectable()
 class MockInjector {
@@ -45,8 +45,7 @@ describe('CommentsConfiguratorService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [MockInjector, CommentsConfiguratorService],
+            providers: [provideHttpClient(), provideHttpClientTesting(), MockInjector, CommentsConfiguratorService],
             schemas: [NO_ERRORS_SCHEMA],
             teardown: { destroyAfterEach: false },
         });
