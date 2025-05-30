@@ -3,25 +3,25 @@
     "version": "0.0.1",
     "private": true,
     "peerDependencies": {
-        "@angular/animations": "^17.3.0",
-        "@angular/cdk": "^17.3.0",
-        "@angular/common": "^17.3.0",
-        "@angular/core": "^17.3.0",
-        "@angular/elements": "^17.3.0",
-        "@angular/forms": "^17.3.0",
-        "@angular/platform-browser": "^17.3.0",
+        "@angular/animations": ">=17.3.0 <19.0.0",
+        "@angular/cdk": ">=17.3.0 <19.0.0",
+        "@angular/common": ">=17.3.0 <19.0.0",
+        "@angular/core": ">=17.3.0 <19.0.0",
+        "@angular/elements": ">=17.3.0 <19.0.0",
+        "@angular/forms": ">=17.3.0 <19.0.0",
+        "@angular/platform-browser": ">=17.3.0 <19.0.0",
         "rxjs": "~7.8.1"
     },
     "dependencies": {
-        "@spryker/button": "^2.0.0",
-        "@spryker/card": "^2.0.0",
-        "@spryker/chips": "^2.0.0",
-        "@spryker/date-picker": "^2.0.0",
-        "@spryker/headline": "^2.0.0",
-        "@spryker/styles": "^2.0.0",
-        "@spryker/table": "^2.0.0",
-        "@spryker/unsaved-changes.monitor.form": "^2.0.0",
-        "@spryker/utils": "^2.0.0",
-        "@spryker/web-components": "^2.0.0"
+        "@spryker/button": "^2.0.9",
+        "@spryker/card": "^2.0.2",
+        "@spryker/chips": "^2.0.4",
+        "@spryker/date-picker": "^2.0.2",
+        "@spryker/headline": "^2.0.2",
+        "@spryker/styles": "^2.0.11",
+        "@spryker/table": "^2.0.8",
+        "@spryker/unsaved-changes.monitor.form": "^2.0.8",
+        "@spryker/utils": "^2.0.8",
+        "@spryker/web-components": "^2.0.9"
     }
 }

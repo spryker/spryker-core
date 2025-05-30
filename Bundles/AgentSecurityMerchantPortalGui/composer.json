@@ -17,7 +17,7 @@
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.27.0",
         "spryker/user": "^3.21.0",
-        "spryker/zed-ui": "^3.0.0"
+        "spryker/zed-ui": "^3.3.0"
     },
     "require-dev": {
         "spryker/application": "*",

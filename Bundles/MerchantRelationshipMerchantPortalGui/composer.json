@@ -16,7 +16,7 @@
         "spryker/transfer": "^3.27.0",
         "spryker/translator": "^1.1.0",
         "spryker/twig": "^3.0.0",
-        "spryker/zed-ui": "^3.0.0"
+        "spryker/zed-ui": "^3.3.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*"
