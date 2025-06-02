@@ -9,6 +9,7 @@ namespace Spryker\Yves\Twig;
 
 use Spryker\Shared\Twig\Cache\Cache\FilesystemCache;
 use Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader;
+use Spryker\Shared\Twig\Cache\CacheLoaderInterface;
 use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
 use Spryker\Shared\Twig\Extender\FilterExtender;
 use Spryker\Shared\Twig\Extender\FilterExtenderInterface;
@@ -21,6 +22,8 @@ use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Twig\Model\TemplateNameExtractor\TemplateNameExtractor;
+use Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin;
+use Twig\Environment;
 use Twig\Loader\ChainLoader;
 
 /**
@@ -65,7 +68,7 @@ class TwigFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Twig\Cache\CacheLoaderInterface
      */
-    protected function createFilesystemCacheLoader()
+    public function createFilesystemCacheLoader(): CacheLoaderInterface
     {
         return new FilesystemCacheLoader($this->getConfig()->getCacheFilePath());
     }
@@ -146,5 +149,13 @@ class TwigFactory extends AbstractFactory
     public function getTwigLoaderPlugins(): array
     {
         return $this->getProvidedDependency(TwigDependencyProvider::PLUGINS_TWIG_LOADER);
+    }
+
+    /**
+     * @return \Twig\Environment
+     */
+    public function getTwigEnvironment(): Environment
+    {
+        return $this->getContainer()->getApplicationService(TwigApplicationPlugin::SERVICE_TWIG);
     }
 }

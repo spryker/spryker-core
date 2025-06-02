@@ -44,4 +44,14 @@ class LocaleConfig extends AbstractBundleConfig
     {
         return $this->get(LocaleConstants::IS_STORE_ROUTING_ENABLED, false);
     }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getConsoleDefaultLocale(): string
+    {
+        return 'en_US';
+    }
 }

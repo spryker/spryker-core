@@ -3,8 +3,10 @@
 
 {{ mail.availabilityNotificationSubscriptionMailData.productName }}
 
-{% for name, value in mail.availabilityNotificationSubscriptionMailData.productConcrete.attributes if name %}
-    {{ ('product.attribute.' ~ name) | trans }}: {{ value }}
+{% for name, value in mail.availabilityNotificationSubscriptionMailData.productConcrete.attributes %}
+    {% if name %}
+        {{ ('product.attribute.' ~ name) | trans }}: {{ value }}
+    {% endif %}
 {% endfor %}
 
 {{ mail.availabilityNotificationSubscriptionMailData.productAttributes.price ?? '' }}

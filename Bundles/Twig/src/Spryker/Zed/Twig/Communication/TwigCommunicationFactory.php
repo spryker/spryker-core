@@ -10,6 +10,7 @@ namespace Spryker\Zed\Twig\Communication;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Twig\Cache\Cache\FilesystemCache;
 use Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader;
+use Spryker\Shared\Twig\Cache\CacheLoaderInterface;
 use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
 use Spryker\Shared\Twig\Extender\FilterExtender;
 use Spryker\Shared\Twig\Extender\FilterExtenderInterface;
@@ -22,11 +23,13 @@ use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Zed\Twig\Communication\RouteResolver\RouteResolver;
 use Spryker\Zed\Twig\Communication\RouteResolver\RouteResolverInterface;
 use Spryker\Zed\Twig\Communication\Subscriber\TwigEventSubscriber;
 use Spryker\Zed\Twig\TwigDependencyProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Twig\Environment;
 use Twig\Loader\ChainLoader;
 
 /**
@@ -122,7 +125,7 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Shared\Twig\Cache\CacheLoaderInterface
      */
-    protected function createFilesystemCacheLoader()
+    public function createFilesystemCacheLoader(): CacheLoaderInterface
     {
         return new FilesystemCacheLoader($this->getConfig()->getCacheFilePath());
     }
@@ -179,5 +182,13 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
     public function createEnvironmentCoreExtension(): EnvironmentCoreExtensionInterface
     {
         return new EnvironmentCoreExtension();
+    }
+
+    /**
+     * @return \Twig\Environment
+     */
+    public function getTwigEnvironment(): Environment
+    {
+        return $this->getContainer()->getApplicationService(TwigApplicationPlugin::SERVICE_TWIG);
     }
 }

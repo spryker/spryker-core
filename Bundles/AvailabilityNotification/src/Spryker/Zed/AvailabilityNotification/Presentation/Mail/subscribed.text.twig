@@ -4,8 +4,10 @@
 
 {{ mail.availabilityNotificationSubscriptionMailData.productAttributes.price ?? '' }}
 
-{% for name, value in mail.availabilityNotificationSubscriptionMailData.productConcrete.attributes if name %}
-    {{ ('product.attribute.' ~ name) | trans }}: {{ value }}
+{% for name, value in mail.availabilityNotificationSubscriptionMailData.productConcrete.attributes %}
+    {% if name %}
+        {{ ('product.attribute.' ~ name) | trans }}: {{ value }}
+    {% endif %}
 {% endfor %}
 
 {% embed '@AvailabilityNotification/mail/footer.text.twig' %}{% endembed %}
