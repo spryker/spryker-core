@@ -15,6 +15,8 @@ use Spryker\Zed\Gui\Communication\Filter\NumberFormatterTwigFilterFactory;
 use Spryker\Zed\Gui\Communication\Filter\NumberFormatterTwigFilterFactoryInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\SanitizeXssTypeExtension;
+use Spryker\Zed\Gui\Communication\NavigationLink\NavigationLinkGenerator;
+use Spryker\Zed\Gui\Communication\NavigationLink\NavigationLinkGeneratorInterface;
 use Spryker\Zed\Gui\Dependency\Service\GuiToUtilNumberServiceInterface;
 use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface;
 use Spryker\Zed\Gui\GuiDependencyProvider;
@@ -92,5 +94,23 @@ class GuiCommunicationFactory extends AbstractCommunicationFactory
     public function getUtilNumberService(): GuiToUtilNumberServiceInterface
     {
         return $this->getProvidedDependency(GuiDependencyProvider::SERVICE_UTIL_NUMBER);
+    }
+
+    /**
+     * @return array<\Spryker\Shared\GuiExtension\Dependency\Plugin\NavigationPluginInterface>
+     */
+    public function getNavigationPlugins(): array
+    {
+        return $this->getProvidedDependency(GuiDependencyProvider::PLUGINS_DROPDOWN_NAVIGATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\NavigationLink\NavigationLinkGeneratorInterface
+     */
+    public function createNavigationLinkGenerator(): NavigationLinkGeneratorInterface
+    {
+        return new NavigationLinkGenerator(
+            $this->getNavigationPlugins(),
+        );
     }
 }

@@ -18,3 +18,10 @@ suites:
         modules:
             enabled:
                 - Asserts
+
+    Communication:
+        path: Communication
+        actor: MultiFactorAuthCommunicationTester
+        modules:
+            enabled:
+                - Asserts

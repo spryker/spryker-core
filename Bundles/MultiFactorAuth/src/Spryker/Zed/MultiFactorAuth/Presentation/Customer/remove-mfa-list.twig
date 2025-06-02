@@ -1,0 +1,39 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title %}{{ 'Deactivate Multi-Factor Authentication' | trans }}{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Deactivate Multi-Factor Authentication' | trans } %}
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'Type' | trans }}</th>
+                                        <th>{{ 'Actions' | trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for multiFactorAuthType in multiFactorAuthTypesCollection.multiFactorAuthTypes %}
+                                        <tr>
+                                            <td>{{ multiFactorAuthType.type }}</td>
+                                            <td>
+                                                <form method="post" action="{{ url('/multi-factor-auth/customer/remove-mfa', {'id-customer': idCustomer, 'type': multiFactorAuthType.type}) }}" style="display: inline;">
+                                                    <input type="hidden" name="_csrf_token" value="{{ csrfTokenDeactivate }}">
+                                                    <button class="btn btn-danger btn-sm">{{ 'Deactivate' | trans }}</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

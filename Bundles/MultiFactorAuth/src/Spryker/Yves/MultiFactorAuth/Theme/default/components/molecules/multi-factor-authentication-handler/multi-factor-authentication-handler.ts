@@ -3,7 +3,7 @@ import MainPopup, { EVENT_POPUP_CLOSED, EVENT_CLOSE_POPUP } from 'ShopUi/compone
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 
 interface AuthResponse {
-    requiresAdditionalAuth?: boolean;
+    requires_additional_auth?: boolean;
 }
 
 export default class MultiFactorAuthenticationHandler extends Component {
@@ -19,6 +19,7 @@ export default class MultiFactorAuthenticationHandler extends Component {
     protected readonly CONTENT_SELECTOR = '.multi-factor-authentication-content';
     protected readonly CLOSE_POPUP_ATTR = 'data-close-popup';
     protected readonly ERROR_ATTR = 'data-error';
+    protected readonly SUCCESS_ATTR = 'data-success';
     protected readonly SINGLE_CLICK_BTN = 'button[data-init-single-click]';
     protected readonly JS_MULTI_FACTOR_AUTHENTICATION_HANDLER_FIELD = '[multi_factor_auth_enabled]';
 
@@ -74,7 +75,7 @@ export default class MultiFactorAuthenticationHandler extends Component {
             if (contentType?.includes('application/json')) {
                 const responseParams: AuthResponse = await response.json();
 
-                return responseParams.requiresAdditionalAuth === true;
+                return responseParams.requires_additional_auth === true;
             }
         } catch (error) {
             console.error('Error checking additional auth requirement:', error);
@@ -164,6 +165,11 @@ export default class MultiFactorAuthenticationHandler extends Component {
             const formData = new FormData(popupForm);
             const content = await this.ajaxProviderDynamic.fetch(formData);
 
+            if (content.toString().includes(this.SUCCESS_ATTR)) {
+                this.closePopupOnSuccess();
+                return;
+            }
+
             if (content.toString().includes(this.ERROR_ATTR)) {
                 this.closePopupOnError();
                 return;
@@ -184,6 +190,17 @@ export default class MultiFactorAuthenticationHandler extends Component {
 
     protected closePopup(): void {
         this.popup.dispatchEvent(new CustomEvent(EVENT_CLOSE_POPUP));
+        this.form.submit();
+    }
+
+    protected closePopupOnSuccess(): void {
+        this.popup.dispatchEvent(new CustomEvent(EVENT_CLOSE_POPUP));
+
+        if (this.isLoginFlow) {
+            location.reload();
+            return;
+        }
+
         this.form.submit();
     }
 

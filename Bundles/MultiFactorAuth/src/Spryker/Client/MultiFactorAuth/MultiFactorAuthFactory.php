@@ -9,6 +9,8 @@ namespace Spryker\Client\MultiFactorAuth;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\MultiFactorAuth\Dependency\Client\MultiFactorAuthToZedRequestClientInterface;
+use Spryker\Client\MultiFactorAuth\Zed\Agent\AgentMultiFactorAuthStub;
+use Spryker\Client\MultiFactorAuth\Zed\Agent\AgentMultiFactorAuthStubInterface;
 use Spryker\Client\MultiFactorAuth\Zed\Customer\CustomerMultiFactorAuthStub;
 use Spryker\Client\MultiFactorAuth\Zed\Customer\CustomerMultiFactorAuthStubInterface;
 
@@ -20,6 +22,16 @@ class MultiFactorAuthFactory extends AbstractFactory
     public function createCustomerMultiFactorAuthStub(): CustomerMultiFactorAuthStubInterface
     {
         return new CustomerMultiFactorAuthStub(
+            $this->getZedRequestClient(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\MultiFactorAuth\Zed\Agent\AgentMultiFactorAuthStubInterface
+     */
+    public function createAgentMultiFactorAuthStub(): AgentMultiFactorAuthStubInterface
+    {
+        return new AgentMultiFactorAuthStub(
             $this->getZedRequestClient(),
         );
     }

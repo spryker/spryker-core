@@ -1,0 +1,17 @@
+{% extends template('widget') %}
+
+{% define data = {
+    form: _view.form,
+    title: 'multi_factor_auth.code.validation' | trans,
+} %}
+
+{% block body %}
+    {% include molecule('multi-factor-authentication-content', 'MultiFactorAuth') with {
+        data: {
+            form: data.form ? data.form : null,
+            title: data.title,
+            url: '/multi-factor-auth/send-user-code',
+            submitText: 'multi_factor_auth.verify_code' | trans,
+        },
+    } only %}
+{% endblock %}

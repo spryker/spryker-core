@@ -17,7 +17,7 @@ class CustomerCodeSender implements CodeSenderInterface
     /**
      * @param \Spryker\Zed\MultiFactorAuth\Persistence\MultiFactorAuthEntityManagerInterface $entityManager
      * @param \Spryker\Zed\MultiFactorAuth\Business\Generator\CodeGeneratorInterface $codeGenerator
-     * @param array<\Spryker\Zed\MultiFactorAuth\Business\Strategy\SendStrategyInterface> $sendStrategies
+     * @param array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\SendStrategyPluginInterface> $sendStrategies
      */
     public function __construct(
         protected MultiFactorAuthEntityManagerInterface $entityManager,

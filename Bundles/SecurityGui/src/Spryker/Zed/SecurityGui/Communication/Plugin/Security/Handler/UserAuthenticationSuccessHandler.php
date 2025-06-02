@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\SecurityGui\Communication\Plugin\Security\Handler;
 
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +34,16 @@ class UserAuthenticationSuccessHandler extends AbstractPlugin implements Authent
     protected const SECURITY_FIREWALL_NAME = 'User';
 
     /**
+     * @var string
+     */
+    protected const PARAMETER_REQUIRES_ADDITIONAL_AUTH = 'requires_additional_auth';
+
+    /**
+     * @var string
+     */
+    protected const ACCESS_MODE_PRE_AUTH = 'ACCESS_MODE_PRE_AUTH';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      *
@@ -39,13 +51,29 @@ class UserAuthenticationSuccessHandler extends AbstractPlugin implements Authent
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
     {
+        if (in_array(static::ACCESS_MODE_PRE_AUTH, $token->getRoleNames())) {
+            return new JsonResponse([
+                static::PARAMETER_REQUIRES_ADDITIONAL_AUTH => true,
+            ]);
+        }
+
         /** @var \Spryker\Zed\SecurityGui\Communication\Security\User $user */
         $user = $token->getUser();
-        $this->getFacade()->authenticateUser($user->getUserTransfer());
-
-        $this->getFactory()->createAuditLogger()->addSuccessfulLoginAuditLog();
+        $this->executeOnAuthenticationSuccess($user->getUserTransfer());
 
         return $this->createRedirectResponse($request);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return void
+     */
+    public function executeOnAuthenticationSuccess(UserTransfer $userTransfer): void
+    {
+        $this->getFacade()->authenticateUser($userTransfer);
+
+        $this->getFactory()->createAuditLogger()->addSuccessfulLoginAuditLog();
     }
 
     /**

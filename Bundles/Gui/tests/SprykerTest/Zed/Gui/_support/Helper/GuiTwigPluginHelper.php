@@ -25,6 +25,7 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\ViewTableButtonTwigP
 use Spryker\Zed\Gui\Communication\Plugin\Twig\FormRuntimeLoaderTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\GuiFilterTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\GuiTwigLoaderPlugin;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\NavigationLinkTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\TabsTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlDecodeTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlTwigPlugin;
@@ -59,7 +60,8 @@ class GuiTwigPluginHelper extends Module
             ->addTwigPlugin(new TabsTwigPlugin())
             ->addTwigPlugin(new UrlDecodeTwigPlugin())
             ->addTwigPlugin(new UrlTwigPlugin())
-            ->addTwigPlugin(new FormRuntimeLoaderTwigPlugin());
+            ->addTwigPlugin(new FormRuntimeLoaderTwigPlugin())
+            ->addTwigPlugin(new NavigationLinkTwigPlugin());
 
         $this->getTwigHelper()->addLoaderPlugin(new GuiTwigLoaderPlugin());
     }

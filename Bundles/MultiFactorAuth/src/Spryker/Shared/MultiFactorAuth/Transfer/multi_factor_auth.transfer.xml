@@ -6,10 +6,18 @@
         <property name="status" type="int"/>
         <property name="attempts" type="int"/>
         <property name="expirationDate" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="MultiFactorAuthCodeCriteria" strict="true">
+        <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="MultiFactorAuth" strict="true">
         <property name="customer" type="Customer"/>
+        <property name="user" type="User"/>
         <property name="status" type="int"/>
         <property name="type" type="string"/>
         <property name="contact" type="string"/>
@@ -21,8 +29,9 @@
     </transfer>
 
     <transfer name="MultiFactorAuthValidationRequest" strict="true">
-        <property name="isActivation" type="bool"/>
         <property name="customer" type="Customer"/>
+        <property name="user" type="User"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="MultiFactorAuthValidationResponse" strict="true">
@@ -35,6 +44,7 @@
         <property name="multiFactorAuth" type="MultiFactorAuth" strict="true"/>
         <property name="type" type="string"/>
         <property name="customer" type="Customer"/>
+        <property name="user" type="User"/>
         <property name="subject" type="string"/>
         <property name="templates" type="MailTemplate[]" singular="template"/>
         <property name="recipients" type="MailRecipient[]" singular="recipient"/>
@@ -45,6 +55,14 @@
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
         <property name="idCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="User">
+        <property name="email" type="string"/>
+        <property name="username" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="idUser" type="int"/>
     </transfer>
 
     <transfer name="MailRecipient">
@@ -58,6 +76,53 @@
     </transfer>
 
     <transfer name="Locale">
+    </transfer>
+
+    <transfer name="CustomerCriteria">
+        <property name="idCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="customerTransfer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Button">
+        <property name="title" type="string"/>
+        <property name="url" type="string"/>
+        <property name="defaultOptions" type="array" singular="defaultOptions"/>
+    </transfer>
+
+    <transfer name="UserCriteria">
+        <property name="userConditions" type="UserConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="UserConditions" strict="true">
+        <property name="usernames" type="string[]" singular="username"/>
+    </transfer>
+
+    <transfer name="UserCollection" strict="true">
+        <property name="users" type="User[]" singular="user"/>
+    </transfer>
+
+    <transfer name="Link" strict="true">
+        <property name="url" type="string"/>
+        <property name="label" type="string"/>
+        <property name="attributes" type="string[]" associative="true" singular="attribute"/>
+    </transfer>
+
+    <transfer name="RestMultiFactorAuthAttributes" strict="true">
+        <property name="type" type="string"/>
+        <property name="status" type="int"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int"/>
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="surrogateIdentifier" type="int"/>
     </transfer>
 
 </transfers>

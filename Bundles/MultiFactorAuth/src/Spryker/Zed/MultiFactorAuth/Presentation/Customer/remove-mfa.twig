@@ -1,0 +1,26 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title %}{{ 'Deactivate Multi-Factor Authentication' | trans }}{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Deactivate Multi-Factor Authentication' | trans } %}
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-body">
+                            <p>{{ 'Are you sure you want to deactivate multi-factor authentication for this customer?' | trans }}</p>
+                            <div class="form-group">
+                                <form method="post" action="{{ url('/multi-factor-auth/customer/confirm-remove-mfa', {'id-customer': idCustomer, 'type': type}) }}">
+                                    <input type="hidden" name="_csrf_token" value="{{ csrfTokenDeactivate }}">
+                                    <button class="btn btn-danger" data-qa="confirm-remove-mfa">{{ 'Yes, deactivate multi-factor authentication' | trans }}</button>
+                                    <a href="{{ url('/customer') }}" class="btn btn-default">{{ 'Cancel' | trans }}</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

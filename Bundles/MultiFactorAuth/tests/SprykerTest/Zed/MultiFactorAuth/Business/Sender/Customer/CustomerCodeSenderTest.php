@@ -10,9 +10,9 @@ namespace SprykerTest\Zed\MultiFactorAuth\Business\Sender\Customer;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\SendStrategyPluginInterface;
 use Spryker\Zed\MultiFactorAuth\Business\Generator\CodeGeneratorInterface;
 use Spryker\Zed\MultiFactorAuth\Business\Sender\Customer\CustomerCodeSender;
-use Spryker\Zed\MultiFactorAuth\Business\Strategy\SendStrategyInterface;
 use Spryker\Zed\MultiFactorAuth\Persistence\MultiFactorAuthEntityManagerInterface;
 use SprykerTest\Zed\MultiFactorAuth\MultiFactorAuthBusinessTester;
 
@@ -69,7 +69,7 @@ class CustomerCodeSenderTest extends Unit
 
         $this->entityManagerMock = $this->createMock(MultiFactorAuthEntityManagerInterface::class);
         $this->codeGeneratorMock = $this->createMock(CodeGeneratorInterface::class);
-        $this->sendStrategiesMock = [$this->createMock(SendStrategyInterface::class)];
+        $this->sendStrategiesMock = [$this->createMock(SendStrategyPluginInterface::class)];
 
         $this->customerCodeSender = new CustomerCodeSender(
             $this->entityManagerMock,

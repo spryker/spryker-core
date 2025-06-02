@@ -12,7 +12,14 @@
 {% endblock %}
 
 {% block form_errors -%}
-    {% if errors|length > 0 -%}
+    {% set visibleErrors = [] %}
+    {% for error in errors %}
+        {% if error.message | trim is not empty %}
+            {% set visibleErrors = visibleErrors | merge([error]) %}
+        {% endif %}
+    {% endfor %}
+
+    {% if visibleErrors|length > 0 -%}
         {% if form.parent is not null %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
         <ul class="list-unstyled">
         {%- for error in errors -%}
@@ -22,3 +29,13 @@
         {% if form.parent is not null %}</span>{% else %}</div>{% endif %}
     {%- endif %}
 {%- endblock form_errors %}
+
+{% block form_start %}
+    {% if form.vars.multiFactorHandlers is defined %}
+        {% for handler in form.vars.multiFactorHandlers %}
+            {{ handler | raw }}
+        {% endfor %}
+    {% endif %}
+
+    {{ parent() }}
+{% endblock form_start %}

@@ -49,4 +49,14 @@ class MultiFactorAuthToCustomerClientBridge implements MultiFactorAuthToCustomer
     {
         return $this->customerClient->getCustomerByEmail($customerTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        return $this->customerClient->setCustomer($customerTransfer);
+    }
 }

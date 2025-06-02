@@ -26,6 +26,10 @@
         <foreign-key name="spy_customer_mfa-fk_customer_mfa" foreignTable="spy_customer_multi_factor_auth">
             <reference local="fk_customer_multi_factor_auth" foreign="id_customer_multi_factor_auth"/>
         </foreign-key>
+        <index name="spy_customer_mfa_codes-fk_customer_type">
+            <index-column name="fk_customer_multi_factor_auth"/>
+            <index-column name="status"/>
+        </index>
         <id-method-parameter value="id_customer_multi_factor_auth_code_pk_seq"/>
     </table>
 
@@ -39,6 +43,50 @@
             <reference local="fk_customer_multi_factor_auth_code" foreign="id_customer_multi_factor_auth_code"/>
         </foreign-key>
         <id-method-parameter value="id_customer_multi_factor_auth_code_attempt_pk_seq"/>
+    </table>
+
+    <table name="spy_user_multi_factor_auth">
+        <column name="id_user_multi_factor_auth" type="integer" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_user" type="integer" required="true"/>
+        <column name="type" type="VARCHAR" size="50" required="true"/>
+        <column name="configuration" type="VARCHAR" size="255"/>
+        <column name="status" type="integer" default="0"/>
+        <behavior name="timestampable"/>
+
+        <foreign-key name="spy_user_mfa-fk_user" foreignTable="spy_user">
+            <reference local="fk_user" foreign="id_user"/>
+        </foreign-key>
+        <id-method-parameter value="id_user_multi_factor_auth_pk_seq"/>
+    </table>
+
+    <table name="spy_user_multi_factor_auth_codes">
+        <column name="id_user_multi_factor_auth_code" type="integer" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_user_multi_factor_auth" type="integer" required="true"/>
+        <column name="code" type="VARCHAR" size="50" required="true"/>
+        <column name="status" type="integer" default="0"/>
+        <column name="expiration_date" type="datetime" required="true"/>
+        <behavior name="timestampable"/>
+
+        <foreign-key name="spy_user_mfa-fk_user_mfa" foreignTable="spy_user_multi_factor_auth">
+            <reference local="fk_user_multi_factor_auth" foreign="id_user_multi_factor_auth"/>
+        </foreign-key>
+        <index name="spy_user_mfa_codes-fk_user_type">
+            <index-column name="fk_user_multi_factor_auth"/>
+            <index-column name="status"/>
+        </index>
+        <id-method-parameter value="id_user_multi_factor_auth_code_pk_seq"/>
+    </table>
+
+    <table name="spy_user_multi_factor_auth_codes_attempts">
+        <column name="id_user_multi_factor_auth_code_attempt" type="integer" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_user_multi_factor_auth_code" type="integer" required="true"/>
+        <column name="created_at" type="datetime" required="true"/>
+        <behavior name="timestampable"/>
+
+        <foreign-key name="spy_user_mfa-fk_user_mfa_code" foreignTable="spy_user_multi_factor_auth_codes">
+            <reference local="fk_user_multi_factor_auth_code" foreign="id_user_multi_factor_auth_code"/>
+        </foreign-key>
+        <id-method-parameter value="id_user_multi_factor_auth_code_attempt_pk_seq"/>
     </table>
 
 </database>

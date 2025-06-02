@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\MultiFactorAuth\Zed\Agent;
+
+use Generated\Shared\Transfer\MultiFactorAuthTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer;
+use Generated\Shared\Transfer\UserTransfer;
+
+interface AgentMultiFactorAuthStubInterface
+{
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getAgentMultiFactorAuthTypes(UserTransfer $userTransfer): MultiFactorAuthTypesCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
+     */
+    public function validateAgentMultiFactorAuthStatus(
+        MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer
+    ): MultiFactorAuthValidationResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTransfer
+     */
+    public function sendAgentCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
+     */
+    public function validateAgentCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthValidationResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTransfer
+     */
+    public function activateAgentMultiFactorAuth(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTransfer
+     */
+    public function deactivateAgentMultiFactorAuth(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthTransfer;
+}

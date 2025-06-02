@@ -43,7 +43,9 @@
                                     {{ 'Settings' | trans }} <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
+                                    {% deprecated 'Will be moved to a plugin in the next major release.' %}
                                     <li><a href="/user/edit/password-reset">{{ 'Reset password' | trans }}</a></li>
+                                    {{ layout_navigation_items() | raw }}
                                 </ul>
                             </li>
                             <li>

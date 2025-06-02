@@ -8,6 +8,7 @@
 namespace Spryker\Yves\MultiFactorAuth\Widget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
+use Spryker\Yves\MultiFactorAuth\Plugin\Router\Agent\MultiFactorAuthAgentRouteProviderPlugin;
 use Spryker\Yves\MultiFactorAuth\Plugin\Router\Customer\MultiFactorAuthCustomerRouteProviderPlugin;
 
 /**
@@ -31,6 +32,11 @@ class SetMultiFactorAuthMenuItemWidget extends AbstractWidget
      * @var string
      */
     protected const PAGE_KEY_SET_MULTI_FACTOR_AUTH = 'setMultiFactorAuth';
+
+    /**
+     * @var string
+     */
+    protected const PAGE_KEY_SET_AGENT_MULTI_FACTOR_AUTH = 'setAgentMultiFactorAuth';
 
     /**
      * @var string
@@ -86,7 +92,11 @@ class SetMultiFactorAuthMenuItemWidget extends AbstractWidget
      */
     protected function addSetMultiFactorAuthRouteNameParameter(): void
     {
-        $this->addParameter(static::PARAMETER_SET_MULTI_FACTOR_AUTH_ROUTE_NAME, MultiFactorAuthCustomerRouteProviderPlugin::MULTI_FACTOR_AUTH_NAME_SET_MULTI_FACTOR_AUTH);
+        $routeName = $this->getFactory()->getCustomerClient()->isLoggedIn() ?
+            MultiFactorAuthCustomerRouteProviderPlugin::MULTI_FACTOR_AUTH_NAME_SET_MULTI_FACTOR_AUTH :
+            MultiFactorAuthAgentRouteProviderPlugin::MULTI_FACTOR_AUTH_NAME_SET_MULTI_FACTOR_AUTH;
+
+        $this->addParameter(static::PARAMETER_SET_MULTI_FACTOR_AUTH_ROUTE_NAME, $routeName);
     }
 
     /**
@@ -96,7 +106,7 @@ class SetMultiFactorAuthMenuItemWidget extends AbstractWidget
      */
     protected function isSetMultiFactorAuthPageActive(string $activePage): bool
     {
-        return $activePage === static::PAGE_KEY_SET_MULTI_FACTOR_AUTH;
+        return $activePage === static::PAGE_KEY_SET_MULTI_FACTOR_AUTH || $activePage === static::PAGE_KEY_SET_AGENT_MULTI_FACTOR_AUTH;
     }
 
     /**
@@ -104,10 +114,22 @@ class SetMultiFactorAuthMenuItemWidget extends AbstractWidget
      */
     protected function isWidgetVisible(): bool
     {
-        if ($this->getFactory()->getCustomerMultiFactorAuthPlugins() !== []) {
-            return true;
-        }
+        return $this->assertCustomerMultiFactorAuthPluginsEnabled() || $this->assertAgentMultiFactorAuthPluginsEnabled();
+    }
 
-        return false;
+    /**
+     * @return bool
+     */
+    protected function assertCustomerMultiFactorAuthPluginsEnabled(): bool
+    {
+        return $this->getFactory()->getCustomerClient()->isLoggedIn() && $this->getFactory()->getCustomerMultiFactorAuthPlugins() !== [];
+    }
+
+    /**
+     * @return bool
+     */
+    protected function assertAgentMultiFactorAuthPluginsEnabled(): bool
+    {
+        return $this->getFactory()->getAgentClient()->isLoggedIn() && $this->getFactory()->getAgentMultiFactorAuthPlugins() !== [];
     }
 }

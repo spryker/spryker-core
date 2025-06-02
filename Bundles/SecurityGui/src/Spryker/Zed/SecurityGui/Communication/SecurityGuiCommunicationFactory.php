@@ -10,6 +10,7 @@ namespace Spryker\Zed\SecurityGui\Communication;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SecurityGui\Communication\Authenticator\LoginFormAuthenticator;
+use Spryker\Zed\SecurityGui\Communication\Badge\MultiFactorAuthBadge;
 use Spryker\Zed\SecurityGui\Communication\Builder\SecurityGuiOptionsBuilder;
 use Spryker\Zed\SecurityGui\Communication\Builder\SecurityGuiOptionsBuilderInterface;
 use Spryker\Zed\SecurityGui\Communication\Expander\SecurityBuilderExpander;
@@ -32,6 +33,7 @@ use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserFacadeInterface;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserPasswordResetFacadeInterface;
 use Spryker\Zed\SecurityGui\SecurityGuiDependencyProvider;
 use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
@@ -189,6 +191,7 @@ class SecurityGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->createUserAuthenticationSuccessHandler(),
             $this->createUserAuthenticationFailureHandler(),
             $this->getConfig(),
+            $this->createMultiFactorAuthBadge(),
         );
     }
 
@@ -214,5 +217,29 @@ class SecurityGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getSecurityBlockerClient(): SecurityGuiToSecurityBlockerClientInterface
     {
         return $this->getProvidedDependency(SecurityGuiDependencyProvider::CLIENT_SECURITY_BLOCKER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityGui\Communication\Badge\MultiFactorAuthBadge
+     */
+    public function createMultiFactorAuthBadge(): MultiFactorAuthBadge
+    {
+        return new MultiFactorAuthBadge($this->getUserMultiFactorAuthenticationHandlerPlugins());
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\AuthenticationHandlerPluginInterface>
+     */
+    public function getUserMultiFactorAuthenticationHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(SecurityGuiDependencyProvider::PLUGINS_USER_AUTHENTICATION_HANDLER);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
+     */
+    public function getTokenStorage(): TokenStorageInterface
+    {
+        return $this->getProvidedDependency(SecurityGuiDependencyProvider::SERVICE_SECURITY_TOKEN_STORAGE);
     }
 }

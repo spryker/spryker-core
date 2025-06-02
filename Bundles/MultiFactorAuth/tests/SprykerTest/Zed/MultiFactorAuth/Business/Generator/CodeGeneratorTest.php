@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\MultiFactorAuth\Business\Facade\Generator;
 use Codeception\Test\Unit;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\MultiFactorAuth\Business\Generator\CodeGenerator;
-use Spryker\Zed\MultiFactorAuth\MultiFactorAuthConfig;
+use Spryker\Zed\MultiFactorAuth\Business\Generator\Provider\CodeGeneratorConfigProviderInterface;
 use SprykerTest\Zed\MultiFactorAuth\MultiFactorAuthBusinessTester;
 
 /**
@@ -48,9 +48,10 @@ class CodeGeneratorTest extends Unit
     protected MultiFactorAuthBusinessTester $tester;
 
     /**
-     * @var \Spryker\Zed\MultiFactorAuth\MultiFactorAuthConfig|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Spryker\Zed\MultiFactorAuth\Business\Generator\Provider\CodeGeneratorConfigProviderInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected MockObject|MultiFactorAuthConfig $configMock;
+
+    protected MockObject|CodeGeneratorConfigProviderInterface $configProviderMock;
 
     /**
      * @var \Spryker\Zed\MultiFactorAuth\Business\Generator\CodeGenerator
@@ -64,8 +65,8 @@ class CodeGeneratorTest extends Unit
     {
         parent::setUp();
 
-        $this->configMock = $this->createMock(MultiFactorAuthConfig::class);
-        $this->codeGenerator = new CodeGenerator($this->configMock);
+        $this->createCodeGeneratorConfigProviderMock();
+        $this->codeGenerator = new CodeGenerator($this->configProviderMock);
     }
 
     /**
@@ -73,8 +74,6 @@ class CodeGeneratorTest extends Unit
      */
     public function testGenerateCodeReturnsCorrectLength(): void
     {
-        $this->configMock->method('getCustomerCodeLength')->willReturn(static::CODE_LENGTH);
-
         $code = ($this->codeGenerator->generateCode($this->tester->createMultiFactorAuthTransfer($this->tester::TYPE_EMAIL)))->getMultiFactorAuthCode()->getCode();
 
         $this->assertEquals(static::CODE_LENGTH, strlen($code));
@@ -85,8 +84,6 @@ class CodeGeneratorTest extends Unit
      */
     public function testGenerateCodeReturnsCodeWithinRange(): void
     {
-        $this->configMock->method('getCustomerCodeLength')->willReturn(static::CODE_LENGTH);
-
         $code = ($this->codeGenerator->generateCode($this->tester->createMultiFactorAuthTransfer($this->tester::TYPE_EMAIL)))->getMultiFactorAuthCode()->getCode();
 
         $this->assertGreaterThanOrEqual(static::MIN_CODE_VALUE, (int)$code);
@@ -98,11 +95,19 @@ class CodeGeneratorTest extends Unit
      */
     public function testGenerateCodeReturnsDifferentCodes(): void
     {
-        $this->configMock->method('getCustomerCodeLength')->willReturn(static::CODE_LENGTH);
-
         $code1 = ($this->codeGenerator->generateCode($this->tester->createMultiFactorAuthTransfer($this->tester::TYPE_EMAIL)))->getMultiFactorAuthCode()->getCode();
         $code2 = ($this->codeGenerator->generateCode($this->tester->createMultiFactorAuthTransfer($this->tester::TYPE_EMAIL)))->getMultiFactorAuthCode()->getCode();
 
         $this->assertNotEquals($code1, $code2);
+    }
+
+    /**
+     * @return void
+     */
+    protected function createCodeGeneratorConfigProviderMock(): void
+    {
+        $this->configProviderMock = $this->createMock(CodeGeneratorConfigProviderInterface::class);
+        $this->configProviderMock->method('getCodeLength')->willReturn(static::CODE_LENGTH);
+        $this->configProviderMock->method('getCodeValidityTtl')->willReturn(10);
     }
 }

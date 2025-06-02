@@ -7,4 +7,10 @@
     <transfer name="User">
     </transfer>
 
+    <transfer name="MultiFactorAuthValidationRequest" strict="true">
+    </transfer>
+
+    <transfer name="MultiFactorAuthValidationResponse" strict="true">
+    </transfer>
+
 </transfers>

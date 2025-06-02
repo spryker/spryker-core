@@ -1,0 +1,18 @@
+{% set page_title = 'Enter Authentication Code' %}
+{% block section_title page_title | trans %}
+
+{% block content %}
+    {% if errorMessage is defined and errorMessage %}
+        <div class="alert alert-danger" role="alert">
+            {{ errorMessage | trans }}
+        </div>
+    {% endif %}
+
+    <div class="js-mfa-data" data-url="multi-factor-auth/user/send-code">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Verify Code' | trans }}">
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

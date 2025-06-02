@@ -1,0 +1,67 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title %}{{ 'Set up Multi-Factor Authentication' | trans }}{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Multi-Factor Authentication' | trans } %}
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'Type' | trans }}</th>
+                                        <th>{{ 'Status' | trans }}</th>
+                                        <th>{{ 'Actions' | trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for method in multiFactorAuthCollection.multiFactorAuthTypes %}
+                                        {% if not method.status %}
+                                            {% set label = 'Inactive' | trans %}
+                                            {% set formName = 'activateForm' %}
+                                            {% set actionPath = url('/multi-factor-auth/user-management/activate', {'type': method.type}) %}
+                                            {% set csrfToken = csrf_token_activate %}
+                                            {% set buttonText = 'Activate' | trans %}
+                                            {% set flowType = 'is_activation' %}
+                                            {% set buttonClass = 'btn-success' %}
+                                        {% else %}
+                                            {% set label = 'Active' | trans %}
+                                            {% set formName = 'deactivateForm' %}
+                                            {% set actionPath = url('/multi-factor-auth/user-management/deactivate', {'type': method.type}) %}
+                                            {% set csrfToken = csrf_token_deactivate %}
+                                            {% set buttonText = 'Deactivate' | trans %}
+                                            {% set flowType = 'is_deactivation' %}
+                                            {% set buttonClass = 'btn-danger' %}
+                                        {% endif %}
+                                        <tr data-qa="mfa-type-section">
+                                            <td>{{ method.type | capitalize }}</td>
+                                            <td>
+                                                <span class="label label-primary">{{ label }}</span>
+                                            </td>
+                                            <td>
+                                                <form name="{{ formName }}" class="js-form-{{ method.type }}" method="post" action="{{ actionPath | raw }}">
+                                                    <input type="hidden" name="_csrf_token" value="{{ csrfToken }}">
+                                                    <button class="btn btn-sm {{ buttonClass }}">{{ buttonText }}</button>
+                                                </form>
+
+                                                {% set url = "/multi-factor-auth/user/get-enabled-types?#{flowType}=true&type_to_set_up=#{method.type}" %}
+                                                {% include '@MultiFactorAuth/Partials/multi-factor-authentication-handler.twig' ignore missing with {
+                                                    url: url,
+                                                    formSelector: ".js-form-#{method.type}",
+                                                    modalId: "modal-id-#{method.type}",
+                                                } %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

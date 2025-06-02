@@ -1,0 +1,25 @@
+{% from '@Gui/Partials/partial-helper.twig' import renderAttributes %}
+
+{% set attributes = {
+    'data-url': url,
+    'data-form-selector': formSelector,
+    'data-modal-id': modalId,
+    'data-is-login': isLogin is defined ? isLogin : false,
+} %}
+
+{% set baseClass = 'mfa-handler' %}
+
+{% block content %}
+    <div class="{{ baseClass }} js-{{ baseClass }}" {{ renderAttributes(attributes) }}>
+        {% block popup %}
+            {% include '@Gui/Modal/modal.twig' with {
+                title: 'Multi-Factor Authentication' | trans,
+                content: 'Blank content',
+                id: modalId,
+                extras: 'data-qa=multi-factor-authentication-modal',
+            } %}
+        {% endblock %}
+    </div>
+
+    <script src="{{ assetsPath('js/spryker-zed-multi-factor-auth.js') }}"></script>
+{% endblock %}

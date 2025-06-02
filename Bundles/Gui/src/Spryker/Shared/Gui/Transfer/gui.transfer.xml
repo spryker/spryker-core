@@ -66,4 +66,10 @@
         <property name="locale" type="string"/>
     </transfer>
 
+    <transfer name="Link" strict="true">
+        <property name="label" type="string"/>
+        <property name="url" type="string"/>
+        <property name="attributes" type="string[]" associative="true" singular="attribute"/>
+    </transfer>
+
 </transfers>

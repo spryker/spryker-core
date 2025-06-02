@@ -8,6 +8,8 @@
 namespace Spryker\Client\MultiFactorAuth\Zed\Customer;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
@@ -58,4 +60,20 @@ interface CustomerMultiFactorAuthStubInterface
      * @return \Generated\Shared\Transfer\MultiFactorAuthTransfer
      */
     public function deactivateCustomerMultiFactorAuth(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer
+     */
+    public function findCustomerMultiFactorAuthType(
+        MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+    ): MultiFactorAuthCodeTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getPendingActivationCustomerMultiFactorAuthTypes(CustomerTransfer $customerTransfer): MultiFactorAuthTypesCollectionTransfer;
 }

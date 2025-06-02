@@ -61,6 +61,18 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_USER_LOGIN_RESTRICTION = 'PLUGINS_USER_LOGIN_RESTRICTION';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_USER_AUTHENTICATION_HANDLER = 'PLUGINS_USER_AUTHENTICATION_HANDLER';
+
+    /**
+     * @uses {@link \Spryker\Zed\Security\Communication\Loader\Services\TokenStorageServiceLoader::SERVICE_SECURITY_TOKEN_STORAGE}
+     *
+     * @var string
+     */
+    public const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -77,6 +89,8 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUserRoleFilterPlugins($container);
         $container = $this->addUserLoginRestrictionPlugins($container);
         $container = $this->addSecurityBlockerClient($container);
+        $container = $this->addUserAuthenticationHandlerPlugins($container);
+        $container = $this->addSecurityTokenStorage($container);
 
         return $container;
     }
@@ -218,6 +232,34 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUserAuthenticationHandlerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_USER_AUTHENTICATION_HANDLER, function () {
+            return $this->getUserAuthenticationHandlerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSecurityTokenStorage(Container $container): Container
+    {
+        $container->set(static::SERVICE_SECURITY_TOKEN_STORAGE, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_SECURITY_TOKEN_STORAGE);
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\AuthenticationLinkPluginInterface>
      */
     protected function getAuthenticationLinkPlugins(): array
@@ -237,6 +279,14 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserLoginRestrictionPluginInterface>
      */
     protected function getUserLoginRestrictionPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\AuthenticationHandlerPluginInterface>
+     */
+    protected function getUserAuthenticationHandlerPlugins(): array
     {
         return [];
     }

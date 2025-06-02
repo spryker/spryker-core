@@ -7,9 +7,14 @@
 
 namespace Spryker\Zed\MultiFactorAuth\Business;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -88,5 +93,124 @@ class MultiFactorAuthFacade extends AbstractFacade implements MultiFactorAuthFac
     public function sendCustomerCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthTransfer
     {
         return $this->getFactory()->createCustomerCodeSender()->sendCode($multiFactorAuthTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer
+     */
+    public function findCustomerMultiFactorAuthType(
+        MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+    ): MultiFactorAuthCodeTransfer {
+        return $this->getRepository()->findCustomerMultiFactorAuthCodeByCriteria($multiFactorAuthCodeCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getPendingActivationCustomerMultiFactorAuthTypes(CustomerTransfer $customerTransfer): MultiFactorAuthTypesCollectionTransfer
+    {
+        return $this->getRepository()->getPendingActivationCustomerMultiFactorAuthTypes($customerTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
+     */
+    public function validateUserCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthValidationResponseTransfer
+    {
+        return $this->getFactory()->createUserCodeValidator()->validate($multiFactorAuthTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer
+     * @param array<int> $additionalStatuses
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
+     */
+    public function validateUserMultiFactorAuthStatus(
+        MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer,
+        array $additionalStatuses = []
+    ): MultiFactorAuthValidationResponseTransfer {
+        return $this->getFactory()->createUserMultiFactorAuthStatusValidator()->validate($multiFactorAuthValidationRequestTransfer, $additionalStatuses);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return void
+     */
+    public function activateUserMultiFactorAuth(MultiFactorAuthTransfer $multiFactorAuthTransfer): void
+    {
+        $this->getEntityManager()->saveUserMultiFactorAuth($multiFactorAuthTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return void
+     */
+    public function deactivateUserMultiFactorAuth(MultiFactorAuthTransfer $multiFactorAuthTransfer): void
+    {
+        $this->getEntityManager()->deleteUserMultiFactorAuth($multiFactorAuthTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTransfer
+     */
+    public function sendUserCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthTransfer
+    {
+        return $this->getFactory()->createUserCodeSender()->sendCode($multiFactorAuthTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface> $userMultiFactorAuthPlugins
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getAvailableUserMultiFactorAuthTypes(
+        UserTransfer $userTransfer,
+        array $userMultiFactorAuthPlugins
+    ): MultiFactorAuthTypesCollectionTransfer {
+        return $this->getFactory()->createUserMultiFactorAuthReader()->getAvailableUserMultiFactorAuthTypes($userTransfer, $userMultiFactorAuthPlugins);
     }
 }

@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\MultiFactorAuth\Business\Validator\Customer;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
-use Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer;
-use Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants;
-use Spryker\Zed\MultiFactorAuth\Business\Validator\MultiFactorAuthStatusValidatorInterface;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Zed\MultiFactorAuth\Business\Validator\AbstractMultiFactorAuthStatusValidator;
 use Spryker\Zed\MultiFactorAuth\Persistence\MultiFactorAuthRepositoryInterface;
 
-class CustomerMultiFactorAuthStatusValidator implements MultiFactorAuthStatusValidatorInterface
+class CustomerMultiFactorAuthStatusValidator extends AbstractMultiFactorAuthStatusValidator
 {
     /**
      * @param \Spryker\Zed\MultiFactorAuth\Persistence\MultiFactorAuthRepositoryInterface $repository
@@ -26,52 +28,48 @@ class CustomerMultiFactorAuthStatusValidator implements MultiFactorAuthStatusVal
 
     /**
      * @param \Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer
-     * @param string|null $currentDateTime
      *
-     * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function validate(
-        MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer,
-        ?string $currentDateTime = null
-    ): MultiFactorAuthValidationResponseTransfer {
-        $customerTransfer = $multiFactorAuthValidationRequestTransfer->getCustomerOrFail();
-        $customerMultiFactorAuthTypesCollectionTransfer = $this->repository->getCustomerMultiFactorAuthTypes($customerTransfer);
-
-        if ($customerMultiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes()->count() === 0) {
-            return $this->createMultiFactorAuthValidationResponseTransfer();
-        }
-
-        $verifiedType = $this->repository->getVerifiedCustomerMultiFactorAuthType($customerTransfer);
-        $multiFactorAuthTransfer = (new MultiFactorAuthTransfer())
-            ->setCustomer($customerTransfer)
-            ->setType($verifiedType);
-
-        $customerMultiFactorAuthCodeTransfer = $this->repository->getCustomerCode($multiFactorAuthTransfer);
-        $currentDateTime = $currentDateTime ?? date('Y-m-d H:i:s');
-
-        if (
-            $customerMultiFactorAuthCodeTransfer->getCode() === null ||
-            $customerMultiFactorAuthCodeTransfer->getStatus() !== MultiFactorAuthConstants::CODE_VERIFIED ||
-            $customerMultiFactorAuthCodeTransfer->getExpirationDate() < $currentDateTime
-        ) {
-            return $this->createMultiFactorAuthValidationResponseTransfer(true, $customerMultiFactorAuthCodeTransfer->getStatus());
-        }
-
-        return $this->createMultiFactorAuthValidationResponseTransfer();
+    protected function extractEntity(MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer): CustomerTransfer
+    {
+        return $multiFactorAuthValidationRequestTransfer->getCustomerOrFail();
     }
 
     /**
-     * @param bool $isRequired
-     * @param int|null $status
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $customerTransfer
+     * @param array<int> $additionalStatuses
      *
-     * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
-    protected function createMultiFactorAuthValidationResponseTransfer(
-        bool $isRequired = false,
-        ?int $status = MultiFactorAuthConstants::CODE_VERIFIED
-    ): MultiFactorAuthValidationResponseTransfer {
-        return (new MultiFactorAuthValidationResponseTransfer())
-            ->setStatus($status)
-            ->setIsRequired($isRequired);
+    protected function getMultiFactorAuthTypesCollectionTransfer(
+        AbstractTransfer $customerTransfer,
+        array $additionalStatuses = []
+    ): MultiFactorAuthTypesCollectionTransfer {
+        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
+        return $this->repository->getCustomerMultiFactorAuthTypes($customerTransfer, $additionalStatuses);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer
+     */
+    protected function getCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthCodeTransfer
+    {
+        return $this->repository->getCustomerCode($multiFactorAuthTransfer);
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTransfer
+     */
+    protected function buildMultiFactorAuthTransfer(AbstractTransfer $customerTransfer): MultiFactorAuthTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
+        return (new MultiFactorAuthTransfer())
+            ->setCustomer($customerTransfer)
+            ->setType($this->repository->getVerifiedCustomerMultiFactorAuthType($customerTransfer));
     }
 }

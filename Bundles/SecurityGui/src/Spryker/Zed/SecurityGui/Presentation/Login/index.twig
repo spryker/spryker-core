@@ -3,10 +3,8 @@
 {% form_theme form '@SecurityGui/Layout/form.twig' %}
 
 {% block content %}
-
     <div>
         {{ form_start(form) }}
-
             {% include '@SecurityGui/Partial/form-message.twig' %}
 
             {{ form_errors(form) }}
@@ -21,9 +19,14 @@
 
             {% include '@SecurityGui/Partial/authentication-links.twig' %}
 
-            {{ form_rest(form) }}
+            {% include '@MultiFactorAuth/Partials/multi-factor-authentication-handler.twig' ignore missing with {
+                url: "multi-factor-auth/user/get-enabled-types",
+                formSelector: '[name="auth"]',
+                modalId: 'modal-id-auth',
+                isLogin: 'true',
+            } %}
 
+            {{ form_rest(form) }}
         {{ form_end(form) }}
     </div>
-
 {% endblock %}

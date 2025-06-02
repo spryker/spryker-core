@@ -24,7 +24,21 @@ interface MultiFactorAuthEntityManagerInterface
      *
      * @return void
      */
+    public function saveUserCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return void
+     */
     public function updateCustomerCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return void
+     */
+    public function updateUserCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
@@ -41,9 +55,30 @@ interface MultiFactorAuthEntityManagerInterface
     public function deleteCustomerMultiFactorAuth(MultiFactorAuthTransfer $multiFactorAuthTransfer): void;
 
     /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return void
+     */
+    public function saveUserMultiFactorAuth(MultiFactorAuthTransfer $multiFactorAuthTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return void
+     */
+    public function deleteUserMultiFactorAuth(MultiFactorAuthTransfer $multiFactorAuthTransfer): void;
+
+    /**
      * @param \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer $multiFactorAuthCodeTransfer
      *
      * @return void
      */
     public function saveCustomerMultiFactorAuthCodeAttempt(MultiFactorAuthCodeTransfer $multiFactorAuthCodeTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer $multiFactorAuthCodeTransfer
+     *
+     * @return void
+     */
+    public function saveUserMultiFactorAuthCodeAttempt(MultiFactorAuthCodeTransfer $multiFactorAuthCodeTransfer): void;
 }

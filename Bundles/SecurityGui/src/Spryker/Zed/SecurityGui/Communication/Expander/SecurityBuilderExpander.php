@@ -28,6 +28,11 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
     /**
      * @var string
      */
+    protected const ACCESS_MODE_PRE_AUTH = 'ACCESS_MODE_PRE_AUTH';
+
+    /**
+     * @var string
+     */
     protected const SECURITY_USER_LOGIN_FORM_AUTHENTICATOR = 'security.User.login_form.authenticator';
 
     /**
@@ -99,6 +104,10 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
             [
                 $this->config->getIgnorablePaths(),
                 static::ACCESS_MODE_PUBLIC,
+            ],
+            [
+                $this->config->getIgnorablePaths(),
+                static::ACCESS_MODE_PRE_AUTH,
             ],
             [
                 $this->config->getBackofficeRoutePattern(),

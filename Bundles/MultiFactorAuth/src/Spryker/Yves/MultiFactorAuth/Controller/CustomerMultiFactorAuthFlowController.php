@@ -12,9 +12,8 @@ use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer;
-use Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\Kernel\View\View;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,49 +22,14 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Client\MultiFactorAuth\MultiFactorAuthClientInterface getClient()
  * @method \Spryker\Yves\MultiFactorAuth\MultiFactorAuthConfig getConfig()
  */
-class CustomerMultiFactorAuthFlowController extends AbstractCustomerMultiFactorAuthController
+class CustomerMultiFactorAuthFlowController extends AbstractMultiFactorAuthController
 {
     /**
-     * @var string
-     */
-    public const IS_ACTIVATION = 'is_activation';
-
-    /**
-     * @var string
-     */
-    public const IS_DEACTIVATION = 'is_deactivation';
-
-    /**
-     * @uses \Spryker\Yves\MultiFactorAuth\Form\DataProvider\TypeSelectionDataProvider::OPTION_TYPES
+     * @uses {@link \SprykerShop\Yves\CustomerPage\Plugin\MultiFactorAuth\PostCustomerLoginMultiFactorAuthenticationPlugin::CUSTOMER_POST_AUTHENTICATION_TYPE}
      *
      * @var string
      */
-    protected const OPTION_TYPES = 'types';
-
-    /**
-     * @var string
-     */
-    protected const TYPE_TO_SET_UP = 'type_to_set_up';
-
-    /**
-     * @var string
-     */
-    protected const EMAIL = 'email';
-
-    /**
-     * @var string
-     */
-    protected const MESSAGE_REQUIRED_SELECTION_ERROR = 'multi_factor_auth.selection.error.required';
-
-    /**
-     * @var string
-     */
-    protected const AUTHENTICATION_CODE = 'authentication_code';
-
-    /**
-     * @var string
-     */
-    protected const DATA_ERROR_PARAMETER = 'data-error';
+    protected const CUSTOMER_POST_AUTHENTICATION_TYPE = 'CUSTOMER_POST_AUTHENTICATION_TYPE';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -74,43 +38,7 @@ class CustomerMultiFactorAuthFlowController extends AbstractCustomerMultiFactorA
      */
     public function getCustomerEnabledTypesAction(Request $request): View
     {
-        $options = $this->getOptions($request);
-
-        if ($this->assertNoTypesEnabled($options) && $this->isSetUpMultiFactorAuthStep($request) === true) {
-            return $this->sendCustomerCodeAction($request, $this->getParameterFromRequest($request, static::TYPE_TO_SET_UP));
-        }
-
-        if ($this->assertOneTypeEnabled($options)) {
-            return $this->sendCustomerCodeAction($request, $options[static::OPTION_TYPES][0]);
-        }
-
-        $typeSelectionFormName = $this->getFactory()->getTypeSelectionForm($options)->getName();
-
-        if ($this->isSetUpMultiFactorAuthStep($request, $typeSelectionFormName) === true) {
-            $options = array_merge($options, $this->extractSetupParameters($request, $typeSelectionFormName));
-        }
-
-        $typeSelectionForm = $this->getFactory()
-            ->getTypeSelectionForm($options)
-            ->handleRequest($request);
-
-        if ($typeSelectionForm->isSubmitted()) {
-            $selectedType = $this->getParameterFromRequest($request, static::TYPE, $typeSelectionFormName);
-
-            if ($selectedType === null) {
-                $typeSelectionFormView = $this->getFactory()
-                    ->getTypeSelectionForm($this->getOptions($request, $typeSelectionForm))
-                    ->handleRequest($request)
-                    ->addError(new FormError(static::MESSAGE_REQUIRED_SELECTION_ERROR))
-                    ->createView();
-
-                return $this->view(['form' => $typeSelectionFormView], [], '@MultiFactorAuth/views/customer-multi-factor-auth/type-selection-form.twig');
-            }
-
-            return $this->sendCustomerCodeAction($request, $selectedType, $typeSelectionForm);
-        }
-
-        return $this->view(['form' => $typeSelectionForm->createView()], [], '@MultiFactorAuth/views/customer-multi-factor-auth/type-selection-form.twig');
+        return $this->getEnabledTypesAction($request);
     }
 
     /**
@@ -122,25 +50,23 @@ class CustomerMultiFactorAuthFlowController extends AbstractCustomerMultiFactorA
      */
     public function sendCustomerCodeAction(Request $request, ?string $multiFactorAuthType = null, ?FormInterface $form = null): View
     {
-        $formName = $form?->getName() ?? $this->getFactory()->getCodeValidationForm()->getName();
-        $multiFactorAuthType = $multiFactorAuthType ?? $this->getParameterFromRequest($request, static::TYPE, $formName);
-        $customerTransfer = $this->getCustomer($request, $formName);
-        $options = array_merge([
-            static::OPTION_TYPES => [$multiFactorAuthType],
-            static::EMAIL => $customerTransfer->getEmail(),
-        ], $this->extractSetupParameters($request, $formName));
+        return $this->sendCodeAction($request, $multiFactorAuthType, $form);
+    }
 
-        $codeValidationForm = $this->getFactory()
-            ->getCodeValidationForm($options)
-            ->handleRequest($request);
+    /**
+     * @return string
+     */
+    protected function getTypeSelectionFormTemplate(): string
+    {
+        return '@MultiFactorAuth/views/customer-multi-factor-auth/type-selection-form.twig';
+    }
 
-        if ($codeValidationForm->isSubmitted() === false) {
-            $this->sendCustomerCode($multiFactorAuthType, $customerTransfer, $request);
-
-            return $this->view(['form' => $codeValidationForm->createView()], [], '@MultiFactorAuth/views/customer-multi-factor-auth/code-validation-form.twig');
-        }
-
-        return $this->executeCodeValidation($request, $codeValidationForm, $customerTransfer);
+    /**
+     * @return string
+     */
+    protected function getCodeValidationFormTemplate(): string
+    {
+        return '@MultiFactorAuth/views/customer-multi-factor-auth/code-validation-form.twig';
     }
 
     /**
@@ -150,7 +76,7 @@ class CustomerMultiFactorAuthFlowController extends AbstractCustomerMultiFactorA
      *
      * @return void
      */
-    protected function sendCustomerCode(string $multiFactorAuthType, CustomerTransfer $customerTransfer, Request $request): void
+    protected function sendCode(string $multiFactorAuthType, AbstractTransfer $customerTransfer, Request $request): void
     {
         foreach ($this->getFactory()->getCustomerMultiFactorAuthPlugins() as $plugin) {
             if ($plugin->isApplicable($multiFactorAuthType) === false) {
@@ -171,39 +97,22 @@ class CustomerMultiFactorAuthFlowController extends AbstractCustomerMultiFactorA
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Form\FormInterface $codeValidationForm
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param string|null $formName
      *
-     * @return \Spryker\Yves\Kernel\View\View
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function executeCodeValidation(
-        Request $request,
-        FormInterface $codeValidationForm,
-        CustomerTransfer $customerTransfer
-    ): View {
-        $multiFactorAuthType = $codeValidationForm->getData()[static::TYPE];
-        $multiFactorAuthValidationResponseTransfer = $this->validateCustomerCode($customerTransfer, $codeValidationForm);
+    protected function getIdentity(Request $request, ?string $formName = null): CustomerTransfer
+    {
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if ($multiFactorAuthValidationResponseTransfer->getStatus() === MultiFactorAuthConstants::CODE_VERIFIED) {
-            if ($this->isSelectedTypeVerificationRequired($request, $multiFactorAuthType, $codeValidationForm->getName())) {
-                $request->request->set(static::TYPE, $codeValidationForm->getData()[static::TYPE_TO_SET_UP]);
-                $request->request->remove($codeValidationForm->getName());
-
-                return $this->sendCustomerCodeAction($request, null, $codeValidationForm);
-            }
-
-            return $this->view([], [], '@MultiFactorAuth/views/customer-multi-factor-auth/validation-response.twig');
+        if ($customerTransfer !== null) {
+            return $customerTransfer;
         }
 
-        if ($multiFactorAuthValidationResponseTransfer->getStatus() === MultiFactorAuthConstants::CODE_BLOCKED) {
-            $this->addErrorMessage($multiFactorAuthValidationResponseTransfer->getMessageOrFail());
+        $email = $this->getParameterFromRequest($request, CustomerTransfer::EMAIL, $formName);
+        $customerTransfer = (new CustomerTransfer())->setEmail($email);
 
-            return $this->view(['dataError' => static::DATA_ERROR_PARAMETER], [], '@MultiFactorAuth/views/customer-multi-factor-auth/validation-response.twig');
-        }
-
-        $codeValidationForm->addError(new FormError($multiFactorAuthValidationResponseTransfer->getMessageOrFail()));
-
-        return $this->view(['form' => $codeValidationForm->createView()], [], '@MultiFactorAuth/views/customer-multi-factor-auth/code-validation-form.twig');
+        return $this->getFactory()->getCustomerClient()->getCustomerByEmail($customerTransfer);
     }
 
     /**
@@ -212,8 +121,8 @@ class CustomerMultiFactorAuthFlowController extends AbstractCustomerMultiFactorA
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
      */
-    protected function validateCustomerCode(
-        CustomerTransfer $customerTransfer,
+    protected function validateCode(
+        AbstractTransfer $customerTransfer,
         FormInterface $codeValidationForm
     ): MultiFactorAuthValidationResponseTransfer {
         $multiFactorAuthCodeTransfer = (new MultiFactorAuthCodeTransfer())
@@ -221,33 +130,27 @@ class CustomerMultiFactorAuthFlowController extends AbstractCustomerMultiFactorA
 
         $multiFactorAuthTransfer = (new MultiFactorAuthTransfer())
             ->setCustomer($customerTransfer)
-            ->setType($codeValidationForm->getData()[static::TYPE])
+            ->setType($codeValidationForm->getData()[MultiFactorAuthTransfer::TYPE])
             ->setMultiFactorAuthCode($multiFactorAuthCodeTransfer);
 
         return $this->getClient()->validateCustomerCode($multiFactorAuthTransfer);
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string|null $formName
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return bool
+     * @return void
      */
-    protected function isSetUpMultiFactorAuthStep(Request $request, ?string $formName = null): bool
+    protected function executePostLoginMultiFactorAuthenticationPlugins(AbstractTransfer $customerTransfer): void
     {
-        return $this->assertIsActivation($request, $formName) || $this->assertIsDeactivation($request, $formName);
-    }
+        foreach ($this->getFactory()->getPostLoginMultiFactorAuthenticationPlugins() as $plugin) {
+            if ($plugin->isApplicable(static::CUSTOMER_POST_AUTHENTICATION_TYPE) === false) {
+                continue;
+            }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $multiFactorAuthType
-     * @param string|null $formName
-     *
-     * @return bool
-     */
-    protected function isSelectedTypeVerificationRequired(Request $request, string $multiFactorAuthType, ?string $formName = null): bool
-    {
-        return $this->assertIsActivation($request, $formName) && $this->getParameterFromRequest($request, static::TYPE_TO_SET_UP, $formName) !== $multiFactorAuthType;
+            $plugin->createToken($customerTransfer->getEmailOrFail());
+            $plugin->executeOnAuthenticationSuccess($customerTransfer);
+        }
     }
 
     /**
@@ -258,9 +161,9 @@ class CustomerMultiFactorAuthFlowController extends AbstractCustomerMultiFactorA
      */
     protected function getOptions(Request $request, ?FormInterface $form = null): array
     {
-        $customerTransfer = $this->getCustomer($request, $form ? $form->getName() : null);
+        $customerTransfer = $this->getIdentity($request, $form ? $form->getName() : null);
 
-        $options = $this->getFactory()->createTypeSelectionFormDataProvider()->getOptions($customerTransfer);
+        $options = $this->getFactory()->createCustomerTypeSelectionFormDataProvider()->getOptions($customerTransfer);
         $multiFactorAuthValidationRequestTransfer = (new MultiFactorAuthValidationRequestTransfer())->setCustomer($customerTransfer);
 
         if ($this->assertIsActivation($request) && $this->getClient()->validateCustomerMultiFactorAuthStatus($multiFactorAuthValidationRequestTransfer)->getIsRequired() === false) {
@@ -268,62 +171,5 @@ class CustomerMultiFactorAuthFlowController extends AbstractCustomerMultiFactorA
         }
 
         return $options;
-    }
-
-    /**
-     * @param array<string, mixed> $options
-     *
-     * @return bool
-     */
-    protected function assertNoTypesEnabled(array $options): bool
-    {
-        return $options[static::OPTION_TYPES] === [];
-    }
-
-    /**
-     * @param array<string, mixed> $options
-     *
-     * @return bool
-     */
-    protected function assertOneTypeEnabled(array $options): bool
-    {
-        return count($options[static::OPTION_TYPES]) === 1;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string|null $formName
-     *
-     * @return string|null
-     */
-    protected function assertIsActivation(Request $request, ?string $formName = null): ?string
-    {
-        return $this->getParameterFromRequest($request, static::IS_ACTIVATION, $formName);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string|null $formName
-     *
-     * @return string|null
-     */
-    protected function assertIsDeactivation(Request $request, ?string $formName = null): ?string
-    {
-        return $this->getParameterFromRequest($request, static::IS_DEACTIVATION, $formName);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string|null $formName
-     *
-     * @return array<string, mixed>
-     */
-    protected function extractSetupParameters(Request $request, ?string $formName = null): array
-    {
-        return [
-            static::IS_ACTIVATION => $this->assertIsActivation($request, $formName),
-            static::IS_DEACTIVATION => $this->assertIsDeactivation($request, $formName),
-            static::TYPE_TO_SET_UP => $this->getParameterFromRequest($request, static::TYPE_TO_SET_UP, $formName),
-        ];
     }
 }

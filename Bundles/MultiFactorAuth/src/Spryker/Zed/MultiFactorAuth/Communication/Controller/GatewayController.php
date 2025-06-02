@@ -8,10 +8,13 @@
 namespace Spryker\Zed\MultiFactorAuth\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -85,5 +88,91 @@ class GatewayController extends AbstractGatewayController
         $this->getFacade()->deactivateCustomerMultiFactorAuth($multiFactorAuthTransfer);
 
         return $multiFactorAuthTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer
+     */
+    public function findCustomerMultiFactorAuthTypeAction(
+        MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+    ): MultiFactorAuthCodeTransfer {
+        return $this->getFacade()->findCustomerMultiFactorAuthType($multiFactorAuthCodeCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getUserMultiFactorAuthTypesAction(UserTransfer $userTransfer): MultiFactorAuthTypesCollectionTransfer
+    {
+        return $this->getRepository()->getUserMultiFactorAuthTypes($userTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
+     */
+    public function validateUserMultiFactorAuthStatusAction(
+        MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer
+    ): MultiFactorAuthValidationResponseTransfer {
+        return $this->getFacade()->validateUserMultiFactorAuthStatus($multiFactorAuthValidationRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTransfer
+     */
+    public function sendUserCodeAction(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthTransfer
+    {
+        return $this->getFacade()->sendUserCode($multiFactorAuthTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
+     */
+    public function validateUserCodeAction(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthValidationResponseTransfer
+    {
+        return $this->getFacade()->validateUserCode($multiFactorAuthTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTransfer
+     */
+    public function activateUserMultiFactorAuthAction(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthTransfer
+    {
+        $this->getFacade()->activateUserMultiFactorAuth($multiFactorAuthTransfer);
+
+        return $multiFactorAuthTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTransfer
+     */
+    public function deactivateUserMultiFactorAuthAction(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthTransfer
+    {
+        $this->getFacade()->deactivateUserMultiFactorAuth($multiFactorAuthTransfer);
+
+        return $multiFactorAuthTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getPendingActivationCustomerMultiFactorAuthTypesAction(CustomerTransfer $customerTransfer): MultiFactorAuthTypesCollectionTransfer
+    {
+        return $this->getFacade()->getPendingActivationCustomerMultiFactorAuthTypes($customerTransfer);
     }
 }

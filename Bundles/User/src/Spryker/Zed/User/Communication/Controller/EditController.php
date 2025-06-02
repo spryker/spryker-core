@@ -107,6 +107,11 @@ class EditController extends AbstractController
     protected const MESSAGE_USER_NOT_FOUND = "User couldn't be found";
 
     /**
+     * @var string
+     */
+    protected const ERROR_ACCESS_DENIED_CAUSE = 'access_denied';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
@@ -179,6 +184,19 @@ class EditController extends AbstractController
                 $dataProvider->getOptions(),
             )
             ->handleRequest($request);
+
+        if ($userForm->isSubmitted() && !$userForm->isValid()) {
+            foreach ($userForm->getErrors(true) as $error) {
+                /** @var \Symfony\Component\Form\FormError $error */
+                if ($error->getCause() !== static::ERROR_ACCESS_DENIED_CAUSE) {
+                    continue;
+                }
+
+                $this->addErrorMessage($error->getMessage());
+
+                return $this->redirectResponse(static::USER_LISTING_URL);
+            }
+        }
 
         if ($userForm->isSubmitted() && $userForm->isValid()) {
             $formData = $userForm->getData();
@@ -330,7 +348,9 @@ class EditController extends AbstractController
         $userDeleteConfirmForm = $this->getFactory()->getUserDeleteConfirmForm()->handleRequest($request);
 
         if (!$userDeleteConfirmForm->isSubmitted() || !$userDeleteConfirmForm->isValid()) {
-            $this->addErrorMessage(static::MESSAGE_CSRF_FORM_PROTECTION_ERROR);
+            /** @var \Symfony\Component\Form\FormError $error */
+            $error = $userDeleteConfirmForm->getErrors(true, false)[0];
+            $this->addErrorMessage($error->getMessage() ?: static::MESSAGE_CSRF_FORM_PROTECTION_ERROR);
 
             return $this->redirectResponse(static::USER_LISTING_URL);
         }

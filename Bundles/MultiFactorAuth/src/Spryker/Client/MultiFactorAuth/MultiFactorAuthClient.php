@@ -8,10 +8,13 @@
 namespace Spryker\Client\MultiFactorAuth;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -102,5 +105,119 @@ class MultiFactorAuthClient extends AbstractClient implements MultiFactorAuthCli
     public function deactivateCustomerMultiFactorAuth(MultiFactorAuthTransfer $multiFactorAuthTransfer): void
     {
         $this->getFactory()->createCustomerMultiFactorAuthStub()->deactivateCustomerMultiFactorAuth($multiFactorAuthTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getAgentMultiFactorAuthTypes(UserTransfer $userTransfer): MultiFactorAuthTypesCollectionTransfer
+    {
+        return $this->getFactory()->createAgentMultiFactorAuthStub()->getAgentMultiFactorAuthTypes($userTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
+     */
+    public function validateAgentMultiFactorAuthStatus(
+        MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer
+    ): MultiFactorAuthValidationResponseTransfer {
+        return $this->getFactory()->createAgentMultiFactorAuthStub()->validateAgentMultiFactorAuthStatus($multiFactorAuthValidationRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTransfer
+     */
+    public function sendAgentCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthTransfer
+    {
+        return $this->getFactory()->createAgentMultiFactorAuthStub()->sendAgentCode($multiFactorAuthTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
+     */
+    public function validateAgentCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthValidationResponseTransfer
+    {
+        return $this->getFactory()->createAgentMultiFactorAuthStub()->validateAgentCode($multiFactorAuthTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return void
+     */
+    public function activateAgentMultiFactorAuth(MultiFactorAuthTransfer $multiFactorAuthTransfer): void
+    {
+        $this->getFactory()->createAgentMultiFactorAuthStub()->activateAgentMultiFactorAuth($multiFactorAuthTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return void
+     */
+    public function deactivateAgentMultiFactorAuth(MultiFactorAuthTransfer $multiFactorAuthTransfer): void
+    {
+        $this->getFactory()->createAgentMultiFactorAuthStub()->deactivateAgentMultiFactorAuth($multiFactorAuthTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer
+     */
+    public function findCustomerMultiFactorAuthType(
+        MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+    ): MultiFactorAuthCodeTransfer {
+        return $this->getFactory()->createCustomerMultiFactorAuthStub()->findCustomerMultiFactorAuthType($multiFactorAuthCodeCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getPendingActivationCustomerMultiFactorAuthTypes(CustomerTransfer $customerTransfer): MultiFactorAuthTypesCollectionTransfer
+    {
+        return $this->getFactory()->createCustomerMultiFactorAuthStub()->getPendingActivationCustomerMultiFactorAuthTypes($customerTransfer);
     }
 }

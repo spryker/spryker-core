@@ -77,6 +77,7 @@ suites:
                           - \Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin
                           - \Spryker\Zed\Gui\Communication\Plugin\Twig\FormRuntimeLoaderTwigPlugin
                           - \Spryker\Zed\Http\Communication\Plugin\Twig\RuntimeLoaderTwigPlugin
+                          - \Spryker\Zed\Gui\Communication\Plugin\Twig\NavigationLinkTwigPlugin
                       loaderPlugins:
                           - \Spryker\Zed\Gui\Communication\Plugin\Twig\GuiTwigLoaderPlugin
                 - \SprykerTest\Zed\Router\Helper\RouterHelper

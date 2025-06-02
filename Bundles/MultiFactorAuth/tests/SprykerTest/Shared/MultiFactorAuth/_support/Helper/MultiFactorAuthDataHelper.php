@@ -11,6 +11,8 @@ use Codeception\Module;
 use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
 use Orm\Zed\MultiFactorAuth\Persistence\SpyCustomerMultiFactorAuthCodesAttemptsQuery;
 use Orm\Zed\MultiFactorAuth\Persistence\SpyCustomerMultiFactorAuthCodesQuery;
+use Orm\Zed\MultiFactorAuth\Persistence\SpyUserMultiFactorAuthCodesAttemptsQuery;
+use Orm\Zed\MultiFactorAuth\Persistence\SpyUserMultiFactorAuthCodesQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -48,6 +50,28 @@ class MultiFactorAuthDataHelper extends Module
     }
 
     /**
+     * @param string $username
+     * @param string $type
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer
+     */
+    public function getUserMultiFactorAuthCode(string $username, string $type): MultiFactorAuthCodeTransfer
+    {
+        $codeEntity = SpyUserMultiFactorAuthCodesQuery::create()
+            ->useSpyUserMultiFactorAuthQuery()
+                ->filterByType($type)
+                ->useSpyUserQuery()
+                    ->filterByUsername($username)
+                ->endUse()
+            ->endUse()
+            ->orderByIdUserMultiFactorAuthCode(Criteria::DESC)
+            ->select([static::COL_CODE])
+            ->findOne();
+
+        return (new MultiFactorAuthCodeTransfer())->setCode($codeEntity);
+    }
+
+    /**
      * @param string $code
      *
      * @return void
@@ -57,6 +81,20 @@ class MultiFactorAuthDataHelper extends Module
         SpyCustomerMultiFactorAuthCodesAttemptsQuery::create()->deleteAll();
 
         SpyCustomerMultiFactorAuthCodesQuery::create()
+            ->filterByCode($code)
+            ->delete();
+    }
+
+    /**
+     * @param string $code
+     *
+     * @return void
+     */
+    public function cleanUpUserMultiFactorAuthCode(string $code): void
+    {
+        SpyUserMultiFactorAuthCodesAttemptsQuery::create()->deleteAll();
+
+        SpyUserMultiFactorAuthCodesQuery::create()
             ->filterByCode($code)
             ->delete();
     }

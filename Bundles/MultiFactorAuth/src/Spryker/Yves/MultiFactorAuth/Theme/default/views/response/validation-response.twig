@@ -1,0 +1,9 @@
+{% extends template('widget') %}
+
+{% define data = {
+    dataResult: _view.dataResult | default(''),
+} %}
+
+{% block body %}
+    <div data-close-popup {{ data.dataResult }}></div>
+{% endblock %}

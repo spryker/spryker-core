@@ -44,7 +44,10 @@ class CustomerMultiFactorAuthReader implements CustomerMultiFactorAuthReaderInte
             $multiFactorAuthTypes[$multiFactorAuthTransfer->getType()] = $multiFactorAuthTransfer;
         }
 
+        $wiredMultiFactorAuthTypesIndexedByName = [];
         foreach ($this->customerMultiFactorAuthPlugins as $plugin) {
+            $wiredMultiFactorAuthTypesIndexedByName[$plugin->getName()] = $plugin;
+
             if (isset($multiFactorAuthTypes[$plugin->getName()])) {
                 continue;
             }
@@ -57,6 +60,7 @@ class CustomerMultiFactorAuthReader implements CustomerMultiFactorAuthReaderInte
             $multiFactorAuthTypes[$plugin->getName()] = $multiFactorAuthTransfer;
         }
 
+        $multiFactorAuthTypes = array_intersect_key($multiFactorAuthTypes, $wiredMultiFactorAuthTypesIndexedByName);
         ksort($multiFactorAuthTypes);
         $multiFactorAuthTypesCollectionTransfer = new MultiFactorAuthTypesCollectionTransfer();
 

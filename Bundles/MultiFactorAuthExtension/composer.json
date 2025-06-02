@@ -8,9 +8,11 @@
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
-        "spryker/code-sniffer": "*"
+        "spryker/code-sniffer": "*",
+        "spryker/kernel": "*"
     },
     "suggest": {
+        "spryker/kernel": "If you want to use kernel functionality with certain plugins",
         "spryker/symfony": "If you want to use the Symfony component."
     },
     "autoload": {

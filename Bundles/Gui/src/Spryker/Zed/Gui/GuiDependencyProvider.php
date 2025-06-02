@@ -38,6 +38,11 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     public const GUI_TWIG_FILTERS = 'gui_twig_filters';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_DROPDOWN_NAVIGATION = 'PLUGINS_DROPDOWN_NAVIGATION';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -49,6 +54,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTwigFilter($container);
         $container = $this->addUtilSanitizeXssService($container);
         $container = $this->addUtilNumberService($container);
+        $container = $this->addDropdownNavigationPlugins($container);
 
         return $container;
     }
@@ -105,5 +111,27 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDropdownNavigationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_DROPDOWN_NAVIGATION, function () {
+            return $this->getDropdownNavigationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Shared\GuiExtension\Dependency\Plugin\NavigationPluginInterface>
+     */
+    protected function getDropdownNavigationPlugins(): array
+    {
+        return [];
     }
 }

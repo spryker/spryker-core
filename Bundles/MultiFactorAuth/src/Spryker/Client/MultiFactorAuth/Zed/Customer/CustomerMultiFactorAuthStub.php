@@ -8,6 +8,8 @@
 namespace Spryker\Client\MultiFactorAuth\Zed\Customer;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
@@ -100,5 +102,32 @@ class CustomerMultiFactorAuthStub implements CustomerMultiFactorAuthStubInterfac
         $multiFactorAuthTransfer = $this->zedStub->call('/multi-factor-auth/gateway/deactivate-customer-multi-factor-auth', $multiFactorAuthTransfer);
 
         return $multiFactorAuthTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer
+     */
+    public function findCustomerMultiFactorAuthType(
+        MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+    ): MultiFactorAuthCodeTransfer {
+        /** @var \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer $multiFactorAuthCodeTransfer */
+        $multiFactorAuthCodeTransfer = $this->zedStub->call('/multi-factor-auth/gateway/find-customer-multi-factor-auth-type', $multiFactorAuthCodeCriteriaTransfer);
+
+        return $multiFactorAuthCodeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getPendingActivationCustomerMultiFactorAuthTypes(CustomerTransfer $customerTransfer): MultiFactorAuthTypesCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer $multiFactorAuthTypesCollectionTransfer */
+        $multiFactorAuthTypesCollectionTransfer = $this->zedStub->call('/multi-factor-auth/gateway/get-pending-activation-customer-multi-factor-auth-types', $customerTransfer);
+
+        return $multiFactorAuthTypesCollectionTransfer;
     }
 }

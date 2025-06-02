@@ -5,22 +5,31 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.2",
+        "spryker-shop/agent-page-extension": "^1.1.0",
         "spryker-shop/customer-page-extension": "^1.7.0",
+        "spryker/agent": "^1.0.0",
         "spryker/application": "^3.0.0",
         "spryker/customer": "^7.0.0",
+        "spryker/customer-extension": "^1.6.0",
         "spryker/form-extension": "^1.0.0",
         "spryker/glossary": "^3.0.0",
+        "spryker/glue-application": "^1.15.0",
+        "spryker/glue-application-extension": "^1.0.0",
+        "spryker/gui-extension": "^1.0.0",
         "spryker/kernel": "^3.52.0",
         "spryker/mail": "^4.6.0",
         "spryker/mail-extension": "^1.0.0",
         "spryker/multi-factor-auth-extension": "^1.0.0",
         "spryker/propel-orm": "^1.16.0",
+        "spryker/security-gui-extension": "^1.3.0",
         "spryker/symfony": "^3.15.0",
         "spryker/transfer": "^3.27.0",
         "spryker/twig": "^3.0.0",
+        "spryker/user": "^3.27.0",
         "spryker/zed-request": "^3.0.0"
     },
     "require-dev": {
+        "spryker-shop/agent-page": "*",
         "spryker-shop/customer-page": "*",
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
@@ -28,6 +37,7 @@
         "spryker/testify": "*"
     },
     "suggest": {
+        "spryker-shop/agent-page": "Use this module when you want to use the AgentPage plugins.",
         "spryker-shop/customer-page": "Use this module when you want to use the CustomerPage plugins.",
         "spryker/container": "Use this module when you want to use the Container.",
         "spryker/router": "Use this module when you want to use the Router."

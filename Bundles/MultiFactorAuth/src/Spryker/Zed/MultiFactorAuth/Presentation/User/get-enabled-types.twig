@@ -1,0 +1,12 @@
+{% set page_title = 'Select Authentication Method' %}
+{% block section_title page_title | trans %}
+
+{% block content %}
+    <div class="js-mfa-data" data-url="multi-factor-auth/user/get-enabled-types">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Continue' | trans }}">
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

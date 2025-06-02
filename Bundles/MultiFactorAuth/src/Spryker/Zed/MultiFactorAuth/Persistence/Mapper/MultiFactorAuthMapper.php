@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Orm\Zed\MultiFactorAuth\Persistence\SpyCustomerMultiFactorAuth;
 use Orm\Zed\MultiFactorAuth\Persistence\SpyCustomerMultiFactorAuthCodes;
+use Orm\Zed\MultiFactorAuth\Persistence\SpyUserMultiFactorAuth;
+use Orm\Zed\MultiFactorAuth\Persistence\SpyUserMultiFactorAuthCodes;
 use Propel\Runtime\Collection\Collection;
 
 class MultiFactorAuthMapper
@@ -22,12 +24,28 @@ class MultiFactorAuthMapper
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer
      */
-    public function mapMultiFactorAuthCodeEntityToMultiFactorAuthCodeTransfer(
+    public function mapCustomerMultiFactorAuthCodeEntityToMultiFactorAuthCodeTransfer(
         SpyCustomerMultiFactorAuthCodes $customerMultiFactorAuthCode,
         MultiFactorAuthCodeTransfer $multiFactorAuthCodeTransfer
     ): MultiFactorAuthCodeTransfer {
         return $multiFactorAuthCodeTransfer->fromArray($customerMultiFactorAuthCode->toArray(), true)
-            ->setIdCode($customerMultiFactorAuthCode->getIdCustomerMultiFactorAuthCode());
+            ->setIdCode($customerMultiFactorAuthCode->getIdCustomerMultiFactorAuthCode())
+            ->setType($customerMultiFactorAuthCode->getSpyCustomerMultiFactorAuth()->getType());
+    }
+
+    /**
+     * @param \Orm\Zed\MultiFactorAuth\Persistence\SpyUserMultiFactorAuthCodes $userMultiFactorAuthCode
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer $multiFactorAuthCodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer
+     */
+    public function mapUserMultiFactorAuthCodeEntityToMultiFactorAuthCodeTransfer(
+        SpyUserMultiFactorAuthCodes $userMultiFactorAuthCode,
+        MultiFactorAuthCodeTransfer $multiFactorAuthCodeTransfer
+    ): MultiFactorAuthCodeTransfer {
+        return $multiFactorAuthCodeTransfer->fromArray($userMultiFactorAuthCode->toArray(), true)
+            ->setIdCode($userMultiFactorAuthCode->getIdUserMultiFactorAuthCode())
+            ->setType($userMultiFactorAuthCode->getSpyUserMultiFactorAuth()->getType());
     }
 
     /**
@@ -67,5 +85,24 @@ class MultiFactorAuthMapper
         }
 
         return $customerMultiFactorAuth;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     * @param \Orm\Zed\MultiFactorAuth\Persistence\SpyUserMultiFactorAuth $userMultiFactorAuth
+     *
+     * @return \Orm\Zed\MultiFactorAuth\Persistence\SpyUserMultiFactorAuth
+     */
+    public function mapMultiFactorAuthTransferToUserMultiFactorAuthEntity(
+        MultiFactorAuthTransfer $multiFactorAuthTransfer,
+        SpyUserMultiFactorAuth $userMultiFactorAuth
+    ): SpyUserMultiFactorAuth {
+        $userMultiFactorAuth->fromArray($multiFactorAuthTransfer->toArray());
+
+        if ($multiFactorAuthTransfer->getUser() !== null) {
+            $userMultiFactorAuth->setFkUser($multiFactorAuthTransfer->getUserOrFail()->getIdUserOrFail());
+        }
+
+        return $userMultiFactorAuth;
     }
 }

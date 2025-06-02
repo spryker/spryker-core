@@ -11,15 +11,26 @@ use DateInterval;
 use DateTime;
 use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
-use Spryker\Zed\MultiFactorAuth\MultiFactorAuthConfig;
+use Spryker\Zed\MultiFactorAuth\Business\Generator\Provider\CodeGeneratorConfigProviderInterface;
 
 class CodeGenerator implements CodeGeneratorInterface
 {
     /**
-     * @param \Spryker\Zed\MultiFactorAuth\MultiFactorAuthConfig $config
+     * @var string
      */
-    public function __construct(protected MultiFactorAuthConfig $config)
-    {
+    protected const DATE_FORMAT = 'Y-m-d H:i:s';
+
+    /**
+     * @var string
+     */
+    protected const EXPIRATION_INTERVAL_FORMAT = 'PT%dM';
+
+    /**
+     * @param \Spryker\Zed\MultiFactorAuth\Business\Generator\Provider\CodeGeneratorConfigProviderInterface $configProvider
+     */
+    public function __construct(
+        protected CodeGeneratorConfigProviderInterface $configProvider
+    ) {
     }
 
     /**
@@ -29,21 +40,35 @@ class CodeGenerator implements CodeGeneratorInterface
      */
     public function generateCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthTransfer
     {
-        $min = (int)str_pad('1', $this->config->getCustomerCodeLength(), '0', STR_PAD_RIGHT);
-        $max = (int)str_pad('', $this->config->getCustomerCodeLength(), '9');
+        $code = $this->generateNumericCode();
 
-        $generatedCode = (string)random_int($min, $max);
-
-        $expirationTime = (new DateTime())->add(
-            new DateInterval(sprintf('PT%dM', $this->config->getCustomerCodeValidityTtl())),
-        );
+        $expirationDate = $this->getExpirationDate();
 
         $multiFactorAuthCodeTransfer = (new MultiFactorAuthCodeTransfer())
-            ->setExpirationDate($expirationTime->format('Y-m-d H:i:s'))
-            ->setCode($generatedCode);
+            ->setCode($code)
+            ->setExpirationDate($expirationDate->format(static::DATE_FORMAT));
 
-        $multiFactorAuthTransfer->setMultiFactorAuthCode($multiFactorAuthCodeTransfer);
+        return $multiFactorAuthTransfer->setMultiFactorAuthCode($multiFactorAuthCodeTransfer);
+    }
 
-        return $multiFactorAuthTransfer;
+    /**
+     * @return string
+     */
+    protected function generateNumericCode(): string
+    {
+        $min = (int)str_pad('1', $this->configProvider->getCodeLength(), '0', STR_PAD_RIGHT);
+        $max = (int)str_pad('', $this->configProvider->getCodeLength(), '9');
+
+        return (string)random_int($min, $max);
+    }
+
+    /**
+     * @return \DateTime
+     */
+    protected function getExpirationDate(): DateTime
+    {
+        return (new DateTime())->add(
+            new DateInterval(sprintf(static::EXPIRATION_INTERVAL_FORMAT, $this->configProvider->getCodeValidityTtl())),
+        );
     }
 }

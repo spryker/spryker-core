@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MultiFactorAuth\Business\Validator;
 
+use DateTime;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer;
 
@@ -14,12 +15,14 @@ interface MultiFactorAuthStatusValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer
-     * @param string|null $currentDateTime
+     * @param array<int> $additionalStatuses
+     * @param \DateTime|null $currentDateTime
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
      */
     public function validate(
         MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer,
-        ?string $currentDateTime = null
+        array $additionalStatuses = [],
+        ?DateTime $currentDateTime = null
     ): MultiFactorAuthValidationResponseTransfer;
 }
