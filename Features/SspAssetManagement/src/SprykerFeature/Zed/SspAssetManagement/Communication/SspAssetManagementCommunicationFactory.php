@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\SspAssetManagement\Communication;
 
 use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\SspAssetManagement\Persistence\SpySspAssetQuery;
 use Orm\Zed\SspAssetManagement\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
 use Orm\Zed\SspInquiryManagement\Persistence\SpySspInquirySspAssetQuery;
@@ -36,6 +37,7 @@ use SprykerFeature\Zed\SspAssetManagement\Communication\Saver\SalesOrderItemSspA
 use SprykerFeature\Zed\SspAssetManagement\Communication\Table\AssignedBusinessUnitTable;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Table\SspAssetTable;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Table\SspInquiryTable;
+use SprykerFeature\Zed\SspAssetManagement\Communication\Table\SspServiceTable;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Tabs\SspAssetTabs;
 use SprykerFeature\Zed\SspAssetManagement\SspAssetManagementDependencyProvider;
 use Symfony\Component\Form\FormInterface;
@@ -198,6 +200,29 @@ class SspAssetManagementCommunicationFactory extends AbstractCommunicationFactor
     public function getCompanyBusinessUnitFacade(): CompanyBusinessUnitFacadeInterface
     {
         return $this->getProvidedDependency(SspAssetManagementDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT);
+    }
+
+    /**
+     * @param string $assetReference
+     *
+     * @return \SprykerFeature\Zed\SspAssetManagement\Communication\Table\SspServiceTable
+     */
+    public function createSspServiceTable(string $assetReference): SspServiceTable
+    {
+        return new SspServiceTable(
+            $assetReference,
+            $this->getSalesOrderItemQuery(),
+            $this->getUtilDateTimeService(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function getSalesOrderItemQuery(): SpySalesOrderItemQuery
+    {
+        return $this->getProvidedDependency(SspAssetManagementDependencyProvider::PROPEL_QUERY_SALES_ORDER_ITEM);
     }
 
     /**

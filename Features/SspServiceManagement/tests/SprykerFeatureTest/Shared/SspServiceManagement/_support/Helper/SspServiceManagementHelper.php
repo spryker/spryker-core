@@ -12,6 +12,10 @@ use Generated\Shared\DataBuilder\ProductAbstractTypeBuilder;
 use Generated\Shared\Transfer\ProductAbstractTypeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Orm\Zed\SspAssetManagement\Persistence\SpySalesOrderItemSspAsset;
+use Orm\Zed\SspAssetManagement\Persistence\SpySalesOrderItemSspAssetQuery;
+use Orm\Zed\SspAssetManagement\Persistence\SpySspAssetQuery;
 use Orm\Zed\SspServiceManagement\Persistence\SpyProductAbstractToProductAbstractTypeQuery;
 use Orm\Zed\SspServiceManagement\Persistence\SpyProductAbstractTypeQuery;
 use Orm\Zed\SspServiceManagement\Persistence\SpyProductShipmentType;
@@ -66,7 +70,7 @@ class SspServiceManagementHelper extends Module
             ->filterByKey($productAbstractTypeTransfer->getKey())
             ->findOneOrCreate();
 
-        $productAbstractTypeEntity->fromArray($productAbstractTypeTransfer->toArray());
+        $productAbstractTypeEntity->fromArray($productAbstractTypeTransfer->modifiedToArray());
         if ($productAbstractTypeEntity->isNew() || $productAbstractTypeEntity->isModified()) {
             $productAbstractTypeEntity->save();
         }
@@ -124,6 +128,80 @@ class SspServiceManagementHelper extends Module
     }
 
     /**
+     * @param int $idSalesOrder
+     * @param int $idSspAsset
+     *
+     * @return void
+     */
+    public function haveSalesSspAsset(int $idSalesOrder, int $idSspAsset): void
+    {
+        $salesOrderEntity = $this->getSalesOrderQuery()
+            ->filterByIdSalesOrder($idSalesOrder)
+            ->findOne();
+
+        $sspAssetEntity = $this->getSspAssetQuery()
+            ->filterByIdSspAsset($idSspAsset)
+            ->findOne();
+
+        if ($salesOrderEntity === null || $sspAssetEntity === null) {
+            return;
+        }
+
+        foreach ($salesOrderEntity->getItems() as $salesOrderItemEntity) {
+            (new SpySalesOrderItemSspAsset())
+            ->setName($sspAssetEntity->getName())
+            ->setReference($sspAssetEntity->getReference())
+            ->setSerialNumber($sspAssetEntity->getSerialNumber())
+            ->setFkSalesOrderItem($salesOrderItemEntity->getIdSalesOrderItem())
+            ->save();
+        }
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($idSalesOrder, $idSspAsset): void {
+            $this->cleanupSalesSspAsset(
+                $idSalesOrder,
+                $idSspAsset,
+            );
+        });
+    }
+
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSspAsset
+     *
+     * @return void
+     */
+    protected function cleanupSalesSspAsset(int $idSalesOrder, int $idSspAsset): void
+    {
+        $salesOrderEntity = $this->getSalesOrderQuery()
+            ->filterByIdSalesOrder($idSalesOrder)
+            ->findOne();
+
+        if ($salesOrderEntity === null) {
+            return;
+        }
+
+        $sspAssetEntity = $this->getSspAssetQuery()
+            ->filterByIdSspAsset($idSspAsset)
+            ->findOne();
+
+        if ($sspAssetEntity === null) {
+            return;
+        }
+
+        $salesOrderItemIds = [];
+        foreach ($salesOrderEntity->getItems() as $salesOrderItemEntity) {
+            $salesOrderItemIds[] = $salesOrderItemEntity->getIdSalesOrderItem();
+        }
+
+        if ($salesOrderItemIds) {
+            SpySalesOrderItemSspAssetQuery::create()
+                ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+                ->filterByReference($sspAssetEntity->getReference())
+                ->delete();
+        }
+    }
+
+    /**
      * @param int $idProductAbstract
      * @param int $idProductAbstractType
      *
@@ -171,5 +249,21 @@ class SspServiceManagementHelper extends Module
     protected function getProductAbstractToProductAbstractTypeQuery(): SpyProductAbstractToProductAbstractTypeQuery
     {
         return SpyProductAbstractToProductAbstractTypeQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function getSalesOrderQuery(): SpySalesOrderQuery
+    {
+        return SpySalesOrderQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\SspAssetManagement\Persistence\SpySspAssetQuery
+     */
+    protected function getSspAssetQuery(): SpySspAssetQuery
+    {
+        return SpySspAssetQuery::create();
     }
 }

@@ -1,0 +1,5 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Services' | trans } %}
+    {% block widget_content %}
+        {{ sspServiceTable | raw }}
+    {% endblock %}
+{% endembed %}

@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\SspServiceManagement\Communication;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
@@ -32,14 +33,20 @@ use SprykerFeature\Zed\SspServiceManagement\Communication\Expander\ProductAbstra
 use SprykerFeature\Zed\SspServiceManagement\Communication\Expander\ProductAbstractTypeExpanderInterface;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Form\CreateOfferForm;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataProvider\CreateOfferFormDataProvider;
+use SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataProvider\EditOfferFormDataProvider;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataProvider\ItemSchedulerFormDataProvider;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataProvider\ServiceDateTimeEnabledProductConcreteFormDataProvider;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataProvider\ShipmentTypeProductConcreteFormDataProvider;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataTransformer\ServicePointServicesDataTransformer;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataTransformer\ShipmentTypesDataTransformer;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataTransformer\StoresDataTransformer;
+use SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataTransformer\ValidFromDataTransformer;
+use SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataTransformer\ValidToDataTransformer;
+use SprykerFeature\Zed\SspServiceManagement\Communication\Form\EditOfferForm;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Form\EventListener\MerchantCreateOfferFormEventSubscriber;
+use SprykerFeature\Zed\SspServiceManagement\Communication\Form\EventListener\ServicePointEditOfferFormEventSubscriber;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Form\EventListener\StockCreateOfferFormEventSubscriber;
+use SprykerFeature\Zed\SspServiceManagement\Communication\Form\EventListener\StockEditOfferFormEventSubscriber;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Form\ItemSchedulerForm;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Form\ProductAbstractTypeForm;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Form\ServiceDateTimeEnabledProductConcreteForm;
@@ -118,6 +125,20 @@ class SspServiceManagementCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createEditOfferForm(ProductOfferTransfer $productOfferTransfer): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            EditOfferForm::class,
+            $this->createEditOfferFormDataProvider()->getData($productOfferTransfer),
+            $this->createEditOfferFormDataProvider()->getOptions($productOfferTransfer),
+        );
+    }
+
+    /**
      * @return \SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataProvider\CreateOfferFormDataProvider
      */
     public function createCreateOfferFormDataProvider(): CreateOfferFormDataProvider
@@ -128,6 +149,20 @@ class SspServiceManagementCommunicationFactory extends AbstractCommunicationFact
             $this->getServicePointFacade(),
             $this->getCreateProductOfferFormModelTransformers(),
             $this->getCreateProductOfferFormEventSubscribers(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataProvider\EditOfferFormDataProvider
+     */
+    public function createEditOfferFormDataProvider(): EditOfferFormDataProvider
+    {
+        return new EditOfferFormDataProvider(
+            $this->getStoreFacade(),
+            $this->getShipmentTypeFacade(),
+            $this->getServicePointFacade(),
+            $this->getEditProductOfferFormModelTransformers(),
+            $this->getEditProductOfferFormEventSubscribers(),
         );
     }
 
@@ -199,6 +234,35 @@ class SspServiceManagementCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
+     * @return array<string, \SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataTransformer\DataTransformerInterface<mixed, mixed>>
+     */
+    public function getEditProductOfferFormModelTransformers(): array
+    {
+        return [
+            CreateOfferForm::FIELD_STORES => $this->createStoresDataTransformer(),
+            CreateOfferForm::FIELD_SHIPMENT_TYPES => $this->createShipmentTypesDataTransformer(),
+            CreateOfferForm::FIELD_VALID_FROM => $this->createValidFromDataTransformer(),
+            CreateOfferForm::FIELD_VALID_TO => $this->createValidToDataTransformer(),
+        ];
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataTransformer\ValidFromDataTransformer
+     */
+    public function createValidFromDataTransformer(): ValidFromDataTransformer
+    {
+        return new ValidFromDataTransformer();
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataTransformer\ValidToDataTransformer
+     */
+    public function createValidToDataTransformer(): ValidToDataTransformer
+    {
+        return new ValidToDataTransformer();
+    }
+
+    /**
      * @return \SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataTransformer\StoresDataTransformer
      */
     public function createStoresDataTransformer(): StoresDataTransformer
@@ -243,6 +307,22 @@ class SspServiceManagementCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    public function createStockEditOfferFormEventSubscriber(): EventSubscriberInterface
+    {
+        return new StockEditOfferFormEventSubscriber();
+    }
+
+    /**
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    public function createServicePointEditOfferFormEventSubscriber(): EventSubscriberInterface
+    {
+        return new ServicePointEditOfferFormEventSubscriber();
+    }
+
+    /**
      * @return list<\Symfony\Component\EventDispatcher\EventSubscriberInterface>
      */
     public function getCreateProductOfferFormEventSubscribers(): array
@@ -250,6 +330,17 @@ class SspServiceManagementCommunicationFactory extends AbstractCommunicationFact
         return [
             $this->createStockCreateOfferFormEventSubscriber(),
             $this->createMerchantCreateOfferFormEventSubscriber(),
+        ];
+    }
+
+    /**
+     * @return list<\Symfony\Component\EventDispatcher\EventSubscriberInterface>
+     */
+    public function getEditProductOfferFormEventSubscribers(): array
+    {
+        return [
+            $this->createStockEditOfferFormEventSubscriber(),
+            $this->createServicePointEditOfferFormEventSubscriber(),
         ];
     }
 

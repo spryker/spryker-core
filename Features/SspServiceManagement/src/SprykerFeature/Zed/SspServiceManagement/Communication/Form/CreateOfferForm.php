@@ -97,19 +97,19 @@ class CreateOfferForm extends AbstractType
      *
      * @var string
      */
-    protected const FIELD_VALID_FROM = 'validFrom';
+    public const FIELD_VALID_FROM = 'validFrom';
 
     /**
      * @uses \Generated\Shared\Transfer\ProductOfferValidityTransfer::VALID_TO
      *
      * @var string
      */
-    protected const FIELD_VALID_TO = 'validTo';
+    public const FIELD_VALID_TO = 'validTo';
 
     /**
      * @var string
      */
-    protected const FIELD_SERVICE_POINT = 'servicePoint';
+    public const FIELD_SERVICE_POINT = 'servicePoint';
 
     /**
      * @uses \Generated\Shared\Transfer\ProductOfferStockTransfer::QUANTITY
@@ -145,10 +145,10 @@ class CreateOfferForm extends AbstractType
     {
         $this->addIsActiveField($builder, $options)
             ->addStoresField($builder, $options)
-            ->addStockQuantityField($builder)
-            ->addIsNeverOutOfStockField($builder)
-            ->addValidFromField($builder)
-            ->addValidToField($builder)
+            ->addStockQuantityField($builder, $options)
+            ->addIsNeverOutOfStockField($builder, $options)
+            ->addValidFromField($builder, $options)
+            ->addValidToField($builder, $options)
             ->addServicePointField($builder, $options)
             ->addServicePointServicesField($builder, $options)
             ->addShipmentTypesField($builder, $options);
@@ -273,10 +273,11 @@ class CreateOfferForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addValidFromField(FormBuilderInterface $builder)
+    protected function addValidFromField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_VALID_FROM, DateType::class, [
             'required' => false,
@@ -296,10 +297,11 @@ class CreateOfferForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addValidToField(FormBuilderInterface $builder)
+    protected function addValidToField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_VALID_TO, DateType::class, [
             'required' => false,
@@ -424,10 +426,11 @@ class CreateOfferForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addStockQuantityField(FormBuilderInterface $builder)
+    protected function addStockQuantityField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             static::FIELD_STOCK_QUANTITY,
@@ -448,10 +451,11 @@ class CreateOfferForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addIsNeverOutOfStockField(FormBuilderInterface $builder)
+    protected function addIsNeverOutOfStockField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             static::FIELD_IS_NEVER_OUT_OF_STOCK,

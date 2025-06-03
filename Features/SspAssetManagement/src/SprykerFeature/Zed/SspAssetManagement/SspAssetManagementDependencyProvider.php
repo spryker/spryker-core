@@ -7,6 +7,7 @@
 
 namespace SprykerFeature\Zed\SspAssetManagement;
 
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -49,6 +50,11 @@ class SspAssetManagementDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
+
+    /**
+     * @var string
+     */
+    public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -95,6 +101,7 @@ class SspAssetManagementDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addCompanyFacade($container);
+        $container = $this->addSalesOrderItemPropelQuery($container);
 
         return $container;
     }
@@ -203,5 +210,19 @@ class SspAssetManagementDependencyProvider extends AbstractBundleDependencyProvi
     protected function getSspAssetManagementExpanderPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesOrderItemPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, $container->factory(function (): SpySalesOrderItemQuery {
+            return SpySalesOrderItemQuery::create();
+        }));
+
+        return $container;
     }
 }

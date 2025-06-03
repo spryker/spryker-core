@@ -28,6 +28,7 @@
         "spryker/product-image": "^3.0.0",
         "spryker/product-management-extension": "^1.2.0",
         "spryker/product-offer": "^1.0.0",
+        "spryker/product-offer-gui-extension": "^1.0.0",
         "spryker/product-offer-shipment-type": "^1.0.0",
         "spryker/product-offer-storage": "^1.0.0",
         "spryker/product-page-search-extension": "^1.6.0",
@@ -52,6 +53,7 @@
         "spryker/zed-request": "^3.0.0"
     },
     "require-dev": {
+        "spryker-feature/ssp-asset-management": "*",
         "spryker-shop/customer-page": "*",
         "spryker/catalog": "*",
         "spryker/code-sniffer": "*",
@@ -69,6 +71,7 @@
         "spryker/testify": "*"
     },
     "suggest": {
+        "spryker-feature/ssp-asset-management": "If you want to use tests for the ssp asset service relation, you need to install the spryker-feature/ssp-asset-management module.",
         "spryker-shop/customer-page": "If you want to use the customer page module, you need to install the spryker-shop/customer-page module.",
         "spryker/catalog": "If you want to use the catalog module, you need to install the spryker/catalog module.",
         "spryker/container": "Add this module when you want to use the ProductServiceTypeNameTwigPlugin.",

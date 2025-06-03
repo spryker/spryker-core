@@ -24,6 +24,7 @@
         <property name="uuid" type="string"/>
         <property name="key" type="string"/>
         <property name="serviceType" type="ServiceType"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="ShipmentTypeCollection" strict="true">
@@ -110,6 +111,7 @@
         <property name="productOfferReference" type="string"/>
         <property name="idProductConcrete" type="int"/>
         <property name="productOfferValidity" type="ProductOfferValidity"/>
+        <property name="services" type="Service[]" singular="service" strict="true"/>
     </transfer>
 
     <transfer name="ServicePointCollection" strict="true">
@@ -153,6 +155,8 @@
         <property name="idService" type="int"/>
         <property name="uuid" type="string"/>
         <property name="serviceType" type="ServiceType"/>
+        <property name="isActive" type="bool"/>
+        <property name="servicePoint" type="ServicePoint"/>
     </transfer>
 
     <transfer name="SspService" strict="true">
@@ -266,6 +270,7 @@
         <property name="idServicePoint" type="int"/>
         <property name="name" type="string"/>
         <property name="uuid" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="Merchant">
@@ -522,6 +527,27 @@
     <transfer name="ProductOfferShipmentType" strict="true">
         <property name="shipmentTypes" type="ShipmentType[]" singular="shipmentType"/>
         <property name="productOffer" type="ProductOffer"/>
+    </transfer>
+
+    <transfer name="QueryCriteria">
+    </transfer>
+
+    <transfer name="ProductOfferConditions" strict="true">
+        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+    </transfer>
+
+    <transfer name="ProductOfferCriteria">
+        <property name="productOfferConditions" type="ProductOfferConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="ProductOfferResponse">
+        <property name="productOffer" type="ProductOffer"/>
+        <property name="errors" type="ProductOfferError[]" singular="error"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductOfferError">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

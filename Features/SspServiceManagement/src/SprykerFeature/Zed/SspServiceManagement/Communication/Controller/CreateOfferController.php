@@ -99,14 +99,15 @@ class CreateOfferController extends AbstractController
             (new ServiceCriteriaTransfer())
                 ->setServiceConditions(
                     (new ServiceConditionsTransfer())
-                        ->setServicePointIds([$idServicePoint])
-                        ->setIsActive(true),
+                        ->setServicePointIds([$idServicePoint]),
                 ),
         );
 
         $choices = [];
         foreach ($servicePointCollectionTransfer->getServices() as $serviceTransfer) {
-            $choices[$serviceTransfer->getServiceTypeOrFail()->getNameOrFail()] = $serviceTransfer->getUuidOrFail();
+            $activityString = $serviceTransfer->getIsActive() ? 'Active' : 'Inactive';
+            $serviceKey = sprintf('%s (%s)', $serviceTransfer->getServiceTypeOrFail()->getNameOrFail(), $activityString);
+            $choices[$serviceKey] = $serviceTransfer->getUuidOrFail();
         }
 
         return $this->jsonResponse($choices);

@@ -7,9 +7,7 @@
 
 namespace SprykerFeature\Zed\SspServiceManagement\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Generated\Shared\Transfer\ProductOfferValidityTransfer;
 use Generated\Shared\Transfer\ServiceCollectionTransfer;
 use Generated\Shared\Transfer\ServiceConditionsTransfer;
 use Generated\Shared\Transfer\ServiceCriteriaTransfer;
@@ -23,8 +21,9 @@ use Spryker\Zed\ServicePoint\Business\ServicePointFacadeInterface;
 use Spryker\Zed\ShipmentType\Business\ShipmentTypeFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Form\CreateOfferForm;
+use Symfony\Component\Form\FormBuilderInterface;
 
-class CreateOfferFormDataProvider
+class EditOfferFormDataProvider
 {
     /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
@@ -73,9 +72,21 @@ class CreateOfferFormDataProvider
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     */
+    public function getData(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
+    {
+        return $productOfferTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
      * @return array<string, mixed>
      */
-    public function getOptions(): array
+    public function getOptions(ProductOfferTransfer $productOfferTransfer): array
     {
         $storeChoices = $this->prepareStoreChoices($this->storeFacade->getAllStores());
         $servicePointChoices = $this->prepareServicePointChoices($this->servicePointFacade->getServicePointCollection(
@@ -90,12 +101,17 @@ class CreateOfferFormDataProvider
                     (new ShipmentTypeConditionsTransfer()),
                 ),
         ));
-        $servicePointServiceChoices = $this->prepareServicePointServiceChoices($this->servicePointFacade->getServiceCollection(
-            (new ServiceCriteriaTransfer())
-                ->setServiceConditions(
-                    (new ServiceConditionsTransfer()),
-                ),
-        ));
+        $idServicePoint = $productOfferTransfer->getServices()->offsetGet(0)->getServicePoint()->getIdServicePoint();
+        $servicePointServiceChoices = [];
+        if ($idServicePoint !== null) {
+            $servicePointServiceChoices = $this->prepareServicePointServiceChoices($this->servicePointFacade->getServiceCollection(
+                (new ServiceCriteriaTransfer())
+                    ->setServiceConditions(
+                        (new ServiceConditionsTransfer())
+                            ->setServicePointIds([$idServicePoint]),
+                    ),
+            ));
+        }
 
         /** @var array<string, mixed> $options */
         $options = [
@@ -111,18 +127,27 @@ class CreateOfferFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return void
      */
-    public function getData(ProductConcreteTransfer $productConcreteTransfer): ProductOfferTransfer
+    public function addModelTransformers(FormBuilderInterface $builder): void
     {
-        return (new ProductOfferTransfer())
-            ->setConcreteSku($productConcreteTransfer->getSkuOrFail())
-            ->setIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
-            ->setProductOfferValidity(
-                new ProductOfferValidityTransfer(),
-            );
+        foreach ($this->formDataTransformers as $field => $modelTransformer) {
+            $builder->get($field)->addModelTransformer($modelTransformer);
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    public function addEventSubscribers(FormBuilderInterface $builder): void
+    {
+        foreach ($this->formEventSubscribers as $eventSubscriber) {
+            $builder->addEventSubscriber($eventSubscriber);
+        }
     }
 
     /**
@@ -183,7 +208,9 @@ class CreateOfferFormDataProvider
     {
         $servicePointServiceChoices = [];
         foreach ($serviceCollectionTransfer->getServices() as $serviceTransfer) {
-            $servicePointServiceChoices[$serviceTransfer->getUuidOrFail()] = $serviceTransfer->getUuidOrFail();
+            $activityString = $serviceTransfer->getIsActive() ? 'Active' : 'Inactive';
+            $servicePointServiceKey = sprintf('%s (%s)', $serviceTransfer->getServiceTypeOrFail()->getNameOrFail(), $activityString);
+            $servicePointServiceChoices[$servicePointServiceKey] = $serviceTransfer->getUuidOrFail();
         }
 
         return $servicePointServiceChoices;
