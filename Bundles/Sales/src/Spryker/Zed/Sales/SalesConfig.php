@@ -60,12 +60,12 @@ class SalesConfig extends AbstractBundleConfig
     /**
      * @var int
      */
-    public const UNIQUE_RANDOM_ID_ORDER_REFERENCE_SIZE = 15;
+    public const UNIQUE_RANDOM_ID_ORDER_REFERENCE_SIZE = 16;
 
     /**
      * @var int
      */
-    public const UNIQUE_RANDOM_ID_ORDER_REFERENCE_SPLIT_LENGTH = 5;
+    public const UNIQUE_RANDOM_ID_ORDER_REFERENCE_SPLIT_LENGTH = 6;
 
     /**
      * Separator for the sequence number

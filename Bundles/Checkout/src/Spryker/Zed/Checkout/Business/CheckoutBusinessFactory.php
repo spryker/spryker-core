@@ -31,6 +31,7 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
             $this->createCheckoutSaveOrderPluginStrategyResolver(),
             $this->createCheckoutPostSavePluginStrategyResolver(),
             $this->createCheckoutPreSavePluginStrategyResolver(),
+            $this->getConfig(),
         );
     }
 

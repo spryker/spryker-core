@@ -658,7 +658,7 @@ class SalesFacadeSaveOrderTest extends Unit
 
         //Assert
         $this->salesBusinessFactory->setConfig($this->salesConfig);
-        $this->tester->assertRegExp('/^\w{2}--\d{5}-\d{5}-\d{5}$/', $saveOrderTransfer->getOrderReference());
+        $this->tester->assertRegExp('/^\w{2}--\d{6}-\d{6}-\d{4}$/', $saveOrderTransfer->getOrderReference());
     }
 
     /**

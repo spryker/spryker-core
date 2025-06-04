@@ -25,4 +25,22 @@ class CheckoutConfig extends AbstractBundleConfig
      * @var string
      */
     public const ERROR_CODE_CART_AMOUNT_DIFFERENT = '4003';
+
+    /**
+     * @var int
+     */
+    protected const SAVE_ORDER_TRANSACTION_MAX_ATTEMPTS = 5;
+
+    /**
+     * Specification:
+     * - Returns the maximum number of attempts to save an order.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getSaveOrderTransactionMaxAttempts(): int
+    {
+        return static::SAVE_ORDER_TRANSACTION_MAX_ATTEMPTS;
+    }
 }

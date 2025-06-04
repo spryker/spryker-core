@@ -11,10 +11,12 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Shared\Kernel\StrategyResolverInterface;
+use Spryker\Zed\Checkout\CheckoutConfig;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface as ObsoleteCheckoutSaveOrderInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Throwable;
 
 class CheckoutWorkflow implements CheckoutWorkflowInterface
 {
@@ -46,24 +48,32 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected $preSavePluginStrategyResolver;
 
     /**
+     * @var \Spryker\Zed\Checkout\CheckoutConfig
+     */
+    protected $checkoutConfig;
+
+    /**
      * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface $omsFacade
      * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface>> $preConditionPluginStrategyResolver
      * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface>> $saveOrderPluginStrategyResolver
      * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPostSaveInterface>> $postSavePluginStrategyResolver
      * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface>> $preSavePluginStrategyResolver
+     * @param \Spryker\Zed\Checkout\CheckoutConfig $checkoutConfig
      */
     public function __construct(
         CheckoutToOmsFacadeInterface $omsFacade,
         StrategyResolverInterface $preConditionPluginStrategyResolver,
         StrategyResolverInterface $saveOrderPluginStrategyResolver,
         StrategyResolverInterface $postSavePluginStrategyResolver,
-        StrategyResolverInterface $preSavePluginStrategyResolver
+        StrategyResolverInterface $preSavePluginStrategyResolver,
+        CheckoutConfig $checkoutConfig
     ) {
         $this->omsFacade = $omsFacade;
         $this->preConditionPluginStrategyResolver = $preConditionPluginStrategyResolver;
         $this->postSavePluginStrategyResolver = $postSavePluginStrategyResolver;
         $this->saveOrderPluginStrategyResolver = $saveOrderPluginStrategyResolver;
         $this->preSavePluginStrategyResolver = $preSavePluginStrategyResolver;
+        $this->checkoutConfig = $checkoutConfig;
     }
 
     /**
@@ -142,13 +152,33 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse Deprecated: SavedOrderTransfer should be used directly
      *
+     * @throws \Throwable
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function doSaveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->handleDatabaseTransaction(function () use ($quoteTransfer, $checkoutResponse) {
-            $this->doSaveOrderTransaction($quoteTransfer, $checkoutResponse);
-        });
+        $maxAttempts = $this->checkoutConfig->getSaveOrderTransactionMaxAttempts();
+        $attempt = 0;
+        $success = false;
+
+        while ($attempt < $maxAttempts && !$success) {
+            try {
+                $this->handleDatabaseTransaction(function () use ($quoteTransfer, $checkoutResponse) {
+                    $this->doSaveOrderTransaction(
+                        (new QuoteTransfer())->fromArray($quoteTransfer->modifiedToArray()),
+                        $checkoutResponse,
+                    );
+                });
+                $success = true;
+            } catch (Throwable $e) {
+                $attempt++;
+
+                if ($attempt >= $maxAttempts) {
+                    throw $e;
+                }
+            }
+        }
 
         return $quoteTransfer;
     }
