@@ -67,4 +67,11 @@ interface SspServiceManagementRepositoryInterface
      * @return array<int, array<string>>
      */
     public function getProductTypesGroupedBySalesOrderItemIds(array $salesOrderItemIds): array;
+
+    /**
+     * @param array<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderItemProductAbstractTypesBySalesOrderItemIds(array $salesOrderItemIds): void;
 }

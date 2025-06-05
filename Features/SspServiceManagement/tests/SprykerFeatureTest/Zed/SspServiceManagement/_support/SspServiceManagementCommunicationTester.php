@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\SspServiceManagement\Persistence\Base\SpySalesOrderItemProductAbstractType;
 use Orm\Zed\SspServiceManagement\Persistence\Map\SpyProductAbstractTypeTableMap;
 use Orm\Zed\SspServiceManagement\Persistence\Map\SpyProductShipmentTypeTableMap;
 use Orm\Zed\SspServiceManagement\Persistence\SpyProductAbstractToProductAbstractType;
@@ -286,5 +287,42 @@ class SspServiceManagementCommunicationTester extends Actor
         if ($orderItemProductType->isNew() || $orderItemProductType->isModified()) {
             $orderItemProductType->save();
         }
+    }
+
+    /**
+     * @param array<string, mixed> $seedData
+     *
+     * @throws \Exception
+     *
+     * @return \Orm\Zed\SspServiceManagement\Persistence\SpySalesOrderItemProductAbstractType
+     */
+    public function createSalesOrderItemProductAbstractType(array $seedData): SpySalesOrderItemProductAbstractType
+    {
+        $salesOrderItem = SpySalesOrderItemQuery::create()
+            ->filterByIdSalesOrderItem($seedData['id_sales_order_item'])
+            ->findOne();
+
+        if (!$salesOrderItem) {
+            throw new Exception('Sales order item not found in database. ID: ' . $seedData['id_sales_order_item']);
+        }
+
+        $productType = SpySalesProductAbstractTypeQuery::create()
+            ->filterByName('test_product_type')
+            ->findOneOrCreate();
+
+        if ($productType->isNew() || $productType->isModified()) {
+            $productType->save();
+        }
+
+        $orderItemProductType = SpySalesOrderItemProductAbstractTypeQuery::create()
+            ->filterByFkSalesOrderItem($seedData['id_sales_order_item'])
+            ->filterByFkSalesProductAbstractType($productType->getIdSalesProductAbstractType())
+            ->findOneOrCreate();
+
+        if ($orderItemProductType->isNew() || $orderItemProductType->isModified()) {
+            $orderItemProductType->save();
+        }
+
+        return $orderItemProductType;
     }
 }

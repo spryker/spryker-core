@@ -433,4 +433,26 @@ class SspServiceManagementRepository extends AbstractRepository implements SspSe
 
         return $productTypesBySalesOrderItemId;
     }
+
+    /**
+     * @param array<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderItemProductAbstractTypesBySalesOrderItemIds(array $salesOrderItemIds): void
+    {
+        if (!$salesOrderItemIds) {
+            return;
+        }
+
+        /**
+         * @var \Propel\Runtime\Collection\ObjectCollection $salesOrderItemProductAbstractTypeEntityCollection
+         */
+        $salesOrderItemProductAbstractTypeEntityCollection = $this->getFactory()
+            ->createSalesOrderItemProductAbstractTypeQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->find();
+
+        $salesOrderItemProductAbstractTypeEntityCollection->delete();
+    }
 }
