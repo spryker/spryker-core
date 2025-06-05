@@ -49,8 +49,23 @@ export class MfaHandler {
     async onSubmit(event, data) {
         event.preventDefault();
 
-        if (data.isLogin && !(await this.handleAdditionalAuth(data))) {
-            data.form.submit();
+        if (data.isLogin) {
+            const responseData = await this.handleAdditionalAuth(data);
+
+            if (responseData.failedLogin === true) {
+                data.form.submit();
+
+                return;
+            }
+
+            if (responseData.requiresAdditionalAuth === true) {
+                await this.handleResponse(data);
+
+                return;
+            }
+
+            location.reload();
+
             return;
         }
 
@@ -67,12 +82,30 @@ export class MfaHandler {
                 body: formData,
             });
 
+            const result = {
+                requiresAdditionalAuth: false,
+                failedLogin: false,
+                refresh: false,
+            };
+
             const contentType = response.headers.get('content-type');
 
             if (contentType?.includes('application/json')) {
                 const responseData = await response.json();
-                return responseData.requires_additional_auth === true;
+                result.requiresAdditionalAuth = responseData.requires_additional_auth;
+
+                return result;
             }
+
+            if (response?.url?.includes('/security-gui/login')) {
+                result.failedLogin = true;
+
+                return result;
+            }
+
+            result.refresh = true;
+
+            return result;
         } catch (error) {
             console.error('Server error:', error);
             this.closePopupOnError();
