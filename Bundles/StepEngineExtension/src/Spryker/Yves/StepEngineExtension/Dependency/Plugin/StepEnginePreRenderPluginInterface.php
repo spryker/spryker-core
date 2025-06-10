@@ -20,9 +20,9 @@ interface StepEnginePreRenderPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function execute(AbstractTransfer $quoteTransfer): AbstractTransfer;
+    public function execute(AbstractTransfer $dataTransfer): AbstractTransfer;
 }

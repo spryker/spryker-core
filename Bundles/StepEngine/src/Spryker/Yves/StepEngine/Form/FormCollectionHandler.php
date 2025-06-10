@@ -52,14 +52,14 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return array<\Symfony\Component\Form\FormInterface>
      */
-    public function getForms(AbstractTransfer $quoteTransfer)
+    public function getForms(AbstractTransfer $dataTransfer)
     {
         if (!$this->forms) {
-            $this->forms = $this->createForms($quoteTransfer);
+            $this->forms = $this->createForms($dataTransfer);
         }
 
         return $this->forms;
@@ -67,13 +67,13 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */
-    public function hasSubmittedForm(Request $request, AbstractTransfer $quoteTransfer)
+    public function hasSubmittedForm(Request $request, AbstractTransfer $dataTransfer)
     {
-        foreach ($this->getForms($quoteTransfer) as $form) {
+        foreach ($this->getForms($dataTransfer) as $form) {
             if ($request->request->has($form->getName())) {
                 return true;
             }
@@ -84,17 +84,17 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @throws \Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function handleRequest(Request $request, AbstractTransfer $quoteTransfer)
+    public function handleRequest(Request $request, AbstractTransfer $dataTransfer)
     {
-        foreach ($this->getForms($quoteTransfer) as $form) {
+        foreach ($this->getForms($dataTransfer) as $form) {
             if ($request->request->has($form->getName())) {
-                $form->setData($quoteTransfer);
+                $form->setData($dataTransfer);
 
                 return $form->handleRequest($request);
             }
@@ -104,43 +104,43 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return void
      */
-    public function provideDefaultFormData(AbstractTransfer $quoteTransfer)
+    public function provideDefaultFormData(AbstractTransfer $dataTransfer)
     {
-        $quoteTransfer = $this->getFormData($quoteTransfer);
+        $dataTransfer = $this->getFormData($dataTransfer);
 
-        foreach ($this->getForms($quoteTransfer) as $form) {
-            $form->setData($quoteTransfer);
+        foreach ($this->getForms($dataTransfer) as $form) {
+            $form->setData($dataTransfer);
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    protected function getFormData(AbstractTransfer $quoteTransfer)
+    protected function getFormData(AbstractTransfer $dataTransfer)
     {
         if ($this->dataProvider !== null) {
-            return $this->dataProvider->getData($quoteTransfer);
+            return $this->dataProvider->getData($dataTransfer);
         }
 
-        return $quoteTransfer;
+        return $dataTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return array<\Symfony\Component\Form\FormInterface>
      */
-    protected function createForms(AbstractTransfer $quoteTransfer)
+    protected function createForms(AbstractTransfer $dataTransfer)
     {
         $forms = [];
         foreach ($this->formTypes as $formType) {
-            $forms[] = $this->createForm($formType, $quoteTransfer);
+            $forms[] = $this->createForm($formType, $dataTransfer);
         }
 
         return $forms;
@@ -148,18 +148,18 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
 
     /**
      * @param \Symfony\Component\Form\FormTypeInterface|string $formType
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createForm($formType, AbstractTransfer $quoteTransfer)
+    protected function createForm($formType, AbstractTransfer $dataTransfer)
     {
         $formOptions = [
-            'data_class' => get_class($quoteTransfer),
+            'data_class' => get_class($dataTransfer),
         ];
 
         if ($this->dataProvider) {
-            $formOptions = array_merge($formOptions, $this->dataProvider->getOptions($quoteTransfer));
+            $formOptions = array_merge($formOptions, $this->dataProvider->getOptions($dataTransfer));
         }
 
         if ($formType instanceof FormInterface) {

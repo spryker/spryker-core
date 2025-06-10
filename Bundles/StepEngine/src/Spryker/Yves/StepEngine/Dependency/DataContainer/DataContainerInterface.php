@@ -12,14 +12,14 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 interface DataContainerInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function get();
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return void
      */
-    public function set(AbstractTransfer $quoteTransfer);
+    public function set(AbstractTransfer $dataTransfer);
 }

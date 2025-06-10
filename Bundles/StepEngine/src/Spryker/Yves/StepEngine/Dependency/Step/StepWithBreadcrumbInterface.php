@@ -17,16 +17,16 @@ interface StepWithBreadcrumbInterface extends StepInterface
     public function getBreadcrumbItemTitle();
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */
-    public function isBreadcrumbItemEnabled(AbstractTransfer $quoteTransfer);
+    public function isBreadcrumbItemEnabled(AbstractTransfer $dataTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */
-    public function isBreadcrumbItemHidden(AbstractTransfer $quoteTransfer);
+    public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer);
 }

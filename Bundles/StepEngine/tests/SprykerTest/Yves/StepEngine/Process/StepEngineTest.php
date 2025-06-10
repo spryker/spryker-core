@@ -183,7 +183,7 @@ class StepEngineTest extends AbstractStepEngineTest
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
      */

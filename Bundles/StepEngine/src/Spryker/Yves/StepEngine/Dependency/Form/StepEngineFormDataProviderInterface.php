@@ -12,16 +12,16 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 interface StepEngineFormDataProviderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function getData(AbstractTransfer $quoteTransfer);
+    public function getData(AbstractTransfer $dataTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return array<string, mixed>
      */
-    public function getOptions(AbstractTransfer $quoteTransfer);
+    public function getOptions(AbstractTransfer $dataTransfer);
 }
