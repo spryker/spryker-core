@@ -22,6 +22,7 @@ trait ClassResolverTrait
         'SprykerSdk',
         'SprykerMiddleware',
         'SprykerEco',
+        'SprykerFeature',
     ];
 
     /**

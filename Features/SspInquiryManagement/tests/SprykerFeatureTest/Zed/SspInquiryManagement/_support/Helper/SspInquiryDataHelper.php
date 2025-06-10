@@ -19,6 +19,7 @@ use Orm\Zed\SspInquiryManagement\Persistence\SpySspInquiryFile;
 use Orm\Zed\SspInquiryManagement\Persistence\SpySspInquiryFileQuery;
 use Orm\Zed\SspInquiryManagement\Persistence\SpySspInquiryQuery;
 use Orm\Zed\SspInquiryManagement\Persistence\SpySspInquirySalesOrder;
+use Orm\Zed\SspInquiryManagement\Persistence\SpySspInquirySspAsset;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Ramsey\Uuid\Uuid;
@@ -37,7 +38,7 @@ class SspInquiryDataHelper extends Module
      */
     public function haveSspInquiry(array $seedData = []): SspInquiryTransfer
     {
-         $sspInquiryTransfer = (new SspInquiryBuilder($seedData))->build();
+        $sspInquiryTransfer = (new SspInquiryBuilder($seedData))->build();
 
         if (!$sspInquiryTransfer->getStore()->getIdStore()) {
              $sspInquiryTransfer->getStore()->setIdStore(
@@ -57,8 +58,8 @@ class SspInquiryDataHelper extends Module
              $sspInquiryEntity->setCreatedAt($sspInquiryTransfer->getCreatedDate());
         }
 
-         $sspInquiryEntity->save();
-         $sspInquiryTransfer->setIdSspInquiry($sspInquiryEntity->getIdSspInquiry());
+        $sspInquiryEntity->save();
+        $sspInquiryTransfer->setIdSspInquiry($sspInquiryEntity->getIdSspInquiry());
         if ($sspInquiryTransfer->getOrder()) {
             (new SpySspInquirySalesOrder())
                 ->setFkSspInquiry($sspInquiryTransfer->getIdSspInquiry())
@@ -69,7 +70,8 @@ class SspInquiryDataHelper extends Module
         if ($sspInquiryTransfer->getSspAsset()) {
             (new SpySspInquirySspAsset())
                 ->setFkSspInquiry($sspInquiryTransfer->getIdSspInquiry())
-                ->setFkSspAsset($sspInquiryTransfer->getSspAsset()->getIdSspAsset());
+                ->setFkSspAsset($sspInquiryTransfer->getSspAsset()->getIdSspAsset())
+                ->save();
         }
 
         $this->generateAndSaveSspInquiryImages($seedData['fileAmount'] ?? 0, $sspInquiryTransfer);

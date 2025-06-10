@@ -6,7 +6,7 @@
 >
     <transfer name="SspInquiry" strict="true">
         <property name="reference" dataBuilderRule="unique()->regexify('[A-Za-z0-9]{30}')"/>
-        <property name="subject" dataBuilderRule="unique()->sentence(2)"/>
-        <property name="description" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="subject" dataBuilderRule="sentence(2)"/>
+        <property name="description" dataBuilderRule="sentence(6)"/>
     </transfer>
 </transfers>
