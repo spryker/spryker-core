@@ -9,13 +9,18 @@ namespace Spryker\Zed\ProductOfferStorage\Persistence;
 
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Orm\Zed\ProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 
 /**
  * @method \Spryker\Zed\ProductOfferStorage\Persistence\ProductOfferStoragePersistenceFactory getFactory()
  */
 class ProductOfferStorageEntityManager extends AbstractEntityManager implements ProductOfferStorageEntityManagerInterface
 {
+    use ActiveRecordBatchProcessorTrait;
+
     /**
      * @param string $concreteSku
      * @param array<string, mixed> $data
@@ -33,6 +38,67 @@ class ProductOfferStorageEntityManager extends AbstractEntityManager implements 
 
         $productConcreteProductOffersStorageEntity->setData($data);
         $productConcreteProductOffersStorageEntity->save();
+    }
+
+    /**
+     * @param array<string, array<string, array<mixed>>> $productOfferToSaveCollection
+     *
+     * @return void
+     */
+    public function saveProductConcreteProductOffersStorageBatch(array $productOfferToSaveCollection): void
+    {
+        if (!$productOfferToSaveCollection) {
+            return;
+        }
+
+        $existedProductOffers = $this->loadExistedProductOffers($productOfferToSaveCollection);
+        foreach ($productOfferToSaveCollection as $concreteSku => $productOfferDataList) {
+            foreach ($productOfferDataList as $storeName => $productOfferData) {
+                $productConcreteProductOffersStorageEntity = $existedProductOffers[$concreteSku][$storeName] ?? new SpyProductConcreteProductOffersStorage();
+                $productConcreteProductOffersStorageEntity->setConcreteSku($concreteSku);
+                $productConcreteProductOffersStorageEntity->setStore($storeName);
+                $productConcreteProductOffersStorageEntity->setData($productOfferData);
+                $this->persist($productConcreteProductOffersStorageEntity);
+            }
+        }
+
+        $this->commit();
+    }
+
+    /**
+     * @param array<string, array<string, array<mixed>>> $productOfferToSaveCollection
+     *
+     * @return array
+     */
+    protected function loadExistedProductOffers(array $productOfferToSaveCollection): array
+    {
+        $concreteSkuList = [];
+        foreach ($productOfferToSaveCollection as $concreteSku => $productOfferData) {
+            $concreteSkuList[$concreteSku] = $concreteSku;
+        }
+
+        $productConcreteProductOffersStorageEntityCollection = $this->getFactory()
+            ->createProductConcreteProductOffersStoragePropelQuery()
+            ->filterByConcreteSku_In($concreteSkuList)
+            ->find();
+
+        return $this->getProductOfferStorageEntitiesIndexedBySkuAndStore($productConcreteProductOffersStorageEntityCollection);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection $productConcreteProductOffersStorageEntityCollection
+     *
+     * @return array
+     */
+    protected function getProductOfferStorageEntitiesIndexedBySkuAndStore(Collection $productConcreteProductOffersStorageEntityCollection): array
+    {
+        $result = [];
+        /** @var \Orm\Zed\ProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage $productConcreteProductOffersStorageEntity */
+        foreach ($productConcreteProductOffersStorageEntityCollection as $productConcreteProductOffersStorageEntity) {
+            $result[$productConcreteProductOffersStorageEntity->getConcreteSku()][$productConcreteProductOffersStorageEntity->getStore()] = $productConcreteProductOffersStorageEntity;
+        }
+
+        return $result;
     }
 
     /**

@@ -12,9 +12,9 @@ interface MerchantProductOfferStorageRepositoryInterface
     /**
      * @param array<int> $merchantIds
      *
-     * @return array<string>
+     * @return array<int, array<string>>
      */
-    public function getProductConcreteSkusByMerchantIds(array $merchantIds): array;
+    public function getProductConcreteSkusByMerchantIds(array $merchantIds): iterable;
 
     /**
      * @param array<int> $merchantIds

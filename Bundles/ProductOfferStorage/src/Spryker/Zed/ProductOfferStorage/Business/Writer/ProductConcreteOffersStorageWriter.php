@@ -160,21 +160,23 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
             $productOfferCollectionTransfer,
         );
 
+        $productOfferToSaveCollection = [];
+        $skusGroupedByStoreName = [];
         foreach ($productOfferReferencesGroupedByConcreteSku as $concreteSku => $productOfferReferencesGroupedByStore) {
-            $storeNamesToRemove = [];
-
-            foreach ($productOfferReferencesGroupedByStore as $storeName => $productOfferReferenceList) {
-                if (!$productOfferReferenceList) {
-                    $storeNamesToRemove[] = $storeName;
+            foreach ($productOfferReferencesGroupedByStore as $storeName => $productOfferDataList) {
+                if (!$productOfferDataList) {
+                    $skusGroupedByStoreName[(string)$storeName][] = $concreteSku;
 
                     continue;
                 }
-                $this->productOfferStorageEntityManager->saveProductConcreteProductOffers($concreteSku, $productOfferReferenceList, $storeName);
+                $productOfferToSaveCollection[$concreteSku][(string)$storeName] = $productOfferDataList;
             }
+        }
 
-            if ($storeNamesToRemove) {
-                $this->deleteProductConcreteProductOffers($storeNamesToRemove, $concreteSku);
-            }
+        $this->productOfferStorageEntityManager->saveProductConcreteProductOffersStorageBatch($productOfferToSaveCollection);
+
+        if ($skusGroupedByStoreName) {
+            $this->deleteProductConcreteProductOffersBatch($skusGroupedByStoreName);
         }
     }
 
@@ -214,16 +216,15 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     }
 
     /**
-     * @param array<string> $storeNamesToRemove
-     * @param string $productSku
+     * @param array<string, array<int, string>> $skusGroupedByStoreName
      *
      * @return void
      */
-    protected function deleteProductConcreteProductOffers(array $storeNamesToRemove, string $productSku): void
+    protected function deleteProductConcreteProductOffersBatch(array $skusGroupedByStoreName): void
     {
-        foreach ($storeNamesToRemove as $storeName) {
+        foreach ($skusGroupedByStoreName as $storeName => $productSkuList) {
             $this->productConcreteProductOffersStorageDeleter->deleteProductConcreteProductOffersStorageEntitiesByProductSkus(
-                [$productSku],
+                $productSkuList,
                 $storeName,
             );
         }

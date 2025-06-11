@@ -21,6 +21,7 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\Util\PropelDateTime;
 use Spryker\Zed\Propel\Exception\StatementNotPreparedException;
+use Spryker\Zed\Propel\Persistence\BatchEntityHooksInterface;
 use Spryker\Zed\Propel\Persistence\BatchEntityPostSaveInterface;
 use Spryker\Zed\Propel\PropelConfig;
 use Throwable;
@@ -179,6 +180,9 @@ trait ActiveRecordBatchProcessorTrait
     {
         foreach ($entities as $entity) {
             $entity->preSave($connection);
+            if ($entity instanceof BatchEntityHooksInterface) {
+                $entity->batchPreSaveHook();
+            }
         }
 
         return $entities;
@@ -204,6 +208,9 @@ trait ActiveRecordBatchProcessorTrait
 
         foreach ($entities as $entity) {
             $entity->postSave($connection);
+            if ($entity instanceof BatchEntityHooksInterface) {
+                $entity->batchPostSaveHook();
+            }
         }
     }
 

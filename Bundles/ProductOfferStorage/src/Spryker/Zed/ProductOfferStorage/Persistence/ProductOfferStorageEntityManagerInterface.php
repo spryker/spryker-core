@@ -21,6 +21,13 @@ interface ProductOfferStorageEntityManagerInterface
     public function saveProductConcreteProductOffers(string $concreteSku, array $data, string $storeName): void;
 
     /**
+     * @param array<string, array<string, array<mixed>>> $productOfferToSaveCollection
+     *
+     * @return void
+     */
+    public function saveProductConcreteProductOffersStorageBatch(array $productOfferToSaveCollection): void;
+
+    /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return void

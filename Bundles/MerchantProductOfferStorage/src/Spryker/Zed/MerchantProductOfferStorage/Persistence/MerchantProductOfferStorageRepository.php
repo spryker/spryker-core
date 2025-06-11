@@ -18,22 +18,42 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantProductOfferStorageRepository extends AbstractRepository implements MerchantProductOfferStorageRepositoryInterface
 {
     /**
+     * @var int
+     */
+    protected const PRODUCT_OFFER_BATCH_SIZE = 1000;
+
+    /**
      * @param array<int> $merchantIds
      *
-     * @return array<string>
+     * @return array<int, array<string>>
      */
-    public function getProductConcreteSkusByMerchantIds(array $merchantIds): array
+    public function getProductConcreteSkusByMerchantIds(array $merchantIds): iterable
     {
         $productOfferPropelQuery = $this->getFactory()->getProductOfferPropelQuery();
         $productOfferPropelQuery
             ->addJoin(SpyProductOfferTableMap::COL_MERCHANT_REFERENCE, SpyMerchantTableMap::COL_MERCHANT_REFERENCE, Criteria::INNER_JOIN)
-            ->addAnd($productOfferPropelQuery->getNewCriterion(SpyMerchantTableMap::COL_ID_MERCHANT, $merchantIds, Criteria::IN));
+            ->addAnd($productOfferPropelQuery->getNewCriterion(SpyMerchantTableMap::COL_ID_MERCHANT, $merchantIds, Criteria::IN))
+            ->orderByIdProductOffer();
 
-        return $productOfferPropelQuery
-            ->select(SpyProductOfferTableMap::COL_CONCRETE_SKU)
-            ->distinct()
-            ->find()
-            ->getData();
+        $lastIdProductOfferInBatch = 0;
+        $limit = static::PRODUCT_OFFER_BATCH_SIZE;
+        do {
+            $data = $productOfferPropelQuery
+                ->filterByIdProductOffer($lastIdProductOfferInBatch, Criteria::GREATER_THAN)
+                ->select([SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER, SpyProductOfferTableMap::COL_CONCRETE_SKU])
+                ->setLimit($limit)
+                ->distinct()
+                ->find()
+                ->getData();
+
+            if ($data) {
+                $lastIdProductOfferInBatch = max(
+                    array_column($data, SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER),
+                );
+
+                yield array_column($data, SpyProductOfferTableMap::COL_CONCRETE_SKU);
+            }
+        } while ($data);
     }
 
     /**

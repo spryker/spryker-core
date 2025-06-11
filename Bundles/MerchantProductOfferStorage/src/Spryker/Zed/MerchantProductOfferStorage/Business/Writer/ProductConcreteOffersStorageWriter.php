@@ -16,6 +16,11 @@ use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStor
 class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorageWriterInterface
 {
     /**
+     * @var int
+     */
+    protected const PRODUCT_OFFER_EVENT_BATCH_SIZE = 200;
+
+    /**
      * @var \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface
      */
     protected $eventBehaviorFacade;
@@ -58,14 +63,37 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
             return;
         }
 
-        $productSkus = $this->merchantProductOfferStorageRepository->getProductConcreteSkusByMerchantIds($merchantIds);
+        foreach ($this->getProductConcreteSkusByMerchantIdsBatch($merchantIds) as $eventTransfersWithSkuBatch) {
+            $this->productOfferStorageFacade->writeProductConcreteProductOffersStorageCollectionByProductEvents($eventTransfersWithSkuBatch);
+        }
+    }
+
+    /**
+     * @param array<int> $merchantIds
+     *
+     * @return iterable
+     */
+    protected function getProductConcreteSkusByMerchantIdsBatch(array $merchantIds): iterable
+    {
         $eventTransfersWithSku = [];
 
-        foreach ($productSkus as $productSku) {
-            $eventTransfersWithSku[] = (new EventEntityTransfer())
-                ->setAdditionalValues([SpyProductOfferTableMap::COL_CONCRETE_SKU => $productSku]);
+        $generator = $this->merchantProductOfferStorageRepository->getProductConcreteSkusByMerchantIds($merchantIds);
+
+        foreach ($generator as $productSkuCollection) {
+            foreach ($productSkuCollection as $productSku) {
+                $eventTransfersWithSku[] = (new EventEntityTransfer())
+                    ->setAdditionalValues([SpyProductOfferTableMap::COL_CONCRETE_SKU => $productSku]);
+
+                if (count($eventTransfersWithSku) === static::PRODUCT_OFFER_EVENT_BATCH_SIZE) {
+                    yield $eventTransfersWithSku;
+
+                    $eventTransfersWithSku = [];
+                }
+            }
         }
 
-        $this->productOfferStorageFacade->writeProductConcreteProductOffersStorageCollectionByProductEvents($eventTransfersWithSku);
+        if ($eventTransfersWithSku) {
+            yield $eventTransfersWithSku;
+        }
     }
 }
