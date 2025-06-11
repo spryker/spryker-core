@@ -50,6 +50,8 @@ function onTabChange(tabId) {
     if (!$dataTables.data('initialized')) {
         $dataTables.data('initialized', true).DataTable().draw();
     }
+
+    $dataTables.DataTable().columns.adjust();
 }
 
 function onError(e, settings, techNote, message) {
