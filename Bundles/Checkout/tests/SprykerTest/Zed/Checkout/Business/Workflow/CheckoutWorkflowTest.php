@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Checkout\Business\Workflow;
 
 use Codeception\Test\Unit;
 use Exception;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -153,6 +154,39 @@ class CheckoutWorkflowTest extends Unit
         $quoteTransfer = new QuoteTransfer();
         $this->expectException(Exception::class);
         $checkoutWorkflow->placeOrder($quoteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPlaceOrderReturnsUpdatedQuoteTransfer(): void
+    {
+        $mock = $this->getMockBuilder(CheckoutDoSaveOrderInterface::class)->getMock();
+        $checkoutConfig = new CheckoutConfig();
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem()
+            ->build();
+        $idSalesOrderItem = 1;
+
+        $mock->method('saveOrder')->with(
+            $this->isInstanceOf(QuoteTransfer::class),
+            $this->isInstanceOf(SaveOrderTransfer::class),
+        );
+        $mock->method('saveOrder')->willReturnCallback(function (QuoteTransfer $quoteTransfer) use ($idSalesOrderItem) {
+            $quoteTransfer->getItems()->getIterator()->current()->setIdSalesOrderItem($idSalesOrderItem);
+        });
+
+        $checkoutWorkflow = new CheckoutWorkflow(
+            new CheckoutToOmsFacadeBridge(new OmsFacade()),
+            $this->createVanillaStrategyResolver([]),
+            $this->createVanillaStrategyResolver([$mock]),
+            $this->createVanillaStrategyResolver([]),
+            $this->createVanillaStrategyResolver([]),
+            $checkoutConfig,
+        );
+
+        $checkoutWorkflow->placeOrder($quoteTransfer);
+        $this->assertSame($quoteTransfer->getItems()->getIterator()->current()->getIdSalesOrderItem(), $idSalesOrderItem);
     }
 
     /**

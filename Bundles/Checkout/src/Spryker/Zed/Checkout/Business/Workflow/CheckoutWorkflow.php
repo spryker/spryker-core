@@ -159,22 +159,22 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected function doSaveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         $maxAttempts = $this->checkoutConfig->getSaveOrderTransactionMaxAttempts();
-        $attempt = 0;
-        $success = false;
 
-        while ($attempt < $maxAttempts && !$success) {
+        while ($maxAttempts) {
+            $maxAttempts--;
             try {
-                $this->handleDatabaseTransaction(function () use ($quoteTransfer, $checkoutResponse) {
+                $quoteTransferToSave = clone $quoteTransfer;
+                $this->handleDatabaseTransaction(function () use ($quoteTransferToSave, $checkoutResponse) {
                     $this->doSaveOrderTransaction(
-                        (new QuoteTransfer())->fromArray($quoteTransfer->modifiedToArray()),
+                        $quoteTransferToSave,
                         $checkoutResponse,
                     );
                 });
-                $success = true;
-            } catch (Throwable $e) {
-                $attempt++;
+                $quoteTransfer->fromArray($quoteTransferToSave->modifiedToArray());
 
-                if ($attempt >= $maxAttempts) {
+                break;
+            } catch (Throwable $e) {
+                if ($maxAttempts <= 0) {
                     throw $e;
                 }
             }
