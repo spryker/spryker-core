@@ -116,6 +116,7 @@
         <property name="withAssignedBusinessUnits" type="bool"/>
         <property name="withSspInquiries" type="bool"/>
         <property name="withFiles" type="bool"/>
+        <property name="withServicesCount" type="int"/>
     </transfer>
 
     <transfer name="Sort">

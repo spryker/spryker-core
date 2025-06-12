@@ -7,6 +7,8 @@
 
 namespace SprykerFeature\Zed\SspServiceManagement\Persistence\Mapper;
 
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspServiceTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Oms\Business\OmsFacadeInterface;
@@ -19,16 +21,15 @@ class SspServiceMapper
     protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
-     * @var \Spryker\Zed\Oms\Business\OmsFacadeInterface
+     * @var string
      */
-    protected $omsFacade;
+    protected const COMPANY_NAME_VIRTUAL_COLUMN = 'company_name';
 
     /**
      * @param \Spryker\Zed\Oms\Business\OmsFacadeInterface $omsFacade
      */
-    public function __construct(OmsFacadeInterface $omsFacade)
+    public function __construct(protected OmsFacadeInterface $omsFacade)
     {
-        $this->omsFacade = $omsFacade;
     }
 
     /**
@@ -38,7 +39,7 @@ class SspServiceMapper
      */
     public function mapSalesOrderItemEntityToSspServiceTransfer(SpySalesOrderItem $salesOrderItemEntity): SspServiceTransfer
     {
-        $serviceTransfer = new SspServiceTransfer();
+        $serviceTransfer = (new SspServiceTransfer())->setOrder((new OrderTransfer()));
 
         $serviceTransfer->setProductName($salesOrderItemEntity->getName());
 
@@ -46,14 +47,24 @@ class SspServiceMapper
             $serviceTransfer->setCreatedAt($salesOrderItemEntity->getCreatedAt()->format(static::DATE_TIME_FORMAT));
         }
 
-        $serviceTransfer->setOrderReference($salesOrderItemEntity->getOrder()->getOrderReference());
-        $serviceTransfer->setIdSalesOrder($salesOrderItemEntity->getOrder()->getIdSalesOrder());
+        $serviceTransfer->getOrderOrFail()->setOrderReference($salesOrderItemEntity->getOrder()->getOrderReference());
+        $serviceTransfer->getOrderOrFail()->setIdSalesOrder($salesOrderItemEntity->getOrder()->getIdSalesOrder());
 
         if ($salesOrderItemEntity->getMetadatas()->count()) {
             $serviceTransfer->setScheduledAt($salesOrderItemEntity->getMetadatas()->getFirst()->getScheduledAt(static::DATE_TIME_FORMAT));
         }
 
+        $serviceTransfer->getOrderOrFail()->setFirstName($salesOrderItemEntity->getOrder()->getFirstName());
+        $serviceTransfer->getOrderOrFail()->setLastName($salesOrderItemEntity->getOrder()->getLastName());
+        if ($salesOrderItemEntity->hasVirtualColumn(static::COMPANY_NAME_VIRTUAL_COLUMN)) {
+            $serviceTransfer->getOrderOrFail()->setCompanyName($salesOrderItemEntity->getVirtualColumn(static::COMPANY_NAME_VIRTUAL_COLUMN));
+        }
+
         $serviceTransfer->setStateDisplayName($this->omsFacade->getStateDisplayName($salesOrderItemEntity));
+
+        foreach ($salesOrderItemEntity->getSalesOrderItemSspAssets() as $salesOrderItemSspAssetEntity) {
+            $serviceTransfer->addSspAsset((new SspAssetTransfer())->setReference($salesOrderItemSspAssetEntity->getReference()));
+        }
 
         return $serviceTransfer;
     }

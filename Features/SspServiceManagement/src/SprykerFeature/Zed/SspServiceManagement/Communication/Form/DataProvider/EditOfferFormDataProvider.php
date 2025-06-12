@@ -101,7 +101,7 @@ class EditOfferFormDataProvider
                     (new ShipmentTypeConditionsTransfer()),
                 ),
         ));
-        $idServicePoint = $productOfferTransfer->getServices()->offsetGet(0)->getServicePoint()->getIdServicePoint();
+        $idServicePoint = $productOfferTransfer->getServices()->count() ? $productOfferTransfer->getServices()->offsetGet(0)->getServicePoint()->getIdServicePoint() : null;
         $servicePointServiceChoices = [];
         if ($idServicePoint !== null) {
             $servicePointServiceChoices = $this->prepareServicePointServiceChoices($this->servicePointFacade->getServiceCollection(

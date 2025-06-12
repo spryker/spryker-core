@@ -169,7 +169,7 @@ class SspAssetManagementRepository extends AbstractRepository implements SspAsse
         }
 
         if ($sspAssetConditionsTransfer->getSearchText()) {
-            $searchText = $sspAssetConditionsTransfer->getSearchTextOrFail();
+            $searchText = '%' . $sspAssetConditionsTransfer->getSearchTextOrFail() . '%';
             $sspAssetQuery->filterByName_Like($searchText)
                 ->_or()
                 ->filterByReference_Like($searchText)

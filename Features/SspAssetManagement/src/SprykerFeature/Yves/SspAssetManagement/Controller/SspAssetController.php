@@ -70,6 +70,14 @@ class SspAssetController extends AbstractController
     protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
 
     /**
+     * The number of services to be included in the SspAssetTransfer.
+     * This constant is used to limit the number of services fetched for each asset.
+     *
+     * @var int
+     */
+    protected const SERVICE_COUNT = 4;
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
@@ -103,7 +111,8 @@ class SspAssetController extends AbstractController
                     ->setWithCompanyBusinessUnit(true)
                     ->setWithAssignedBusinessUnits(true)
                     ->setWithSspInquiries(true)
-                    ->setWithFiles(true),
+                    ->setWithFiles(true)
+                    ->setWithServicesCount(static::SERVICE_COUNT),
             );
 
         $sspAssetCriteriaTransfer->setCompanyUser($companyUserTransfer);

@@ -9,6 +9,7 @@ namespace SprykerFeature\Yves\SspServiceManagement\Controller;
 
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer;
+use Generated\Shared\Transfer\SspServiceConditionsTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerFeature\Yves\SspServiceManagement\Form\SspServiceCancelForm;
@@ -87,6 +88,11 @@ class SspServiceController extends AbstractController
     protected const PARAM_ORDER_ID = 'id-sales-order';
 
     /**
+     * @var string
+     */
+    protected const QUERY_PARAM_SSP_ASSET_REFERENCE = 'ssp-asset-reference';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View
@@ -120,6 +126,13 @@ class SspServiceController extends AbstractController
 
         $sspServiceCriteriaTransfer = $this->handleServiceSearchFormSubmit($request, $serviceSearchForm, $sspServiceCriteriaTransfer);
         $sspServiceCriteriaTransfer = $this->setPagination($request, $sspServiceCriteriaTransfer);
+
+        if ($request->query->has(static::QUERY_PARAM_SSP_ASSET_REFERENCE)) {
+            if (!$sspServiceCriteriaTransfer->getServiceConditions()) {
+                $sspServiceCriteriaTransfer->setServiceConditions(new SspServiceConditionsTransfer());
+            }
+            $sspServiceCriteriaTransfer->getServiceConditionsOrFail()->addSspAssetReference((string)$request->query->get(static::QUERY_PARAM_SSP_ASSET_REFERENCE));
+        }
 
         $sspServiceCollectionTransfer = $this->getClient()->getServiceCollection($sspServiceCriteriaTransfer);
 

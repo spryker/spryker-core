@@ -75,7 +75,7 @@
         {% if data.asset.sspInquiryCollection.sspInquiries.count and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}
             {% widget 'SspInquiryListWidget' args [data.asset.sspInquiryCollection, url('customer/ssp-inquiry', {'ssp-asset-reference': data.asset.reference})] only %}{% endwidget %}
         {% endif %}
-        {# SERVICE DASHBOARDS WIDGET #}
+        {% widget 'ServiceListWidget' args [data.asset.sspServiceCollection, url('customer/ssp-service', {'ssp-asset-reference': data.asset.reference})] only %}{% endwidget %}
     </div>
 {% endblock %}
 

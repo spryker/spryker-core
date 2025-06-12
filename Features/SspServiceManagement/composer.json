@@ -54,6 +54,7 @@
     },
     "require-dev": {
         "spryker-feature/ssp-asset-management": "*",
+        "spryker-feature/ssp-dashboard-management": "*",
         "spryker-shop/customer-page": "*",
         "spryker/catalog": "*",
         "spryker/code-sniffer": "*",
@@ -72,6 +73,7 @@
     },
     "suggest": {
         "spryker-feature/ssp-asset-management": "If you want to use tests for the ssp asset service relation, you need to install the spryker-feature/ssp-asset-management module.",
+        "spryker-feature/ssp-dashboard-management": "If you want to use ServiceListWidget for displaying the list of services, you need to install the spryker-feature/ssp-dashboard-management module.",
         "spryker-shop/customer-page": "If you want to use the customer page module, you need to install the spryker-shop/customer-page module.",
         "spryker/catalog": "If you want to use the catalog module, you need to install the spryker/catalog module.",
         "spryker/container": "Add this module when you want to use the ProductServiceTypeNameTwigPlugin.",

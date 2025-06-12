@@ -45,6 +45,8 @@ use SprykerFeature\Zed\SspServiceManagement\Business\Expander\ServicePointItemEx
 use SprykerFeature\Zed\SspServiceManagement\Business\Expander\ServicePointItemExpanderInterface;
 use SprykerFeature\Zed\SspServiceManagement\Business\Expander\ShipmentTypeItemExpander;
 use SprykerFeature\Zed\SspServiceManagement\Business\Expander\ShipmentTypeItemExpanderInterface;
+use SprykerFeature\Zed\SspServiceManagement\Business\Expander\SspAssetExpander;
+use SprykerFeature\Zed\SspServiceManagement\Business\Expander\SspAssetExpanderInterface;
 use SprykerFeature\Zed\SspServiceManagement\Business\Filter\QuoteItemFilter;
 use SprykerFeature\Zed\SspServiceManagement\Business\Filter\QuoteItemFilterInterface;
 use SprykerFeature\Zed\SspServiceManagement\Business\Grouper\ShipmentTypeGrouper;
@@ -208,6 +210,14 @@ class SspServiceManagementBusinessFactory extends AbstractBusinessFactory
         return new ServiceReader(
             $this->getRepository(),
         );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SspServiceManagement\Business\Expander\SspAssetExpanderInterface
+     */
+    public function createSspAssetExpander(): SspAssetExpanderInterface
+    {
+        return new SspAssetExpander($this->createServiceReader());
     }
 
     /**

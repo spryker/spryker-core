@@ -42,17 +42,19 @@
         }) %}
 
         {% block table %}
-            {% include molecule('dashboard-table', 'SspDashboardManagement') with {
-                data: {
-                    title: 'customer.account.ssp_inquiries',
-                    counter: data.totalItems,
-                    columns: columns,
-                    rows: rows,
-                    emptyText: 'customer.account.no_ssp_inquiries',
-                    moreLink: data.moreLink,
-                },
-                qa: 'ssp-inquiry-table',
-            } only %}
+            <div {{ qa('ssp-asset-inquiries-table') }}>
+                {% include molecule('dashboard-table', 'SspDashboardManagement') with {
+                    data: {
+                        title: 'customer.account.ssp_inquiries',
+                        counter: data.totalItems,
+                        columns: columns,
+                        rows: rows,
+                        emptyText: 'customer.account.no_ssp_inquiries',
+                        moreLink: data.moreLink,
+                    },
+                    qa: 'ssp-inquiry-table',
+                } only %}
+            </div>
         {% endblock %}
     {% endif %}
 {% endblock %}

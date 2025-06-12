@@ -7,7 +7,6 @@
 
 namespace SprykerFeature\Zed\SspServiceManagement\Persistence;
 
-use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractTypeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTypeTransfer;
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
@@ -182,11 +181,14 @@ class SspServiceManagementRepository extends AbstractRepository implements SspSe
 
         $query = $this->joinOrderData($query);
 
+        $query->joinSalesOrderItemSspAsset(null, Criteria::LEFT_JOIN);
+
         $query = $this->applyFilters($query, $sspServiceCriteriaTransfer);
-        $query = $this->applyPagination($query, $sspServiceCriteriaTransfer, $serviceCollectionTransfer);
         $query = $this->applySorting($query, $sspServiceCriteriaTransfer);
 
-        $serviceEntities = $query->groupByIdSalesOrderItem()->find();
+        $query = $query->groupByIdSalesOrderItem();
+
+        $serviceEntities = $this->getPaginatedCollection($query, $sspServiceCriteriaTransfer);
 
         $sspServiceMapper = $this->getFactory()->createSspServiceMapper();
         $serviceTransfers = $sspServiceMapper->mapSalesOrderItemEntitiesToSspServiceTransfers($serviceEntities->getData());
@@ -194,6 +196,8 @@ class SspServiceManagementRepository extends AbstractRepository implements SspSe
         foreach ($serviceTransfers as $serviceTransfer) {
             $serviceCollectionTransfer->addService($serviceTransfer);
         }
+
+        $serviceCollectionTransfer->setPagination($sspServiceCriteriaTransfer->getPagination());
 
         return $serviceCollectionTransfer;
     }
@@ -212,6 +216,14 @@ class SspServiceManagementRepository extends AbstractRepository implements SspSe
             ->useOrderQuery()
                 ->withColumn(SpySalesOrderTableMap::COL_ORDER_REFERENCE, static::FIELD_ORDER_REFERENCE)
                 ->withColumn(SpySalesOrderTableMap::COL_ID_SALES_ORDER, 'id_sales_order')
+                ->withColumn(SpySalesOrderTableMap::COL_FIRST_NAME, 'first_name')
+                ->withColumn(SpySalesOrderTableMap::COL_LAST_NAME, 'last_name')
+                ->addJoin(
+                    SpySalesOrderTableMap::COL_COMPANY_UUID,
+                    'spy_company.uuid',
+                    Criteria::LEFT_JOIN,
+                )
+                ->withColumn('spy_company.name', 'company_name')
             ->endUse();
 
         $query
@@ -283,33 +295,40 @@ class SspServiceManagementRepository extends AbstractRepository implements SspSe
                 ->endUse();
         }
 
+        if ($serviceConditionsTransfer->getSspAssetReferences() !== []) {
+            $query->useSalesOrderItemSspAssetQuery()
+                ->filterByReference_In($serviceConditionsTransfer->getSspAssetReferences())
+            ->endUse();
+        }
+
         return $query;
     }
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
      * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     * @param \Generated\Shared\Transfer\SspServiceCollectionTransfer $serviceCollectionTransfer
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
-    protected function applyPagination(
+    protected function getPaginatedCollection(
         SpySalesOrderItemQuery $query,
-        SspServiceCriteriaTransfer $sspServiceCriteriaTransfer,
-        SspServiceCollectionTransfer $serviceCollectionTransfer
-    ): SpySalesOrderItemQuery {
+        SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
+    ): Collection {
         if (!$sspServiceCriteriaTransfer->getPagination()) {
-            return $query;
+            return $query->find();
         }
 
         $paginationTransfer = $sspServiceCriteriaTransfer->getPaginationOrFail();
-        $page = $paginationTransfer->getPage() ?? 1;
-        $maxPerPage = $paginationTransfer->getMaxPerPage() ?? 10;
+        $page = $paginationTransfer
+            ->requirePage()
+            ->getPageOrFail();
+
+        $maxPerPage = $paginationTransfer
+            ->requireMaxPerPage()
+            ->getMaxPerPageOrFail();
+
         $paginationModel = $query->paginate($page, $maxPerPage);
 
-        $paginationTransfer = new PaginationTransfer();
-        $paginationTransfer->setPage($paginationModel->getPage());
-        $paginationTransfer->setMaxPerPage($paginationModel->getMaxPerPage());
         $paginationTransfer->setNbResults($paginationModel->getNbResults());
         $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
         $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
@@ -318,14 +337,7 @@ class SspServiceManagementRepository extends AbstractRepository implements SspSe
         $paginationTransfer->setNextPage($paginationModel->getNextPage());
         $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
 
-        $serviceCollectionTransfer->setPagination($paginationTransfer);
-
-        /**
-         * @var \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
-         */
-        $query = $paginationModel->getQuery();
-
-        return $query;
+        return $paginationModel->getResults();
     }
 
     /**

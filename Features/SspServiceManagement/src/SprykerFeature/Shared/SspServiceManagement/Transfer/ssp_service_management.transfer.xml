@@ -163,12 +163,18 @@
         <property name="idService" type="int"/>
         <property name="uuid" type="string"/>
         <property name="serviceType" type="ServiceType"/>
-        <property name="orderReference" type="string"/>
+        <property name="order" type="Order"/>
         <property name="productName" type="string"/>
         <property name="scheduledAt" type="string"/>
         <property name="createdAt" type="string"/>
-        <property name="idSalesOrder" type="int"/>
         <property name="stateDisplayName" type="string"/>
+        <property name="sspAssets" type="SspAsset[]" singular="sspAsset"/>
+    </transfer>
+
+    <transfer name="SspAsset" strict="true">
+        <property name="idSspAsset" type="int"/>
+        <property name="reference" type="string"/>
+        <property name="sspServiceCollection" type="SspServiceCollection"/>
     </transfer>
 
     <transfer name="MerchantCriteria">
@@ -209,6 +215,7 @@
         <property name="companyUuid" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="filterFields" type="FilterField[]" singular="filterField"/>
+        <property name="sspAssetReferences" type="string[]" singular="sspAssetReference"/>
     </transfer>
 
     <transfer name="ServicesSearchConditionGroup" strict="true">
@@ -302,6 +309,10 @@
         <property name="idSalesOrder" type="int"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="fkCustomer" type="int"/>
+        <property name="orderReference" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="companyName" type="string"/>
     </transfer>
 
     <transfer name="Error">
@@ -552,6 +563,18 @@
 
     <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
         <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="SspAssetCriteria" strict="true">
+        <property name="include" type="SspAssetInclude"/>
+    </transfer>
+
+    <transfer name="SspAssetInclude" strict="true">
+        <property name="withServicesCount" type="int"/>
+    </transfer>
+
+    <transfer name="SspAssetCollection" strict="true">
+        <property name="sspAssets" type="SspAsset[]" singular="sspAsset"/>
     </transfer>
 
 </transfers>

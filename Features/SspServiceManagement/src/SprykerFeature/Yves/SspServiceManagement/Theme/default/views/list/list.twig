@@ -98,13 +98,13 @@
                 ] %}
 
                 {% set rows = data.serviceList | map(row => {
-                    order_reference: row.orderReference,
+                    order_reference: row.order.orderReference,
                     product_name: row.productName,
                     scheduled_at: row.scheduledAt,
                     created_at: row.createdAt,
                     state: row.stateDisplayName | trans,
                     actions: [{
-                        url: url('customer/order/details', { 'id': row.idSalesOrder }),
+                        url: url('customer/order/details', { 'id': row.order.idSalesOrder }),
                         label: 'ssp_service_management.list.button.view'
                     }],
                 }) %}
