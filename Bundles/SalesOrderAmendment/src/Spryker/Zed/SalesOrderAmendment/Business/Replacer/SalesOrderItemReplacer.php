@@ -192,7 +192,7 @@ class SalesOrderItemReplacer implements SalesOrderItemReplacerInterface
 
         return (new SalesOrderItemCollectionRequestTransfer())
             ->setItems($itemTransfers)
-            ->setQuote($quoteTransfer);
+            ->setQuote(clone $quoteTransfer);
     }
 
     /**
