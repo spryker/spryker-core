@@ -41,6 +41,8 @@ class ProductValidityQueryContainer extends AbstractQueryContainer implements Pr
         return $this
             ->getFactory()
             ->createProductValidityQuery()
+            ->joinSpyProduct()
+            ->addJoinCondition('SpyProduct', 'SpyProduct.is_active = ?', false)
             ->filterByValidFrom('now', Criteria::LESS_EQUAL)
             ->filterByValidTo(null, Criteria::ISNULL)
             ->_or()
@@ -59,6 +61,8 @@ class ProductValidityQueryContainer extends AbstractQueryContainer implements Pr
         return $this
             ->getFactory()
             ->createProductValidityQuery()
+            ->joinSpyProduct()
+            ->addJoinCondition('SpyProduct', 'SpyProduct.is_active = ?', true)
             ->filterByValidTo('now', Criteria::LESS_THAN);
     }
 
