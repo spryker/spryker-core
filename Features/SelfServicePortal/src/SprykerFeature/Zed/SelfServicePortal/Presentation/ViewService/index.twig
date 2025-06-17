@@ -1,0 +1,59 @@
+{# @var orderItem \Generated\Shared\Transfer\ItemTransfer #}
+
+{% extends '@Gui/layout/layout.twig' %}
+
+{% set page_title = 'View Service' | trans ~ ': ' ~ orderItem.idSalesOrderItem %}
+
+{% block head_title page_title %}
+
+{% block section_title %}
+	{{ page_title }}
+{% endblock %}
+
+{% block action %}
+	{{ backActionButton(url(urlPathSelfServicePortalList), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+	{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Details' | trans } %}
+		{% block widget_content %}
+			<div class="well">
+				<div class="spacing-bottom">
+					<strong>{{ 'Service Details' | trans }}</strong>
+				</div>
+
+				{% set data = [
+                    {
+                        label: 'SKU',
+                        value: orderItem.sku,
+                    },
+                    {
+                        label: 'Name',
+                        value: orderItem.name,
+                    },
+                    {
+                        label: 'Quantity',
+                        value: orderItem.quantity,
+                    },
+                    {
+                        label: 'Current State',
+                        value: orderItem.state.name,
+                    },
+                    {
+                        label: 'Scheduled At',
+                        value: orderItem.metadata.scheduledAt ? orderItem.metadata.scheduledAt | formatDateTime : 'N/A' | trans,
+                    }
+                ] %}
+
+				{% for item in data %}
+					<div class="row spacing-bottom">
+						<div class="col-xs-3">
+							<strong>{{ item.label | trans }}</strong>
+						</div>
+						<div class="col-xs-9">{{ item.value }}</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

@@ -29,12 +29,7 @@
         "cs-check": "phpcs"
     },
     "replace": {
-        "spryker-feature/feature-ui": "*",
-        "spryker-feature/ssp-asset-management": "*",
-        "spryker-feature/ssp-dashboard-management": "*",
-        "spryker-feature/ssp-file-management": "*",
-        "spryker-feature/ssp-inquiry-management": "*",
-        "spryker-feature/ssp-service-management": "*",
+        "spryker-feature/self-service-portal": "*",
         "spryker/acl": "*",
         "spryker/acl-data-import": "*",
         "spryker/acl-entity": "*",

@@ -1,0 +1,59 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    form: _view.form,
+    asset: _view.sspAsset,
+    currentCompanyBusinessUnitAssigment: _view.currentCompanyBusinessUnitAssigment,
+    formAction: url('ssp/asset/update', { 'reference': _view.sspAsset.reference }),
+    title: 'self_service_portal.asset.update.title' | trans,
+    activePage: 'asset',
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'self_service_portal.asset.list.title' | trans,
+                    url: url('ssp/asset'),
+                },
+                {
+                    label: 'self_service_portal.asset.update.title' | trans ~ ' ' ~ data.asset.reference,
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
+{% block customerContent %}
+    <div class="box">
+        {% block form %}
+            {% include molecule('asset-form', 'SelfServicePortal') with {
+                data: {
+                    form: data.form,
+                    formAction: data.formAction,
+                    assetData: [
+                        { title: 'self_service_portal.asset.details.reference', value: data.asset.reference },
+                        { title: 'self_service_portal.asset.details.status', value: block('status') },
+                        { title: 'self_service_portal.asset.details.created_date', value: data.currentCompanyBusinessUnitAssigment ? data.currentCompanyBusinessUnitAssigment.assignedAt | formatDateTime : '---' },
+                        { title: 'self_service_portal.asset.details.owner', value: data.asset.companyBusinessUnit.name | default('self_service_portal.asset.details.owner.undefined' | trans) },
+                    ],
+                },
+            } only %}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block status %}
+    {% include molecule('status') with {
+        class: 'spacing-y',
+        data: {
+            label: ('self_service_portal.asset.status.' ~ data.asset.status) | trans,
+            status: data.asset.status,
+        },
+    } only %}
+{% endblock %}

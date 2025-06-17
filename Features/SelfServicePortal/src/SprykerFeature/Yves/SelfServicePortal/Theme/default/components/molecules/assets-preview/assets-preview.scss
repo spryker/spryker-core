@@ -1,0 +1,37 @@
+@mixin self-service-portal-assets-preview($name: '.assets-preview') {
+    #{$name} {
+        &__container {
+            display: flex;
+            gap: 0.9375rem;
+            padding-bottom: 0.9375rem;
+            overflow-x: auto;
+        }
+
+        &__link {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.625rem;
+            justify-content: center;
+            text-align: center;
+            color: $setting-color-black;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+        &__block {
+            width: 10.625rem;
+            flex-shrink: 0;
+        }
+
+        &__image {
+            background: $setting-color-white;
+            width: 10.625rem;
+            height: 8.125rem;
+        }
+
+        @content;
+    }
+}

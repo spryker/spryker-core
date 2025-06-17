@@ -1,0 +1,13 @@
+{% extends template('widget') %}
+
+{% define data = {
+    assets: assets | default([]),
+} %}
+
+{% block body %}
+    {% include molecule('asset-list', 'SelfServicePortal') with {
+        data: {
+            assets: data.assets,
+        },
+    } only %}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'List of File Attachments' | trans %}
+
+{% block section_title 'File Attachments' | trans %}
+{% block head_title 'File Attachments' | trans %}
+
+{% block action %}
+    {{ createActionButton(url(urlPathAddFile), 'Upload file' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            {{ form_start(fileTableFilterForm, { 'attr' : { 'class': 'form-filter' }}) }}
+                <div class="row">
+                    <div class="col-xs-4">
+                        {{ form_row(fileTableFilterForm.extension, {
+                            attr: { class: 'js-form-submitter' }
+                        }) }}
+                    </div>
+                    <div class="col-xs-4">
+                        {{ form_row(fileTableFilterForm.dateFrom, {
+                            attr: { class: 'js-form-submitter' }
+                        }) }}
+                    </div>
+                    <div class="col-xs-4">
+                        {{ form_row(fileTableFilterForm.dateTo, {
+                            attr: { class: 'js-form-submitter' }
+                        }) }}
+                    </div>
+                </div>
+            {{ form_end(fileTableFilterForm) }}
+
+            {{ fileTable | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

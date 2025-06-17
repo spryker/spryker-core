@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SelfServicePortal\Persistence" package="src.Orm.Zed.SelfServicePortal.Persistence">
+
+    <table name="spy_ssp_asset_file" idMethod="native">
+        <column name="id_ssp_asset_file" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_ssp_asset" required="true" type="INTEGER"/>
+        <column name="fk_file" required="true" type="INTEGER"/>
+
+        <unique name="spy_ssp_asset_file-fk_ssp_asset-fk_file">
+            <unique-column name="fk_file"/>
+            <unique-column name="fk_ssp_asset"/>
+        </unique>
+
+        <foreign-key foreignTable="spy_ssp_asset" phpName="SspAsset">
+            <reference local="fk_ssp_asset" foreign="id_ssp_asset"/>
+        </foreign-key>
+        <foreign-key foreignTable="spy_file" phpName="File">
+            <reference local="fk_file" foreign="id_file"/>
+        </foreign-key>
+        <behavior name="timestampable"/>
+        <id-method-parameter value="id_ssp_asset_file_pk_seq"/>
+    </table>
+
+    <table name="spy_ssp_asset" idMethod="native" allowPkInsert="true">
+        <column name="id_ssp_asset" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="reference" required="true" size="255" type="VARCHAR"/>
+        <column name="name" required="true" size="255" type="VARCHAR"/>
+        <column name="serial_number" required="false" size="255" type="VARCHAR"/>
+        <column name="status" required="true" size="255" type="VARCHAR"/>
+        <column name="fk_image_file" required="false" type="INTEGER"/>
+        <column name="note" required="false" type="LONGVARCHAR"/>
+        <column name="fk_company_business_unit" required="false" type="INTEGER"/>
+
+        <foreign-key foreignTable="spy_company_business_unit">
+            <reference local="fk_company_business_unit" foreign="id_company_business_unit"/>
+        </foreign-key>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_ssp_asset_pk_seq"/>
+    </table>
+
+    <table name="spy_ssp_asset_to_company_business_unit" idMethod="native" allowPkInsert="true">
+        <column name="id_ssp_asset_to_company_business_unit" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_ssp_asset" required="true" type="INTEGER"/>
+        <column name="fk_company_business_unit" required="true" type="INTEGER"/>
+
+        <foreign-key foreignTable="spy_ssp_asset">
+            <reference local="fk_ssp_asset" foreign="id_ssp_asset"/>
+        </foreign-key>
+
+        <foreign-key foreignTable="spy_company_business_unit">
+            <reference local="fk_company_business_unit" foreign="id_company_business_unit"/>
+        </foreign-key>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_ssp_asset_to_company_business_unit_pk_seq"/>
+
+        <unique name="spy_ssp_asset_to_company_business_unit_fk_ssp_asset_fk_company_business_unit_unique">
+            <unique-column name="fk_ssp_asset"/>
+            <unique-column name="fk_company_business_unit"/>
+        </unique>
+    </table>
+
+    <table name="spy_sales_order_item_ssp_asset">
+        <column name="id_sales_order_item_ssp_asset" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_sales_order_item" type="INTEGER" required="true"/>
+        <column name="reference" required="true" size="255" type="VARCHAR"/>
+        <column name="name" required="true" size="255" type="VARCHAR"/>
+        <column name="serial_number" required="false" size="255" type="VARCHAR"/>
+
+        <foreign-key name="spy_sales_order_item_ssp_asset-fk_sales_order_item" foreignTable="spy_sales_order_item" phpName="SalesOrderItem" refPhpName="SalesOrderItemSspAsset">
+            <reference local="fk_sales_order_item" foreign="id_sales_order_item"/>
+        </foreign-key>
+
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_sales_order_item_ssp_asset_pk_seq"/>
+    </table>
+
+</database>

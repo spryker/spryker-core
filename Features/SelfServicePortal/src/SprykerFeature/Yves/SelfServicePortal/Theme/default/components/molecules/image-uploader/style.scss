@@ -1,0 +1,3 @@
+@include helper-import(molecule, image-uploader) {
+    @include self-service-portal-image-uploader;
+}

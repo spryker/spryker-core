@@ -1,0 +1,146 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    inquiries: _view.sspInquiryList,
+    title: 'customer.account.ssp_inquiries' | trans,
+    searchForm: _view.sspInquirySearchForm | default(null),
+    activePage: 'ssp-inquiry',
+    pagination: {
+        parameters: app.request.query.all(),
+        currentPage: _view.pagination.page,
+        paginationPath: 'customer/ssp-inquiry',
+        maxPage: _view.pagination.lastPage,
+        showAlwaysFirstAndLast: true,
+    },
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'customer.account.ssp_inquiries' | trans,
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
+
+{% set formClass = 'js-ssp-inquiry-form' %}
+
+{% block customerContent %}
+    {% block actions %}
+        {% if can('CreateSspInquiryPermissionPlugin') %}
+            <div class="box text-right">
+                <a class="button"
+                   {{qa('create-general-ssp-inquiry')}}
+                   href="{{ url('customer/ssp-inquiry/create') }}">
+                    {{ 'customer.self_service_portal.inquiry.create.button' | trans }}
+                </a>
+            </div>
+        {% endif %}
+    {% endblock %}
+
+    {% block overlay %}
+        <div class="box">
+            {% block list %}
+                {% block formStart %}
+                    {{ form_start(data.searchForm, {
+                        attr: {
+                            class: formClass,
+                        },
+                    }) }}
+                {% endblock %}
+
+                {% block filtersSection %}
+                    {% set filters = [
+                            { row: data.searchForm.type, class: 'col--sm-6' },
+                            { row: data.searchForm.status, class: 'col--sm-6' },
+                        ]
+                        | merge(data.searchForm.filters.children
+                        | map(filter => { row: filter, class: filter.vars.attr.class }))
+                    %}
+
+                    {% block filters %}
+                        {% include molecule('filters', 'SelfServicePortal') with {
+                            data: {
+                                filters: filters,
+                            },
+                        } only %}
+                    {% endblock %}
+                {% endblock %}
+
+                {% block inquiries %}
+                    {% set columns = [
+                        {
+                            id: 'reference',
+                            title: 'customer.self_service_portal.inquiry.list.reference',
+                        },
+                        {
+                            id: 'type',
+                            title: 'customer.self_service_portal.inquiry.list.type',
+                            sortable: true,
+                        },
+                        {
+                            id: 'subject',
+                            title: 'customer.self_service_portal.inquiry.list.subject',
+                        },
+                        {
+                            id: 'owner',
+                            title: 'customer.self_service_portal.inquiry.list.owner',
+                        },
+                        {
+                            id: 'createdDate',
+                            title: 'customer.self_service_portal.inquiry.list.date_created',
+                            type: 'date',
+                            sortable: true,
+                        },
+                        {
+                            id: 'status',
+                            title: 'customer.self_service_portal.inquiry.list.status',
+                            type: 'status',
+                        },
+                        {
+                            id: 'actions',
+                            type: 'actions',
+                        },
+                    ] %}
+
+                    {% set rows = data.inquiries | map(sspInquiry => {
+                        reference: sspInquiry.reference,
+                        type: "self_service_portal.inquiry.type.#{sspInquiry.type}" | trans,
+                        subject: sspInquiry.subject,
+                        owner: "#{sspInquiry.companyUser.customer.firstName} #{sspInquiry.companyUser.customer.lastName} <br> <i>#{sspInquiry.companyUser.companyBusinessUnit.name}</i>",
+                        createdDate: sspInquiry.createdDate,
+                        status: { label: "self_service_portal.inquiry.status.#{sspInquiry.status}", status: sspInquiry.status },
+                        actions: [{
+                            url: path('customer/ssp-inquiry/details', { reference: sspInquiry.reference }),
+                            label: 'customer.self_service_portal.inquiry.view_ssp_inquiry'
+                        }],
+                    }) %}
+
+                    {% block table %}
+                        {% include molecule('advanced-table', 'SelfServicePortal') with {
+                            data: {
+                                columns: columns,
+                                rows: rows,
+                                emptyText: 'customer.account.no_ssp_inquiries',
+                                sortableForm: data.searchForm,
+                                sortableFormClass: formClass,
+                                pagination: data.pagination,
+                            },
+                        } only %}
+                    {% endblock %}
+                {% endblock %}
+
+                {% block formEnd %}
+                    {{ form_end(data.searchForm) }}
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

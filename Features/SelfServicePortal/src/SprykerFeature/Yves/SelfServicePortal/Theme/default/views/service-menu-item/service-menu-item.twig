@@ -1,0 +1,16 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isActivePage: _widget.isActivePage,
+    isVisible: _widget.isVisible,
+} %}
+
+{% set itemClass = data.isActivePage ? ' menu__item--active' : '' %}
+
+{% block body %}
+    {% if data.isVisible %}
+        <li class="menu__item {{ itemClass }}">
+            <a href="{{ url('ssp/service/list') }}" data-id="sidebar-ssp-services">{{ 'self_service_portal.service.list.widget.title' | trans }}</a>
+        </li>
+    {% endif %}
+{% endblock %}

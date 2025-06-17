@@ -1,0 +1,27 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Delete file' | trans ~ ' #' ~ file.idFile %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton(app.request.headers.get('referer'), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            <p>{{ 'You are trying to delete file' | trans }}: <b>{{ file.fileName }}</b></p>
+            <p>
+                {{ 'Deleting this file will delete all the links to the attached entities. Do you want to proceed?' | trans }}
+            </p>
+            <div>
+                <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Cancel' | trans }}</a>
+                {{ form_start(deleteFileForm, {'action': url(urlPathDeleteFile, { 'id-file': file.idFile })}) }}
+                <button class="btn btn-danger safe-submit" data-qa="delete-confirm-button"> {{ 'Delete file' | trans }} </button>
+                {{ form_end(deleteFileForm) }}
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

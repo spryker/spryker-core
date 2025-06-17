@@ -1,0 +1,43 @@
+{% extends template('widget') %}
+
+{% define data = {
+    shipmentTypeOptions: _widget.shipmentTypeOptions,
+    hasOnlyServiceShipmentType: _widget.hasOnlyServiceShipmentType,
+    hasOnlyDeliveryShipmentType: _widget.hasOnlyDeliveryShipmentType,
+    isSelectionDisabled: _widget.isDisabled,
+    isServiceDateTimeEnabled: _widget.isServiceDateTimeEnabled,
+    formFieldShipmentTypeUuid: _widget.formFieldShipmentTypeUuid,
+    formFieldServicePointUuid: _widget.formFieldServicePointUuid,
+    formFieldProductOfferReference: _widget.formFieldProductOfferReference,
+    formFieldItemMetadataScheduledAt: _widget.formFieldItemMetadataScheduledAt,
+    product: _widget.product,
+} %}
+
+{% block separator %}
+    <hr>
+{% endblock %}
+
+{% block body %}
+    {{ block('separator') }}
+
+    {% include molecule('service-point-shipment-types', 'SelfServicePortal') with {
+        data: {
+            isSelectionDisabled: data.isSelectionDisabled,
+            formFieldShipmentTypeUuid: data.formFieldShipmentTypeUuid,
+            shipmentTypes: data.shipmentTypeOptions,
+            formFieldServicePointUuid: data.formFieldServicePointUuid,
+            formFieldProductOfferReference: data.formFieldProductOfferReference,
+            formFieldItemMetadataScheduledAt: data.formFieldItemMetadataScheduledAt,
+            isServiceDateTimeEnabled: data.isServiceDateTimeEnabled,
+            hasOnlyServiceShipmentType: data.hasOnlyServiceShipmentType,
+            hasOnlyDeliveryShipmentType: data.hasOnlyDeliveryShipmentType,
+            isConcreteProduct: data.product.idProductConcrete is not null,
+            product: data.product,
+        },
+        attributes: {
+            'data-service-point-product-sku': data.product.sku,
+        },
+    } only %}
+
+    {{ block('separator') }}
+{% endblock %}

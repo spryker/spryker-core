@@ -1,0 +1,51 @@
+@mixin self-service-portal-asset-finder($name: '.asset-finder') {
+    #{$name} {
+        position: relative;
+
+        &.is-selected {
+            #{$name}__selected {
+                display: flex;
+            }
+
+            #{$name}__finder {
+                display: none;
+            }
+        }
+
+        &__finder {
+            position: relative;
+        }
+
+        &__results-container {
+            position: absolute;
+            top: calc(100% + 0.3rem);
+            left: 0;
+            width: 100%;
+            background: $setting-color-white;
+            z-index: $setting-zi-popup;
+            border: 0.0625rem solid $setting-color-lighter;
+        }
+
+        &__selected {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem;
+            border: 0.0625rem solid #d9d9d9;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+
+        &__change-button {
+            margin-left: 0.5rem;
+        }
+
+        &__selected-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        @content;
+    }
+}

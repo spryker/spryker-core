@@ -1,0 +1,32 @@
+{% extends '@Gui/layout/layout.twig' %}
+
+{% set widget_title = 'Assets' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ createActionButton(url('/self-service-portal/add-asset'), 'Create' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_title -%}
+            <h5>{{ 'List of Assets' | trans}}</h5>
+        {%- endblock %}
+
+        {% block widget_content %}
+            {{ form_start(sspAssetFilterForm, { 'attr' : { 'class': 'form-filter' }}) }}
+                <div class="row">
+                    <div class="col-xs-4">
+                        {{ form_row(sspAssetFilterForm.status, {
+                            attr: { class: 'js-form-submitter' }
+                        }) }}
+                    </div>
+                </div>
+            {{ form_end(sspAssetFilterForm) }}
+
+            {{ sspAssetTable | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

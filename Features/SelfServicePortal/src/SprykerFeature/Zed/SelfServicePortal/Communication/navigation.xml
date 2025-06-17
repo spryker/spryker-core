@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<config>
+    <self-service-portal-services>
+        <label>Services</label>
+        <title>Services</title>
+        <bundle>self-service-portal</bundle>
+        <controller>list-service</controller>
+        <action>index</action>
+        <icon>fa-paperclip</icon>
+    </self-service-portal-services>
+    <self-service-portal-company-file>
+        <label>File Attachments</label>
+        <title>File Attachments</title>
+        <bundle>self-service-portal</bundle>
+        <controller>list-file</controller>
+        <action>index</action>
+        <icon>fa-paperclip</icon>
+        <pages>
+            <self-service-portal-company-view-file>
+                <label>View File Attachment</label>
+                <title>View File Attachment</title>
+                <bundle>self-service-portal</bundle>
+                <controller>view-file</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </self-service-portal-company-view-file>
+            <self-service-portal-company-attach-file>
+                <label>Attach File</label>
+                <title>Attach File</title>
+                <bundle>self-service-portal</bundle>
+                <controller>attach-file</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </self-service-portal-company-attach-file>
+            <self-service-portal-company-delete-file>
+                <label>Delete File</label>
+                <title>Delete File</title>
+                <bundle>self-service-portal</bundle>
+                <controller>delete-file</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </self-service-portal-company-delete-file>
+            <self-service-portal-company-upload>
+                <label>Upload File</label>
+                <title>Upload File</title>
+                <bundle>self-service-portal</bundle>
+                <controller>add-file</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </self-service-portal-company-upload>
+        </pages>
+    </self-service-portal-company-file>
+    <sales>
+        <pages>
+            <self-service-portal-inquiries>
+                <label>Inquiries</label>
+                <title>Inquiries</title>
+                <bundle>self-service-portal</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <pages>
+                    <self-service-portal-inquiry-view>
+                        <label>Inquiry Overview</label>
+                        <title>Inquiry Overview</title>
+                        <bundle>self-service-portal</bundle>
+                        <controller>list-inquiry</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </self-service-portal-inquiry-view>
+                </pages>
+            </self-service-portal-inquiries>
+        </pages>
+    </sales>
+    <self-service-portal-asset>
+        <label>Assets</label>
+        <title>Assets</title>
+        <bundle>self-service-portal</bundle>
+        <controller>list-asset</controller>
+        <action>index</action>
+        <pages>
+            <self-service-portal-asset-view>
+                <label>Asset Overview</label>
+                <title>Asset Overview</title>
+                <bundle>self-service-portal</bundle>
+                <controller>view-asset</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </self-service-portal-asset-view>
+            <self-service-portal-asset-add>
+                <label>Asset Create</label>
+                <title>Asset Create</title>
+                <bundle>self-service-portal</bundle>
+                <controller>add-asset</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </self-service-portal-asset-add>
+        </pages>
+    </self-service-portal-asset>
+</config>

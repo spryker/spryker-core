@@ -1,0 +1,155 @@
+"Product with id %d is not found.","Produkt mit ID %d wurde nicht gefunden."
+"Is Active","Ist Aktiv"
+Yes,Ja
+No,Nein
+"Merchant SKU","Merchant SKU"
+Stores,Stores
+"Select stores","Stores auswählen"
+"Shipment Types",Lieferart
+"Select shipment types","Lieferart auswählen"
+"Valid From","Gültig von"
+"Valid To","Gültig bis"
+"Date ""Valid from"" cannot be later than ""Valid to"".","Das ""Gültig ab""-Datum kann nicht nach dem ""Gültig bis""-Datum liegen."
+"Date ""Valid from"" is the same as ""Valid to"".","Das Datum ""Gültig von"" ist gleich wie ""Gültig bis""."
+"Date ""Valid to"" cannot be earlier than ""Valid from"".","Das ""Gültig bis""-Datum kann nicht vor dem ""Gültig ab""-Datum liegen."
+"Service Point",Servicestelle
+"Select a service point","Servicestelle auswählen"
+"Select a service","Service auswählen"
+Quantity,Menge
+"Is Never Out Of Stock","Immer auf Lager"
+Sku,SKU
+Image,Bild
+Name,Name
+"Valid From (Time in UTC)","Gültig ab (Zeit in UTC)"
+"Valid To (Time in UTC)","Gültig bis (Zeit in UTC)"
+"Create Offer","Angebot erstellen"
+Deactivated,Inaktiv
+Active,Aktiv
+"Back to Product Offer list","Zurück zu Angeboten"
+"Select product for offer creation","Produkt zur Angebotserstellung auswählen"
+"Offer %s has been created successfully.","Angebot %s wurde erfolgreich erstellt."
+"List of Services","Liste der Dienstleistungen"
+"Overview of Services","Übersicht der Dienstleistungen"
+Inactive,Inaktiv
+Attributes,Attribute
+"Approval Status",Genehmigungsstatus
+"Time and Date","Zeit und Datum"
+"Created At","Erstellt am"
+Service,Dienstleistung
+"Update time","Zeit aktualisieren"
+"Back to Order","Zurück zur Bestellung"
+"Order Item Details",Bestellpositionsdetails
+SKU,SKU
+"Product Types",Produktarten
+"Select product types","Produktarten auswählen"
+"Current State","Aktueller Status"
+"Scheduled At:","Geplant für:"
+"Service with ID ""%id%"" does not exist.","Dienstleistung mit ID ""%id%"" existiert nicht."
+N/A,N/A
+"View Service","Dienstleistung anzeigen"
+Created,Erstellt
+asset,Asset
+"Attach entity","Entität anhängen"
+"Attached To","Zugeordnet zu"
+Back,Zurück
+"Create File Attachment","Dateianhang erstellen"
+"Date Attached","Datum zugeordnet"
+Details,Einzelheiten
+"Delete File","Datei löschen"
+"File Attachments",Dateianhänge
+"File Attachment",Dateianhang
+"File Name",Dateiname
+"File with ID ""%id%"" does not exist.","Datei mit ID ""%id%"" existiert nicht."
+File,Datei
+ID,ID
+"Linked Entities","Verknüpfte Entitäten"
+"List of File Attachments","Liste der Dateianhänge"
+"Unlink all","Alle Verknüpfungen aufheben"
+"Upload date",Hochladedatum
+"View File Attachments","Dateianhänge anzeigen"
+"Business entity name","Name der Geschäftseinheit"
+company,Firmenname
+"Company User",Firmenkontonutzer
+company_user,Firmenkontonutzer
+"Company Business Unit",Geschäftseinheit
+company_business_unit,Geschäftseinheit
+ssp_asset,Asset
+"Upload Files","Dateien hochladen"
+"Back to File List","Zur Dateiliste zurück"
+Upload,Hochladen
+"Please upload valid documents (PDF) or images (JPEG, PNG)","Bitte laden Sie gültige Dokumente (PDF) oder Bilder (JPEG, PNG) hoch"
+"Please select a file to upload","Bitte eine Datei auswählen"
+"The files were added successfully.","Die Dateien wurden erfolgreich hinzugefügt."
+"Upload file","Datei hochladen"
+"File was successfully removed.","Datei wurde erfolgreich entfernt."
+"File cannot be removed.","Datei kann nicht entfernt werden."
+"File attachment successfully unlinked.","Verknüpfung des Dateianhangs erfolgreich aufgehoben."
+"File attachments successfully unlinked.","Verknüpfung der Dateianhänge erfolgreich aufgehoben."
+"Confirm action","Aktion bestätigen"
+Confirm,Bestätigen
+Cancel,Abbrechen
+Save,Speichern
+"Are you sure you want to delete file?","Möchten Sie die Datei wirklich löschen?"
+"Are you sure you want to delete this file?","Möchten Sie diese Datei wirklich löschen?"
+"Date From","Datum von"
+"Date To","Datum bis"
+"Select type","Typ auswählen"
+"Select business entity type","Geschäftsentitätstyp auswählen"
+"Select entities","Entitäten auswählen"
+"Entity Type",Entitätstyp
+"Entity ID",Entitäts-ID
+"No entities attached","Keine Entitäten angehängt"
+"File successfully attached","Datei erfolgreich angehängt"
+"File attachment failed","Beim Dateianhang ist ein Fehler aufgetreten"
+"Start typing to search...","Tippen Sie, um zu suchen..."
+"You are trying to delete file","Sie versuchen, die Datei zu löschen"
+"Deleting this file will delete all the links to the attached entities. Do you want to proceed?","Durch das Löschen dieser Datei werden alle Verknüpfungen zu den angehängten Entitäten gelöscht. Möchten Sie fortfahren?"
+pending,Ausstehend
+in_review,"In Bearbeitung"
+approved,Genehmigt
+rejected,Abgelehnt
+canceled,Storniert
+start_review,"Überprüfung starten"
+cancel,Stornieren
+approve,Genehmigen
+reject,Ablehnen
+"View Ssp Inquiry: ","Anfrage anzeigen: "
+"Back to Ssp Inquiries","Zurück zu Anfragen"
+"Ssp Inquiry reference",Referenz
+Date,Datum
+Store,Store
+"Customer Email",Kunden-E-Mail
+"Company / Business Unit","Firma / Geschätseinheit"
+"Ssp Inquiry Details",Anfragedetails
+order,Bestellung
+Subject,Betreff
+Files,Dateien
+"File name",Dateiname
+Download,Herunterladen
+"Ssp Inquiry status transition is not possible.","Eine Änderung des Anfragestatus ist nicht möglich."
+"Internal Comments","Interne Anmerkungen"
+"File was not found","Datei wurde nicht gefunden"
+"No files available.","Keine Dateien verfügbar."
+"Order reference",Bestellnummer
+"List of Ssp Inquiries","Liste der Anfragen"
+"Show history","Historie anzeigen"
+"Select Type","Typ auswählen"
+"Select Status","Status auswählen"
+Filter,Filter
+"Ssp Inquiries",Anfragen
+"Create Reclamation",Reklamieren
+"Overview of Ssp Inquiries","Übersicht der Anfragen"
+general,Allgemein
+"Product offer not found.","Produktangebot nicht gefunden."
+"Offer %s has been updated successfully.","Angebot %s wurde erfolgreich aktualisiert."
+Edit,Bearbeiten
+"Order Reference",Bestellreferenz
+Customer,Kunde
+Company,Firma
+"Service (Product name)","Service (Produktname)"
+Status,Status
+"Time a date of Service","Datum und Zeit des Service"
+"Date created","Datum erstellt"
+Actions,Aktionen
+View,Ansicht
+Services,Dienstleistungen

@@ -1,0 +1,36 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block head_title %}
+    {{ 'Upload Files' | trans }}
+{% endblock %}
+
+{% block section_title %}
+    {{ 'Upload Files' | trans }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url(urlPathListFile), 'Back to File List' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Upload Files' | trans } %}
+        {% block widget_content %}
+            {{ form_start(form, {
+                attr: {
+                    'enctype': 'multipart/form-data'
+                }
+            }) }}
+                <div class="form-group">
+                    {% include '@Gui/Form/Type/dropzone.twig' with {
+                        input: form.fileUploads,
+                    } %}
+                </div>
+
+                <div class="form-group form-group--flex form-group--end">
+                    <button class="btn btn-primary safe-submit" data-qa="file-upload-submit">{{ 'Upload' | trans }}</button>
+                </div>
+
+            {{ form_end(form) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

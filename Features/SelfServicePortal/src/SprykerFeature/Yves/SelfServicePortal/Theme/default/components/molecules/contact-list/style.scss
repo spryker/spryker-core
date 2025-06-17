@@ -1,0 +1,3 @@
+@include helper-import(molecule, contact-list) {
+    @include self-service-portal-contact-list();
+}

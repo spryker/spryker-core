@@ -1,0 +1,18 @@
+{% extends template('widget') %}
+
+{% define data = {
+    servicePointName: _widget.servicePointName,
+    scheduledAt: _widget.scheduledAt
+} %}
+
+{% block body %}
+    {% if data.servicePointName %}
+      <div><strong>{{ 'self_service_portal.service.cart_item.service_point.name' | trans }}</strong>: {{ data.servicePointName }}</div>
+    {% endif %}
+
+    {% if data.scheduledAt %}
+        <div class="service-point-scheduled-time">
+            <strong>{{ 'self_service_portal.service.cart_item.scheduled_at' | trans }}</strong>: {{ data.scheduledAt | formatDateTime }}
+        </div>
+    {% endif %}
+{% endblock %}

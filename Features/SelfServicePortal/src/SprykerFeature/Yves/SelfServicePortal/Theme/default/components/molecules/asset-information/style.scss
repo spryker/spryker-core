@@ -1,0 +1,3 @@
+@include helper-import(molecule, asset-information) {
+    @include self-service-portal-asset-information;
+}

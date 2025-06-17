@@ -1,0 +1,72 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'contact-list',
+} %}
+
+{% define data = {
+    title: 'ssp_dashboard.representatives.title',
+    contacts: required,
+} %}
+
+{% block body %}
+    {% block title %}
+        {% include molecule('title-counter', 'SelfServicePortal') with {
+            class: 'spacing-bottom',
+            data: {
+                title: data.title,
+            },
+            } only %}
+    {% endblock %}
+
+    {% block contacts %}
+        {% if data.contacts is not empty %}
+            {% for contact in data.contacts %}
+                {% block contact %}
+                    <div class="{{ config.name }}__representative">
+                        <div class="{{ config.name }}__representative-logo">
+                            {% include atom('icon') with {
+                                data: {
+                                    name: 'user'
+                                }
+                            } only %}
+
+                            <span class="{{ config.name }}__representative-image" style="background-image: url('{{ contact.logo }}');"></span>
+                        </div>
+
+                        <div class="{{ config.name }}__representative-info">
+                            <span class="{{ config.name }}__representative-name">{{ contact.name }}</span>
+                            <span class="{{ config.name }}__representative-data">
+                                <span class="{{ config.name }}__representative-data-col">
+                                    <a href="mailto:{{ contact.email }}" class="{{ config.name }}__representative-mail">
+                                        {% include atom('icon') with {
+                                            class: "#{config.name}__representative-icon",
+                                            data: {
+                                                name: 'mail'
+                                            }
+                                        } only %}
+
+                                        {{ contact.email }}
+                                    </a>
+                                </span>
+
+                                <span class="{{ config.name }}__representative-data-col">
+                                    <a href="tel:{{ contact.phone }}" class="{{ config.name }}__representative-phone">
+                                        {% include atom('icon') with {
+                                            class: "#{config.name}__representative-icon",
+                                            data: {
+                                                name: 'phone'
+                                            }
+                                        } only %}
+
+                                        {{ contact.phone }}
+                                    </a>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                {% endblock %}
+            {% endfor %}
+        {% endif %}
+    {% endblock %}
+{% endblock %}

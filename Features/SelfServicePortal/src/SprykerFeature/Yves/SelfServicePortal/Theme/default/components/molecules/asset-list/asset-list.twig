@@ -1,0 +1,43 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'asset-list',
+    tag: 'asset-list',
+} %}
+
+{% define data = {
+    assets: [],
+    emptyText: 'self_service_portal.asset.selector.no_assets_available',
+} %}
+
+{% block body %}
+    <ul class="list">
+        {% if data.assets is not empty %}
+            {% block options %}
+                {% for asset in data.assets %}
+                    {% block option %}
+                        {% set information = {
+                            serial: asset.serialNumber,
+                            name: asset.name,
+                            reference: asset.reference,
+                            id: asset.idSspAsset,
+                        } %}
+
+                        <li class="list__item {{ config.name }}__item {{ config.jsName }}__item"
+                            data-name="{{ asset.name }}"
+                            tabIndex="0"
+                            data-information="{{ information | json_encode }}">
+                            <span>{{ asset.name }}{% if asset.serialNumber %}, {{ asset.serialNumber }}{% endif %}</span>
+                        </li>
+                    {% endblock %}
+                {% endfor %}
+            {% endblock %}
+        {% else %}
+            {% block empty %}
+                <li class="list__item list__item--disabled {{ config.name }}__item {{ config.name }}__item--empty">
+                    {{ data.emptyText | trans }}
+                </li>
+            {% endblock %}
+        {% endif %}
+    </ul>
+{% endblock %}

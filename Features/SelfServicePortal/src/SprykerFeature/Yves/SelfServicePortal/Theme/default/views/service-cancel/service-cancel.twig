@@ -1,0 +1,33 @@
+{% extends template('widget') %}
+
+{% define data = {
+    orderItem: _widget.orderItem,
+    isVisible: _widget.isVisible,
+    form: _widget.form,
+} %}
+
+{% block body %}
+    {% if data.isVisible and data.orderItem.isCancellable %}
+        {% embed molecule('remote-form-submit') with {
+            data: {
+                label: 'self_service_portal.service.cancel_service' | trans,
+                buttonClass: 'button button--hollow button--alert',
+                buttonExtraAttributes: {
+                    'data-qa': 'cancel-service-button',
+                    'data-init-single-click': true
+                }
+            },
+            attributes: {
+                'form-name': data.form.vars.id,
+                'form-action': path('ssp/service/cancel-service')
+            },
+            embed: {
+                form: data.form
+            }
+        } only %}
+            {% block fields %}
+                {{- form_widget(embed.form) -}}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endblock %}

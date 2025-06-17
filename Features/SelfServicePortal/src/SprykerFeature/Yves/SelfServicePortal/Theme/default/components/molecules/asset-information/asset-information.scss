@@ -1,0 +1,23 @@
+@mixin self-service-portal-asset-information($name: '.asset-information') {
+    #{$name} {
+        &__image {
+            border: 0.0625rem solid $setting-color-input-border;
+            aspect-ratio: 1.5;
+        }
+
+        &__info {
+            padding-bottom: 2.5rem;
+        }
+
+        &__info-col {
+            padding: 0.4rem 0.8rem;
+
+            &:nth-child(4n + 3),
+            &:nth-child(4n + 4) {
+                background-color: $setting-color-lightest;
+            }
+        }
+
+        @content;
+    }
+}

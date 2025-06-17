@@ -1,0 +1,55 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    orderItem: _view.orderItem,
+    serviceItemSchedulerForm: _view.serviceItemSchedulerForm,
+    activePage: 'ssp-service',
+    title: 'self_service_portal.service.update_scheduled_time.title' | trans,
+} %}
+
+{% block customerContent %}
+    <div class="box">
+        {% block details %}
+            {% include molecule('order-item-details', 'SelfServicePortal') with {
+                data: {
+                    details: [
+                        {
+                            label: 'self_service_portal.service.update_scheduled_time.service.sku',
+                            value: data.orderItem.sku,
+                        },
+                        {
+                            label: 'self_service_portal.service.update_scheduled_time.service.name',
+                            value: data.orderItem.name,
+                        },
+                        {
+                            label: 'self_service_portal.service.update_scheduled_time.service.quantity',
+                            value: data.orderItem.quantity,
+                        },
+                        {
+                            label: 'self_service_portal.service.update_scheduled_time.service.state',
+                            value: data.orderItem.state.displayName | trans,
+                        },
+                    ],
+                },
+            } only %}
+        {% endblock %}
+
+        {% block form %}
+            {% include molecule('form') with {
+                class: '',
+                data: {
+                    form: data.serviceItemSchedulerForm,
+                    submit: {
+                        enable: true,
+                        text: 'self_service_portal.service.update_scheduled_time.button.save' | trans,
+                    },
+                    cancel: {
+                        enable: true,
+                        text: 'self_service_portal.service.update_scheduled_time.button.cancel' | trans,
+                        url: path('ssp/service/list'),
+                    },
+                }
+            } only %}
+        {% endblock %}
+    </div>
+{% endblock %}

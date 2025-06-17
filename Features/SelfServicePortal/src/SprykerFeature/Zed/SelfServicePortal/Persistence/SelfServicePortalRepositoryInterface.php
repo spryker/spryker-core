@@ -1,0 +1,147 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
+
+use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
+use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
+use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
+use Generated\Shared\Transfer\ProductAbstractTypeCollectionTransfer;
+use Generated\Shared\Transfer\SspAssetCollectionTransfer;
+use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
+use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
+use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
+use Generated\Shared\Transfer\SspServiceCollectionTransfer;
+use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
+
+interface SelfServicePortalRepositoryInterface
+{
+    /**
+     * @param list<int> $productConcreteIds
+     *
+     * @return array<int, list<int>>
+     */
+    public function getShipmentTypeIdsGroupedByIdProductConcrete(array $productConcreteIds): array;
+
+    /**
+     * @param list<int> $productConcreteIds
+     * @param string $shipmentTypeName
+     *
+     * @return array<int, list<int>>
+     */
+    public function getProductIdsWithShipmentType(array $productConcreteIds, string $shipmentTypeName): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductAbstractTypeCollectionTransfer
+     */
+    public function getProductAbstractTypeCollection(): ProductAbstractTypeCollectionTransfer;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTypeTransfer>
+     */
+    public function getProductAbstractTypesByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTypeTransfer>
+     */
+    public function getProductAbstractTypesByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
+     */
+    public function getServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer;
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<\Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractToProductAbstractType>
+     */
+    public function findProductAbstractTypesByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param array<int> $salesOrderItemIds
+     *
+     * @return array<int, array<string>>
+     */
+    public function getProductTypesGroupedBySalesOrderItemIds(array $salesOrderItemIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
+     */
+    public function getFileAttachmentCollection(FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): FileAttachmentCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
+     * @param array<\SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\FilePermissionQueryStrategyInterface> $queryStrategies
+     *
+     * @return \Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer
+     */
+    public function getFileAttachmentFileCollectionAccordingToPermissions(
+        FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer,
+        array $queryStrategies
+    ): FileAttachmentFileCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
+     */
+    public function getSspInquiryCollection(
+        SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
+    ): SspInquiryCollectionTransfer;
+
+    /**
+     * @param array<int> $stateIds
+     *
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
+     */
+    public function getStateMachineItemsByStateIds(array $stateIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
+     */
+    public function getSspInquiryFileCollection(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
+     */
+    public function getSspInquiryOrderCollection(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
+     */
+    public function getSspInquirySspAssetCollection(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
+     */
+    public function getSspAssetCollection(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): SspAssetCollectionTransfer;
+
+    /**
+     * @param array<int> $salesOrderItemIds
+     *
+     * @return array<int, \Generated\Shared\Transfer\SspAssetTransfer>
+     */
+    public function getSspAssetsIndexedByIdSalesOrderItem(array $salesOrderItemIds): array;
+}

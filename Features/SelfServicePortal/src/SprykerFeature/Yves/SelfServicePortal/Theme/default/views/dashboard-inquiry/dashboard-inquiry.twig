@@ -1,0 +1,60 @@
+{% extends template('widget') %}
+
+{% define data = {
+    totalItems: _widget.totalItems,
+    inquiries: _widget.inquiries,
+    moreLink: _widget.moreLink | default(url('customer/ssp-inquiry')),
+} %}
+
+{% block body %}
+    {% if can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin') %}
+        {% set columns = [
+            {
+                id: 'reference',
+                title: 'customer.self_service_portal.inquiry.list.reference' | trans,
+            },
+            {
+                id: 'type',
+                title: 'customer.self_service_portal.inquiry.list.type' | trans,
+            },
+            {
+                id: 'date',
+                title: 'customer.self_service_portal.inquiry.list.date_created' | trans,
+                type: 'date',
+            },
+            {
+                id: 'status',
+                title: 'customer.self_service_portal.inquiry.list.status' | trans,
+                type: 'status',
+            },
+            {
+                id: 'actions',
+                type: 'actions',
+            },
+        ] %}
+
+        {% set rows = (data.inquiries | default([])) | map(inquiry => {
+            reference: inquiry.reference,
+            type: "self_service_portal.inquiry.type.#{inquiry.type | lower}" | trans,
+            date: inquiry.createdDate,
+            status: { label: "self_service_portal.inquiry.status.#{inquiry.status}" | lower | trans, status: inquiry.status },
+            actions: [{ url: path('customer/ssp-inquiry/details', {'reference': inquiry.reference}), label: 'customer.self_service_portal.inquiry.view_ssp_inquiry' }],
+        }) %}
+
+        {% block table %}
+            <div {{ qa('ssp-asset-inquiries-table') }}>
+                {% include molecule('dashboard-table', 'SelfServicePortal') with {
+                    data: {
+                        title: 'customer.account.ssp_inquiries',
+                        counter: data.totalItems,
+                        columns: columns,
+                        rows: rows,
+                        emptyText: 'customer.account.no_ssp_inquiries',
+                        moreLink: data.moreLink,
+                    },
+                    qa: 'ssp-inquiry-table',
+                } only %}
+            </div>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

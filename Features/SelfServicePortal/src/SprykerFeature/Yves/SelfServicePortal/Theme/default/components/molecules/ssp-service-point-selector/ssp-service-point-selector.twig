@@ -1,0 +1,77 @@
+{# @var data.selectedServicePoint \Generated\Shared\Transfer\ServicePointSearchTransfer #}
+
+{% extends model('component') %}
+
+{% define config = {
+    name: 'ssp-service-point-selector',
+    tag: 'ssp-service-point-selector',
+} %}
+
+{% define data = {
+    serviceTypeKey: required,
+    serviceTypeUuid: required,
+    shipmentTypeUuid: required,
+    items: required,
+    sku: required,
+    quantity: required,
+    id: random(),
+} %}
+
+{% define attributes = {
+    'trigger-class-name': 'js-' ~ config.name ~ '__trigger-' ~ data.id,
+    'finder-class-name': 'js-' ~ config.name ~ '__finder-' ~ data.id,
+    'toggle-class-name': 'is-hidden',
+    'hidden-uuid-selector': '[data-service-point-uuid-input]',
+    'hidden-offer-reference-selector': '[data-product-offer-reference-input]',
+    'price-attribute': 'data-product-price-offer'
+} %}
+
+{% block locationsWidget %}
+    {% widget 'ServicePointSearchWidget' args [data.serviceTypeKey, data.serviceTypeUuid, data.shipmentTypeUuid, [], null, true, data.items, 'ssp/service-point-widget/search'] with {
+        data: {
+            extraClassName: attributes['finder-class-name'],
+            quantity: data.quantity,
+            sku: data.sku,
+        },
+    } only %}
+    {% endwidget %}
+{% endblock %}
+
+{% block body %}
+    {% block noLocation %}
+        <div class="{{ config.jsName }}__no-location">
+            <button type="button" class="button button--expand {{ attributes['trigger-class-name'] }}">
+                {{ 'service_point_widget.select_location_action' | trans }}
+            </button>
+        </div>
+    {% endblock %}
+
+    {% block selectedLocation %}
+        <div class="{{ config.jsName }}__location-container {{ attributes['toggle-class-name'] }}">
+            <strong>{{ 'service_point_widget.location_label' | trans }}</strong>
+            <span class="{{ config.jsName }}__location"></span>
+
+            <div>
+                <button type="button" class="button button--expand {{ attributes['trigger-class-name'] }}">
+                    {{ 'service_point_widget.change_action' | trans }}
+                </button>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block popup %}
+        {% include molecule('main-popup') with {
+            modifiers: ['spaceless', 'flex-content'],
+            class: config.jsName ~ '__popup',
+            data: {
+                title: 'service_point_widget.select_your_store_title' | trans,
+                content: block('locationsWidget'),
+            },
+            attributes: {
+                'content-id': config.jsName ~ '__popup-content-',
+                'trigger-class-name': attributes['trigger-class-name'],
+                'has-content-mount': true,
+            },
+        } only %}
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,237 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    inquiry: _view.sspInquiry,
+    cancelForm: _view.cancelForm,
+    isInquiryOwner: _view.isSspInquiryOwner,
+    title: 'customer.account.self_service_portal.inquiry.details' | trans,
+    activePage: 'ssp-inquiry',
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'customer.account.ssp_inquiries' | trans,
+                    url: url('customer/ssp-inquiry'),
+                },
+                {
+                    label: 'customer.self_service_portal.inquiry.view_ssp_inquiry' | trans,
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
+
+{% block customerContent %}
+    {% block actions %}
+        {% if data.inquiry.isCancellable and data.isInquiryOwner %}
+            <div class="box text-right">
+                {{ form_start(data.cancelForm, {'action': path('customer/ssp-inquiry/cancel', {
+                    'sspInquiryReference': data.inquiry.reference
+                })}) }}
+                    <button class="button button--alert button--hollow" data-qa="cancel-ssp-inquiry">{{ 'self_service_portal.inquiry.cancel' | trans }}</button>
+                {{ form_end(data.cancelForm) }}
+            </div>
+        {% endif %}
+    {% endblock %}
+
+    {% block overlay %}
+        <div class="box">
+            {% block information %}
+                {% block main %}
+                    {% include molecule('inquiry-information', 'SelfServicePortal') with {
+                        data: {
+                            title: 'customer.self_service_portal.inquiry.details',
+                            information: [
+                                {
+                                    title: 'customer.self_service_portal.inquiry.details.reference',
+                                    value: data.inquiry.reference,
+                                },
+                                {
+                                    title: 'customer.self_service_portal.inquiry.details.date',
+                                    value: data.inquiry.createdDate | formatDateTime,
+                                },
+                                {
+                                    block: block('status'),
+                                },
+                            ] ,
+                        },
+                    } only %}
+                {% endblock %}
+
+                {% block details %}
+                    {% include molecule('inquiry-information', 'SelfServicePortal') with {
+                        data: {
+                            title: 'customer.self_service_portal.inquiry.details',
+                            information: [
+                                {
+                                    title: 'customer.self_service_portal.inquiry.details.type',
+                                    value: "self_service_portal.inquiry.type.#{data.inquiry.type}",
+                                },
+                                (data.inquiry.order and data.inquiry.order.orderReference
+                                    ? {
+                                        title: 'customer.self_service_portal.inquiry.details.last_name',
+                                        value: data.inquiry.companyUser.customer.lastName,
+                                    }
+                                    : {}
+                                ),
+                                {
+                                    title: 'customer.self_service_portal.inquiry.details.subject',
+                                    value: data.inquiry.subject,
+                                },
+                                {
+                                    title: 'customer.self_service_portal.inquiry.details.description',
+                                    value: data.inquiry.description,
+                                },
+                            ] ,
+                        },
+                    } only %}
+                {% endblock %}
+
+                {% block asset %}
+                    {% if data.inquiry.type is same as 'ssp_asset' %}
+
+                        {% include molecule('inquiry-information', 'SelfServicePortal') with {
+                            data: {
+                                title: 'customer.self_service_portal.inquiry.ssp_asset.details',
+                                information: data.inquiry.sspAsset ? [
+                                    (data.inquiry.sspAsset.image
+                                        ? {
+                                            block: block('assetImage'),
+                                        }
+                                        : {}
+                                    ),
+                                    (data.inquiry.sspAsset.reference
+                                        ? {
+                                            title: 'customer.self_service_portal.inquiry.details.ssp_asset_reference',
+                                            value: data.inquiry.sspAsset.reference,
+                                        }
+                                        : {}
+                                    ),
+                                    (data.inquiry.sspAsset.name
+                                        ? {
+                                            title: 'customer.self_service_portal.inquiry.details.ssp_asset_name',
+                                            value: data.inquiry.sspAsset.name,
+                                        }
+                                        : {}
+                                    ),
+                                ] : [],
+                                empty: 'customer.self_service_portal.inquiry.details.ssp_asset_not_available',
+                            },
+                        } only %}
+                    {% endif %}
+                {% endblock %}
+
+                {% block owner %}
+                    {% include molecule('inquiry-information', 'SelfServicePortal') with {
+                        data: {
+                            title: 'customer.self_service_portal.inquiry.owner',
+                            information: [
+                                {
+                                    title: 'customer.self_service_portal.inquiry.details.first_name',
+                                    value: data.inquiry.companyUser.customer.firstName,
+                                },
+                                {
+                                    title: 'customer.self_service_portal.inquiry.details.last_name',
+                                    value: data.inquiry.companyUser.customer.lastName,
+                                },
+                                {
+                                    title: 'customer.self_service_portal.inquiry.details.email',
+                                    value: data.inquiry.companyUser.customer.email,
+                                },
+                                {
+                                    title: 'customer.self_service_portal.inquiry.details.company',
+                                    value: "#{data.inquiry.companyUser.companyBusinessUnit.company.name} / #{data.inquiry.companyUser.companyBusinessUnit.name}",
+                                },
+                            ],
+                            showSeparator: data.inquiry.files is not empty,
+                        },
+                    } only %}
+                {% endblock %}
+
+                {% block files %}
+                    {% if data.inquiry.files is not empty %}
+                        {% set columns = [
+                            {
+                                id: 'name',
+                                title: 'customer.self_service_portal.inquiry.details.file.name',
+                            },
+                            {
+                                id: 'size',
+                                title: 'customer.self_service_portal.inquiry.details.file.size',
+                            },
+                            {
+                                id: 'extension',
+                                title: 'customer.self_service_portal.inquiry.details.file.extension',
+                            },
+                            {
+                                id: 'actions',
+                                type: 'actions',
+                            },
+                        ] %}
+
+                        {% set rows = data.inquiry.files | map(file => {
+                            name: file.fileName,
+                            size: file.fileInfo[0].size | default(0) | format_bytes,
+                            extension: file.fileInfo[0].extension | default('N/A'),
+                            actions: [{
+                                url: url('/customer/ssp-inquiry-file/download',
+                                    {'ssp-inquiry-reference': data.inquiry.reference, 'uuid': file.uuid }
+                                ),
+                                label: 'customer.self_service_portal.inquiry.details.file.download',
+                                qa: 'download-button',
+                            }],
+                        }) %}
+
+                        <div><strong>{{ 'customer.self_service_portal.inquiry.details.files' | trans }}</strong></div>
+
+                        {% block table %}
+                            {% include molecule('advanced-table', 'SelfServicePortal') with {
+                                data: {
+                                    columns: columns,
+                                    rows: rows,
+                                },
+                            } only %}
+                        {% endblock %}
+                    {% endif %}
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}
+
+{% block status %}
+    <li>
+        <strong>{{ 'customer.self_service_portal.inquiry.details.status' | trans  ~ ': ' }}</strong>
+
+        {% include molecule('status') with {
+            data: {
+                label: ('self_service_portal.inquiry.status.' ~ data.inquiry.status) | trans ,
+                status: data.inquiry.status,
+            },
+        } only %}
+    </li>
+{% endblock %}
+
+{% block assetImage %}
+    {% if data.inquiry.sspAsset.image | default %}
+        <div class="grid">
+            <div class="col col--sm-12 col--lg-6">
+                {% include molecule('lazy-image') with {
+                    class: 'spacing-bottom--big',
+                    data: {
+                        imagePlaceholder: publicPath('images/image-placeholder.png'),
+                        imageSrc: url('ssp/asset/view-image', {'ssp-asset-reference': data.inquiry.sspAsset.reference}),
+                        imageTitle: '',
+                    },
+                } only %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

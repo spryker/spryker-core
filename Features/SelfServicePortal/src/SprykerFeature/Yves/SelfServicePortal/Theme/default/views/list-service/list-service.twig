@@ -1,0 +1,137 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    serviceList: _view.serviceList,
+    title: 'self_service_portal.service.list.title' | trans,
+    searchForm: _view.serviceSearchForm,
+    activePage: 'ssp-service',
+    pagination: _view.pagination,
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview')
+                },
+                {
+                    label: 'self_service_portal.service.list.title' | trans
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
+{% set formClass = 'js-search-form' %}
+
+{% block customerContent %}
+    <div class="box">
+        {% block serviceContent %}
+            {% block formStart %}
+                {{ form_start(data.searchForm, {
+                    attr: {
+                        class: formClass,
+                    },
+                }) }}
+            {% endblock %}
+
+            {% block filtersSection %}
+                {% set filters = [
+                    {
+                        row: data.searchForm.searchType,
+                        class: 'col--md-6 col--lg-3',
+                    },
+                    {
+                        row: data.searchForm.searchText,
+                        class: 'col--md-6 col--lg-6',
+                    },
+                    {
+                        row: data.searchForm.companyBusinessUnit,
+                        class: 'col--md-6 col--lg-3',
+                    },
+                ] %}
+
+                {% block filters %}
+                    {% include molecule('filters', 'SelfServicePortal') with {
+                        data: {
+                            filters: filters,
+                        },
+                    } only %}
+                {% endblock %}
+            {% endblock %}
+
+            {% block services %}
+                {% set columns = [
+                    {
+                        id: 'order_reference',
+                        title: 'self_service_portal.service.list.order_reference',
+                        sortable: true,
+                    },
+                    {
+                        id: 'product_name',
+                        title: 'self_service_portal.service.list.product_name',
+                        sortable: true,
+                    },
+                    {
+                        id: 'scheduled_at',
+                        title: 'self_service_portal.service.list.scheduled_at',
+                        type: 'date',
+                        sortable: true,
+                    },
+                    {
+                        id: 'created_at',
+                        title: 'self_service_portal.service.list.created_at',
+                        type: 'date',
+                        sortable: true,
+                    },
+                    {
+                        id: 'state',
+                        title: 'self_service_portal.service.list.state',
+                        sortable: true,
+                    },
+                    {
+                        id: 'actions',
+                        type: 'actions',
+                    },
+                ] %}
+
+                {% set rows = data.serviceList | map(row => {
+                    order_reference: row.order.orderReference,
+                    product_name: row.productName,
+                    scheduled_at: row.scheduledAt,
+                    created_at: row.createdAt,
+                    state: row.stateDisplayName | trans,
+                    actions: [{
+                        url: url('customer/order/details', { 'id': row.order.idSalesOrder }),
+                        label: 'self_service_portal.service.list.button.view'
+                    }],
+                }) %}
+
+                {% block table %}
+                    {% include molecule('advanced-table', 'SelfServicePortal') with {
+                        data: {
+                            columns: columns,
+                            rows: rows,
+                            emptyText: 'self_service_portal.service.list.empty',
+                            sortableForm: data.searchForm,
+                            sortableFormClass: formClass,
+                            pagination: {
+                                parameters: app.request.query.all,
+                                currentPage: data.pagination.page,
+                                paginationPath: 'ssp/service/list',
+                                maxPage: data.pagination.lastPage,
+                                showAlwaysFirstAndLast: true
+                            },
+                        },
+                    } only %}
+                {% endblock %}
+            {% endblock %}
+
+            {% block formEnd %}
+                {{ form_end(data.searchForm) }}
+            {% endblock %}
+        {% endblock %}
+    </div>
+{% endblock %}

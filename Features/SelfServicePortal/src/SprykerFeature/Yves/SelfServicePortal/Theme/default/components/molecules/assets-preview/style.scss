@@ -1,0 +1,3 @@
+@include helper-import(molecule, assets-preview) {
+    @include self-service-portal-assets-preview();
+}

@@ -1,0 +1,155 @@
+"Product with id %d is not found.","Product with id %d is not found."
+"Is Active","Is Active"
+Yes,Yes
+No,No
+"Merchant SKU","Merchant SKU"
+Stores,Stores
+"Select stores","Select stores"
+"Shipment Types","Shipment Types"
+"Select shipment types","Select shipment types"
+"Valid From","Valid From"
+"Valid To","Valid To"
+"Date ""Valid from"" cannot be later than ""Valid to"".","Date ""Valid from"" cannot be later than ""Valid to""."
+"Date ""Valid from"" is the same as ""Valid to"".","Date ""Valid from"" is the same as ""Valid to""."
+"Date ""Valid to"" cannot be earlier than ""Valid from"".","Date ""Valid to"" cannot be earlier than ""Valid from""."
+"Service Point","Service Point"
+"Select a service point","Select a service point"
+"Select a service","Select a service"
+Quantity,Quantity
+"Is Never Out Of Stock","Is Never Out Of Stock"
+Sku,Sku
+Image,Image
+Name,Name
+"Valid From (Time in UTC)","Valid From (Time in UTC)"
+"Valid To (Time in UTC)","Valid To (Time in UTC)"
+"Create Offer","Create Offer"
+Deactivated,Deactivated
+Active,Active
+"Back to Product Offer list","Back to Product Offer list"
+"Select product for offer creation","Select product for offer creation"
+"Offer %s has been created successfully.","Offer %s has been created successfully."
+"List of Services","List of Services"
+"Overview of Services","Overview of Services"
+Inactive,Inactive
+Attributes,Attributes
+"Approval Status","Approval Status"
+"Time and Date","Time and Date"
+"Created At","Created At"
+Service,Service
+"Update time","Update time"
+"Back to Order","Back to Order"
+"Order Item Details","Order Item Details"
+SKU,SKU
+"Product Types","Product Types"
+"Select product types","Select product types"
+"Current State","Current State"
+"Scheduled At:","Scheduled At:"
+"Service with ID ""%id%"" does not exist.","Service with ID ""%id%"" does not exist."
+N/A,N/A
+"View Service","View Service"
+Created,Created
+asset,Asset
+"Attach entity","Attach entity"
+"Attached To","Attached To"
+Back,Back
+"Create File Attachment","Create File Attachment"
+"Date Attached","Date Attached"
+Details,Details
+"Delete File","Delete File"
+"File Attachments","File Attachments"
+"File Attachment","File Attachment"
+"File Name","File Name"
+"File with ID ""%id%"" does not exist.","File with ID ""%id%"" does not exist."
+File,File
+ID,ID
+"Linked Entities","Linked Entities"
+"List of File Attachments","List of File Attachments"
+"Unlink all","Unlink all"
+"Upload date","Upload date"
+"View File Attachments","View File Attachments"
+"Business entity name","Business entity name"
+company,Company
+"Company User","Company User"
+company_user,"Company user"
+"Company Business Unit","Company Business Unit"
+company_business_unit,"Company business unit"
+ssp_asset,Asset
+"Upload Files","Upload Files"
+"Back to File List","Back to File List"
+Upload,Upload
+"Please upload valid documents (PDF) or images (JPEG, PNG)","Please upload valid documents (PDF) or images (JPEG, PNG)"
+"Please select a file to upload","Please select a file to upload"
+"The files were added successfully.","The files were added successfully."
+"Upload file","Upload file"
+"File was successfully removed.","File was successfully removed."
+"File cannot be removed.","File cannot be removed."
+"File attachment successfully unlinked.","File attachment successfully unlinked."
+"File attachments successfully unlinked.","File attachments successfully unlinked."
+"Confirm action","Confirm action"
+Confirm,Confirm
+Cancel,Cancel
+Save,Save
+"Are you sure you want to delete file?","Are you sure you want to delete file?"
+"Are you sure you want to delete this file?","Are you sure you want to delete this file?"
+"Date From","Date From"
+"Date To","Date To"
+"Select type","Select type"
+"Select business entity type","Select business entity type"
+"Select entities","Select entities"
+"Entity Type","Entity Type"
+"Entity ID","Entity ID"
+"No entities attached","No entities attached"
+"File successfully attached","File successfully attached"
+"File attachment failed","File attachment failed"
+"Start typing to search...","Start typing to search..."
+"You are trying to delete file","You are trying to delete file"
+"Deleting this file will delete all the links to the attached entities. Do you want to proceed?","Deleting this file will delete all the links to the attached entities. Do you want to proceed?"
+pending,Pending
+in_review,"In Review"
+approved,Approved
+rejected,Rejected
+canceled,Canceled
+start_review,"Start Review"
+cancel,Cancel
+approve,Approve
+reject,Reject
+"View Ssp Inquiry: ","View Inquiry: "
+"Back to Ssp Inquiries","Back to Inquiries"
+"Ssp Inquiry reference","Inquiry reference"
+Date,Date
+Store,Store
+"Customer Email","Customer Email"
+"Company / Business Unit","Company / Business Unit"
+"Ssp Inquiry Details","Inquiry Details"
+order,Order
+Subject,Subject
+Files,Files
+"File name","File name"
+Download,Download
+"Ssp Inquiry status transition is not possible.","Inquiry status transition is not possible."
+"Internal Comments","Internal Comments"
+"File was not found","File was not found"
+"No files available.","No files available."
+"Order reference","Order reference"
+"List of Ssp Inquiries","List of Inquiries"
+"Show history","Show history"
+"Select Type","Select Type"
+"Select Status","Select Status"
+Filter,Filter
+"Ssp Inquiries",Inquiries
+"Create Reclamation","Create Reclamation"
+"Overview of Ssp Inquiries","Overview of Inquiries"
+general,General
+"Product offer not found.","Product offer not found."
+"Offer %s has been updated successfully.","Offer %s has been updated successfully."
+Edit,Edit
+"Order Reference","Order Reference"
+Customer,Customer
+Company,Company
+"Service (Product name)","Service (Product name)"
+Status,Status
+"Time a date of Service","Time a date of Service"
+"Date created","Date created"
+Actions,Actions
+View,View
+Services,Services

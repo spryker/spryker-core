@@ -1,0 +1,25 @@
+@mixin self-service-portal-asset-list($name: '.asset-list') {
+    #{$name} {
+        &__item {
+            @include helper-effect-transition(background-color);
+            padding: 0.5rem;
+            cursor: pointer;
+            border-bottom: 0.0625rem solid $setting-color-lighter;
+
+            &:hover {
+                background-color: $setting-color-lightest;
+            }
+
+            &:focus-visible {
+                outline: 0.0625rem solid $setting-color-main;
+                outline-offset: 0.125rem;
+            }
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+
+        @content;
+    }
+}

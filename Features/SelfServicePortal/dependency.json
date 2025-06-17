@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/transfer": "Provides transfer objects definition with strict types and `::get*OrFail()` functionality.",
+        "spryker-shop/customer-page": "Provides the basic template for the customer self-service portal."
+    }
+}

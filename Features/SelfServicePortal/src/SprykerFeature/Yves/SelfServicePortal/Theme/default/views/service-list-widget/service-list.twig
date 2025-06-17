@@ -1,0 +1,71 @@
+{% extends template('widget') %}
+
+{% define data = {
+    totalItems: _widget.totalItems,
+    services: _widget.services,
+    moreLink: _widget.moreLink | default(url('ssp/service/list')),
+} %}
+
+{% block body %}
+    {% set columns = [
+        {
+            id: 'orderReference',
+            title: 'customer.ssp_service.order.reference' | trans,
+        },
+        {
+            id: 'customer',
+            title: 'customer.ssp_service.customer' | trans,
+        },
+        {
+            id: 'company',
+            title: 'customer.ssp_service.company' | trans,
+        },
+        {
+            id: 'service',
+            title: 'customer.ssp_service.service' | trans,
+        },
+        {
+            id: 'scheduledAt',
+            title: 'customer.ssp_service.scheduled_at' | trans,
+        },
+        {
+            id: 'createdAt',
+            title: 'customer.ssp_service.created_at' | trans,
+        },
+        {
+            id: 'status',
+            title: 'customer.ssp_service.status' | trans,
+        },
+        {
+            id: 'actions',
+            type: 'actions',
+        },
+    ] %}
+
+    {% set rows = (data.services | default([])) | map(service => {
+        orderReference: service.order.orderReference,
+        customer: service.order.firstName ~ ' ' ~ service.order.lastName,
+        company: service.order.companyName,
+        service: service.productName,
+        scheduledAt: service.scheduledAt,
+        createdAt: service.createdAt,
+        status: (service.stateDisplayName) | trans,
+        actions: [{ url: path('customer/order/details',  {'id': service.order.idSalesOrder }), label: 'customer.ssp_service.view_ssp_service' }],
+    }) %}
+
+    {% block table %}
+        <div {{ qa('ssp-asset-services-table') }}>
+            {% include molecule('dashboard-table', 'SelfServicePortal') with {
+                data: {
+                    title: 'customer.account.ssp_services',
+                    counter: data.totalItems,
+                    columns: columns,
+                    rows: rows,
+                    emptyText: 'customer.account.no_ssp_services',
+                    moreLink: data.moreLink,
+                },
+                qa: 'ssp-inquiry-table',
+            } only %}
+        </div>
+    {% endblock %}
+{% endblock %}

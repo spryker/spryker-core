@@ -1,0 +1,162 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'service-point-shipment-types',
+    tag: 'service-point-shipment-types',
+} %}
+
+{% define data = {
+    shipmentTypes: [],
+    isSelectionDisabled: false,
+    formFieldShipmentTypeUuid: null,
+    isServiceDateTimeEnabled: false,
+    hasOnlyServiceShipmentType: false,
+    formFieldServicePointUuid: null,
+    formFieldProductOfferReference: null,
+    formFieldItemMetadataScheduledAt: null,
+    hasOnlyDeliveryShipmentType: false,
+    isConcreteProduct: false,
+    product: null,
+} %}
+
+{% define attributes = {
+    'data-service-point-product-sku': null,
+    'ajax-container-class': "js-#{config.name}-container",
+    'no-service-types': ((data.shipmentTypes | default([])) | filter(type => not type.serviceTypeKey) | reduce((acc, type) => acc | merge([type.value]), [])) | json_encode
+} %}
+
+{% set requiredServicePoint = data.shipmentTypes | filter(shipmentTypeOption => shipmentTypeOption.isServicePointRequired) %}
+
+{% set ajaxContainerClass = attributes['ajax-container-class'] %}
+{% set ajaxProviderClass = "js-#{config.name}-provider" %}
+{% set ajaxTriggerAttribute = "data-#{config.name}-ajax-trigger" %}
+
+{% block servicePointSelector %}
+    {% set dynamicParams = {
+        'service-type-key': {
+            selector: ".#{config.name}__radio input:checked",
+            attribute: 'data-service-type-key',
+        },
+        'shipment-type-uuid': {
+            selector: ".#{config.name}__radio input:checked",
+            attribute: 'value',
+        },
+        'service-type-uuid': {
+            selector: ".#{config.name}__radio input:checked",
+            attribute: 'data-service-type-uuid',
+        },
+        sku: {
+            selector: ".#{config.name}",
+            attribute: 'data-service-point-product-sku',
+        },
+        quantity: {
+            selector: 'packaging-unit-quantity-selector select[name="quantity"]',
+            attribute: 'value',
+        },
+    } %}
+
+    {% block ajax %}
+        {% include molecule('ajax-provider') with {
+            class: ajaxProviderClass,
+            attributes: {
+                'fetch-on-load': true,
+                url: url('ssp/service-point-widget-content'),
+                'dynamic-params': dynamicParams | json_encode,
+            },
+        } only %}
+
+        {% include molecule('ajax-loader') with {
+            attributes: {
+                'provider-class-name': ajaxProviderClass,
+            },
+        } only %}
+
+        {% include molecule('ajax-renderer') with {
+            attributes: {
+                'provider-class-name': ajaxProviderClass,
+                'target-class-name': ajaxContainerClass,
+                'mount-after-render': true,
+            },
+        } only %}
+
+        {% include molecule('ajax-form-submitter') with {
+            attributes: {
+                'provider-class-name': ajaxProviderClass,
+                'trigger-attribute': ajaxTriggerAttribute,
+                event: 'change',
+                'is-provider-trigger': 'true',
+            },
+        } only %}
+    {% endblock %}
+
+    {% block render %}
+        <div class="{{ ajaxContainerClass }} spacing-bottom"></div>
+    {% endblock %}
+{% endblock %}
+
+{% block datepicker %}
+    {% if data.isServiceDateTimeEnabled %}
+        <div class="spacing-bottom--big">
+            <label class="label">{{'self_service_portal.service.product.service_date_time' | trans }}</label>
+            <input type="datetime-local" class="input input--expand"  name="{{ data.formFieldItemMetadataScheduledAt }}">
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% set shipmentTypeLength = data.shipmentTypes | length %}
+    {% if shipmentTypeLength %}
+
+        {% block types %}
+            <div class="spacing-bottom {% if not requiredServicePoint and shipmentTypeLength == 1 %}is-hidden{% endif %}">
+                <label class="label">{{ 'self_service_portal.service.product.shipment_types' | trans }}</label>
+
+                <div class="grid">
+                    {% for shipmentType in data.shipmentTypes %}
+                        {% block type %}
+                            <div class="col spacing--small">
+                                {% include atom('radio') with {
+                                    class: "#{config.name}__radio #{config.jsName}__radio",
+                                    data: {
+                                        label: shipmentType.label,
+                                    },
+                                    attributes: {
+                                        checked: shipmentType.serviceTypeKey and shipmentType.serviceTypeKey is not null,
+                                        name: data.formFieldShipmentTypeUuid,
+                                        disabled: data.isSelectionDisabled,
+                                        value: shipmentType.value,
+                                        'data-service-type-key': shipmentType.serviceTypeKey,
+                                        'data-service-type-uuid': shipmentType.serviceTypeUuid,
+                                        (ajaxTriggerAttribute): true,
+                                    },
+                                } only %}
+                            </div>
+                        {% endblock %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endblock %}
+
+        {{ block('datepicker') }}
+
+        {% if requiredServicePoint %}
+            {{ block('servicePointSelector') }}
+            <input data-service-point-uuid-input type="hidden" name="{{ data.formFieldServicePointUuid }}" value="">
+        {% endif %}
+
+         <input data-product-offer-reference-input type="hidden" name="{{ data.formFieldProductOfferReference }}" value="{{ data.product.productOfferReference }}">
+
+        {% if data.hasOnlyDeliveryShipmentType %}
+            {% set shipmentType = data.shipmentTypes | first %}
+		    <input type="hidden" name="{{ data.formFieldShipmentTypeUuid }}" value="{{ shipmentType.value }}">
+        {% endif %}
+    {% else %}
+        {% block empty %}
+            {% if data.isConcreteProduct %}
+                <div class="box box--alert">
+                    {{ 'self_service_portal.service.product.no_shipment_types_available' | trans }}
+                </div>
+            {% endif %}
+        {% endblock %}
+    {% endif %}
+{% endblock %}

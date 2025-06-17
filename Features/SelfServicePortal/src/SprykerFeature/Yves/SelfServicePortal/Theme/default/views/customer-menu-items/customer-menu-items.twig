@@ -1,0 +1,13 @@
+{% extends template('widget') %}
+
+{% define data = {
+    activePage: _widget.activePage,
+} %}
+
+{% block body %}
+    {% widget 'SspCompanyFilesMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+    {% widget 'SspInquiryMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+    {% widget 'SspAssetMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+    {% widget 'DashboardMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+    {% widget 'SspServiceMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+{% endblock %}

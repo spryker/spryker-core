@@ -1,0 +1,102 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'asset-details-title',
+} %}
+
+{% define data = {
+    title: required,
+    reference: required,
+    unassignBusinessUnitForm: null,
+    canBusinessUnitBeUnassigned: true,
+    isUnassignmentAllowed: false,
+    isUpdateAllowed: false,
+} %}
+
+{% set confirmationTrigger = "js-#{config.name}-confirmation-trigger" %}
+
+{% block body %}
+    <div class="grid grid--middle">
+        <div class="col col--sm-9">
+            {% block title %}
+                <span class="title title--h3">{{ data.title }}</span>
+            {% endblock %}
+        </div>
+        <div class="col col--sm-3">
+            {% block actions %}
+                <div class="grid grid--right">
+                    <div class="col spacing-right">
+                        {% block unassign %}
+                            {% if data.canBusinessUnitBeUnassigned and can('UnassignSspAssetPermissionPlugin') %}
+                                <button title="{{ 'self_service_portal.asset.details_page.unassign' | trans }}" class="link {{ confirmationTrigger }}"
+                                    {{ qa('unassign-ssp-asset-link') }}>
+                                    {% include atom('icon') with {
+                                        data: {
+                                            name: 'remove',
+                                        }
+                                    } only %}
+                                </button>
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                    <div class="col">
+                        {% block edit %}
+                            {% if can('UpdateSspAssetPermissionPlugin') and data.isUpdateAllowed %}
+                                <a
+                                    href="{{ url('ssp/asset/update', { reference: data.reference }) }}"
+                                    title="{{ 'general.edit.button' | trans }}"
+                                    data-qa="edit-ssp-asset">
+                                    {% include atom('icon') with {
+                                        data: {
+                                            name: 'edit',
+                                        }
+                                    } only %}
+                                </a>
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                </div>
+            {% endblock %}
+        </div>
+    </div>
+
+    {% block popup %}
+        {% include molecule('main-popup') with {
+            data: {
+                title: 'self_service_portal.asset.details_page.confirm_unassign_title' | trans,
+                content: block('popupContent'),
+            },
+            attributes: {
+                'content-id': 'confirm-unassign',
+                'trigger-class-name': confirmationTrigger,
+            },
+        } only %}
+    {% endblock %}
+{% endblock %}
+
+{% block popupContent %}
+    <div class="spacing-x">
+        <p>{{ (data.isUnassignmentAllowed ? 'self_service_portal.asset.details_page.confirm_unassign_body' : 'self_service_portal.asset.details_page.confirm_unassign_in_review') | trans }}</p>
+
+        {% if data.isUnassignmentAllowed %}
+            <div class="grid grid--right">
+                <div class="col">
+                    <button type="button" class="js-main-popup-close button button--hollow">
+                        {{ 'general.cancel.button' | trans }}
+                    </button>
+                </div>
+                {% if data.unassignBusinessUnitForm %}
+                    {{ form_start(data.unassignBusinessUnitForm, {
+                        'action': path('ssp/asset/update-relations', {'reference': data.reference})
+                    }) }}
+                        <div class="col spacing-left">
+                            <button class="button button--primary" {{ qa('unassign-ssp-asset') }}>
+                                {{ 'general.confirm.button' | trans }}
+                            </button>
+                        </div>
+                    {{ form_end(data.unassignBusinessUnitForm) }}
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

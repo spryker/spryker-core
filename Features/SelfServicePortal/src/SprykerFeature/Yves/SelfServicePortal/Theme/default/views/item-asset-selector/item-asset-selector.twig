@@ -1,0 +1,20 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isDisabled: _widget.isDisabled,
+    isVisible: _widget.isVisible,
+    product: _widget.product
+} %}
+
+{% block body %}
+    {% if data.isVisible %}
+        {% include molecule('asset-finder', 'SelfServicePortal') with {
+            class: 'spacing-bottom--big',
+            data: {
+                formFieldName: 'assetReference',
+                isDisabled: data.isDisabled,
+                placeholder: 'self_service_portal.asset.selector.search_placeholder' | trans
+            }
+        } only %}
+    {% endif %}
+{% endblock %}

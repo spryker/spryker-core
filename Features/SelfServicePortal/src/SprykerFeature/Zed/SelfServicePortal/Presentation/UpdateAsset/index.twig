@@ -1,0 +1,50 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Edit Asset: ' | trans ~ sspAsset.reference %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url('/self-service-portal/list-asset'), 'Back to Assets' | trans) }}
+    {{ viewActionButton(url('/self-service-portal/detail-asset', {'id-ssp-asset': sspAsset.idSspAsset}), 'View' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'general' | trans } %}
+        {% block widget_content %}
+             {% include '@SelfServicePortal/_partials/list.twig' with {
+                    list: [
+                        {
+                           title: 'Asset reference',
+                           value: sspAsset.reference,
+                        },
+                        {
+                           title: 'Asset created date',
+                           value: sspAsset.createdDate | formatDateTime,
+                        },
+                    ],
+            } only %}
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Update Assets' | trans } %}
+        {% block widget_content %}
+            <div class="ibox-content">
+                {% include '@SelfServicePortal/_partials/asset-form.twig' with {
+                    sspAssetForm: sspAssetForm,
+                } only %}
+            </div>
+
+            {{ tabs(sspAssetTabs, {
+                'idSspAsset': sspAsset.idSspAsset,
+                'reference': sspAsset.reference,
+            }) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

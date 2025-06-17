@@ -1,0 +1,25 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block head_title %}
+    {{ 'File Attachment' | trans }}
+{% endblock %}
+
+{% block section_title %}
+    {{ 'File Attachment' | trans }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url(urlPathListFile), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'File Attachment' | trans } %}
+        {% block widget_content %}
+            {{ tabs(tabsViewTransfer, {
+                'fileAttachForm': fileAttachForm,
+                'sspAssetFileAttachForm': sspAssetFileAttachForm,
+                'idFile': idFile,
+            }) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

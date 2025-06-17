@@ -1,0 +1,118 @@
+{#
+@var file \Generated\Shared\Transfer\FileTransfer
+@var file.fileInfo <\Generated\Shared\Transfer\FileInfoTransfer>
+#}
+
+{% extends '@Gui/layout/layout.twig' %}
+
+{% set page_title = 'View File Attachments' | trans ~ ': ' ~ file.idFile %}
+
+{% block head_title page_title %}
+
+{% block section_title %}
+    {{ page_title }}
+{% endblock %}
+
+{% set deleteConfirmModel = 'file-delete-confirmation-modal' %}
+
+{% block action %}
+    {{ form_start(deleteFileForm, {
+        attr: { class: 'd-inline' },
+        action: url(urlPathDeleteFile, { 'id-file': file.idFile })
+    }) }}
+        {{ form_widget(deleteFileForm) }}
+
+        <button
+            data-toggle="modal"
+            data-target="#{{ deleteConfirmModel }}"
+            type="button"
+            class="btn btn-sm btn-outline btn-remove"
+        >
+            <i class="fa fa-trash"></i>
+            {{ 'Delete file' | trans }}
+        </button>
+    {{ form_end(deleteFileForm) }}
+
+    {{ createActionButton(url(urlPathAttachFile, {'id-file': file.idFile}), 'Attach entity' | trans) }}
+    {{ backActionButton(url(urlPathListFile), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Details' | trans } %}
+        {% block widget_content %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'File' | trans }}</b></div>
+                <div class="col-xs-10" data-qa="file-name">{{ file.fileName }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Upload date' | trans }}</b></div>
+                <div class="col-xs-10" data-qa="uploaded-date">{{ file.fileInfo[0].createdAt | formatDateTime }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Size' | trans }}</b></div>
+                <div class="col-xs-10" data-qa="file-size">{{ file.fileInfo[0].size | formatFileSize }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Type' | trans }}</b></div>
+                <div class="col-xs-10" data-qa="file-type">{{ file.fileInfo[0].type }}</div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Linked Entities' | trans } %}
+        {% block widget_header_content %}
+            {{ form_start(unlinkFileForm, {
+                attr: { class: 'd-inline' },
+                action: url(urlPathUnlinkFile, {'id-file': file.idFile})
+            }) }}
+                {{ form_widget(unlinkFileForm) }}
+                <button type="submit" class="btn btn-sm btn-outline safe-submit btn-remove">
+                    <i class="fa fa-unlink"></i>
+                    {{ 'Unlink all' | trans }}
+                </button>
+            {{ form_end(unlinkFileForm) }}
+        {% endblock %}
+
+        {% block widget_content %}
+            {{ form_start(viewFileDetailTableFilterForm, { 'attr' : { 'class': 'form-filter' }}) }}
+                <div class="row" data-qa="linked-entities">
+                    <div class="col-xs-4">
+                        {{ form_row(viewFileDetailTableFilterForm.entityType, {
+                            attr: { class: 'js-form-submitter' }
+                        }) }}
+                    </div>
+                    <div class="col-xs-4">
+                        {{ form_row(viewFileDetailTableFilterForm.dateFrom, {
+                            attr: { class: 'js-form-submitter' }
+                        }) }}
+                    </div>
+                    <div class="col-xs-4">
+                        {{ form_row(viewFileDetailTableFilterForm.dateTo, {
+                            attr: { class: 'js-form-submitter' }
+                        }) }}
+                    </div>
+                </div>
+            {{ form_end(viewFileDetailTableFilterForm) }}
+
+            {{ viewFileDetailTable | raw }}
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Modal/confirmation-modal-window.twig' with {
+        id: deleteConfirmModel,
+        formName: deleteFileForm.vars.name,
+        fileName: file.fileName,
+    } only %}
+        {% block modal %}
+            {% set content %}
+                <p>{{ 'Are you sure you want to delete file' | trans }}: <b>{{ fileName }}</b>?</p>
+                <p>{{ 'Deleting this file will delete all the links to the attached entities. Do you want to proceed?' | trans }}</p>
+            {% endset %}
+
+            {{ parent() }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

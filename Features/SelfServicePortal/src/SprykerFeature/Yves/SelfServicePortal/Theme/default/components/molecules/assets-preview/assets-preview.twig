@@ -1,0 +1,63 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'assets-preview',
+} %}
+
+{% define data = {
+    assets: [],
+    title: 'ssp_dashboard.general.ssp_assets',
+    counter: 0,
+} %}
+
+{% block body %}
+    {% block heading %}
+        <div class="grid grid--middle">
+            {% block title %}
+                <h5 class="{{ config.name }}__title spacing-right col">{{ data.title | trans }}</h5>
+            {% endblock %}
+
+            {% block counter %}
+                {% if data.counter %}
+                    <span class="{{ config.name }}__counter col badge">{{ data.counter }}</span>
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <div class="box box--dark box--outer-spacingless {{ config.name }}__content">
+            {% block assets %}
+                {% if (data.assets | default([])) is empty %}
+                    <div class="text-center"><strong>{{ 'ssp_dashboard.general.no_data' | trans }}</strong></div>
+                {% else %}
+                    <div class="{{ config.name }}__container">
+                        {% for asset in data.assets %}
+                            <div class="{{ config.name }}__block" data-qa="asset-item-preview">
+                                <a href="{{ path('ssp/asset/details', {'reference': asset.reference}) }}" class="{{ config.name }}__link">
+                                    {% include molecule('lazy-image') with {
+                                        class: "#{config.name}__image",
+                                        data: {
+                                            imagePlaceholder: publicPath('images/image-placeholder.png'),
+                                            imageSrc: asset.image ? url('ssp/asset/view-image', { 'ssp-asset-reference': asset.reference }) : null | default(null),
+                                            imageTitle: asset.name,
+                                            isBackground: true,
+                                        },
+                                    } only %}
+
+                                    <span>{{ asset.name }}</span>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endblock %}
+
+            {% block more %}
+                <div class="spacing-top text-right">
+                    <a class="link link--alt" href="{{ path('ssp/asset') }}">{{ 'ssp_dashboard.general.view_all' | trans }}</a>
+                </div>
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

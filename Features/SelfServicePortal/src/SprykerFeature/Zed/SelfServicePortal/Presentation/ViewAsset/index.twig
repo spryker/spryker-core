@@ -1,0 +1,100 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'View Asset: ' ~ sspAsset.reference | trans %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url('/self-service-portal/list-asset'), 'Back to Assets' | trans) }}
+    {{ editActionButton(url('/self-service-portal/update-asset', {'id-ssp-asset': sspAsset.idSspAsset}), 'Edit' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with {
+        widget_title: 'general' | trans,
+        image: block('image'),
+    } %}
+        {% block widget_content %}
+            <div class="row">
+                {% if imageUrl %}
+                    <div class="col-sm-12 col-md-auto">
+                        {% include '@SelfServicePortal/_partials/list.twig' with {
+                                list: [
+                                    {
+                                    title: 'Image',
+                                    block: image,
+                                },
+                            ],
+                        } only %}
+                    </div>
+                {% endif %}
+
+                <div class="col-sm-12 col-md-auto">
+                    {% include '@SelfServicePortal/_partials/list.twig' with {
+                        list: [
+                            {
+                                title: 'Reference',
+                                value: sspAsset.reference,
+                                qa: 'ssp-asset-reference',
+                            },
+                            {
+                                title: 'Asset Name',
+                                value: sspAsset.name,
+                                qa: 'ssp-asset-name',
+                            },
+                            {
+                                title: 'Serial Number',
+                                value: sspAsset.serialNumber | default('---'),
+                                qa: 'ssp-asset-serial-number',
+                            },
+                            {
+                                title: 'Status',
+                                value: status | default('N/A'),
+                                qa: 'ssp-asset-status',
+                            },
+                            {
+                                title: 'Note',
+                                value: sspAsset.note | default('---'),
+                                qa: 'ssp-asset-note',
+                            },
+                            {
+                                title: 'Asset created date',
+                                value: sspAsset.createdDate | formatDateTime,
+                            },
+                            {
+                                title: 'Business unit owner',
+                                value: sspAsset.companyBusinessUnit is not empty ? sspAsset.companyBusinessUnit.name : '---',
+                                qa: 'ssp-asset-business-unit-owner',
+                            },
+                        ],
+                    } only %}
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Relations' | trans } %}
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12" data-qa="ssp-asset-relations">
+                    <dl>
+                        {{ tabs(sspAssetTabs, {
+                            'idSspAsset': sspAsset.idSspAsset,
+                            'reference': sspAsset.reference,
+                        }) }}
+                    </dl>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block image %}
+    <img data-qa="ssp-asset-image" width="300" class="image" src="{{ imageUrl }}">
+{% endblock %}

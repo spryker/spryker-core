@@ -1,0 +1,143 @@
+{# @var data.fileAttachments array<\Generated\Shared\Transfer\FileAttachmentTransfer> #}
+{# @var data.fileSearchFilterForm \SprykerFeature\Yves\SelfServicePortal\Form\FileSearchFilterForm #}
+
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    title: 'self_service_portal.company_file' | trans,
+    activePage: 'sspCompanyFileList',
+    currentBreadcrumb: 'self_service_portal.company_file' | trans,
+    fileAttachments: _view.fileAttachments,
+    searchForm: _view.fileSearchFilterForm,
+    pagination: {
+        parameters: app.request.query.all(),
+        currentPage: _view.pagination.page,
+        paginationPath: 'ssp/company-file/list-file',
+        maxPage: _view.pagination.lastPage,
+        showAlwaysFirstAndLast: true,
+    },
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'self_service_portal.company_file' | trans,
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
+
+{% set jsPrefix = 'js-file-management-' %}
+{% set formClass = "#{jsPrefix}form" %}
+
+{% block customerContent %}
+    <div class="box">
+        {% block formStart %}
+            {{ form_start(data.searchForm, {
+                attr: {
+                    class: formClass,
+                },
+            }) }}
+        {% endblock %}
+
+        {% block filtersSection %}
+            {% set filters = data.searchForm.filters.children
+                | map(filter => { row: filter, class: 'search' in filter.vars.id ? 'col--lg-8' : 'col--lg-4' })
+            %}
+
+            {% block filters %}
+                {% include molecule('filters', 'SelfServicePortal') with {
+                    data: {
+                        filters: filters,
+                    },
+                } only %}
+            {% endblock %}
+        {% endblock %}
+
+        {% block activeFilters %}
+            {% include molecule('active-filters', 'SelfServicePortal') with {
+                class: 'spacing-bottom spacing-bottom--big',
+                data: {
+                    searchForm: data.searchForm,
+                    jsPrefix: jsPrefix,
+                    formClass: formClass,
+                },
+            } only %}
+        {% endblock %}
+
+        {% block files %}
+            {% set columns = [
+                {
+                    id: 'idFile',
+                    title: 'self_service_portal.company_file.table.header.file_reference',
+                    sortable: true,
+                },
+                {
+                    id: 'fileName',
+                    title: 'self_service_portal.company_file.table.header.file_name',
+                    sortable: true,
+                },
+                {
+                    id: 'fileType',
+                    title: 'self_service_portal.company_file.table.header.file_type',
+                    sortable: true,
+                },
+                {
+                    id: 'createdAt',
+                    title: 'self_service_portal.company_file.table.header.file_created_at',
+                    sortable: true,
+                    type: 'date',
+                },
+                {
+                    id: 'size',
+                    title: 'self_service_portal.company_file.table.header.file_size',
+                    sortable: true,
+                },
+                {
+                    id: 'actions',
+                    title: 'self_service_portal.company_file.table.header.actions',
+                    type: 'actions',
+                },
+            ] %}
+
+            {% set rows = data.fileAttachments | map(fileAttachment => {
+                idFile: fileAttachment.file.fileReference,
+                fileName: fileAttachment.file.fileName,
+                fileType: fileAttachment.file.fileInfo[0].extension,
+                createdAt: fileAttachment.file.fileInfo[0].createdAt,
+                size: fileAttachment.file.fileInfo[0].size | readable_bytesize,
+                actions: can('DownloadCompanyFilesPermissionPlugin')
+                    ? [{
+                        url: path('ssp/company-file/download', { 'id-file': fileAttachment.file.uuid }),
+                        label: 'self_service_portal.company_file.table.actions.download',
+                        qa: 'download-button',
+                    }]
+                    : [],
+            }) %}
+
+            {% block table %}
+                {% include molecule('advanced-table', 'SelfServicePortal') with {
+                    data: {
+                        columns: columns,
+                        rows: rows,
+                        emptyText: 'self_service_portal.company_file.view.empty',
+                        sortableForm: data.searchForm,
+                        sortableFormClass: formClass,
+                        pagination: data.pagination,
+                    },
+                } only %}
+            {% endblock %}
+        {% endblock %}
+
+        {% block formEnd %}
+            {{ form_end(data.searchForm) }}
+        {% endblock %}
+    </div>
+{% endblock %}

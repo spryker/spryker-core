@@ -1,0 +1,36 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-item-details',
+} %}
+
+{% define data = {
+    details: required,
+} %}
+
+{% block separator %}
+    <hr class="box__separator">
+{% endblock %}
+
+{% block body %}
+    {% block title %}
+        <div class="title--h5">{{ 'self_service_portal.service.update_scheduled_time.order_item_details' | trans }}</div>
+
+        {{ block('separator') }}
+    {% endblock %}
+
+    {% block details %}
+        <ul>
+            {% for detail in data.details %}
+                {% block detail %}
+                    <li>
+                        <span>{{ detail.label | trans }}:</span>
+                        <strong>{{ detail.value }}</strong>
+                    </li>
+                {% endblock %}
+            {% endfor %}
+        </ul>
+
+        {{ block('separator') }}
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends template('widget') %}
+
+{% define data = {
+    asset: _widget.asset
+} %}
+
+{% block body %}
+    {% if data.asset %}
+        <div class="spacing-y spacing-y--small">
+            {% block title %}
+                <div><strong>{{ 'self_service_portal.asset.assigned_asset' | trans }}:</strong></div>
+            {% endblock %}
+
+            {% block asset %}
+                <ul class="list">
+                    <li class="list__item">
+                        {{ 'self_service_portal.asset.name' | trans }}: <a href="{{ path('ssp/asset/details', {'reference': data.asset.reference }) }}">{{ data.asset.name }}</a>
+                    </li>
+
+                    {% if data.asset.serialNumber %}
+                        <li class="list__item">
+                            {{ 'self_service_portal.asset.serial_number' | trans }}: {{ data.asset.serialNumber }}
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endblock %}
+        </div>
+    {% endif %}
+{% endblock %}

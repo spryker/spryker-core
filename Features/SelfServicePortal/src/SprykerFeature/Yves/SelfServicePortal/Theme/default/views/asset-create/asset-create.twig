@@ -1,0 +1,41 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    form: _view.form,
+    formAction: url('ssp/asset/create'),
+    title: 'self_service_portal.asset.create.title' | trans,
+    activePage: 'asset',
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'self_service_portal.asset.list.title' | trans,
+                    url: url('ssp/asset')
+                },
+                {
+                    label: 'self_service_portal.asset.create.title' | trans
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
+{% block customerContent %}
+    <div class="box">
+        {% block form %}
+            {% include molecule('asset-form', 'SelfServicePortal') with {
+                data: {
+                    form: data.form,
+                    formAction: data.formAction,
+                },
+            } only %}
+        {% endblock %}
+    </div>
+{% endblock %}

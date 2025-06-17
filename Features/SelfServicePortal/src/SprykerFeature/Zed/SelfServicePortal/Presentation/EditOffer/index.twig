@@ -1,0 +1,22 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Edit Offer' | trans %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url('/product-offer-gui/list'), 'Back to Product Offer list' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Edit Offer' | trans } %}
+        {% block widget_content %}
+            {% include '@SelfServicePortal/Partials/offer-details.twig' with {
+                productConcreteTransfer: productConcreteTransfer,
+            } %}
+
+            {% include '@SelfServicePortal/Partials/offer-form.twig' with {
+                createOfferForm: editOfferForm,
+            } %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

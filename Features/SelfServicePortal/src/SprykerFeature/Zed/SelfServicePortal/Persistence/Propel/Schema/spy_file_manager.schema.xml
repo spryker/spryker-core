@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\FileManager\Persistence" package="src.Orm.Zed.FileManager.Persistence">
+
+    <table name="spy_file">
+        <column name="file_reference" required="false" type="VARCHAR" size="255"/>
+        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+
+        <unique name="spy_file-unique-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+
+        <unique name="spy_file-unique-file_reference">
+            <unique-column name="file_reference"/>
+        </unique>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_file"/>
+        </behavior>
+
+    </table>
+
+</database>

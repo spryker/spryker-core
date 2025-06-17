@@ -1,0 +1,151 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    assets: _view.sspAssetList,
+    title: 'customer.account.ssp_assets' | trans,
+    searchForm: _view.sspAssetSearchForm | default(null),
+    activePage: 'asset',
+    pagination: {
+        parameters: app.request.query.all(),
+        currentPage: _view.pagination.page,
+        paginationPath: 'ssp/asset',
+        maxPage: _view.pagination.lastPage,
+        showAlwaysFirstAndLast: true,
+    },
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'customer.account.ssp_assets' | trans,
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
+
+{% set jsPrefix = 'js-asset-management-' %}
+{% set formClass = "#{jsPrefix}form" %}
+
+{% block customerContent %}
+    {% block actions %}
+        {% if can('CreateSspAssetPermissionPlugin') %}
+            <div class="box text-right">
+                <a class="button" data-qa="create-ssp-asset"
+                   href="{{ url('ssp/asset/create') }}">
+                    {{ 'customer.ssp_asset.create.button' | trans }}
+                </a>
+            </div>
+        {% endif %}
+    {% endblock %}
+
+    {% block overlay %}
+        <div class="box">
+            {% block list %}
+                {% block formStart %}
+                    {{ form_start(data.searchForm, {
+                        attr: {
+                            class: formClass,
+                        },
+                    }) }}
+                {% endblock %}
+
+                {% block filtersSection %}
+                    {% set filters = (data.searchForm.filters.children
+                        | map(filter => { row: filter, class: 'col--sm-4' }))
+                        | merge([{ row: data.searchForm.searchText, class: 'col--sm-8' }])
+                    %}
+
+                    {% block filters %}
+                        {% include molecule('filters', 'SelfServicePortal') with {
+                            data: {
+                                filters: filters,
+                            },
+                        } only %}
+                    {% endblock %}
+                {% endblock %}
+
+                {% block activeFilters %}
+                    {% include molecule('active-filters', 'SelfServicePortal') with {
+                        class: 'spacing-bottom spacing-bottom--big',
+                        data: {
+                            searchForm: data.searchForm,
+                            jsPrefix: jsPrefix,
+                            formClass: formClass,
+                        },
+                    } only %}
+                {% endblock %}
+
+                {% block assets %}
+                    {% set columns = [
+                        {
+                            id: 'reference',
+                            title: 'customer.ssp_asset.list.reference',
+                            sortable: true,
+                        },
+                        {
+                            id: 'image',
+                            title: 'customer.ssp_asset.list.image',
+                            type: 'image',
+                        },
+                        {
+                            id: 'name',
+                            title: 'customer.ssp_asset.list.name',
+                            sortable: true,
+                        },
+                        {
+                            id: 'serial_number',
+                            title: 'customer.ssp_asset.list.serial_number',
+                            sortable: true,
+                        },
+                        {
+                            id: 'business_unit',
+                            title: 'customer.ssp_asset.list.business_unit',
+                        },
+                        {
+                            id: 'actions',
+                            type: 'actions',
+                        },
+                    ] %}
+
+                    {% set rows = data.assets | map(sspAsset => {
+                        reference: sspAsset.reference,
+                        image: sspAsset.image ? url('ssp/asset/view-image', { 'ssp-asset-reference': sspAsset.reference }) : null,
+                        name: sspAsset.name,
+                        business_unit: sspAsset.companyBusinessUnit ? sspAsset.companyBusinessUnit.name : '',
+                        serial_number: sspAsset.serialNumber,
+                        status: { label: "ssp_asset.status.#{sspAsset.status}", status: sspAsset.status },
+                        actions: [{
+                            url: path('ssp/asset/details', { reference: sspAsset.reference }),
+                            label: 'customer.ssp_asset.view_ssp_asset'
+                        }],
+                    }) %}
+
+                    {% block table %}
+                        {% include molecule('advanced-table', 'SelfServicePortal') with {
+                            data: {
+                                columns: columns,
+                                rows: rows,
+                                emptyText: 'customer.account.no_ssp_assets',
+                                sortableForm: data.searchForm,
+                                sortableFormClass: formClass,
+                                pagination: data.pagination,
+                            },
+                            qa: 'advanced-table-ssp-assets',
+                        } only %}
+                    {% endblock %}
+                {% endblock %}
+
+                {% block formEnd %}
+                    {{ form_end(data.searchForm) }}
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}
