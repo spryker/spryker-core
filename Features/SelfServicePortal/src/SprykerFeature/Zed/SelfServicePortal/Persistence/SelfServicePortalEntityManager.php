@@ -524,6 +524,7 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
     {
         $salesOrderItemSspAssetEntity = new SpySalesOrderItemSspAsset();
         $salesOrderItemSspAssetEntity->fromArray($salesOrderItemSspAssetTransfer->toArray());
+        $salesOrderItemSspAssetEntity->setFkSalesOrderItem($salesOrderItemSspAssetTransfer->getSalesOrderItemOrFail()->getIdSalesOrderItemOrFail());
         $salesOrderItemSspAssetEntity->save();
     }
 

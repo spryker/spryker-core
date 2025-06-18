@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
+use Generated\Shared\Transfer\StateMachineItemStateTransfer;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiry;
@@ -47,12 +48,16 @@ class SspInquiryMapper implements SspInquiryMapperInterface
     {
         $sspInquiryTransfer->fromArray($sspInquiryEntity->toArray(), true);
         if ($sspInquiryEntity->getCreatedAt()) {
-             $sspInquiryTransfer->setCreatedDate($sspInquiryEntity->getCreatedAt()->format('Y-m-d H:i:s'));
+            $sspInquiryTransfer->setCreatedDate($sspInquiryEntity->getCreatedAt()->format('Y-m-d H:i:s'));
         }
 
         $stateMachineItemState = $sspInquiryEntity->getStateMachineItemState();
         if ($stateMachineItemState) {
-             $sspInquiryTransfer->setStatus($stateMachineItemState->getName());
+            $sspInquiryTransfer->setStatus($stateMachineItemState->getName());
+            $sspInquiryTransfer->setStateMachineItemState(
+                (new StateMachineItemStateTransfer())
+                    ->fromArray($stateMachineItemState->toArray(), true),
+            );
         }
 
         if ($sspInquiryEntity->hasVirtualColumn(SspAssetTransfer::ID_SSP_ASSET)) {

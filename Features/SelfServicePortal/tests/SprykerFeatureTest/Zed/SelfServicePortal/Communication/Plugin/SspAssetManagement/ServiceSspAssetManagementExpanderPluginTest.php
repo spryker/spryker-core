@@ -9,6 +9,7 @@ namespace SprykerFeatureTest\Zed\SelfServicePortal\Communication\Plugin\Sales;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
@@ -66,7 +67,8 @@ class ServiceSspAssetManagementExpanderPluginTest extends Unit
             ->setSspAssets(new ArrayObject([$sspAssetTransfer1, $sspAssetTransfer2]));
 
         $sspAssetCriteriaTransfer = (new SspAssetCriteriaTransfer())
-            ->setInclude((new SspAssetIncludeTransfer())->setWithServicesCount(4));
+            ->setInclude((new SspAssetIncludeTransfer())->setWithServicesCount(4))
+            ->setCompanyUser((new CompanyUserTransfer()));
 
         $sspServiceCollectionTransfer = $this->createMockSspServiceCollection();
 

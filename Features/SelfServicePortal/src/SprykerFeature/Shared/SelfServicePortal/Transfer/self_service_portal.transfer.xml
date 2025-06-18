@@ -235,6 +235,7 @@
         <property name="serviceConditions" type="SspServiceConditions"/>
         <property name="pagination" type="Pagination"/>
         <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="companyUser" type="CompanyUser"/>
     </transfer>
 
     <transfer name="OrderItemFilter">
@@ -499,6 +500,7 @@
         <property name="customer" type="Customer"/>
         <property name="fkCompanyBusinessUnit" type="int"/>
         <property name="fkCustomer" type="int"/>
+        <property name="company" type="Company"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
@@ -869,8 +871,12 @@
         <property name="manualEvents" type="string[]" singular="manualEvent"/>
         <property name="statusHistory" type="StateMachineItem[]" singular="statusHistory"/>
         <property name="reference" type="string"/>
-        <property name="fkStateMachineItemState" type="int"/>
+        <property name="stateMachineItemState" type="StateMachineItemState"/>
         <property name="isCancellable" type="bool"/>
+    </transfer>
+
+    <transfer name="StateMachineItemState">
+        <property name="idStateMachineItemState" type="string"/>
     </transfer>
 
     <transfer name="SspInquiryCriteria">
@@ -1033,8 +1039,7 @@
 
     <transfer name="SalesOrderItemSspAsset">
         <property name="idSalesOrderItemSspAsset" type="int"/>
-        <property name="fkSalesOrderItem" type="int"/>
-        <property name="fkSalesSspAsset" type="int"/>
+        <property name="salesOrderItem" type="Item"/>
         <property name="reference" type="string"/>
         <property name="name" type="string"/>
         <property name="serialNumber" type="string"/>

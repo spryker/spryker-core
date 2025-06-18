@@ -98,6 +98,8 @@ class AssetController extends AbstractController
             throw new NotFoundHttpException('Company user not found');
         }
 
+        $companyUserTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomerById($companyUserTransfer->getFkCustomerOrFail()));
+
         $sspAssetCriteriaTransfer = (new SspAssetCriteriaTransfer())
             ->setSspAssetConditions(
                 (new SspAssetConditionsTransfer())

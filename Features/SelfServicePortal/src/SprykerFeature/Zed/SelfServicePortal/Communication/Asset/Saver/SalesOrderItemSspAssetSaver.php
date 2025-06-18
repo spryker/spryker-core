@@ -8,6 +8,7 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Saver;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -215,7 +216,7 @@ class SalesOrderItemSspAssetSaver implements SalesOrderItemSspAssetSaverInterfac
         $salesOrderItemSspAssetTransfer = (new SalesOrderItemSspAssetTransfer())
             ->fromArray($sspAssetTransfer->toArray(), true);
 
-        $salesOrderItemSspAssetTransfer->setFkSalesOrderItem($idSalesOrderItem);
+        $salesOrderItemSspAssetTransfer->setSalesOrderItem((new ItemTransfer())->setIdSalesOrderItem($idSalesOrderItem));
 
         return $salesOrderItemSspAssetTransfer;
     }

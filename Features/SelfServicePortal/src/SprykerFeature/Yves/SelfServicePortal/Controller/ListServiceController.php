@@ -69,6 +69,15 @@ class ListServiceController extends AbstractController
             $sspServiceCriteriaTransfer->getServiceConditionsOrFail()->addSspAssetReference((string)$request->query->get(static::QUERY_PARAM_SSP_ASSET_REFERENCE));
         }
 
+        $companyUserTransfer = $this->getFactory()->getCompanyUserClient()->findCompanyUser();
+
+        if (!$companyUserTransfer || !$companyUserTransfer->getIdCompanyUser()) {
+            throw new NotFoundHttpException('Company user not found.');
+        }
+
+        $companyUserTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomerById($companyUserTransfer->getFkCustomerOrFail()));
+        $sspServiceCriteriaTransfer->setCompanyUser($companyUserTransfer);
+
         $sspServiceCollectionTransfer = $this->getClient()->getServiceCollection($sspServiceCriteriaTransfer);
 
         return [

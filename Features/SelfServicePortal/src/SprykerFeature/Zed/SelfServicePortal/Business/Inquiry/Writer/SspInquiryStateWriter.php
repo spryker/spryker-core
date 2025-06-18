@@ -62,7 +62,7 @@ class SspInquiryStateWriter implements SspInquiryStateWriterInterface
             $stateMachineItemTransfers[] = (new StateMachineItemTransfer())
                 ->setStateMachineName($this->selfServicePortalConfig->getInquiryStateMachineName())
                 ->setProcessName($this->selfServicePortalConfig->getInquiryStateMachineProcessInquiryTypeMap()[$sspInquiryTransfer->getType()])
-                ->setIdItemState($sspInquiryTransfer->getFkStateMachineItemState())
+                ->setIdItemState((int)$sspInquiryTransfer->getStateMachineItemStateOrFail()->getIdStateMachineItemStateOrFail())
                 ->setIdentifier($sspInquiryTransfer->getIdSspInquiry())
                 ->setEventName($this->selfServicePortalConfig->getInquiryCancelStateMachineEventName());
         }

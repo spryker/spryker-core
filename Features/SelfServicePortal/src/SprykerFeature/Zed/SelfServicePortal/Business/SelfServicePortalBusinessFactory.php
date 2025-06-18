@@ -129,6 +129,8 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Service\Filter\QuoteItemFilter
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Filter\QuoteItemFilterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Grouper\ShipmentTypeGrouper;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Grouper\ShipmentTypeGrouperInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Permission\SspServiceCustomerPermissionExpander;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Permission\SspServiceCustomerPermissionExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ProductShipmentTypeReader;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ProductShipmentTypeReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ServicePointReader;
@@ -400,7 +402,16 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     {
         return new ServiceReader(
             $this->getRepository(),
+            $this->createSspServiceCustomerPermissionExpander(),
         );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Permission\SspServiceCustomerPermissionExpanderInterface
+     */
+    public function createSspServiceCustomerPermissionExpander(): SspServiceCustomerPermissionExpanderInterface
+    {
+        return new SspServiceCustomerPermissionExpander();
     }
 
     /**

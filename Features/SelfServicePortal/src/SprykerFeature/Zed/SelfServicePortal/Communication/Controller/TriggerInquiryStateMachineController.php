@@ -136,7 +136,7 @@ class TriggerInquiryStateMachineController extends AbstractController
         $config = $this->getFactory()->getConfig();
         $stateMachineItemTransfer = new StateMachineItemTransfer();
         $stateMachineItemTransfer->setIdentifier($sspInquiryTransfer->getIdSspInquiry())
-            ->setIdItemState($sspInquiryTransfer->getFkStateMachineItemState())
+            ->setIdItemState((int)$sspInquiryTransfer->getStateMachineItemStateOrFail()->getIdStateMachineItemStateOrFail())
             ->setStateMachineName(
                 $config->getInquiryStateMachineName(),
             )

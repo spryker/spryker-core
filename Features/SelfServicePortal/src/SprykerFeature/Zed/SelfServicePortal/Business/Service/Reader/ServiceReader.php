@@ -9,15 +9,19 @@ namespace SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader;
 
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Permission\SspServiceCustomerPermissionExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
 
 class ServiceReader implements ServiceReaderInterface
 {
- /**
-  * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
-  */
-    public function __construct(protected SelfServicePortalRepositoryInterface $selfServicePortalRepository)
-    {
+    /**
+     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
+     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Permission\SspServiceCustomerPermissionExpanderInterface $sspServiceCustomerPermissionExpander
+     */
+    public function __construct(
+        protected SelfServicePortalRepositoryInterface $selfServicePortalRepository,
+        protected SspServiceCustomerPermissionExpanderInterface $sspServiceCustomerPermissionExpander
+    ) {
     }
 
     /**
@@ -27,6 +31,8 @@ class ServiceReader implements ServiceReaderInterface
      */
     public function getServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer
     {
+        $sspServiceCriteriaTransfer = $this->sspServiceCustomerPermissionExpander->expand($sspServiceCriteriaTransfer);
+
         return $this->selfServicePortalRepository->getServiceCollection($sspServiceCriteriaTransfer);
     }
 }

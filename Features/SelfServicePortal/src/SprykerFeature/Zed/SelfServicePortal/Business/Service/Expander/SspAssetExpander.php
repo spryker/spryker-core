@@ -48,6 +48,7 @@ class SspAssetExpander implements SspAssetExpanderInterface
 
         $sspServiceCollectionTransfer = $this->serviceReader->getServiceCollection(
             (new SspServiceCriteriaTransfer())
+                ->setCompanyUser($sspAssetCriteriaTransfer->getCompanyUserOrFail())
                 ->setServiceConditions(
                     (new SspServiceConditionsTransfer())
                         ->setSspAssetReferences(array_map(function (SspAssetTransfer $sspAssetTransfer) {

@@ -254,7 +254,7 @@ class SelfServicePortalConfig extends AbstractBundleConfig
         return (new DataImporterDataSourceConfigurationTransfer())
             ->setImportType(static::IMPORT_TYPE_PRODUCT_SHIPMENT_TYPE)
             ->setFileName('product_shipment_type.csv')
-            ->setModuleName('SelfServicePortal')
+            ->setModuleName(static::MODULE_NAME)
             ->setDirectory('/data/data/import/common/common/');
     }
 
@@ -271,7 +271,7 @@ class SelfServicePortalConfig extends AbstractBundleConfig
         return (new DataImporterDataSourceConfigurationTransfer())
             ->setImportType(static::IMPORT_TYPE_PRODUCT_ABSTRACT_TYPE)
             ->setFileName('product_abstract_type.csv')
-            ->setModuleName('SelfServicePortal')
+            ->setModuleName(static::MODULE_NAME)
             ->setDirectory('/data/data/import/common/common/');
     }
 
@@ -288,7 +288,7 @@ class SelfServicePortalConfig extends AbstractBundleConfig
         return (new DataImporterDataSourceConfigurationTransfer())
             ->setImportType(static::IMPORT_TYPE_PRODUCT_ABSTRACT_TO_PRODUCT_ABSTRACT_TYPE)
             ->setFileName('product_abstract_product_abstract_type.csv')
-            ->setModuleName('SelfServicePortal')
+            ->setModuleName(static::MODULE_NAME)
             ->setDirectory('/data/data/import/common/common/');
     }
 
