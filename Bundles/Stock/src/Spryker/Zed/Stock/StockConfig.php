@@ -33,4 +33,17 @@ class StockConfig extends AbstractBundleConfig
     {
         return false;
     }
+
+    /**
+     * Specification:
+     * - This event is used for updating stock relations after a stock update.
+     *
+     * @api
+     *
+     * @return string|null
+     */
+    public function getEventQueueName(): ?string
+    {
+        return null;
+    }
 }

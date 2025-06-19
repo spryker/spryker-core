@@ -29,6 +29,7 @@ use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Stock\StockStoreRelationshipUpdaterInterface;
 use Spryker\Zed\Stock\Business\Stock\StockUpdater;
 use Spryker\Zed\Stock\Business\StockProduct\StockProductUpdaterInterface;
+use Spryker\Zed\Stock\Dependency\Facade\StockToEventFacadeInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Spryker\Zed\Stock\Persistence\StockEntityManager;
 use Spryker\Zed\Stock\Persistence\StockRepository;
@@ -252,8 +253,8 @@ class StockFacadeTest extends Unit
         $idStock = $this->stockFacade->createStockType($stockTypeTransfer);
 
         $exists = SpyStockQuery::create()
-            ->filterByIdStock($idStock)
-            ->count() > 0;
+                ->filterByIdStock($idStock)
+                ->count() > 0;
 
         $this->assertTrue($exists);
     }
@@ -1061,6 +1062,109 @@ class StockFacadeTest extends Unit
             $stockProductUpdater,
             $this->tester->getModuleConfig(),
             [],
+            $this->createMock(StockToEventFacadeInterface::class),
+        ));
+
+        // Act
+        $response = $this->tester->getFacade()->updateStock($originStockTransfer);
+
+        // Assert
+        $this->assertTrue($response->getIsSuccessful());
+        $this->assertSame('Changed Name', $response->getStock()->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStockShouldNotUpdateStockProductsAndStoreRelationWhenShouldUpdateStockRelationsAsyncEnabled(): void
+    {
+        // Arrange
+        $originStockTransfer = $this->tester->haveStock();
+        $originStockTransfer
+            ->setName('Changed Name')
+            ->setShouldUpdateStockRelationsAsync(true);
+
+        $touchFacade = $this->getMockBuilder(StockToTouchInterface::class)
+            ->onlyMethods(['touchActive'])
+            ->getMock();
+        $touchFacade->expects($this->once())->method('touchActive');
+
+        $stockProductUpdater = $this->getMockBuilder(StockProductUpdaterInterface::class)
+            ->onlyMethods(['updateStockProductsRelatedToStock'])
+            ->getMock();
+        $stockProductUpdater->expects($this->never())->method('updateStockProductsRelatedToStock');
+
+        $stockStoreRelationshipUpdater = $this->getMockBuilder(StockStoreRelationshipUpdaterInterface::class)
+            ->onlyMethods(['updateStockStoreRelationshipsForStock'])
+            ->getMock();
+        $stockStoreRelationshipUpdater->expects($this->once())->method('updateStockStoreRelationshipsForStock');
+
+        $eventFacade = $this->getMockBuilder(StockToEventFacadeInterface::class)
+            ->onlyMethods(['trigger'])
+            ->getMock();
+        $eventFacade->expects($this->once())->method('trigger');
+
+        // Mock the createStockUpdater method
+        $this->tester->mockFactoryMethod('createStockUpdater', new StockUpdater(
+            new StockEntityManager(),
+            new StockRepository(),
+            $touchFacade,
+            $stockStoreRelationshipUpdater,
+            $stockProductUpdater,
+            $this->tester->getModuleConfig(),
+            [],
+            $eventFacade,
+        ));
+
+        // Act
+        $response = $this->tester->getFacade()->updateStock($originStockTransfer);
+
+        // Assert
+        $this->assertTrue($response->getIsSuccessful());
+        $this->assertSame('Changed Name', $response->getStock()->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStockShouldNotUpdateStockProductsAndStoreRelationWhenShouldUpdateStockRelationsAsyncDisabled(): void
+    {
+        // Arrange
+        $originStockTransfer = $this->tester->haveStock();
+        $originStockTransfer
+            ->setName('Changed Name')
+            ->setShouldUpdateStockRelationsAsync(false);
+
+        $touchFacade = $this->getMockBuilder(StockToTouchInterface::class)
+            ->onlyMethods(['touchActive'])
+            ->getMock();
+        $touchFacade->expects($this->once())->method('touchActive');
+
+        $stockProductUpdater = $this->getMockBuilder(StockProductUpdaterInterface::class)
+            ->onlyMethods(['updateStockProductsRelatedToStock'])
+            ->getMock();
+        $stockProductUpdater->expects($this->once())->method('updateStockProductsRelatedToStock');
+
+        $stockStoreRelationshipUpdater = $this->getMockBuilder(StockStoreRelationshipUpdaterInterface::class)
+            ->onlyMethods(['updateStockStoreRelationshipsForStock'])
+            ->getMock();
+        $stockStoreRelationshipUpdater->expects($this->once())->method('updateStockStoreRelationshipsForStock');
+
+        $eventFacade = $this->getMockBuilder(StockToEventFacadeInterface::class)
+            ->onlyMethods(['trigger'])
+            ->getMock();
+        $eventFacade->expects($this->never())->method('trigger');
+
+        // Mock the createStockUpdater method
+        $this->tester->mockFactoryMethod('createStockUpdater', new StockUpdater(
+            new StockEntityManager(),
+            new StockRepository(),
+            $touchFacade,
+            $stockStoreRelationshipUpdater,
+            $stockProductUpdater,
+            $this->tester->getModuleConfig(),
+            [],
+            $eventFacade,
         ));
 
         // Act
@@ -1102,6 +1206,7 @@ class StockFacadeTest extends Unit
             $stockProductUpdater,
             $this->tester->getModuleConfig(),
             [],
+            $this->createMock(StockToEventFacadeInterface::class),
         ));
 
         // Act
@@ -1147,6 +1252,7 @@ class StockFacadeTest extends Unit
             $stockProductUpdater,
             $this->tester->getModuleConfig(),
             [],
+            $this->createMock(StockToEventFacadeInterface::class),
         ));
 
         // Act

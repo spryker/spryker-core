@@ -26,6 +26,7 @@ use Spryker\Zed\Stock\Business\StockProduct\StockProductUpdater;
 use Spryker\Zed\Stock\Business\StockProduct\StockProductUpdaterInterface;
 use Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapper;
 use Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface;
+use Spryker\Zed\Stock\Dependency\Facade\StockToEventFacadeBridge;
 use Spryker\Zed\Stock\StockDependencyProvider;
 
 /**
@@ -113,6 +114,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
             $this->createStockProductUpdater(),
             $this->getConfig(),
             $this->getStockPostUpdatePlugins(),
+            $this->getEventFacade(),
         );
     }
 
@@ -216,5 +218,13 @@ class StockBusinessFactory extends AbstractBusinessFactory
     public function getStockPostUpdatePlugins(): array
     {
         return $this->getProvidedDependency(StockDependencyProvider::PLUGINS_STOCK_POST_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Stock\Dependency\Facade\StockToEventFacadeBridge
+     */
+    public function getEventFacade(): StockToEventFacadeBridge
+    {
+        return $this->getProvidedDependency(StockDependencyProvider::FACADE_EVENT);
     }
 }

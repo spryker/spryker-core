@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\StockGui\Communication\Form\Constraint\StockNameUniqueConstraint;
 use Spryker\Zed\StockGui\Communication\Form\StockForm;
+use Spryker\Zed\StockGui\Communication\Form\UpdateStockForm;
 use Spryker\Zed\StockGui\Communication\Table\StockTable;
 use Spryker\Zed\StockGui\Communication\Tabs\StockTabs;
 use Spryker\Zed\StockGui\Dependency\Facade\StockGuiToStockFacadeInterface;
@@ -59,6 +60,16 @@ class StockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getStockForm(?StockTransfer $stockTransfer = null): FormInterface
     {
         return $this->getFormFactory()->create(StockForm::class, $stockTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockTransfer|null $stockTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getUpdateStockForm(?StockTransfer $stockTransfer = null): FormInterface
+    {
+        return $this->getFormFactory()->create(UpdateStockForm::class, $stockTransfer);
     }
 
     /**

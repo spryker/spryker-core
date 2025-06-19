@@ -36,7 +36,7 @@ class StockGuiToStockFacadeBridge implements StockGuiToStockFacadeInterface
     }
 
     /**
-     * @return array
+     * @return array<array<string>>
      */
     public function getWarehouseToStoreMapping()
     {
@@ -44,7 +44,7 @@ class StockGuiToStockFacadeBridge implements StockGuiToStockFacadeInterface
     }
 
     /**
-     * @return array
+     * @return array<array<string>>
      */
     public function getStoreToWarehouseMapping()
     {

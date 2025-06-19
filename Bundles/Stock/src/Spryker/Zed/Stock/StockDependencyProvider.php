@@ -12,6 +12,7 @@ use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Stock\Dependency\External\StockToPropelConnectionAdapter;
+use Spryker\Zed\Stock\Dependency\Facade\StockToEventFacadeBridge;
 use Spryker\Zed\Stock\Dependency\Facade\StockToProductBridge;
 use Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeBridge;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchBridge;
@@ -35,6 +36,11 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
+     * @var string
+     */
+    public const FACADE_EVENT = 'FACADE_EVENT';
 
     /**
      * @var string
@@ -77,6 +83,7 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductFacade($container);
         $container = $this->addStockUpdatePlugins($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addEventFacade($container);
         $container = $this->addStockCollectionExpanderPlugins($container);
         $container = $this->addStockPostCreatePlugins($container);
         $container = $this->addStockPostUpdatePlugins($container);
@@ -176,6 +183,22 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CONNECTION, function () {
             return new StockToPropelConnectionAdapter(Propel::getConnection());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
+            return new StockToEventFacadeBridge(
+                $container->getLocator()->event()->facade(),
+            );
         });
 
         return $container;

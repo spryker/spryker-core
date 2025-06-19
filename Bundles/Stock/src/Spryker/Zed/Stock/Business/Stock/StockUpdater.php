@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\Stock\Business\Stock;
 
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\StockResponseTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Spryker\Shared\Stock\StockConfig as SharedStockConfig;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Stock\Business\StockProduct\StockProductUpdaterInterface;
+use Spryker\Zed\Stock\Dependency\Facade\StockToEventFacadeInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Spryker\Zed\Stock\Persistence\StockEntityManagerInterface;
 use Spryker\Zed\Stock\Persistence\StockRepositoryInterface;
@@ -61,6 +64,11 @@ class StockUpdater implements StockUpdaterInterface
     protected StockConfig $stockConfig;
 
     /**
+     * @var \Spryker\Zed\Stock\Dependency\Facade\StockToEventFacadeInterface
+     */
+    protected StockToEventFacadeInterface $eventFacade;
+
+    /**
      * @param \Spryker\Zed\Stock\Persistence\StockEntityManagerInterface $stockEntityManager
      * @param \Spryker\Zed\Stock\Persistence\StockRepositoryInterface $stockRepository
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface $touchFacade
@@ -68,6 +76,7 @@ class StockUpdater implements StockUpdaterInterface
      * @param \Spryker\Zed\Stock\Business\StockProduct\StockProductUpdaterInterface $stockProductUpdater
      * @param \Spryker\Zed\Stock\StockConfig $stockConfig
      * @param array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface> $stockPostUpdatePlugins
+     * @param \Spryker\Zed\Stock\Dependency\Facade\StockToEventFacadeInterface $eventFacade
      */
     public function __construct(
         StockEntityManagerInterface $stockEntityManager,
@@ -76,7 +85,8 @@ class StockUpdater implements StockUpdaterInterface
         StockStoreRelationshipUpdaterInterface $stockStoreRelationshipUpdater,
         StockProductUpdaterInterface $stockProductUpdater,
         StockConfig $stockConfig,
-        array $stockPostUpdatePlugins
+        array $stockPostUpdatePlugins,
+        StockToEventFacadeInterface $eventFacade
     ) {
         $this->stockEntityManager = $stockEntityManager;
         $this->stockRepository = $stockRepository;
@@ -85,6 +95,7 @@ class StockUpdater implements StockUpdaterInterface
         $this->stockProductUpdater = $stockProductUpdater;
         $this->stockPostUpdatePlugins = $stockPostUpdatePlugins;
         $this->stockConfig = $stockConfig;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -94,9 +105,25 @@ class StockUpdater implements StockUpdaterInterface
      */
     public function updateStock(StockTransfer $stockTransfer): StockResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($stockTransfer) {
+        /** @var \Generated\Shared\Transfer\StockResponseTransfer $stockResponseTransfer */
+        $stockResponseTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($stockTransfer) {
             return $this->executeUpdateStockTransaction($stockTransfer);
         });
+
+        $updatedStockTransfer = $stockResponseTransfer->getStock();
+        if (!$updatedStockTransfer || !$stockResponseTransfer->getIsSuccessful()) {
+            return $stockResponseTransfer;
+        }
+
+        if ($stockTransfer->getShouldUpdateStockRelationsAsync()) {
+            $eventEntityTransfer = (new EventEntityTransfer())
+                ->setId($updatedStockTransfer->getIdStock())
+                ->setAdditionalValues($updatedStockTransfer->toArray());
+
+            $this->eventFacade->trigger(SharedStockConfig::STOCK_POST_UPDATE_STOCK_RELATIONS, $eventEntityTransfer);
+        }
+
+        return $stockResponseTransfer;
     }
 
     /**
@@ -130,7 +157,10 @@ class StockUpdater implements StockUpdaterInterface
             ($isConditionalStockUpdateApplied && !$this->isOnlyNameChanged($existingStockTransfer, $stockTransfer))
         ) {
             $this->insertActiveTouchRecordStockType($stockTransfer);
-            $this->stockProductUpdater->updateStockProductsRelatedToStock($stockTransfer);
+
+            if (!$stockTransfer->getShouldUpdateStockRelationsAsync()) {
+                $this->stockProductUpdater->updateStockProductsRelatedToStock($stockTransfer);
+            }
         }
 
         return $this->executeStockPostUpdatePlugins($stockTransfer);
@@ -158,6 +188,7 @@ class StockUpdater implements StockUpdaterInterface
     {
         foreach ($this->stockPostUpdatePlugins as $stockPostUpdatePlugin) {
             $stockResponseTransfer = $stockPostUpdatePlugin->postUpdate($stockTransfer);
+
             if (!$stockResponseTransfer->getIsSuccessful()) {
                 return $stockResponseTransfer;
             }

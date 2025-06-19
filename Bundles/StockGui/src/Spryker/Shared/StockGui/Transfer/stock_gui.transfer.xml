@@ -4,6 +4,7 @@
     <transfer name="Stock">
         <property name="idStock" type="int"/>
         <property name="storeRelation" type="StoreRelation"/>
+        <property name="shouldUpdateStockRelationsAsync" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="StoreRelation">

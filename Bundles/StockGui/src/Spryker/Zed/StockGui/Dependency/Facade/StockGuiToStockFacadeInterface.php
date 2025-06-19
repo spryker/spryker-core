@@ -20,12 +20,12 @@ interface StockGuiToStockFacadeInterface
     public function updateStock(StockTransfer $stockTransfer): StockResponseTransfer;
 
     /**
-     * @return array
+     * @return array<array<string>>
      */
     public function getWarehouseToStoreMapping();
 
     /**
-     * @return array
+     * @return array<array<string>>
      */
     public function getStoreToWarehouseMapping();
 

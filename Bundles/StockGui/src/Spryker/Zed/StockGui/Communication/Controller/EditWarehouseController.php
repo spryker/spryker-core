@@ -43,7 +43,7 @@ class EditWarehouseController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function indexAction(Request $request)
     {
@@ -58,7 +58,7 @@ class EditWarehouseController extends AbstractController
         $stockTabs = $this->getFactory()->createStockTabs();
 
         $stockForm = $this->getFactory()
-            ->getStockForm($stockTransfer)
+            ->getUpdateStockForm($stockTransfer)
             ->handleRequest($request);
 
         if ($stockForm->isSubmitted() && $stockForm->isValid()) {

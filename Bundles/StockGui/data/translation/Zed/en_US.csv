@@ -22,3 +22,4 @@ View,View
 "Warehouse ID","Warehouse ID"
 Warehouses,Warehouses
 Yes,Yes
+"Update stock relations asynchronously (recommended for big amount of products)","Update stock relations asynchronously (recommended for big amount of products)"
