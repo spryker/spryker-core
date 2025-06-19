@@ -56,5 +56,10 @@ interface MultiFactorAuthResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
+    public function createSendingCodeError(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
     public function createSuccessResponse(): RestResponseInterface;
 }

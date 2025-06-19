@@ -156,6 +156,22 @@ class MultiFactorAuthResponseBuilder implements MultiFactorAuthResponseBuilderIn
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
+    public function createSendingCodeError(): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $restResponse->addError(
+            (new RestErrorMessageTransfer())
+                ->setCode(MultiFactorAuthConfig::RESPONSE_SENDING_CODE_ERROR)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(MultiFactorAuthConfig::ERROR_MESSAGE_SENDING_CODE_ERROR),
+        );
+
+        return $restResponse;
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
     public function createSuccessResponse(): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();

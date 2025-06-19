@@ -11,6 +11,7 @@ namespace Spryker\Glue\MultiFactorAuth\Processor\Activate;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\RestMultiFactorAuthAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -22,6 +23,7 @@ use Spryker\Glue\MultiFactorAuth\Processor\ResponseBuilder\MultiFactorAuthRespon
 use Spryker\Glue\MultiFactorAuth\Processor\TransferBuilder\MultiFactorAuthTransferBuilderInterface;
 use Spryker\Glue\MultiFactorAuth\Processor\Validator\MultiFactorAuthValidatorInterface;
 use Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants;
+use Throwable;
 
 class MultiFactorAuthActivateProcessor implements MultiFactorAuthActivateProcessorInterface
 {
@@ -65,11 +67,11 @@ class MultiFactorAuthActivateProcessor implements MultiFactorAuthActivateProcess
             return $this->multiFactorAuthResponseBuilder->createAlreadyActivatedMultiFactorAuthError();
         }
 
-        if ($this->hasExistingMultiFactorAuth($multiFactorAuthTypesCollectionTransfer) && $restRequest->getHttpRequest()->headers->get(MultiFactorAuthConfig::HEADER_MULTI_FACTOR_AUTH_CODE) === null) {
+        if ($this->assertTheCodeIsMissing($restRequest, $multiFactorAuthTypesCollectionTransfer)) {
             return $this->multiFactorAuthResponseBuilder->createMissingMultiFactorAuthCodeError();
         }
 
-        if ($this->hasExistingMultiFactorAuth($multiFactorAuthTypesCollectionTransfer) && !$this->isMultiFactorAuthActivationCodeValid($restRequest, $customerTransfer)) {
+        if ($this->assertTheProvidedCodeIsNotApplicable($restRequest, $multiFactorAuthTypesCollectionTransfer, $customerTransfer)) {
             return $this->multiFactorAuthResponseBuilder->createInvalidMultiFactorAuthCodeError();
         }
 
@@ -81,9 +83,48 @@ class MultiFactorAuthActivateProcessor implements MultiFactorAuthActivateProcess
         );
 
         $this->multiFactorAuthClient->activateCustomerMultiFactorAuth($multiFactorAuthTransfer);
-        $this->multiFactorAuthClient->sendCustomerCode($multiFactorAuthTransfer->setStatus(MultiFactorAuthConstants::STATUS_ACTIVE));
 
-        return $this->multiFactorAuthResponseBuilder->createSuccessResponse();
+        return $this->safelySendActivationCode($multiFactorAuthTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer $multiFactorAuthTypesCollectionTransfer
+     *
+     * @return bool
+     */
+    protected function assertTheCodeIsMissing(
+        RestRequestInterface $restRequest,
+        MultiFactorAuthTypesCollectionTransfer $multiFactorAuthTypesCollectionTransfer
+    ): bool {
+        return $this->hasExistingMultiFactorAuth($multiFactorAuthTypesCollectionTransfer) && $restRequest->getHttpRequest()->headers->get(MultiFactorAuthConfig::HEADER_MULTI_FACTOR_AUTH_CODE) === null;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer $multiFactorAuthTypesCollectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function assertTheProvidedCodeIsNotApplicable(
+        RestRequestInterface $restRequest,
+        MultiFactorAuthTypesCollectionTransfer $multiFactorAuthTypesCollectionTransfer,
+        CustomerTransfer $customerTransfer
+    ): bool {
+        $hasExistingMultiFactorAuth = $this->hasExistingMultiFactorAuth($multiFactorAuthTypesCollectionTransfer);
+
+        if (!$hasExistingMultiFactorAuth && $restRequest->getHttpRequest()->headers->get(MultiFactorAuthConfig::HEADER_MULTI_FACTOR_AUTH_CODE) === null) {
+            return false;
+        }
+
+        $isCodeValid = $this->isMultiFactorAuthActivationCodeValid($restRequest, $customerTransfer);
+
+        if (!$hasExistingMultiFactorAuth && $isCodeValid) {
+            return true;
+        }
+
+        return $hasExistingMultiFactorAuth && !$isCodeValid;
     }
 
     /**
@@ -93,7 +134,17 @@ class MultiFactorAuthActivateProcessor implements MultiFactorAuthActivateProcess
      */
     protected function hasExistingMultiFactorAuth(MultiFactorAuthTypesCollectionTransfer $multiFactorAuthTypesCollectionTransfer): bool
     {
-        return count($multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes()) > 0;
+        if (count($multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes()) === 0) {
+            return false;
+        }
+
+        foreach ($multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes() as $multiFactorAuthType) {
+            if ($multiFactorAuthType->getStatus() === MultiFactorAuthConstants::STATUS_ACTIVE) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -125,6 +176,24 @@ class MultiFactorAuthActivateProcessor implements MultiFactorAuthActivateProcess
             $multiFactorAuthCodeTransfer,
         );
 
-        return $this->multiFactorAuthValidator->isMultiFactorAuthCodeVerified($multiFactorAuthTransfer);
+        return $this->multiFactorAuthValidator->isMultiFactorAuthCodeValid($multiFactorAuthCode, $customerTransfer, $multiFactorAuthTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function safelySendActivationCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): RestResponseInterface
+    {
+        try {
+            $this->multiFactorAuthClient->sendCustomerCode(
+                $multiFactorAuthTransfer->setStatus(MultiFactorAuthConstants::STATUS_ACTIVE),
+            );
+        } catch (Throwable $e) {
+            return $this->multiFactorAuthResponseBuilder->createSendingCodeError();
+        }
+
+        return $this->multiFactorAuthResponseBuilder->createSuccessResponse();
     }
 }

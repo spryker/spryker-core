@@ -32,9 +32,7 @@ class MultiFactorAuthTriggerResourceController extends AbstractController
      *              "204": "No content.",
      *              "400": "Bad Request",
      *              "403": "Forbidden"
-     *          },
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestMultiFactorAuthAttributesTransfer",
-     *          "isProtected": true
+     *          }
      *     }
      * })
      *

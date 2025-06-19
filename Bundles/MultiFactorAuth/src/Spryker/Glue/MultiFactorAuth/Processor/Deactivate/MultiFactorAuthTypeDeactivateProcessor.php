@@ -67,9 +67,11 @@ class MultiFactorAuthTypeDeactivateProcessor implements MultiFactorAuthTypeDeact
 
         $multiFactorAuthCodeTransfer = $this->multiFactorAuthTransferBuilder->buildMultiFactorAuthCodeTransfer($multiFactorAuthCode);
         $multiFactorAuthTransfer = $this->multiFactorAuthTransferBuilder->buildMultiFactorAuthTransfer($multiFactorAuthType, $customerTransfer, $multiFactorAuthCodeTransfer);
-        if ($this->multiFactorAuthValidator->isMultiFactorAuthCodeValid($multiFactorAuthCode, $customerTransfer, $multiFactorAuthTransfer) === false) {
+
+        if ($this->multiFactorAuthValidator->isMultiFactorAuthCodeValid($multiFactorAuthCode, $customerTransfer, $multiFactorAuthTransfer, [], $multiFactorAuthType) === false) {
             return $this->multiFactorAuthResponseBuilder->createInvalidMultiFactorAuthCodeError();
         }
+
         $this->multiFactorAuthClient->deactivateCustomerMultiFactorAuth($multiFactorAuthTransfer);
 
         return $this->multiFactorAuthResponseBuilder->createSuccessResponse();

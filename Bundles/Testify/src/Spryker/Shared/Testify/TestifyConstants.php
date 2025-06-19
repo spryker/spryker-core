@@ -61,9 +61,27 @@ class TestifyConstants
 
     /**
      * Specification:
+     * - Storefront API application domain for end-to-end testing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const GLUE_STOREFRONT_API_DOMAIN = 'TESTIFY:GLUE_STOREFRONT_API_DOMAIN';
+
+    /**
+     * Specification:
      * - Folder in which the aggregated Glue Backend API OpenApi3 schema is saved.
      *
      * @var string
      */
     public const GLUE_BACKEND_API_OPEN_API_SCHEMA = 'TESTIFY:GLUE_BACKEND_API_OPEN_API_SCHEMA';
+
+    /**
+     * Specification:
+     * - Folder in which the aggregated Glue Backend API OpenApi3 schema is saved.
+     *
+     * @var string
+     */
+    public const GLUE_STOREFRONT_API_OPEN_API_SCHEMA = 'TESTIFY:GLUE_STOREFRONT_API_OPEN_API_SCHEMA';
 }

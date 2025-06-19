@@ -107,11 +107,16 @@ class MultiFactorAuthRepository extends AbstractRepository implements MultiFacto
             $customerMultiFactorAuthCodeQuery->filterByCode($multiFactorAuthCodeCriteriaTransfer->getCode());
         }
 
-        /** @var \Orm\Zed\MultiFactorAuth\Persistence\SpyCustomerMultiFactorAuthCodes|null $customerMultiFactorAuthCodeEntity */
-        $customerMultiFactorAuthCodeEntity = $customerMultiFactorAuthCodeQuery
+        $customerMultiFactorAuthCodeQuery = $customerMultiFactorAuthCodeQuery
             ->useSpyCustomerMultiFactorAuthQuery()
-                ->filterByFkCustomer($multiFactorAuthCodeCriteriaTransfer->getCustomerOrFail()->getIdCustomer())
-                ->addDescendingOrderByColumn(SpyCustomerMultiFactorAuthCodesTableMap::COL_ID_CUSTOMER_MULTI_FACTOR_AUTH_CODE)
+                ->filterByFkCustomer($multiFactorAuthCodeCriteriaTransfer->getCustomerOrFail()->getIdCustomer());
+
+        if ($multiFactorAuthCodeCriteriaTransfer->getType() !== null) {
+            $customerMultiFactorAuthCodeQuery->filterByType($multiFactorAuthCodeCriteriaTransfer->getType());
+        }
+
+        /** @var \Orm\Zed\MultiFactorAuth\Persistence\SpyCustomerMultiFactorAuthCodes|null $customerMultiFactorAuthCodeEntity */
+        $customerMultiFactorAuthCodeEntity = $customerMultiFactorAuthCodeQuery->addDescendingOrderByColumn(SpyCustomerMultiFactorAuthCodesTableMap::COL_ID_CUSTOMER_MULTI_FACTOR_AUTH_CODE)
             ->endUse()
             ->findOne();
 
@@ -264,5 +269,71 @@ class MultiFactorAuthRepository extends AbstractRepository implements MultiFacto
             ->createSpyUserMultiFactorAuthCodesAttemptsQuery()
             ->filterByFkUserMultiFactorAuthCode($multiFactorAuthCodeTransfer->getIdCode())
             ->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer
+     */
+    public function findUserMultiFactorAuthCodeByCriteria(
+        MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+    ): MultiFactorAuthCodeTransfer {
+        $userMultiFactorAuthCodeQuery = $this->getFactory()
+            ->createSpyUserMultiFactorAuthCodeQuery()
+            ->innerJoinSpyUserMultiFactorAuth();
+
+        if ($multiFactorAuthCodeCriteriaTransfer->getCode() !== null) {
+            $userMultiFactorAuthCodeQuery->filterByCode($multiFactorAuthCodeCriteriaTransfer->getCode());
+        }
+
+        if ($multiFactorAuthCodeCriteriaTransfer->getStatus() !== null) {
+            $userMultiFactorAuthCodeQuery->filterByStatus($multiFactorAuthCodeCriteriaTransfer->getStatus());
+        }
+
+        $userMultiFactorAuthCodeQuery = $userMultiFactorAuthCodeQuery
+            ->useSpyUserMultiFactorAuthQuery()
+                ->filterByFkUser($multiFactorAuthCodeCriteriaTransfer->getUserOrFail()->getIdUserOrFail());
+
+        if ($multiFactorAuthCodeCriteriaTransfer->getType() !== null) {
+            $userMultiFactorAuthCodeQuery->filterByType($multiFactorAuthCodeCriteriaTransfer->getType());
+        }
+
+        /** @var \Orm\Zed\MultiFactorAuth\Persistence\SpyUserMultiFactorAuthCodes|null $userMultiFactorAuthCodeEntity */
+        $userMultiFactorAuthCodeEntity = $userMultiFactorAuthCodeQuery->addDescendingOrderByColumn(SpyUserMultiFactorAuthCodesTableMap::COL_ID_USER_MULTI_FACTOR_AUTH_CODE)
+            ->endUse()
+            ->findOne();
+
+        if ($userMultiFactorAuthCodeEntity === null) {
+            return new MultiFactorAuthCodeTransfer();
+        }
+
+        $multiFactorAuthCodeTransfer = $this->getFactory()
+            ->createMultiFactorAuthMapper()
+            ->mapUserMultiFactorAuthCodeEntityToMultiFactorAuthCodeTransfer($userMultiFactorAuthCodeEntity, new MultiFactorAuthCodeTransfer());
+
+        return $multiFactorAuthCodeTransfer->setType($userMultiFactorAuthCodeEntity->getSpyUserMultiFactorAuth()->getType());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getPendingActivationUserMultiFactorAuthTypes(UserTransfer $userTransfer): MultiFactorAuthTypesCollectionTransfer
+    {
+        $userMultiFactorAuthEntities = $this->getFactory()
+            ->createSpyUserMultiFactorAuthQuery()
+            ->filterByFkUser($userTransfer->getIdUser())
+            ->filterByStatus(MultiFactorAuthConstants::STATUS_PENDING_ACTIVATION)
+            ->find();
+
+        if ($userMultiFactorAuthEntities->count() === 0) {
+            return new MultiFactorAuthTypesCollectionTransfer();
+        }
+
+        return $this->getFactory()
+            ->createMultiFactorAuthMapper()
+            ->mapMultiFactorAuthEntitiesToMultiFactorAuthTypesCollectionTransfer($userMultiFactorAuthEntities, new MultiFactorAuthTypesCollectionTransfer());
     }
 }

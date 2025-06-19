@@ -91,4 +91,20 @@ interface MultiFactorAuthRepositoryInterface
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
     public function getPendingActivationCustomerMultiFactorAuthTypes(CustomerTransfer $customerTransfer): MultiFactorAuthTypesCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer
+     */
+    public function findUserMultiFactorAuthCodeByCriteria(
+        MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+    ): MultiFactorAuthCodeTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getPendingActivationUserMultiFactorAuthTypes(UserTransfer $userTransfer): MultiFactorAuthTypesCollectionTransfer;
 }

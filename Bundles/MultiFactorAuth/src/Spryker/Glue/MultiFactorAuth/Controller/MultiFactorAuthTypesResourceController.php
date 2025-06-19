@@ -18,7 +18,7 @@ class MultiFactorAuthTypesResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResourceById": {
+     *     "getCollection": {
      *          "summary": [
      *              "Retrieves multi-factor authentication types."
      *          ],

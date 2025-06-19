@@ -1,5 +1,26 @@
 [
     {
+        "fileName": "src/Spryker/Glue/MultiFactorAuth/Dependency/Facade/MultiFactorAuthToMultiFactorAuthFacadeBridge.php",
+        "description": "Bridges: Method `findUserMultiFactorAuthType()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/MultiFactorAuth/Dependency/Facade/MultiFactorAuthToMultiFactorAuthFacadeBridge.php",
+        "description": "Bridges: Method `getPendingActivationUserMultiFactorAuthTypes()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/MultiFactorAuth/Dependency/Facade/MultiFactorAuthToMultiFactorAuthFacadeBridge.php",
+        "description": "Bridges: Method `getUserMultiFactorAuthTypes()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/MultiFactorAuth/Dependency/Facade/MultiFactorAuthToCustomerFacadeBridge.php",
         "description": "Bridges: Method `getCustomerByCriteria()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",

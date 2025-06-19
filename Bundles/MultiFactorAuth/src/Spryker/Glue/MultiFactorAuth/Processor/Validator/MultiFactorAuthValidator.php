@@ -39,16 +39,22 @@ class MultiFactorAuthValidator implements MultiFactorAuthValidatorInterface
      * @param string $multiFactorAuthCode
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     * @param array<int> $additionalStatuses
+     * @param string|null $multiFactorAuthType
      *
      * @return bool
      */
     public function isMultiFactorAuthCodeValid(
         string $multiFactorAuthCode,
         CustomerTransfer $customerTransfer,
-        MultiFactorAuthTransfer $multiFactorAuthTransfer
+        MultiFactorAuthTransfer $multiFactorAuthTransfer,
+        array $additionalStatuses = [],
+        ?string $multiFactorAuthType = null
     ): bool {
         $multiFactorAuthCodeCriteriaTransfer = (new MultiFactorAuthCodeCriteriaTransfer())
-            ->setCode($multiFactorAuthCode)->setCustomer($customerTransfer);
+            ->setCode($multiFactorAuthCode)
+            ->setCustomer($customerTransfer)
+            ->setType($multiFactorAuthType);
 
         $multiFactorAuthCodeWithTypeTransfer = $this->multiFactorAuthClient
             ->findCustomerMultiFactorAuthType($multiFactorAuthCodeCriteriaTransfer);
@@ -61,7 +67,7 @@ class MultiFactorAuthValidator implements MultiFactorAuthValidatorInterface
         }
 
         if ($multiFactorAuthCodeWithTypeTransfer->getStatusOrFail() === MultiFactorAuthConstants::STATUS_ACTIVE) {
-             $multiFactorAuthValidationRequestTransfer = (new MultiFactorAuthValidationRequestTransfer())->setCustomer($customerTransfer);
+             $multiFactorAuthValidationRequestTransfer = (new MultiFactorAuthValidationRequestTransfer())->setCustomer($customerTransfer)->setAdditionalStatuses($additionalStatuses);
              $multiFactorAuthValidationResponseTransfer = $this->multiFactorAuthClient->validateCustomerMultiFactorAuthStatus(
                  $multiFactorAuthValidationRequestTransfer,
              );
@@ -146,7 +152,7 @@ class MultiFactorAuthValidator implements MultiFactorAuthValidatorInterface
      *
      * @return bool
      */
-    public function isMultiFactorAuthCodeVerified(MultiFactorAuthTransfer $multiFactorAuthTransfer): bool
+    protected function isMultiFactorAuthCodeVerified(MultiFactorAuthTransfer $multiFactorAuthTransfer): bool
     {
         $validationResponse = $this->multiFactorAuthClient->validateCustomerCode($multiFactorAuthTransfer);
 

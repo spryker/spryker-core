@@ -198,6 +198,11 @@ class MultiFactorAuthEntityManager extends AbstractEntityManager implements Mult
 
         $customerMultiFactorAuthEntity->setStatus(MultiFactorAuthConstants::STATUS_INACTIVE)
             ->save();
+
+        if ($multiFactorAuthTransfer->getMultiFactorAuthCode() !== null) {
+            $multiFactorAuthTransfer->getMultiFactorAuthCodeOrFail()->setStatus(MultiFactorAuthConstants::CODE_INVALIDATED);
+            $this->updateCustomerCode($multiFactorAuthTransfer);
+        }
     }
 
     /**
@@ -233,17 +238,22 @@ class MultiFactorAuthEntityManager extends AbstractEntityManager implements Mult
      */
     public function deleteUserMultiFactorAuth(MultiFactorAuthTransfer $multiFactorAuthTransfer): void
     {
-        $customerMultiFactorAuthEntity = $this->getFactory()
+        $userMultiFactorAuthEntity = $this->getFactory()
             ->createSpyUserMultiFactorAuthQuery()
             ->filterByFkUser($multiFactorAuthTransfer->getUserOrFail()->getIdUserOrFail())
             ->filterByType($multiFactorAuthTransfer->getType())
             ->findOne();
 
-        if ($customerMultiFactorAuthEntity === null) {
+        if ($userMultiFactorAuthEntity === null) {
             return;
         }
 
-        $customerMultiFactorAuthEntity->setStatus(MultiFactorAuthConstants::STATUS_INACTIVE)
+        $userMultiFactorAuthEntity->setStatus(MultiFactorAuthConstants::STATUS_INACTIVE)
             ->save();
+
+        if ($multiFactorAuthTransfer->getMultiFactorAuthCode() !== null) {
+            $multiFactorAuthTransfer->getMultiFactorAuthCodeOrFail()->setStatus(MultiFactorAuthConstants::CODE_INVALIDATED);
+            $this->updateUserCode($multiFactorAuthTransfer);
+        }
     }
 }

@@ -189,4 +189,46 @@ interface MultiFactorAuthFacadeInterface
         UserTransfer $userTransfer,
         array $userMultiFactorAuthPlugins
     ): MultiFactorAuthTypesCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns multi-factor authentication code by criteria for a user.
+     * - Searches from the end of the codes list.
+     * - If no code found, returns empty transfer object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer
+     */
+    public function findUserMultiFactorAuthType(
+        MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
+    ): MultiFactorAuthCodeTransfer;
+
+    /**
+     * Specification:
+     *  - Returns pending activation multi-factor authentication types for the provided user.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getPendingActivationUserMultiFactorAuthTypes(UserTransfer $userTransfer): MultiFactorAuthTypesCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns multi-factor authentication types for the provided user.
+     * - Optionally filters by additional statuses.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param array<int> $additionalStatuses
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getUserMultiFactorAuthTypes(UserTransfer $userTransfer, array $additionalStatuses = []): MultiFactorAuthTypesCollectionTransfer;
 }

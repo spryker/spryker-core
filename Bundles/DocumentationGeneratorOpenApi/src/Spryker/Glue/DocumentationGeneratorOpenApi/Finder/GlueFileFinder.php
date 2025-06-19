@@ -48,7 +48,14 @@ class GlueFileFinder implements FinderInterface
     {
         $namespaceExploded = explode('\\', $classPath);
 
-        $existingDirectories = $this->getSourceDirectories(array_slice($namespaceExploded, -3)[0]);
+        $candidateDepths = [3, 4];
+
+        foreach ($candidateDepths as $depth) {
+            $existingDirectories = $this->getSourceDirectories(array_slice($namespaceExploded, -$depth)[0]);
+            if ($existingDirectories !== []) {
+                break;
+            }
+        }
         if (!$existingDirectories) {
             return [];
         }

@@ -78,7 +78,7 @@ class MultiFactorAuthTypeVerifyProcessor implements MultiFactorAuthTypeVerifyPro
             MultiFactorAuthConstants::STATUS_ACTIVE,
         );
 
-        if ($this->multiFactorAuthValidator->isMultiFactorAuthCodeValid($multiFactorAuthCode, $customerTransfer, $multiFactorAuthTransfer) === false) {
+        if ($this->multiFactorAuthValidator->isMultiFactorAuthCodeValid($multiFactorAuthCode, $customerTransfer, $multiFactorAuthTransfer, [MultiFactorAuthConstants::STATUS_PENDING_ACTIVATION]) === false) {
             return $this->multiFactorAuthResponseBuilder->createInvalidMultiFactorAuthCodeError();
         }
 

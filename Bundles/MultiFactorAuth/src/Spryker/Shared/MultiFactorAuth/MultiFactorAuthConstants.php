@@ -71,4 +71,14 @@ class MultiFactorAuthConstants
      * @var int
      */
     public const CODE_VERIFIED = 2;
+
+    /**
+     * Specification:
+     * - Defines the invalidated status of the multi factor auth.
+     *
+     * @api
+     *
+     * @var int
+     */
+    public const CODE_INVALIDATED = 3;
 }

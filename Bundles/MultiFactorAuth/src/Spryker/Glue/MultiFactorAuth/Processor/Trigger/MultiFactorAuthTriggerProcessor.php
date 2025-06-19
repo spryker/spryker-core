@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Glue\MultiFactorAuth\Processor\Trigger;
 
+use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\RestMultiFactorAuthAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -17,6 +18,8 @@ use Spryker\Glue\MultiFactorAuth\Dependency\Client\MultiFactorAuthToMultiFactorA
 use Spryker\Glue\MultiFactorAuth\Processor\ResponseBuilder\MultiFactorAuthResponseBuilderInterface;
 use Spryker\Glue\MultiFactorAuth\Processor\TransferBuilder\MultiFactorAuthTransferBuilderInterface;
 use Spryker\Glue\MultiFactorAuth\Processor\Validator\MultiFactorAuthValidatorInterface;
+use Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants;
+use Throwable;
 
 class MultiFactorAuthTriggerProcessor implements MultiFactorAuthTriggerProcessorInterface
 {
@@ -62,11 +65,28 @@ class MultiFactorAuthTriggerProcessor implements MultiFactorAuthTriggerProcessor
             }
 
             $multiFactorAuthTransfer = $this->multiFactorAuthTransferBuilder->buildMultiFactorAuthTransfer($multiFactorAuthType, $customerTransfer);
-            $this->multiFactorAuthClient->sendCustomerCode($multiFactorAuthTransfer);
 
-            return $this->multiFactorAuthResponseBuilder->createSuccessResponse();
+            return $this->safelySendActivationCode($multiFactorAuthTransfer);
         }
 
         return $this->multiFactorAuthResponseBuilder->createNotFoundTypeErrorResponse();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function safelySendActivationCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): RestResponseInterface
+    {
+        try {
+            $this->multiFactorAuthClient->sendCustomerCode(
+                $multiFactorAuthTransfer->setStatus(MultiFactorAuthConstants::STATUS_ACTIVE),
+            );
+        } catch (Throwable $e) {
+            return $this->multiFactorAuthResponseBuilder->createSendingCodeError();
+        }
+
+        return $this->multiFactorAuthResponseBuilder->createSuccessResponse();
     }
 }

@@ -11,8 +11,10 @@
 
     <transfer name="MultiFactorAuthCodeCriteria" strict="true">
         <property name="code" type="string"/>
+        <property name="type" type="string"/>
         <property name="status" type="int"/>
         <property name="customer" type="Customer"/>
+        <property name="user" type="User"/>
     </transfer>
 
     <transfer name="MultiFactorAuth" strict="true">
@@ -32,6 +34,7 @@
         <property name="customer" type="Customer"/>
         <property name="user" type="User"/>
         <property name="type" type="string"/>
+        <property name="additionalStatuses" type="array" singular="additionalStatus"/>
     </transfer>
 
     <transfer name="MultiFactorAuthValidationResponse" strict="true">
@@ -98,6 +101,7 @@
 
     <transfer name="UserConditions" strict="true">
         <property name="usernames" type="string[]" singular="username"/>
+        <property name="userIds" type="int[]" singular="idUser"/>
     </transfer>
 
     <transfer name="UserCollection" strict="true">
@@ -112,7 +116,7 @@
 
     <transfer name="RestMultiFactorAuthAttributes" strict="true">
         <property name="type" type="string"/>
-        <property name="status" type="int"/>
+        <property name="status" type="string"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
@@ -122,6 +126,56 @@
     </transfer>
 
     <transfer name="RestUser">
+        <property name="surrogateIdentifier" type="int"/>
+    </transfer>
+
+    <transfer name="GlueRequest">
+        <property name="requestUser" type="GlueRequestUser"/>
+        <property name="meta" type="array" associative="true" singular="meta"/>
+        <property name="resource" type="GlueResource"/>
+        <property name="method" type="string"/>
+        <property name="requestCustomer" type="GlueRequestCustomer"/>
+    </transfer>
+
+    <transfer name="GlueResource">
+        <property name="type" type="string"/>
+        <property name="attributes" type="AbstractAttributes"/>
+    </transfer>
+
+    <transfer name="GlueResponse">
+        <property name="resources" type="GlueResource[]" singular="resource"/>
+        <property name="httpStatus" type="int"/>
+        <property name="errors" type="GlueError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="GlueError">
+        <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="GlueRequestValidation">
+        <property name="isValid" type="bool"/>
+        <property name="errors" type="GlueError[]" singular="error"/>
+        <property name="status" type="int"/>
+    </transfer>
+
+    <transfer name="GlueResourceMethodCollection">
+        <property name="getCollection" type="GlueResourceMethodConfiguration"/>
+        <property name="post" type="GlueResourceMethodConfiguration"/>
+    </transfer>
+
+    <transfer name="GlueResourceMethodConfiguration">
+        <property name="action" type="string"/>
+        <property name="attributes" type="string"/>
+    </transfer>
+
+    <transfer name="GlueRequestUser">
+        <property name="surrogateIdentifier" type="int"/>
+        <property name="naturalIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="GlueRequestCustomer">
         <property name="surrogateIdentifier" type="int"/>
     </transfer>
 

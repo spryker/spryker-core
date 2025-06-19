@@ -14,6 +14,7 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
+        "spryker/currency": "*",
         "spryker/oauth-user-connector": "*",
         "spryker/propel": "*",
         "spryker/store": "*",

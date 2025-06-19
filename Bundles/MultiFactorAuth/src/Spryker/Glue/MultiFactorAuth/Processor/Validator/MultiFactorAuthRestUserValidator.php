@@ -167,16 +167,6 @@ class MultiFactorAuthRestUserValidator implements MultiFactorAuthRestUserValidat
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return string|null
-     */
-    protected function getMultiFactorAuthCode(RestRequestInterface $restRequest): ?string
-    {
-        return $restRequest->getHttpRequest()->headers->get(MultiFactorAuthConfig::HEADER_MULTI_FACTOR_AUTH_CODE);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer $multiFactorAuthCodeTransfer
      *

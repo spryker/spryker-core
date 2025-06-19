@@ -22,13 +22,17 @@ interface MultiFactorAuthValidatorInterface
      * @param string $multiFactorAuthCode
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
+     * @param array<int> $additionalStatuses
+     * @param string|null $multiFactorAuthType
      *
      * @return bool
      */
     public function isMultiFactorAuthCodeValid(
         string $multiFactorAuthCode,
         CustomerTransfer $customerTransfer,
-        MultiFactorAuthTransfer $multiFactorAuthTransfer
+        MultiFactorAuthTransfer $multiFactorAuthTransfer,
+        array $additionalStatuses = [],
+        ?string $multiFactorAuthType = null
     ): bool;
 
     /**
@@ -63,11 +67,4 @@ interface MultiFactorAuthValidatorInterface
         RestRequestInterface $restRequest,
         RestMultiFactorAuthAttributesTransfer $restMultiFactorAuthAttributesTransfer
     ): ?RestResponseInterface;
-
-    /**
-     * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
-     *
-     * @return bool
-     */
-    public function isMultiFactorAuthCodeVerified(MultiFactorAuthTransfer $multiFactorAuthTransfer): bool;
 }

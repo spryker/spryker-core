@@ -8,6 +8,7 @@
 namespace Spryker\Glue\MultiFactorAuth;
 
 use Spryker\Glue\Kernel\AbstractBundleConfig;
+use Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants;
 
 class MultiFactorAuthConfig extends AbstractBundleConfig
 {
@@ -109,6 +110,21 @@ class MultiFactorAuthConfig extends AbstractBundleConfig
     /**
      * @var string
      */
+    public const RESPONSE_CODE_NO_USER_IDENTIFIER = '5908';
+
+    /**
+     * @var string
+     */
+    public const RESPONSE_USER_NOT_FOUND = '5909';
+
+    /**
+     * @var string
+     */
+    public const RESPONSE_SENDING_CODE_ERROR = '5910';
+
+    /**
+     * @var string
+     */
     public const ERROR_MESSAGE_MULTI_FACTOR_AUTH_CODE_MISSING = 'X-MFA-Code header is missing.';
 
     /**
@@ -144,7 +160,22 @@ class MultiFactorAuthConfig extends AbstractBundleConfig
     /**
      * @var string
      */
+    public const ERROR_MESSAGE_SENDING_CODE_ERROR = 'Something went wrong while sending your code. Please try again later or contact the system administrator.';
+
+    /**
+     * @var string
+     */
     public const RESPONSE_DETAIL_CUSTOMER_NOT_FOUND = 'Customer not found.';
+
+    /**
+     * @var string
+     */
+    public const RESPONSE_DETAIL_NO_USER_IDENTIFIER = 'No user identifier provided.';
+
+    /**
+     * @var string
+     */
+    public const RESPONSE_DETAIL_USER_NOT_FOUND = 'User not found.';
 
     /**
      * Specification:
@@ -160,5 +191,54 @@ class MultiFactorAuthConfig extends AbstractBundleConfig
     public function getRestApiMultiFactorAuthProtectedResources(): array
     {
         return [];
+    }
+
+    /**
+     * Specification:
+     * - Returns a list of enabled backend resources for the multi-factor authentication in the following format:
+     * [
+     *    'resource-name',
+     * ]
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getMultiFactorAuthProtectedBackendResources(): array
+    {
+        return [];
+    }
+
+    /**
+     * Specification:
+     * - Returns a list of enabled storefront resources for the multi-factor authentication in the following format:
+     * [
+     *    'resource-name',
+     * ]
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getMultiFactorAuthProtectedStorefrontResources(): array
+    {
+        return [];
+    }
+
+    /**
+     * Specification:
+     * - Returns a list of multi-factor authentication type statuses with their descriptions.
+     *
+     * @api
+     *
+     * @return array<int, string>
+     */
+    public function getMultiFactorAuthTypeStatuses(): array
+    {
+        return [
+            MultiFactorAuthConstants::STATUS_PENDING_ACTIVATION => 'activation is pending',
+            MultiFactorAuthConstants::STATUS_ACTIVE => 'activated',
+            MultiFactorAuthConstants::STATUS_INACTIVE => 'deactivated',
+        ];
     }
 }

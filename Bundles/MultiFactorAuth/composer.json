@@ -15,6 +15,7 @@
         "spryker/glossary": "^3.0.0",
         "spryker/glue-application": "^1.15.0",
         "spryker/glue-application-extension": "^1.0.0",
+        "spryker/glue-json-api-convention-extension": "^1.0.0",
         "spryker/gui-extension": "^1.0.0",
         "spryker/kernel": "^3.52.0",
         "spryker/mail": "^4.6.0",

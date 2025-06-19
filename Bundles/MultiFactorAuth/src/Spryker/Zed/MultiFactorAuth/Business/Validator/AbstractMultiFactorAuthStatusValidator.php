@@ -31,7 +31,13 @@ abstract class AbstractMultiFactorAuthStatusValidator implements MultiFactorAuth
         ?DateTime $currentDateTime = null
     ): MultiFactorAuthValidationResponseTransfer {
         $entityTransfer = $this->extractEntity($multiFactorAuthValidationRequestTransfer);
-        $multiFactorAuthTypesCollectionTransfer = $this->getMultiFactorAuthTypesCollectionTransfer($entityTransfer, $additionalStatuses);
+        $multiFactorAuthTypesCollectionTransfer = $this->getMultiFactorAuthTypesCollectionTransfer(
+            $entityTransfer,
+            array_unique(array_merge(
+                $multiFactorAuthValidationRequestTransfer->getAdditionalStatuses(),
+                $additionalStatuses,
+            )),
+        );
 
         if ($multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes()->count() === 0) {
             return $this->createMultiFactorAuthValidationResponseTransfer();

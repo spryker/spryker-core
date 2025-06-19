@@ -28,13 +28,15 @@ class MultiFactorAuthTypesReader implements MultiFactorAuthTypesReaderInterface
      * @param array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface> $multiFactorAuthPlugins
      * @param \Spryker\Glue\MultiFactorAuth\Processor\ResponseBuilder\MultiFactorAuthResponseBuilderInterface $multiFactorAuthResponseBuilder
      * @param \Spryker\Glue\MultiFactorAuth\Processor\TransferBuilder\MultiFactorAuthTransferBuilderInterface $multiFactorAuthTransferBuilder
+     * @param \Spryker\Glue\MultiFactorAuth\MultiFactorAuthConfig $config
      */
     public function __construct(
         protected MultiFactorAuthToMultiFactorAuthClientInterface $multiFactorAuthClient,
         protected RestResourceBuilderInterface $restResourceBuilder,
         protected array $multiFactorAuthPlugins,
         protected MultiFactorAuthResponseBuilderInterface $multiFactorAuthResponseBuilder,
-        protected MultiFactorAuthTransferBuilderInterface $multiFactorAuthTransferBuilder
+        protected MultiFactorAuthTransferBuilderInterface $multiFactorAuthTransferBuilder,
+        protected MultiFactorAuthConfig $config
     ) {
     }
 
@@ -100,6 +102,7 @@ class MultiFactorAuthTypesReader implements MultiFactorAuthTypesReaderInterface
     ): RestResponseInterface {
         $restMultiFactorAuthAttributesTransfer = new RestMultiFactorAuthAttributesTransfer();
         $restMultiFactorAuthAttributesTransfer->fromArray($multiFactorAuthTransfer->toArray(), true);
+        $restMultiFactorAuthAttributesTransfer->setStatus($this->config->getMultiFactorAuthTypeStatuses()[$multiFactorAuthTransfer->getStatusOrFail()]);
 
         $restResource = $this->restResourceBuilder
             ->createRestResource(
