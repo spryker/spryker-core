@@ -54,7 +54,7 @@ class CustomerReferenceGenerator implements CustomerReferenceGeneratorInterface
         $sequenceNumberPrefix = $this->config->getCustomerSequenceNumberPrefix();
 
         if (!$sequenceNumberPrefix) {
-            $sequenceNumberPrefix = $this->storeFacade->getCurrentStore()->getNameOrFail();
+            $sequenceNumberPrefix = $this->storeFacade->getCurrentStore(true)->getNameOrFail();
         }
 
         return $this->sequenceNumberFacade->generate(

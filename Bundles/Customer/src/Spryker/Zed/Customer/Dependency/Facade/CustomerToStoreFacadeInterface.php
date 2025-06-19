@@ -12,9 +12,11 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface CustomerToStoreFacadeInterface
 {
     /**
+     * @param bool $fallbackToDefault
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer;
+    public function getCurrentStore(bool $fallbackToDefault = false): StoreTransfer;
 
     /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
