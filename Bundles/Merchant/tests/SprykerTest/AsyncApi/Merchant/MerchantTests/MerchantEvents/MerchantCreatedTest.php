@@ -36,6 +36,7 @@ class MerchantCreatedTest extends Unit
     public function testMerchantCreatedMessageIsEmittedWhenMerchantsAreCreated(): void
     {
         // Arrange
+        $this->tester->setupMessageBroker(MerchantCreatedTransfer::class, 'merchant-events');
         $this->tester->setStoreReferenceData([
             'DE' => 'dev-DE',
         ]);

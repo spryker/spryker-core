@@ -33,3 +33,4 @@ suites:
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
                 - \SprykerTest\Zed\WarehouseUser\Helper\WarehouseUserHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper

@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\Redis;
 use Codeception\Actor;
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
 use Generated\Shared\Transfer\RedisCredentialsTransfer;
+use ReflectionClass;
 use Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceBridge;
 use Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceInterface;
 use Spryker\Shared\Redis\Logger\RedisInMemoryLogger;
@@ -80,6 +81,11 @@ class RedisClientTester extends Actor
             ->setDatabase($database);
         $configurationTransfer = (new RedisConfigurationTransfer())
             ->setConnectionCredentials($connectionCredentials);
+
+        $refClass = new ReflectionClass(RedisInMemoryLogger::class);
+        $property = $refClass->getProperty('logs');
+        $property->setAccessible(true);
+        $property->setValue([]);
 
         return new RedisInMemoryLogger(
             $this->getUtilEncodingService(),

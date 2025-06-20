@@ -26,10 +26,12 @@
         "spryker/application": "^3.2.0",
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
+        "spryker/currency": "*",
         "spryker/event-dispatcher": "*",
         "spryker/log": "*",
         "spryker/propel": "*",
         "spryker/silex": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

@@ -16,9 +16,6 @@ use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateI
 use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorageQuery;
 use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorage;
 use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorageQuery;
-use Spryker\Client\Kernel\Container;
-use Spryker\Client\Queue\QueueDependencyProvider;
-use Spryker\Client\Store\StoreDependencyProvider;
 use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
 
 /**
@@ -48,22 +45,6 @@ class ConfigurableBundleStorageCommunicationTester extends Actor
      * @var string
      */
     protected const DEFAULT_CURRENCY = 'EUR';
-
-    /**
-     * @return void
-     */
-    public function addDependencies(): void
-    {
-        $this->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
-            return [
-                $this->getLocator()->rabbitMq()->client()->createQueueAdapter(),
-            ];
-        });
-
-        $this->setDependency(StoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
-            $this->createStoreStorageStoreExpanderPluginMock(),
-        ]);
-    }
 
     /**
      * @param array<string, mixed> $data

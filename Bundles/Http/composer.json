@@ -24,6 +24,7 @@
         "spryker/event-dispatcher": "*",
         "spryker/propel": "*",
         "spryker/router": "*",
+        "spryker/storage": "*",
         "spryker/testify": "*"
     },
     "suggest": {

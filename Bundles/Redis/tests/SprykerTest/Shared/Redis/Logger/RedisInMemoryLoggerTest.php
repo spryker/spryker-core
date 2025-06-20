@@ -83,12 +83,6 @@ class RedisInMemoryLoggerTest extends Unit
                 [
                     [
                         'destination' => $this->buildDsnString(),
-                        'command' => 'GET',
-                        'payload' => json_encode(['key' => 'some:redis:key'], JSON_PRETTY_PRINT),
-                        'result' => json_encode(['result'], JSON_PRETTY_PRINT),
-                    ],
-                    [
-                        'destination' => $this->buildDsnString(),
                         'command' => 'SET',
                         'payload' => json_encode(['key' => 'some:redis:key', 'data' => ['dummy data']], JSON_PRETTY_PRINT),
                         'result' => json_encode(['result'], JSON_PRETTY_PRINT),

@@ -21,7 +21,9 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/company": "*",
+        "spryker/container": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

@@ -19,3 +19,4 @@ suites:
             enabled:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper

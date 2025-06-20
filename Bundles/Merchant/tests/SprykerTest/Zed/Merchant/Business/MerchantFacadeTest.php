@@ -108,7 +108,7 @@ class MerchantFacadeTest extends Unit
         // Arrange
         $merchantTransfer = $this->tester->haveMerchantWithStore();
         $merchantExportCriteriaTransfer = (new MerchantExportCriteriaTransfer());
-
+        $merchantExportCriteriaTransfer->setStoreReference($merchantTransfer->getStoreRelation()->getStores()->offsetGet(0)->getStoreReference());
         // Assert
         $this->tester->assertTriggerMerchantExportEventsSuccessfully($this->eventFacade, $merchantTransfer);
 

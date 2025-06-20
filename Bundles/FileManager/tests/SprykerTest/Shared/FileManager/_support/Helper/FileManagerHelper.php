@@ -13,7 +13,6 @@ use Generated\Shared\DataBuilder\FileBuilder;
 use Generated\Shared\DataBuilder\FileInfoBuilder;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
-use Spryker\Zed\FileManager\Business\FileManagerFacade;
 use Spryker\Zed\FileManager\Business\FileManagerFacadeInterface;
 use SprykerTest\Service\Testify\Helper\ServiceHelperTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
@@ -75,7 +74,7 @@ class FileManagerHelper extends Module
      */
     public function haveFile(array $seed = [], array $fileInfoSeed = [], string $fileSystemName = 'files'): FileTransfer
     {
-        $fileManagerFacade = new FileManagerFacade();
+        $fileManagerFacade = $this->getBusinessHelper()->getFacade('FileManager');
 
         $fileTransfer = (new FileBuilder($seed))->build();
         $fileInfoTransfer = (new FileInfoBuilder($fileInfoSeed))->build();

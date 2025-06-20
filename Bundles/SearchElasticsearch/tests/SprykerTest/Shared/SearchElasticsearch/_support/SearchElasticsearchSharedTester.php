@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\SearchElasticsearch;
 
 use Codeception\Actor;
+use ReflectionClass;
 use Spryker\Shared\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceBridge;
 use Spryker\Shared\SearchElasticsearch\Logger\ElasticsearchInMemoryLogger;
 use Spryker\Shared\SearchElasticsearch\Logger\ElasticsearchLoggerInterface;
@@ -57,6 +58,10 @@ class SearchElasticsearchSharedTester extends Actor
             'host' => static::DEFAULT_ELASTICSEARCH_HOST,
             'port' => static::DEFAULT_ELASTICSEARCH_PORT,
         ], $clientConfig);
+        $refClass = new ReflectionClass(ElasticsearchInMemoryLogger::class);
+        $property = $refClass->getProperty('logs');
+        $property->setAccessible(true);
+        $property->setValue([]);
 
         return new ElasticsearchInMemoryLogger(
             new SearchElasticsearchToUtilEncodingServiceBridge(

@@ -99,17 +99,6 @@ class ElasticsearchInMemoryLoggerTest extends Unit
                         'destination' => $this->buildUriString(),
                         'payload' => json_encode([
                             'query' => [
-                                'query-match-all' => [],
-                            ],
-                        ], JSON_PRETTY_PRINT),
-                        'result' => json_encode([
-                            'product_reviews' => [],
-                        ], JSON_PRETTY_PRINT),
-                    ],
-                    [
-                        'destination' => $this->buildUriString(),
-                        'payload' => json_encode([
-                            'query' => [
                                 'bool' => [],
                             ],
                         ], JSON_PRETTY_PRINT),

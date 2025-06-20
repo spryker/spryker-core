@@ -9,7 +9,7 @@ coverage:
     remote: false
     whitelist:
         include:
-            - '../../../../src/*'
+            - '../../../../src/Spryker'
 suites:
     AsyncApi:
         path: MerchantTests
@@ -22,14 +22,21 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
-                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
-                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\TaxApp\Helper\TaxAppDataHelper
                 - \SprykerTest\Shared\Store\Helper\StoreReferenceHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
-                - \SprykerTest\AsyncApi\Merchant\Helper\MerchantCommandsExportMerchantsReceiveHelper
+                - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\AsyncApi\TaxApp\Helper\TaxCommandsDeleteTaxAppHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
                 - \SprykerTest\Zed\MessageBroker\Helper\InMemoryMessageBrokerHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\AsyncApi\Merchant\Helper\MerchantCommandsExportMerchantsReceiveHelper
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                 - \Spryker\Zed\TestifyAsyncApi\Business\Codeception\Helper\AsyncApiHelper:
                       asyncapi: 'resources/api/asyncapi.yml'
                       handlers:

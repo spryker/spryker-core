@@ -22,11 +22,13 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/config": "*",
+        "spryker/container": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
         "spryker/quote-request": "*",
         "spryker/session": "*",
         "spryker/storage": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

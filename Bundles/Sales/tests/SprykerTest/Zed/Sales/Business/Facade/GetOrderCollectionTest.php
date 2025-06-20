@@ -155,9 +155,6 @@ class GetOrderCollectionTest extends Unit
     public function testShouldReturnOrderCollectionSortedByFieldAsc(): void
     {
         // Arrange
-        $orderCriteriaTransfer = new OrderCriteriaTransfer();
-        $ordersCountBeforeTest = $this->tester->getFacade()->getOrderCollection($orderCriteriaTransfer)->getOrders()->count();
-
         $this->tester->haveOrder([
             OrderTransfer::ORDER_REFERENCE => 'AAA',
         ], static::DEFAULT_OMS_PROCESS_NAME);
@@ -174,7 +171,11 @@ class GetOrderCollectionTest extends Unit
             ->setField(OrderTransfer::ORDER_REFERENCE)
             ->setIsAscending(true);
 
-        $orderCriteriaTransfer = (new OrderCriteriaTransfer())->addSort($sortTransfer);
+        $orderCriteriaTransfer = (new OrderCriteriaTransfer())
+            ->setOrderConditions(
+                (new OrderConditionsTransfer())->setOrderReferences(['AAA', 'AAAA', 'AAAAA']),
+            )
+            ->addSort($sortTransfer);
 
         // Act
         $orderCollectionTransfer = $this->tester->getFacade()->getOrderCollection($orderCriteriaTransfer);
@@ -182,7 +183,7 @@ class GetOrderCollectionTest extends Unit
         // Assert
         $orderTransfers = $orderCollectionTransfer->getOrders();
 
-        $this->assertCount($ordersCountBeforeTest + 3, $orderTransfers);
+        $this->assertCount(3, $orderTransfers);
 
         $this->assertSame('AAA', $orderTransfers->offsetGet(0)->getOrderReference());
         $this->assertSame('AAAA', $orderTransfers->offsetGet(1)->getOrderReference());

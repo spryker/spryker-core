@@ -81,7 +81,7 @@ class ZedHelper extends Module
 
         $tester->fillField('#auth_username', $username);
         $tester->fillField('#auth_password', $password);
-        $tester->click('Login');
+        $tester->click('button[type=submit]');
 
         $tester->waitForElementVisible('#side-menu');
 

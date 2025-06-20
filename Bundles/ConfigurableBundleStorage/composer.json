@@ -20,8 +20,8 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
+        "spryker/customer": "*",
         "spryker/event": "*",
-        "spryker/glossary": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
         "spryker/rabbit-mq": "*",

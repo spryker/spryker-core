@@ -12,10 +12,14 @@ use PDO;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
+use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 use Spryker\Zed\Propel\PropelConfig;
+use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 
 class StorageDatabaseHelper extends Module
 {
+    use ConfigHelperTrait;
+
     /**
      * @var string
      */
@@ -49,6 +53,13 @@ class StorageDatabaseHelper extends Module
     public function _beforeSuite($settings = []): void
     {
         parent::_beforeSuite($settings);
+
+        $this->getConfigHelper()->mockEnvironmentConfig(StorageDatabaseConstants::DB_HOST, Config::get(PropelConstants::ZED_DB_HOST));
+        $this->getConfigHelper()->mockEnvironmentConfig(StorageDatabaseConstants::DB_PORT, Config::get(PropelConstants::ZED_DB_PORT));
+        $this->getConfigHelper()->mockEnvironmentConfig(StorageDatabaseConstants::DB_DATABASE, Config::get(PropelConstants::ZED_DB_DATABASE));
+        $this->getConfigHelper()->mockEnvironmentConfig(StorageDatabaseConstants::DB_USERNAME, Config::get(PropelConstants::ZED_DB_USERNAME));
+        $this->getConfigHelper()->mockEnvironmentConfig(StorageDatabaseConstants::DB_PASSWORD, Config::get(PropelConstants::ZED_DB_PASSWORD));
+        $this->getConfigHelper()->mockEnvironmentConfig(StorageDatabaseConstants::DB_ENGINE, Config::get(PropelConstants::ZED_DB_ENGINE));
 
         $this->createFixtureStorageTable();
     }

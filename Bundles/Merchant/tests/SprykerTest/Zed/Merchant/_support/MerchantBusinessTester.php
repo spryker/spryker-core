@@ -152,7 +152,7 @@ class MerchantBusinessTester extends Actor
     }
 
     /**
-     * @param \Spryker\Zed\Event\Business\EventFacadeInterface $eventFacade
+     * @param (\object&\PHPUnit\Framework\MockObject\MockObject)|\Spryker\Zed\Event\Business\EventFacadeInterface|object $eventFacade
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return void

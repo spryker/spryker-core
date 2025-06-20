@@ -36,6 +36,7 @@ class MerchantExportedTest extends Unit
     public function testMerchantExportedMessageIsEmittedWhenMerchantsAreExported(): void
     {
         // Arrange
+        $this->tester->setupMessageBroker(MerchantExportedTransfer::class, 'merchant-commands');
         $this->tester->setStoreReferenceData([
             'DE' => 'dev-DE',
         ]);

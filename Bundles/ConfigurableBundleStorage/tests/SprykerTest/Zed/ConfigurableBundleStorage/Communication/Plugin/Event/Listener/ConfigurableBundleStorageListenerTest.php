@@ -48,7 +48,6 @@ class ConfigurableBundleStorageListenerTest extends Unit
         parent::setUp();
 
         $this->configurableBundleStorageRepository = new ConfigurableBundleStorageRepository();
-        $this->tester->addDependencies();
     }
 
     /**

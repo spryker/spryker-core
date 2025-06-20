@@ -47,7 +47,6 @@ class ConfigurableBundleTemplateImageStoragePublishListenerTest extends Unit
         parent::setUp();
 
         $this->configurableBundleStorageRepository = new ConfigurableBundleStorageRepository();
-        $this->tester->addDependencies();
     }
 
     /**

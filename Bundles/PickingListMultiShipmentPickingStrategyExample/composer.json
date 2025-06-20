@@ -12,10 +12,12 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/country": "*",
         "spryker/oms": "*",
         "spryker/propel": "*",
         "spryker/sales": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

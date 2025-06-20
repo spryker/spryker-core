@@ -26,8 +26,11 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
+        "spryker/customer": "*",
         "spryker/propel": "*",
         "spryker/ramsey-uuid": "*",
+        "spryker/sales": "*",
+        "spryker/tax-app": "*",
         "spryker/testify": "*"
     },
     "autoload": {

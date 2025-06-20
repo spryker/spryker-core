@@ -16,6 +16,7 @@ use Spryker\Client\StorageDatabase\StorageDatabaseClient;
 use Spryker\Client\StorageDatabase\StorageDatabaseDependencyProvider;
 use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\StorageDatabase\StorageDatabaseConfig;
 use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 use SprykerTest\Client\StorageDatabase\Helper\StorageDatabaseHelper;
@@ -128,6 +129,7 @@ class StorageDatabaseClientTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
+        $this->tester->mockEnvironmentConfig(StorageDatabaseConstants::DB_ENGINE, Config::get(PropelConstants::ZED_DB_ENGINE));
         $this->tester->setupStorageReaderPlugins();
 
         $this->setUpDependencies();

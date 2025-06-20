@@ -15,8 +15,11 @@
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
+        "spryker/category": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

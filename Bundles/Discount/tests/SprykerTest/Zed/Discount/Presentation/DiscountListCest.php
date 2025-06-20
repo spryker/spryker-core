@@ -52,7 +52,7 @@ class DiscountListCest
      */
     public function showADiscountInList(DiscountPresentationTester $i, DiscountEditPage $editPage, DiscountViewPage $viewPage): void
     {
-        $name = 'Works as test discount';
+        $name = 'Works as test discount' . uniqid();
         $currencyTransfer = $i->haveCurrencyTransfer([CurrencyTransfer::CODE => static::CURRENCY_CODE]);
         $discount = $i->haveDiscount(['displayName' => $name], [
             [

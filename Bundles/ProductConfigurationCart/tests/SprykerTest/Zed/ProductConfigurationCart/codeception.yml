@@ -27,3 +27,5 @@ suites:
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\ProductConfiguration\Helper\ProductConfigurationHelper
                 - \SprykerTest\Shared\QuoteRequest\Helper\QuoteRequestHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
