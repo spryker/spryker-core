@@ -1,0 +1,39 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'google-map',
+    tag: 'google-map',
+} %}
+
+{% define data = {
+    key: required,
+} %}
+
+{% define attributes = {
+    center: { lat: 51.1657, lng: 10.4515 } | json_encode,
+    locations: null,
+    marker: {
+        path: 0,
+        scale: 8,
+        fillColor: '#000',
+        fillOpacity: 1,
+        strokeColor: '#fff',
+        strokeWeight: 2,
+    } | json_encode
+} %}
+
+{% block body %}
+    {% block map %}
+        <div class="{{ config.name }}__container {{ config.jsName }}__container"></div>
+    {% endblock %}
+
+    {% block script %}
+        {% include molecule('script-loader') with {
+            class: "#{config.jsName}__script-loader",
+            attributes: {
+                src: "https://maps.googleapis.com/maps/api/js?key=#{data.key}",
+                name: config.name,
+            },
+        } only %}
+    {% endblock %}
+{% endblock %}

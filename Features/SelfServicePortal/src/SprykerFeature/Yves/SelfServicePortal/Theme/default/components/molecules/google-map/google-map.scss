@@ -1,0 +1,12 @@
+@mixin self-service-portal-google-map($name: '.google-map') {
+    #{$name} {
+        height: 100%;
+
+        &__container {
+            height: 100%;
+            width: 100%;
+        }
+
+        @content;
+    }
+}

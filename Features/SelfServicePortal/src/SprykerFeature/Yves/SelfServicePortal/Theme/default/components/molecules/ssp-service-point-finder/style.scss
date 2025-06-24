@@ -1,0 +1,3 @@
+@include helper-import(molecule, ssp-service-point-finder) {
+    @include self-service-portal-ssp-service-point-finder;
+}

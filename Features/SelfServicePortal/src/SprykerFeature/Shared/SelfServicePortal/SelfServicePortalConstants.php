@@ -70,4 +70,14 @@ class SelfServicePortalConstants
      * @var string
      */
     public const BASE_URL_BACKOFFICE = 'SELF_SERVICE_PORTAL:BASE_URL_BACKOFFICE';
+
+    /**
+     * Specification:
+     * - Defines the Google Maps API key.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const GOOGLE_MAPS_API_KEY = 'SELF_SERVICE_PORTAL:GOOGLE_MAPS_API_KEY';
 }

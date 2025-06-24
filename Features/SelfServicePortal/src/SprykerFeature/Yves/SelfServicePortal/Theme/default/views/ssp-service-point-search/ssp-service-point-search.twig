@@ -1,0 +1,16 @@
+{% extends view('service-point-search', 'ServicePointWidget') %}
+
+{% block body %}
+    {% include molecule('ssp-service-point-finder', 'SelfServicePortal') with {
+        class: data.extraClassName,
+        data: {
+            content: data.searchResults,
+            fieldExtraAttributes: searchFieldAttributes,
+            googleMapsApiKey: _widget.googleMapsApiKey,
+        },
+        attributes: {
+            url: path(data.searchRoute),
+            'query-string': queryStringObject | url_encode ~ '&searchString',
+        },
+    } only %}
+{% endblock %}

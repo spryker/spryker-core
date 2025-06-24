@@ -153,6 +153,8 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Service\Storage\Expander\Shipm
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Storage\Expander\ShipmentTypeProductConcreteStorageExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Updater\OrderItemScheduleUpdater;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Updater\OrderItemScheduleUpdaterInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePointSearchCoordinatesExpander;
+use SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePointSearchCoordinatesExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\CompanyBusinessUnitFileQueryStrategy;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\CompanyFileQueryStrategy;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\CompanyUserFileQueryStrategy;
@@ -485,6 +487,14 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return new ServicePointItemExpander(
             $this->createServicePointReader(),
         );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePointSearchCoordinatesExpanderInterface
+     */
+    public function createServicePointSearchCoordinatesExpander(): ServicePointSearchCoordinatesExpanderInterface
+    {
+        return new ServicePointSearchCoordinatesExpander();
     }
 
     /**

@@ -87,6 +87,13 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     protected const SERVICE_LIST_DEFAULT_ITEMS_PER_PAGE = 10;
 
     /**
+     * @uses \SprykerShop\Yves\ServicePointWidget\ServicePointWidgetConfig::SEARCH_RESULT_LIMIT
+     *
+     * @var int
+     */
+    protected const SEARCH_RESULT_LIMIT = 10;
+
+    /**
      * @var array<string, string>
      */
     protected const BACK_URL_TYPE_TO_PATH_MAP = [
@@ -232,6 +239,20 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     public function getServiceListDefaultItemsPerPage(): int
     {
         return static::SERVICE_LIST_DEFAULT_ITEMS_PER_PAGE;
+    }
+
+    /**
+     * Specification:
+     * - Defines number of search results returned in single batch.
+     * - Used as a fallback.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getSearchResultLimit(): int
+    {
+        return static::SEARCH_RESULT_LIMIT;
     }
 
     /**
@@ -657,5 +678,18 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     public function getShipmentTypeInCenterService(): string
     {
         return static::SHIPMENT_TYPE_IN_CENTER_SERVICE;
+    }
+
+    /**
+     * Specification:
+     * - Returns the Google Maps API key.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getGoogleMapsApiKey(): string
+    {
+        return $this->get(SelfServicePortalConstants::GOOGLE_MAPS_API_KEY);
     }
 }

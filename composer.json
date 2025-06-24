@@ -983,6 +983,7 @@
         "spryker/service-point-carts-rest-api": "*",
         "spryker/service-point-data-import": "*",
         "spryker/service-point-search": "*",
+        "spryker/service-point-search-extension": "*",
         "spryker/service-point-storage": "*",
         "spryker/service-points-backend-api": "*",
         "spryker/service-points-rest-api": "*",

@@ -18,6 +18,14 @@ use Spryker\Shared\ServicePointSearch\ServicePointSearchConfig;
 class ServicePointSearchDataMapper implements ServicePointSearchDataMapperInterface
 {
     /**
+     * @param list<\Spryker\Zed\ServicePointSearchExtension\Dependency\Plugin\ServicePointSearchDataExpanderPluginInterface> $servicePointSearchDataExpanderPlugins
+     */
+    public function __construct(
+        protected array $servicePointSearchDataExpanderPlugins = []
+    ) {
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -25,7 +33,7 @@ class ServicePointSearchDataMapper implements ServicePointSearchDataMapperInterf
      */
     public function mapServicePointToSearchData(ServicePointTransfer $servicePointTransfer, StoreTransfer $storeTransfer): array
     {
-        return [
+        $searchData = [
             ServicePointIndexMap::TYPE => ServicePointSearchConfig::SERVICE_POINT_RESOURCE_NAME,
             ServicePointIndexMap::STORE => $storeTransfer->getName(),
             ServicePointIndexMap::SEARCH_RESULT_DATA => $this->getSearchResultData($servicePointTransfer),
@@ -36,6 +44,8 @@ class ServicePointSearchDataMapper implements ServicePointSearchDataMapperInterf
             ServicePointIndexMap::STRING_SORT => $this->getStringSortData($servicePointTransfer),
             ServicePointIndexMap::SERVICE_TYPES => $this->getServiceTypesData($servicePointTransfer),
         ];
+
+        return $this->executeServicePointSearchDataExpanderPlugins($searchData, $servicePointTransfer);
     }
 
     /**
@@ -197,5 +207,20 @@ class ServicePointSearchDataMapper implements ServicePointSearchDataMapperInterf
         }
 
         return array_unique($serviceTypesData);
+    }
+
+    /**
+     * @param array<string, mixed> $searchData
+     * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
+     *
+     * @return array<string, mixed>
+     */
+    protected function executeServicePointSearchDataExpanderPlugins(array $searchData, ServicePointTransfer $servicePointTransfer): array
+    {
+        foreach ($this->servicePointSearchDataExpanderPlugins as $servicePointSearchDataExpanderPlugin) {
+            $searchData = $servicePointSearchDataExpanderPlugin->expand($searchData, $servicePointTransfer);
+        }
+
+        return $searchData;
     }
 }

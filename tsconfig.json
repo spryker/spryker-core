@@ -18,7 +18,10 @@
         "rootDir": ".",
         "removeComments": true,
         "paths": {
-            "ShopUi/*": ["../spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Theme/default/*"]
+            "ShopUi/*": ["../spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Theme/default/*"],
+            "ServicePointWidget/*": [
+                "../spryker-shop/Bundles/ServicePointWidget/src/SprykerShop/Yves/ServicePointWidget/Theme/default/*"
+            ]
         }
     }
 }

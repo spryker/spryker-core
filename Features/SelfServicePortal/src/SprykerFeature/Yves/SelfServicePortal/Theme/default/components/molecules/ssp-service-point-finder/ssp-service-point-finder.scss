@@ -1,0 +1,55 @@
+@mixin self-service-portal-ssp-service-point-finder($name: '.ssp-service-point-finder') {
+    @include service-point-widget-service-point-finder(#{$name});
+
+    #{$name} {
+        min-height: 80vh;
+
+        &__container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        &__content,
+        &__search {
+            @include helper-breakpoint(lg) {
+                width: 40%;
+            }
+        }
+
+        &__search {
+            margin: 0;
+            padding: 0 1.5rem 0.5rem 0;
+            margin-left: 1.5rem;
+        }
+
+        &__content {
+            height: 100%;
+
+            @include helper-breakpoint(lg) {
+                overflow: unset;
+            }
+        }
+
+        &__map {
+            height: 12.5rem;
+            padding: 0 0.9375rem;
+            margin-bottom: 0.625rem;
+            flex-shrink: 0;
+
+            @include helper-breakpoint(lg) {
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 100%;
+                width: 60%;
+                padding: 0 0 0 0.5rem;
+                margin-bottom: 0;
+            }
+        }
+
+        @content;
+    }
+}

@@ -60,7 +60,9 @@ class ServicePointSearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createServicePointSearchDataMapper(): ServicePointSearchDataMapperInterface
     {
-        return new ServicePointSearchDataMapper();
+        return new ServicePointSearchDataMapper(
+            $this->getServicePointSearchDataExpanderPlugins(),
+        );
     }
 
     /**
@@ -104,5 +106,13 @@ class ServicePointSearchBusinessFactory extends AbstractBusinessFactory
     public function getUtilEncodingService(): ServicePointSearchToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ServicePointSearchDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ServicePointSearchExtension\Dependency\Plugin\ServicePointSearchDataExpanderPluginInterface>
+     */
+    public function getServicePointSearchDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ServicePointSearchDependencyProvider::PLUGINS_SERVICE_POINT_SEARCH_DATA_EXPANDER);
     }
 }

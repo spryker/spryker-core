@@ -40,6 +40,11 @@ class ServicePointSearchDependencyProvider extends AbstractBundleDependencyProvi
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_SERVICE_POINT_SEARCH_DATA_EXPANDER = 'PLUGINS_SERVICE_POINT_SEARCH_DATA_EXPANDER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -52,6 +57,7 @@ class ServicePointSearchDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addServicePointSearchDataExpanderPlugins($container);
 
         return $container;
     }
@@ -132,5 +138,27 @@ class ServicePointSearchDependencyProvider extends AbstractBundleDependencyProvi
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addServicePointSearchDataExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SERVICE_POINT_SEARCH_DATA_EXPANDER, function () {
+            return $this->getServicePointSearchDataExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ServicePointSearchExtension\Dependency\Plugin\ServicePointSearchDataExpanderPluginInterface>
+     */
+    protected function getServicePointSearchDataExpanderPlugins(): array
+    {
+        return [];
     }
 }

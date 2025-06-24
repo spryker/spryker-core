@@ -27,7 +27,7 @@
 } %}
 
 {% block locationsWidget %}
-    {% widget 'ServicePointSearchWidget' args [data.serviceTypeKey, data.serviceTypeUuid, data.shipmentTypeUuid, [], null, true, data.items, 'ssp/service-point-widget/search'] with {
+    {% widget 'SspServicePointSearchWidget' args [data.serviceTypeKey, data.serviceTypeUuid, data.shipmentTypeUuid, [], null, true, data.items, 'ssp/service-point-widget/search'] with {
         data: {
             extraClassName: attributes['finder-class-name'],
             quantity: data.quantity,
@@ -61,7 +61,7 @@
 
     {% block popup %}
         {% include molecule('main-popup') with {
-            modifiers: ['spaceless', 'flex-content'],
+            modifiers: ['spaceless', 'flex-content', 'wide'],
             class: config.jsName ~ '__popup',
             data: {
                 title: 'service_point_widget.select_your_store_title' | trans,

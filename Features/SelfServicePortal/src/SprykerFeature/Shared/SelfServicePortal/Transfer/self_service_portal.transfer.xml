@@ -274,6 +274,7 @@
         <property name="name" type="string"/>
         <property name="uuid" type="string"/>
         <property name="isActive" type="bool"/>
+        <property name="address" type="ServicePointAddress" strict="true"/>
     </transfer>
 
     <transfer name="Merchant">
@@ -461,6 +462,7 @@
     </transfer>
 
     <transfer name="ServicePointSearch" strict="true">
+        <property name="address" type="ServicePointAddress"/>
     </transfer>
 
     <transfer name="SaveOrder">
@@ -1043,6 +1045,11 @@
         <property name="reference" type="string"/>
         <property name="name" type="string"/>
         <property name="serialNumber" type="string"/>
+    </transfer>
+
+    <transfer name="ServicePointAddress" strict="true">
+        <property name="latitude" type="string"/>
+        <property name="longitude" type="string"/>
     </transfer>
 
     <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">

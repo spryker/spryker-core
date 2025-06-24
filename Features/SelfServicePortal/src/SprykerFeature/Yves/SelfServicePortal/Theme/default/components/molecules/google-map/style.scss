@@ -1,0 +1,3 @@
+@include helper-import(molecule, google-map) {
+    @include self-service-portal-google-map();
+}

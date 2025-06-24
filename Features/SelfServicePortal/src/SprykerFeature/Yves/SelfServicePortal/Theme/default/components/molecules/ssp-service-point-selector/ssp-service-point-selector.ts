@@ -32,9 +32,12 @@ export default class SspServicePointSelector extends Component {
         }
 
         this.finder = <ServicePointFinder>document.getElementsByClassName(this.finderClassName)[0];
-        this.finder.addEventListener(EVENT_SET_SERVICE_POINT, (event: CustomEvent<ServicePointEventDetail>) =>
-            this.onServicePointSelected(event.detail),
-        );
+
+        if (this.finder) {
+            this.finder.addEventListener(EVENT_SET_SERVICE_POINT, (event: CustomEvent<ServicePointEventDetail>) =>
+                this.onServicePointSelected(event.detail),
+            );
+        }
     }
 
     protected onServicePointSelected(detail: ServicePointEventDetail): void {
