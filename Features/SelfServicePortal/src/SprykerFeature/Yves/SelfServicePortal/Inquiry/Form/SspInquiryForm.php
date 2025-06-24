@@ -10,8 +10,8 @@ namespace SprykerFeature\Yves\SelfServicePortal\Inquiry\Form;
 use Generated\Shared\Transfer\FileUploadTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use SprykerFeature\Yves\SelfServicePortal\Inquiry\Form\Validator\Constraints\Files;
+use SprykerShop\Yves\ShopUi\Form\Type\DropzoneType;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -152,7 +152,7 @@ class SspInquiryForm extends AbstractType
      */
     protected function addFileField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_FILES, FileType::class, [
+        $builder->add(static::FIELD_FILES, DropzoneType::class, [
             'constraints' => [
                 new Count([
                     'max' => $this->getConfig()->getInquiryFileMaxCount(),

@@ -9,6 +9,7 @@
         "spryker-shop/customer-page": "^2.60.0",
         "spryker-shop/shop-application": "^1.0.0",
         "spryker-shop/shop-application-extension": "^1.2.0",
+        "spryker-shop/shop-ui": "^1.94.0",
         "spryker/cart-extension": "^4.2.0",
         "spryker/cms-block-storage-extension": "^1.0.0",
         "spryker/comment": "^1.6.0",
