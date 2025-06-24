@@ -84,7 +84,7 @@ class MaintenanceController extends AbstractController
         $document = $this->getFacade()->readDocument($documentId, $indexName);
 
         return $this->viewResponse([
-            'data' => var_export($document->getData(), true),
+            'data' => $document->getData(),
             'documentId' => $documentId,
             'indexName' => $indexName,
         ]);

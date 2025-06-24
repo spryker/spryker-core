@@ -72,7 +72,7 @@ class MaintenanceController extends AbstractController
         $value = $this->getFactory()->getStorageFacade()->get($key);
 
         return $this->viewResponse([
-            'value' => var_export($value, true),
+            'value' => $value,
             'key' => $key,
             'referenceKey' => $this->getReferenceKey($value),
         ]);

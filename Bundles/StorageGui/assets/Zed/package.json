@@ -1,0 +1,8 @@
+{
+    "private": true,
+    "name": "spryker-zed-storage-gui",
+    "version": "1.0.0",
+    "dependencies": {
+        "highlight.js": "^11.11.1"
+    }
+}

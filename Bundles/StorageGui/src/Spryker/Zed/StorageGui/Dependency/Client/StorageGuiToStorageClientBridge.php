@@ -57,6 +57,16 @@ class StorageGuiToStorageClientBridge implements StorageGuiToStorageClientInterf
     }
 
     /**
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function get(string $key)
+    {
+        return $this->storageClient->get($key);
+    }
+
+    /**
      * @return int
      */
     public function getCountItems(): int

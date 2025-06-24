@@ -8,17 +8,48 @@
 
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Search Key' } %}
-
         {% block widget_content %}
+            <div class="col-sm-12 storage-key">
+                <div class="clearfix storage-key__title">
+                    <h1 class="pull-left">{{ key }}</h1>
 
-            <h1>{{ key }}</h1>
-            {% if referenceKey %}
-            <a href="/storage-gui/maintenance/key?key={{ referenceKey }}">{{ referenceKey }}</a>
-            {% endif %}
-            <pre>{{ value }}</pre>
+                    <div class="pull-right">
+                        {% if referenceKey %}
+                            <a href="/storage-gui/maintenance/key?key={{ referenceKey }}">{{ referenceKey }}</a>
+                        {% endif %}
+                        <button
+                            data-copy-target="key-json-raw"
+                            data-success-feedback-text="{{ 'Copied!' | trans }}"
+                            data-failed-feedback-text="{{ 'Failed to copy' | trans }}"
+                            class="btn btn-sm btn-default copy-button"
+                        >
+                            <span class="glyphicon glyphicon-copy" aria-hidden="true"></span> {{ 'Copy' | trans }}
+                        </button>
 
+                        <button
+                            data-download-target="key-json-raw"
+                            data-success-feedback-text="{{ 'Downloaded!' | trans }}"
+                            data-failed-feedback-text="{{ 'Failed to download' | trans }}"
+                            data-filename="{{ key }}.json"
+                            class="btn btn-sm btn-default download-button"
+                        >
+                            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> {{ 'Download' | trans }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <pre><code class="json" id="key-json-raw">{{ value | json_encode(constant('JSON_PRETTY_PRINT')) }}</code></pre>
         {% endblock %}
-
     {% endembed %}
+{% endblock %}
 
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-storage-gui.css') }}" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-storage-gui.js') }}"></script>
 {% endblock %}

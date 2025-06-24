@@ -155,6 +155,16 @@ class StorageTable extends AbstractTable
     /**
      * @param string $key
      *
+     * @return bool
+     */
+    protected function isRedisPattern(string $key): bool
+    {
+        return preg_match('/[*?\[\]]/', $key) === 1;
+    }
+
+    /**
+     * @param string $key
+     *
      * @return string
      */
     protected function createKeyUrl(string $key): string
@@ -167,6 +177,17 @@ class StorageTable extends AbstractTable
      */
     protected function getKeys(): array
     {
+        $searchTerm = $this->getSearchTerm();
+        if (!$searchTerm) {
+            return [];
+        }
+        if (!$this->isRedisPattern($searchTerm)) {
+            $value = $this->storageClient->get($this->getSearchTerm());
+            if ($value) {
+                return [$this->getSearchTerm()];
+            }
+        }
+
         try {
             $keys = $this->storageClient->scanKeys(
                 $this->getSearchTerm(),

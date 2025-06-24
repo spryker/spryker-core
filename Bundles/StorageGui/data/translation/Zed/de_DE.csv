@@ -7,3 +7,18 @@ Storage,Speicher
 "Storage overview",Speicherübersicht
 "Drop storage timestamps","Speicherungszeitstempel verwerfen"
 "No droppable timestamps found.","Es wurden keine Zeitstempel gefunden die verworfen werden können."
+"storage help","Die verwendete Datenbank entspricht der Konfiguration des aktuellen Shops.
+<br>Um eine andere Datenbank zu verwenden, melden Sie sich im entsprechenden Shop an.
+
+<br>Redis-Mustererkennung:
+<br>* → beliebige Anzahl von Zeichen
+<br>? → genau ein beliebiges Zeichen
+<br>[abc] → genau ein Zeichen: a, b oder c
+<br>[a-z] → ein Zeichen im Bereich von a bis z
+<br>[^x] → ein beliebiges Zeichen, außer 'x'"
+Copy,Kopieren
+Copied!,Kopiert!
+Download,Herunterladen
+Downloaded!,Heruntergeladen!
+"Failed to copy","Kopieren fehlgeschlagen"
+"Failed to download","Herunterladen fehlgeschlagen"

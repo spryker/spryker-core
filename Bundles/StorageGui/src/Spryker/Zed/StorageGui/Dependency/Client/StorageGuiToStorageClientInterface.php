@@ -35,6 +35,13 @@ interface StorageGuiToStorageClientInterface
     public function getMulti(array $keys): array;
 
     /**
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function get(string $key);
+
+    /**
      * @return int
      */
     public function getCountItems(): int;

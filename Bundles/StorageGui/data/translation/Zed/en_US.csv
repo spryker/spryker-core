@@ -7,3 +7,18 @@ Storage,Storage
 "Storage overview","Storage overview"
 "Drop storage timestamps","Drop storage timestamps"
 "No droppable timestamps found.","No droppable timestamps found."
+"storage help","The database used matches the configuration of the current store.
+<br>To use a different database, log in to the corresponding store.
+
+<br>Redis pattern matching:
+<br>*  → any number of characters
+<br>?  → any single character
+<br>[abc]  → matches one character: a, b, or c
+<br>[a-z]  → matches one character in range a to z
+<br>[^x]  → matches any character except 'x'"
+Copy,Copy
+Copied!,Copied!
+Download,Download
+Downloaded!,Downloaded!
+"Failed to copy","Failed to copy"
+"Failed to download","Failed to download"

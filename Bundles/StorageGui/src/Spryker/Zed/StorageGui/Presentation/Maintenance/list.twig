@@ -5,15 +5,35 @@
 {% block head_title widget_title | trans %}
 
 {% block content %}
-
     {% embed '@Gui/Partials/widget.twig' %}
-
+        {% block widget_title -%}
+            <div class="form-group">
+                <h5>
+                    {{ widget_title | default('') | trans }}
+                </h5>
+                <span
+                    class="pull-right storage-tooltip"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    data-html="true"
+                    title="{{ "storage help" | trans }}"
+                >
+                    <i class="glyphicon glyphicon-question-sign"></i>
+                </span>
+            </div>
+        {%- endblock %}
         {% block widget_content %}
-
             {{ table | raw }}
-
         {% endblock %}
-
     {% endembed %}
+{% endblock %}
 
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-storage-gui.css') }}" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-storage-list-gui.js') }}"></script>
 {% endblock %}
