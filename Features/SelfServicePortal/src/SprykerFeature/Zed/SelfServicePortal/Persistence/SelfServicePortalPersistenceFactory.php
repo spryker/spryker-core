@@ -18,6 +18,7 @@ use Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractTypeQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductAbstractTypeQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAssetQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySalesProductAbstractTypeQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
@@ -39,7 +40,6 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspAssetMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspInquiryMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspInquiryMapperInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspServiceMapper;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\Propel\AbstractSpySalesProductAbstractTypeQuery;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\CompanyBusinessUnitFileSaver;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\CompanyFileSaver;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\CompanyUserFileSaver;
@@ -88,9 +88,9 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesProductAbstractTypeQuery
      */
-    public function createSalesProductAbstractTypeQuery(): AbstractSpySalesProductAbstractTypeQuery
+    public function createSalesProductAbstractTypeQuery(): SpySalesProductAbstractTypeQuery
     {
-        return AbstractSpySalesProductAbstractTypeQuery::create();
+        return SpySalesProductAbstractTypeQuery::create();
     }
 
     /**
