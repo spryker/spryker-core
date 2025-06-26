@@ -26,11 +26,6 @@ class PageController extends AbstractController
     protected const GLOSSARY_KEY_EMAIL_CHANGE_REQUEST_SUCCESS = 'customer.data_change_request.email_change.success';
 
     /**
-     * @var string
-     */
-    protected const GLOSSARY_KEY_EMAIL_CHANGE_REQUEST_ERROR = 'customer.data_change_request.email_change.error';
-
-    /**
      * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_PROFILE
      *
      * @var string
@@ -47,14 +42,6 @@ class PageController extends AbstractController
         $customerDataChangeRequestTransfer = new CustomerDataChangeRequestTransfer();
         $customerDataChangeRequestTransfer->setVerificationToken((string)$request->query->get('verification_token'));
         $customerDataChangeRequestTransfer->setType(CustomerDataChangeRequestTypeEnum::EMAIL->value);
-
-        $customerTransfer = $this->getFactory()->getCustomerClient()->findCustomerRawData();
-
-        if (!$customerTransfer) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_EMAIL_CHANGE_REQUEST_ERROR);
-
-            return $this->redirectResponseInternal(static::ROUTE_NAME_CUSTOMER_PROFILE);
-        }
 
         $customerDataChangeResponseTransfer = $this->getClient()->changeCustomerData($customerDataChangeRequestTransfer);
 
