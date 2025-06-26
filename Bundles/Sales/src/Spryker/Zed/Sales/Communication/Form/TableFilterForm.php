@@ -101,6 +101,7 @@ class TableFilterForm extends AbstractType
         $resolver->setRequired([
             TableFilterFormDataProvider::OPTION_STATUSES,
             TableFilterFormDataProvider::OPTION_STORES,
+            TableFilterFormDataProvider::OPTION_CURRENT_TIMEZONE,
         ]);
 
         $resolver->setDefaults([
@@ -122,8 +123,8 @@ class TableFilterForm extends AbstractType
         $this
             ->addStatusField($builder, $options)
             ->addStoreField($builder, $options)
-            ->addOrderDateFromField($builder)
-            ->addOrderDateToField($builder);
+            ->addOrderDateFromField($builder, $options)
+            ->addOrderDateToField($builder, $options);
     }
 
     /**
@@ -178,16 +179,18 @@ class TableFilterForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addOrderDateFromField(FormBuilderInterface $builder)
+    protected function addOrderDateFromField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_ORDER_DATE_FROM, DateTimeType::class, [
             'label' => static::LABEL_ORDER_DATE_FROM,
             'widget' => 'single_text',
             'required' => false,
             'html5' => true,
+            'view_timezone' => $options[TableFilterFormDataProvider::OPTION_CURRENT_TIMEZONE],
         ]);
 
         $builder->get(static::FIELD_ORDER_DATE_FROM)
@@ -198,16 +201,18 @@ class TableFilterForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addOrderDateToField(FormBuilderInterface $builder)
+    protected function addOrderDateToField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_ORDER_DATE_TO, DateTimeType::class, [
             'label' => static::LABEL_ORDER_DATE_TO,
             'widget' => 'single_text',
             'required' => false,
             'html5' => true,
+            'view_timezone' => $options[TableFilterFormDataProvider::OPTION_CURRENT_TIMEZONE],
         ]);
 
         $builder->get(static::FIELD_ORDER_DATE_TO)

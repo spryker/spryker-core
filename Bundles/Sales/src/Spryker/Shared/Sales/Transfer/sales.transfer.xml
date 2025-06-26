@@ -443,6 +443,7 @@
 
     <transfer name="Store">
         <property name="name" type="string"/>
+        <property name="timezone" type="string"/>
     </transfer>
 
     <transfer name="StoreCriteria">

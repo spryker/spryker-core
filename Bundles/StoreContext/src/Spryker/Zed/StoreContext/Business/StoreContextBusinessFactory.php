@@ -44,6 +44,7 @@ class StoreContextBusinessFactory extends AbstractBusinessFactory
     {
         return new StoreExpander(
             $this->createStoreContextReader(),
+            $this->getConfig(),
         );
     }
 

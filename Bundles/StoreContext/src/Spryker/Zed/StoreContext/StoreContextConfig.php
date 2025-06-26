@@ -30,4 +30,17 @@ class StoreContextConfig extends AbstractBundleConfig
             'GLUE_BACKEND',
         ];
     }
+
+    /**
+     * Specification:
+     * - Returns the application name.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getApplicationName(): string
+    {
+        return APPLICATION;
+    }
 }

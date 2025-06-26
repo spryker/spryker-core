@@ -25,6 +25,11 @@ class TableFilterFormDataProvider
     public const OPTION_STATUSES = 'statuses';
 
     /**
+     * @var string
+     */
+    public const OPTION_CURRENT_TIMEZONE = 'current_timezone';
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface $storeFacade
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
@@ -52,6 +57,7 @@ class TableFilterFormDataProvider
         return [
             static::OPTION_STATUSES => $this->getStatusChoices(),
             static::OPTION_STORES => $this->getStoreChoices(),
+            static::OPTION_CURRENT_TIMEZONE => $this->storeFacade->getCurrentStore(true)->getTimezone(),
         ];
     }
 

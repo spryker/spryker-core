@@ -8,22 +8,20 @@
 namespace Spryker\Zed\StoreContext\Business\Expander;
 
 use Generated\Shared\Transfer\StoreCollectionTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\StoreContext\Business\Reader\StoreContextReaderInterface;
+use Spryker\Zed\StoreContext\StoreContextConfig;
 
 class StoreExpander implements StoreExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\StoreContext\Business\Reader\StoreContextReaderInterface
-     */
-    protected StoreContextReaderInterface $storeContextReader;
-
-    /**
      * @param \Spryker\Zed\StoreContext\Business\Reader\StoreContextReaderInterface $storeContextReader
+     * @param \Spryker\Zed\StoreContext\StoreContextConfig $storeContextConfig
      */
     public function __construct(
-        StoreContextReaderInterface $storeContextReader
+        protected StoreContextReaderInterface $storeContextReader,
+        protected StoreContextConfig $storeContextConfig
     ) {
-        $this->storeContextReader = $storeContextReader;
     }
 
     /**
@@ -41,5 +39,44 @@ class StoreExpander implements StoreExpanderInterface
         }
 
         return $storeCollectionTransfer;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function expandStoreTransfersWithTimezone(array $storeTransfers): array
+    {
+        $expandedStoreTransfers = [];
+        foreach ($storeTransfers as $storeTransfer) {
+            $expandedStoreTransfers[] = $this->expandStoreWithTimezone($storeTransfer);
+        }
+
+        return $expandedStoreTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function expandStoreWithTimezone(StoreTransfer $storeTransfer): StoreTransfer
+    {
+        if ($storeTransfer->getApplicationContextCollection() === null) {
+            return $storeTransfer;
+        }
+
+        foreach ($storeTransfer->getApplicationContextCollectionOrFail()->getApplicationContexts() as $storeApplicationContextTransfer) {
+            if ($storeApplicationContextTransfer->getApplication() === $this->storeContextConfig->getApplicationName()) {
+                return $storeTransfer->setTimezone($storeApplicationContextTransfer->getTimezoneOrFail());
+            }
+
+            if ($storeApplicationContextTransfer->getApplication() === null) {
+                $storeTransfer->setTimezone($storeApplicationContextTransfer->getTimezoneOrFail());
+            }
+        }
+
+        return $storeTransfer;
     }
 }

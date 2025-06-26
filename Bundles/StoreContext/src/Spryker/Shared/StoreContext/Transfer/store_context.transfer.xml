@@ -22,6 +22,7 @@
         <property name="applicationContextCollection" type="StoreApplicationContextCollection" strict="true"/>
         <property name="name" type="string"/>
         <property name="idStore" type="int"/>
+        <property name="timezone" type="string"/>
     </transfer>
 
     <transfer name="StoreStorage">

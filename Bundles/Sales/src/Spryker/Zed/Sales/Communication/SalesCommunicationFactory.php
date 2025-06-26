@@ -310,12 +310,4 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
             $this->getRepository(),
         );
     }
-
-    /**
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery
-     */
-    protected function getOmsOrderItemStatePropelQuery()
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::PROPEL_QUERY_OMS_ORDER_ITEM_STATE);
-    }
 }

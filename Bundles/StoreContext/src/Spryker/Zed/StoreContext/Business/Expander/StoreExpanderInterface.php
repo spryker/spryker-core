@@ -17,4 +17,11 @@ interface StoreExpanderInterface
      * @return \Generated\Shared\Transfer\StoreCollectionTransfer
      */
     public function expandStoreCollectionTransferWithStoreContext(StoreCollectionTransfer $storeCollectionTransfer): StoreCollectionTransfer;
+
+    /**
+     * @param list<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function expandStoreTransfersWithTimezone(array $storeTransfers): array;
 }
