@@ -15,13 +15,11 @@
 {% endblock %}
 
 {% block content %}
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Update Assets' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Add Assets' | trans } %}
         {% block widget_content %}
-            <div class="ibox-content">
-                {% include '@SelfServicePortal/_partials/asset-form.twig' with {
-                    sspAssetForm: sspAssetForm,
-                } only %}
-            </div>
+            {% include '@SelfServicePortal/_partials/asset-form.twig' with {
+                sspAssetForm: sspAssetForm,
+            } only %}
         {% endblock %}
     {% endembed %}
 {% endblock %}

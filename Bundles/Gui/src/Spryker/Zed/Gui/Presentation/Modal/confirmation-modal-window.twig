@@ -19,7 +19,7 @@
     {% block modal %}
         {% include '@Gui/Modal/modal.twig' with {
             id: id | default('confirmation-modal-window'),
-            title: title | default('Confirm action') | trans,
+            title: confirmTitle | default('Confirm action') | trans,
             content: content,
             footer: footer
         } %}

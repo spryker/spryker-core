@@ -36,6 +36,7 @@
         {% set rows = (data.inquiries | default([])) | map(inquiry => {
             reference: inquiry.reference,
             type: "self_service_portal.inquiry.type.#{inquiry.type | lower}" | trans,
+            subject: inquiry.subject,
             date: inquiry.createdDate,
             status: { label: "self_service_portal.inquiry.status.#{inquiry.status}" | lower | trans, status: inquiry.status },
             actions: [{ url: path('customer/ssp-inquiry/details', {'reference': inquiry.reference}), label: 'customer.self_service_portal.inquiry.view_ssp_inquiry' }],

@@ -39,7 +39,7 @@
 
                     {% block button %}
                         <label for="{{ inputAttrs.id }}" class="image-uploader__button btn btn-outlined">
-                            {{ 'Upload' | trans }}
+                            {{ 'Upload Image' | trans }}
                         </label>
                     {% endblock %}
 
@@ -97,16 +97,16 @@
         {% block popup %}
             {% embed '@Gui/Modal/confirmation-modal-window.twig' with {
                 id: attributes['data-id'],
-                title: 'Confirm delete',
+                confirmTitle: 'Confirm delete',
                 message: 'Are you sure you want to delete the image?',
             } only %}
                 {% block modal %}
                     {% set footer %}
-                        <button type="button" class="btn btn--hollow" data-dismiss="modal">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">
                             {{ 'Cancel' | trans }}
                         </button>
-                        <button type="button" data-id="{{ id }}" class="js-image-uploader__delete btn" data-dismiss="modal">
-                            {{ 'Confirm' | trans }}
+                        <button type="button" data-id="{{ id }}" class="js-image-uploader__delete btn btn-danger" data-dismiss="modal">
+                            {{ 'Remove' | trans }}
                         </button>
                     {% endset %}
 

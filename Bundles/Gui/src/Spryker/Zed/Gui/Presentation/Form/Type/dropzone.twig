@@ -43,7 +43,7 @@
 
                     {% block button %}
                         <button type="button" class="btn btn-primary">
-                            <i class="fa fa-plus"></i>
+                            <i class="fa fa-upload"></i>
                             {{ 'Upload file' | trans }}
                         </button>
                     {% endblock %}
@@ -63,9 +63,7 @@
             <template data-id="input-dropzone-file">
                 <span class="input-dropzone__file js-input-dropzone__file">
                     <i class="fa fa-times input-dropzone__file-icon"></i>
-
                     <span class="input-dropzone__file-name js-input-dropzone__file-name"></span>
-
                     <span>(<span class="input-dropzone__file-size js-input-dropzone__file-size"></span> {{ 'MB' | trans }})</span>
                 </span>
             </template>

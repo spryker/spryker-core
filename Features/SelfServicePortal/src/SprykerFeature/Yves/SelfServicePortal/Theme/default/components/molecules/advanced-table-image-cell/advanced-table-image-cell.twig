@@ -10,8 +10,8 @@
 
 {% block body %}
     {% include molecule('lazy-image') with {
-        class: 'spacing-x--small',
-        modifiers: ['smaller'],
+        class: "spacing-x--small #{config.name}__image",
+        modifiers: ['smaller', 'table'],
         data: {
             imagePlaceholder: publicPath('images/image-placeholder.png'),
             imageSrc: data.cell,

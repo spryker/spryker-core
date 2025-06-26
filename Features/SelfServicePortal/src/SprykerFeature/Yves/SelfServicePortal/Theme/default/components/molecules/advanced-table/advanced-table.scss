@@ -1,5 +1,7 @@
 @mixin self-service-portal-advanced-table($name: '.advanced-table') {
     #{$name} {
+        overflow-y: auto;
+
         &__container {
             width: 100%;
         }
@@ -13,6 +15,7 @@
             display: flex;
             align-items: center;
             gap: 0.12rem;
+            white-space: nowrap;
         }
 
         &__col {

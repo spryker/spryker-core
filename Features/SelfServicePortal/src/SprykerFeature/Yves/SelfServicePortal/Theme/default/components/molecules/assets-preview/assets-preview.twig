@@ -12,17 +12,14 @@
 
 {% block body %}
     {% block heading %}
-        <div class="grid grid--middle">
-            {% block title %}
-                <h5 class="{{ config.name }}__title spacing-right col">{{ data.title | trans }}</h5>
-            {% endblock %}
-
-            {% block counter %}
-                {% if data.counter %}
-                    <span class="{{ config.name }}__counter col badge">{{ data.counter }}</span>
-                {% endif %}
-            {% endblock %}
-        </div>
+        {% include molecule('title-counter', 'SelfServicePortal') with {
+            class: 'col--sm-12',
+            data: {
+                title: data.title,
+                counter: data.counter,
+            },
+            qa: qa ~ '-counter',
+        } only %}
     {% endblock %}
 
     {% block content %}

@@ -28,7 +28,7 @@ export default class AssetList extends Component {
     }
 
     protected itemDispatchInformation(event: Event): void {
-        const detail = JSON.parse((event.target as HTMLElement).getAttribute('data-information'));
+        const detail = JSON.parse((event.currentTarget as HTMLElement).getAttribute('data-information'));
 
         this.dispatchCustomEvent(EVENT_SELECT_ASSET, detail, {
             bubbles: true,

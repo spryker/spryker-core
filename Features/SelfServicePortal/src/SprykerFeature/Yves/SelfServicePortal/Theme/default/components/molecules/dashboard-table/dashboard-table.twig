@@ -13,12 +13,11 @@
     moreLink: required,
 } %}
 
-{%- block extraClass %} box box--stretch grid grid--column {{ parent() }}{% endblock -%}
+{%- block extraClass %} box spacing-bottom--big {{ parent() }}{% endblock -%}
 
 {% block body %}
     {% block title %}
         {% include molecule('title-counter', 'SelfServicePortal') with {
-            class: 'col--sm-12',
             data: {
                 title: data.title,
                 counter: data.counter,
@@ -30,7 +29,6 @@
 
     {% block table %}
         {% include molecule('advanced-table', 'SelfServicePortal') with {
-            class: 'col--expand col--sm-12',
             data: {
                 columns: data.columns,
                 rows: data.rows,
@@ -41,7 +39,7 @@
 
     {% block more %}
         {% if data.rows | length %}
-            <div class="spacing-top col--sm-12 text-right">
+            <div class="spacing-top text-right">
                 <a class="link link--alt" href="{{ data.moreLink }}">{{ 'ssp_dashboard.general.view_all' | trans }}</a>
             </div>
         {% endif %}

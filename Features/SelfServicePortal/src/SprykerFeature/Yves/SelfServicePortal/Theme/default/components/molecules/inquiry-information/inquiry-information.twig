@@ -31,8 +31,10 @@
                                     {% if info.block | default %}
                                         {{ info.block | raw }}
                                     {% else %}
-                                        <strong class="{{ config.name }}__info-title">{{ info.title | trans }}:</strong>
-                                        {{ info.value | trans }}
+                                        {% block itemDefault %}
+                                            <span class="{{ config.name }}__info-title">{{ info.title | trans }}:</span>
+                                            {{ info.value | trans }}
+                                        {% endblock %}
                                     {% endif %}
                                 </li>
                             {% endif %}

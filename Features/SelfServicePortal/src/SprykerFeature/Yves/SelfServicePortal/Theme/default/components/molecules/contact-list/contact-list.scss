@@ -3,10 +3,7 @@
         &__representative {
             display: flex;
             gap: 0.625rem;
-
-            &:not(:last-child) {
-                padding-bottom: 0.625rem;
-            }
+            padding-bottom: 0.625rem;
         }
 
         &__representative-logo {
@@ -30,6 +27,7 @@
             height: 100%;
             background-size: cover;
             background-position: center;
+            z-index: $setting-zi-element + 4;
         }
 
         &__representative-info {
@@ -38,9 +36,7 @@
 
         &__representative-data {
             display: flex;
-            gap: 0.3125rem;
             flex-wrap: wrap;
-            justify-content: space-between;
         }
 
         &__representative-data-col {
@@ -49,6 +45,10 @@
             text-overflow: ellipsis;
             max-width: 100%;
             font-size: 0.8125rem;
+
+            &:not(:last-child) {
+                padding-right: 1.25rem;
+            }
         }
 
         @content;

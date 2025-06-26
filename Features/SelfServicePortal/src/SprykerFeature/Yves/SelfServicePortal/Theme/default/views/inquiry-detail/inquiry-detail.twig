@@ -208,7 +208,9 @@
 
 {% block status %}
     <li>
-        <strong>{{ 'customer.self_service_portal.inquiry.details.status' | trans  ~ ': ' }}</strong>
+        {% block statusTitle %}
+            <span>{{ 'customer.self_service_portal.inquiry.details.status' | trans  ~ ': ' }}</span>
+        {% endblock %}
 
         {% include molecule('status') with {
             data: {

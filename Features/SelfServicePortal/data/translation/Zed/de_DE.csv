@@ -75,7 +75,7 @@ company_user,Firmenkontonutzer
 company_business_unit,Geschäftseinheit
 ssp_asset,Asset
 "Upload Files","Dateien hochladen"
-"Back to File List","Zur Dateiliste zurück"
+"Back to File Attachments","Zurück zu Dateianhängen"
 Upload,Hochladen
 "Please upload valid documents (PDF) or images (JPEG, PNG)","Bitte laden Sie gültige Dokumente (PDF) oder Bilder (JPEG, PNG) hoch"
 "Please select a file to upload","Bitte eine Datei auswählen"
@@ -153,3 +153,6 @@ Status,Status
 Actions,Aktionen
 View,Ansicht
 Services,Dienstleistungen
+Submit,Absenden
+"Confirm delete","Löschen bestätigen"
+"Add Assets","Assets hinzufügen"

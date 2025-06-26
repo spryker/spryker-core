@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block action %}
-    {{ backActionButton(url(urlPathListFile), 'Back to File List' | trans) }}
+    {{ backActionButton(url(urlPathListFile), 'Back to File Attachments' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -26,8 +26,8 @@
                     } %}
                 </div>
 
-                <div class="form-group form-group--flex form-group--end">
-                    <button class="btn btn-primary safe-submit" data-qa="file-upload-submit">{{ 'Upload' | trans }}</button>
+                <div class="form-group">
+                    <button class="btn btn-outline safe-submit" data-qa="file-upload-submit">{{ 'Submit' | trans }}</button>
                 </div>
 
             {{ form_end(form) }}

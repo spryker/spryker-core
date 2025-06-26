@@ -75,7 +75,7 @@ company_user,"Company user"
 company_business_unit,"Company business unit"
 ssp_asset,Asset
 "Upload Files","Upload Files"
-"Back to File List","Back to File List"
+"Back to File Attachments","Back to File Attachments"
 Upload,Upload
 "Please upload valid documents (PDF) or images (JPEG, PNG)","Please upload valid documents (PDF) or images (JPEG, PNG)"
 "Please select a file to upload","Please select a file to upload"
@@ -153,3 +153,6 @@ Status,Status
 Actions,Actions
 View,View
 Services,Services
+Submit,Submit
+"Confirm delete","Confirm delete"
+"Add Assets","Add Assets"

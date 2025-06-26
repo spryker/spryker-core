@@ -30,57 +30,62 @@
     <div class="box">
         {% block userInfo %}
             <div data-qa="welcome-block" class="spacing-bottom--small">
-                <div data-qa="user-info">
-                    <strong class="title--h5">
-                        {{ 'ssp_dashboard.general.welcome' | trans({
-                            '%name%': data.customer.firstName ~ ' ' ~ data.customer.lastName,
-                        }) }}
-                    </strong>
-                </div>
-                <span>{{ data.customer.companyUserTransfer.company.name }}</span>
-                <br/>
-                <span>{{ data.customer.companyUserTransfer.companyBusinessUnit.name }}</span>
+                {% block userTitle %}
+                    <div data-qa="user-info">
+                        <strong class="title--h5">
+                            {{ 'ssp_dashboard.general.welcome' | trans({
+                                '%name%': data.customer.firstName ~ ' ' ~ data.customer.lastName,
+                            }) }}
+                        </strong>
+                    </div>
+                {% endblock %}
+
+                {% block userCompany %}
+                    <span>{{ data.customer.companyUserTransfer.company.name }}</span> | <span>{{ data.customer.companyUserTransfer.companyBusinessUnit.name }}</span>
+                {% endblock %}
             </div>
         {% endblock %}
 
         {% block information %}
             <div class="grid grid--stretch grid--with-gutter spacing-bottom--big">
-                {% set colClasses = 'col col--with-gutter col--sm-12 col--xl-6' %}
+                {% set colClasses = 'col col--with-gutter col--sm-12 col--lg-6' %}
 
-                {% block statsCol %}
-                    <div class="{{ colClasses }}">
-                        {% block stats %}
-                            {% include molecule('stats-overview', 'SelfServicePortal') with {
-                                class: 'box box--stretch box--dark',
-                                data: {
-                                    stats: [
-                                        {
-                                            title: 'ssp_dashboard.general.ssp_assets',
-                                            value: canAccessAssets and data.dashboard.dashboardComponentAssets is not empty ? data.dashboard.dashboardComponentAssets.sspAssetCollection.pagination.nbResults: 'ssp_dashboard.overview.not_applicable' | trans,
-                                        },
-                                        {
-                                            title: 'ssp_dashboard.general.inquiries',
-                                            value: canAccessInquiries and data.dashboard.dashboardComponentInquiry is not empty ? data.dashboard.dashboardComponentInquiry.pendingItems : 'ssp_dashboard.overview.not_applicable' | trans,
-                                        },
-                                    ],
-                                },
-                            } only %}
-                        {% endblock %}
-                    </div>
-                {% endblock %}
+                {% block informationCols %}
+                    {% block statsCol %}
+                        <div class="{{ colClasses }}">
+                            {% block stats %}
+                                {% include molecule('stats-overview', 'SelfServicePortal') with {
+                                    class: 'box box--stretch box--dark',
+                                    data: {
+                                        stats: [
+                                            {
+                                                title: 'ssp_dashboard.general.ssp_assets',
+                                                value: canAccessAssets and data.dashboard.dashboardComponentAssets is not empty ? data.dashboard.dashboardComponentAssets.sspAssetCollection.pagination.nbResults: 'ssp_dashboard.overview.not_applicable' | trans,
+                                            },
+                                            {
+                                                title: 'ssp_dashboard.general.inquiries',
+                                                value: canAccessInquiries and data.dashboard.dashboardComponentInquiry is not empty ? data.dashboard.dashboardComponentInquiry.pendingItems : 'ssp_dashboard.overview.not_applicable' | trans,
+                                            },
+                                        ],
+                                    },
+                                } only %}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
 
-                {% block representativesCol %}
-                    {% set cmsSalesRep = spyCmsBlock({ companyUnitBlockName: 'sales-rep', companyUnit: data.customer.companyUserTransfer.companyBusinessUnit.idCompanyBusinessUnit }) | trim %}
+                    {% block representativesCol %}
+                        {% set cmsSalesRep = spyCmsBlock({ companyUnitBlockName: 'sales-rep', companyUnit: data.customer.companyUserTransfer.companyBusinessUnit.idCompanyBusinessUnit }) | trim %}
 
-                    <div class="{{ colClasses }}" data-qa="sales-representative">
-                        {% block representatives %}
-                            {% if cmsSalesRep is not empty %}
-                                {{ cmsSalesRep | raw }}
-                            {% else %}
-                                {{ spyCmsBlock({ name: 'sales_rep:default '}) }}
-                            {% endif %}
-                        {% endblock %}
-                    </div>
+                        <div class="{{ colClasses }}" data-qa="sales-representative">
+                            {% block representatives %}
+                                {% if cmsSalesRep is not empty %}
+                                    {{ cmsSalesRep | raw }}
+                                {% else %}
+                                    {{ spyCmsBlock({ name: 'sales_rep:default '}) }}
+                                {% endif %}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
                 {% endblock %}
             </div>
         {% endblock %}
@@ -99,35 +104,18 @@
         {% endblock %}
 
         {% block tables %}
-            <div class="grid grid--stretch grid--with-gutter">
-                {% set colClasses = 'col col--with-gutter col--sm-12 col--xl-6' %}
+            {% set inquiryCollection = data.dashboard.dashboardComponentInquiry is not empty ? data.dashboard.dashboardComponentInquiry.sspInquiryCollection : null %}
+            {% set fileAttachmentFileCollection = data.dashboard.dashboardComponentFiles ? data.dashboard.dashboardComponentFiles.fileAttachmentFileCollection : null %}
 
-                {% block tablesCols %}
-                    {% if can('ViewCompanyFilesPermissionPlugin') or can('ViewCompanyUserFilesPermissionPlugin') or can('ViewCompanyBusinessUnitFilesPermissionPlugin') %}
-                        {% block filesCol %}
-                            {% set fileAttachmentFileCollection = data.dashboard.dashboardComponentFiles ? data.dashboard.dashboardComponentFiles.fileAttachmentFileCollection : null %}
+            {% block inquiries %}
+                {% widget 'SspInquiryListWidget' args [inquiryCollection] only %}{% endwidget %}
+            {% endblock %}
 
-                            <div class="{{ colClasses }}">
-                                {% block files %}
-                                    {% widget 'SspFileListWidget' args [fileAttachmentFileCollection] only %}
-                                    {% endwidget %}
-                                {% endblock %}
-                            </div>
-                        {% endblock %}
-                    {% endif %}
-
-                    {% block inquiryCol %}
-                        {% set inquiryCollection = data.dashboard.dashboardComponentInquiry is not empty ? data.dashboard.dashboardComponentInquiry.sspInquiryCollection : null %}
-
-                        <div class="{{ colClasses }}">
-                            {% block inquiries %}
-                                {% widget 'SspInquiryListWidget' args [inquiryCollection] only %}
-                                {% endwidget %}
-                            {% endblock %}
-                        </div>
-                    {% endblock %}
-                {% endblock %}
-            </div>
+            {% block files %}
+                {% if can('ViewCompanyFilesPermissionPlugin') or can('ViewCompanyUserFilesPermissionPlugin') or can('ViewCompanyBusinessUnitFilesPermissionPlugin') %}
+                    {% widget 'SspFileListWidget' args [fileAttachmentFileCollection] only %}{% endwidget %}
+                {% endif %}
+            {% endblock %}
         {% endblock %}
     </div>
 {% endblock %}
