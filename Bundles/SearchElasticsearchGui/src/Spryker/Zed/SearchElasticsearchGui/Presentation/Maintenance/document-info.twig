@@ -40,13 +40,3 @@
         {% endblock %}
     {% endembed %}
 {% endblock %}
-
-{% block head_css %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-search-elasticsearch-gui.css') }}" />
-{% endblock %}
-
-{% block footer_js %}
-    {{ parent() }}
-    <script src="{{ assetsPath('js/spryker-zed-search-elasticsearch-gui.js') }}"></script>
-{% endblock %}

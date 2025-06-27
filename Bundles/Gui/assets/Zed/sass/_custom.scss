@@ -2064,6 +2064,20 @@ form .horizontal-form {
     gap: 15px;
 }
 
+.storage-tooltip {
+    color: #337ab7;
+}
+
+.tooltip-inner {
+    text-align: left;
+}
+
+.storage-key {
+    &__title {
+        margin-bottom: 10px;
+    }
+}
+
 // [START] Drop with bootstrap 4
 .d-inline {
     display: inline;

@@ -25,7 +25,8 @@
         "pace": "npm:pace-js@~1.0.2",
         "select2": "~4.0.13",
         "summernote": "~0.9.1",
-        "sweetalert": "~1.1.3"
+        "sweetalert": "~1.1.3",
+        "highlight.js": "^11.11.1"
     },
     "optionalDependencies": {
         "bootstrap": "^5.0.0",

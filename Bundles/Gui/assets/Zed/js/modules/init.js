@@ -19,6 +19,9 @@ import { Dropzone } from './libs/dropzone';
 import { FormSubmitter } from './libs/form-submitter';
 import { DatePicker } from './libs/datepicker';
 import { ImageUploader } from './libs/image-uploader';
+import { Highlight } from './libs/highlight';
+import { DownloadAction } from './libs/download-action';
+import { CopyAction } from './libs/copy-action';
 import FormWithExternalFields from './form-with-external-fields';
 
 var dataTablesSearchDelay = function () {
@@ -252,11 +255,18 @@ $(document).ready(function () {
     initFormattedNumber();
     initFormattedMoney();
 
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
     new DatePicker().init();
     new Dropzone();
     new FormSubmitter();
     new ImageUploader();
     new FormWithExternalFields();
+    new Highlight();
+    new CopyAction();
+    new DownloadAction();
 });
 
 $(window).on('load', function () {
