@@ -16,5 +16,5 @@ interface SspAssetCustomerPermissionExpanderInterface
      *
      * @return \Generated\Shared\Transfer\SspAssetCriteriaTransfer
      */
-    public function expand(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): SspAssetCriteriaTransfer;
+    public function expandCriteria(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): SspAssetCriteriaTransfer;
 }

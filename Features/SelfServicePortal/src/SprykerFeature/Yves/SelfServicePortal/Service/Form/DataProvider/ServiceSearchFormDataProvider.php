@@ -136,7 +136,7 @@ class ServiceSearchFormDataProvider
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
         $idCompanyUser = $companyUserTransfer->getIdCompanyUserOrFail();
 
-        if ($this->can(static::PERMISSION_SEE_COMPANY_ORDERS, $idCompanyUser)) {
+        if ($this->can(static::PERMISSION_SEE_COMPANY_ORDERS, $idCompanyUser)) { // THIS IS Ok (fail fast) ZED mirror created
             $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
                 ->setIdCompany($companyUserTransfer->getFkCompany())
                 ->setWithoutExpanders(true);
@@ -148,7 +148,7 @@ class ServiceSearchFormDataProvider
 
         $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
 
-        if ($this->can(static::PERMISSION_SEE_BUSINESS_UNIT_ORDERS, $idCompanyUser)) {
+        if ($this->can(static::PERMISSION_SEE_BUSINESS_UNIT_ORDERS, $idCompanyUser)) { // THIS IS Ok (fail fast) ZED mirror created
             $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit(
                 $companyUserTransfer->getCompanyBusinessUnitOrFail(),
             );
@@ -165,7 +165,7 @@ class ServiceSearchFormDataProvider
      */
     protected function can(string $permissionKey, int $idCompanyUser): bool
     {
-        return $this->permissionClient->can($permissionKey, $idCompanyUser);
+        return $this->permissionClient->can($permissionKey, $idCompanyUser); // THIS IS Ok (fail fast) ZED mirror created
     }
 
     /**

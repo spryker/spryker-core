@@ -166,6 +166,8 @@ class InquiryController extends AbstractController
      */
     protected function executeCreateAction(Request $request): View|RedirectResponse
     {
+        $companyUserTransfer = $this->getFactory()->getCompanyUserClient()->findCompanyUser();
+
         $sspInquiryForm = $this
             ->getFactory()
             ->getSspInquiryForm(
@@ -175,7 +177,7 @@ class InquiryController extends AbstractController
 
         if ($sspInquiryForm->isSubmitted() && $sspInquiryForm->isValid()) {
             $sspInquiryCollectionTransfer = $this->getClient()->createSspInquiryCollection(
-                (new SspInquiryCollectionRequestTransfer())->addSspInquiry(
+                (new SspInquiryCollectionRequestTransfer())->setCompanyUser($companyUserTransfer)->addSspInquiry(
                     $this->getFactory()->createCreateSspInquiryFormDataToTransferMapper()->mapSspInquiryData($sspInquiryForm->getData()),
                 ),
             );

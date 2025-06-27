@@ -33,12 +33,7 @@ class DashboardController extends AbstractController
      */
     public function indexAction(Request $request): View|RedirectResponse
     {
-        if (
-            !$this->can(
-                ViewDashboardPermissionPlugin::KEY,
-                $this->getFactory()->getCustomerClient()->getCustomer()?->getCompanyUserTransferOrFail()->getIdCompanyUserOrFail(),
-            )
-        ) {
+        if (!$this->can(ViewDashboardPermissionPlugin::KEY)) {
             throw new AccessDeniedHttpException('dashboard.access.denied');
         }
 

@@ -1227,7 +1227,7 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     public function createSspAssetItemExpander(): SspAssetItemExpanderInterface
     {
         return new SspAssetItemExpander(
-            $this->getRepository(),
+            $this->getFacade(),
         );
     }
 
@@ -1238,7 +1238,7 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     {
         return new SalesOrderItemSspAssetSaver(
             $this->getEntityManager(),
-            $this->getRepository(),
+            $this->getFacade(),
         );
     }
 

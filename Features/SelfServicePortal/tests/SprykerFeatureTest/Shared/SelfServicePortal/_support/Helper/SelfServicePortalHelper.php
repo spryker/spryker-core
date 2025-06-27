@@ -61,6 +61,7 @@ use Spryker\Zed\FileManager\Business\FileManagerFacade;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspAssetMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspInquiryMapper;
+use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig as ZedSelfServicePortalConfig;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -360,6 +361,7 @@ class SelfServicePortalHelper extends Module
         $fileManagerDataTransfer->setFileInfo(
             (new FileInfoTransfer())
                 ->setStorageFileName($fileName)
+                ->setStorageName((new ZedSelfServicePortalConfig())->getAssetStorageName())
                 ->setExtension($imageData['extension'])
                 ->setSize(strlen($imageData['content']))
                 ->setType($imageData['type']),
@@ -486,6 +488,7 @@ class SelfServicePortalHelper extends Module
             $fileManagerDataTransfer->setFileInfo(
                 (new FileInfoTransfer())
                     ->setStorageFileName($fileName)
+                    ->setStorageName((new SelfServicePortalConfig())->getInquiryStorageName())
                     ->setExtension($file['extension'])
                     ->setSize(strlen($file['content']))
                     ->setType($file['type']),

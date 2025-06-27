@@ -11,22 +11,28 @@ use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException;
 use Spryker\Zed\FileManager\Business\FileManagerFacadeInterface;
+use Spryker\Zed\Kernel\PermissionAwareTrait;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Permission\SspAssetCustomerPermissionExpanderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Validator\SspAssetValidatorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
 
 class SspAssetReader implements SspAssetReaderInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
      * @param \Spryker\Zed\FileManager\Business\FileManagerFacadeInterface $fileManagerFacade
      * @param array<\SprykerFeature\Zed\SelfServicePortal\Dependency\Plugin\SspAssetManagementExpanderPluginInterface> $sspAssetExpanderPlugins
      * @param \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Permission\SspAssetCustomerPermissionExpanderInterface $sspAssetCustomerPermissionExpander
+     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Validator\SspAssetValidatorInterface $assetValidator
      */
     public function __construct(
         protected SelfServicePortalRepositoryInterface $selfServicePortalRepository,
         protected FileManagerFacadeInterface $fileManagerFacade,
         protected array $sspAssetExpanderPlugins,
-        protected SspAssetCustomerPermissionExpanderInterface $sspAssetCustomerPermissionExpander
+        protected SspAssetCustomerPermissionExpanderInterface $sspAssetCustomerPermissionExpander,
+        protected SspAssetValidatorInterface $assetValidator
     ) {
     }
 
@@ -37,8 +43,12 @@ class SspAssetReader implements SspAssetReaderInterface
      */
     public function getSspAssetCollection(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): SspAssetCollectionTransfer
     {
+        if (!$this->assetValidator->isCompanyUserGrantedToApplyCriteria($sspAssetCriteriaTransfer)) {
+            return (new SspAssetCollectionTransfer())->setPagination($sspAssetCriteriaTransfer->getPagination());
+        }
+
         $sspAssetCollectionTransfer = $this->selfServicePortalRepository->getSspAssetCollection(
-            $this->sspAssetCustomerPermissionExpander->expand($sspAssetCriteriaTransfer),
+            $this->sspAssetCustomerPermissionExpander->expandCriteria($sspAssetCriteriaTransfer),
         );
 
         foreach ($this->sspAssetExpanderPlugins as $sspAssetExpanderPlugin) {

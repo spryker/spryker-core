@@ -7,6 +7,7 @@
 
 namespace SprykerFeature\Yves\SelfServicePortal\Asset\Form\DataProvider;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetIncludeTransfer;
@@ -31,10 +32,11 @@ class SspAssetFormDataProvider
 
     /**
      * @param string $sspAssetReference
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\SspAssetTransfer|null
      */
-    public function getData(string $sspAssetReference): ?SspAssetTransfer
+    public function getData(string $sspAssetReference, CompanyUserTransfer $companyUserTransfer): ?SspAssetTransfer
     {
         $sspAssetCollectionTransfer = $this->sspAssetManagementClient->getSspAssetCollection(
             (new SspAssetCriteriaTransfer())
@@ -42,6 +44,7 @@ class SspAssetFormDataProvider
                     (new SspAssetConditionsTransfer())
                         ->addReference($sspAssetReference),
                 )
+                ->setCompanyUser($companyUserTransfer)
                 ->setInclude(
                     (new SspAssetIncludeTransfer())
                         ->setWithOwnerCompanyBusinessUnit(true)

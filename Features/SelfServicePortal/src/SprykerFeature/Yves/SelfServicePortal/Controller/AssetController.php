@@ -94,6 +94,10 @@ class AssetController extends AbstractController
 
         $companyUserTransfer = $this->getFactory()->getCompanyUserClient()->findCompanyUser();
 
+        if (!$this->getFactory()->createSspAssetCustomerPermissionChecker()->canViewAsset()) {
+            throw new AccessDeniedHttpException('self_service_portal.asset.access.denied');
+        }
+
         if (!$companyUserTransfer) {
             throw new NotFoundHttpException('Company user not found');
         }
@@ -131,10 +135,6 @@ class AssetController extends AbstractController
                 'Ssp Asset with provided Reference %s was not found.',
                 $sspAssetReference,
             ));
-        }
-
-        if (!$this->getFactory()->createSspAssetCustomerPermissionChecker()->canViewAsset($sspAssetTransfer, $companyUserTransfer)) {
-            throw new AccessDeniedHttpException('self_service_portal.asset.access.denied');
         }
 
         $canBusinessUnitBeUnassigned = false;
@@ -207,7 +207,9 @@ class AssetController extends AbstractController
             $sspAssetTransfer->setCompanyBusinessUnit($companyUserTransfer->getCompanyBusinessUnit());
 
             $sspAssetCollectionResponseTransfer = $this->getClient()->createSspAssetCollection(
-                (new SspAssetCollectionRequestTransfer())->addSspAsset($sspAssetTransfer),
+                (new SspAssetCollectionRequestTransfer())
+                    ->addSspAsset($sspAssetTransfer)
+                    ->setCompanyUser($companyUserTransfer),
             );
 
             if (!$sspAssetCollectionResponseTransfer->getErrors()->count() && $sspAssetCollectionResponseTransfer->getSspAssets()->count()) {
@@ -252,8 +254,22 @@ class AssetController extends AbstractController
             throw new NotFoundHttpException('Asset reference not found');
         }
 
+        if (!$this->can(UpdateSspAssetPermissionPlugin::KEY)) {
+            throw new AccessDeniedHttpException('self_service_portal.asset.access.denied');
+        }
+
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->findCompanyUser();
+
+        if (!$companyUserTransfer) {
+            $this->addErrorMessage('company.error.company_user_not_found');
+
+            return $this->redirectResponseInternal(static::ROUTE_CUSTOMER_OVERVIEW);
+        }
+
         $sspAssetFormDataProvider = $this->getFactory()->createSspAssetFormDataProvider();
-        $sspAssetTransfer = $sspAssetFormDataProvider->getData($sspAssetReference);
+        $sspAssetTransfer = $sspAssetFormDataProvider->getData($sspAssetReference, $companyUserTransfer);
 
         if (!$sspAssetTransfer) {
             throw new NotFoundHttpException('ssp_asset.error.not_found');
@@ -268,20 +284,6 @@ class AssetController extends AbstractController
             throw new AccessDeniedHttpException('self_service_portal.asset.access.status.restricted');
         }
 
-        $companyUserTransfer = $this->getFactory()
-            ->getCompanyUserClient()
-            ->findCompanyUser();
-
-        if (!$companyUserTransfer) {
-            $this->addErrorMessage('company.error.company_user_not_found');
-
-            return $this->redirectResponseInternal(static::ROUTE_CUSTOMER_OVERVIEW);
-        }
-
-        if (!$this->can(UpdateSspAssetPermissionPlugin::KEY)) {
-            throw new AccessDeniedHttpException('self_service_portal.asset.access.denied');
-        }
-
         $sspAssetUpdateForm = $this->getFactory()
             ->createAssetForm($sspAssetTransfer, $sspAssetFormDataProvider->getOptions($sspAssetTransfer))
             ->handleRequest($request);
@@ -293,7 +295,7 @@ class AssetController extends AbstractController
             );
 
             $sspAssetCollectionResponseTransfer = $this->getClient()->updateSspAssetCollection(
-                (new SspAssetCollectionRequestTransfer())
+                (new SspAssetCollectionRequestTransfer())->setCompanyUser($companyUserTransfer)
                     ->addSspAsset($sspAssetTransfer),
             );
 
@@ -411,9 +413,10 @@ class AssetController extends AbstractController
 
             /** @var \Generated\Shared\Transfer\SspAssetTransfer|null $sspAssetTransfer */
             $sspAssetTransfer = $this->getClient()->getSspAssetCollection(
-                (new SspAssetCriteriaTransfer())->setSspAssetConditions(
-                    (new SspAssetConditionsTransfer())->addReference($formData[SspAssetBusinessUnitRelationsForm::FIELD_ASSET_REFERENCE]),
-                ),
+                (new SspAssetCriteriaTransfer())->setCompanyUser($companyUserTransfer)
+                    ->setSspAssetConditions(
+                        (new SspAssetConditionsTransfer())->addReference($formData[SspAssetBusinessUnitRelationsForm::FIELD_ASSET_REFERENCE]),
+                    ),
             )->getSspAssets()->getIterator()->current();
 
             if (!$sspAssetTransfer) {

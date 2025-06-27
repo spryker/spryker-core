@@ -316,6 +316,7 @@
     <transfer name="Error">
         <property name="message" type="string"/>
         <property name="parameters" type="array" singular="parameter"/>
+        <property name="entityIdentifier" type="string"/>
     </transfer>
 
     <transfer name="SalesOrderItemCollectionResponse" strict="true">
@@ -936,6 +937,7 @@
     <transfer name="SspInquiryCollectionRequest">
         <property name="sspInquiries" type="SspInquiry[]" singular="sspInquiry"/>
         <property name="sspInquiryConditions" type="SspInquiryConditions"/>
+        <property name="companyUser" type="CompanyUser"/>
     </transfer>
 
     <transfer name="SspInquiryCollectionResponse">
@@ -1028,6 +1030,7 @@
         <property name="sspAssets" type="SspAsset[]" singular="sspAsset"/>
         <property name="businessUnitAssignmentsToDelete" type="SspAssetBusinessUnitAssignment[]" singular="businessUnitAssignmentToDelete"/>
         <property name="businessUnitAssignmentsToAdd" type="SspAssetBusinessUnitAssignment[]" singular="businessUnitAssignmentToAdd"/>
+        <property name="companyUser" type="CompanyUser"/>
     </transfer>
 
     <transfer name="SspAssetCollectionResponse" strict="true">

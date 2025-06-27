@@ -13,11 +13,14 @@ use Codeception\Actor;
 use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -116,5 +119,35 @@ class SelfServicePortalBusinessTester extends Actor
             CompanyUserTransfer::CUSTOMER => $customerTransfer,
             CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function haveCompanyUserWithPermissions(
+        CompanyTransfer $companyTransfer,
+        PermissionCollectionTransfer $permissionCollectionTransfer
+    ): CompanyUserTransfer {
+        $companyRoleTransfer = $this->haveCompanyRole([
+            CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyRoleTransfer::PERMISSION_COLLECTION => $permissionCollectionTransfer,
+        ]);
+
+        $companyRoleCollection = (new CompanyRoleCollectionTransfer())->addRole($companyRoleTransfer);
+
+        $customerTransfer = $this->haveCustomer();
+        $companyUserTransfer = $this->haveCompanyUser([
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+
+        $companyUserTransfer->setCompanyRoleCollection($companyRoleCollection);
+
+        $this->assignCompanyRolesToCompanyUser($companyUserTransfer);
+
+        return $companyUserTransfer;
     }
 }

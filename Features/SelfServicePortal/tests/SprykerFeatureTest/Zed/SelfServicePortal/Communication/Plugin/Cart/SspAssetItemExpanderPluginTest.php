@@ -10,9 +10,9 @@ namespace SprykerFeatureTest\Zed\SelfServicePortal\Communication\Plugin\Cart;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\SspAssetItemExpander;
+use SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacade;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Cart\SspAssetItemExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SelfServicePortalCommunicationFactory;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
 use SprykerFeatureTest\Zed\SelfServicePortal\SelfServicePortalCommunicationTester;
 
 /**
@@ -39,13 +39,13 @@ class SspAssetItemExpanderPluginTest extends Unit
         // Arrange
         $sspAssetCollectionTransfer = $this->tester->createSspAssetCollectionTransfer();
 
-        $sspAssetManagementRepositoryMock = $this->createMock(SelfServicePortalRepositoryInterface::class);
-        $sspAssetManagementRepositoryMock->method('getSspAssetCollection')
+        $selfServicePortalFacadeMock = $this->createMock(SelfServicePortalFacade::class);
+        $selfServicePortalFacadeMock->method('getSspAssetCollection')
             ->willReturn($sspAssetCollectionTransfer);
 
         $factoryMock = $this->createMock(SelfServicePortalCommunicationFactory::class);
         $factoryMock->method('createSspAssetItemExpander')
-            ->willReturn(new SspAssetItemExpander($sspAssetManagementRepositoryMock));
+            ->willReturn(new SspAssetItemExpander($selfServicePortalFacadeMock));
 
         $sspAssetItemExpanderPlugin = new SspAssetItemExpanderPlugin();
         $sspAssetItemExpanderPlugin->setFactory($factoryMock);
@@ -80,13 +80,13 @@ class SspAssetItemExpanderPluginTest extends Unit
     public function testExpandItemsDoesNothingWhenNoSspAssetReferenceProvided(): void
     {
         // Arrange
-        $sspAssetManagementRepositoryMock = $this->createMock(SelfServicePortalRepositoryInterface::class);
-        $sspAssetManagementRepositoryMock->expects($this->never())
+        $selfServicePortalFacadeMock = $this->createMock(SelfServicePortalFacade::class);
+        $selfServicePortalFacadeMock->expects($this->never())
             ->method('getSspAssetCollection');
 
         $factoryMock = $this->createMock(SelfServicePortalCommunicationFactory::class);
         $factoryMock->method('createSspAssetItemExpander')
-            ->willReturn(new SspAssetItemExpander($sspAssetManagementRepositoryMock));
+            ->willReturn(new SspAssetItemExpander($selfServicePortalFacadeMock));
 
         $sspAssetItemExpanderPlugin = new SspAssetItemExpanderPlugin();
         $sspAssetItemExpanderPlugin->setFactory($factoryMock);
@@ -107,13 +107,13 @@ class SspAssetItemExpanderPluginTest extends Unit
     public function testExpandItemsDoesNothingWhenNoItemsProvided(): void
     {
         // Arrange
-        $sspAssetManagementRepositoryMock = $this->createMock(SelfServicePortalRepositoryInterface::class);
-        $sspAssetManagementRepositoryMock->expects($this->never())
+        $selfServicePortalFacadeMock = $this->createMock(SelfServicePortalFacade::class);
+        $selfServicePortalFacadeMock->expects($this->never())
             ->method('getSspAssetCollection');
 
         $factoryMock = $this->createMock(SelfServicePortalCommunicationFactory::class);
         $factoryMock->method('createSspAssetItemExpander')
-            ->willReturn(new SspAssetItemExpander($sspAssetManagementRepositoryMock));
+            ->willReturn(new SspAssetItemExpander($selfServicePortalFacadeMock));
 
         $sspAssetItemExpanderPlugin = new SspAssetItemExpanderPlugin();
         $sspAssetItemExpanderPlugin->setFactory($factoryMock);
@@ -133,13 +133,13 @@ class SspAssetItemExpanderPluginTest extends Unit
     public function testExpandItemsDoesNothingWhenRepositoryReturnsNoResults(): void
     {
         // Arrange
-        $sspAssetManagementRepositoryMock = $this->createMock(SelfServicePortalRepositoryInterface::class);
-        $sspAssetManagementRepositoryMock->method('getSspAssetCollection')
+        $selfServicePortalFacadeMock = $this->createMock(SelfServicePortalFacade::class);
+        $selfServicePortalFacadeMock->method('getSspAssetCollection')
             ->willReturn(new SspAssetCollectionTransfer());
 
         $factoryMock = $this->createMock(SelfServicePortalCommunicationFactory::class);
         $factoryMock->method('createSspAssetItemExpander')
-            ->willReturn(new SspAssetItemExpander($sspAssetManagementRepositoryMock));
+            ->willReturn(new SspAssetItemExpander($selfServicePortalFacadeMock));
 
         $sspAssetItemExpanderPlugin = new SspAssetItemExpanderPlugin();
         $sspAssetItemExpanderPlugin->setFactory($factoryMock);

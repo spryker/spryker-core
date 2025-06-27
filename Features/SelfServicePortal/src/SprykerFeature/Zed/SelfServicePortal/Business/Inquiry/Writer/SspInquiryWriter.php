@@ -49,7 +49,15 @@ class SspInquiryWriter implements SspInquiryWriterInterface
      */
     public function createSspInquiryCollection(SspInquiryCollectionRequestTransfer $sspInquiryCollectionRequestTransfer): SspInquiryCollectionResponseTransfer
     {
-         $sspInquiryCollectionResponseTransfer = new SspInquiryCollectionResponseTransfer();
+        $sspInquiryCollectionResponseTransfer = $this->sspInquiryValidator
+            ->validateRequestGrantedToCreateInquiry(
+                new SspInquiryCollectionResponseTransfer(),
+                $sspInquiryCollectionRequestTransfer->getCompanyUser(),
+            );
+
+        if ($sspInquiryCollectionResponseTransfer->getErrors()->count() > 0) {
+            return $sspInquiryCollectionResponseTransfer;
+        }
 
         foreach ($sspInquiryCollectionRequestTransfer->getSspInquiries() as $sspInquiryTransfer) {
             $sequenceNumberSetting = $this->selfServicePortalConfig->getInquirySequenceNumberSettings(

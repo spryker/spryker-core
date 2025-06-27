@@ -15,11 +15,6 @@ class ViewCompanySspAssetPermissionPlugin extends AbstractPlugin implements Exec
     /**
      * @var string
      */
-    public const KEY = 'ViewCompanySspAssetPermissionPlugin';
-
-    /**
-     * @var string
-     */
     public const CONTEXT_COMPANY_USER = 'company_user';
 
     /**
@@ -28,17 +23,30 @@ class ViewCompanySspAssetPermissionPlugin extends AbstractPlugin implements Exec
     public const CONTEXT_SSP_ASSET = 'ssp_asset';
 
     /**
+     * @var string
+     */
+    public const KEY = 'ViewCompanySspAssetPermissionPlugin';
+
+    /**
+     * @return string
+     */
+    public function getKey(): string
+    {
+        return static::KEY;
+    }
+
+    /**
      * {@inheritDoc}
-     * - Checks if the company user has access to the ssp asset withing the specific company.
+     * - Checks if the company of the company user matches the company of any business unit associated with the SSP asset.
      *
      * @param array<string, mixed> $configuration
-     * @param array<mixed>|string|int|null $context
+     * @param array<string, mixed>|null $context
      *
      * @return bool
      */
     public function can(array $configuration, $context = null): bool
     {
-        if (!isset($context[static::CONTEXT_COMPANY_USER], $context[static::CONTEXT_SSP_ASSET])) {
+        if (!isset($context[static::CONTEXT_SSP_ASSET])) {
             return true;
         }
 
@@ -50,30 +58,26 @@ class ViewCompanySspAssetPermissionPlugin extends AbstractPlugin implements Exec
         /**
          * @var \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
          */
-         $sspAssetTransfer = $context[static::CONTEXT_SSP_ASSET];
+        $sspAssetTransfer = $context[static::CONTEXT_SSP_ASSET];
+
+        if ($sspAssetTransfer->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnit() === $companyUserTransfer->getFkCompanyBusinessUnitOrFail()) {
+            return true;
+        }
 
         foreach ($sspAssetTransfer->getBusinessUnitAssignments() as $sspAssetBusinessUnitAssignmentTransfer) {
-            if ($sspAssetBusinessUnitAssignmentTransfer->getCompanyBusinessUnitOrFail()->getCompanyOrFail()->getIdCompanyOrFail() === $companyUserTransfer->getFkCompany()) {
+            if ($sspAssetBusinessUnitAssignmentTransfer->getCompanyBusinessUnitOrFail()->getFkCompanyOrFail() === $companyUserTransfer->getFkCompanyOrFail()) {
                 return true;
             }
         }
 
-         return false;
+        return false;
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string>
      */
     public function getConfigurationSignature(): array
     {
         return [];
-    }
-
-    /**
-     * @return string
-     */
-    public function getKey(): string
-    {
-        return static::KEY;
     }
 }

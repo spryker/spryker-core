@@ -16,8 +16,8 @@ use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacadeInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
 
 class SalesOrderItemSspAssetSaver implements SalesOrderItemSspAssetSaverInterface
 {
@@ -25,11 +25,11 @@ class SalesOrderItemSspAssetSaver implements SalesOrderItemSspAssetSaverInterfac
 
     /**
      * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface $selfServicePortalEntityManager
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
+     * @param \SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacadeInterface $selfServicePortalFacade
      */
     public function __construct(
         protected SelfServicePortalEntityManagerInterface $selfServicePortalEntityManager,
-        protected SelfServicePortalRepositoryInterface $selfServicePortalRepository
+        protected SelfServicePortalFacadeInterface $selfServicePortalFacade
     ) {
     }
 
@@ -181,7 +181,7 @@ class SalesOrderItemSspAssetSaver implements SalesOrderItemSspAssetSaverInterfac
         $sspAssetConditionsTransfer->setReferences($assetReferences);
         $sspAssetCriteriaTransfer->setSspAssetConditions($sspAssetConditionsTransfer);
 
-        return $this->selfServicePortalRepository->getSspAssetCollection($sspAssetCriteriaTransfer);
+        return $this->selfServicePortalFacade->getSspAssetCollection($sspAssetCriteriaTransfer);
     }
 
     /**

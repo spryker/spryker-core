@@ -1041,6 +1041,7 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
             $this->getFileManagerFacade(),
             $this->getSspAssetManagementExpanderPlugins(),
             $this->createSspAssetCustomerPermissionExpander(),
+            $this->createSspAssetValidator(),
         );
     }
 

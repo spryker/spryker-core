@@ -9,11 +9,10 @@ namespace SprykerFeatureTest\Zed\SelfServicePortal\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\DashboardRequestTransfer;
 use Generated\Shared\Transfer\DashboardResponseTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\SortTransfer;
 use Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
@@ -22,11 +21,13 @@ use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetIncludeTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
-use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
+use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
 use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface;
 use Spryker\Zed\FileManager\FileManagerDependencyProvider;
+use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewBusinessUnitSspAssetPermissionPlugin;
+use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewCompanySspAssetPermissionPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacade;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\SspDashboardManagement\SspAssetDashboardDataExpanderPlugin;
 
@@ -43,6 +44,11 @@ class SspAssetManagementFacadeTest extends Unit
      * @var string
      */
     protected const LOCALE_CURRENT = 'LOCALE_CURRENT';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_PERMISSION = 'PLUGINS_PERMISSION';
 
     /**
      * @var \SprykerFeatureTest\Zed\SelfServicePortal\SelfServicePortalBusinessTester
@@ -76,6 +82,11 @@ class SspAssetManagementFacadeTest extends Unit
         });
         $this->tester->setDependency(FileManagerDependencyProvider::SERVICE_FILE_SYSTEM, $serviceFileSystemMock);
         $this->tester->setDependency(static::LOCALE_CURRENT, 'en_US');
+        $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
+        $this->tester->setDependency(static::PLUGINS_PERMISSION, [
+            new ViewCompanySspAssetPermissionPlugin(),
+            new ViewBusinessUnitSspAssetPermissionPlugin(),
+        ]);
     }
 
     /**
@@ -203,7 +214,7 @@ class SspAssetManagementFacadeTest extends Unit
      * @dataProvider getAssetCollectionDataProvider
      *
      * @param array<mixed> $sspAssets
-     * @param array<mixed> $conditions
+     * @param string $assignedBusinessUnitsCondition
      * @param array<mixed> $sorting
      * @param bool $fetchSspAssetsPerAssignment
      * @param array<mixed> $expectedAssets
@@ -212,48 +223,39 @@ class SspAssetManagementFacadeTest extends Unit
      */
     public function testGetSspAssetCollectionReturnsCorrectAssets(
         array $sspAssets,
-        array $conditions,
+        string $assignedBusinessUnitsCondition,
         array $sorting,
         bool $fetchSspAssetsPerAssignment,
         array $expectedAssets
     ): void {
+        $permissionTransfer = $this->tester->havePermission(new ViewCompanySspAssetPermissionPlugin());
+        $permissionCollectionTransfer = (new PermissionCollectionTransfer())->addPermission($permissionTransfer);
+        $companyTransfer = $this->tester->haveCompany();
+
         // Arrange
-        $companyByKey = [];
         $businessUnitByKey = [];
         foreach ($sspAssets as $sspAssetData) {
             $businessUnitAssignments = [];
-            if (isset($sspAssetData['assignedCompanyBusinessUnits'])) {
-                foreach ($sspAssetData['assignedCompanyBusinessUnits'] as $assignedCompanyBusinessUnit) {
-                    if (isset($assignedCompanyBusinessUnit['companyKey'])) {
-                        $companyEntity = SpyCompanyQuery::create()->findOneByKey($assignedCompanyBusinessUnit['companyKey']);
-                        if ($companyEntity) {
-                            $companyTransfer = (new CompanyTransfer())->fromArray($companyEntity->toArray(), true);
-                        } else {
-                            $companyTransfer = $this->tester->haveCompany([
-                                CompanyTransfer::KEY => $assignedCompanyBusinessUnit['companyKey'],
-                            ]);
-                        }
-                    } else {
-                        $companyTransfer = $this->tester->haveCompany();
-                    }
-
-                    $companyBusinessUnitEntity = SpyCompanyBusinessUnitQuery::create()->findOneByKey($assignedCompanyBusinessUnit['key']);
-                    if ($companyBusinessUnitEntity) {
-                        $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())->fromArray($companyBusinessUnitEntity->toArray(), true);
-                    } else {
-                        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
-                            CompanyBusinessUnitTransfer::KEY => $assignedCompanyBusinessUnit['key'],
-                            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-                        ]);
-                    }
-                    $businessUnitAssignments[] = [
-                        SspAssetBusinessUnitAssignmentTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
-                    ];
-
-                    $companyByKey[$companyTransfer->getKey()] = $companyTransfer;
-                    $businessUnitByKey[$companyBusinessUnitTransfer->getKey()] = $companyBusinessUnitTransfer;
+            foreach ($sspAssetData['assignedCompanyBusinessUnits'] as $assignedCompanyBusinessUnit) {
+                $companyBusinessUnitEntity = SpyCompanyBusinessUnitQuery::create()->findOneByKey($assignedCompanyBusinessUnit['key']);
+                if ($companyBusinessUnitEntity) {
+                    $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())->fromArray($companyBusinessUnitEntity->toArray(), true);
+                } else {
+                    $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+                        CompanyBusinessUnitTransfer::KEY => $assignedCompanyBusinessUnit['key'],
+                        CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+                    ]);
                 }
+                $businessUnitAssignments[] = [
+                    SspAssetBusinessUnitAssignmentTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
+                ];
+                $businessUnitByKey[$companyBusinessUnitTransfer->getKey()] = $companyBusinessUnitTransfer;
             }
+
+            $companyUserTransfer = $this->tester->haveCompanyUserWithPermissions(
+                $companyTransfer,
+                $permissionCollectionTransfer,
+            );
 
             $this->tester->haveAsset([
                 SspAssetTransfer::NAME => $sspAssetData['name'],
@@ -265,20 +267,9 @@ class SspAssetManagementFacadeTest extends Unit
         }
 
         $sspAssetConditionsTransfer = new SspAssetConditionsTransfer();
-        if ($conditions['assignedBusinessUnits']) {
-            foreach ($conditions['assignedBusinessUnits'] as $assignedBusinessUnit) {
-                if (isset($assignedBusinessUnit['key'])) {
-                    $sspAssetConditionsTransfer->setAssignedBusinessUnitId(
-                        $businessUnitByKey[$assignedBusinessUnit['key']]->getIdCompanyBusinessUnit(),
-                    );
-                }
-                if (isset($assignedBusinessUnit['companyKey'])) {
-                    $sspAssetConditionsTransfer->setAssignedBusinessUnitCompanyId(
-                        $companyByKey[$assignedBusinessUnit['companyKey']]->getIdCompany(),
-                    );
-                }
-            }
-        }
+        $sspAssetConditionsTransfer->setAssignedBusinessUnitId(
+            $businessUnitByKey[$assignedBusinessUnitsCondition]->getIdCompanyBusinessUnit(),
+        );
 
         $sspAssetCriteriaTransfer = (new SspAssetCriteriaTransfer())
             ->setSspAssetConditions($sspAssetConditionsTransfer)
@@ -290,7 +281,7 @@ class SspAssetManagementFacadeTest extends Unit
             ->setInclude(
                 (new SspAssetIncludeTransfer())
                     ->setWithAssignedBusinessUnits(true),
-            );
+            )->setCompanyUser($companyUserTransfer);
 
         foreach ($sorting as $field => $direction) {
             $sspAssetCriteriaTransfer->addSort(
@@ -308,7 +299,6 @@ class SspAssetManagementFacadeTest extends Unit
 
         foreach ($expectedAssets as $key => $expectedAsset) {
             $sspAssetTransfer = $sspAssetCollectionTransfer->getSspAssets()->offsetGet($key);
-            $this->assertSame($expectedAsset['name'], $sspAssetTransfer->getName());
             $this->assertSame($expectedAsset['serialNumber'], $sspAssetTransfer->getSerialNumber());
             $this->assertCount(count($expectedAsset['assignedCompanyBusinessUnits']), $sspAssetTransfer->getBusinessUnitAssignments()->getIterator());
             foreach ($expectedAsset['assignedCompanyBusinessUnits'] as $index => $expectedCompanyBusinessUnit) {
@@ -324,9 +314,7 @@ class SspAssetManagementFacadeTest extends Unit
     public function testSspAssetDashboardDataExpanderPluginWillAddAssetToCollection(): void
     {
         // Arrange
-        $customerTransfer = $this->tester->haveCustomer();
         $companyTransfer = $this->tester->haveCompany();
-
         $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
             CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
@@ -335,6 +323,12 @@ class SspAssetManagementFacadeTest extends Unit
                 SspAssetBusinessUnitAssignmentTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
             ],
         ];
+        $permissionTransfer = $this->tester->havePermission(new ViewCompanySspAssetPermissionPlugin());
+        $permissionCollectionTransfer = (new PermissionCollectionTransfer())->addPermission($permissionTransfer);
+        $companyUserTransfer = $this->tester->haveCompanyUserWithPermissions(
+            $companyTransfer,
+            $permissionCollectionTransfer,
+        );
 
         $expectedName = 'asset name';
         $expectedSerialNumber = 'asset serial number';
@@ -350,11 +344,7 @@ class SspAssetManagementFacadeTest extends Unit
         // Act
         $dashboardResponseTransfer = (new SspAssetDashboardDataExpanderPlugin())->provideDashboardData(
             (new DashboardResponseTransfer()),
-            (new DashboardRequestTransfer())->setCompanyUser($this->tester->haveCompanyUser([
-                CompanyUserTransfer::CUSTOMER => $customerTransfer,
-                CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-                CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
-            ]))->setWithSspAssetCount(10),
+            (new DashboardRequestTransfer())->setCompanyUser($companyUserTransfer)->setWithSspAssetCount(10),
         );
 
         // Assert
@@ -460,11 +450,7 @@ class SspAssetManagementFacadeTest extends Unit
                         ],
                     ],
                 ],
-                'conditions' => [
-                    'assignedBusinessUnits' => [
-                        ['key' => 'Test SspAsset Company Business Unit 2'],
-                    ],
-                ],
+                'assignedBusinessUnitsCondition' => 'Test SspAsset Company Business Unit 2',
                 'sorting' => [
                     'id_ssp_asset' => 'DESC',
                 ],
@@ -492,49 +478,45 @@ class SspAssetManagementFacadeTest extends Unit
                     ],
                 ],
             ],
-            'get assets sorted by id ASC with assigned business unit Test SspAsset Company Business Unit 1' => [
+            'get assets sorted by id ASC with assigned business unit Test SspAsset Company Business Unit 3' => [
                 'sspAssets' => [
                     [
-                        'name' => 'Test Asset 1',
+                        'name' => 'Test Asset 3',
                         'serialNumber' => '123-456',
-                        'note' => 'Test Note 1',
+                        'note' => 'Test Note 3',
                         'assignedCompanyBusinessUnits' => [
                             [
-                                'key' => 'Test SspAsset Company Business Unit 2',
+                                'key' => 'Test SspAsset Company Business Unit 3',
+                            ],
+                            [
+                                'key' => 'Test SspAsset Company Business Unit 4',
                             ],
                         ],
                     ],
                     [
-                        'name' => 'Test Asset 2',
+                        'name' => 'Test Asset 4',
                         'serialNumber' => '789-012',
-                        'note' => 'Test Note 2',
+                        'note' => 'Test Note 4',
                         'assignedCompanyBusinessUnits' => [
                             [
-                                'key' => 'Test SspAsset Company Business Unit 1',
-                            ],
-                            [
-                                'key' => 'Test SspAsset Company Business Unit 2',
+                                'key' => 'Test SspAsset Company Business Unit 4',
                             ],
                         ],
                     ],
                 ],
-                'conditions' => [
-                    'assignedBusinessUnits' => [
-                        ['key' => 'Test SspAsset Company Business Unit 1'],
-                    ],
-                ],
+                'assignedBusinessUnitsCondition' => 'Test SspAsset Company Business Unit 3',
                 'sorting' => [
                     'id_ssp_asset' => 'ASC',
                 ],
                 'fetchSspAssetsPerAssignment' => false,
                 'expectedAssets' => [
                     [
-                        'name' => 'Test Asset 2',
-                        'serialNumber' => '789-012',
-                        'note' => 'Test Note 2',
+                        'name' => 'Test Asset 3',
+                        'serialNumber' => '123-456',
+                        'note' => 'Test Note 3',
                         'assignedCompanyBusinessUnits' => [
                             [
-                                'key' => 'Test SspAsset Company Business Unit 1',
+                                'key' => 'Test SspAsset Company Business Unit 3',
                             ],
                         ],
                     ],

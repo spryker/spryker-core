@@ -25,7 +25,22 @@ class SspAssetWriter implements SspAssetWriterInterface
     /**
      * @var string
      */
-    protected const MESSAGE_ASSET_ID_NOT_PROVIDED = 'self_service_portal.asset.validation.id_not_provided';
+    protected const MESSAGE_ASSET_UPDATE_ACCESS_DENIED = 'self_service_portal.asset.access.denied';
+
+    /**
+     * @var string
+     */
+    protected const MESSAGE_ASSET_SELF_ASSET_ASSIGMENT_DELETE = 'ssp_asset.validation.cannot_delete_own_assignment';
+
+    /**
+     * @var string
+     */
+    protected const MESSAGE_ASSET_BUSINESS_UNIT_UNASSIGNMENT_DENIED = 'self_service_portal.asset.business_unit_unassignment.denied';
+
+    /**
+     * @var string
+     */
+    protected const MESSAGE_ASSET_BUSINESS_UNIT_ASSIGNMENT_DENIED = 'self_service_portal.asset.business_unit_assignment.denied';
 
     /**
      * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface $entityManager
@@ -53,9 +68,17 @@ class SspAssetWriter implements SspAssetWriterInterface
     public function createSspAssetCollection(
         SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
     ): SspAssetCollectionResponseTransfer {
-        $sspAssetCollectionResponseTransfer = new SspAssetCollectionResponseTransfer();
+        $sspAssetCollectionResponseTransfer = $this->sspAssetValidator->validateRequestGrantedToCreateAsset(
+            new SspAssetCollectionResponseTransfer(),
+            $sspAssetCollectionRequestTransfer->getCompanyUser(),
+        );
+
+        if ($sspAssetCollectionResponseTransfer->getErrors()->count() > 0) {
+            return $sspAssetCollectionResponseTransfer;
+        }
+
         foreach ($sspAssetCollectionRequestTransfer->getSspAssets() as $sspAssetTransfer) {
-            if (!$this->validateAsset($sspAssetTransfer, $sspAssetCollectionResponseTransfer)) {
+            if (!$this->sspAssetValidator->validateAssetTransfer($sspAssetTransfer, $sspAssetCollectionResponseTransfer)) {
                 continue;
             }
 
@@ -77,7 +100,17 @@ class SspAssetWriter implements SspAssetWriterInterface
         $sspAssetCollectionResponseTransfer = new SspAssetCollectionResponseTransfer();
 
         foreach ($sspAssetCollectionRequestTransfer->getSspAssets() as $sspAssetTransfer) {
-            if (!$this->validateAssetForUpdate($sspAssetTransfer, $sspAssetCollectionResponseTransfer)) {
+            if (!$this->sspAssetValidator->isAssetUpdateGranted($sspAssetTransfer, $sspAssetCollectionRequestTransfer->getCompanyUser())) {
+                $sspAssetCollectionResponseTransfer->addError(
+                    (new ErrorTransfer())
+                        ->setEntityIdentifier($sspAssetTransfer->getReferenceOrFail())
+                        ->setMessage(static::MESSAGE_ASSET_UPDATE_ACCESS_DENIED),
+                );
+
+                continue;
+            }
+
+            if (!$this->sspAssetValidator->validateAssetTransfer($sspAssetTransfer, $sspAssetCollectionResponseTransfer)) {
                 continue;
             }
 
@@ -89,46 +122,6 @@ class SspAssetWriter implements SspAssetWriterInterface
         $this->createBusinessUnitAssignments($sspAssetCollectionRequestTransfer, $sspAssetCollectionResponseTransfer);
 
         return $sspAssetCollectionResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     * @param \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
-     *
-     * @return bool
-     */
-    protected function validateAsset(
-        SspAssetTransfer $sspAssetTransfer,
-        SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
-    ): bool {
-        $validationErrorTransfers = $this->sspAssetValidator->validateAsset($sspAssetTransfer);
-
-        foreach ($validationErrorTransfers as $validationErrorTransfer) {
-            $sspAssetCollectionResponseTransfer->addError($validationErrorTransfer);
-        }
-
-        return $sspAssetCollectionResponseTransfer->getErrors()->count() === 0;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     * @param \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
-     *
-     * @return bool
-     */
-    protected function validateAssetForUpdate(
-        SspAssetTransfer $sspAssetTransfer,
-        SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
-    ): bool {
-        if (!$sspAssetTransfer->getIdSspAsset()) {
-            $sspAssetCollectionResponseTransfer->addError(
-                (new ErrorTransfer())->setMessage(static::MESSAGE_ASSET_ID_NOT_PROVIDED),
-            );
-
-            return false;
-        }
-
-        return $this->validateAsset($sspAssetTransfer, $sspAssetCollectionResponseTransfer);
     }
 
     /**
@@ -195,16 +188,32 @@ class SspAssetWriter implements SspAssetWriterInterface
     ): SspAssetCollectionResponseTransfer {
         $businessUnitToDeleteGroupedBySspAssetId = [];
         foreach ($sspAssetCollectionRequestTransfer->getBusinessUnitAssignmentsToDelete() as $sspAssetAssignmentTransfer) {
-            if ($sspAssetAssignmentTransfer->getCompanyBusinessUnit()?->getIdCompanyBusinessUnit() === $sspAssetAssignmentTransfer->getSspAssetOrFail()->getCompanyBusinessUnit()?->getIdCompanyBusinessUnit()) {
+            $sspAssetTransfer = $sspAssetAssignmentTransfer->getSspAssetOrFail();
+            $companyBusinessUnitTransfer = $sspAssetAssignmentTransfer->getCompanyBusinessUnit();
+
+            if (!$companyBusinessUnitTransfer) {
+                continue;
+            }
+
+            if ($companyBusinessUnitTransfer->getIdCompanyBusinessUnit() === $sspAssetTransfer->getCompanyBusinessUnit()?->getIdCompanyBusinessUnit()) {
                 $sspAssetCollectionResponseTransfer->addError(
-                    (new ErrorTransfer())->setMessage('ssp_asset.validation.cannot_delete_own_assignment'),
+                    (new ErrorTransfer())->setMessage(static::MESSAGE_ASSET_SELF_ASSET_ASSIGMENT_DELETE),
                 );
 
                 continue;
             }
-            if ($sspAssetAssignmentTransfer->getCompanyBusinessUnit()) {
-                $businessUnitToDeleteGroupedBySspAssetId[$sspAssetAssignmentTransfer->getSspAssetOrFail()->getIdSspAssetOrFail()][] = $sspAssetAssignmentTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnitOrFail();
+
+            if (!$this->sspAssetValidator->isAssetUpdateGranted($sspAssetTransfer, $sspAssetCollectionRequestTransfer->getCompanyUser())) {
+                $sspAssetCollectionResponseTransfer->addError(
+                    (new ErrorTransfer())
+                        ->setEntityIdentifier($sspAssetTransfer->getReferenceOrFail())
+                        ->setMessage(static::MESSAGE_ASSET_BUSINESS_UNIT_UNASSIGNMENT_DENIED),
+                );
+
+                continue;
             }
+
+            $businessUnitToDeleteGroupedBySspAssetId[$sspAssetAssignmentTransfer->getSspAssetOrFail()->getIdSspAssetOrFail()][] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail();
         }
 
         foreach ($businessUnitToDeleteGroupedBySspAssetId as $idSspAsset => $companyBusinessUnitIds) {
@@ -226,9 +235,24 @@ class SspAssetWriter implements SspAssetWriterInterface
     ): SspAssetCollectionResponseTransfer {
         $businessUnitToAddGroupedBySspAssetId = [];
         foreach ($sspAssetCollectionRequestTransfer->getBusinessUnitAssignmentsToAdd() as $sspAssetAssignmentTransfer) {
-            if ($sspAssetAssignmentTransfer->getCompanyBusinessUnit()) {
-                $businessUnitToAddGroupedBySspAssetId[$sspAssetAssignmentTransfer->getSspAssetOrFail()->getIdSspAssetOrFail()][] = $sspAssetAssignmentTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnitOrFail();
+            $sspAssetTransfer = $sspAssetAssignmentTransfer->getSspAssetOrFail();
+            $companyBusinessUnitTransfer = $sspAssetAssignmentTransfer->getCompanyBusinessUnit();
+
+            if (!$companyBusinessUnitTransfer) {
+                continue;
             }
+
+            if (!$this->sspAssetValidator->isAssetUpdateGranted($sspAssetTransfer, $sspAssetCollectionRequestTransfer->getCompanyUser())) {
+                $sspAssetCollectionResponseTransfer->addError(
+                    (new ErrorTransfer())
+                        ->setEntityIdentifier($sspAssetTransfer->getReferenceOrFail())
+                        ->setMessage(static::MESSAGE_ASSET_BUSINESS_UNIT_ASSIGNMENT_DENIED),
+                );
+
+                continue;
+            }
+
+            $businessUnitToAddGroupedBySspAssetId[$sspAssetTransfer->getIdSspAssetOrFail()][] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail();
         }
 
         foreach ($businessUnitToAddGroupedBySspAssetId as $idSspAsset => $companyBusinessUnitIds) {

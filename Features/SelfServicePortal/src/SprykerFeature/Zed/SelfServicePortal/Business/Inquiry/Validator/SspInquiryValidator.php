@@ -8,14 +8,25 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Validator;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\FileUploadTransfer;
+use Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
+use Spryker\Zed\Kernel\PermissionAwareTrait;
+use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\CreateSspInquiryPermissionPlugin;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class SspInquiryValidator implements SspInquiryValidatorInterface
 {
+    use PermissionAwareTrait;
+
+    /**
+     * @var string
+     */
+    protected const MESSAGE_INQUIRY_CREATION_ACCESS_DENIED = 'self_service_portal.inquiry.access.denied';
+
     /**
      * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
      */
@@ -39,6 +50,35 @@ class SspInquiryValidator implements SspInquiryValidatorInterface
         $this->validateFiles($sspInquiryTransfer, $validationErrors);
 
         return $validationErrors;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer $sspInquiryCollectionResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer
+     */
+    public function validateRequestGrantedToCreateInquiry(
+        SspInquiryCollectionResponseTransfer $sspInquiryCollectionResponseTransfer,
+        ?CompanyUserTransfer $companyUserTransfer
+    ): SspInquiryCollectionResponseTransfer {
+        // when company user is not provided, assume that the inquiry is being updated by a system user
+        if (!$companyUserTransfer) {
+            return $sspInquiryCollectionResponseTransfer;
+        }
+
+        if (
+            !$this->can(
+                CreateSspInquiryPermissionPlugin::KEY,
+                $companyUserTransfer->getIdCompanyUserOrFail(),
+            )
+        ) {
+            return $sspInquiryCollectionResponseTransfer->addError(
+                (new ErrorTransfer())->setMessage(static::MESSAGE_INQUIRY_CREATION_ACCESS_DENIED),
+            );
+        }
+
+        return $sspInquiryCollectionResponseTransfer;
     }
 
     /**

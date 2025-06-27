@@ -76,6 +76,7 @@
         "spryker/catalog": "*",
         "spryker/cms-block": "*",
         "spryker/code-sniffer": "*",
+        "spryker/company-role": "*",
         "spryker/container": "*",
         "spryker/country": "*",
         "spryker/file-system": "*",
@@ -101,7 +102,8 @@
     },
     "autoload": {
         "psr-4": {
-            "SprykerFeature\\": "src/SprykerFeature/"
+            "SprykerFeature\\": "src/SprykerFeature/",
+            "SprykerFeatureTest\\Shared\\SelfServicePortal\\Helper\\": "tests/SprykerFeatureTest/Shared/SelfServicePortal/_support/Helper/"
         }
     },
     "autoload-dev": {

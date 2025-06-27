@@ -22,7 +22,7 @@ class SspAssetCustomerPermissionExpander implements SspAssetCustomerPermissionEx
      *
      * @return \Generated\Shared\Transfer\SspAssetCriteriaTransfer
      */
-    public function expand(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): SspAssetCriteriaTransfer
+    public function expandCriteria(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): SspAssetCriteriaTransfer
     {
         $companyUserTransfer = $sspAssetCriteriaTransfer->getCompanyUser();
 
@@ -34,11 +34,15 @@ class SspAssetCustomerPermissionExpander implements SspAssetCustomerPermissionEx
             $sspAssetCriteriaTransfer->setSspAssetConditions(new SspAssetConditionsTransfer());
         }
 
+        $sspAssetCriteriaTransfer->getSspAssetConditionsOrFail()->setAssignedBusinessUnitCompanyId(null);
+
         if ($this->can(ViewCompanySspAssetPermissionPlugin::KEY, $companyUserTransfer->getIdCompanyUserOrFail())) {
             $sspAssetCriteriaTransfer->getSspAssetConditionsOrFail()->setAssignedBusinessUnitCompanyId($companyUserTransfer->getFkCompanyOrFail());
 
             return $sspAssetCriteriaTransfer;
         }
+
+        $sspAssetCriteriaTransfer->getSspAssetConditionsOrFail()->setAssignedBusinessUnitId(null);
 
         if ($this->can(ViewBusinessUnitSspAssetPermissionPlugin::KEY, $companyUserTransfer->getIdCompanyUserOrFail())) {
             $sspAssetCriteriaTransfer->getSspAssetConditionsOrFail()->setAssignedBusinessUnitId($companyUserTransfer->getFkCompanyBusinessUnitOrFail());

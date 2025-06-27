@@ -10,15 +10,15 @@ namespace SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacadeInterface;
 
 class SspAssetItemExpander implements SspAssetItemExpanderInterface
 {
     /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $sspAssetManagementRepository
+     * @param \SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacadeInterface $selfServicePortalFacade
      */
     public function __construct(
-        protected SelfServicePortalRepositoryInterface $sspAssetManagementRepository
+        protected SelfServicePortalFacadeInterface $selfServicePortalFacade
     ) {
     }
 
@@ -68,7 +68,7 @@ class SspAssetItemExpander implements SspAssetItemExpanderInterface
         $sspAssetCriteriaTransfer = new SspAssetCriteriaTransfer();
         $sspAssetCriteriaTransfer->setSspAssetConditions($sspAssetConditionsTransfer);
 
-        return $this->sspAssetManagementRepository->getSspAssetCollection($sspAssetCriteriaTransfer);
+        return $this->selfServicePortalFacade->getSspAssetCollection($sspAssetCriteriaTransfer);
     }
 
     /**
