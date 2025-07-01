@@ -265,4 +265,186 @@ class SecurityConfigurationTest extends Unit
         $this->expectException(SecurityConfigurationException::class);
         $securityConfiguration->getFirewalls();
     }
+
+    /**
+     * @return void
+     */
+    public function testMergeFirewallWithComplexNestedArraysPreventArrayToStringConversion(): void
+    {
+        // Arrange
+        $securityConfiguration = new SecurityConfiguration();
+
+        $securityConfiguration->addFirewall(static::FIREWALL_MAIN, [
+            'context' => 'agent_merchant_user',
+            'switch_user' => [
+                'parameter' => '_switch_user',
+                'role' => 'ROLE_ALLOWED_TO_SWITCH',
+            ],
+            'users' => ['user1', 'user2'],
+        ]);
+
+        $securityConfiguration->mergeFirewall(static::FIREWALL_MAIN, [
+            'context' => 'AgentMerchantUser',
+            'switch_user' => [
+                'parameter' => '_switch_user',
+                'role' => 'ROLE_ALLOWED_TO_SWITCH',
+            ],
+            'roles' => ['ROLE_USER', 'ROLE_ADMIN'],
+        ]);
+
+        // Act
+        $configuration = $securityConfiguration->getConfiguration();
+        $firewalls = $configuration->getFirewalls();
+
+        // Assert
+        $expectedFirewallConfig = [
+            'context' => 'AgentMerchantUser',
+            'switch_user' => [
+                'parameter' => '_switch_user',
+                'role' => 'ROLE_ALLOWED_TO_SWITCH',
+            ],
+            'users' => ['user1', 'user2'],
+            'roles' => ['ROLE_USER', 'ROLE_ADMIN'],
+        ];
+
+        $this->assertArrayHasKey(static::FIREWALL_MAIN, $firewalls);
+        $this->assertSame($expectedFirewallConfig, $firewalls[static::FIREWALL_MAIN]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMergeFirewallReplacesStringValuesInsteadOfMerging(): void
+    {
+        // Arrange
+        $securityConfiguration = new SecurityConfiguration();
+
+        $securityConfiguration->addFirewall(static::FIREWALL_MAIN, [
+            'pattern' => '^/(+)merchant-portal-gui',
+            'form' => ['login_path' => '/security-gui/login'],
+            'logout' => ['logout_path' => '/security-gui/logout'],
+        ]);
+
+        $securityConfiguration->mergeFirewall(static::FIREWALL_MAIN, [
+            'pattern' => '^/(.+)merchant-portal-gui/',
+            'form' => ['login_path' => '/agent-security-gui/login'],
+        ]);
+
+        // Act
+        $firewalls = $securityConfiguration->getConfiguration()->getFirewalls();
+
+        $expectedConfig = [
+            'pattern' => '^/(.+)merchant-portal-gui/',
+            'form' => ['login_path' => '/agent-security-gui/login'],
+            'logout' => ['logout_path' => '/security-gui/logout'],
+        ];
+
+        $this->assertSame($expectedConfig, $firewalls[static::FIREWALL_MAIN]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMultipleMergeFirewallCallsPreventArrayAccumulation(): void
+    {
+        // Arrange
+        $securityConfiguration = new SecurityConfiguration();
+
+        $securityConfiguration->addFirewall(static::FIREWALL_MAIN, [
+            'users' => ['initial_user'],
+            'context' => 'initial_context',
+        ]);
+
+        $securityConfiguration->mergeFirewall(static::FIREWALL_MAIN, [
+            'users' => ['first_merge_user'],
+            'context' => 'first_merge_context',
+        ]);
+
+        $securityConfiguration->mergeFirewall(static::FIREWALL_MAIN, [
+            'users' => ['final_user'],
+            'roles' => ['ROLE_USER'],
+        ]);
+
+        // Act
+        $firewalls = $securityConfiguration->getConfiguration()->getFirewalls();
+
+        // Assert
+        $expectedConfig = [
+            'users' => ['final_user'],
+            'context' => 'first_merge_context',
+            'roles' => ['ROLE_USER'],
+        ];
+
+        $this->assertSame($expectedConfig, $firewalls[static::FIREWALL_MAIN]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMergeFirewallWithMixedArrayTypes(): void
+    {
+        // Arrange
+        $securityConfiguration = new SecurityConfiguration();
+
+        $securityConfiguration->addFirewall(static::FIREWALL_MAIN, [
+            'indexed_array' => [0 => '_switch_user', 1 => '_switch_user'],
+            'associative_array' => [
+                'parameter' => '_switch_user',
+                'role' => 'ROLE_ALLOWED_TO_SWITCH',
+            ],
+        ]);
+
+        $securityConfiguration->mergeFirewall(static::FIREWALL_MAIN, [
+            'indexed_array' => [0 => '_switch_user'],
+            'associative_array' => [
+                'parameter' => '_switch_user',
+                'role' => 'ROLE_ALLOWED_TO_SWITCH',
+            ],
+        ]);
+
+        // Act
+        $firewalls = $securityConfiguration->getConfiguration()->getFirewalls();
+
+        // Assert
+        $expectedConfig = [
+            'indexed_array' => [0 => '_switch_user'],
+            'associative_array' => [
+                'parameter' => '_switch_user',
+                'role' => 'ROLE_ALLOWED_TO_SWITCH',
+            ],
+        ];
+
+        $this->assertSame($expectedConfig, $firewalls[static::FIREWALL_MAIN]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMergeFirewallWithEmptyArrays(): void
+    {
+        // Arrange
+        $securityConfiguration = new SecurityConfiguration();
+
+        $securityConfiguration->addFirewall(static::FIREWALL_MAIN, [
+            'users' => [],
+            'roles' => ['ROLE_USER'],
+        ]);
+
+        $securityConfiguration->mergeFirewall(static::FIREWALL_MAIN, [
+            'users' => ['user1', 'user2'],
+            'empty_field' => [],
+        ]);
+
+        // Act
+        $firewalls = $securityConfiguration->getConfiguration()->getFirewalls();
+
+        // Assert
+        $expectedConfig = [
+            'users' => ['user1', 'user2'],
+            'roles' => ['ROLE_USER'],
+            'empty_field' => [],
+        ];
+
+        $this->assertSame($expectedConfig, $firewalls[static::FIREWALL_MAIN]);
+    }
 }

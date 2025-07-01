@@ -310,10 +310,63 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
                 throw new FirewallNotFoundException(sprintf('You tried to merge a firewall "%s" which is not configured.', $firewallName));
             }
 
-            $this->firewalls[$firewallName] = array_merge_recursive($this->firewalls[$firewallName], $configuration);
+            $this->firewalls[$firewallName] = $this->mergeFirewallConfiguration($this->firewalls[$firewallName], $configuration);
         }
 
         return $this;
+    }
+
+    /**
+     * Safely merges firewall configurations preventing array-to-string conversion errors.
+     *
+     * For associative arrays: merges recursively
+     * For indexed arrays: replaces completely
+     * For scalar values: replaces the value
+     *
+     * @param array<mixed> $baseFirewallConfiguration
+     * @param array<mixed> $mergeFirewallConfiguration
+     *
+     * @return array<mixed>
+     */
+    protected function mergeFirewallConfiguration(array $baseFirewallConfiguration, array $mergeFirewallConfiguration): array
+    {
+        foreach ($mergeFirewallConfiguration as $key => $value) {
+            if (!array_key_exists($key, $baseFirewallConfiguration)) {
+                $baseFirewallConfiguration[$key] = $value;
+
+                continue;
+            }
+
+            if (!is_array($value) || !is_array($baseFirewallConfiguration[$key])) {
+                $baseFirewallConfiguration[$key] = $value;
+
+                continue;
+            }
+
+            if ($this->isIndexedArray($value) || $this->isIndexedArray($baseFirewallConfiguration[$key])) {
+                $baseFirewallConfiguration[$key] = $value;
+
+                continue;
+            }
+
+            $baseFirewallConfiguration[$key] = $this->mergeFirewallConfiguration($baseFirewallConfiguration[$key], $value);
+        }
+
+        return $baseFirewallConfiguration;
+    }
+
+    /**
+     * @param array<mixed> $array
+     *
+     * @return bool
+     */
+    protected function isIndexedArray(array $array): bool
+    {
+        if ($array === []) {
+            return true;
+        }
+
+        return array_keys($array) === range(0, count($array) - 1);
     }
 
     /**
