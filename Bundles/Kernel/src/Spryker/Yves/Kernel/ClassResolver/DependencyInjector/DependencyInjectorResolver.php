@@ -32,6 +32,11 @@ class DependencyInjectorResolver extends AbstractClassResolver
     /**
      * @var string
      */
+    protected const CACHE_KEY_FORMAT = '%s%s';
+
+    /**
+     * @var string|null
+     */
     protected $fromBundle;
 
     /**
@@ -139,5 +144,13 @@ class DependencyInjectorResolver extends AbstractClassResolver
     protected function getDependencyInjectorCollection()
     {
         return new DependencyInjectorCollection();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCacheKey(): string
+    {
+        return sprintf(static::CACHE_KEY_FORMAT, parent::getCacheKey(), $this->fromBundle ?? '');
     }
 }

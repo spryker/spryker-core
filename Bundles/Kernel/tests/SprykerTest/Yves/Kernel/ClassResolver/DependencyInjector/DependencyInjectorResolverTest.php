@@ -8,6 +8,7 @@
 namespace SprykerTest\Yves\Kernel\ClassResolver\DependencyInjector;
 
 use Codeception\Test\Unit;
+use ReflectionMethod;
 use Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
@@ -223,6 +224,130 @@ class DependencyInjectorResolverTest extends Unit
     {
         $dependencyInjectorResolver = new DependencyInjectorResolver();
         $this->assertSame('\%namespace%\Yves\%fromBundle%%codeBucket%\Dependency\Injector\%bundle%DependencyInjector', $dependencyInjectorResolver->getClassPattern());
+    }
+
+    /**
+     * @return void
+     */
+    public function testResolveWithCachingEnabledShouldReturnAllDependencyInjectors(): void
+    {
+        // Arrange
+        $dummyPaymentClass = 'Spryker\\Yves\\DummyPayment\\Dependency\\Injector\\FooDependencyInjector';
+        $stripeClass = 'Spryker\\Yves\\Stripe\\Dependency\\Injector\\FooDependencyInjector';
+
+        $this->createClass($dummyPaymentClass);
+        $this->createClass($stripeClass);
+
+        $resolverMock = $this->getMockBuilder(DependencyInjectorResolver::class)
+            ->onlyMethods(['getDependencyInjectorConfiguration', 'canUseCaching'])
+            ->getMock();
+
+        $resolverMock->method('canUseCaching')->willReturn(true);
+
+        $resolverMock->method('getDependencyInjectorConfiguration')
+            ->willReturn(['Foo' => ['DummyPayment', 'Stripe']]);
+
+        // Act
+        $dependencyInjectorCollection = $resolverMock->resolve('Foo');
+
+        //Assert
+        $this->assertInstanceOf(
+            DependencyInjectorCollectionInterface::class,
+            $dependencyInjectorCollection,
+        );
+
+        $injectors = $dependencyInjectorCollection->getDependencyInjector();
+        $this->assertCount(2, $injectors, 'Should resolve both dependency injectors when caching is enabled');
+
+        $injectorClasses = array_map('get_class', $injectors);
+        $this->assertContains($dummyPaymentClass, $injectorClasses);
+        $this->assertContains($stripeClass, $injectorClasses);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCacheKeyIncludesFromBundleForUniqueness(): void
+    {
+        // Arrange
+        $dummyPaymentResolver = new class extends DependencyInjectorResolver {
+            /**
+             * @var string
+             */
+            protected $fromBundle = 'DummyPayment';
+        };
+        $dummyPaymentResolver->setCallerClass('Foo');
+
+        $stripeResolver = new class extends DependencyInjectorResolver {
+            /**
+             * @var string
+             */
+            protected $fromBundle = 'Stripe';
+        };
+        $stripeResolver->setCallerClass('Foo');
+
+        $reflectionMethod = new ReflectionMethod(DependencyInjectorResolver::class, 'getCacheKey');
+        $reflectionMethod->setAccessible(true);
+
+        // Act
+        $dummyPaymentCacheKey = $reflectionMethod->invoke($dummyPaymentResolver);
+        $stripeCacheKey = $reflectionMethod->invoke($stripeResolver);
+
+        // Assert
+        $this->assertNotEquals(
+            $dummyPaymentCacheKey,
+            $stripeCacheKey,
+            'Cache keys should be unique for different fromBundle values',
+        );
+
+        $this->assertStringContainsString('DummyPayment', $dummyPaymentCacheKey);
+        $this->assertStringContainsString('Stripe', $stripeCacheKey);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCacheKeyFormatWithFromBundle(): void
+    {
+        // Arrange
+        $resolver = new class extends DependencyInjectorResolver {
+            /**
+             * @var string
+             */
+            protected $fromBundle = 'TestBundle';
+        };
+        $resolver->setCallerClass('TargetBundle');
+
+        $reflectionMethod = new ReflectionMethod(DependencyInjectorResolver::class, 'getCacheKey');
+        $reflectionMethod->setAccessible(true);
+
+        // Act
+        $cacheKey = $reflectionMethod->invoke($resolver);
+
+        // Assert
+        $this->assertStringContainsString('TargetBundle', $cacheKey);
+        $this->assertStringContainsString('TestBundle', $cacheKey);
+        $this->assertStringEndsWith('TestBundle', $cacheKey, 'Cache key should end with fromBundle name');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCacheKeyWithNullFromBundle(): void
+    {
+        // Arrange
+        $resolver = new DependencyInjectorResolver();
+        $resolver->setCallerClass('TargetBundle');
+
+        $reflectionMethod = new ReflectionMethod(DependencyInjectorResolver::class, 'getCacheKey');
+        $reflectionMethod->setAccessible(true);
+
+        // Act
+        $cacheKey = $reflectionMethod->invoke($resolver);
+
+        // Assert
+        $this->assertStringContainsString('TargetBundle', $cacheKey);
+        $this->assertIsString($cacheKey);
     }
 
     /**
