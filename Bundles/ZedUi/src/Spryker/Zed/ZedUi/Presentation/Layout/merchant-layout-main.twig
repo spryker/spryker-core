@@ -17,6 +17,7 @@
                 {% block topSection %}
                     {% if is_granted('ROLE_PREVIOUS_ADMIN') and is_granted('IS_IMPERSONATOR') %}
                         {% include '@AgentDashboardMerchantPortalGui/Partials/agent-bar.twig' ignore missing with {
+                            withJsAssets: false,
                             agentDetails: {
                                 name: merchantName | default,
                                 userName: username | default,
