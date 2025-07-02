@@ -66,10 +66,34 @@ class SspServiceChangeScheduledTimeLinkWidget extends AbstractWidget
      */
     protected function addIsVisibleParameter(ItemTransfer $itemTransfer): void
     {
-        $isService = in_array($this->getConfig()->getServiceProductTypeName(), $itemTransfer->getProductTypes());
-        $isVisible = $isService && $itemTransfer->getIsServiceDateTimeEnabled();
+        $productClasses = $itemTransfer->getProductClasses()->getArrayCopy();
+        $isScheduled = $this->hasProductClassName($productClasses, $this->getConfig()->getScheduledProductClassName());
+        $isService = $this->hasProductClassName($productClasses, $this->getConfig()->getServiceProductClassName());
+
+        $isVisible = $isService && $isScheduled;
 
         $this->addParameter(static::PARAMETER_IS_VISIBLE, $isVisible);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductClassTransfer> $productClasses
+     * @param string $className
+     *
+     * @return bool
+     */
+    protected function hasProductClassName(array $productClasses, string $className): bool
+    {
+        if (!$productClasses) {
+            return false;
+        }
+
+        foreach ($productClasses as $productClass) {
+            if ($productClass->getName() === $className) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

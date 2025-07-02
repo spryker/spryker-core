@@ -34,11 +34,6 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
     /**
      * @var string
      */
-    protected const PARAMETER_SHIPMENT_TYPES = 'shipmentTypes';
-
-    /**
-     * @var string
-     */
     protected const PARAMETER_SHIPMENT_TYPE_OPTIONS = 'shipmentTypeOptions';
 
     /**
@@ -79,7 +74,7 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
     /**
      * @var string
      */
-    protected const PARAMETER_IS_SERVICE_DATE_TIME_ENABLED = 'isServiceDateTimeEnabled';
+    protected const PARAMETER_IS_SERVICE_DATE_TIME_FIELD_VISIBLE = 'isServiceDateTimeFieldVisible';
 
     /**
      * @var string
@@ -139,7 +134,7 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
         $this->addHasOnlyServiceShipmentTypeParameter($hasOnlyServiceShipmentType);
         $this->addHasOnlyDeliveryShipmentTypeParameter($hasOnlyDeliveryShipmentType);
         $this->addHasShipmentTypeWithRequiredLocationParameter($hasShipmentTypeWithRequiredLocation);
-        $this->addIsServiceDateTimeEnabledParameter((bool)$productViewTransfer->getIsServiceDateTimeEnabled());
+        $this->isServiceDateTimeFieldVisible($productViewTransfer);
         $this->addFormFieldShipmentTypeUuidParameter();
         $this->addFormFieldServicePointUuidParameter();
         $this->addFormFieldProductOfferReferenceParameter();
@@ -214,13 +209,16 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
     }
 
     /**
-     * @param bool $isServiceDateTimeEnabled
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return void
      */
-    protected function addIsServiceDateTimeEnabledParameter(bool $isServiceDateTimeEnabled): void
+    protected function isServiceDateTimeFieldVisible(ProductViewTransfer $productViewTransfer): void
     {
-        $this->addParameter(static::PARAMETER_IS_SERVICE_DATE_TIME_ENABLED, $isServiceDateTimeEnabled);
+        $isVisible = in_array($this->getConfig()->getScheduledProductClassName(), $productViewTransfer->getProductClassNames())
+            && in_array($this->getConfig()->getServiceProductClassName(), $productViewTransfer->getProductClassNames());
+
+        $this->addParameter(static::PARAMETER_IS_SERVICE_DATE_TIME_FIELD_VISIBLE, $isVisible);
     }
 
     /**

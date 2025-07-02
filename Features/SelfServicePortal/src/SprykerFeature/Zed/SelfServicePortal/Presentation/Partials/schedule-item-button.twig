@@ -1,4 +1,6 @@
 {# @var orderItem \Generated\Shared\Transfer\ItemTransfer #}
-{% if productServiceTypeName in orderItem.productTypes %}
-    <a class="btn btn-primary" href="{{ url('/self-service-portal/item-scheduler', {'id-sales-order-item': orderItem.idSalesOrderItem}) }}">{{ 'Update time' | trans }}</a>
-{% endif %}
+{% for productClass in orderItem.productClasses %}
+    {% if productClass.name == serviceProductClassName %}
+        <a class="btn btn-primary" href="{{ url('/self-service-portal/item-scheduler', {'id-sales-order-item': orderItem.idSalesOrderItem}) }}">{{ 'Update time' | trans }}</a>
+    {% endif %}
+{% endfor %}

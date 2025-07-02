@@ -37,6 +37,8 @@ use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface;
 use Spryker\Zed\ProductOfferShipmentType\Business\ProductOfferShipmentTypeFacadeInterface;
+use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface;
+use Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface;
 use Spryker\Zed\ServicePoint\Business\ServicePointFacadeInterface;
@@ -118,6 +120,16 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+
+    /**
+     * @var string
+     */
+    public const FACADE_PRODUCT_PAGE_SEARCH = 'FACADE_PRODUCT_PAGE_SEARCH';
+
+    /**
+     * @var string
+     */
+    public const FACADE_PRODUCT_STORAGE = 'FACADE_PRODUCT_STORAGE';
 
     /**
      * @var string
@@ -329,6 +341,8 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addSequenceNumberFacade($container);
         $container = $this->addSspAssetManagementExpanderPlugins($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
+        $container = $this->addProductPageSearchFacade($container);
+        $container = $this->addProductStorageFacade($container);
         $container = $this->addMailFacade($container);
         $container = $this->addCustomerFacade($container);
 
@@ -952,6 +966,34 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     protected function getStateMachineConditionPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductPageSearchFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_PAGE_SEARCH, function (Container $container): ProductPageSearchFacadeInterface {
+            return $container->getLocator()->productPageSearch()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductStorageFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_STORAGE, function (Container $container): ProductStorageFacadeInterface {
+            return $container->getLocator()->productStorage()->facade();
+        });
+
+        return $container;
     }
 
     /**

@@ -21,60 +21,60 @@
         </foreign-key>
     </table>
 
-    <table name="spy_sales_product_abstract_type" idMethod="native" identifierQuoting="true">
-        <column name="id_sales_product_abstract_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+    <table name="spy_sales_product_class" idMethod="native" identifierQuoting="true">
+        <column name="id_sales_product_class" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
 
-        <unique name="spy_sales_product_abstract_type-name">
+        <unique name="spy_sales_product_class-name">
             <unique-column name="name"/>
         </unique>
 
         <behavior name="timestampable"/>
-        <id-method-parameter value="spy_sales_product_abstract_type_pk_seq"/>
+        <id-method-parameter value="spy_sales_product_class_pk_seq"/>
     </table>
 
-    <table name="spy_sales_order_item_product_abstract_type" isCrossRef="true">
+    <table name="spy_sales_order_item_product_class" isCrossRef="true">
         <column name="fk_sales_order_item" type="INTEGER" primaryKey="true"/>
-        <column name="fk_sales_product_abstract_type" type="INTEGER" primaryKey="true"/>
+        <column name="fk_sales_product_class" type="INTEGER" primaryKey="true"/>
 
-        <index name="index-spy_soipat-fk_sales_order_item">
+        <index name="index-spy_soipc-fk_sales_order_item">
             <index-column name="fk_sales_order_item"/>
         </index>
 
-        <index name="index-spy_soipat-fk_product_abstract_type">
-            <index-column name="fk_sales_product_abstract_type"/>
+        <index name="index-spy_soipc-fk_product_class">
+            <index-column name="fk_sales_product_class"/>
         </index>
 
-        <foreign-key name="spy_soipat-fk_sales_order_item" foreignTable="spy_sales_order_item">
+        <foreign-key name="spy_soipc-fk_sales_order_item" foreignTable="spy_sales_order_item">
             <reference local="fk_sales_order_item" foreign="id_sales_order_item"/>
         </foreign-key>
 
-        <foreign-key name="spy_soipat-fk_product_abstract_type" foreignTable="spy_sales_product_abstract_type">
-            <reference local="fk_sales_product_abstract_type" foreign="id_sales_product_abstract_type"/>
+        <foreign-key name="spy_soipc-fk_product_class" foreignTable="spy_sales_product_class">
+            <reference local="fk_sales_product_class" foreign="id_sales_product_class"/>
         </foreign-key>
     </table>
 
-    <table name="spy_product_abstract_type" idMethod="native" phpName="SpyProductAbstractType" allowPkInsert="true" identifierQuoting="true">
-        <column name="id_product_abstract_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+    <table name="spy_product_class" idMethod="native" phpName="SpyProductClass" allowPkInsert="true" identifierQuoting="true">
+        <column name="id_product_class" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="key" required="true" type="VARCHAR" size="255"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
 
-        <unique name="spy_product_abstract_type-key">
+        <unique name="spy_product_class-key">
             <unique-column name="key"/>
         </unique>
-        <id-method-parameter value="spy_product_abstract_type_pk_seq"/>
+        <id-method-parameter value="spy_product_class_pk_seq"/>
     </table>
 
-    <table name="spy_product_abstract_to_product_abstract_type" isCrossRef="true">
-        <column name="fk_product_abstract_type" type="INTEGER" primaryKey="true"/>
-        <column name="fk_product_abstract" type="INTEGER" primaryKey="true"/>
+    <table name="spy_product_to_product_class" isCrossRef="true">
+        <column name="fk_product_class" type="INTEGER" primaryKey="true"/>
+        <column name="fk_product" type="INTEGER" primaryKey="true"/>
 
-        <foreign-key name="spy_p_a_to_product_abstract_type-fk_product_abstract_type" foreignTable="spy_product_abstract_type" phpName="ProductAbstractType" refPhpName="ProductAbstractToProductAbstractType">
-            <reference local="fk_product_abstract_type" foreign="id_product_abstract_type"/>
+        <foreign-key name="spy_product_to_product_class-fk_product_class" foreignTable="spy_product_class" phpName="ProductClass" refPhpName="ProductToProductClass">
+            <reference local="fk_product_class" foreign="id_product_class"/>
         </foreign-key>
 
-        <foreign-key name="spy_p_a_to_product_abstract_type-fk_product_abstract" foreignTable="spy_product_abstract" phpName="ProductAbstract" refPhpName="ProductAbstractToProductAbstractType">
-            <reference local="fk_product_abstract" foreign="id_product_abstract"/>
+        <foreign-key name="spy_product_to_product_class-fk_product" foreignTable="spy_product" phpName="Product" refPhpName="ProductToProductClass">
+            <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
     </table>
 

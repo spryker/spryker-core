@@ -36,16 +36,6 @@ class ServiceSearchFormHandler implements ServiceSearchFormHandlerInterface
     protected const FILTER_FIELD_TYPE_DATE = 'created_at';
 
     /**
-     * @var string
-     */
-    protected const PARAMETER_PAGE = 'page';
-
-    /**
-     * @var string
-     */
-    protected const PARAMETER_ITEMS_PER_PAGE = 'ipp';
-
-    /**
      * @var int
      */
     protected const DEFAULT_PAGE = 1;
@@ -68,7 +58,7 @@ class ServiceSearchFormHandler implements ServiceSearchFormHandlerInterface
         FormInterface $serviceSearchForm,
         SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
     ): SspServiceCriteriaTransfer {
-        $sspServiceCriteriaTransfer = $this->addProductTypeFilter($sspServiceCriteriaTransfer, $this->sspServiceManagementConfig->getServiceProductTypeName());
+        $sspServiceCriteriaTransfer = $this->addProductClassFilter($sspServiceCriteriaTransfer, $this->sspServiceManagementConfig->getServiceProductClassName());
 
         if (!$serviceSearchForm->isSubmitted() || !$serviceSearchForm->isValid()) {
             $sspServiceCriteriaTransfer = $this->addCustomerFilter($sspServiceCriteriaTransfer);
@@ -87,13 +77,13 @@ class ServiceSearchFormHandler implements ServiceSearchFormHandlerInterface
 
     /**
      * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     * @param string $productType
+     * @param string $productClass
      *
      * @return \Generated\Shared\Transfer\SspServiceCriteriaTransfer
      */
-    protected function addProductTypeFilter(
+    protected function addProductClassFilter(
         SspServiceCriteriaTransfer $sspServiceCriteriaTransfer,
-        string $productType
+        string $productClass
     ): SspServiceCriteriaTransfer {
         $sspServiceConditionsTransfer = $sspServiceCriteriaTransfer->getServiceConditions();
         if (!$sspServiceConditionsTransfer) {
@@ -101,7 +91,7 @@ class ServiceSearchFormHandler implements ServiceSearchFormHandlerInterface
             $sspServiceCriteriaTransfer->setServiceConditions($sspServiceConditionsTransfer);
         }
 
-        $sspServiceConditionsTransfer->setProductType($productType);
+        $sspServiceConditionsTransfer->setProductClass($productClass);
 
         return $sspServiceCriteriaTransfer;
     }

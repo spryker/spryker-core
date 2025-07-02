@@ -2,16 +2,27 @@
 
     <transfer name="ProductConcrete">
         <property name="shipmentTypes" type="ShipmentType[]" singular="shipmentType" strict="true"/>
-        <property name="isServiceDateTimeEnabled" type="bool"/>
         <property name="idProductConcrete" type="int"/>
         <property name="sku" type="string"/>
         <property name="approvalStatus" type="string"/>
         <property name="fkProductAbstract" type="int"/>
         <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
+        <property name="productClasses" type="ProductClass[]" singular="productClass" strict="true"/>
     </transfer>
 
     <transfer name="ProductAbstract">
-        <property name="productAbstractTypes" type="ProductAbstractType[]" singular="productAbstractType"/>
+        <property name="productClasses" type="ProductClass[]" singular="productClass" strict="true"/>
+    </transfer>
+
+    <transfer name="ProductClass" strict="true">
+        <property name="idProductClass" type="int"/>
+        <property name="name" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="SalesProductClass" strict="true">
+        <property name="idSalesProductClass" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ShipmentTypeCriteria" strict="true">
@@ -41,9 +52,8 @@
 
     <transfer name="ProductConcreteStorage">
         <property name="shipmentTypeUuids" type="string[]" singular="shipmentTypeUuid" strict="true"/>
-        <property name="productTypes" type="string[]" singular="productType"/>
+        <property name="productClassNames" type="string[]" singular="productClassName"/>
         <property name="idProductConcrete" type="int"/>
-        <property name="isServiceDateTimeEnabled" type="bool"/>
         <property name="idProductAbstract" type="int"/>
     </transfer>
 
@@ -55,8 +65,7 @@
         <property name="shipmentTypes" type="ShipmentTypeStorage[]" singular="shipmentType" strict="true"/>
         <property name="shipmentTypeUuids" type="string[]" singular="shipmentTypeUuid" strict="true"/>
         <property name="idProductConcrete" type="int"/>
-        <property name="productTypes" type="string[]" singular="productType"/>
-        <property name="isServiceDateTimeEnabled" type="bool"/>
+        <property name="productClassNames" type="string[]" singular="productClassName"/>
         <property name="sku" type="string"/>
         <property name="currentProductPrice" type="CurrentProductPrice"/>
         <property name="productOfferReference" type="string"/>
@@ -133,7 +142,7 @@
         <property name="fkOmsOrderItemState" type="int"/>
         <property name="state" type="ItemState"/>
         <property name="fkSalesOrder" type="int"/>
-        <property name="productTypes" type="string[]" singular="productType"/>
+        <property name="productClasses" type="ProductClass[]" singular="productClass" strict="true"/>
         <property name="shipmentType" type="ShipmentType" strict="true"/>
         <property name="productOfferReference" type="string"/>
         <property name="servicePoint" type="ServicePoint" strict="true"/>
@@ -146,7 +155,6 @@
         <property name="isCancellable" type="bool"/>
         <property name="relatedBundleItemIdentifier" type="string"/>
         <property name="bundleItemIdentifier" type="string"/>
-        <property name="isServiceDateTimeEnabled" type="bool"/>
         <property name="process" type="string"/>
         <property name="id" type="int"/>
         <property name="sspAsset" type="SspAsset"/>
@@ -205,7 +213,7 @@
 
     <transfer name="SspServiceConditions" strict="true">
         <property name="servicesSearchConditionGroup" type="SspServicesSearchConditionGroup"/>
-        <property name="productType" type="string"/>
+        <property name="productClass" type="string"/>
         <property name="companyBusinessUnitUuid" type="string"/>
         <property name="companyUuid" type="string"/>
         <property name="customerReference" type="string"/>
@@ -344,33 +352,26 @@
     <transfer name="LocalizedAttributes">
     </transfer>
 
-    <transfer name="ProductAbstractType" strict="true">
-        <property name="idProductAbstractType" type="int"/>
-        <property name="key" type="string"/>
-        <property name="name" type="string"/>
-        <property name="fkProductAbstracts" type="int[]" singular="fkProductAbstract"/>
+    <transfer name="ProductClassCollection" strict="true">
+        <property name="productClasses" type="ProductClass[]" singular="productClass"/>
     </transfer>
 
-    <transfer name="ProductAbstractTypeCollection" strict="true">
-        <property name="productAbstractTypes" type="ProductAbstractType[]" singular="productAbstractType"/>
+    <transfer name="ProductClassCriteria" strict="true">
+        <property name="productClassConditions" type="ProductClassConditions"/>
     </transfer>
 
-    <transfer name="ProductAbstractTypeCriteria" strict="true">
-        <property name="productAbstractTypeConditions" type="ProductAbstractTypeConditions"/>
-    </transfer>
-
-    <transfer name="ProductAbstractTypeConditions" strict="true">
-        <property name="productAbstractTypeIds" type="int[]" singular="idProductAbstractType"/>
+    <transfer name="ProductClassConditions" strict="true">
+        <property name="productClassIds" type="int[]" singular="idProductClass"/>
         <property name="keys" type="string[]" singular="key"/>
     </transfer>
 
     <transfer name="ProductPayload">
-        <property name="productAbstractTypes" type="ProductAbstractType[]" singular="productAbstractType"/>
+        <property name="productClassNames" type="string[]" singular="productClassName"/>
         <property name="productAbstractIds" type="array" singular="productAbstractIds"/>
     </transfer>
 
     <transfer name="ProductPageSearch">
-        <property name="productAbstractTypes" type="ProductAbstractType[]" singular="productAbstractType"/>
+        <property name="productClassNames" type="string[]" singular="productClassName"/>
     </transfer>
 
     <transfer name="ProductPageLoad">
@@ -1058,5 +1059,4 @@
     <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
         <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
     </transfer>
-
 </transfers>

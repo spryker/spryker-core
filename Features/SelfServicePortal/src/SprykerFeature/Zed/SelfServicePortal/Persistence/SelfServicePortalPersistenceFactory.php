@@ -7,18 +7,17 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractToProductAbstractTypeQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractTypeQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductAbstractTypeQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpyProductToProductClassQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAssetQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpySalesProductAbstractTypeQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySalesProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
@@ -34,7 +33,7 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\CompanyBusinessUnitF
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\CompanyFileMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\CompanyUserFileMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\FileMapper;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\ProductAbstractTypeMapper;
+use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\ProductClassMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspAssetFileMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspAssetMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspInquiryMapper;
@@ -62,35 +61,43 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractTypeQuery
+     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery
      */
-    public function createProductAbstractTypeQuery(): SpyProductAbstractTypeQuery
+    public function createProductClassQuery(): SpyProductClassQuery
     {
-        return SpyProductAbstractTypeQuery::create();
+        return SpyProductClassQuery::create();
     }
 
     /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractToProductAbstractTypeQuery
+     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesProductClassQuery
      */
-    public function createProductAbstractToProductAbstractTypeQuery(): SpyProductAbstractToProductAbstractTypeQuery
+    public function createSalesProductClassQuery(): SpySalesProductClassQuery
     {
-        return SpyProductAbstractToProductAbstractTypeQuery::create();
+        return SpySalesProductClassQuery::create();
     }
 
     /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductAbstractTypeQuery
+     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductToProductClassQuery
      */
-    public function createSalesOrderItemProductAbstractTypeQuery(): SpySalesOrderItemProductAbstractTypeQuery
+    public function createProductToProductClassQuery(): SpyProductToProductClassQuery
     {
-        return SpySalesOrderItemProductAbstractTypeQuery::create();
+        return SpyProductToProductClassQuery::create();
     }
 
     /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesProductAbstractTypeQuery
+     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClassQuery
      */
-    public function createSalesProductAbstractTypeQuery(): SpySalesProductAbstractTypeQuery
+    public function createSalesOrderItemProductClassQuery(): SpySalesOrderItemProductClassQuery
     {
-        return SpySalesProductAbstractTypeQuery::create();
+        return SpySalesOrderItemProductClassQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function createSalesOrderItemQuery(): SpySalesOrderItemQuery
+    {
+        return SpySalesOrderItemQuery::create();
     }
 
     /**
@@ -216,14 +223,6 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\ProductAbstractTypeMapper
-     */
-    public function createProductAbstractTypeMapper(): ProductAbstractTypeMapper
-    {
-        return new ProductAbstractTypeMapper();
-    }
-
-    /**
      * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspServiceMapper
      */
     public function createSspServiceMapper(): SspServiceMapper
@@ -296,14 +295,6 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
-     */
-    public function getCustomerPropelQuery(): SpyCustomerQuery
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_CUSTOMER);
-    }
-
-    /**
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
     public function getStateMachineItemStatePropelQuery(): SpyStateMachineItemStateQuery
@@ -359,5 +350,13 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     public function getUtilDateTimeService(): UtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_UTIL_DATE_TIME);
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\ProductClassMapper
+     */
+    public function createProductClassMapper(): ProductClassMapper
+    {
+        return new ProductClassMapper();
     }
 }

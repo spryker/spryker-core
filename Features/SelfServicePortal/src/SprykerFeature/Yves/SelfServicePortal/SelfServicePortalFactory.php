@@ -70,8 +70,6 @@ use SprykerFeature\Yves\SelfServicePortal\Service\Checker\ShipmentTypeChecker;
 use SprykerFeature\Yves\SelfServicePortal\Service\Checker\ShipmentTypeCheckerInterface;
 use SprykerFeature\Yves\SelfServicePortal\Service\Expander\ProductOfferExpander;
 use SprykerFeature\Yves\SelfServicePortal\Service\Expander\ProductOfferExpanderInterface;
-use SprykerFeature\Yves\SelfServicePortal\Service\Expander\ServiceDateTimeEnabledExpander;
-use SprykerFeature\Yves\SelfServicePortal\Service\Expander\ServiceDateTimeEnabledExpanderInterface;
 use SprykerFeature\Yves\SelfServicePortal\Service\Expander\ServiceDateTimeExpander;
 use SprykerFeature\Yves\SelfServicePortal\Service\Expander\ServiceDateTimeExpanderInterface;
 use SprykerFeature\Yves\SelfServicePortal\Service\Expander\ServicePointExpander;
@@ -258,16 +256,6 @@ class SelfServicePortalFactory extends AbstractFactory
     public function createServiceDateTimeExpander(): ServiceDateTimeExpanderInterface
     {
         return new ServiceDateTimeExpander();
-    }
-
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Expander\ServiceDateTimeEnabledExpanderInterface
-     */
-    public function createServiceDateTimeEnabledExpander(): ServiceDateTimeEnabledExpanderInterface
-    {
-        return new ServiceDateTimeEnabledExpander(
-            $this->getProductStorageClient(),
-        );
     }
 
     /**

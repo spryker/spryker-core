@@ -83,11 +83,17 @@ class QuoteItemFilter implements QuoteItemFilterInterface
      */
     protected function isFiltrationNeeded(ItemTransfer $itemTransfer): bool
     {
-        if (!$itemTransfer->getProductTypes()) {
-            return false;
-        }
+        $serviceProductClassName = $this->config->getServiceProductClassName();
+        $isServiceItem = false;
 
-        $isServiceItem = in_array($this->config->getServiceProductTypeName(), $itemTransfer->getProductTypes(), true);
+        foreach ($itemTransfer->getProductClasses() as $productClassTransfer) {
+            /** @var \Generated\Shared\Transfer\ProductClassTransfer $productClassTransfer */
+            if ($productClassTransfer->getNameOrFail() === $serviceProductClassName) {
+                $isServiceItem = true;
+
+                break;
+            }
+        }
 
         if (!$isServiceItem) {
             return false;

@@ -67,5 +67,6 @@ suites:
                 - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SelfServicePortalHelper
                 - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SalesDataHelper
                 - \SprykerTest\Zed\StateMachine\Helper\StateMachineHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\Permission\Helper\PermissionHelper
                 - \SprykerTest\Zed\CompanyRole\Helper\CompanyRoleHelper

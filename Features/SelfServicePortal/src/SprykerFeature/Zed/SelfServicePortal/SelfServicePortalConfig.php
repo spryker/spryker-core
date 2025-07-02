@@ -32,23 +32,23 @@ class SelfServicePortalConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Import type for product abstract type.
+     * - Import type for product class.
      *
      * @api
      *
      * @var string
      */
-    public const IMPORT_TYPE_PRODUCT_ABSTRACT_TYPE = 'product-abstract-type';
+    public const IMPORT_TYPE_PRODUCT_CLASS = 'product-class';
 
     /**
      * Specification:
-     * - Import type for product abstract to product abstract type relation.
+     * - Import type for product to product class relation.
      *
      * @api
      *
      * @var string
      */
-    public const IMPORT_TYPE_PRODUCT_ABSTRACT_TO_PRODUCT_ABSTRACT_TYPE = 'product-abstract-product-abstract-type';
+    public const IMPORT_TYPE_PRODUCT_TO_PRODUCT_CLASS = 'product-to-product-class';
 
     /**
      * Specification:
@@ -260,35 +260,41 @@ class SelfServicePortalConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Import configuration for product abstract type.
+     * - Import configuration for product class.
      *
      * @api
      *
      * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
      */
-    public function getProductAbstractTypeDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
+    public function getProductClassDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
     {
+        $currentPathChunks = explode(DIRECTORY_SEPARATOR, __DIR__);
+        $moduleName = array_pop($currentPathChunks);
+
         return (new DataImporterDataSourceConfigurationTransfer())
-            ->setImportType(static::IMPORT_TYPE_PRODUCT_ABSTRACT_TYPE)
-            ->setFileName('product_abstract_type.csv')
-            ->setModuleName(static::MODULE_NAME)
+            ->setImportType(static::IMPORT_TYPE_PRODUCT_CLASS)
+            ->setFileName('product_class.csv')
+            ->setModuleName($moduleName)
             ->setDirectory('/data/data/import/common/common/');
     }
 
     /**
      * Specification:
-     * - Import configuration for product abstract to product abstract type relation.
+     * - Import configuration for product to product class relation.
      *
      * @api
      *
      * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
      */
-    public function getProductAbstractToProductAbstractTypeDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
+    public function getProductToProductClassDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
     {
+        $currentPathChunks = explode(DIRECTORY_SEPARATOR, __DIR__);
+        $moduleName = array_pop($currentPathChunks);
+
         return (new DataImporterDataSourceConfigurationTransfer())
-            ->setImportType(static::IMPORT_TYPE_PRODUCT_ABSTRACT_TO_PRODUCT_ABSTRACT_TYPE)
-            ->setFileName('product_abstract_product_abstract_type.csv')
-            ->setModuleName(static::MODULE_NAME)
+            ->setImportType(static::IMPORT_TYPE_PRODUCT_TO_PRODUCT_CLASS)
+            ->setFileName('product_to_product_class.csv')
+            ->setModuleName($moduleName)
             ->setDirectory('/data/data/import/common/common/');
     }
 
@@ -347,15 +353,15 @@ class SelfServicePortalConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Returns the product service type name.
+     * - Returns the service product class name.
      *
      * @api
      *
      * @return string
      */
-    public function getServiceProductTypeName(): string
+    public function getServiceProductClassName(): string
     {
-        return $this->getSharedConfig()->getServiceProductTypeName();
+        return $this->getSharedConfig()->getServiceProductClassName();
     }
 
     /**

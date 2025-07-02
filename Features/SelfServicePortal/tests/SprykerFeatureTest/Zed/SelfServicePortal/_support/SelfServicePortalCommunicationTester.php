@@ -11,11 +11,9 @@ namespace SprykerFeatureTest\Zed\SelfServicePortal;
 
 use ArrayObject;
 use Codeception\Actor;
-use Exception;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
@@ -23,15 +21,12 @@ use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
-use Orm\Zed\SelfServicePortal\Persistence\Map\SpyProductAbstractTypeTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpyProductShipmentTypeTableMap;
-use Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractToProductAbstractType;
-use Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractToProductAbstractTypeQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractTypeQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductAbstractTypeQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpySalesProductAbstractTypeQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpyProductToProductClassQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClass;
+use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClassQuery;
 use PHPUnit\Framework\MockObject\MockObject;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
 
@@ -48,7 +43,6 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepository
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause($vars = [])
- * @method \SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacadeInterface getFacade()
  * @SuppressWarnings(PHPMD)
  */
 class SelfServicePortalCommunicationTester extends Actor
@@ -104,6 +98,33 @@ class SelfServicePortalCommunicationTester extends Actor
      * @var string
      */
     public const TEST_ASSET_SERIAL_NUMBER_2 = 'SN987654321';
+
+    /**
+     * @return void
+     */
+    public function ensureProductShipmentTypeTableIsEmpty(): void
+    {
+        $this->getProductShipmentTypeQuery()
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
+     * @param string $productClassName
+     *
+     * @return bool
+     */
+    public function hasProductClass(ItemTransfer $item, string $productClassName): bool
+    {
+        foreach ($item->getProductClasses() as $productClass) {
+            if ($productClass->getName() === $productClassName) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     /**
      * @param string $assetReference
@@ -297,89 +318,6 @@ class SelfServicePortalCommunicationTester extends Actor
     }
 
     /**
-     * @return void
-     */
-    public function ensureProductAbstractTypeTableIsEmpty(): void
-    {
-        $this->getProductAbstractToProductAbstractTypeQuery()->deleteAll();
-        $this->getProductAbstractTypeQuery()->deleteAll();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param list<\Generated\Shared\Transfer\ProductAbstractTypeTransfer> $productAbstractTypeTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    public function addProductAbstractTypesToProductAbstract(
-        ProductAbstractTransfer $productAbstractTransfer,
-        array $productAbstractTypeTransfers
-    ): ProductAbstractTransfer {
-        foreach ($productAbstractTypeTransfers as $productAbstractTypeTransfer) {
-            $productAbstractTransfer->addProductAbstractType($productAbstractTypeTransfer);
-            $this->haveProductAbstractToProductAbstractType(
-                $productAbstractTransfer->getIdProductAbstractOrFail(),
-                $productAbstractTypeTransfer->getIdProductAbstractTypeOrFail(),
-            );
-        }
-
-        return $productAbstractTransfer;
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param int $idProductAbstractType
-     *
-     * @return void
-     */
-    protected function haveProductAbstractToProductAbstractType(int $idProductAbstract, int $idProductAbstractType): void
-    {
-        $productAbstractToProductAbstractTypeEntity = $this->getProductAbstractToProductAbstractTypeQuery()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->filterByFkProductAbstractType($idProductAbstractType)
-            ->findOne();
-
-        if (!$productAbstractToProductAbstractTypeEntity) {
-            $productAbstractToProductAbstractTypeEntity = new SpyProductAbstractToProductAbstractType();
-            $productAbstractToProductAbstractTypeEntity->setFkProductAbstract($idProductAbstract);
-            $productAbstractToProductAbstractTypeEntity->setFkProductAbstractType($idProductAbstractType);
-            $productAbstractToProductAbstractTypeEntity->save();
-        }
-    }
-
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractTypeQuery
-     */
-    protected function getProductAbstractTypeQuery(): SpyProductAbstractTypeQuery
-    {
-        return SpyProductAbstractTypeQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractToProductAbstractTypeQuery
-     */
-    protected function getProductAbstractToProductAbstractTypeQuery(): SpyProductAbstractToProductAbstractTypeQuery
-    {
-        return SpyProductAbstractToProductAbstractTypeQuery::create();
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return array<int>
-     */
-    public function getProductAbstractTypeIdsForProductAbstract(int $idProductAbstract): array
-    {
-        return $this->getProductAbstractTypeQuery()
-            ->useProductAbstractToProductAbstractTypeQuery()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->endUse()
-            ->select([SpyProductAbstractTypeTableMap::COL_ID_PRODUCT_ABSTRACT_TYPE])
-            ->find()
-            ->toArray();
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\ServicePointTransfer
      */
     public function createServicePointCollectionTransfer(): ServicePointCollectionTransfer
@@ -393,6 +331,69 @@ class SelfServicePortalCommunicationTester extends Actor
         $servicePointCollection->addServicePoint($servicePointTransfer);
 
         return $servicePointCollection;
+    }
+
+    /**
+     * @param string $uuid
+     * @param int $id
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTypeTransfer
+     */
+
+    /**
+     * @return void
+     */
+    public function ensureSalesOrderItemProductClassTableIsEmpty(): void
+    {
+        $this->getSalesOrderItemProductClassQuery()
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @return int
+     */
+    public function countSalesOrderItemProductClasses(): int
+    {
+        return $this->getSalesOrderItemProductClassQuery()->count();
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     * @param string $name
+     *
+     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClass|null
+     */
+    public function findSalesOrderItemProductClass(int $idSalesOrderItem, string $name): ?SpySalesOrderItemProductClass
+    {
+        return $this->getSalesOrderItemProductClassQuery()
+            ->filterByFkSalesOrderItem($idSalesOrderItem)
+            ->useSpySalesProductClassQuery()
+                ->filterByName($name)
+            ->endUse()
+            ->findOne();
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return array<string>
+     */
+    public function getProductClassNamesByIdProductConcrete(int $idProductConcrete): array
+    {
+        $productClassEntities = $this->getProductClassQuery()
+            ->useProductToProductClassQuery()
+                ->filterByFkProduct($idProductConcrete)
+            ->endUse()
+            ->find();
+
+        $productClassNames = [];
+        foreach ($productClassEntities as $productClassEntity) {
+            $productClassNames[] = $productClassEntity->getName();
+        }
+
+        return $productClassNames;
     }
 
     /**
@@ -418,48 +419,49 @@ class SelfServicePortalCommunicationTester extends Actor
     /**
      * @return void
      */
-    public function cleanUpSalesOrderItemProductTypeRelations(): void
+    public function ensureProductClassTableIsEmpty(): void
     {
-        SpySalesOrderItemProductAbstractTypeQuery::create()->deleteAll();
-
-        SpySalesProductAbstractTypeQuery::create()
-            ->filterByName_In(['service', 'additional_type'])
-            ->delete();
+        $this->truncateProductClassTable();
     }
 
     /**
-     * @param string $productTypeName
-     * @param int $idSalesOrderItem
-     *
-     * @throws \Exception
-     *
      * @return void
      */
-    public function haveSalesOrderItemProductType(string $productTypeName, int $idSalesOrderItem): void
+    public function truncateProductClassTable(): void
     {
-        $salesOrderItem = SpySalesOrderItemQuery::create()
-            ->filterByIdSalesOrderItem($idSalesOrderItem)
-            ->findOne();
+        $this->getProductToProductClassQuery()->deleteAll();
+        $this->getProductClassQuery()->deleteAll();
+    }
 
-        if (!$salesOrderItem) {
-            throw new Exception('Sales order item not found in database. ID: ' . $idSalesOrderItem);
-        }
+    /**
+     * @return array<\Orm\Zed\SelfServicePortal\Persistence\SpyProductClass>
+     */
+    public function getAllProductClasses(): array
+    {
+        return $this->getProductClassQuery()->find()->getArrayCopy();
+    }
 
-        $productType = SpySalesProductAbstractTypeQuery::create()
-            ->filterByName($productTypeName)
-            ->findOneOrCreate();
+    /**
+     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery
+     */
+    protected function getProductClassQuery(): SpyProductClassQuery
+    {
+        return SpyProductClassQuery::create();
+    }
 
-        if ($productType->isNew() || $productType->isModified()) {
-            $productType->save();
-        }
+    /**
+     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductToProductClassQuery
+     */
+    protected function getProductToProductClassQuery(): SpyProductToProductClassQuery
+    {
+        return SpyProductToProductClassQuery::create();
+    }
 
-        $orderItemProductType = SpySalesOrderItemProductAbstractTypeQuery::create()
-            ->filterByFkSalesOrderItem($idSalesOrderItem)
-            ->filterByFkSalesProductAbstractType($productType->getIdSalesProductAbstractType())
-            ->findOneOrCreate();
-
-        if ($orderItemProductType->isNew() || $orderItemProductType->isModified()) {
-            $orderItemProductType->save();
-        }
+    /**
+     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClassQuery
+     */
+    protected function getSalesOrderItemProductClassQuery(): SpySalesOrderItemProductClassQuery
+    {
+        return SpySalesOrderItemProductClassQuery::create();
     }
 }

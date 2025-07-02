@@ -47,11 +47,6 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     /**
      * @var int
      */
-    protected const FILE_ATTACHMENT_DEFAULT_PAGE = 1;
-
-    /**
-     * @var int
-     */
     protected const FILE_ATTACHMENT_DEFAULT_MAX_PER_PAGE = 20;
 
     /**
@@ -186,15 +181,28 @@ class SelfServicePortalConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Returns the product service type name.
+     * - Returns the service product class name.
      *
      * @api
      *
      * @return string
      */
-    public function getServiceProductTypeName(): string
+    public function getServiceProductClassName(): string
     {
-        return $this->getSharedConfig()->getServiceProductTypeName();
+        return $this->getSharedConfig()->getServiceProductClassName();
+    }
+
+    /**
+     * Specification:
+     * - Returns the scheduled product class name.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getScheduledProductClassName(): string
+    {
+        return $this->getSharedConfig()->getScheduledProductClassName();
     }
 
     /**

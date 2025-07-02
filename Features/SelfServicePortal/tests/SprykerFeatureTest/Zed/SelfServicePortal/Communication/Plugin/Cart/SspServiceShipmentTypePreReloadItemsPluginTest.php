@@ -10,6 +10,7 @@ namespace SprykerFeatureTest\Zed\SelfServicePortal\Communication\Plugin\Cart;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductClassTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use ReflectionProperty;
@@ -34,7 +35,7 @@ class SspServiceShipmentTypePreReloadItemsPluginTest extends Unit
     /**
      * @var string
      */
-    protected const SERVICE_PRODUCT_TYPE = 'service';
+    protected const SERVICE_PRODUCT_CLASS = 'service';
 
     /**
      * @var \SprykerFeatureTest\Zed\SelfServicePortal\SelfServicePortalCommunicationTester
@@ -69,7 +70,7 @@ class SspServiceShipmentTypePreReloadItemsPluginTest extends Unit
         $this->assertCount(1, $resultQuoteTransfer->getItems());
         $this->assertSame($itemWithShipmentType->getSku(), $resultQuoteTransfer->getItems()[0]->getSku());
         foreach ($resultQuoteTransfer->getItems() as $item) {
-            if (in_array(static::SERVICE_PRODUCT_TYPE, $item->getProductTypes() ?: [], true)) {
+            if ($this->tester->hasProductClass($item, static::SERVICE_PRODUCT_CLASS)) {
                 $this->assertNotNull($item->getShipmentType(), 'Service items without shipment type should be filtered out');
             }
         }
@@ -116,7 +117,7 @@ class SspServiceShipmentTypePreReloadItemsPluginTest extends Unit
                 ->setName('Test Shipment Type'),
         );
         $itemTransfer->setSku('test-sku-with-shipment');
-        $itemTransfer->setProductTypes([static::SERVICE_PRODUCT_TYPE]);
+        $itemTransfer->addProductClass($this->createServiceProductClass());
 
         return $itemTransfer;
     }
@@ -128,9 +129,17 @@ class SspServiceShipmentTypePreReloadItemsPluginTest extends Unit
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku('test-service-sku-without-shipment');
-        $itemTransfer->setProductTypes([static::SERVICE_PRODUCT_TYPE]);
+        $itemTransfer->addProductClass($this->createServiceProductClass());
 
         return $itemTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductClassTransfer
+     */
+    public function createServiceProductClass(): ProductClassTransfer
+    {
+        return (new ProductClassTransfer())->setName(static::SERVICE_PRODUCT_CLASS);
     }
 
     /**
@@ -140,7 +149,6 @@ class SspServiceShipmentTypePreReloadItemsPluginTest extends Unit
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku('test-non-service-sku');
-        $itemTransfer->setProductTypes(['product']);
 
         return $itemTransfer;
     }
@@ -163,8 +171,8 @@ class SspServiceShipmentTypePreReloadItemsPluginTest extends Unit
     {
         $configMock = $this->getMockBuilder(SelfServicePortalConfig::class)
             ->getMock();
-        $configMock->method('getServiceProductTypeName')
-            ->willReturn(static::SERVICE_PRODUCT_TYPE);
+        $configMock->method('getServiceProductClassName')
+            ->willReturn(static::SERVICE_PRODUCT_CLASS);
 
         $quoteItemFilter = new QuoteItemFilter(
             $configMock,

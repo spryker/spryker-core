@@ -14,13 +14,13 @@ class SelfServicePortalConfig extends AbstractSharedConfig
 {
     /**
      * Specification
-     * - Constant is used to group abstract type product-related product page data expanders.
+     * - Constant is used to group product-related page data expanders.
      *
      * @api
      *
      * @var string
      */
-    public const PLUGIN_PRODUCT_ABSTRACT_TYPE_DATA = 'PLUGIN_PRODUCT_ABSTRACT_TYPE_DATA';
+    public const PLUGIN_PRODUCT_ABSTRACT_CLASS_DATA = 'PLUGIN_PRODUCT_ABSTRACT_CLASS_DATA';
 
     /**
      * Specification:
@@ -157,15 +157,28 @@ class SelfServicePortalConfig extends AbstractSharedConfig
 
     /**
      * Specification:
-     * - Returns the product service type name.
+     * - Returns the service product class name.
      *
      * @api
      *
      * @return string
      */
-    public function getServiceProductTypeName(): string
+    public function getServiceProductClassName(): string
     {
         return 'Service';
+    }
+
+    /**
+     * Specification:
+     * - Returns the scheduled product class name.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getScheduledProductClassName(): string
+    {
+        return 'Scheduled';
     }
 
     /**

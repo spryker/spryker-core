@@ -13,7 +13,8 @@ use Generated\Shared\DataBuilder\CmsBlockBuilder;
 use Generated\Shared\DataBuilder\CmsBlockGlossaryPlaceholderBuilder;
 use Generated\Shared\DataBuilder\CmsBlockGlossaryPlaceholderTranslationBuilder;
 use Generated\Shared\DataBuilder\FileAttachmentBuilder;
-use Generated\Shared\DataBuilder\ProductAbstractTypeBuilder;
+use Generated\Shared\DataBuilder\ProductClassBuilder;
+use Generated\Shared\DataBuilder\SalesProductClassBuilder;
 use Generated\Shared\DataBuilder\SspAssetBuilder;
 use Generated\Shared\DataBuilder\SspInquiryBuilder;
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
@@ -23,8 +24,9 @@ use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\FileUploadTransfer;
-use Generated\Shared\Transfer\ProductAbstractTypeTransfer;
+use Generated\Shared\Transfer\ProductClassTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\SalesProductClassTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
@@ -34,12 +36,14 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractToProductAbstractTypeQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractTypeQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentType;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpyProductToProductClassQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAsset;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAssetQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySalesProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAsset;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
@@ -73,64 +77,111 @@ class SelfServicePortalHelper extends Module
     /**
      * @return void
      */
-    public function ensureProductShipmentTypeTableIsEmpty(): void
+    public function ensureProductClassTableIsEmpty(): void
     {
-        $this->createProductShipmentTypeQuery()->deleteAll();
+        $this->getProductClassQuery()->deleteAll();
     }
 
     /**
-     * @param array<string, mixed> $productAbstractTypeOverride
+     * @param array<string, mixed> $productClassOverride
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTypeTransfer
+     * @return \Generated\Shared\Transfer\ProductClassTransfer
      */
-    public function haveProductAbstractType(array $productAbstractTypeOverride = []): ProductAbstractTypeTransfer
+    public function haveProductClass(array $productClassOverride = []): ProductClassTransfer
     {
-        $productAbstractTypeTransfer = (new ProductAbstractTypeBuilder($productAbstractTypeOverride))
-            ->build();
+        $productClassTransfer = (new ProductClassBuilder($productClassOverride))->build();
 
-        $productAbstractTypeEntity = $this->getProductAbstractTypeQuery()
-            ->filterByKey($productAbstractTypeTransfer->getKey())
+        $productClassEntity = $this->getProductClassQuery()
+            ->filterByKey($productClassTransfer->getKey())
             ->findOneOrCreate();
 
-        $productAbstractTypeEntity->fromArray($productAbstractTypeTransfer->modifiedToArray());
-        if ($productAbstractTypeEntity->isNew() || $productAbstractTypeEntity->isModified()) {
-            $productAbstractTypeEntity->save();
+        $productClassEntity->fromArray($productClassTransfer->modifiedToArray());
+        if ($productClassEntity->isNew() || $productClassEntity->isModified()) {
+            $productClassEntity->save();
         }
 
-        $productAbstractTypeTransfer->setIdProductAbstractType($productAbstractTypeEntity->getIdProductAbstractType());
+        $productClassTransfer->setIdProductClass($productClassEntity->getIdProductClass());
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productAbstractTypeTransfer): void {
-            $this->cleanupProductAbstractType($productAbstractTypeTransfer->getIdProductAbstractType());
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productClassTransfer): void {
+            $this->cleanupProductClass($productClassTransfer->getIdProductClass());
         });
 
-        return $productAbstractTypeTransfer;
+        return $productClassTransfer;
     }
 
     /**
-     * @param int $idProductAbstract
-     * @param int $idProductAbstractType
+     * @param int $idProduct
+     * @param int $idProductClass
      *
      * @return void
      */
-    public function haveProductAbstractToProductAbstractType(
-        int $idProductAbstract,
-        int $idProductAbstractType
+    public function haveProductToProductClass(
+        int $idProduct,
+        int $idProductClass
     ): void {
-        $productAbstractToProductAbstractTypeEntity = $this->getProductAbstractToProductAbstractTypeQuery()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->filterByFkProductAbstractType($idProductAbstractType)
+        $productToProductClassEntity = $this->getProductToProductClassQuery()
+            ->filterByFkProduct($idProduct)
+            ->filterByFkProductClass($idProductClass)
             ->findOneOrCreate();
 
-        if ($productAbstractToProductAbstractTypeEntity->isNew() || $productAbstractToProductAbstractTypeEntity->isModified()) {
-            $productAbstractToProductAbstractTypeEntity->save();
+        if ($productToProductClassEntity->isNew() || $productToProductClassEntity->isModified()) {
+            $productToProductClassEntity->save();
         }
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($idProductAbstract, $idProductAbstractType): void {
-            $this->cleanupProductAbstractToProductAbstractType(
-                $idProductAbstract,
-                $idProductAbstractType,
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($idProduct, $idProductClass): void {
+            $this->cleanupProductToProductClass(
+                $idProduct,
+                $idProductClass,
             );
         });
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     * @param int $idSalesProductClass
+     *
+     * @return void
+     */
+    public function haveSalesOrderItemToProductClass(
+        int $idSalesOrderItem,
+        int $idSalesProductClass
+    ): void {
+        $salesOrderItemToProductClassEntity = $this->getSalesOrderItemProductClassQuery()
+            ->filterByFkSalesOrderItem($idSalesOrderItem)
+            ->filterByFkSalesProductClass($idSalesProductClass)
+            ->findOneOrCreate();
+
+        if ($salesOrderItemToProductClassEntity->isNew() || $salesOrderItemToProductClassEntity->isModified()) {
+            $salesOrderItemToProductClassEntity->save();
+        }
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($idSalesOrderItem, $idSalesProductClass): void {
+            $this->cleanupSalesOrderItemToProductClass(
+                $idSalesOrderItem,
+                $idSalesProductClass,
+            );
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array<\Generated\Shared\Transfer\ProductClassTransfer> $productClassTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function addProductClassesToProductAbstract(
+        ProductAbstractTransfer $productAbstractTransfer,
+        array $productClassTransfers
+    ): ProductAbstractTransfer {
+        foreach ($productClassTransfers as $productClassTransfer) {
+            $this->haveProductToProductClass(
+                $productAbstractTransfer->getIdProductAbstractOrFail(),
+                $productClassTransfer->getIdProductClassOrFail(),
+            );
+            $productAbstractTransfer->addProductClass($productClassTransfer);
+        }
+
+        return $productAbstractTransfer;
     }
 
     /**
@@ -577,32 +628,46 @@ class SelfServicePortalHelper extends Module
     }
 
     /**
-     * @param int $idProductAbstractType
+     * @param int $idProductClass
      *
      * @return void
      */
-    protected function cleanupProductAbstractType(int $idProductAbstractType): void
+    protected function cleanupProductClass(int $idProductClass): void
     {
-        $this->getProductAbstractToProductAbstractTypeQuery()
-            ->filterByFkProductAbstractType($idProductAbstractType)
+        $this->getProductToProductClassQuery()
+            ->filterByFkProductClass($idProductClass)
             ->delete();
 
-        $this->getProductAbstractTypeQuery()
-            ->filterByIdProductAbstractType($idProductAbstractType)
+        $this->getProductClassQuery()
+            ->filterByIdProductClass($idProductClass)
             ->delete();
     }
 
     /**
-     * @param int $idProductAbstract
-     * @param int $idProductAbstractType
+     * @param int $idProduct
+     * @param int $idProductClass
      *
      * @return void
      */
-    protected function cleanupProductAbstractToProductAbstractType(int $idProductAbstract, int $idProductAbstractType): void
+    protected function cleanupProductToProductClass(int $idProduct, int $idProductClass): void
     {
-        $this->getProductAbstractToProductAbstractTypeQuery()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->filterByFkProductAbstractType($idProductAbstractType)
+        $this->getProductToProductClassQuery()
+            ->filterByFkProduct($idProduct)
+            ->filterByFkProductClass($idProductClass)
+            ->delete();
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     * @param int $idSalesProductClass
+     *
+     * @return void
+     */
+    protected function cleanupSalesOrderItemToProductClass(int $idSalesOrderItem, int $idSalesProductClass): void
+    {
+        $this->getSalesOrderItemProductClassQuery()
+            ->filterByFkSalesOrderItem($idSalesOrderItem)
+            ->filterByFkSalesProductClass($idSalesProductClass)
             ->delete();
     }
 
@@ -627,19 +692,27 @@ class SelfServicePortalHelper extends Module
     }
 
     /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractTypeQuery
+     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery
      */
-    protected function getProductAbstractTypeQuery(): SpyProductAbstractTypeQuery
+    protected function getProductClassQuery(): SpyProductClassQuery
     {
-        return SpyProductAbstractTypeQuery::create();
+        return SpyProductClassQuery::create();
     }
 
     /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractToProductAbstractTypeQuery
+     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductToProductClassQuery
      */
-    protected function getProductAbstractToProductAbstractTypeQuery(): SpyProductAbstractToProductAbstractTypeQuery
+    protected function getProductToProductClassQuery(): SpyProductToProductClassQuery
     {
-        return SpyProductAbstractToProductAbstractTypeQuery::create();
+        return SpyProductToProductClassQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClassQuery
+     */
+    protected function getSalesOrderItemProductClassQuery(): SpySalesOrderItemProductClassQuery
+    {
+        return SpySalesOrderItemProductClassQuery::create();
     }
 
     /**
@@ -650,6 +723,42 @@ class SelfServicePortalHelper extends Module
         $this->createCompanyFileQuery()->deleteAll();
         $this->createCompanyUserFileQuery()->deleteAll();
         $this->createCompanyBusinessUnitFileQuery()->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureSalesOrderItemProductClassDatabaseTablesAreEmpty(): void
+    {
+        $this->getSalesOrderItemProductClassQuery()->deleteAll();
+        $this->getSalesProductClassQuery()->deleteAll();
+    }
+
+    /**
+     * @param array<string, mixed> $salesProductClassOverride
+     *
+     * @return \Generated\Shared\Transfer\SalesProductClassTransfer
+     */
+    public function haveSalesProductClass(array $salesProductClassOverride = []): SalesProductClassTransfer
+    {
+        $salesProductClassTransfer = (new SalesProductClassBuilder($salesProductClassOverride))->build();
+
+        $salesProductClassEntity = $this->getSalesProductClassQuery()
+            ->filterByName($salesProductClassTransfer->getName())
+            ->findOneOrCreate();
+
+        $salesProductClassEntity->fromArray($salesProductClassTransfer->modifiedToArray());
+        if ($salesProductClassEntity->isNew() || $salesProductClassEntity->isModified()) {
+            $salesProductClassEntity->save();
+        }
+
+        $salesProductClassTransfer->setIdSalesProductClass($salesProductClassEntity->getIdSalesProductClass());
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($salesProductClassTransfer): void {
+            $this->getSalesProductClassQuery()->filterByIdSalesProductClass($salesProductClassTransfer->getIdSalesProductClass())->delete();
+        });
+
+        return $salesProductClassTransfer;
     }
 
     /**
@@ -766,6 +875,14 @@ class SelfServicePortalHelper extends Module
     public function createSspAssetFileQuery(): SpySspAssetFileQuery
     {
         return SpySspAssetFileQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesProductClassQuery
+     */
+    public function getSalesProductClassQuery(): SpySalesProductClassQuery
+    {
+        return SpySalesProductClassQuery::create();
     }
 
     /**

@@ -13,11 +13,15 @@ use Codeception\Actor;
 use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
@@ -28,6 +32,8 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Shared\Price\PriceMode;
 
 /**
@@ -136,18 +142,82 @@ class SelfServicePortalBusinessTester extends Actor
             CompanyRoleTransfer::PERMISSION_COLLECTION => $permissionCollectionTransfer,
         ]);
 
+        $businessUnitTransfer = $this->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+
         $companyRoleCollection = (new CompanyRoleCollectionTransfer())->addRole($companyRoleTransfer);
 
         $customerTransfer = $this->haveCustomer();
         $companyUserTransfer = $this->haveCompanyUser([
             CompanyUserTransfer::CUSTOMER => $customerTransfer,
             CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $businessUnitTransfer->getIdCompanyBusinessUnit(),
         ]);
 
         $companyUserTransfer->setCompanyRoleCollection($companyRoleCollection);
+        $companyUserTransfer->setCompany($companyTransfer);
+        $companyUserTransfer->setCompanyBusinessUnit($businessUnitTransfer);
+        $companyUserTransfer->setCustomer($customerTransfer);
 
         $this->assignCompanyRolesToCompanyUser($companyUserTransfer);
 
         return $companyUserTransfer;
+    }
+
+    /**
+     * @param string $stateMachineProcessName
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function createOrderByStateMachineProcessName(string $stateMachineProcessName): OrderTransfer
+    {
+        $quoteTransfer = $this->buildFakeQuote(
+            $this->haveCustomer(),
+            $this->haveStore([StoreTransfer::NAME => 'DE']),
+        );
+
+        $saveOrderTransfer = $this->haveOrderFromQuote($quoteTransfer, $stateMachineProcessName);
+
+        return (new OrderTransfer())
+            ->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder())
+            ->setOrderReference($saveOrderTransfer->getOrderReference())
+            ->setStore($quoteTransfer->getStore()->getName())
+            ->setCustomer($quoteTransfer->getCustomer())
+            ->setItems($saveOrderTransfer->getOrderItems());
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem|null
+     */
+    public function findSalesOrderItemByIdSalesOrderItem(int $idSalesOrderItem): ?SpySalesOrderItem
+    {
+        return SpySalesOrderItemQuery::create()->findOneByIdSalesOrderItem($idSalesOrderItem);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function buildFakeQuote(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteTransfer
+    {
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem()
+            ->withItem()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->withCurrency()
+            ->build();
+
+        $quoteTransfer
+            ->setCustomer($customerTransfer)
+            ->setStore($storeTransfer);
+
+        return $quoteTransfer;
     }
 }

@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
-use Generated\Shared\Transfer\ProductAbstractTypeCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
@@ -67,17 +67,6 @@ interface SelfServicePortalFacadeInterface
     public function updateSalesOrderItemCollection(
         SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
     ): SalesOrderItemCollectionResponseTransfer;
-
-    /**
-     * Specification:
-     * - Returns collection of product abstract types.
-     * - Returns empty collection if no product abstract types found.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTypeCollectionTransfer
-     */
-    public function getProductAbstractTypeCollection(): ProductAbstractTypeCollectionTransfer;
 
     /**
      * Specification:
@@ -264,4 +253,21 @@ interface SelfServicePortalFacadeInterface
      * @return \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer
      */
     public function updateSspAssetCollection(SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer): SspAssetCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Saves product classes for the given product concrete.
+     * - Requires `ProductConcreteTransfer.fkProductAbstract` to be provided.
+     * - Requires `ProductConcreteTransfer.productClasses` to be provided.
+     * - Deletes existing product class relations for the abstract product first.
+     * - Creates new relations between abstract product and product classes.
+     * - Returns the updated product concrete transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function saveProductClassesForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

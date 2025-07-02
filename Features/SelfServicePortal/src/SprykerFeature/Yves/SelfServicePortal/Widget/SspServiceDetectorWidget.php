@@ -25,7 +25,7 @@ class SspServiceDetectorWidget extends AbstractWidget
     /**
      * @var string
      */
-    protected const PARAMETER_PRODUCT_ABSTRACT_TYPES = 'product-abstract-types';
+    protected const PARAMETER_PRODUCT_CLASS_NAMES = 'product-class-names';
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer|array<string|mixed> $productData
@@ -70,15 +70,15 @@ class SspServiceDetectorWidget extends AbstractWidget
      */
     protected function isSspService(array|ProductViewTransfer $productData): bool
     {
-        $productServiceTypeName = $this->getConfig()->getServiceProductTypeName();
+        $serviceProductClassName = $this->getConfig()->getServiceProductClassName();
 
-        $productTypes = $this->getProductTypes($productData);
+        $productClassNames = $this->getProductClassNames($productData);
 
-        if (!$productTypes) {
+        if (!$productClassNames) {
             return false;
         }
 
-        return in_array($productServiceTypeName, $productTypes, true);
+        return in_array($serviceProductClassName, $productClassNames, true);
     }
 
     /**
@@ -86,15 +86,15 @@ class SspServiceDetectorWidget extends AbstractWidget
      *
      * @return array<string>
      */
-    protected function getProductTypes(array|ProductViewTransfer $productData): array
+    protected function getProductClassNames(array|ProductViewTransfer $productData): array
     {
         if (is_array($productData)) {
-            return $productData[static::PARAMETER_PRODUCT_ABSTRACT_TYPES] ?? [];
+            return $productData[static::PARAMETER_PRODUCT_CLASS_NAMES] ?? [];
         }
 
         /**
          * @var \Generated\Shared\Transfer\ProductViewTransfer $productData
          */
-        return $productData->getProductTypes();
+        return $productData->getProductClassNames();
     }
 }

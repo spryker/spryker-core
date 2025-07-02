@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
-use Generated\Shared\Transfer\ProductAbstractTypeCollectionTransfer;
+use Generated\Shared\Transfer\ProductClassCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
@@ -37,23 +37,44 @@ interface SelfServicePortalRepositoryInterface
     public function getProductIdsWithShipmentType(array $productConcreteIds, string $shipmentTypeName): array;
 
     /**
-     * @return \Generated\Shared\Transfer\ProductAbstractTypeCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductClassCollectionTransfer
      */
-    public function getProductAbstractTypeCollection(): ProductAbstractTypeCollectionTransfer;
+    public function getProductClassCollection(): ProductClassCollectionTransfer;
 
     /**
      * @param int $idProductAbstract
      *
-     * @return array<\Generated\Shared\Transfer\ProductAbstractTypeTransfer>
+     * @return array<\Generated\Shared\Transfer\ProductClassTransfer>
      */
-    public function getProductAbstractTypesByIdProductAbstract(int $idProductAbstract): array;
+    public function getProductClassesByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param array<int> $productAbstractIds
      *
-     * @return array<\Generated\Shared\Transfer\ProductAbstractTypeTransfer>
+     * @return array<int, array<\Generated\Shared\Transfer\ProductClassTransfer>>
      */
-    public function getProductAbstractTypesByProductAbstractIds(array $productAbstractIds): array;
+    public function getProductClassesByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param array<int> $productConcreteIds
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\ProductClassTransfer>>
+     */
+    public function getProductClassesByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
+     * @param array<string> $skus
+     *
+     * @return array<string, array<\Generated\Shared\Transfer\ProductClassTransfer>>
+     */
+    public function getProductClassesForConcreteProductsBySkusIndexedBySku(array $skus): array;
+
+    /**
+     * @param array<int> $salesOrderItemIds
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\ProductClassTransfer>>
+     */
+    public function getProductClassesGroupedBySalesOrderItemIds(array $salesOrderItemIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
@@ -61,20 +82,6 @@ interface SelfServicePortalRepositoryInterface
      * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
      */
     public function getServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer;
-
-    /**
-     * @param array<int> $productAbstractIds
-     *
-     * @return array<\Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractToProductAbstractType>
-     */
-    public function findProductAbstractTypesByProductAbstractIds(array $productAbstractIds): array;
-
-    /**
-     * @param array<int> $salesOrderItemIds
-     *
-     * @return array<int, array<string>>
-     */
-    public function getProductTypesGroupedBySalesOrderItemIds(array $salesOrderItemIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
@@ -144,4 +151,11 @@ interface SelfServicePortalRepositoryInterface
      * @return array<int, \Generated\Shared\Transfer\SspAssetTransfer>
      */
     public function getSspAssetsIndexedByIdSalesOrderItem(array $salesOrderItemIds): array;
+
+    /**
+     * @param array<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderItemProductClassesBySalesOrderItemIds(array $salesOrderItemIds): void;
 }

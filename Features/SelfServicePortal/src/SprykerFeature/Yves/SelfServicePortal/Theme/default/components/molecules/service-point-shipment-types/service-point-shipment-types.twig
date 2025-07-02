@@ -9,7 +9,7 @@
     shipmentTypes: [],
     isSelectionDisabled: false,
     formFieldShipmentTypeUuid: null,
-    isServiceDateTimeEnabled: false,
+    isServiceDateTimeFieldVisible: false,
     hasOnlyServiceShipmentType: false,
     formFieldServicePointUuid: null,
     formFieldProductOfferReference: null,
@@ -95,7 +95,7 @@
 {% endblock %}
 
 {% block datepicker %}
-    {% if data.isServiceDateTimeEnabled %}
+    {% if data.isServiceDateTimeFieldVisible %}
         <div class="spacing-bottom--big">
             <label class="label">{{'self_service_portal.service.product.service_date_time' | trans }}</label>
             <input type="datetime-local" class="input input--expand"  name="{{ data.formFieldItemMetadataScheduledAt }}">

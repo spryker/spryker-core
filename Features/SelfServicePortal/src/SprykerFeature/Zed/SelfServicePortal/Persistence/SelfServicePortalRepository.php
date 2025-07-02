@@ -16,8 +16,7 @@ use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
-use Generated\Shared\Transfer\ProductAbstractTypeCollectionTransfer;
-use Generated\Shared\Transfer\ProductAbstractTypeTransfer;
+use Generated\Shared\Transfer\ProductClassCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
@@ -94,11 +93,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
     protected const SORT_DIRECTION_ASC = 'ASC';
 
     /**
-     * @var string
-     */
-    protected const SORT_DIRECTION_DESC = 'DESC';
-
-    /**
      * @var array<string, string>
      */
     protected const SERVICE_SORT_FIELD_MAPPING = [
@@ -154,75 +148,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
     }
 
     /**
-     * @param int $idProductAbstract
-     *
-     * @return array<\Generated\Shared\Transfer\ProductAbstractTypeTransfer>
-     */
-    public function getProductAbstractTypesByIdProductAbstract(int $idProductAbstract): array
-    {
-        $productAbstractTypeEntities = $this->getFactory()
-            ->createProductAbstractTypeQuery()
-            ->useProductAbstractToProductAbstractTypeQuery()
-                ->filterByFkProductAbstract($idProductAbstract)
-            ->endUse()
-            ->find();
-
-        return $this->getFactory()
-            ->createProductAbstractTypeMapper()
-            ->mapProductAbstractTypeEntitiesToProductAbstractTypeTransfers($productAbstractTypeEntities);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductAbstractTypeCollectionTransfer
-     */
-    public function getProductAbstractTypeCollection(): ProductAbstractTypeCollectionTransfer
-    {
-        $productAbstractTypeEntities = $this->getFactory()
-            ->createProductAbstractTypeQuery()
-            ->find();
-
-        $productAbstractTypeCollectionTransfer = new ProductAbstractTypeCollectionTransfer();
-
-        foreach ($productAbstractTypeEntities as $productAbstractTypeEntity) {
-            $productAbstractTypeTransfer = (new ProductAbstractTypeTransfer())
-                ->setIdProductAbstractType($productAbstractTypeEntity->getIdProductAbstractType())
-                ->setKey($productAbstractTypeEntity->getKey())
-                ->setName($productAbstractTypeEntity->getName());
-
-            $productAbstractTypeCollectionTransfer->addProductAbstractType($productAbstractTypeTransfer);
-        }
-
-        return $productAbstractTypeCollectionTransfer;
-    }
-
-    /**
-     * @param array<int> $productAbstractIds
-     *
-     * @return array<\Generated\Shared\Transfer\ProductAbstractTypeTransfer>
-     */
-    public function getProductAbstractTypesByProductAbstractIds(array $productAbstractIds): array
-    {
-        if (!$productAbstractIds) {
-            return [];
-        }
-
-        $productAbstractTypeQuery = $this->getFactory()
-            ->createProductAbstractTypeQuery()
-            ->useProductAbstractToProductAbstractTypeQuery()
-                ->filterByFkProductAbstract_In($productAbstractIds)
-            ->endUse()
-            ->joinWithProductAbstractToProductAbstractType()
-            ->withColumn('spy_product_abstract_to_product_abstract_type.fk_product_abstract', 'fk_product_abstract')
-            ->groupBy(['spy_product_abstract_type.id_product_abstract_type', 'fk_product_abstract']);
-
-        $productAbstractTypeEntities = $productAbstractTypeQuery->find();
-
-        return $this->getFactory()
-            ->createProductAbstractTypeMapper()
-            ->mapProductAbstractTypeEntitiesWithVirtualColumnsToProductAbstractTypeTransfers($productAbstractTypeEntities);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
@@ -254,6 +179,20 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         $serviceCollectionTransfer->setPagination($sspServiceCriteriaTransfer->getPagination());
 
         return $serviceCollectionTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductClassCollectionTransfer
+     */
+    public function getProductClassCollection(): ProductClassCollectionTransfer
+    {
+        $productClassEntities = $this->getFactory()
+            ->createProductClassQuery()
+            ->find()->getData();
+
+        return $this->getFactory()
+            ->createProductClassMapper()
+            ->mapProductClassEntitiesToProductClassCollectionTransfer($productClassEntities, new ProductClassCollectionTransfer());
     }
 
     /**
@@ -305,12 +244,12 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
 
         $serviceConditionsTransfer = $sspServiceCriteriaTransfer->getServiceConditionsOrFail();
 
-        $productTypeNameToFilter = $serviceConditionsTransfer->getProductType() ?: $this->getFactory()->getConfig()->getServiceProductTypeName();
+        $productClassNameToFilter = $serviceConditionsTransfer->getProductClass() ?: $this->getFactory()->getConfig()->getServiceProductClassName();
 
-        if ($productTypeNameToFilter) {
-            $query->useSpySalesOrderItemProductAbstractTypeQuery()
-                ->useSpySalesProductAbstractTypeQuery()
-                    ->filterByName($productTypeNameToFilter)
+        if ($productClassNameToFilter) {
+            $query->useSpySalesOrderItemProductClassQuery()
+                ->useSpySalesProductClassQuery()
+                    ->filterByName($productClassNameToFilter)
                 ->endUse()
             ->endUse();
         }
@@ -390,67 +329,94 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
     }
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return array<\Generated\Shared\Transfer\ProductClassTransfer>
+     */
+    public function getProductClassesByIdProductAbstract(int $idProductAbstract): array
+    {
+        return $this->getProductClassesByProductAbstractIds([$idProductAbstract])[$idProductAbstract] ?? [];
+    }
+
+    /**
      * @param array<int> $productAbstractIds
      *
-     * @return array<\Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractToProductAbstractType>
+     * @return array<int, array<\Generated\Shared\Transfer\ProductClassTransfer>>
      */
-    public function findProductAbstractTypesByProductAbstractIds(array $productAbstractIds): array
+    public function getProductClassesByProductAbstractIds(array $productAbstractIds): array
     {
-        return $this->getFactory()
-            ->createProductAbstractToProductAbstractTypeQuery()
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->joinWithProductAbstractType()
-            ->find()
-            ->getData();
+        if (!$productAbstractIds) {
+            return [];
+        }
+
+        $productToProductClassEntities = $this->getFactory()
+            ->createProductToProductClassQuery()
+            ->joinWithProductClass()
+            ->useProductQuery()
+                ->filterByFkProductAbstract_In($productAbstractIds)
+            ->endUse()
+            ->find();
+
+        if ($productToProductClassEntities->isEmpty()) {
+            return [];
+        }
+
+        $result = [];
+        $productClassMapper = $this->getFactory()->createProductClassMapper();
+
+        foreach ($productToProductClassEntities as $productToProductClassEntity) {
+            $idProductAbstract = (int)$productToProductClassEntity->getProduct()->getFkProductAbstract();
+
+            if (!isset($result[$idProductAbstract])) {
+                $result[$idProductAbstract] = [];
+            }
+
+            $result[$idProductAbstract][] = $productClassMapper->mapProductClassEntityToProductClassTransfer($productToProductClassEntity->getProductClass());
+        }
+
+        return $result;
     }
 
     /**
      * @param array<int> $salesOrderItemIds
      *
-     * @return array<int, array<string>>
+     * @return array<int, array<\Generated\Shared\Transfer\ProductClassTransfer>>
      */
-    public function getProductTypesGroupedBySalesOrderItemIds(array $salesOrderItemIds): array
+    public function getProductClassesGroupedBySalesOrderItemIds(array $salesOrderItemIds): array
     {
         if (!$salesOrderItemIds) {
             return [];
         }
 
-        $salesOrderItemProductAbstractTypeQuery = $this->getFactory()
-            ->createSalesOrderItemProductAbstractTypeQuery()
-            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
-            ->joinWithSpySalesProductAbstractType();
+        $salesOrderItemEntities = $this->getFactory()
+            ->getSalesOrderItemPropelQuery()
+            ->filterByIdSalesOrderItem_In($salesOrderItemIds)
+            ->find();
 
-        $salesOrderItemProductAbstractTypeEntities = $salesOrderItemProductAbstractTypeQuery->find();
+        if ($salesOrderItemEntities->isEmpty()) {
+            return [];
+        }
 
-        return $this->groupProductTypesBySalesOrderItemId($salesOrderItemProductAbstractTypeEntities);
-    }
+        $salesOrderItemIdToSkuMap = [];
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
+            $salesOrderItemIdToSkuMap[$salesOrderItemEntity->getIdSalesOrderItem()] = $salesOrderItemEntity->getSku();
+        }
 
-    /**
-     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductAbstractType> $salesOrderItemProductAbstractTypeEntities
-     *
-     * @return array<int, array<string>>
-     */
-    protected function groupProductTypesBySalesOrderItemId(Collection $salesOrderItemProductAbstractTypeEntities): array
-    {
-        $productTypesBySalesOrderItemId = [];
+        $skus = array_values($salesOrderItemIdToSkuMap);
+        $productClassesBySkus = $this->getProductClassesForConcreteProductsBySkusIndexedBySku($skus);
 
-        foreach ($salesOrderItemProductAbstractTypeEntities as $salesOrderItemProductAbstractTypeEntity) {
-            /**
-             * @var \Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductAbstractType $salesOrderItemProductAbstractTypeEntity
-             */
-            $idSalesOrderItem = $salesOrderItemProductAbstractTypeEntity->getFkSalesOrderItem();
-            $productTypeName = $salesOrderItemProductAbstractTypeEntity->getSpySalesProductAbstractType()->getName();
+        if (!$productClassesBySkus) {
+            return [];
+        }
 
-            if (!isset($productTypesBySalesOrderItemId[$idSalesOrderItem])) {
-                $productTypesBySalesOrderItemId[$idSalesOrderItem] = [];
-            }
-
-            if (!in_array($productTypeName, $productTypesBySalesOrderItemId[$idSalesOrderItem])) {
-                $productTypesBySalesOrderItemId[$idSalesOrderItem][] = $productTypeName;
+        $salesOrderItemIdToProductClasses = [];
+        foreach ($salesOrderItemIdToSkuMap as $salesOrderItemId => $sku) {
+            if (isset($productClassesBySkus[$sku])) {
+                $salesOrderItemIdToProductClasses[$salesOrderItemId] = $productClassesBySkus[$sku];
             }
         }
 
-        return $productTypesBySalesOrderItemId;
+        return $salesOrderItemIdToProductClasses;
     }
 
     /**
@@ -1341,6 +1307,93 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         }
 
         return $sspAssetsIndexedByIdSalesOrderItem;
+    }
+
+    /**
+     * @param array<int> $salesOrderItemIds
+     *
+     * @return void
+     */
+    public function deleteSalesOrderItemProductClassesBySalesOrderItemIds(array $salesOrderItemIds): void
+    {
+        if (!$salesOrderItemIds) {
+            return;
+        }
+
+        $this->getFactory()
+            ->createSalesOrderItemProductClassQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
+            ->delete();
+    }
+
+    /**
+     * @param array<string> $skus
+     *
+     * @return array<string, array<\Generated\Shared\Transfer\ProductClassTransfer>>
+     */
+    public function getProductClassesForConcreteProductsBySkusIndexedBySku(array $skus): array
+    {
+        if (!$skus) {
+            return [];
+        }
+
+        $productToProductClassEntities = $this->getFactory()
+            ->createProductToProductClassQuery()
+            ->joinWithProductClass()
+            ->useProductQuery()
+                ->filterBySku_In($skus)
+            ->endUse()
+            ->find();
+
+        if ($productToProductClassEntities->isEmpty()) {
+            return [];
+        }
+
+        $productClassTransfersIndexedBySku = [];
+
+        foreach ($productToProductClassEntities as $productToProductClassEntity) {
+            $productClassTransfersIndexedBySku[(string)$productToProductClassEntity->getProduct()->getSku()][] = $this->getFactory()->createProductClassMapper()->mapProductClassEntityToProductClassTransfer($productToProductClassEntity->getProductClass());
+        }
+
+        return $productClassTransfersIndexedBySku;
+    }
+
+    /**
+     * @param array<int> $productConcreteIds
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\ProductClassTransfer>>
+     */
+    public function getProductClassesByProductConcreteIds(array $productConcreteIds): array
+    {
+        if (!$productConcreteIds) {
+            return [];
+        }
+
+        $productToProductClassQuery = $this->getFactory()
+            ->createProductToProductClassQuery()
+            ->filterByFkProduct_In($productConcreteIds)
+            ->joinWithProductClass();
+
+        $productToProductClassEntities = $productToProductClassQuery->find();
+
+        if ($productToProductClassEntities->isEmpty()) {
+            return [];
+        }
+
+        $result = [];
+        $productClassMapper = $this->getFactory()->createProductClassMapper();
+
+        foreach ($productToProductClassEntities as $productToProductClassEntity) {
+            $idProduct = (int)$productToProductClassEntity->getFkProduct();
+
+            if (!isset($result[$idProduct])) {
+                $result[$idProduct] = [];
+            }
+
+            $result[$idProduct][] = $productClassMapper->mapProductClassEntityToProductClassTransfer($productToProductClassEntity->getProductClass());
+        }
+
+        return $result;
     }
 
     /**

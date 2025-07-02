@@ -49,10 +49,6 @@ use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Spryker\Zed\Translator\Business\TranslatorFacadeInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\SspAssetItemExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\SspAssetItemExpanderInterface;
-use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemProductTypeExpander;
-use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemProductTypeExpanderInterface;
-use SprykerFeature\Zed\SelfServicePortal\Business\Service\Saver\ServiceDateTimeEnabledSaver;
-use SprykerFeature\Zed\SelfServicePortal\Business\Service\Saver\ServiceDateTimeEnabledSaverInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Expander\OrderItemSspAssetExpander;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Expander\OrderItemSspAssetExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Extractor\SalesOrderItemIdExtractor;
@@ -107,15 +103,14 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\SspInquiryFi
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\TriggerEventForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Table\OrderSspInquiryTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Table\SspInquiryTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductAbstractTypeExpander;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductAbstractTypeExpanderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductConcreteClassExpander;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductConcreteClassExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductOfferTableActionExpander;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductOfferTableActionExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\CreateOfferForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataProvider\CreateOfferFormDataProvider;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataProvider\EditOfferFormDataProvider;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataProvider\ItemSchedulerFormDataProvider;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataProvider\ServiceDateTimeEnabledProductConcreteFormDataProvider;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataProvider\ShipmentTypeProductConcreteFormDataProvider;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataTransformer\ServicePointServicesDataTransformer;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataTransformer\ShipmentTypesDataTransformer;
@@ -127,18 +122,11 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\EventListene
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\EventListener\ServicePointEditOfferFormEventSubscriber;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\EventListener\StockCreateOfferFormEventSubscriber;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\EventListener\StockEditOfferFormEventSubscriber;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\Expander\ServiceDateTimeEnabledProductConcreteFormExpander;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\Expander\ServiceDateTimeEnabledProductConcreteFormExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\Expander\ShipmentTypeProductConcreteFormExpander;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\Expander\ShipmentTypeProductConcreteFormExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\ItemSchedulerForm;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\ProductAbstractTypeForm;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\ServiceDateTimeEnabledProductConcreteForm;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\ProductClassForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\ShipmentTypeProductConcreteForm;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Mapper\ProductAbstractTypeProductFormMapper;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Mapper\ProductAbstractTypeProductFormMapperInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Mapper\ServiceDateTimeProductFormMapper;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Mapper\ServiceDateTimeProductFormMapperInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Mapper\ShipmentTypeProductFormMapper;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Mapper\ShipmentTypeProductFormMapperInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Reader\ProductReader;
@@ -147,10 +135,11 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Reader\SalesOrder
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Reader\SalesOrderItemReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Reader\ShipmentTypeReader;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Reader\ShipmentTypeReaderInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Saver\SalesOrderItemProductTypesSaver;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Saver\SalesOrderItemProductTypesSaverInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Saver\SalesOrderItemProductClassesSaver;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Saver\SalesOrderItemProductClassesSaverInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Table\ProductConcreteTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Table\ServiceTable;
+use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalDependencyProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormInterface;
@@ -178,22 +167,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     public function createShipmentTypeProductConcreteForm(): FormTypeInterface
     {
         return new ShipmentTypeProductConcreteForm();
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataProvider\ServiceDateTimeEnabledProductConcreteFormDataProvider
-     */
-    public function createServiceDateTimeEnabledProductConcreteFormDataProvider(): ServiceDateTimeEnabledProductConcreteFormDataProvider
-    {
-        return new ServiceDateTimeEnabledProductConcreteFormDataProvider();
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormTypeInterface
-     */
-    public function createServiceDateTimeEnabledProductConcreteForm(): FormTypeInterface
-    {
-        return new ServiceDateTimeEnabledProductConcreteForm();
     }
 
     /**
@@ -236,27 +209,11 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeInterface
-     */
-    public function createProductAbstractTypeForm(): FormTypeInterface
-    {
-        return new ProductAbstractTypeForm();
-    }
-
-    /**
      * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Mapper\ShipmentTypeProductFormMapperInterface
      */
     public function createShipmentTypeProductFormMapper(): ShipmentTypeProductFormMapperInterface
     {
         return new ShipmentTypeProductFormMapper();
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Mapper\ServiceDateTimeProductFormMapperInterface
-     */
-    public function createServiceDateTimeProductFormMapper(): ServiceDateTimeProductFormMapperInterface
-    {
-        return new ServiceDateTimeProductFormMapper();
     }
 
     /**
@@ -277,6 +234,19 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductImageQuery(),
             $this->getLocaleFacade(),
         );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface
+     */
+    public function getRepository(): SelfServicePortalRepositoryInterface
+    {
+        /**
+         * @var \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $repository
+         */
+        $repository = parent::getRepository();
+
+        return $repository;
     }
 
     /**
@@ -391,42 +361,23 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductAbstractTypeExpanderInterface
+     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Saver\SalesOrderItemProductClassesSaverInterface
      */
-    public function createProductAbstractTypeExpander(): ProductAbstractTypeExpanderInterface
+    public function createSalesOrderItemProductClassesSaver(): SalesOrderItemProductClassesSaverInterface
     {
-        return new ProductAbstractTypeExpander(
-            $this->getRepository(),
-        );
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Saver\SalesOrderItemProductTypesSaverInterface
-     */
-    public function createSalesOrderItemProductTypesSaver(): SalesOrderItemProductTypesSaverInterface
-    {
-        return new SalesOrderItemProductTypesSaver(
+        return new SalesOrderItemProductClassesSaver(
             $this->getEntityManager(),
         );
     }
 
     /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Saver\ServiceDateTimeEnabledSaverInterface
+     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\Expander\ShipmentTypeProductConcreteFormExpanderInterface
      */
-    public function createServiceDateTimeEnabledSaver(): ServiceDateTimeEnabledSaverInterface
+    public function createShipmentTypeProductConcreteFormExpander(): ShipmentTypeProductConcreteFormExpanderInterface
     {
-        return new ServiceDateTimeEnabledSaver(
-            $this->getEntityManager(),
-        );
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemProductTypeExpanderInterface
-     */
-    public function createOrderItemProductTypeExpander(): OrderItemProductTypeExpanderInterface
-    {
-        return new OrderItemProductTypeExpander(
-            $this->getRepository(),
+        return new ShipmentTypeProductConcreteFormExpander(
+            $this->createShipmentTypeProductConcreteFormDataProvider(),
+            $this->createShipmentTypeProductConcreteForm(),
         );
     }
 
@@ -1243,6 +1194,14 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\ProductClassForm
+     */
+    public function createProductClassForm(): ProductClassForm
+    {
+        return new ProductClassForm();
+    }
+
+    /**
      * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Extractor\SalesOrderItemIdExtractorInterface
      */
     public function createSalesOrderItemIdExtractor(): SalesOrderItemIdExtractorInterface
@@ -1262,32 +1221,12 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Mapper\ProductAbstractTypeProductFormMapperInterface
+     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductConcreteClassExpanderInterface
      */
-    public function createProductAbstractTypeProductFormMapper(): ProductAbstractTypeProductFormMapperInterface
+    public function createProductConcreteClassExpander(): ProductConcreteClassExpanderInterface
     {
-        return new ProductAbstractTypeProductFormMapper();
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\Expander\ServiceDateTimeEnabledProductConcreteFormExpanderInterface
-     */
-    public function createServiceDateTimeEnabledProductConcreteFormExpander(): ServiceDateTimeEnabledProductConcreteFormExpanderInterface
-    {
-        return new ServiceDateTimeEnabledProductConcreteFormExpander(
-            $this->createServiceDateTimeEnabledProductConcreteFormDataProvider(),
-            $this->createServiceDateTimeEnabledProductConcreteForm(),
-        );
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\Expander\ShipmentTypeProductConcreteFormExpanderInterface
-     */
-    public function createShipmentTypeProductConcreteFormExpander(): ShipmentTypeProductConcreteFormExpanderInterface
-    {
-        return new ShipmentTypeProductConcreteFormExpander(
-            $this->createShipmentTypeProductConcreteFormDataProvider(),
-            $this->createShipmentTypeProductConcreteForm(),
+        return new ProductConcreteClassExpander(
+            $this->getRepository(),
         );
     }
 

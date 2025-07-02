@@ -230,9 +230,9 @@ class ServiceTable extends AbstractTable
      */
     protected function prepareQuery(): SpySalesOrderItemQuery
     {
-        $query = $this->salesOrderItemQuery->useSpySalesOrderItemProductAbstractTypeQuery()
-            ->useSpySalesProductAbstractTypeQuery()
-                ->filterByName($this->SelfServicePortalConfig->getServiceProductTypeName())
+        $query = $this->salesOrderItemQuery->useSpySalesOrderItemProductClassQuery()
+            ->useSpySalesProductClassQuery()
+                ->filterByName($this->SelfServicePortalConfig->getServiceProductClassName())
             ->endUse()
             ->endUse();
 

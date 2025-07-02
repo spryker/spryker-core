@@ -7,6 +7,7 @@
 
 namespace SprykerFeature\Yves\SelfServicePortal\Widget;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -94,8 +95,26 @@ class SspServiceCancelWidget extends AbstractWidget
      */
     protected function addIsVisibleParameter(ItemTransfer $itemTransfer): void
     {
-        $isService = in_array($this->getConfig()->getServiceProductTypeName(), $itemTransfer->getProductTypes());
+        $serviceClassName = $this->getConfig()->getServiceProductClassName();
+        $isService = $this->hasProductClassName($itemTransfer->getProductClasses(), $serviceClassName);
 
         $this->addParameter(static::PARAMETER_IS_VISIBLE, $isService);
+    }
+
+    /**
+     * @param \ArrayObject<\Generated\Shared\Transfer\ProductClassTransfer> $productClasses
+     * @param string $className
+     *
+     * @return bool
+     */
+    protected function hasProductClassName(ArrayObject $productClasses, string $className): bool
+    {
+        foreach ($productClasses as $productClass) {
+            if ($productClass->getName() === $className) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

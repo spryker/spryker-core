@@ -5,8 +5,4 @@
         <column name="scheduled_at" type="TIMESTAMP" required="false" default="NULL"/>
     </table>
 
-    <table name="spy_sales_order_item">
-        <column name="is_service_date_time_enabled" type="BOOLEAN" defaultValue="false"/>
-    </table>
-
 </database>

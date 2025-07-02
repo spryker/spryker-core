@@ -10,6 +10,7 @@ namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 use Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileCollectionTransfer;
+use Generated\Shared\Transfer\ProductClassTransfer;
 use Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
@@ -36,35 +37,27 @@ interface SelfServicePortalEntityManagerInterface
     ): void;
 
     /**
-     * @param int $idProductAbstract
+     * @param int $idProduct
      *
      * @return void
      */
-    public function deleteProductAbstractTypesByProductAbstractId(int $idProductAbstract): void;
+    public function deleteProductClassesByProductId(int $idProduct): void;
 
     /**
-     * @param int $idProductAbstract
-     * @param array<int> $productAbstractTypeIds
+     * @param int $idProduct
+     * @param array<int> $productClassIds
      *
      * @return void
      */
-    public function updateProductAbstractTypesForProductAbstract(int $idProductAbstract, array $productAbstractTypeIds): void;
-
-    /**
-     * @param int $idSalesOrderItem
-     * @param string $productTypeName
-     *
-     * @return void
-     */
-    public function saveSalesOrderItemProductType(int $idSalesOrderItem, string $productTypeName): void;
+    public function saveProductClassesForProduct(int $idProduct, array $productClassIds): void;
 
     /**
      * @param int $idSalesOrderItem
-     * @param bool $isServiceDateTimeEnabled
+     * @param \Generated\Shared\Transfer\ProductClassTransfer $productClassTransfer
      *
      * @return void
      */
-    public function saveIsServiceDateTimeEnabledForSalesOrderItem(int $idSalesOrderItem, bool $isServiceDateTimeEnabled): void;
+    public function saveSalesOrderItemProductClass(int $idSalesOrderItem, ProductClassTransfer $productClassTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer $fileAttachmentCollectionDeleteCriteriaTransfer
@@ -155,9 +148,17 @@ interface SelfServicePortalEntityManagerInterface
     public function createAssetToCompanyBusinessUnitRelation(int $idSspAsset, array $businessUnitIds): void;
 
     /**
-     * @param array<int> $salesOrderItemIds
+     * @param int $idProductConcrete
      *
      * @return void
      */
-    public function deleteSalesOrderItemProductAbstractTypesBySalesOrderItemIds(array $salesOrderItemIds): void;
+    public function deleteProductConcreteToProductClassRelations(int $idProductConcrete): void;
+
+    /**
+     * @param int $idProductConcrete
+     * @param array<int> $productClassIds
+     *
+     * @return void
+     */
+    public function saveProductConcreteProductClassRelations(int $idProductConcrete, array $productClassIds): void;
 }

@@ -51,8 +51,6 @@ class OrderItemCanceler implements OrderItemCancelerInterface
     public function cancelSalesOrderItemCollection(
         SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
     ): SalesOrderItemCollectionResponseTransfer {
-        $salesOrderItemCollectionRequestTransfer->requireItems();
-
         if (!$salesOrderItemCollectionRequestTransfer->getItems()->count()) {
             return $this->createErrorResponse(static::GLOSSARY_KEY_VALIDATION_NO_ORDER_ITEMS_PROVIDED);
         }

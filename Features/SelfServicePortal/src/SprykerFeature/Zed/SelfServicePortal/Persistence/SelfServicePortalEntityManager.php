@@ -10,6 +10,7 @@ namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 use Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileCollectionTransfer;
+use Generated\Shared\Transfer\ProductClassTransfer;
 use Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
@@ -17,11 +18,9 @@ use LogicException;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractToProductAbstractType;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAsset;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAsset;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnit;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiry;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryFile;
@@ -70,86 +69,63 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
     }
 
     /**
-     * @param int $idProductAbstract
-     * @param array<int> $productAbstractTypeIds
+     * @param int $idProduct
+     * @param array<int> $productClassIds
      *
      * @return void
      */
-    public function updateProductAbstractTypesForProductAbstract(int $idProductAbstract, array $productAbstractTypeIds): void
+    public function saveProductClassesForProduct(int $idProduct, array $productClassIds): void
     {
-        $this->deleteProductAbstractTypesByProductAbstractId($idProductAbstract);
+        $this->deleteProductClassesByProductId($idProduct);
 
-        foreach ($productAbstractTypeIds as $idProductAbstractType) {
-            $productAbstractToProductAbstractTypeEntity = new SpyProductAbstractToProductAbstractType();
-            $productAbstractToProductAbstractTypeEntity
-                ->setFkProductAbstract($idProductAbstract)
-                ->setFkProductAbstractType($idProductAbstractType)
-                ->save();
+        foreach ($productClassIds as $idProductClass) {
+            $productToProductClassEntity = $this->getFactory()->createProductToProductClassQuery()
+                ->filterByFkProduct($idProduct)
+                ->filterByFkProductClass($idProductClass)
+                ->findOneOrCreate();
+
+            $productToProductClassEntity->save();
         }
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param int $idProduct
      *
      * @return void
      */
-    public function deleteProductAbstractTypesByProductAbstractId(int $idProductAbstract): void
+    public function deleteProductClassesByProductId(int $idProduct): void
     {
-        /**
-         * @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SelfServicePortal\Persistence\SpyProductAbstractToProductAbstractType> $productAbstractTypesProductAbstractRelations
-         */
-        $productAbstractTypesProductAbstractRelations = $this->getFactory()
-            ->createProductAbstractToProductAbstractTypeQuery()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->find();
-
-        $productAbstractTypesProductAbstractRelations->delete();
+        $this->getFactory()
+            ->createProductToProductClassQuery()
+            ->filterByFkProduct($idProduct)
+            ->delete();
     }
 
     /**
      * @param int $idSalesOrderItem
-     * @param string $productTypeName
+     * @param \Generated\Shared\Transfer\ProductClassTransfer $productClassTransfer
      *
      * @return void
      */
-    public function saveSalesOrderItemProductType(int $idSalesOrderItem, string $productTypeName): void
+    public function saveSalesOrderItemProductClass(int $idSalesOrderItem, ProductClassTransfer $productClassTransfer): void
     {
-        $salesProductAbstractTypeEntity = $this->getFactory()
-            ->createSalesProductAbstractTypeQuery()
-            ->filterByName($productTypeName)
+        $salesProductClassEntity = $this->getFactory()
+            ->createSalesProductClassQuery()
+            ->filterByName($productClassTransfer->getName())
             ->findOneOrCreate();
 
-        if ($salesProductAbstractTypeEntity->isNew()) {
-            $salesProductAbstractTypeEntity->save();
+        if ($salesProductClassEntity->isNew()) {
+            $salesProductClassEntity->save();
         }
 
-        $salesOrderItemProductAbstractTypeEntity = $this->getFactory()
-            ->createSalesOrderItemProductAbstractTypeQuery()
+        $salesOrderItemProductClassEntity = $this->getFactory()
+            ->createSalesOrderItemProductClassQuery()
             ->filterByFkSalesOrderItem($idSalesOrderItem)
-            ->filterByFkSalesProductAbstractType($salesProductAbstractTypeEntity->getIdSalesProductAbstractType())
+            ->filterByFkSalesProductClass($salesProductClassEntity->getIdSalesProductClass())
             ->findOneOrCreate();
 
-        if ($salesOrderItemProductAbstractTypeEntity->isNew()) {
-            $salesOrderItemProductAbstractTypeEntity->save();
-        }
-    }
-
-    /**
-     * @param int $idSalesOrderItem
-     * @param bool $isServiceDateTimeEnabled
-     *
-     * @return void
-     */
-    public function saveIsServiceDateTimeEnabledForSalesOrderItem(int $idSalesOrderItem, bool $isServiceDateTimeEnabled): void
-    {
-        $salesOrderItemEntity = $this->getFactory()
-            ->getSalesOrderItemPropelQuery()
-            ->filterByIdSalesOrderItem($idSalesOrderItem)
-            ->findOne();
-
-        if ($salesOrderItemEntity) {
-            $salesOrderItemEntity->setIsServiceDateTimeEnabled($isServiceDateTimeEnabled);
-            $salesOrderItemEntity->save();
+        if ($salesOrderItemProductClassEntity->isNew()) {
+            $salesOrderItemProductClassEntity->save();
         }
     }
 
@@ -550,34 +526,50 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
      */
     public function createAssetToCompanyBusinessUnitRelation(int $idSspAsset, array $businessUnitIds): void
     {
-        foreach ($businessUnitIds as $businessUnitId) {
-            $spySspAssetToCompanyBusinessUnit = new SpySspAssetToCompanyBusinessUnit();
-            $spySspAssetToCompanyBusinessUnit
-                ->setFkSspAsset($idSspAsset)
-                ->setFkCompanyBusinessUnit($businessUnitId)
-                ->save();
+        foreach ($businessUnitIds as $idCompanyBusinessUnit) {
+            $assetCompanyBusinessUnitRelationEntity = $this->getFactory()
+                ->createSspAssetToCompanyBusinessUnitQuery()
+                ->filterByFkSspAsset($idSspAsset)
+                ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+                ->findOneOrCreate();
+
+            if ($assetCompanyBusinessUnitRelationEntity->isNew()) {
+                $assetCompanyBusinessUnitRelationEntity->save();
+            }
         }
     }
 
     /**
-     * @param array<int> $salesOrderItemIds
+     * @param int $idProductConcrete
      *
      * @return void
      */
-    public function deleteSalesOrderItemProductAbstractTypesBySalesOrderItemIds(array $salesOrderItemIds): void
+    public function deleteProductConcreteToProductClassRelations(int $idProductConcrete): void
     {
-        if (!$salesOrderItemIds) {
-            return;
+        $this->getFactory()
+            ->createProductToProductClassQuery()
+            ->filterByFkProduct($idProductConcrete)
+            ->delete();
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param array<int> $productClassIds
+     *
+     * @return void
+     */
+    public function saveProductConcreteProductClassRelations(int $idProductConcrete, array $productClassIds): void
+    {
+        foreach ($productClassIds as $idProductClass) {
+            $productConcreteProductClassEntity = $this->getFactory()
+                ->createProductToProductClassQuery()
+                ->filterByFkProduct($idProductConcrete)
+                ->filterByFkProductClass($idProductClass)
+                ->findOneOrCreate();
+
+            if ($productConcreteProductClassEntity->isNew()) {
+                $productConcreteProductClassEntity->save();
+            }
         }
-
-        /**
-         * @var \Propel\Runtime\Collection\ObjectCollection $salesOrderItemProductAbstractTypeEntityCollection
-         */
-        $salesOrderItemProductAbstractTypeEntityCollection = $this->getFactory()
-            ->createSalesOrderItemProductAbstractTypeQuery()
-            ->filterByFkSalesOrderItem_In($salesOrderItemIds)
-            ->find();
-
-        $salesOrderItemProductAbstractTypeEntityCollection->delete();
     }
 }
