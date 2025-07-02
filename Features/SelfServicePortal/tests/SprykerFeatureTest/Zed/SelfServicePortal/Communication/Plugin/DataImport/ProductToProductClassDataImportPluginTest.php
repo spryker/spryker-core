@@ -11,7 +11,9 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
+use SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalBusinessFactory;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\ProductToProductClassDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 /**
  * @group SprykerFeatureTest
@@ -71,8 +73,10 @@ class ProductToProductClassDataImportPluginTest extends Unit
             ->setReaderConfiguration($configurationTransfer)
             ->setThrowException(true);
 
-        // Act
         $productToProductClassDataImportPlugin = new ProductToProductClassDataImportPlugin();
+        $productToProductClassDataImportPlugin = $this->overwriteConfig($productToProductClassDataImportPlugin);
+
+        // Act
         $dataImporterReportTransfer = $productToProductClassDataImportPlugin->import($dataImporterConfigurationTransfer);
 
         // Assert
@@ -103,6 +107,37 @@ class ProductToProductClassDataImportPluginTest extends Unit
         // Act
         $productToProductClassDataImportPlugin = new ProductToProductClassDataImportPlugin();
         $productToProductClassDataImportPlugin->import($dataImporterConfigurationTransfer);
+    }
+
+    /**
+     * @param \SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\ProductToProductClassDataImportPlugin $productToProductClassDataImportPlugin
+     *
+     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\ProductToProductClassDataImportPlugin
+     */
+    protected function overwriteConfig(ProductToProductClassDataImportPlugin $productToProductClassDataImportPlugin): ProductToProductClassDataImportPlugin
+    {
+        $moduleNameConstant = '\Pyz\Zed\SelfServicePortal\SelfServicePortalConfig::MODULE_NAME';
+
+        if (!defined($moduleNameConstant)) {
+            return $productToProductClassDataImportPlugin;
+        }
+
+        $configMock = $this->createPartialMock(SelfServicePortalConfig::class, ['getProductToProductClassDataImporterConfiguration']);
+        $configMock->method('getProductToProductClassDataImporterConfiguration')
+            ->willReturn(
+                (new SelfServicePortalConfig())
+                    ->getProductClassDataImporterConfiguration()
+                    ->setModuleName(
+                        constant($moduleNameConstant),
+                    ),
+            );
+
+        $productToProductClassDataImportPlugin->setBusinessFactory(
+            (new SelfServicePortalBusinessFactory())
+                ->setConfig($configMock),
+        );
+
+        return $productToProductClassDataImportPlugin;
     }
 
     /**

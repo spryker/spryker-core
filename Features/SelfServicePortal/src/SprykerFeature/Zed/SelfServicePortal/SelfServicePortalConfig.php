@@ -268,13 +268,10 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      */
     public function getProductClassDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
     {
-        $currentPathChunks = explode(DIRECTORY_SEPARATOR, __DIR__);
-        $moduleName = array_pop($currentPathChunks);
-
         return (new DataImporterDataSourceConfigurationTransfer())
             ->setImportType(static::IMPORT_TYPE_PRODUCT_CLASS)
             ->setFileName('product_class.csv')
-            ->setModuleName($moduleName)
+            ->setModuleName(static::MODULE_NAME)
             ->setDirectory('/data/data/import/common/common/');
     }
 
@@ -288,13 +285,10 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      */
     public function getProductToProductClassDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
     {
-        $currentPathChunks = explode(DIRECTORY_SEPARATOR, __DIR__);
-        $moduleName = array_pop($currentPathChunks);
-
         return (new DataImporterDataSourceConfigurationTransfer())
             ->setImportType(static::IMPORT_TYPE_PRODUCT_TO_PRODUCT_CLASS)
             ->setFileName('product_to_product_class.csv')
-            ->setModuleName($moduleName)
+            ->setModuleName(static::MODULE_NAME)
             ->setDirectory('/data/data/import/common/common/');
     }
 
