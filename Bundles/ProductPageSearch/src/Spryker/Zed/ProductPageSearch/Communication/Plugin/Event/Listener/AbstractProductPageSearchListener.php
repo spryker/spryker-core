@@ -19,6 +19,16 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class AbstractProductPageSearchListener extends AbstractPlugin
 {
     /**
+     * @var array<int>
+     */
+    protected static $publishedProductAbstractIds = [];
+
+    /**
+     * @var array<int>
+     */
+    protected static $unpublishedProductAbstractIds = [];
+
+    /**
      * @var string
      */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
@@ -30,7 +40,11 @@ class AbstractProductPageSearchListener extends AbstractPlugin
      */
     protected function publish(array $productAbstractIds)
     {
-        $this->getFacade()->publish($productAbstractIds);
+        $productAbstractIds = array_values(array_unique(array_diff($productAbstractIds, static::$publishedProductAbstractIds)));
+        if ($productAbstractIds) {
+            $this->getFacade()->publish($productAbstractIds);
+        }
+        static::$publishedProductAbstractIds = array_merge(static::$publishedProductAbstractIds, $productAbstractIds);
     }
 
     /**
@@ -40,7 +54,11 @@ class AbstractProductPageSearchListener extends AbstractPlugin
      */
     protected function unpublish(array $productAbstractIds)
     {
-        $this->getFacade()->unpublish($productAbstractIds);
+        $productAbstractIds = array_values(array_unique(array_diff($productAbstractIds, static::$unpublishedProductAbstractIds)));
+        if ($productAbstractIds) {
+            $this->getFacade()->unpublish($productAbstractIds);
+        }
+        static::$unpublishedProductAbstractIds = array_merge(static::$unpublishedProductAbstractIds, $productAbstractIds);
     }
 
     /**

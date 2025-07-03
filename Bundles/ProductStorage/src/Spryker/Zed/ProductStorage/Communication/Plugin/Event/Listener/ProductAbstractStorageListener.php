@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 
 /**
@@ -19,7 +18,7 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
  * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductStorage\ProductStorageConfig getConfig()
  */
-class ProductAbstractStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductAbstractStorageListener extends AbstractProductStorageListener implements EventBulkHandlerInterface
 {
     /**
      * @api
@@ -37,9 +36,9 @@ class ProductAbstractStorageListener extends AbstractPlugin implements EventBulk
             $eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE ||
             $eventName === ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH
         ) {
-            $this->getFacade()->unpublishProductAbstracts($productAbstractIds);
+            $this->unpublishProductAbstracts($productAbstractIds);
         } else {
-            $this->getFacade()->publishAbstractProducts($productAbstractIds);
+            $this->publishAbstractProducts($productAbstractIds);
         }
     }
 }

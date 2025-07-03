@@ -21,11 +21,22 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
+                - \SprykerTest\Zed\Testify\Helper\BusinessHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
+                - \SprykerTest\Client\RabbitMq\Helper\RabbitMqHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
+                - \SprykerTest\Client\Testify\Helper\ConfigHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
     Business:
         path: Business
         actor: ProductStorageBusinessTester

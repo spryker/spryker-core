@@ -8,9 +8,14 @@
 namespace SprykerTest\Zed\ProductPageSearch;
 
 use Codeception\Actor;
+use Codeception\Stub;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\Base\SpyProductAbstractPageSearch;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
+use ReflectionClass;
+use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\AbstractProductConcretePageSearchListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\AbstractProductPageSearchListener;
 
 /**
  * @method void wantToTest($text)
@@ -29,6 +34,44 @@ use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 class ProductPageSearchCommunicationTester extends Actor
 {
     use _generated\ProductPageSearchCommunicationTesterActions;
+
+    /**
+     * @return (\object&\PHPUnit\Framework\MockObject\MockObject)|(\Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade&\object&\PHPUnit\Framework\MockObject\MockObject)|(\Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade&\object&\PHPUnit\Framework\MockObject\MockObject&\object&\PHPUnit\Framework\MockObject\MockObject)
+     */
+    public function mockProductPageSearchFacade(): ProductPageSearchFacade
+    {
+        return Stub::makeEmpty(ProductPageSearchFacade::class);
+    }
+
+    /**
+     * @return void
+     */
+    public function cleanUpProcessedAbstractProductIds()
+    {
+        $refClass = new ReflectionClass(AbstractProductPageSearchListener::class);
+        $property = $refClass->getProperty('publishedProductAbstractIds');
+        $property->setAccessible(true);
+        $property->setValue([]);
+
+        $property = $refClass->getProperty('unpublishedProductAbstractIds');
+        $property->setAccessible(true);
+        $property->setValue([]);
+    }
+
+    /**
+     * @return void
+     */
+    public function cleanUpProcessedConcreteProductIds()
+    {
+        $refClass = new ReflectionClass(AbstractProductConcretePageSearchListener::class);
+        $property = $refClass->getProperty('publishedProductConcreteIds');
+        $property->setAccessible(true);
+        $property->setValue([]);
+
+        $property = $refClass->getProperty('unpublishedProductConcreteIds');
+        $property->setAccessible(true);
+        $property->setValue([]);
+    }
 
     /**
      * @param int $idProductAbstract

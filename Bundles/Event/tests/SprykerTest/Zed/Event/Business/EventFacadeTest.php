@@ -16,6 +16,7 @@ use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Event\Business\EventBusinessFactory;
 use Spryker\Zed\Event\Business\EventFacade;
+use Spryker\Zed\Event\Business\Queue\Consumer\EventQueueConsumer;
 use Spryker\Zed\Event\Dependency\Client\EventToQueueInterface;
 use Spryker\Zed\Event\Dependency\EventCollection;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
@@ -151,16 +152,96 @@ class EventFacadeTest extends Unit
 
         $eventCollection->addListenerQueued(static::TEST_EVENT_NAME, $eventListenerMock);
 
-        $queueReceivedMessageTransfer = $this->createQueueReceiveMessageTransfer($eventListenerMock, $transferObject);
-
         $messages = [
-            $queueReceivedMessageTransfer,
+            $this->createQueueReceiveMessageTransfer($eventListenerMock, $transferObject),
         ];
 
         $processedMessages = $eventFacade->processEnqueuedMessages($messages);
 
         $processedQueueReceivedMessageTransfer = $processedMessages[0];
 
+        $this->assertTrue($processedQueueReceivedMessageTransfer->getAcknowledge());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProcessEnqueuedMessagesWithBulkShouldHandleProvidedEventsForTheSameEntity(): void
+    {
+        // Arrange
+        $eventCollection = $this->createEventListenerCollection();
+        $eventListenerMock = $this->createEventBulkListenerMock();
+
+        // Assert
+        $eventListenerMock
+            ->expects($this->once())
+            ->method('handleBulk')
+            ->with(
+                $this->callback(function ($arg) {
+                    return is_array($arg) && count($arg) === 1;
+                }),
+                $this->anything(),
+            );
+
+        // Arrange
+        $eventQueueConsumerMock = $this->createEventQueueConsumerMock();
+        $eventQueueConsumerMock->method('createEventListener')->willReturn($eventListenerMock);
+
+        $this->tester->mockFactoryMethod('createEventQueueConsumer', $eventQueueConsumerMock);
+        $eventCollection->addListenerQueued(static::TEST_EVENT_NAME, $eventListenerMock);
+
+        $messages = [
+            $this->createQueueReceiveMessageTransfer($eventListenerMock, $this->createTransferObjectMock(1)),
+            $this->createQueueReceiveMessageTransfer($eventListenerMock, $this->createTransferObjectMock(1)),
+        ];
+
+        // Act
+        $processedMessages = $this->tester->getFacade()->processEnqueuedMessages($messages);
+
+        $processedQueueReceivedMessageTransfer = $processedMessages[0];
+
+        // Assert
+        $this->assertTrue($processedQueueReceivedMessageTransfer->getAcknowledge());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProcessEnqueuedMessagesWithBulkShouldHandleProvidedEvents(): void
+    {
+        // Arrange
+        $eventCollection = $this->createEventListenerCollection();
+        $eventListenerMock = $this->createEventBulkListenerMock();
+
+        // Assert
+        $eventListenerMock
+            ->expects($this->once())
+            ->method('handleBulk')
+            ->with(
+                $this->callback(function ($arg) {
+                    return is_array($arg) && count($arg) === 2;
+                }),
+                $this->anything(),
+            );
+
+        // Arrange
+        $eventQueueConsumerMock = $this->createEventQueueConsumerMock();
+        $eventQueueConsumerMock->method('createEventListener')->willReturn($eventListenerMock);
+
+        $this->tester->mockFactoryMethod('createEventQueueConsumer', $eventQueueConsumerMock);
+        $eventCollection->addListenerQueued(static::TEST_EVENT_NAME, $eventListenerMock);
+
+        $messages = [
+            $this->createQueueReceiveMessageTransfer($eventListenerMock, $this->createTransferObjectMock(1)),
+            $this->createQueueReceiveMessageTransfer($eventListenerMock, $this->createTransferObjectMock(2)),
+        ];
+
+        // Act
+        $processedMessages = $this->tester->getFacade()->processEnqueuedMessages($messages);
+
+        $processedQueueReceivedMessageTransfer = $processedMessages[0];
+
+        // Assert
         $this->assertTrue($processedQueueReceivedMessageTransfer->getAcknowledge());
     }
 
@@ -245,6 +326,21 @@ class EventFacadeTest extends Unit
     }
 
     /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|(\Spryker\Zed\Event\Business\Queue\Consumer\EventQueueConsumer&\PHPUnit\Framework\MockObject\MockObject)
+     */
+    protected function createEventQueueConsumerMock(): EventQueueConsumer
+    {
+        return $this->getMockBuilder(EventQueueConsumer::class)
+            ->onlyMethods(['createEventListener'])
+            ->setConstructorArgs([
+                $this->tester->getFactory()->createEventLogger(),
+                $this->tester->getFactory()->getUtilEncodingService(),
+                $this->tester->getFactory()->getConfig(),
+            ])
+            ->getMock();
+    }
+
+    /**
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
     protected function createEventListenerCollection(): EventCollectionInterface
@@ -269,11 +365,13 @@ class EventFacadeTest extends Unit
     }
 
     /**
+     * @param int|null $id
+     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    protected function createTransferObjectMock(): TransferInterface
+    protected function createTransferObjectMock(?int $id = null): TransferInterface
     {
-        return new EventEntityTransfer();
+        return (new EventEntityTransfer())->setId($id);
     }
 
     /**
@@ -346,7 +444,7 @@ class EventFacadeTest extends Unit
         $message = [
             EventQueueSendMessageBodyTransfer::LISTENER_CLASS_NAME => ($eventListenerMock) ? get_class($eventListenerMock) : null,
             EventQueueSendMessageBodyTransfer::TRANSFER_CLASS_NAME => ($transferObject) ? get_class($transferObject) : null,
-            EventQueueSendMessageBodyTransfer::TRANSFER_DATA => ['1', '2', '3'],
+            EventQueueSendMessageBodyTransfer::TRANSFER_DATA => $transferObject !== null ? $transferObject->toArray() : ['1', '2', '3'],
             EventQueueSendMessageBodyTransfer::EVENT_NAME => static::TEST_EVENT_NAME,
         ];
 

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
@@ -16,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductStorage\ProductStorageConfig getConfig()
  */
-class ProductAbstractStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductAbstractStoragePublishListener extends AbstractProductStorageListener implements EventBulkHandlerInterface
 {
     /**
      * {@inheritDoc}
@@ -32,6 +31,6 @@ class ProductAbstractStoragePublishListener extends AbstractPlugin implements Ev
     {
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
-        $this->getFacade()->publishAbstractProducts($productAbstractIds);
+        $this->publishAbstractProducts($productAbstractIds);
     }
 }

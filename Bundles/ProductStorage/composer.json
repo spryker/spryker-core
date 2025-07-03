@@ -29,6 +29,7 @@
         "spryker/container": "*",
         "spryker/event": "*",
         "spryker/product-attribute": "*",
+        "spryker/product-page-search": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
         "spryker/rabbit-mq": "*",

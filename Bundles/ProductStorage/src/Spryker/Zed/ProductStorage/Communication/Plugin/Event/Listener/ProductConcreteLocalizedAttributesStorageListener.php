@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
@@ -17,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductStorage\ProductStorageConfig getConfig()
  */
-class ProductConcreteLocalizedAttributesStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductConcreteLocalizedAttributesStorageListener extends AbstractProductConcreteStorageListener implements EventBulkHandlerInterface
 {
     /**
      * @api
@@ -34,6 +33,6 @@ class ProductConcreteLocalizedAttributesStorageListener extends AbstractPlugin i
             SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT,
         );
 
-        $this->getFacade()->publishConcreteProducts($productIds);
+        $this->publishConcreteProducts($productIds);
     }
 }

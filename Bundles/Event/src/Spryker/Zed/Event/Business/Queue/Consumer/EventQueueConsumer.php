@@ -93,8 +93,9 @@ class EventQueueConsumer implements EventQueueConsumerInterface
 
             try {
                 $transfer = $this->mapEventTransfer($eventQueueSentMessageBodyTransfer);
-                $bulkListener[$eventQueueSentMessageBodyTransfer->getListenerClassName()][$eventQueueSentMessageBodyTransfer->getEventName()][static::EVENT_TRANSFERS][] = $transfer;
-                $bulkListener[$eventQueueSentMessageBodyTransfer->getListenerClassName()][$eventQueueSentMessageBodyTransfer->getEventName()][static::EVENT_MESSAGES][] = $queueMessageTransfer;
+                $identifier = method_exists($transfer, 'getId') && $transfer->getId() ? $transfer->getId() : spl_object_id($transfer);
+                $bulkListener[$eventQueueSentMessageBodyTransfer->getListenerClassName()][$eventQueueSentMessageBodyTransfer->getEventName()][static::EVENT_TRANSFERS][$identifier] = $transfer;
+                $bulkListener[$eventQueueSentMessageBodyTransfer->getListenerClassName()][$eventQueueSentMessageBodyTransfer->getEventName()][static::EVENT_MESSAGES][$identifier] = $queueMessageTransfer;
 
                 $listener = $this->createEventListener($eventQueueSentMessageBodyTransfer->getListenerClassName());
                 if ($listener instanceof EventHandlerInterface) {

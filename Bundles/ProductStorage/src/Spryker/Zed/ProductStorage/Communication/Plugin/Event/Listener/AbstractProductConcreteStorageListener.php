@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  */
-abstract class AbstractProductConcretePageSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
+abstract class AbstractProductConcreteStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * @var array<int>
@@ -30,11 +30,11 @@ abstract class AbstractProductConcretePageSearchListener extends AbstractPlugin 
      *
      * @return void
      */
-    protected function publish(array $productIds): void
+    protected function publishConcreteProducts(array $productIds): void
     {
         $productIds = array_values(array_unique(array_diff($productIds, static::$publishedProductConcreteIds)));
         if ($productIds) {
-            $this->getFacade()->publishProductConcretes($productIds);
+            $this->getFacade()->publishConcreteProducts($productIds);
         }
         static::$publishedProductConcreteIds = array_merge(static::$publishedProductConcreteIds, $productIds);
     }
@@ -44,11 +44,11 @@ abstract class AbstractProductConcretePageSearchListener extends AbstractPlugin 
      *
      * @return void
      */
-    protected function unpublish(array $productIds): void
+    protected function unpublishConcreteProducts(array $productIds): void
     {
         $productIds = array_values(array_unique(array_diff($productIds, static::$unpublishedProductConcreteIds)));
         if ($productIds) {
-            $this->getFacade()->unpublishProductConcretes($productIds);
+            $this->getFacade()->unpublishConcreteProducts($productIds);
         }
 
         static::$unpublishedProductConcreteIds = array_merge(static::$unpublishedProductConcreteIds, $productIds);

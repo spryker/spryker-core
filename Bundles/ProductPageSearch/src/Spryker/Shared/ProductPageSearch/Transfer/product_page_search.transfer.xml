@@ -111,6 +111,7 @@
         <property name="name" type="string"/>
         <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
         <property name="idStore" type="int"/>
+        <property name="defaultCurrencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="LocalizedAttributes">

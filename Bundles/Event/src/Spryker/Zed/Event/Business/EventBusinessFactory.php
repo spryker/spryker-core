@@ -101,7 +101,7 @@ class EventBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface
      */
-    protected function getUtilEncodingService()
+    public function getUtilEncodingService()
     {
         return $this->getProvidedDependency(EventDependencyProvider::SERVICE_UTIL_ENCODING);
     }
@@ -117,7 +117,7 @@ class EventBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */
-    protected function createEventLogger()
+    public function createEventLogger()
     {
         return new EventLogger($this->createLoggerConfig(), $this->getConfig());
     }

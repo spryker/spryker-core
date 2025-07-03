@@ -8,6 +8,11 @@
 namespace SprykerTest\Zed\ProductStorage;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use ReflectionClass;
+use Spryker\Zed\ProductStorage\Business\ProductStorageFacade;
+use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\AbstractProductConcreteStorageListener;
+use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\AbstractProductStorageListener;
 
 /**
  * @method void wantToTest($text)
@@ -47,5 +52,43 @@ class ProductStorageCommunicationTester extends Actor
         }
 
         return false;
+    }
+
+    /**
+     * @return void
+     */
+    public function cleanUpProcessedAbstractProductIds()
+    {
+        $refClass = new ReflectionClass(AbstractProductStorageListener::class);
+        $property = $refClass->getProperty('publishedProductAbstractIds');
+        $property->setAccessible(true);
+        $property->setValue([]);
+
+        $property = $refClass->getProperty('unpublishedProductAbstractIds');
+        $property->setAccessible(true);
+        $property->setValue([]);
+    }
+
+    /**
+     * @return void
+     */
+    public function cleanUpProcessedConcreteProductIds()
+    {
+        $refClass = new ReflectionClass(AbstractProductConcreteStorageListener::class);
+        $property = $refClass->getProperty('publishedProductConcreteIds');
+        $property->setAccessible(true);
+        $property->setValue([]);
+
+        $property = $refClass->getProperty('unpublishedProductConcreteIds');
+        $property->setAccessible(true);
+        $property->setValue([]);
+    }
+
+    /**
+     * @return (\object&\PHPUnit\Framework\MockObject\MockObject)|(\Spryker\Zed\ProductStorage\Business\ProductStorageFacade&\object&\PHPUnit\Framework\MockObject\MockObject)|(\Spryker\Zed\ProductStorage\Business\ProductStorageFacade&\object&\PHPUnit\Framework\MockObject\MockObject&\object&\PHPUnit\Framework\MockObject\MockObject)
+     */
+    public function mockProductStorageFacade(): ProductStorageFacade
+    {
+        return Stub::makeEmpty(ProductStorageFacade::class);
     }
 }
