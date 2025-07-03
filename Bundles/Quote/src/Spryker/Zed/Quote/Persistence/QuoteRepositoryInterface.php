@@ -79,4 +79,11 @@ interface QuoteRepositoryInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
     public function findQuoteByUuid(string $uuidQuote): ?QuoteTransfer;
+
+    /**
+     * @param int $idQuote
+     *
+     * @return bool
+     */
+    public function acquireExclusiveQuoteLock(int $idQuote): bool;
 }

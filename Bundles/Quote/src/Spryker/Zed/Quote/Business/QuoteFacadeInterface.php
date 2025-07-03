@@ -244,4 +244,20 @@ interface QuoteFacadeInterface
         CommentRequestTransfer $commentRequestTransfer,
         CommentValidationResponseTransfer $commentValidationResponseTransfer
     ): CommentValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Acquires an exclusive database-level lock on a quote record.
+     * - Uses 'SELECT FOR UPDATE NOWAIT' to ensure only one process can lock a quote at a time.
+     * - Returns true if the lock was successfully acquired and the quote exists.
+     * - Returns false if the quote does not exist or is already locked by another transaction.
+     * - Must be called within a database transaction to be effective.
+     *
+     * @api
+     *
+     * @param int $idQuote
+     *
+     * @return bool
+     */
+    public function acquireExclusiveLockForQuote(int $idQuote): bool;
 }

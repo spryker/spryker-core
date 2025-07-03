@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
 use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
+use PDOException;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -194,5 +195,39 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
         }
 
         return $this->getFactory()->createQuoteMapper()->mapQuoteTransfer($quoteEntityTransfer);
+    }
+
+    /**
+     * Acquires an exclusive database-level lock on a quote record.
+     *
+     *  This method uses raw SQL with 'SELECT ... FOR UPDATE NOWAIT' syntax to implement row-level locking
+     *  for concurrency control. This approach:
+     *  1. Provides explicit control over the locking mechanism
+     *  2. Ensures only one process can modify a quote at a time
+     *  3. Fails immediately (NOWAIT) rather than blocking if the row is already locked
+     *
+     *  Must be called within an active database transaction to be effective.
+     *
+     * @param int $idQuote
+     *
+     * @return bool
+     */
+    public function acquireExclusiveQuoteLock(int $idQuote): bool
+    {
+        try {
+            $connection = $this->getFactory()->getPropelConnection();
+
+            /** @var \Propel\Runtime\Connection\StatementInterface $statement */
+            $statement = $connection->prepare(sprintf(
+                'SELECT * FROM %s WHERE %s = ? FOR UPDATE NOWAIT',
+                SpyQuoteTableMap::TABLE_NAME,
+                SpyQuoteTableMap::COL_ID_QUOTE,
+            ));
+            $statement->execute([$idQuote]);
+
+            return $statement->rowCount() > 0;
+        } catch (PDOException $e) {
+            return false;
+        }
     }
 }

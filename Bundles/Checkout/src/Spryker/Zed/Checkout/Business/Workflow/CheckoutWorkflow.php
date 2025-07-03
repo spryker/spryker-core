@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Shared\Kernel\StrategyResolverInterface;
 use Spryker\Zed\Checkout\CheckoutConfig;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface as ObsoleteCheckoutSaveOrderInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -23,57 +24,23 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface
-     */
-    protected $omsFacade;
-
-    /**
-     * @var \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface>>
-     */
-    protected $preConditionPluginStrategyResolver;
-
-    /**
-     * @var \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface>>
-     */
-    protected $saveOrderPluginStrategyResolver;
-
-    /**
-     * @var \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPostSaveInterface>>
-     */
-    protected $postSavePluginStrategyResolver;
-
-    /**
-     * @var \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface>>
-     */
-    protected $preSavePluginStrategyResolver;
-
-    /**
-     * @var \Spryker\Zed\Checkout\CheckoutConfig
-     */
-    protected $checkoutConfig;
-
-    /**
      * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface $omsFacade
      * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface>> $preConditionPluginStrategyResolver
      * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface>> $saveOrderPluginStrategyResolver
      * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPostSaveInterface>> $postSavePluginStrategyResolver
      * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface>> $preSavePluginStrategyResolver
      * @param \Spryker\Zed\Checkout\CheckoutConfig $checkoutConfig
+     * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface $quoteFacade
      */
     public function __construct(
-        CheckoutToOmsFacadeInterface $omsFacade,
-        StrategyResolverInterface $preConditionPluginStrategyResolver,
-        StrategyResolverInterface $saveOrderPluginStrategyResolver,
-        StrategyResolverInterface $postSavePluginStrategyResolver,
-        StrategyResolverInterface $preSavePluginStrategyResolver,
-        CheckoutConfig $checkoutConfig
+        protected CheckoutToOmsFacadeInterface $omsFacade,
+        protected StrategyResolverInterface $preConditionPluginStrategyResolver,
+        protected StrategyResolverInterface $saveOrderPluginStrategyResolver,
+        protected StrategyResolverInterface $postSavePluginStrategyResolver,
+        protected StrategyResolverInterface $preSavePluginStrategyResolver,
+        protected CheckoutConfig $checkoutConfig,
+        protected CheckoutToQuoteFacadeInterface $quoteFacade
     ) {
-        $this->omsFacade = $omsFacade;
-        $this->preConditionPluginStrategyResolver = $preConditionPluginStrategyResolver;
-        $this->postSavePluginStrategyResolver = $postSavePluginStrategyResolver;
-        $this->saveOrderPluginStrategyResolver = $saveOrderPluginStrategyResolver;
-        $this->preSavePluginStrategyResolver = $preSavePluginStrategyResolver;
-        $this->checkoutConfig = $checkoutConfig;
     }
 
     /**
@@ -164,12 +131,16 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
             $maxAttempts--;
             try {
                 $quoteTransferToSave = clone $quoteTransfer;
-                $this->handleDatabaseTransaction(function () use ($quoteTransferToSave, $checkoutResponse) {
-                    $this->doSaveOrderTransaction(
-                        $quoteTransferToSave,
-                        $checkoutResponse,
-                    );
+                $idQuote = $quoteTransferToSave->getIdQuote();
+
+                $this->handleDatabaseTransaction(function () use ($quoteTransferToSave, $checkoutResponse, $idQuote) {
+                    if ($idQuote && !$this->tryAcquireExclusiveLockForQuote($idQuote, $checkoutResponse)) {
+                        return;
+                    }
+
+                    $this->doSaveOrderTransaction($quoteTransferToSave, $checkoutResponse);
                 });
+
                 $quoteTransfer->fromArray($quoteTransferToSave->modifiedToArray());
 
                 break;
@@ -181,6 +152,25 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * Attempts to acquire an exclusive lock for a quote.
+     *
+     * @param int $idQuote
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return bool
+     */
+    protected function tryAcquireExclusiveLockForQuote(int $idQuote, CheckoutResponseTransfer $checkoutResponse): bool
+    {
+        if ($this->quoteFacade->acquireExclusiveLockForQuote($idQuote)) {
+            return true;
+        }
+
+        $checkoutResponse->setIsSuccess(false);
+
+        return false;
     }
 
     /**

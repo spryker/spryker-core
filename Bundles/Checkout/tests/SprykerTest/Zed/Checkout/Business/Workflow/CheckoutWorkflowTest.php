@@ -19,6 +19,8 @@ use Spryker\Shared\Kernel\StrategyResolverInterface;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Spryker\Zed\Checkout\CheckoutConfig;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeBridge;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeBridge;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
@@ -27,6 +29,7 @@ use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginIn
 use Spryker\Zed\Oms\Business\OmsFacade;
 use SprykerTest\Zed\Checkout\Business\Fixture\MockPostHook;
 use SprykerTest\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
+use SprykerTest\Zed\Checkout\CheckoutBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -42,6 +45,11 @@ use SprykerTest\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
 class CheckoutWorkflowTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\Checkout\CheckoutBusinessTester
+     */
+    protected CheckoutBusinessTester $tester;
+
+    /**
      * @return void
      */
     public function testIsPlaceableOrderResponseIsSuccessful(): void
@@ -55,6 +63,7 @@ class CheckoutWorkflowTest extends Unit
             $this->createVanillaStrategyResolver([new MockPostHook($checkoutResponse)]),
             $this->createVanillaStrategyResolver([]),
             new CheckoutConfig(),
+            $this->createQuoteFacadeMock(),
         );
         $quoteTransfer = new QuoteTransfer();
 
@@ -86,6 +95,7 @@ class CheckoutWorkflowTest extends Unit
             $this->createVanillaStrategyResolver([new MockPostHook($checkoutResponse)]),
             $this->createVanillaStrategyResolver([]),
             new CheckoutConfig(),
+            $this->createQuoteFacadeMock(),
         );
         $quoteTransfer = new QuoteTransfer();
 
@@ -121,6 +131,7 @@ class CheckoutWorkflowTest extends Unit
             $this->createVanillaStrategyResolver([]),
             $this->createVanillaStrategyResolver([]),
             new CheckoutConfig(),
+            $this->createQuoteFacadeMock(),
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -149,6 +160,7 @@ class CheckoutWorkflowTest extends Unit
             $this->createVanillaStrategyResolver([]),
             $this->createVanillaStrategyResolver([]),
             $checkoutConfig,
+            $this->createQuoteFacadeMock(),
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -183,6 +195,7 @@ class CheckoutWorkflowTest extends Unit
             $this->createVanillaStrategyResolver([]),
             $this->createVanillaStrategyResolver([]),
             $checkoutConfig,
+            $this->createQuoteFacadeMock(),
         );
 
         $checkoutWorkflow->placeOrder($quoteTransfer);
@@ -216,6 +229,7 @@ class CheckoutWorkflowTest extends Unit
             $this->createVanillaStrategyResolver([]),
             $this->createVanillaStrategyResolver([]),
             new CheckoutConfig(),
+            $this->createQuoteFacadeMock(),
         );
         $checkoutWorkflow->placeOrder($quoteTransfer);
     }
@@ -253,6 +267,7 @@ class CheckoutWorkflowTest extends Unit
             $this->createVanillaStrategyResolver([]),
             $this->createVanillaStrategyResolver([]),
             new CheckoutConfig(),
+            $this->createQuoteFacadeMock(),
         );
 
         $checkoutWorkflow->placeOrder($quoteTransfer);
@@ -285,6 +300,7 @@ class CheckoutWorkflowTest extends Unit
             $this->createVanillaStrategyResolver([$mock1, $mock2]),
             $this->createVanillaStrategyResolver([]),
             new CheckoutConfig(),
+            $this->createQuoteFacadeMock(),
         );
         $checkoutWorkflow->placeOrder($quoteTransfer);
     }
@@ -311,6 +327,7 @@ class CheckoutWorkflowTest extends Unit
             $this->createVanillaStrategyResolver([]),
             $this->createVanillaStrategyResolver([]),
             new CheckoutConfig(),
+            $this->createQuoteFacadeMock(),
         );
 
         $mock2->expects($this->once())->method('saveOrder')->with(
@@ -340,6 +357,7 @@ class CheckoutWorkflowTest extends Unit
             $this->createVanillaStrategyResolver([$mock]),
             $this->createVanillaStrategyResolver([]),
             new CheckoutConfig(),
+            $this->createQuoteFacadeMock(),
         );
         $quoteTransfer = new QuoteTransfer();
 
@@ -372,6 +390,16 @@ class CheckoutWorkflowTest extends Unit
                 CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT => fn () => $plugins,
             ],
             CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT,
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface
+     */
+    protected function createQuoteFacadeMock(): CheckoutToQuoteFacadeInterface
+    {
+        return new CheckoutToQuoteFacadeBridge(
+            $this->tester->getLocator()->quote()->facade(),
         );
     }
 }

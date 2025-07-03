@@ -263,4 +263,18 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
             ->createQuoteCommentValidator()
             ->validate($commentRequestTransfer, $commentValidationResponseTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idQuote
+     *
+     * @return bool
+     */
+    public function acquireExclusiveLockForQuote(int $idQuote): bool
+    {
+        return $this->getRepository()->acquireExclusiveQuoteLock($idQuote);
+    }
 }

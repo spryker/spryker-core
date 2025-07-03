@@ -11,7 +11,7 @@
         "spryker/oms": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0",
         "spryker/permission-extension": "^1.0.0",
         "spryker/propel-orm": "^1.0.0",
-        "spryker/quote": "^1.0.0 || ^2.0.0",
+        "spryker/quote": "^1.0.0 || ^2.24.0",
         "spryker/sales-order-amendment-extension": "^1.1.0",
         "spryker/step-engine": "^2.2.0 || ^3.2.0",
         "spryker/symfony": "^3.0.0",

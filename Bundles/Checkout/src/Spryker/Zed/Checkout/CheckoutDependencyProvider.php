@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Checkout;
 
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeBridge;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeAdapter;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -62,6 +63,11 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_OMS = 'FACADE_OMS';
 
     /**
+     * @var string
+     */
+    public const FACADE_QUOTE = 'FACADE_QUOTE';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -101,6 +107,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         $container = $this->addOmsFacade($container);
+        $container = $this->addQuoteFacade($container);
 
         return $container;
     }
@@ -114,6 +121,22 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_OMS, function () use ($container) {
             return new CheckoutToOmsFacadeBridge($container->getLocator()->oms()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_QUOTE, function () use ($container) {
+            return new CheckoutToQuoteFacadeAdapter(
+                $container->getLocator()->quote()->facade(),
+            );
         });
 
         return $container;

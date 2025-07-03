@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Quote\Persistence;
 
 use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
+use Propel\Runtime\Connection\ConnectionInterface;
+use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Quote\Persistence\Propel\Mapper\QuoteMapper;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
@@ -33,6 +35,14 @@ class QuotePersistenceFactory extends AbstractPersistenceFactory
     public function createQuoteMapper()
     {
         return new QuoteMapper($this->getUtilEncodingService());
+    }
+
+    /**
+     * @return \Propel\Runtime\Connection\ConnectionInterface
+     */
+    public function getPropelConnection(): ConnectionInterface
+    {
+        return Propel::getConnection();
     }
 
     /**

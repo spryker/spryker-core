@@ -76,6 +76,7 @@
         <property name="orderReference" type="string"/>
         <property name="payment" type="Payment" deprecated="Use payments property instead."/>
         <property name="quoteProcessFlow" type="QuoteProcessFlow" strict="true"/>
+        <property name="idQuote" type="int"/>
     </transfer>
 
     <transfer name="QuoteProcessFlow" strict="true">

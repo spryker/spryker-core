@@ -13,6 +13,7 @@ use Spryker\Shared\Kernel\StrategyResolverInterface;
 use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -32,6 +33,7 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
             $this->createCheckoutPostSavePluginStrategyResolver(),
             $this->createCheckoutPreSavePluginStrategyResolver(),
             $this->getConfig(),
+            $this->getQuoteFacade(),
         );
     }
 
@@ -97,5 +99,13 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
     public function getOmsFacade()
     {
         return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface
+     */
+    public function getQuoteFacade(): CheckoutToQuoteFacadeInterface
+    {
+        return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_QUOTE);
     }
 }
