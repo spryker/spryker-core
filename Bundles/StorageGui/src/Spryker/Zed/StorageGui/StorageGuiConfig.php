@@ -12,6 +12,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class StorageGuiConfig extends AbstractBundleConfig
 {
     /**
+     * @var string
+     */
+    public const KV_PREFIX = 'kv:';
+
+    /**
      * @var int
      */
     protected const DEFAULT_PAGE_LENGTH = 100;

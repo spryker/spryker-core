@@ -13,14 +13,10 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\StorageGui\Dependency\Client\StorageGuiToStorageClientInterface;
 use Spryker\Zed\StorageGui\Dependency\Service\StorageGuiToUtilSanitizeServiceInterface;
+use Spryker\Zed\StorageGui\StorageGuiConfig;
 
 class StorageTable extends AbstractTable
 {
-    /**
-     * @var string
-     */
-    protected const KV_PREFIX = 'kv:';
-
     /**
      * @var string
      */
@@ -149,7 +145,7 @@ class StorageTable extends AbstractTable
             return static::MATCH_ALL;
         }
 
-        return parent::getSearchTerm()[static::TABLE_COL_VALUE];
+        return preg_replace(sprintf('/^%s/', StorageGuiConfig::KV_PREFIX), '', parent::getSearchTerm()[static::TABLE_COL_VALUE]);
     }
 
     /**
@@ -202,7 +198,7 @@ class StorageTable extends AbstractTable
         }
 
         return array_map(function (string $key) {
-            return str_replace(static::KV_PREFIX, '', $key);
+            return str_replace(StorageGuiConfig::KV_PREFIX, '', $key);
         }, $keys);
     }
 
@@ -215,10 +211,10 @@ class StorageTable extends AbstractTable
 
         $values = [];
         foreach ($this->storageClient->getMulti($keys) as $i => $value) {
-            $i = str_replace(static::KV_PREFIX, '', $i);
+            $i = str_replace(StorageGuiConfig::KV_PREFIX, '', $i);
             $values[$i] = $value;
         }
 
-        return $values;
+        return $this->storageClient->getMulti($keys);
     }
 }

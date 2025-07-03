@@ -8,6 +8,7 @@
 namespace Spryker\Zed\StorageGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\StorageGui\StorageGuiConfig;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -68,12 +69,12 @@ class MaintenanceController extends AbstractController
      */
     public function keyAction(Request $request): array
     {
-        $key = $request->get('key');
+        $key = preg_replace(sprintf('/^%s/', StorageGuiConfig::KV_PREFIX), '', $request->get('key'));
         $value = $this->getFactory()->getStorageFacade()->get($key);
 
         return $this->viewResponse([
             'value' => $value,
-            'key' => $key,
+            'key' => $request->get('key'),
             'referenceKey' => $this->getReferenceKey($value),
         ]);
     }
