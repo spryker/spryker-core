@@ -19,7 +19,7 @@ use Spryker\Shared\Kernel\StrategyResolverInterface;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Spryker\Zed\Checkout\CheckoutConfig;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeBridge;
-use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeBridge;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeAdapter;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
@@ -398,7 +398,7 @@ class CheckoutWorkflowTest extends Unit
      */
     protected function createQuoteFacadeMock(): CheckoutToQuoteFacadeInterface
     {
-        return new CheckoutToQuoteFacadeBridge(
+        return new CheckoutToQuoteFacadeAdapter(
             $this->tester->getLocator()->quote()->facade(),
         );
     }
