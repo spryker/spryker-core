@@ -39,10 +39,11 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array<string, string> $skusToSkipValidation
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkActiveItems(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    public function checkActiveItems(CartChangeTransfer $cartChangeTransfer, array $skusToSkipValidation = []): CartPreCheckResponseTransfer
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())
             ->setIsSuccess(true);
@@ -52,7 +53,10 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
             ->getProductForBundleTransfersByProductConcreteSkus($productConcreteSkus);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$this->checkBundledProductsActive($groupedProductForBundleTransfers[$itemTransfer->getSku()] ?? [])) {
+            if (
+                !$this->checkBundledProductsActive($groupedProductForBundleTransfers[$itemTransfer->getSku()] ?? [])
+                && !isset($skusToSkipValidation[$itemTransfer->getSku()])
+            ) {
                 $cartPreCheckResponseTransfer
                     ->addMessage(
                         $this->createItemIsNotActiveMessageTransfer($itemTransfer->getSku()),

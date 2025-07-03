@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
@@ -63,14 +64,16 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param list<string> $itemProductOfferReferencesToSkipFiltering
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterInactiveProductOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function filterInactiveProductOfferItems(QuoteTransfer $quoteTransfer, array $itemProductOfferReferencesToSkipFiltering = []): QuoteTransfer
     {
         $filteredItemTransfers = $this->getFilteredProductOfferItems(
             $quoteTransfer->getItems(),
             $quoteTransfer->getStore(),
+            $itemProductOfferReferencesToSkipFiltering,
         );
 
         return $quoteTransfer->setItems($filteredItemTransfers);
@@ -95,11 +98,15 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
     /**
      * @param \ArrayObject<int,\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param list<string> $itemProductOfferReferencesToSkipFiltering
      *
      * @return \ArrayObject<int,\Generated\Shared\Transfer\ItemTransfer>
      */
-    protected function getFilteredProductOfferItems(ArrayObject $itemTransfers, StoreTransfer $storeTransfer): ArrayObject
-    {
+    protected function getFilteredProductOfferItems(
+        ArrayObject $itemTransfers,
+        StoreTransfer $storeTransfer,
+        array $itemProductOfferReferencesToSkipFiltering = []
+    ): ArrayObject {
         $productOfferReferences = $this->getProductOfferReferencesFromItems($itemTransfers);
 
         if (!$productOfferReferences) {
@@ -120,10 +127,7 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
         $messageTransfersIndexedBySku = [];
 
         foreach ($itemTransfers as $key => $itemTransfer) {
-            if (
-                $itemTransfer->getProductOfferReference() !== null &&
-                !isset($indexedProductConcreteTransfers[$itemTransfer->getProductOfferReference()])
-            ) {
+            if ($this->isProductOfferInactive($itemTransfer, $indexedProductConcreteTransfers, $itemProductOfferReferencesToSkipFiltering)) {
                 $messageTransfersIndexedBySku = $this->addFilterMessage($itemTransfer->getSku(), $messageTransfersIndexedBySku);
 
                 continue;
@@ -133,6 +137,23 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
         }
 
         return $filteredItemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array<\Generated\Shared\Transfer\ProductOfferTransfer> $indexedProductConcreteTransfers
+     * @param list<string> $itemProductOfferReferencesToSkipFiltering
+     *
+     * @return bool
+     */
+    protected function isProductOfferInactive(
+        ItemTransfer $itemTransfer,
+        array $indexedProductConcreteTransfers,
+        array $itemProductOfferReferencesToSkipFiltering = []
+    ): bool {
+        return $itemTransfer->getProductOfferReference() !== null &&
+            !isset($indexedProductConcreteTransfers[$itemTransfer->getProductOfferReference()]) &&
+            !in_array($itemTransfer->getProductOfferReference(), $itemProductOfferReferencesToSkipFiltering);
     }
 
     /**

@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductApproval\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductApproval\Business\Expander\ProductAbstractExpander;
 use Spryker\Zed\ProductApproval\Business\Expander\ProductAbstractExpanderInterface;
+use Spryker\Zed\ProductApproval\Business\Extractor\QuoteOriginalSalesOrderItemExtractor;
+use Spryker\Zed\ProductApproval\Business\Extractor\QuoteOriginalSalesOrderItemExtractorInterface;
 use Spryker\Zed\ProductApproval\Business\Filter\ProductAbstractStorageCollectionFilter;
 use Spryker\Zed\ProductApproval\Business\Filter\ProductAbstractStorageCollectionFilterInterface;
 use Spryker\Zed\ProductApproval\Business\Filter\ProductConcreteCollectionFilter;
@@ -85,6 +87,14 @@ class ProductApprovalBusinessFactory extends AbstractBusinessFactory
     public function createProductApprovalCartChangeValidator(): ProductApprovalCartChangeValidatorInterface
     {
         return new ProductApprovalCartChangeValidator($this->getProductFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductApproval\Business\Extractor\QuoteOriginalSalesOrderItemExtractorInterface
+     */
+    public function createQuoteOriginalSalesOrderItemExtractor(): QuoteOriginalSalesOrderItemExtractorInterface
+    {
+        return new QuoteOriginalSalesOrderItemExtractor();
     }
 
     /**

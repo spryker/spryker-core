@@ -49,6 +49,7 @@
     <transfer name="SalesOrderAmendmentQuoteCollectionDeleteCriteria" strict="true">
         <property name="salesOrderAmendmentQuoteIds" type="int[]" singular="idSalesOrderAmendmentQuote"/>
         <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="amendmentOrderReferences" type="string[]" singular="amendmentOrderReference"/>
     </transfer>
 
     <transfer name="SalesOrderAmendmentConditions" strict="true">
@@ -153,11 +154,40 @@
         <property name="orderReference" type="string"/>
         <property name="customer" type="Customer"/>
         <property name="idQuote" type="int"/>
+        <property name="originalSalesOrderItems" type="OriginalSalesOrderItem[]" singular="originalSalesOrderItem" strict="true"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
         <property name="amendmentOrderReference" type="string" strict="true"/>
         <property name="quoteProcessFlow" type="QuoteProcessFlow" strict="true"/>
+        <property name="originalSalesOrderItems" type="OriginalSalesOrderItem[]" singular="originalSalesOrderItem" strict="true"/>
+    </transfer>
+
+    <transfer name="OriginalSalesOrderItem" strict="true">
+        <property name="quantity" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
+    </transfer>
+
+    <transfer name="SellableItemsRequest">
+        <property name="quote" type="Quote" strict="true"/>
+        <property name="sellableItemRequests" type="SellableItemRequest[]" singular="sellableItemRequest"/>
+    </transfer>
+
+    <transfer name="SellableItemRequest">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="decimal"/>
+        <property name="productAvailabilityCriteria" type="ProductAvailabilityCriteria"/>
+    </transfer>
+
+    <transfer name="ProductAvailabilityCriteria">
+    </transfer>
+
+    <transfer name="SellableItemResponse">
+        <property name="sku" type="string"/>
+        <property name="isSellable" type="bool"/>
+        <property name="availableQuantity" type="decimal"/>
+        <property name="productAvailabilityCriteria" type="ProductAvailabilityCriteria" strict="true"/>
     </transfer>
 
     <transfer name="CartReorderRequest" strict="true">
@@ -170,6 +200,10 @@
         <property name="order" type="Order"/>
         <property name="orderItems" type="Item[]" singular="orderItem"/>
         <property name="reorderItems" type="Item[]" singular="reorderItem"/>
+    </transfer>
+
+    <transfer name="SellableItemsResponse">
+        <property name="sellableItemResponses" type="SellableItemResponse[]" singular="sellableItemResponse"/>
     </transfer>
 
     <transfer name="OrderConditions" strict="true">

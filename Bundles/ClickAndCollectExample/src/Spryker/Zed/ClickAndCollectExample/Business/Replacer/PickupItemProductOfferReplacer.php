@@ -103,7 +103,12 @@ class PickupItemProductOfferReplacer extends AbstractItemProductOfferReplacer
             ->setStoreName($quoteTransfer->getStoreOrFail()->getNameOrFail())
             ->setShipmentTypeKey($this->clickAndCollectExampleConfig->getPickupShipmentTypeKey())
             ->setCurrencyCode($quoteTransfer->getCurrencyOrFail()->getCodeOrFail())
-            ->setPriceMode($quoteTransfer->getPriceModeOrFail());
+            ->setPriceMode($quoteTransfer->getPriceModeOrFail())
+            ->setIsActive(true);
+
+        if (!$this->isFilteredByIsActive($quoteTransfer)) {
+            $productOfferServicePointCriteriaTransfer->setIsActive(false);
+        }
 
         foreach ($quoteItemsForReplacement as $itemTransfer) {
             $productOfferServicePointCriteriaTransfer

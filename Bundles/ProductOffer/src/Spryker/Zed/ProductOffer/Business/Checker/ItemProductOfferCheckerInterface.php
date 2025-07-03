@@ -14,8 +14,12 @@ interface ItemProductOfferCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param list<string> $itemProductOfferReferencesToSkipValidation
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkItemProductOffer(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+    public function checkItemProductOffer(
+        CartChangeTransfer $cartChangeTransfer,
+        array $itemProductOfferReferencesToSkipValidation = []
+    ): CartPreCheckResponseTransfer;
 }

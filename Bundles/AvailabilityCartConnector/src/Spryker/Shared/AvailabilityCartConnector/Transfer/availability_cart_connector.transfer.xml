@@ -44,6 +44,7 @@
     <transfer name="SellableItemsRequest">
         <property name="store" type="Store"/>
         <property name="sellableItemRequests" type="SellableItemRequest[]" singular="sellableItemRequest"/>
+        <property name="quote" type="Quote" strict="true"/>
     </transfer>
 
     <transfer name="SellableItemRequest">

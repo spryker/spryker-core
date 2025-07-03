@@ -19,4 +19,7 @@
     <transfer name="Order">
     </transfer>
 
+    <transfer name="Item">
+    </transfer>
+
 </transfers>

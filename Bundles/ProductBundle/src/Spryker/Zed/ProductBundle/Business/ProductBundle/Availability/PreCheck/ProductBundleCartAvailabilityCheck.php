@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
@@ -68,16 +69,18 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array<string, string> $skusToSkipIsActiveValidation
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer)
+    public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer, array $skusToSkipIsActiveValidation = [])
     {
         /** @var \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $cartPreCheckFailedItems */
         $cartPreCheckFailedItems = new ArrayObject();
-        $itemsInCart = clone $cartChangeTransfer->getQuote()->getItems();
+        $quoteTransfer = $cartChangeTransfer->getQuoteOrFail();
+        $itemsInCart = clone $quoteTransfer->getItems();
 
-        $storeTransfer = $cartChangeTransfer->getQuote()->getStore();
+        $storeTransfer = $quoteTransfer->getStore();
         $storeTransfer->requireName();
 
         $productConcreteSkus = $this->getProductCocnreteSkusFromCartChangeTransfer($cartChangeTransfer);
@@ -91,7 +94,13 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
                 continue;
             }
 
-            $messageTransfers = $this->checkItemAvailability($itemsInCart, $itemTransfer, $storeTransfer);
+            $messageTransfers = $this->checkItemAvailability(
+                $itemsInCart,
+                $itemTransfer,
+                $storeTransfer,
+                $quoteTransfer,
+                $skusToSkipIsActiveValidation,
+            );
             $itemsInCart->append($itemTransfer);
 
             foreach ($messageTransfers as $messageTransfer) {
@@ -234,22 +243,33 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array<string, string> $skusToSkipIsActiveValidation
      *
      * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     protected function checkItemAvailability(
         ArrayObject $itemsInCart,
         ItemTransfer $itemTransfer,
-        StoreTransfer $storeTransfer
+        StoreTransfer $storeTransfer,
+        QuoteTransfer $quoteTransfer,
+        array $skusToSkipIsActiveValidation = []
     ) {
         $bundledProducts = $this->findBundledProducts($itemTransfer->getSku());
         $bundledProductsMessages = [];
 
         if (count($bundledProducts) > 0) {
-            return $this->getUnavailableBundleItemsInCart($itemsInCart, $bundledProducts, $itemTransfer, $storeTransfer);
+            return $this->getUnavailableBundleItemsInCart(
+                $itemsInCart,
+                $bundledProducts,
+                $itemTransfer,
+                $storeTransfer,
+                $quoteTransfer,
+                $skusToSkipIsActiveValidation,
+            );
         }
 
-        $regularItemAvailability = $this->checkRegularItemAvailability($itemsInCart, $itemTransfer, $storeTransfer);
+        $regularItemAvailability = $this->checkRegularItemAvailability($itemsInCart, $itemTransfer, $storeTransfer, $quoteTransfer);
         if ($regularItemAvailability) {
             $bundledProductsMessages[] = $regularItemAvailability;
         }
@@ -262,6 +282,8 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @param array<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $bundledProducts
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array<string, string> $skusToSkipIsActiveValidation
      *
      * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
@@ -269,9 +291,18 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         ArrayObject $itemsInCart,
         array $bundledProducts,
         ItemTransfer $itemTransfer,
-        StoreTransfer $storeTransfer
+        StoreTransfer $storeTransfer,
+        QuoteTransfer $quoteTransfer,
+        array $skusToSkipIsActiveValidation = []
     ) {
-        $unavailableBundleItems = $this->getUnavailableBundleItems($itemsInCart, $bundledProducts, $itemTransfer, $storeTransfer);
+        $unavailableBundleItems = $this->getUnavailableBundleItems(
+            $itemsInCart,
+            $bundledProducts,
+            $itemTransfer,
+            $storeTransfer,
+            $quoteTransfer,
+            $skusToSkipIsActiveValidation,
+        );
 
         $availabilityTransfer = $this->findAvailabilityBySku($itemTransfer->getSku(), $storeTransfer);
 
@@ -336,12 +367,17 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    protected function checkRegularItemAvailability(ArrayObject $itemsInCart, ItemTransfer $itemTransfer, StoreTransfer $storeTransfer): ?MessageTransfer
-    {
-        if ($this->checkIfItemIsSellable($itemsInCart, $itemTransfer->getSku(), $storeTransfer, new Decimal($itemTransfer->getQuantity()))) {
+    protected function checkRegularItemAvailability(
+        ArrayObject $itemsInCart,
+        ItemTransfer $itemTransfer,
+        StoreTransfer $storeTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ?MessageTransfer {
+        if ($this->checkIfItemIsSellable($itemsInCart, $itemTransfer->getSku(), $storeTransfer, $quoteTransfer, new Decimal($itemTransfer->getQuantity()))) {
             return null;
         }
 

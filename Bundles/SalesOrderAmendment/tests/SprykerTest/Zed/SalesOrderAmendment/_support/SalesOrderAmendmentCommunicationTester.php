@@ -11,6 +11,8 @@ use Codeception\Actor;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\SalesOrderAmendment\Persistence\Base\SpySalesOrderAmendmentQuote;
+use Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuoteQuery;
 
 /**
  * Inherited Methods
@@ -53,5 +55,33 @@ class SalesOrderAmendmentCommunicationTester extends Actor
             ->withBillingAddress()
             ->withCurrency()
             ->build();
+    }
+
+    /**
+     * @param string $amendmentOrderReference
+     *
+     * @return \Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuote|null
+     */
+    public function findSalesOrderAmendmentQuoteByAmendmentOrderReference(string $amendmentOrderReference): ?SpySalesOrderAmendmentQuote
+    {
+        return $this->getSalesOrderAmendmentQuoteQuery()
+            ->filterByAmendmentOrderReference($amendmentOrderReference)
+            ->findOne();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureSalesOrderAmendmentQuoteTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getSalesOrderAmendmentQuoteQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuoteQuery
+     */
+    protected function getSalesOrderAmendmentQuoteQuery(): SpySalesOrderAmendmentQuoteQuery
+    {
+        return SpySalesOrderAmendmentQuoteQuery::create();
     }
 }

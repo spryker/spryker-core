@@ -17,6 +17,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemInitialStateProviderPl
  * @method \Spryker\Zed\SalesOrderAmendmentOms\Business\SalesOrderAmendmentOmsFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesOrderAmendmentOms\Business\SalesOrderAmendmentOmsBusinessFactory getBusinessFactory()
  * @method \Spryker\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsConfig getConfig()
+ * @method \Spryker\Zed\SalesOrderAmendmentOms\Communication\SalesOrderAmendmentOmsCommunicationFactory getFactory()
  */
 class OrderAmendmentDefaultOrderItemInitialStateProviderPlugin extends AbstractPlugin implements OrderItemInitialStateProviderPluginInterface
 {

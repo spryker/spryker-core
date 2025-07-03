@@ -12,7 +12,7 @@
         "spryker/quote-extension": "^1.1.0",
         "spryker/sales": "^11.51.0",
         "spryker/sales-extension": "^1.12.0",
-        "spryker/sales-order-amendment": "^0.5.0",
+        "spryker/sales-order-amendment": "^0.6.0",
         "spryker/sales-order-amendment-extension": "^1.0.0",
         "spryker/transfer": "^3.27.0"
     },

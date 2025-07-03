@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductBundle\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductBundle\Business\Extractor\QuoteOriginalSalesOrderItemExtractor;
+use Spryker\Zed\ProductBundle\Business\Extractor\QuoteOriginalSalesOrderItemExtractorInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCheckoutAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
@@ -36,6 +38,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleItemE
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleItemExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpanderInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Filter\OriginalOrderBundleItemFilter;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Filter\OriginalOrderBundleItemFilterInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Filter\ReorderBundleItemFilter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Filter\ReorderBundleItemFilterInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\BundleItemReplacer;
@@ -414,6 +418,22 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createCartReorderItemsReplacer(): CartReorderItemsReplacerInterface
     {
         return new CartReorderItemsReplacer();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Filter\OriginalOrderBundleItemFilterInterface
+     */
+    public function createOriginalOrderBundleItemFilter(): OriginalOrderBundleItemFilterInterface
+    {
+        return new OriginalOrderBundleItemFilter();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\Extractor\QuoteOriginalSalesOrderItemExtractorInterface
+     */
+    public function createQuoteOriginalSalesOrderItemExtractor(): QuoteOriginalSalesOrderItemExtractorInterface
+    {
+        return new QuoteOriginalSalesOrderItemExtractor();
     }
 
     /**

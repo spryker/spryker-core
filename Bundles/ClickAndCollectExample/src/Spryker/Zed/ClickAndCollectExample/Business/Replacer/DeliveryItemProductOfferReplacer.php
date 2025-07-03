@@ -85,7 +85,12 @@ class DeliveryItemProductOfferReplacer extends AbstractItemProductOfferReplacer
             ->setStoreName($quoteTransfer->getStoreOrFail()->getNameOrFail())
             ->setShipmentTypeKey($this->clickAndCollectExampleConfig->getDeliveryShipmentTypeKey())
             ->setCurrencyCode($quoteTransfer->getCurrencyOrFail()->getCodeOrFail())
-            ->setPriceMode($quoteTransfer->getPriceModeOrFail());
+            ->setPriceMode($quoteTransfer->getPriceModeOrFail())
+            ->setIsActive(true);
+
+        if (!$this->isFilteredByIsActive($quoteTransfer)) {
+            $productOfferServicePointCriteriaTransfer->setIsActive(false);
+        }
 
         foreach ($quoteItemTransfersForReplacement as $itemTransfer) {
             $productOfferServicePointCriteriaTransfer

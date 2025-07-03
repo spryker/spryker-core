@@ -13,8 +13,9 @@ interface QuoteItemsFilterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param list<string> $skusToSkip
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterCartItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function filterCartItems(QuoteTransfer $quoteTransfer, array $skusToSkip = []): QuoteTransfer;
 }

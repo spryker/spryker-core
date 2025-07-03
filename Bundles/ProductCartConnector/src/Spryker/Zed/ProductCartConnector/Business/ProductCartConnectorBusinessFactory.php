@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpander;
 use Spryker\Zed\ProductCartConnector\Business\Expander\ProductUrlExpander;
 use Spryker\Zed\ProductCartConnector\Business\Expander\ProductUrlExpanderInterface;
+use Spryker\Zed\ProductCartConnector\Business\Extractor\QuoteOriginalSalesOrderItemExtractor;
+use Spryker\Zed\ProductCartConnector\Business\Extractor\QuoteOriginalSalesOrderItemExtractorInterface;
 use Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter\InactiveItemsFilter;
 use Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter\InactiveItemsFilterInterface;
 use Spryker\Zed\ProductCartConnector\Business\Validator\ProductValidator;
@@ -55,6 +57,14 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getMessengerFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCartConnector\Business\Extractor\QuoteOriginalSalesOrderItemExtractorInterface
+     */
+    public function createQuoteOriginalSalesOrderItemExtractor(): QuoteOriginalSalesOrderItemExtractorInterface
+    {
+        return new QuoteOriginalSalesOrderItemExtractor();
     }
 
     /**

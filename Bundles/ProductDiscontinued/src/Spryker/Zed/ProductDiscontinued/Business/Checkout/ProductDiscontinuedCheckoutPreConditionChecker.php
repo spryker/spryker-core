@@ -40,16 +40,23 @@ class ProductDiscontinuedCheckoutPreConditionChecker implements ProductDiscontin
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param list<string> $skusToSkip
      *
      * @return bool
      */
-    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
-    {
+    public function checkCondition(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        array $skusToSkip = []
+    ): bool {
         $isPassed = true;
-
         $skus = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if (in_array($itemTransfer->getSku(), $skusToSkip)) {
+                continue;
+            }
+
             $skus[] = $itemTransfer->getSkuOrFail();
         }
 

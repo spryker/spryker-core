@@ -15,11 +15,13 @@ interface ProductOfferCheckoutValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param list<string> $itemProductOfferReferencesToSkipValidation
      *
      * @return bool
      */
     public function isQuoteReadyForCheckout(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        array $itemProductOfferReferencesToSkipValidation = []
     ): bool;
 }

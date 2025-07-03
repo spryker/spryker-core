@@ -43,19 +43,21 @@ class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInte
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param list<string> $itemProductOfferReferencesToSkipValidation
      *
      * @return bool
      */
     public function isQuoteReadyForCheckout(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        array $itemProductOfferReferencesToSkipValidation = []
     ): bool {
         $checkoutResponseTransfer->setIsSuccess(true);
         $productOfferTransfersByProductOfferReference = $this
             ->groupProductOfferTransfersByProductOfferReference($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getProductOfferReference()) {
+            if (!$itemTransfer->getProductOfferReference() || in_array($itemTransfer->getProductOfferReference(), $itemProductOfferReferencesToSkipValidation)) {
                 continue;
             }
 

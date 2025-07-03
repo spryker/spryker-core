@@ -47,15 +47,17 @@ class CartChangePreCheck implements CartChangePreCheckInterface
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param list<string> $skusToSkip
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkCartItems(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    public function checkCartItems(CartChangeTransfer $cartChangeTransfer, array $skusToSkip = []): CartPreCheckResponseTransfer
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
         $cartPreCheckResponseTransfer = $this->addDiscontinuedErrorMessagesToCartPreCheckResponseTransfer(
             $cartPreCheckResponseTransfer,
             $cartChangeTransfer,
+            $skusToSkip,
         );
 
         return $cartPreCheckResponseTransfer;
@@ -64,12 +66,14 @@ class CartChangePreCheck implements CartChangePreCheckInterface
     /**
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param list<string> $skusToSkip
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     protected function addDiscontinuedErrorMessagesToCartPreCheckResponseTransfer(
         CartPreCheckResponseTransfer $cartPreCheckResponseTransfer,
-        CartChangeTransfer $cartChangeTransfer
+        CartChangeTransfer $cartChangeTransfer,
+        array $skusToSkip = []
     ): CartPreCheckResponseTransfer {
         $skus = $this->getSkusFromCartChangeTransfer($cartChangeTransfer);
         $productDiscontinuedCollectionTransfer = $this
@@ -78,6 +82,10 @@ class CartChangePreCheck implements CartChangePreCheckInterface
         $indexedProductDiscontinuedTransfers = $this->indexProductDiscontinuedTransfersBySku($productDiscontinuedCollectionTransfer);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            if (in_array($itemTransfer->getSku(), $skusToSkip)) {
+                continue;
+            }
+
             if ($this->isProductDiscontinued($itemTransfer, $indexedProductDiscontinuedTransfers)) {
                 $cartPreCheckResponseTransfer->addMessage(
                     $this->createItemIsDiscontinuedMessageTransfer($itemTransfer),

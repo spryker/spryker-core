@@ -76,6 +76,7 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="priceMode" type="string"/>
         <property name="currency" type="Currency"/>
+        <property name="originalSalesOrderItems" type="OriginalSalesOrderItem[]" singular="originalSalesOrderItem" strict="true"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
@@ -240,6 +241,32 @@
     <transfer name="CartReorder" strict="true">
         <property name="order" type="Order"/>
         <property name="orderItems" type="Item[]" singular="orderItem"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="SellableItemsRequest">
+        <property name="store" type="Store"/>
+        <property name="sellableItemRequests" type="SellableItemRequest[]" singular="sellableItemRequest"/>
+        <property name="quote" type="Quote" strict="true"/>
+    </transfer>
+
+    <transfer name="SellableItemRequest">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="decimal"/>
+    </transfer>
+
+    <transfer name="SellableItemsResponse">
+        <property name="sellableItemResponses" type="SellableItemResponse[]" singular="sellableItemResponse"/>
+    </transfer>
+
+    <transfer name="SellableItemResponse">
+        <property name="isSellable" type="bool"/>
+    </transfer>
+
+    <transfer name="OriginalSalesOrderItem" strict="true">
+        <property name="quantity" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
 </transfers>

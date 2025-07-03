@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\QuoteReplacementResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use Spryker\Zed\ClickAndCollectExample\Business\ErrorAdder\QuoteReplacementResponseErrorAdderInterface;
 use Spryker\Zed\ClickAndCollectExample\Business\Merger\ItemMergerInterface;
 use Spryker\Zed\ClickAndCollectExample\Business\ProductOfferReplacementFinder\ProductOfferReplacementFinderInterface;
@@ -101,7 +102,7 @@ abstract class AbstractItemProductOfferReplacer implements ItemProductOfferRepla
 
         foreach ($mergedItemTransfersForReplacement as $itemTransfer) {
             $replacementProductOfferTransfer = $this->replacementFinder
-                ->findSuitableProductOffer($itemTransfer, $productOfferServicePointTransfers);
+                ->findSuitableProductOffer($itemTransfer, $quoteTransfer, $productOfferServicePointTransfers);
             if (!$replacementProductOfferTransfer) {
                 $this->addFailedItemsToQuoteReplacementResponseTransfer(
                     $itemTransfer,
@@ -169,5 +170,18 @@ abstract class AbstractItemProductOfferReplacer implements ItemProductOfferRepla
         }
 
         return $quoteReplacementResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isFilteredByIsActive(QuoteTransfer $quoteTransfer): bool
+    {
+        $quoteProcessFlowName = $quoteTransfer->getQuoteProcessFlow()?->getNameOrFail();
+        $isOrderAmendment = $quoteProcessFlowName === SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT;
+
+        return !$isOrderAmendment || $this->clickAndCollectExampleConfig->isProductOfferFilteredByIsActiveForOrderAmendment();
     }
 }

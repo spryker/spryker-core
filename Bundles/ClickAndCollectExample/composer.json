@@ -19,6 +19,7 @@
         "spryker/product-offer-stock": "^1.0.0",
         "spryker/product-offer-storage": "^1.0.0",
         "spryker/propel-orm": "^1.18.0",
+        "spryker/sales-order-amendment-extension": "^1.1.0",
         "spryker/service-point": "^1.0.0",
         "spryker/service-point-cart-extension": "^1.0.0",
         "spryker/shipment": "^8.18.0",

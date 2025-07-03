@@ -15,16 +15,22 @@ interface ProductValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param list<string> $skusToSkip
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validateItems(CartChangeTransfer $cartChangeTransfer);
+    public function validateItems(CartChangeTransfer $cartChangeTransfer, array $skusToSkip = []);
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param list<string> $skusToSkip
      *
      * @return bool
      */
-    public function validateCheckoutQuoteItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+    public function validateCheckoutQuoteItems(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        array $skusToSkip = []
+    ): bool;
 }

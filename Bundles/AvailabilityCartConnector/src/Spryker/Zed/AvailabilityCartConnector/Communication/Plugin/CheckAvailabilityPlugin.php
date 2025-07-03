@@ -12,6 +12,8 @@ use Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\Cart\CheckAvailabilityPlugin} instead.
+ *
  * @method \Spryker\Zed\AvailabilityCartConnector\Business\AvailabilityCartConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityCartConnector\Communication\AvailabilityCartConnectorCommunicationFactory getFactory()
  */
@@ -23,8 +25,6 @@ class CheckAvailabilityPlugin extends AbstractPlugin implements CartPreCheckPlug
      *  - In case `ItemTransfer.amount` was defined, item availability check will be ignored.
      *
      * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\Cart\CheckAvailabilityPlugin} instead.
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *

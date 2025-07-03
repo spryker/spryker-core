@@ -43,6 +43,11 @@
         <property name="store" type="Store"/>
         <property name="currency" type="Currency"/>
         <property name="priceMode" type="string"/>
+        <property name="quoteProcessFlow" type="QuoteProcessFlow" strict="true"/>
+    </transfer>
+
+    <transfer name="QuoteProcessFlow" strict="true">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="QuoteError">
@@ -105,6 +110,7 @@
         <property name="servicePointIds" type="int[]" singular="idServicePoint"/>
         <property name="currencyCode" type="string"/>
         <property name="priceMode" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="ServicePoint" strict="true">
@@ -216,6 +222,7 @@
     <transfer name="SellableItemsRequest">
         <property name="store" type="Store"/>
         <property name="sellableItemRequests" type="SellableItemRequest[]" singular="sellableItemRequest"/>
+        <property name="quote" type="Quote" strict="true"/>
     </transfer>
 
     <transfer name="SellableItemsResponse">

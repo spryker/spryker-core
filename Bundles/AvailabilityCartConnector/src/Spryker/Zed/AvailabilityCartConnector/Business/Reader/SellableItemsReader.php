@@ -82,6 +82,8 @@ class SellableItemsReader implements SellableItemsReaderInterface
             $sellableItemsRequestTransfer->addSellableItemRequest($sellableItemRequestTransfer);
         }
 
+        $sellableItemsRequestTransfer->setQuote($cartChangeTransfer->getQuoteOrFail());
+
         return $sellableItemsRequestTransfer;
     }
 }

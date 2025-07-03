@@ -14,8 +14,9 @@ interface CartChangePreCheckInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param list<string> $skusToSkip
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkCartItems(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+    public function checkCartItems(CartChangeTransfer $cartChangeTransfer, array $skusToSkip = []): CartPreCheckResponseTransfer;
 }

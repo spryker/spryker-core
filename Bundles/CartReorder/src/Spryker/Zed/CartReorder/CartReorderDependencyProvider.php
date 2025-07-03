@@ -77,6 +77,11 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_CART_REORDER_PRE_ADD_TO_CART_FOR_ORDER_AMENDMENT = 'PLUGINS_CART_REORDER_PRE_ADD_TO_CART_FOR_ORDER_AMENDMENT';
+
+    /**
+     * @var string
+     */
     public const PLUGINS_CART_POST_REORDER = 'PLUGINS_CART_POST_REORDER';
 
     /**
@@ -97,6 +102,7 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartPreReorderPlugins($container);
         $container = $this->addCartReorderItemHydratorPlugins($container);
         $container = $this->addCartReorderPreAddToCartPlugins($container);
+        $container = $this->addCartReorderPreAddToCartPluginsForOrderAmendment($container);
         $container = $this->addCartPostReorderPlugins($container);
 
         return $container;
@@ -247,6 +253,20 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addCartReorderPreAddToCartPluginsForOrderAmendment(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CART_REORDER_PRE_ADD_TO_CART_FOR_ORDER_AMENDMENT, function () {
+            return $this->getCartReorderPreAddToCartPluginsForOrderAmendment();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addCartPostReorderPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_CART_POST_REORDER, function () {
@@ -313,9 +333,17 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>>
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>
      */
     protected function getCartReorderPreAddToCartPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>
+     */
+    protected function getCartReorderPreAddToCartPluginsForOrderAmendment(): array
     {
         return [];
     }

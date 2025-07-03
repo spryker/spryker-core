@@ -10,9 +10,11 @@ namespace SprykerTest\Zed\ClickAndCollectExample\Business\Facade;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\QuoteProcessFlowTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use SprykerTest\Zed\ClickAndCollectExample\ClickAndCollectExampleBusinessTester;
 
 /**
@@ -78,6 +80,66 @@ class ReplaceQuoteItemProductOffersDeliveryTest extends ClickAndCollectExampleFa
             $quoteItemTransfer->getProductOfferReference(),
         );
         $this->assertNull($quoteItemTransfer->getGroupKey());
+        $this->assertEmpty($quoteReplacementResponseTransfer->getErrors());
+        $this->assertEmpty($quoteReplacementResponseTransfer->getFailedReplacementItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReplacesWithSuitableProductOfferForOrderAmendment(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $this->tester->addCurrentStore($storeTransfer);
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $productOfferTransfer1 = $this->tester->createReplacementProductOffer(
+            $productConcreteTransfer,
+            [
+                ShipmentTypeTransfer::KEY => ClickAndCollectExampleBusinessTester::TEST_SHIPMENT_TYPE_KEY_DELIVERY,
+                ShipmentTypeTransfer::IS_ACTIVE => true,
+                ProductOfferTransfer::MERCHANT_REFERENCE => ClickAndCollectExampleBusinessTester::TEST_MERCHANT_REFERENCE_1,
+                ProductOfferTransfer::STORES => new ArrayObject([$storeTransfer]),
+            ],
+        );
+        $this->mockAvailabilityFacade([$productOfferTransfer1]);
+
+        $productOfferTransfer2 = $this->tester->haveProductOffer([
+            ProductOfferTransfer::MERCHANT_REFERENCE => ClickAndCollectExampleBusinessTester::TEST_MERCHANT_REFERENCE_1,
+            ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
+            ProductOfferTransfer::STORES => new ArrayObject([$storeTransfer]),
+            ShipmentTypeTransfer::IS_ACTIVE => false,
+        ]);
+        $productOfferStockTransfer2 = $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer2->getIdProductOfferOrFail(),
+            ProductOfferStockTransfer::QUANTITY => 0,
+            ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK => true,
+        ]);
+        $productOfferTransfer2->addProductOfferStock($productOfferStockTransfer2);
+        $this->mockAvailabilityFacade([$productOfferTransfer2]);
+
+        $itemTransfer = $this->tester->createItemTransfer($productConcreteTransfer)
+            ->setMerchantReference($productOfferTransfer2->getMerchantReference())
+            ->setQuantity(1)
+            ->setProductOfferReference($productOfferTransfer2->getProductOfferReference())
+            ->setShipmentType((new ShipmentTypeTransfer())->setKey(ClickAndCollectExampleBusinessTester::TEST_SHIPMENT_TYPE_KEY_DELIVERY));
+
+        $quoteTransfer = $this->tester->createQuoteTransfer($storeTransfer);
+        $quoteTransfer->addItem($itemTransfer);
+        $quoteProcessFlowTransfer = (new QuoteProcessFlowTransfer())
+            ->setName(SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT);
+        $quoteTransfer->setQuoteProcessFlow($quoteProcessFlowTransfer);
+
+        // Act
+        $quoteReplacementResponseTransfer = $this->tester->getFacade()->replaceQuoteItemProductOffers($quoteTransfer);
+
+        // Assert
+        $quoteItemTransfer = $quoteReplacementResponseTransfer->getQuoteOrFail()->getItems()[0];
+        $this->assertSame(
+            $productOfferTransfer2->getProductOfferReference(),
+            $quoteItemTransfer->getProductOfferReference(),
+        );
+        $this->assertNotNull($quoteItemTransfer->getGroupKey());
         $this->assertEmpty($quoteReplacementResponseTransfer->getErrors());
         $this->assertEmpty($quoteReplacementResponseTransfer->getFailedReplacementItems());
     }

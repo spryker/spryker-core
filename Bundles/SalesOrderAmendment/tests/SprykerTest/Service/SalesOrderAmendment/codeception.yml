@@ -1,0 +1,24 @@
+namespace: SprykerTest\Service\SalesOrderAmendment
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Business:
+        path: .
+        actor: SalesOrderAmendmentTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Service\Testify\Helper\ServiceHelper
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper

@@ -55,7 +55,7 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
     {
         return new CartItemAdder(
             $this->getCartFacade(),
-            $this->getCartReorderPreAddToCartPlugins(),
+            $this->createCartReorderPreAddToCartPluginStrategyResolver(),
         );
     }
 
@@ -129,6 +129,20 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>>
+     */
+    public function createCartReorderPreAddToCartPluginStrategyResolver(): StrategyResolverInterface
+    {
+        return new StrategyResolver(
+            [
+                CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT => $this->getProvidedDependency(CartReorderDependencyProvider::PLUGINS_CART_REORDER_PRE_ADD_TO_CART, static::LOADING_LAZY),
+                SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT => $this->getProvidedDependency(CartReorderDependencyProvider::PLUGINS_CART_REORDER_PRE_ADD_TO_CART_FOR_ORDER_AMENDMENT, static::LOADING_LAZY),
+            ],
+            CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT,
+        );
+    }
+
+    /**
      * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderStrategyPluginInterface>
      */
     public function getCartReorderQuoteProviderStrategyPlugins(): array
@@ -158,14 +172,6 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
     public function getCartReorderItemHydratorPlugins(): array
     {
         return $this->getProvidedDependency(CartReorderDependencyProvider::PLUGINS_CART_REORDER_ITEM_HYDRATOR);
-    }
-
-    /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>
-     */
-    public function getCartReorderPreAddToCartPlugins(): array
-    {
-        return $this->getProvidedDependency(CartReorderDependencyProvider::PLUGINS_CART_REORDER_PRE_ADD_TO_CART);
     }
 
     /**

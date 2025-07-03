@@ -18,6 +18,8 @@ use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OrderReader;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OrderReaderInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Triggerer\OmsEventTriggerer;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Triggerer\OmsEventTriggererInterface;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Updater\ItemReservationUpdater;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Updater\ItemReservationUpdaterInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\CartReorderRequestValidator;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\CartReorderRequestValidatorInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\OrderValidator;
@@ -28,6 +30,8 @@ use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\SalesOrderAmendmentVal
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\SalesOrderAmendmentValidatorInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToOmsFacadeInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToSalesFacadeInterface;
+use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToSalesOrderAmendmentFacadeInterface;
+use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Service\SalesOrderAmendmentOmsToSalesOrderAmendmentServiceInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsDependencyProvider;
 
 /**
@@ -122,6 +126,18 @@ class SalesOrderAmendmentOmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\SalesOrderAmendmentOms\Business\Updater\ItemReservationUpdaterInterface
+     */
+    public function createItemReservationUpdater(): ItemReservationUpdaterInterface
+    {
+        return new ItemReservationUpdater(
+            $this->getOmsFacade(),
+            $this->getSalesOrderAmendmentFacade(),
+            $this->getSalesOrderAmendmentService(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToOmsFacadeInterface
      */
     public function getOmsFacade(): SalesOrderAmendmentOmsToOmsFacadeInterface
@@ -135,5 +151,21 @@ class SalesOrderAmendmentOmsBusinessFactory extends AbstractBusinessFactory
     public function getSalesFacade(): SalesOrderAmendmentOmsToSalesFacadeInterface
     {
         return $this->getProvidedDependency(SalesOrderAmendmentOmsDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToSalesOrderAmendmentFacadeInterface
+     */
+    public function getSalesOrderAmendmentFacade(): SalesOrderAmendmentOmsToSalesOrderAmendmentFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesOrderAmendmentOmsDependencyProvider::FACADE_SALES_ORDER_AMENDMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendmentOms\Dependency\Service\SalesOrderAmendmentOmsToSalesOrderAmendmentServiceInterface
+     */
+    public function getSalesOrderAmendmentService(): SalesOrderAmendmentOmsToSalesOrderAmendmentServiceInterface
+    {
+        return $this->getProvidedDependency(SalesOrderAmendmentOmsDependencyProvider::SERVICE_SALES_ORDER_AMENDMENT);
     }
 }

@@ -15,6 +15,7 @@ use Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendme
 /**
  * @method \Spryker\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsConfig getConfig()
  * @method \Spryker\Zed\SalesOrderAmendmentOms\Business\SalesOrderAmendmentOmsFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesOrderAmendmentOms\Communication\SalesOrderAmendmentOmsCommunicationFactory getFactory()
  */
 class OrderSalesOrderAmendmentValidatorRulePlugin extends AbstractPlugin implements SalesOrderAmendmentValidatorRulePluginInterface
 {

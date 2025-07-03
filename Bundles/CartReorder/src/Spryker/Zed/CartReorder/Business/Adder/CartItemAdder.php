@@ -13,16 +13,19 @@ use Generated\Shared\Transfer\CartReorderResponseTransfer;
 use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Spryker\Shared\Kernel\StrategyResolverInterface;
 use Spryker\Zed\CartReorder\Dependency\Facade\CartReorderToCartFacadeInterface;
 
 class CartItemAdder implements CartItemAdderInterface
 {
     /**
      * @param \Spryker\Zed\CartReorder\Dependency\Facade\CartReorderToCartFacadeInterface $cartFacade
-     * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface> $cartReorderPreAddToCartPlugins
+     * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>> $cartReorderPreAddToCartPluginStrategyResolver
      */
-    public function __construct(protected CartReorderToCartFacadeInterface $cartFacade, protected array $cartReorderPreAddToCartPlugins)
-    {
+    public function __construct(
+        protected CartReorderToCartFacadeInterface $cartFacade,
+        protected StrategyResolverInterface $cartReorderPreAddToCartPluginStrategyResolver
+    ) {
     }
 
     /**
@@ -89,7 +92,10 @@ class CartItemAdder implements CartItemAdderInterface
      */
     protected function executeCartReorderPreAddToCartPlugins(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        foreach ($this->cartReorderPreAddToCartPlugins as $cartReorderPreAddToCartPlugin) {
+        $quoteProcessFlowName = $cartChangeTransfer->getQuoteOrFail()->getQuoteProcessFlow()?->getNameOrFail();
+        $cartReorderPreAddToCartPlugins = $this->cartReorderPreAddToCartPluginStrategyResolver->get($quoteProcessFlowName);
+
+        foreach ($cartReorderPreAddToCartPlugins as $cartReorderPreAddToCartPlugin) {
             $cartChangeTransfer = $cartReorderPreAddToCartPlugin->preAddToCart($cartChangeTransfer);
         }
 

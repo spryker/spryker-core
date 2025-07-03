@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SellableItemRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
@@ -89,6 +92,8 @@ class BasePreCheck
      * @param array<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $bundledProducts
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array<string, string> $skusToSkipIsActiveValidation
      *
      * @return array
      */
@@ -96,7 +101,9 @@ class BasePreCheck
         ArrayObject $itemTransfers,
         array $bundledProducts,
         ItemTransfer $itemTransfer,
-        StoreTransfer $storeTransfer
+        StoreTransfer $storeTransfer,
+        QuoteTransfer $quoteTransfer,
+        array $skusToSkipIsActiveValidation = []
     ) {
         $unavailableBundleItems = [];
 
@@ -105,7 +112,10 @@ class BasePreCheck
 
             $sku = $bundledProductConcreteEntity->getSku();
             $totalBundledItemQuantity = $productBundleEntity->getQuantity() * $itemTransfer->getQuantity();
-            if ($this->checkIfItemIsSellable($itemTransfers, $sku, $storeTransfer, new Decimal($totalBundledItemQuantity)) && $bundledProductConcreteEntity->getIsActive()) {
+            if (
+                $this->checkIfItemIsSellable($itemTransfers, $sku, $storeTransfer, $quoteTransfer, new Decimal($totalBundledItemQuantity))
+                && ($bundledProductConcreteEntity->getIsActive() || isset($skusToSkipIsActiveValidation[$sku]))
+            ) {
                 continue;
             }
             $unavailableBundleItems[] = [
@@ -121,6 +131,7 @@ class BasePreCheck
      * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\DecimalObject\Decimal|null $itemQuantity
      *
      * @return bool
@@ -129,6 +140,7 @@ class BasePreCheck
         iterable $itemTransfers,
         string $sku,
         StoreTransfer $storeTransfer,
+        QuoteTransfer $quoteTransfer,
         ?Decimal $itemQuantity = null
     ): bool {
         if ($itemQuantity === null) {
@@ -137,6 +149,10 @@ class BasePreCheck
 
         $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku($itemTransfers, $sku);
         $currentItemQuantity = $currentItemQuantity->add($itemQuantity);
+
+        if ($this->productBundleConfig->useBatchAvailabilityCheck()) {
+            return $this->checkAvailabilityInBatch($sku, $currentItemQuantity, $storeTransfer, $quoteTransfer);
+        }
 
         return $this->availabilityFacade->isProductSellableForStore($sku, $currentItemQuantity, $storeTransfer);
     }
@@ -174,5 +190,37 @@ class BasePreCheck
         return $this->productBundleQueryContainer
             ->queryBundleProductBySku($itemTransfer->getSku())
             ->exists();
+    }
+
+    /**
+     * @param string $sku
+     * @param \Spryker\DecimalObject\Decimal $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function checkAvailabilityInBatch(
+        string $sku,
+        Decimal $quantity,
+        StoreTransfer $storeTransfer,
+        QuoteTransfer $quoteTransfer
+    ): bool {
+        $sellableItemsRequestTransfer = (new SellableItemsRequestTransfer())
+            ->setQuote($quoteTransfer)
+            ->setStore($storeTransfer)
+            ->addSellableItemRequest(
+                (new SellableItemRequestTransfer())
+                    ->setSku($sku)
+                    ->setQuantity($quantity),
+            );
+
+        $sellableItemsResponseTransfer = $this->availabilityFacade->areProductsSellableForStore($sellableItemsRequestTransfer);
+
+        if (!$sellableItemsResponseTransfer->getSellableItemResponses()->offsetExists(0)) {
+            return false;
+        }
+
+        return (bool)$sellableItemsResponseTransfer->getSellableItemResponses()->offsetGet(0)->getIsSellable();
     }
 }

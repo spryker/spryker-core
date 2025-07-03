@@ -17,6 +17,7 @@
 
     <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="CartPreCheckResponse">
@@ -51,6 +52,11 @@
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="originalSalesOrderItems" type="OriginalSalesOrderItem[]" singular="originalSalesOrderItem" strict="true"/>
+    </transfer>
+
+    <transfer name="OriginalSalesOrderItem" strict="true">
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="Item">

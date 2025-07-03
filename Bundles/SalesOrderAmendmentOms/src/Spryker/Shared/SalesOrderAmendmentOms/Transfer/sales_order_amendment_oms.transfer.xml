@@ -4,6 +4,7 @@
     <transfer name="Quote">
         <property name="amendmentOrderReference" type="string" strict="true"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="originalSalesOrderItems" type="OriginalSalesOrderItem[]" singular="originalSalesOrderItem" strict="true"/>
     </transfer>
 
     <transfer name="ErrorCollection" strict="true">
@@ -74,6 +75,38 @@
     </transfer>
 
     <transfer name="SaveOrder">
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuoteCollectionDeleteCriteria" strict="true">
+        <property name="amendmentOrderReferences" type="string[]" singular="amendmentOrderReference"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuoteCollection" strict="true">
+        <property name="salesOrderAmendmentQuotes" type="SalesOrderAmendmentQuote[]" singular="salesOrderAmendmentQuote"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuote" strict="true">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuoteCriteria" strict="true">
+        <property name="salesOrderAmendmentQuoteConditions" type="SalesOrderAmendmentQuoteConditions"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuoteConditions" strict="true">
+        <property name="amendmentOrderReferences" type="string[]" singular="amendmentOrderReference"/>
+    </transfer>
+
+    <transfer name="OriginalSalesOrderItem" strict="true">
+        <property name="groupKey" type="string"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuoteCollectionResponse" strict="true">
+        <property name="salesOrderAmendmentQuotes" type="SalesOrderAmendmentQuote[]" singular="salesOrderAmendmentQuote"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="ReservationRequest">
     </transfer>
 
 </transfers>

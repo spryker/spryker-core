@@ -26,6 +26,11 @@ class ProductBundleConfig extends AbstractBundleConfig
     protected const PARAMETER_PRODUCT_SKU_AVAILABILITY = '%sku%';
 
     /**
+     * @var bool
+     */
+    protected const USE_BATCH_AVAILABILITY_CHECK = false;
+
+    /**
      * @api
      *
      * @return string
@@ -56,5 +61,18 @@ class ProductBundleConfig extends AbstractBundleConfig
     public function getAllowedBundleItemFieldsToCopy(): array
     {
         return [];
+    }
+
+    /**
+     * Specification:
+     * - Defines whether batch availability check facade method should be used.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function useBatchAvailabilityCheck(): bool
+    {
+        return static::USE_BATCH_AVAILABILITY_CHECK;
     }
 }

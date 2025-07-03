@@ -49,10 +49,11 @@ class QuoteItemsFilter implements QuoteItemsFilterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param list<string> $skusToSkip
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterCartItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function filterCartItems(QuoteTransfer $quoteTransfer, array $skusToSkip = []): QuoteTransfer
     {
         $productAbstractSkus = $this->getProductAbstractSkus($quoteTransfer);
 
@@ -64,6 +65,10 @@ class QuoteItemsFilter implements QuoteItemsFilterInterface
             ->getProductAbstractTransfersIndexedByIdProductAbstract($productAbstractSkus);
 
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
+            if (in_array($itemTransfer->getSku(), $skusToSkip)) {
+                continue;
+            }
+
             $productAbstractTransfer = $productAbstractTransfersIndexedByIdProductAbstract[$itemTransfer->getIdProductAbstract()] ?? null;
             if ($productAbstractTransfer && $productAbstractTransfer->getApprovalStatus() !== ProductApprovalConfig::STATUS_APPROVED) {
                 $quoteTransfer->getItems()->offsetUnset($key);

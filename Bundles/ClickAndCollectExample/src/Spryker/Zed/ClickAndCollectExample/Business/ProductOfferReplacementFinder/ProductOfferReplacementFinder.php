@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferServicePointTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SellableItemRequestTransfer;
 use Generated\Shared\Transfer\SellableItemsRequestTransfer;
 use Spryker\Zed\ClickAndCollectExample\Business\ProductOfferReplacementChecker\ProductOfferReplacementCheckerInterface;
@@ -52,14 +53,19 @@ class ProductOfferReplacementFinder implements ProductOfferReplacementFinderInte
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param list<\Generated\Shared\Transfer\ProductOfferServicePointTransfer> $productOfferServicePointTransfers
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function findSuitableProductOffer(ItemTransfer $itemTransfer, array $productOfferServicePointTransfers): ?ProductOfferTransfer
-    {
+    public function findSuitableProductOffer(
+        ItemTransfer $itemTransfer,
+        QuoteTransfer $quoteTransfer,
+        array $productOfferServicePointTransfers
+    ): ?ProductOfferTransfer {
         $sellableItemsRequestTransfer = $this->createSellableItemsRequestTransfer(
             $itemTransfer,
+            $quoteTransfer,
             $productOfferServicePointTransfers,
         );
 
@@ -141,12 +147,14 @@ class ProductOfferReplacementFinder implements ProductOfferReplacementFinderInte
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param list<\Generated\Shared\Transfer\ProductOfferServicePointTransfer> $productOfferServicePointTransfers
      *
      * @return \Generated\Shared\Transfer\SellableItemsRequestTransfer
      */
     protected function createSellableItemsRequestTransfer(
         ItemTransfer $itemTransfer,
+        QuoteTransfer $quoteTransfer,
         array $productOfferServicePointTransfers
     ): SellableItemsRequestTransfer {
         $sellableItemsRequestTransfer = (new SellableItemsRequestTransfer())->setStore(
@@ -165,6 +173,8 @@ class ProductOfferReplacementFinder implements ProductOfferReplacementFinderInte
 
             $sellableItemsRequestTransfer->addSellableItemRequest($sellableItemRequestTransfer);
         }
+
+        $sellableItemsRequestTransfer->setQuote($quoteTransfer);
 
         return $sellableItemsRequestTransfer;
     }

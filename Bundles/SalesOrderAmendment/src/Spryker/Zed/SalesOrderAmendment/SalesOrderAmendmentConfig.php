@@ -43,6 +43,7 @@ class SalesOrderAmendmentConfig extends AbstractBundleConfig
             QuoteTransfer::PRICE_MODE,
             QuoteTransfer::AMENDMENT_ORDER_REFERENCE,
             QuoteTransfer::QUOTE_PROCESS_FLOW,
+            QuoteTransfer::ORIGINAL_SALES_ORDER_ITEMS,
         ];
     }
 

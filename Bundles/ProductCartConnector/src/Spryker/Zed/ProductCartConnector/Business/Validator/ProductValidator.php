@@ -66,10 +66,11 @@ class ProductValidator implements ProductValidatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param list<string> $skusToSkip
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validateItems(CartChangeTransfer $cartChangeTransfer)
+    public function validateItems(CartChangeTransfer $cartChangeTransfer, array $skusToSkip = [])
     {
         $responseTransfer = new CartPreCheckResponseTransfer();
 
@@ -79,6 +80,10 @@ class ProductValidator implements ProductValidatorInterface
         $indexedProductAbstractTransfers = $this->getIndexedProductAbstractsByProductAbstractSkus($skus[static::SKU_ABSTRACT]);
 
         foreach ($itemTransfers as $itemTransfer) {
+            if (in_array($itemTransfer->getSku(), $skusToSkip)) {
+                continue;
+            }
+
             if ($itemTransfer->getSku()) {
                 if ($this->validateConcreteItem($itemTransfer, $responseTransfer, $indexedProductConcreteTransfers) === false) {
                     continue;
@@ -97,11 +102,15 @@ class ProductValidator implements ProductValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param list<string> $skusToSkip
      *
      * @return bool
      */
-    public function validateCheckoutQuoteItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
-    {
+    public function validateCheckoutQuoteItems(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        array $skusToSkip = []
+    ): bool {
         if ($quoteTransfer->getItems()->count() === 0) {
             $checkoutResponseTransfer->setIsSuccess(true);
 
@@ -114,6 +123,10 @@ class ProductValidator implements ProductValidatorInterface
         $indexedProductAbstractTransfers = $this->getIndexedProductAbstractsByProductAbstractSkus($skus[static::SKU_ABSTRACT]);
 
         foreach ($itemTransfers as $itemTransfer) {
+            if (in_array($itemTransfer->getSku(), $skusToSkip)) {
+                continue;
+            }
+
             if ($itemTransfer->getSku()) {
                 $checkoutResponseTransfer = $this->validateProductConcreteTransfersForCheckout(
                     $checkoutResponseTransfer,

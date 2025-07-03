@@ -14,8 +14,9 @@ interface ProductBundleCartActiveCheckInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array<string, string> $skusToSkipValidation
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkActiveItems(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+    public function checkActiveItems(CartChangeTransfer $cartChangeTransfer, array $skusToSkipValidation = []): CartPreCheckResponseTransfer;
 }

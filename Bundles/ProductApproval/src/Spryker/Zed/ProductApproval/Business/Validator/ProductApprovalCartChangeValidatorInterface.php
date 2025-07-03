@@ -14,8 +14,9 @@ interface ProductApprovalCartChangeValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param list<string> $skusToSkip
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validateCartChange(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+    public function validateCartChange(CartChangeTransfer $cartChangeTransfer, array $skusToSkip = []): CartPreCheckResponseTransfer;
 }

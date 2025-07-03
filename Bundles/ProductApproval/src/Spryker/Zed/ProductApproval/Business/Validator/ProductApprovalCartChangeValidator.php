@@ -45,10 +45,11 @@ class ProductApprovalCartChangeValidator implements ProductApprovalCartChangeVal
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param list<string> $skusToSkip
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validateCartChange(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    public function validateCartChange(CartChangeTransfer $cartChangeTransfer, array $skusToSkip = []): CartPreCheckResponseTransfer
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
         $approvalStatusesIndexedByProductSku = $this->getApprovalStatusesIndexedByProductSku($cartChangeTransfer);
@@ -59,6 +60,10 @@ class ProductApprovalCartChangeValidator implements ProductApprovalCartChangeVal
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $sku = $itemTransfer->getSkuOrFail();
+
+            if (in_array($sku, $skusToSkip)) {
+                continue;
+            }
 
             if (
                 isset($approvalStatusesIndexedByProductSku[$sku])

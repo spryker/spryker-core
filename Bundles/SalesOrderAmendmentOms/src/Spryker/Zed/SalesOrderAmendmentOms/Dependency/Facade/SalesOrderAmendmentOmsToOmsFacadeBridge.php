@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade;
 
 use Generated\Shared\Transfer\OmsOrderItemStateTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 
 class SalesOrderAmendmentOmsToOmsFacadeBridge implements SalesOrderAmendmentOmsToOmsFacadeInterface
 {
@@ -56,5 +57,15 @@ class SalesOrderAmendmentOmsToOmsFacadeBridge implements SalesOrderAmendmentOmsT
     public function getOmsOrderItemState(string $stateName): OmsOrderItemStateTransfer
     {
         return $this->omsFacade->getOmsOrderItemState($stateName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return void
+     */
+    public function updateReservation(ReservationRequestTransfer $reservationRequestTransfer): void
+    {
+        $this->omsFacade->updateReservation($reservationRequestTransfer);
     }
 }

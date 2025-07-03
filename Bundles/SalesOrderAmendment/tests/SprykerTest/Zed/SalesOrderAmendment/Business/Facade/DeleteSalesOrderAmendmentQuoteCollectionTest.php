@@ -70,4 +70,27 @@ class DeleteSalesOrderAmendmentQuoteCollectionTest extends Unit
         $this->assertNull($this->tester->findSalesOrderAmendmentQuoteByUuid($salesOrderAmendmentQuoteTransfer1->getUuid()));
         $this->assertNull($this->tester->findSalesOrderAmendmentQuoteByUuid($salesOrderAmendmentQuoteTransfer2->getUuid()));
     }
+
+    /**
+     * @return void
+     */
+    public function testShouldDeleteSalesOrderAmendmentQuotesByAmendmentOrderReferences(): void
+    {
+        // Arrange
+        $salesOrderAmendmentQuoteTransfer1 = $this->tester->haveSalesOrderAmendmentQuote();
+        $salesOrderAmendmentQuoteTransfer2 = $this->tester->haveSalesOrderAmendmentQuote();
+        $salesOrderAmendmentQuoteTransfer3 = $this->tester->haveSalesOrderAmendmentQuote();
+        $deleteCriteriaTransfer = (new SalesOrderAmendmentQuoteCollectionDeleteCriteriaTransfer())
+            ->addAmendmentOrderReference($salesOrderAmendmentQuoteTransfer1->getAmendmentOrderReference())
+            ->addAmendmentOrderReference($salesOrderAmendmentQuoteTransfer3->getAmendmentOrderReference());
+
+        // Act
+        $salesOrderAmendmentQuoteCollectionResponseTransfer = $this->tester->getFacade()->deleteSalesOrderAmendmentQuoteCollection($deleteCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(0, $salesOrderAmendmentQuoteCollectionResponseTransfer->getErrors());
+        $this->assertNull($this->tester->findSalesOrderAmendmentQuoteByUuid($salesOrderAmendmentQuoteTransfer1->getUuid()));
+        $this->assertNull($this->tester->findSalesOrderAmendmentQuoteByUuid($salesOrderAmendmentQuoteTransfer3->getUuid()));
+        $this->assertNotNull($this->tester->findSalesOrderAmendmentQuoteByUuid($salesOrderAmendmentQuoteTransfer2->getUuid()));
+    }
 }

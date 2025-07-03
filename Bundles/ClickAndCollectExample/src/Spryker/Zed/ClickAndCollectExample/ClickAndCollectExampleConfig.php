@@ -26,6 +26,11 @@ class ClickAndCollectExampleConfig extends AbstractBundleConfig
     protected const SHIPMENT_TYPE_DELIVERY = 'delivery';
 
     /**
+     * @var bool
+     */
+    protected const IS_PRODUCT_OFFER_FILTERED_BY_IS_ACTIVE_FOR_ORDER_AMENDMENT = false;
+
+    /**
      * @api
      *
      * @return string
@@ -43,5 +48,18 @@ class ClickAndCollectExampleConfig extends AbstractBundleConfig
     public function getDeliveryShipmentTypeKey(): string
     {
         return static::SHIPMENT_TYPE_DELIVERY;
+    }
+
+    /**
+     * Specification:
+     *  - Defines if product offers should be filtered by `isActive` for order amendment.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isProductOfferFilteredByIsActiveForOrderAmendment(): bool
+    {
+        return static::IS_PRODUCT_OFFER_FILTERED_BY_IS_ACTIVE_FOR_ORDER_AMENDMENT;
     }
 }

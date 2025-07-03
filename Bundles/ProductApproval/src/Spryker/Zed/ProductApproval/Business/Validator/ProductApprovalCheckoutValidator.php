@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductApproval\Business\Validator;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\ProductApproval\ProductApprovalConfig;
 use Spryker\Zed\ProductApproval\Business\Reader\ProductReaderInterface;
@@ -41,12 +42,14 @@ class ProductApprovalCheckoutValidator implements ProductApprovalCheckoutValidat
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param list<string> $skusToSkip
      *
      * @return bool
      */
     public function validateQuoteForCheckout(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        array $skusToSkip = []
     ): bool {
         if ($checkoutResponseTransfer->getIsSuccess() === null) {
             $checkoutResponseTransfer->setIsSuccess(true);
@@ -59,13 +62,8 @@ class ProductApprovalCheckoutValidator implements ProductApprovalCheckoutValidat
         }
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!isset($productAbstractTransfersIndexedByIdProductAbstract[$itemTransfer->getIdProductAbstract()])) {
-                continue;
-            }
-
-            $productAbstractTransfer = $productAbstractTransfersIndexedByIdProductAbstract[$itemTransfer->getIdProductAbstract()];
-            if ($productAbstractTransfer->getApprovalStatus() === ProductApprovalConfig::STATUS_APPROVED) {
-                continue;
+            if ($this->isProductAbstractApproved($itemTransfer, $productAbstractTransfersIndexedByIdProductAbstract) || in_array($itemTransfer->getSku(), $skusToSkip)) {
+                    continue;
             }
 
             $checkoutErrorTransfer = (new CheckoutErrorTransfer())
@@ -79,6 +77,28 @@ class ProductApprovalCheckoutValidator implements ProductApprovalCheckoutValidat
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array<int, \Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfersIndexedByIdProductAbstract
+     *
+     * @return bool
+     */
+    protected function isProductAbstractApproved(
+        ItemTransfer $itemTransfer,
+        array $productAbstractTransfersIndexedByIdProductAbstract
+    ): bool {
+        if (!isset($productAbstractTransfersIndexedByIdProductAbstract[$itemTransfer->getIdProductAbstract()])) {
+            return true;
+        }
+
+        $productAbstractTransfer = $productAbstractTransfersIndexedByIdProductAbstract[$itemTransfer->getIdProductAbstract()];
+        if ($productAbstractTransfer->getApprovalStatus() === ProductApprovalConfig::STATUS_APPROVED) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

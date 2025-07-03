@@ -69,8 +69,11 @@ class ClickAndCollectExampleRepository extends AbstractRepository implements Cli
                     ->endUse()
                 ->endUse()
             ->endUse()
-            ->filterByConcreteSku_In($productOfferServicePointCriteriaTransfer->getConcreteSkus())
-            ->filterByIsActive(true);
+            ->filterByConcreteSku_In($productOfferServicePointCriteriaTransfer->getConcreteSkus());
+
+        if ($productOfferServicePointCriteriaTransfer->getIsActive() === null || $productOfferServicePointCriteriaTransfer->getIsActive()) {
+            $productOfferQuery->filterByIsActive(true);
+        }
 
         $productOfferEntityCollection = $productOfferQuery->find();
 
@@ -115,8 +118,11 @@ class ClickAndCollectExampleRepository extends AbstractRepository implements Cli
             ->condition('idShipmentTypeIsNull', sprintf('%s IS NULL', SpyShipmentTypeTableMap::COL_ID_SHIPMENT_TYPE))
             ->combine(['shipmentTypeKeyEquals', 'shipmentTypeIsActive', 'storeNameEquals'], Criteria::LOGICAL_AND, 'shipmentTypeConditions')
             ->where(['idShipmentTypeIsNull', 'shipmentTypeConditions'], Criteria::LOGICAL_OR)
-            ->filterByConcreteSku_In($productOfferServicePointCriteriaTransfer->getConcreteSkus())
-            ->filterByIsActive(true);
+            ->filterByConcreteSku_In($productOfferServicePointCriteriaTransfer->getConcreteSkus());
+
+        if ($productOfferServicePointCriteriaTransfer->getIsActive() === null || $productOfferServicePointCriteriaTransfer->getIsActive()) {
+            $productOfferQuery->filterByIsActive(true);
+        }
 
         $productOfferEntityCollection = $productOfferQuery->find();
 

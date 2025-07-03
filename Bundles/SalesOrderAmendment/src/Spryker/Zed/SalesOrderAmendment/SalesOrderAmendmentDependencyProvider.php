@@ -89,6 +89,11 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_QUOTE = 'FACADE_QUOTE';
 
     /**
+     * @var string
+     */
+    public const SERVICE_SALES_ORDER_AMENDMENT = 'SERVICE_SALES_ORDER_AMENDMENT';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -109,6 +114,7 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addSalesOrderAmendmentPostDeletePlugins($container);
         $container = $this->addSalesOrderAmendmentItemCollectorStrategyPlugins($container);
         $container = $this->addSalesOrderItemCollectorPlugins($container);
+        $container = $this->addSalesOrderAmendmentService($container);
 
         return $container;
     }
@@ -316,6 +322,20 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::PLUGINS_SALES_ORDER_ITEM_COLLECTOR_PLUGIN, function () {
             return $this->getSalesOrderItemCollectorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesOrderAmendmentService(Container $container): Container
+    {
+        $container->set(static::SERVICE_SALES_ORDER_AMENDMENT, function (Container $container) {
+            return $container->getLocator()->salesOrderAmendment()->service();
         });
 
         return $container;

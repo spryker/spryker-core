@@ -13,6 +13,8 @@ use Spryker\Zed\ProductDiscontinued\Business\CartChangePreCheck\CartChangePreChe
 use Spryker\Zed\ProductDiscontinued\Business\CartChangePreCheck\CartChangePreCheckInterface;
 use Spryker\Zed\ProductDiscontinued\Business\Checkout\ProductDiscontinuedCheckoutPreConditionChecker;
 use Spryker\Zed\ProductDiscontinued\Business\Checkout\ProductDiscontinuedCheckoutPreConditionCheckerInterface;
+use Spryker\Zed\ProductDiscontinued\Business\Extractor\QuoteOriginalSalesOrderItemExtractor;
+use Spryker\Zed\ProductDiscontinued\Business\Extractor\QuoteOriginalSalesOrderItemExtractorInterface;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutor;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutorInterface;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedReader;
@@ -129,6 +131,14 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
         return new ProductDiscontinuedCheckoutPreConditionChecker(
             $this->getRepository(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinued\Business\Extractor\QuoteOriginalSalesOrderItemExtractorInterface
+     */
+    public function createQuoteOriginalSalesOrderItemExtractor(): QuoteOriginalSalesOrderItemExtractorInterface
+    {
+        return new QuoteOriginalSalesOrderItemExtractor();
     }
 
     /**

@@ -14,10 +14,11 @@ interface InactiveItemsFilterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param list<string> $skusToSkip
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function filterInactiveItems(QuoteTransfer $quoteTransfer, array $skusToSkip = []): QuoteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer

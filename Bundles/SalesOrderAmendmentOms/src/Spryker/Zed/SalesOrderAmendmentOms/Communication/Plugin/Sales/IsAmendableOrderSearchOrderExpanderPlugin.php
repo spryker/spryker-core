@@ -13,6 +13,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterf
 /**
  * @method \Spryker\Zed\SalesOrderAmendmentOms\Business\SalesOrderAmendmentOmsFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesOrderAmendmentOms\SalesOrderAmendmentOmsConfig getConfig()
+ * @method \Spryker\Zed\SalesOrderAmendmentOms\Communication\SalesOrderAmendmentOmsCommunicationFactory getFactory()
  */
 class IsAmendableOrderSearchOrderExpanderPlugin extends AbstractPlugin implements SearchOrderExpanderPluginInterface
 {

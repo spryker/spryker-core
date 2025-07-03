@@ -125,6 +125,8 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
             $sellableItemsRequestTransfer->addSellableItemRequest($sellableItemRequestTransfer);
         }
 
+        $sellableItemsRequestTransfer->setQuote($quoteTransfer);
+
         return $sellableItemsRequestTransfer;
     }
 

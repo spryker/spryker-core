@@ -61,14 +61,16 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param list<string> $skusToSkip
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function filterInactiveItems(QuoteTransfer $quoteTransfer, array $skusToSkip = []): QuoteTransfer
     {
         $filteredItemTransfers = $this->filterOutInactiveItems(
             $quoteTransfer->getStore(),
             $quoteTransfer->getItems(),
+            $skusToSkip,
         );
 
         return $quoteTransfer->setItems($filteredItemTransfers);
@@ -92,11 +94,15 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param list<string> $skusToSkip
      *
      * @return \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer>
      */
-    protected function filterOutInactiveItems(StoreTransfer $storeTransfer, ArrayObject $itemTransfers): ArrayObject
-    {
+    protected function filterOutInactiveItems(
+        StoreTransfer $storeTransfer,
+        ArrayObject $itemTransfers,
+        array $skusToSkip = []
+    ): ArrayObject {
         $skus = $this->extractProductSkus($itemTransfers);
         if ($skus === []) {
             return $itemTransfers;
@@ -113,7 +119,7 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
         $filteredItemTransfers = new ArrayObject();
         $messageTransfersIndexedBySku = [];
         foreach ($itemTransfers as $key => $itemTransfer) {
-            if (!isset($indexedProductConcreteTransfers[$itemTransfer->getSku()])) {
+            if (!isset($indexedProductConcreteTransfers[$itemTransfer->getSku()]) && !in_array($itemTransfer->getSku(), $skusToSkip)) {
                 $this->addFilterMessage($itemTransfer->getSku(), $messageTransfersIndexedBySku);
 
                 continue;

@@ -276,6 +276,7 @@ class ReorderTest extends Unit
     {
         // Assert
         $this->tester->setDependency(CartReorderDependencyProvider::PLUGINS_CART_REORDER_VALIDATOR_FOR_ORDER_AMENDMENT, [$this->getCartReorderValidatorPluginMock()]);
+        $this->tester->setDependency(CartReorderDependencyProvider::PLUGINS_CART_REORDER_PRE_ADD_TO_CART_FOR_ORDER_AMENDMENT, [$this->getCartReorderPreAddToCartPluginMock()]);
 
         // Arrange
         $orderTransfer = $this->tester->createOrder();

@@ -49,12 +49,16 @@ class ProductBundleHelper extends Module
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param array $seed
+     * @param array<mixed> $seed
+     * @param array<mixed> $productConcreteSeed
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function haveProductBundle(ProductConcreteTransfer $productConcreteTransfer, array $seed = []): ProductConcreteTransfer
-    {
+    public function haveProductBundle(
+        ProductConcreteTransfer $productConcreteTransfer,
+        array $seed = [],
+        array $productConcreteSeed = []
+    ): ProductConcreteTransfer {
         $productBundleTransfer = (new ProductBundleBuilder($seed))->build();
 
         if ($productBundleTransfer->getIsNeverOutOfStock() === null) {
@@ -62,7 +66,7 @@ class ProductBundleHelper extends Module
         }
 
         if (!$productBundleTransfer->getBundledProducts()->count()) {
-            $productBundleTransfer->setBundledProducts($this->createProductForBundleTransfers());
+            $productBundleTransfer->setBundledProducts($this->createProductForBundleTransfers(3, $productConcreteSeed));
         }
 
         $productConcreteTransfer->setProductBundle($productBundleTransfer);
@@ -72,15 +76,16 @@ class ProductBundleHelper extends Module
 
     /**
      * @param int $count
+     * @param array<mixed> $productConcreteSeed
      *
      * @return \ArrayObject
      */
-    protected function createProductForBundleTransfers(int $count = 3): ArrayObject
+    protected function createProductForBundleTransfers(int $count = 3, array $productConcreteSeed = []): ArrayObject
     {
         $productForBundleTransfers = new ArrayObject();
 
         while ($count > 0) {
-            $productConcreteTransfer = $this->createProduct();
+            $productConcreteTransfer = $this->createProduct($productConcreteSeed);
 
             $productForBundleTransfer = (new ProductForBundleTransfer())
                 ->setIdProductConcrete($productConcreteTransfer->getIdProductConcrete())
@@ -95,14 +100,16 @@ class ProductBundleHelper extends Module
     }
 
     /**
+     * @param array<mixed> $productConcreteSeed
+     *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function createProduct(): ProductConcreteTransfer
+    protected function createProduct(array $productConcreteSeed = []): ProductConcreteTransfer
     {
         $currencyTransfer = $this->getCurrencyDataHelper()->haveCurrencyTransfer([CurrencyTransfer::CODE => 'EUR']);
         $storeTransfer = $this->getStoreDataHelper()->haveStore([StoreTransfer::NAME => 'DE']);
 
-        $productConcreteTransfer = $this->getProductDataHelper()->haveProduct([
+        $productConcreteTransfer = $this->getProductDataHelper()->haveProduct($productConcreteSeed ?: [
             ProductConcreteTransfer::SKU => $this->faker->slug(),
             ProductConcreteTransfer::IS_ACTIVE => true,
         ]);

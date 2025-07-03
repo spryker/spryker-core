@@ -14,10 +14,11 @@ interface InactiveProductOfferItemsFilterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param list<string> $itemProductOfferReferencesToSkipFiltering
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterInactiveProductOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function filterInactiveProductOfferItems(QuoteTransfer $quoteTransfer, array $itemProductOfferReferencesToSkipFiltering = []): QuoteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer

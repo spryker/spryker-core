@@ -13,8 +13,9 @@ interface ProductBundleCartAvailabilityCheckInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array<string, string> $skusToSkipIsActiveValidation
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer);
+    public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer, array $skusToSkipIsActiveValidation = []);
 }

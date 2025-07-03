@@ -85,6 +85,7 @@
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
         <property name="store" type="Store"/>
+        <property name="originalSalesOrderItems" type="OriginalSalesOrderItem[]" singular="originalSalesOrderItem" strict="true"/>
     </transfer>
 
     <transfer name="Store">
@@ -147,6 +148,10 @@
     <transfer name="CartReorder" strict="true">
         <property name="orderItems" type="Item[]" singular="orderItem"/>
         <property name="reorderItems" type="Item[]" singular="reorderItem"/>
+    </transfer>
+
+    <transfer name="OriginalSalesOrderItem" strict="true">
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
 </transfers>

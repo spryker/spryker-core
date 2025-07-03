@@ -15,8 +15,13 @@ interface ProductBundleCheckoutAvailabilityCheckInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param array<string, string> $skusToSkipIsActiveValidation
      *
      * @return bool
      */
-    public function checkCheckoutAvailability(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+    public function checkCheckoutAvailability(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        array $skusToSkipIsActiveValidation = []
+    );
 }
