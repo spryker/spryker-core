@@ -66,6 +66,8 @@ use SprykerFeature\Yves\SelfServicePortal\Inquiry\Reader\SspInquiryReader;
 use SprykerFeature\Yves\SelfServicePortal\Inquiry\Reader\SspInquiryReaderInterface;
 use SprykerFeature\Yves\SelfServicePortal\Reader\CompanyUserReader;
 use SprykerFeature\Yves\SelfServicePortal\Reader\CompanyUserReaderInterface;
+use SprykerFeature\Yves\SelfServicePortal\Service\Checker\AddressFormChecker;
+use SprykerFeature\Yves\SelfServicePortal\Service\Checker\AddressFormCheckerInterface;
 use SprykerFeature\Yves\SelfServicePortal\Service\Checker\ShipmentTypeChecker;
 use SprykerFeature\Yves\SelfServicePortal\Service\Checker\ShipmentTypeCheckerInterface;
 use SprykerFeature\Yves\SelfServicePortal\Service\Expander\ProductOfferExpander;
@@ -80,6 +82,7 @@ use SprykerFeature\Yves\SelfServicePortal\Service\Form\DataProvider\ServiceSearc
 use SprykerFeature\Yves\SelfServicePortal\Service\Form\DataProvider\SspServiceCancelFormDataProvider;
 use SprykerFeature\Yves\SelfServicePortal\Service\Form\ServiceItemSchedulerForm;
 use SprykerFeature\Yves\SelfServicePortal\Service\Form\ServiceSearchForm;
+use SprykerFeature\Yves\SelfServicePortal\Service\Form\SingleAddressPerShipmentTypeAddressStepForm;
 use SprykerFeature\Yves\SelfServicePortal\Service\Form\SspServiceCancelForm;
 use SprykerFeature\Yves\SelfServicePortal\Service\Grouper\AddressFormItemShipmentTypeGrouper;
 use SprykerFeature\Yves\SelfServicePortal\Service\Grouper\AddressFormItemShipmentTypeGrouperInterface;
@@ -87,6 +90,8 @@ use SprykerFeature\Yves\SelfServicePortal\Service\Grouper\ItemShipmentTypeGroupe
 use SprykerFeature\Yves\SelfServicePortal\Service\Grouper\ItemShipmentTypeGrouperInterface;
 use SprykerFeature\Yves\SelfServicePortal\Service\Handler\ServiceSearchFormHandler;
 use SprykerFeature\Yves\SelfServicePortal\Service\Handler\ServiceSearchFormHandlerInterface;
+use SprykerFeature\Yves\SelfServicePortal\Service\Handler\SingleAddressPerShipmentTypePreSubmitHandler;
+use SprykerFeature\Yves\SelfServicePortal\Service\Handler\SingleAddressPerShipmentTypePreSubmitHandlerInterface;
 use SprykerFeature\Yves\SelfServicePortal\Service\Provider\ShipmentTypeOptionsProvider;
 use SprykerFeature\Yves\SelfServicePortal\Service\Provider\ShipmentTypeOptionsProviderInterface;
 use SprykerFeature\Yves\SelfServicePortal\Service\Reader\OrderReader;
@@ -104,6 +109,7 @@ use SprykerFeature\Yves\SelfServicePortal\Service\Sorter\ShipmentTypeGroupSorter
 use SprykerFeature\Yves\SelfServicePortal\Twig\FileSizeFormatterExtension;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
@@ -770,5 +776,29 @@ class SelfServicePortalFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->getRouter(),
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
+    public function createSingleAddressPerShipmentTypeAddressStepForm(): FormTypeInterface
+    {
+        return new SingleAddressPerShipmentTypeAddressStepForm();
+    }
+
+    /**
+     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Checker\AddressFormCheckerInterface
+     */
+    public function createAddressFormChecker(): AddressFormCheckerInterface
+    {
+        return new AddressFormChecker($this->getConfig());
+    }
+
+    /**
+     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Handler\SingleAddressPerShipmentTypePreSubmitHandlerInterface
+     */
+    public function createSingleAddressPerShipmentTypePreSubmitHandler(): SingleAddressPerShipmentTypePreSubmitHandlerInterface
+    {
+        return new SingleAddressPerShipmentTypePreSubmitHandler($this->createAddressFormChecker());
     }
 }

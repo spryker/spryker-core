@@ -1,0 +1,16 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isVisible: _widget.isVisible,
+    singleAddressPerShipmentTypeFormField: _widget.singleAddressPerShipmentTypeFormField,
+} %}
+
+{% block body %}
+    {% if data.isVisible and data.singleAddressPerShipmentTypeFormField %}
+        {{ form_row(data.singleAddressPerShipmentTypeFormField, {
+            label_attr: {
+                class: 'list--inline',
+            }
+        }) }}
+    {% endif %}
+{% endblock %}

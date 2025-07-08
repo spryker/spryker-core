@@ -700,4 +700,21 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     {
         return $this->get(SelfServicePortalConstants::GOOGLE_MAPS_API_KEY);
     }
+
+    /**
+     * Specification:
+     * - Returns the shipment type keys that are applicable for single address per shipment type checkbox.
+     * - Only these shipment types will show the checkbox option in multi-shipping address forms.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getApplicableShipmentTypesForSingleAddressPerShipmentType(): array
+    {
+        return [
+            static::SHIPMENT_TYPE_DELIVERY,
+            static::SHIPMENT_TYPE_ON_SITE_SERVICE,
+        ];
+    }
 }

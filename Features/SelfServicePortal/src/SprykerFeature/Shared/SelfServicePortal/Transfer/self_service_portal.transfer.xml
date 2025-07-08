@@ -159,6 +159,7 @@
         <property name="id" type="int"/>
         <property name="sspAsset" type="SspAsset"/>
         <property name="groupKey" type="string"/>
+        <property name="isSingleAddressPerShipmentType" type="bool"/>
     </transfer>
 
     <transfer name="Service" strict="true">
@@ -448,9 +449,6 @@
 
     <transfer name="ServicePointStorage" strict="true">
         <property name="uuid" type="string"/>
-    </transfer>
-
-    <transfer name="Address">
     </transfer>
 
     <transfer name="ServicePointSearchCollection" strict="true">
@@ -1058,5 +1056,8 @@
 
     <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
         <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="Address">
     </transfer>
 </transfers>

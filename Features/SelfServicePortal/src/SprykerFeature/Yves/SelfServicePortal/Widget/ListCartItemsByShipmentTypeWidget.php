@@ -37,7 +37,7 @@ class ListCartItemsByShipmentTypeWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ListItemsByShipmentTypeWidget';
+        return 'ListCartItemsByShipmentTypeWidget';
     }
 
     /**
