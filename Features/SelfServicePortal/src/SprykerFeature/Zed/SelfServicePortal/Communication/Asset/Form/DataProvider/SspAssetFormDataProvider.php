@@ -24,6 +24,13 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 class SspAssetFormDataProvider
 {
     /**
+     * @uses \SprykerFeature\Yves\SelfServicePortal\Plugin\Router\SelfServicePortalPageRouteProviderPlugin::ROUTE_NAME_ASSET_VIEW_IMAGE
+     *
+     * @var string
+     */
+    protected const ROUTE_NAME_ASSET_VIEW_IMAGE = 'asset-image';
+
+    /**
      * @param \SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacadeInterface $sspAssetManagementFacade
      * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
      * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
@@ -147,7 +154,7 @@ class SspAssetFormDataProvider
             return null;
         }
 
-        return Url::generate('/ssp-asset-management/image', ['ssp-asset-reference' => $sspAssetTransfer->getReferenceOrFail()])->build();
+        return Url::generate(static::ROUTE_NAME_ASSET_VIEW_IMAGE, ['ssp-asset-reference' => $sspAssetTransfer->getReferenceOrFail()])->build();
     }
 
     /**
@@ -161,7 +168,11 @@ class SspAssetFormDataProvider
         foreach ($sspAssetAssignmentTransfers as $sspAssetAssignmentTransfer) {
             $companyBusinessUnitTransfer = $sspAssetAssignmentTransfer->getCompanyBusinessUnit();
             if ($companyBusinessUnitTransfer) {
-                $assignedBusinessUnits[$companyBusinessUnitTransfer->getNameOrFail()] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail();
+                $assignedBusinessUnits[sprintf(
+                    '%s (ID: %s)',
+                    $companyBusinessUnitTransfer->getNameOrFail(),
+                    $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
+                )] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail();
             }
         }
 
@@ -179,7 +190,13 @@ class SspAssetFormDataProvider
         foreach ($sspAssetAssignmentTransfers as $sspAssetAssignmentTransfer) {
             $companyBusinessUnitTransfer = $sspAssetAssignmentTransfer->getCompanyBusinessUnit();
             if ($companyBusinessUnitTransfer) {
-                $assignedCompanies[$companyBusinessUnitTransfer->getCompanyOrFail()->getNameOrFail()] = $companyBusinessUnitTransfer->getCompanyOrFail()->getIdCompanyOrFail();
+                $companyTransfer = $companyBusinessUnitTransfer->getCompanyOrFail();
+
+                $assignedCompanies[sprintf(
+                    '%s (ID: %s)',
+                    $companyTransfer->getNameOrFail(),
+                    $companyTransfer->getIdCompanyOrFail(),
+                )] = $companyTransfer->getIdCompanyOrFail();
             }
         }
 

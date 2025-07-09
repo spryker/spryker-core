@@ -9,8 +9,6 @@ namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 
 use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
 use Generated\Shared\Transfer\ProductClassCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
@@ -88,18 +86,9 @@ interface SelfServicePortalRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
      */
-    public function getFileAttachmentCollection(FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): FileAttachmentCollectionTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-     * @param array<\SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\FilePermissionQueryStrategyInterface> $queryStrategies
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer
-     */
-    public function getFileAttachmentFileCollectionAccordingToPermissions(
-        FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer,
-        array $queryStrategies
-    ): FileAttachmentFileCollectionTransfer;
+    public function getFileAttachmentCollection(
+        FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
+    ): FileAttachmentCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer

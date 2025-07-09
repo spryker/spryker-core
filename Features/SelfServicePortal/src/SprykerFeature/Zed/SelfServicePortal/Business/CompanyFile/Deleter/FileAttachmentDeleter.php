@@ -7,7 +7,7 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Deleter;
 
-use Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer;
 use Generated\Shared\Transfer\FileCollectionTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -31,23 +31,6 @@ class FileAttachmentDeleter implements FileAttachmentDeleterInterface
     /**
      * @param \Generated\Shared\Transfer\FileCollectionTransfer $fileCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\FileCollectionTransfer
-     */
-    public function deleteFileAttachmentsByFileCollection(FileCollectionTransfer $fileCollectionTransfer): FileCollectionTransfer
-    {
-        $fileIds = $this->extractFileIds($fileCollectionTransfer);
-
-        $this->deleteFileAttachmentCollection(
-            (new FileAttachmentCollectionDeleteCriteriaTransfer())
-                ->setFileIds($fileIds),
-        );
-
-        return $fileCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileCollectionTransfer $fileCollectionTransfer
-     *
      * @return list<int>
      */
     protected function extractFileIds(FileCollectionTransfer $fileCollectionTransfer): array
@@ -62,15 +45,17 @@ class FileAttachmentDeleter implements FileAttachmentDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer $fileAttachmentCollectionDeleteCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer
      */
     public function deleteFileAttachmentCollection(
-        FileAttachmentCollectionDeleteCriteriaTransfer $fileAttachmentCollectionDeleteCriteriaTransfer
+        FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
     ): FileAttachmentCollectionResponseTransfer {
-        $this->getTransactionHandler()->handleTransaction(function () use ($fileAttachmentCollectionDeleteCriteriaTransfer): void {
-            $this->entityManager->deleteFileAttachmentCollection($fileAttachmentCollectionDeleteCriteriaTransfer);
+        $this->getTransactionHandler()->handleTransaction(function () use ($fileAttachmentCollectionRequestTransfer): void {
+            foreach ($fileAttachmentCollectionRequestTransfer->getFileAttachmentsToDelete() as $fileAttachmentToDelete) {
+                $this->entityManager->deleteFileAttachmentCollection($fileAttachmentToDelete);
+            }
         });
 
         return new FileAttachmentCollectionResponseTransfer();

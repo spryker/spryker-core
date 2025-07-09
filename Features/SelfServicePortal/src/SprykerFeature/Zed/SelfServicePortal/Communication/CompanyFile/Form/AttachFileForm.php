@@ -193,7 +193,7 @@ class AttachFileForm extends AbstractType
 
                 $choices = [];
                 foreach ($companyTransfers as $companyTransfer) {
-                    $choices[$companyTransfer->getNameOrFail()] = $companyTransfer->getIdCompanyOrFail();
+                    $choices[sprintf('%s (ID: %s)', $companyTransfer->getNameOrFail(), $companyTransfer->getIdCompanyOrFail())] = $companyTransfer->getIdCompanyOrFail();
                 }
 
                 /** @var \Symfony\Component\Form\FormInterface $form */
@@ -258,7 +258,7 @@ class AttachFileForm extends AbstractType
 
                 $choices = [];
                 foreach ($companyBusinessUnitTransfers as $companyBusinessUnitTransfer) {
-                    $choices[$companyBusinessUnitTransfer->getNameOrFail()] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail();
+                    $choices[sprintf('%s (ID: %s)', $companyBusinessUnitTransfer->getNameOrFail(), $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail())] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail();
                 }
 
                 /** @var \Symfony\Component\Form\FormInterface $form */

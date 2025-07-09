@@ -7,7 +7,6 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 
-use Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileCollectionTransfer;
 use Generated\Shared\Transfer\ProductClassTransfer;
@@ -60,12 +59,12 @@ interface SelfServicePortalEntityManagerInterface
     public function saveSalesOrderItemProductClass(int $idSalesOrderItem, ProductClassTransfer $productClassTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer $fileAttachmentCollectionDeleteCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
      *
      * @return void
      */
     public function deleteFileAttachmentCollection(
-        FileAttachmentCollectionDeleteCriteriaTransfer $fileAttachmentCollectionDeleteCriteriaTransfer
+        FileAttachmentTransfer $fileAttachmentTransfer
     ): void;
 
     /**

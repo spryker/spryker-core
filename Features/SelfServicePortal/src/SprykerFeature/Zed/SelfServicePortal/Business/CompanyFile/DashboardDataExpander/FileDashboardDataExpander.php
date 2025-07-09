@@ -10,12 +10,10 @@ namespace SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\DashboardDat
 use Generated\Shared\Transfer\DashboardComponentFilesTransfer;
 use Generated\Shared\Transfer\DashboardRequestTransfer;
 use Generated\Shared\Transfer\DashboardResponseTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileConditionsTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileSearchConditionsTransfer;
+use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentSearchConditionsTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\SortTransfer;
-use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig as SharedSelfServicePortalConfig;
 use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Reader\CompanyFileReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
@@ -41,12 +39,12 @@ class FileDashboardDataExpander implements FileDashboardDataExpanderInterface
         DashboardResponseTransfer $dashboardResponseTransfer,
         DashboardRequestTransfer $dashboardRequestTransfer
     ): DashboardResponseTransfer {
-        $fileAttachmentFileCriteriaTransfer = $this->createFileAttachmentFileCriteriaTransfer($dashboardRequestTransfer);
+        $fileAttachmentCriteriaTransfer = $this->createFileAttachmentCriteriaTransfer($dashboardRequestTransfer);
 
-        $fileAttachmentFileCollectionTransfer = $this->fileReader->getFileAttachmentFileCollectionAccordingToPermissions($fileAttachmentFileCriteriaTransfer);
+        $fileAttachmentCollectionTransfer = $this->fileReader->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
 
         $dashboardComponentFilesTransfer = (new DashboardComponentFilesTransfer())
-            ->setFileAttachmentFileCollection($fileAttachmentFileCollectionTransfer);
+            ->setFileAttachmentCollection($fileAttachmentCollectionTransfer);
 
         return $dashboardResponseTransfer->setDashboardComponentFiles($dashboardComponentFilesTransfer);
     }
@@ -54,21 +52,14 @@ class FileDashboardDataExpander implements FileDashboardDataExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\DashboardRequestTransfer $dashboardRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer
+     * @return \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer
      */
-    protected function createFileAttachmentFileCriteriaTransfer(
+    protected function createFileAttachmentCriteriaTransfer(
         DashboardRequestTransfer $dashboardRequestTransfer
-    ): FileAttachmentFileCriteriaTransfer {
-        return (new FileAttachmentFileCriteriaTransfer())
-            ->setFileAttachmentFileSearchConditions(
-                (new FileAttachmentFileSearchConditionsTransfer()),
-            )
-            ->setFileAttachmentFileConditions(
-                (new FileAttachmentFileConditionsTransfer())->setEntityTypes([
-                    SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT,
-                    SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY,
-                    SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER,
-                ]),
+    ): FileAttachmentCriteriaTransfer {
+        return (new FileAttachmentCriteriaTransfer())
+            ->setFileAttachmentSearchConditions(
+                (new FileAttachmentSearchConditionsTransfer()),
             )
             ->setPagination(
                 (new PaginationTransfer())
@@ -80,6 +71,10 @@ class FileDashboardDataExpander implements FileDashboardDataExpanderInterface
                 (new SortTransfer())
                     ->setField($this->config->getDefaultFileDashboardSortField())
                     ->setIsAscending($this->config->isDefaultFileDashboardSortAscending()),
-            );
+            )
+            ->setWithCompanyRelation(true)
+            ->setWithBusinessUnitRelation(true)
+            ->setWithCompanyUserRelation(true)
+            ->setWithSspAssetRelation(true);
     }
 }

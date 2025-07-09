@@ -8,7 +8,7 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form;
 
 use DateTime;
-use Generated\Shared\Transfer\FileAttachmentFileTableCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentTableCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -93,7 +93,7 @@ class FileTableFilterForm extends AbstractType
 
         $resolver->setDefaults([
             'csrf_protection' => false,
-            'data_class' => FileAttachmentFileTableCriteriaTransfer::class,
+            'data_class' => FileAttachmentTableCriteriaTransfer::class,
         ]);
     }
 

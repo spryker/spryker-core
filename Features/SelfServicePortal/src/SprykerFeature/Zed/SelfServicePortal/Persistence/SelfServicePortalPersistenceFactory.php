@@ -29,20 +29,14 @@ use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Oms\Business\OmsFacadeInterface;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\CompanyBusinessUnitFileMapper;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\CompanyFileMapper;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\CompanyUserFileMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\FileMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\ProductClassMapper;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspAssetFileMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspAssetMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspInquiryMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspInquiryMapperInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspServiceMapper;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\CompanyBusinessUnitFileSaver;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\CompanyFileSaver;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\CompanyUserFileSaver;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\SspAssetFileSaver;
+use SprykerFeature\Zed\SelfServicePortal\Persistence\QueryBuilder\FileAttachmentQueryBuilder;
+use SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\FileAttachmentSaver;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalDependencyProvider;
 
 /**
@@ -178,51 +172,6 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return array<\SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\FileAttachmentSaverInterface>
-     */
-    public function createFileAttachmentSavers(): array
-    {
-        return [
-            $this->createCompanyFileSaver(),
-            $this->createCompanyUserFileSaver(),
-            $this->createCompanyBusinessUnitFileSaver(),
-            $this->createSspAssetFileSaver(),
-        ];
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\CompanyFileSaver
-     */
-    public function createCompanyFileSaver(): CompanyFileSaver
-    {
-        return new CompanyFileSaver($this->createCompanyFileQuery());
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\CompanyUserFileSaver
-     */
-    public function createCompanyUserFileSaver(): CompanyUserFileSaver
-    {
-        return new CompanyUserFileSaver($this->createCompanyUserFileQuery());
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\CompanyBusinessUnitFileSaver
-     */
-    public function createCompanyBusinessUnitFileSaver(): CompanyBusinessUnitFileSaver
-    {
-        return new CompanyBusinessUnitFileSaver($this->createCompanyBusinessUnitFileQuery());
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\SspAssetFileSaver
-     */
-    public function createSspAssetFileSaver(): SspAssetFileSaver
-    {
-        return new SspAssetFileSaver($this->createSspAssetFileQuery());
-    }
-
-    /**
      * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspServiceMapper
      */
     public function createSspServiceMapper(): SspServiceMapper
@@ -239,43 +188,32 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\CompanyFileMapper
-     */
-    public function createCompanyFileMapper(): CompanyFileMapper
-    {
-        return new CompanyFileMapper();
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\CompanyUserFileMapper
-     */
-    public function createCompanyUserFileMapper(): CompanyUserFileMapper
-    {
-        return new CompanyUserFileMapper();
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspAssetFileMapper
-     */
-    public function createSspAssetFileMapper(): SspAssetFileMapper
-    {
-        return new SspAssetFileMapper();
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\CompanyBusinessUnitFileMapper
-     */
-    public function createCompanyBusinessUnitFileMapper(): CompanyBusinessUnitFileMapper
-    {
-        return new CompanyBusinessUnitFileMapper();
-    }
-
-    /**
      * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\FileMapper
      */
     public function createFileMapper(): FileMapper
     {
         return new FileMapper();
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\QueryBuilder\FileAttachmentQueryBuilder
+     */
+    public function createFileAttachmentQueryBuilder(): FileAttachmentQueryBuilder
+    {
+        return new FileAttachmentQueryBuilder();
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\FileAttachmentSaver
+     */
+    public function createFileAttachmentSaver(): FileAttachmentSaver
+    {
+        return new FileAttachmentSaver(
+            $this->createCompanyFileQuery(),
+            $this->createCompanyBusinessUnitFileQuery(),
+            $this->createCompanyUserFileQuery(),
+            $this->createSspAssetFileQuery(),
+        );
     }
 
     /**

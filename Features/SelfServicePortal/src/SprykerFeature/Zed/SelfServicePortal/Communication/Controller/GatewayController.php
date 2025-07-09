@@ -9,8 +9,8 @@ namespace SprykerFeature\Zed\SelfServicePortal\Communication\Controller;
 
 use Generated\Shared\Transfer\DashboardRequestTransfer;
 use Generated\Shared\Transfer\DashboardResponseTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
+use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
@@ -45,14 +45,14 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer
+     * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
      */
-    public function getFileAttachmentFileCollectionAccordingToPermissionsAction(
-        FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-    ): FileAttachmentFileCollectionTransfer {
-        return $this->getFacade()->getFileAttachmentFileCollectionAccordingToPermissions($fileAttachmentFileCriteriaTransfer);
+    public function getFileAttachmentCollectionAction(
+        FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
+    ): FileAttachmentCollectionTransfer {
+        return $this->getFacade()->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
     }
 
     /**

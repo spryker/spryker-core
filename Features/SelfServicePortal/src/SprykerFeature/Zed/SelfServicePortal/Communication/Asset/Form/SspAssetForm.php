@@ -633,7 +633,11 @@ class SspAssetForm extends AbstractType
         foreach ($sspAssetAssignmentTransfers as $sspAssetAssignmentTransfer) {
             $companyBusinessUnitTransfer = $sspAssetAssignmentTransfer->getCompanyBusinessUnit();
             if ($companyBusinessUnitTransfer) {
-                $businessUnitIds[$companyBusinessUnitTransfer->getNameOrFail()] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail();
+                $businessUnitIds[sprintf(
+                    '%s (ID: %s)',
+                    $companyBusinessUnitTransfer->getNameOrFail(),
+                    $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
+                )] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail();
             }
         }
 
@@ -656,7 +660,12 @@ class SspAssetForm extends AbstractType
         foreach ($sspAssetAssignmentTransfers as $sspAssetAssignmentTransfer) {
             $companyBusinessUnitTransfer = $sspAssetAssignmentTransfer->getCompanyBusinessUnit();
             if ($companyBusinessUnitTransfer) {
-                $companyIds[$companyBusinessUnitTransfer->getCompanyOrFail()->getNameOrFail()] = $companyBusinessUnitTransfer->getCompanyOrFail()->getIdCompanyOrFail();
+                $companyTransfer = $companyBusinessUnitTransfer->getCompanyOrFail();
+                $companyIds[sprintf(
+                    '%s (ID: %s)',
+                    $companyTransfer->getNameOrFail(),
+                    $companyTransfer->getIdCompanyOrFail(),
+                )] = $companyTransfer->getIdCompanyOrFail();
             }
         }
 

@@ -105,7 +105,7 @@
 
         {% block tables %}
             {% set inquiryCollection = data.dashboard.dashboardComponentInquiry is not empty ? data.dashboard.dashboardComponentInquiry.sspInquiryCollection : null %}
-            {% set fileAttachmentFileCollection = data.dashboard.dashboardComponentFiles ? data.dashboard.dashboardComponentFiles.fileAttachmentFileCollection : null %}
+            {% set fileAttachmentCollection = data.dashboard.dashboardComponentFiles ? data.dashboard.dashboardComponentFiles.fileAttachmentCollection : null %}
 
             {% block inquiries %}
                 {% widget 'SspInquiryListWidget' args [inquiryCollection] only %}{% endwidget %}
@@ -113,7 +113,7 @@
 
             {% block files %}
                 {% if can('ViewCompanyFilesPermissionPlugin') or can('ViewCompanyUserFilesPermissionPlugin') or can('ViewCompanyBusinessUnitFilesPermissionPlugin') %}
-                    {% widget 'SspFileListWidget' args [fileAttachmentFileCollection] only %}{% endwidget %}
+                    {% widget 'SspFileListWidget' args [fileAttachmentCollection] only %}{% endwidget %}
                 {% endif %}
             {% endblock %}
         {% endblock %}

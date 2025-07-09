@@ -7,8 +7,8 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Communication;
 
-use Generated\Shared\Transfer\FileAttachmentFileTableCriteriaTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentTableCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -47,6 +47,7 @@ use Spryker\Zed\ShipmentType\Business\ShipmentTypeFacadeInterface;
 use Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Spryker\Zed\Translator\Business\TranslatorFacadeInterface;
+use Spryker\Zed\User\Business\UserFacadeInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\SspAssetItemExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\SspAssetItemExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Expander\OrderItemSspAssetExpander;
@@ -412,38 +413,38 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentFileTableCriteriaTransfer $fileAttachmentFileTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer
      *
      * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\FileTable
      */
     public function createFileTable(
-        FileAttachmentFileTableCriteriaTransfer $fileAttachmentFileTableCriteriaTransfer
+        FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer
     ): FileTable {
         return new FileTable(
             $this->getFilePropelQuery(),
             $this->createFileSizeFormatter(),
             $this->getDateTimeService(),
             $this->createTimeZoneFormatter(),
-            $fileAttachmentFileTableCriteriaTransfer,
+            $fileAttachmentTableCriteriaTransfer,
         );
     }
 
     /**
      * @param int $idFile
-     * @param \Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
      *
      * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\ViewFileDetailTable
      */
     public function createViewFileDetailTable(
         int $idFile,
-        FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+        FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ): ViewFileDetailTable {
         return new ViewFileDetailTable(
             $this->getFilePropelQuery(),
             $idFile,
             $this->getDateTimeService(),
             $this->createTimeZoneFormatter(),
-            $fileAttachmentFileViewDetailTableCriteriaTransfer,
+            $fileAttachmentViewDetailTableCriteriaTransfer,
         );
     }
 
@@ -519,18 +520,18 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentFileTableCriteriaTransfer $fileAttachmentFileTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createFileTableFilterForm(
-        FileAttachmentFileTableCriteriaTransfer $fileAttachmentFileTableCriteriaTransfer
+        FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer
     ): FormInterface {
         $dataProvider = $this->createFileTableFilterFormDataProvider();
 
         return $this->getFormFactory()->create(
             FileTableFilterForm::class,
-            $fileAttachmentFileTableCriteriaTransfer,
+            $fileAttachmentTableCriteriaTransfer,
             $dataProvider->getOptions(),
         );
     }
@@ -557,18 +558,18 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createViewFileDetailTableFilterForm(
-        FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+        FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ): FormInterface {
         $dataProvider = $this->createViewFileDetailTableFilterFormDataProvider();
 
         return $this->getFormFactory()->create(
             ViewFileDetailTableFilterForm::class,
-            $fileAttachmentFileViewDetailTableCriteriaTransfer,
+            $fileAttachmentViewDetailTableCriteriaTransfer,
             $dataProvider->getOptions(),
         );
     }
@@ -996,6 +997,14 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     public function getCompanyUserFacade(): CompanyUserFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_COMPANY_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\User\Business\UserFacadeInterface
+     */
+    public function getUserFacade(): UserFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_USER);
     }
 
     /**

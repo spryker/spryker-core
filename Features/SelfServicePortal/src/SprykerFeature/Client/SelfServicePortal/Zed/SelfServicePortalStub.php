@@ -9,8 +9,8 @@ namespace SprykerFeature\Client\SelfServicePortal\Zed;
 
 use Generated\Shared\Transfer\DashboardRequestTransfer;
 use Generated\Shared\Transfer\DashboardResponseTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
+use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
@@ -93,22 +93,22 @@ class SelfServicePortalStub implements SelfServicePortalStubInterface
     }
 
     /**
-     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\GatewayController::getFileAttachmentFileCollectionAccordingToPermissionsAction()
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\GatewayController::getFileAttachmentCollectionAccordingToPermissionsAction()
      *
-     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer
+     * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
      */
-    public function getFileAttachmentFileCollectionAccordingToPermissions(
-        FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-    ): FileAttachmentFileCollectionTransfer {
-        /** @var \Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer $fileAttachmentFileCollectionTransfer */
-        $fileAttachmentFileCollectionTransfer = $this->zedRequestClient->call(
-            '/self-service-portal/gateway/get-file-attachment-file-collection-according-to-permissions',
-            $fileAttachmentFileCriteriaTransfer,
+    public function getFileAttachmentCollection(
+        FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
+    ): FileAttachmentCollectionTransfer {
+        /** @var \Generated\Shared\Transfer\FileAttachmentCollectionTransfer $fileAttachmentCollectionTransfer */
+        $fileAttachmentCollectionTransfer = $this->zedRequestClient->call(
+            '/self-service-portal/gateway/get-file-attachment-collection',
+            $fileAttachmentCriteriaTransfer,
         );
 
-        return $fileAttachmentFileCollectionTransfer;
+        return $fileAttachmentCollectionTransfer;
     }
 
     /**

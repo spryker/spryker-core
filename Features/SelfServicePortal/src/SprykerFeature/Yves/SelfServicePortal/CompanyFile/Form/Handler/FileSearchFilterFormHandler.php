@@ -9,15 +9,15 @@ namespace SprykerFeature\Yves\SelfServicePortal\CompanyFile\Form\Handler;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CriteriaRangeFilterTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileConditionsTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileSearchConditionsTransfer;
+use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
+use Generated\Shared\Transfer\FileAttachmentConditionsTransfer;
+use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentSearchConditionsTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\SortTransfer;
 use SprykerFeature\Client\SelfServicePortal\SelfServicePortalClientInterface;
-use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig as SharedSelfServicePortalConfig;
+use SprykerFeature\Yves\SelfServicePortal\CompanyFile\Form\DataProvider\FileSearchFilterFormDataProvider;
 use SprykerFeature\Yves\SelfServicePortal\CompanyFile\Form\FileSearchFilterForm;
 use SprykerFeature\Yves\SelfServicePortal\CompanyFile\Form\FileSearchFilterSubForm;
 use SprykerFeature\Yves\SelfServicePortal\CompanyFile\Formatter\TimeZoneFormatterInterface;
@@ -61,109 +61,117 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $fileSearchFilterForm
      *
-     * @return \Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer
+     * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
      */
     public function handleSearchFormSubmit(
         Request $request,
         FormInterface $fileSearchFilterForm
-    ): FileAttachmentFileCollectionTransfer {
-        $fileAttachmentFileCriteriaTransfer = $this->getFileAttachmentFileCriteriaTransfer($request);
-
-        $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()->setEntityTypes([
-            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT,
-            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY,
-            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER,
-        ]);
+    ): FileAttachmentCollectionTransfer {
+        $fileAttachmentCriteriaTransfer = $this->getFileAttachmentCriteriaTransfer($request);
 
         $data = $request->query->all()[FileSearchFilterForm::FORM_NAME] ?? [];
         $isReset = $data[FileSearchFilterForm::FIELD_RESET] ?? null;
 
         if ($isReset) {
-            return $this->getFileAttachmentFileCollection($fileAttachmentFileCriteriaTransfer);
+            return $this->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
         }
 
         if ($request->query->has(static::QUERY_PARAM_SSP_ASSET_REFERENCE)) {
-            $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()->addAssetReference(
-                (string)$request->query->get(static::QUERY_PARAM_SSP_ASSET_REFERENCE),
-            )->setEntityTypes([SharedSelfServicePortalConfig::ENTITY_TYPE_SSP_ASSET]);
+            $fileAttachmentCriteriaTransfer
+                ->getFileAttachmentConditionsOrFail()->addAssetReference(
+                    (string)$request->query->get(static::QUERY_PARAM_SSP_ASSET_REFERENCE),
+                );
+            $fileAttachmentCriteriaTransfer->setWithSspAssetRelation(true);
         }
 
         $fileSearchFilterForm->handleRequest($request);
+
         if (!$fileSearchFilterForm->isSubmitted() || !$fileSearchFilterForm->isValid()) {
-            return $this->getFileAttachmentFileCollection($fileAttachmentFileCriteriaTransfer);
+            $fileAttachmentCriteriaTransfer
+                ->setWithCompanyRelation(true)
+                ->setWithBusinessUnitRelation(true)
+                ->setWithCompanyUserRelation(true)
+                ->setWithSspAssetRelation(true);
+
+            return $this->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
         }
 
-        $fileAttachmentFileCriteriaTransfer = $this->applyFormFilters(
+        $fileAttachmentCriteriaTransfer = $this->applyFormFilters(
             $fileSearchFilterForm->getData(),
-            $fileAttachmentFileCriteriaTransfer,
+            $fileAttachmentCriteriaTransfer,
         );
 
-        return $this->getFileAttachmentFileCollection($fileAttachmentFileCriteriaTransfer);
+        return $this->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer
+     * @return \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer
      */
-    protected function getFileAttachmentFileCriteriaTransfer(Request $request): FileAttachmentFileCriteriaTransfer
+    protected function getFileAttachmentCriteriaTransfer(Request $request): FileAttachmentCriteriaTransfer
     {
-        $fileAttachmentFileConditionsTransfer = (new FileAttachmentFileConditionsTransfer())
+        $fileAttachmentConditionsTransfer = (new FileAttachmentConditionsTransfer())
             ->setRangeCreatedAt(new CriteriaRangeFilterTransfer());
 
         $sortTransfer = (new SortTransfer())
             ->setField(FileTransfer::ID_FILE)
             ->setIsAscending(false);
 
-        return (new FileAttachmentFileCriteriaTransfer())
+        return (new FileAttachmentCriteriaTransfer())
             ->setCompanyUser($this->companyUserReader->getCurrentCompanyUser())
-            ->setFileAttachmentFileConditions($fileAttachmentFileConditionsTransfer)
+            ->setFileAttachmentConditions($fileAttachmentConditionsTransfer)
             ->setPagination($this->getPaginationTransfer($request))
-            ->setFileAttachmentFileSearchConditions(new FileAttachmentFileSearchConditionsTransfer())
+            ->setFileAttachmentSearchConditions(new FileAttachmentSearchConditionsTransfer())
             ->addSort($sortTransfer);
     }
 
     /**
      * @param array<string, mixed> $fileSearchFilterFormData
-     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer
+     * @return \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer
      */
     protected function applyFormFilters(
         array $fileSearchFilterFormData,
-        FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-    ): FileAttachmentFileCriteriaTransfer {
+        FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
+    ): FileAttachmentCriteriaTransfer {
         $filterData = $fileSearchFilterFormData[FileSearchFilterForm::FIELD_FILTERS];
 
         $fileTypes = $filterData[FileSearchFilterSubForm::FIELD_TYPE] ?? null;
         $searchString = $filterData[FileSearchFilterSubForm::FIELD_SEARCH] ?? null;
-        $entityTypes = $filterData[FileSearchFilterSubForm::FIELD_ACCESS_LEVEL] ?? null;
+        $businessUnitEntity = $filterData[FileSearchFilterSubForm::FIELD_BUSINESS_ENTITY] ?? null;
+        $sspAssetUnitEntity = $filterData[FileSearchFilterSubForm::FIELD_SSP_ASSET_ENTITY] ?? null;
         $dateFrom = $filterData[FileSearchFilterSubForm::FIELD_DATE_FROM] ?? null;
         $dateTo = $filterData[FileSearchFilterSubForm::FIELD_DATE_TO] ?? null;
         $orderBy = $fileSearchFilterFormData[FileSearchFilterForm::FIELD_ORDER_BY] ?? null;
         $orderDirection = $fileSearchFilterFormData[FileSearchFilterForm::FIELD_ORDER_DIRECTION] ?? static::DEFAULT_ORDER_DIRECTION;
 
         if ($fileTypes) {
-            $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()
+            $fileAttachmentCriteriaTransfer->getFileAttachmentConditionsOrFail()
                 ->setFileTypes([$fileTypes]);
         }
 
-        $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileSearchConditionsOrFail()
+        $fileAttachmentCriteriaTransfer->getFileAttachmentSearchConditionsOrFail()
             ->setSearchString($searchString);
 
-        if ($entityTypes) {
-            $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()
-                ->setEntityTypes([$entityTypes]);
-        }
+        $fileAttachmentCriteriaTransfer = $this->applyBusinessUnitEntityFilter(
+            $businessUnitEntity,
+            $fileAttachmentCriteriaTransfer,
+        );
+        $fileAttachmentCriteriaTransfer = $this->applySspAssetUnitEntityFilter(
+            $sspAssetUnitEntity,
+            $fileAttachmentCriteriaTransfer,
+        );
 
         if ($dateFrom) {
-            $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()
+            $fileAttachmentCriteriaTransfer->getFileAttachmentConditionsOrFail()
                 ->getRangeCreatedAtOrFail()
                 ->setFrom($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($dateFrom));
         }
 
         if ($dateTo) {
-            $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()
+            $fileAttachmentCriteriaTransfer->getFileAttachmentConditionsOrFail()
                 ->getRangeCreatedAtOrFail()
                 ->setTo($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($dateTo));
         }
@@ -173,10 +181,10 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
                 ->setField($orderBy)
                 ->setIsAscending($orderDirection === static::DEFAULT_ORDER_DIRECTION);
 
-            $fileAttachmentFileCriteriaTransfer->setSortCollection(new ArrayObject([$sortTransfer]));
+            $fileAttachmentCriteriaTransfer->setSortCollection(new ArrayObject([$sortTransfer]));
         }
 
-        return $fileAttachmentFileCriteriaTransfer;
+        return $fileAttachmentCriteriaTransfer;
     }
 
     /**
@@ -195,13 +203,105 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer
+     * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
      */
-    protected function getFileAttachmentFileCollection(
-        FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-    ): FileAttachmentFileCollectionTransfer {
-        return $this->selfServicePortalClient->getFileAttachmentFileCollectionAccordingToPermissions($fileAttachmentFileCriteriaTransfer);
+    protected function getFileAttachmentCollection(
+        FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
+    ): FileAttachmentCollectionTransfer {
+        return $this->selfServicePortalClient->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
+    }
+
+    /**
+     * @param string|null $businessUnitEntity
+     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer
+     */
+    protected function applyBusinessUnitEntityFilter(
+        ?string $businessUnitEntity,
+        FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
+    ): FileAttachmentCriteriaTransfer {
+        if (!$businessUnitEntity) {
+            return $fileAttachmentCriteriaTransfer;
+        }
+
+        if (!$fileAttachmentCriteriaTransfer->getFileAttachmentConditions()) {
+            $fileAttachmentCriteriaTransfer->setFileAttachmentConditions(new FileAttachmentConditionsTransfer());
+        }
+
+        match ($businessUnitEntity) {
+            FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_COMPANY_USER => $fileAttachmentCriteriaTransfer->setWithCompanyUserRelation(true),
+            FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_COMPANY => $fileAttachmentCriteriaTransfer
+                ->setWithCompanyRelation(true)
+                ->setWithBusinessUnitRelation(true)
+                ->setWithCompanyUserRelation(true),
+            FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_NONE => $fileAttachmentCriteriaTransfer,
+            FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_ALL => $fileAttachmentCriteriaTransfer
+                ->setWithCompanyUserRelation(true)
+                ->setWithBusinessUnitRelation(true)
+                ->setWithCompanyRelation(true),
+            default =>
+            $fileAttachmentCriteriaTransfer
+                ->setWithBusinessUnitRelation(true),
+        };
+
+        if (
+            !in_array($businessUnitEntity, [
+            FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_COMPANY_USER,
+            FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_COMPANY,
+            FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_NONE,
+            FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_ALL,
+            ])
+        ) {
+            $fileAttachmentCriteriaTransfer
+                ->getFileAttachmentConditionsOrFail()
+                ->addBusinessUnitUuid($businessUnitEntity);
+        }
+
+        return $fileAttachmentCriteriaTransfer;
+    }
+
+    /**
+     * @param string|null $sspAssetEntity
+     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer
+     */
+    protected function applySspAssetUnitEntityFilter(
+        ?string $sspAssetEntity,
+        FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
+    ): FileAttachmentCriteriaTransfer {
+        if (!$sspAssetEntity) {
+            return $fileAttachmentCriteriaTransfer;
+        }
+
+        if (!$fileAttachmentCriteriaTransfer->getFileAttachmentConditions()) {
+            $fileAttachmentCriteriaTransfer->setFileAttachmentConditions(new FileAttachmentConditionsTransfer());
+        }
+
+        match ($sspAssetEntity) {
+            FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_SSP_ASSET => $fileAttachmentCriteriaTransfer->setWithSspAssetRelation(true),
+            FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_NONE => $fileAttachmentCriteriaTransfer,
+            FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_ALL => $fileAttachmentCriteriaTransfer
+                ->setWithSspAssetRelation(true),
+            default => $fileAttachmentCriteriaTransfer
+                ->setWithSspAssetRelation(true),
+        };
+
+        if (
+            !in_array($sspAssetEntity, [
+                FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_SSP_ASSET,
+                FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_NONE,
+                FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_ALL,
+            ])
+        ) {
+            $fileAttachmentCriteriaTransfer
+                ->getFileAttachmentConditionsOrFail()
+                ->addAssetReference($sspAssetEntity);
+        }
+
+        return $fileAttachmentCriteriaTransfer;
     }
 }

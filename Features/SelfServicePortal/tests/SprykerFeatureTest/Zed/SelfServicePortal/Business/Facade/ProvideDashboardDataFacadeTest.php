@@ -12,14 +12,14 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\DashboardRequestTransfer;
 use Generated\Shared\Transfer\DashboardResponseTransfer;
-use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemWriterPlugin;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Shared\FileSystem\FileSystemConstants;
+use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewBusinessUnitSspAssetPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewCompanyBusinessUnitFilesPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewCompanyFilesPermissionPlugin;
+use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewCompanySspAssetPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewCompanyUserFilesPermissionPlugin;
-use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\SspDashboardManagement\SspFileDashboardDataExpanderPlugin;
 use SprykerFeatureTest\Zed\SelfServicePortal\SelfServicePortalBusinessTester;
 
@@ -93,18 +93,25 @@ class ProvideDashboardDataFacadeTest extends Unit
         $companyUserTransfer = $this->tester->haveCompanyUser(
             [
                 CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+                CompanyUserTransfer::COMPANY => $companyTransfer,
                 CompanyUserTransfer::CUSTOMER => $customerTransfer,
             ],
         );
 
-        $this->tester->haveFileAttachment([
-            FileAttachmentTransfer::FILE => $fileTransfer,
-            FileAttachmentTransfer::ENTITY_ID => $companyUserTransfer->getIdCompanyUser(),
-            FileAttachmentTransfer::ENTITY_NAME => SelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER,
+        $this->tester->haveCompanyUserFileAttachment([
+            'idFile' => $fileTransfer->getIdFileOrFail(),
+            'idCompanyUser' => $companyUserTransfer->getIdCompanyUserOrFail(),
         ]);
 
         $dashboardRequestTransfer = (new DashboardRequestTransfer())
             ->setCompanyUser($companyUserTransfer);
+
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            'fkCompany' => $companyTransfer->getIdCompanyOrFail(),
+            'company' => $companyTransfer,
+        ]);
+
+        $companyUserTransfer->setCompanyBusinessUnit($businessUnitTransfer);
         $dashboardResponseTransfer = (new DashboardResponseTransfer());
 
         // Act
@@ -112,7 +119,7 @@ class ProvideDashboardDataFacadeTest extends Unit
 
         // Assert
         $this->assertIsObject($actualDashboardResponseTransfer->getDashboardComponentFiles());
-        $this->assertCount(1, $actualDashboardResponseTransfer->getDashboardComponentFiles()->getFileAttachmentFileCollection()->getFileAttachments());
+        $this->assertCount(1, $actualDashboardResponseTransfer->getDashboardComponentFiles()->getFileAttachmentCollection()->getFileAttachments());
     }
 
     /**
@@ -125,6 +132,8 @@ class ProvideDashboardDataFacadeTest extends Unit
             new ViewCompanyFilesPermissionPlugin(),
             new ViewCompanyBusinessUnitFilesPermissionPlugin(),
             new ViewCompanyUserFilesPermissionPlugin(),
+            new ViewCompanySspAssetPermissionPlugin(),
+            new ViewBusinessUnitSspAssetPermissionPlugin(),
         ]);
 
         $companyTransfer = $this->tester->haveCompany();
@@ -133,14 +142,21 @@ class ProvideDashboardDataFacadeTest extends Unit
         $companyUserTransfer = $this->tester->haveCompanyUser(
             [
                 CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+                CompanyUserTransfer::COMPANY => $companyTransfer,
                 CompanyUserTransfer::CUSTOMER => (new CustomerTransfer())->setEmail('test@test.test'),
             ],
         );
 
-        $this->tester->haveFileAttachment([
-            FileAttachmentTransfer::FILE => $fileTransfer,
-            FileAttachmentTransfer::ENTITY_ID => $companyTransfer->getIdCompany(),
-            FileAttachmentTransfer::ENTITY_NAME => SelfServicePortalConfig::ENTITY_TYPE_COMPANY,
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            'fkCompany' => $companyTransfer->getIdCompanyOrFail(),
+            'company' => $companyTransfer,
+        ]);
+
+        $companyUserTransfer->setCompanyBusinessUnit($businessUnitTransfer);
+
+        $this->tester->haveCompanyFileAttachment([
+            'idFile' => $fileTransfer->getIdFileOrFail(),
+            'idCompany' => $companyTransfer->getIdCompanyOrFail(),
         ]);
 
         $dashboardRequestTransfer = (new DashboardRequestTransfer())
@@ -152,6 +168,6 @@ class ProvideDashboardDataFacadeTest extends Unit
 
         // Assert
         $this->assertIsObject($actualDashboardResponseTransfer->getDashboardComponentFiles());
-        $this->assertCount(0, $actualDashboardResponseTransfer->getDashboardComponentFiles()->getFileAttachmentFileCollection()->getFileAttachments());
+        $this->assertCount(0, $actualDashboardResponseTransfer->getDashboardComponentFiles()->getFileAttachmentCollection()->getFileAttachments());
     }
 }

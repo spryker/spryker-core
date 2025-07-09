@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductClassCollectionTransfer;
@@ -27,9 +25,7 @@ use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
-use Orm\Zed\FileManager\Persistence\Map\SpyFileInfoTableMap;
 use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
-use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemMetadataTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
@@ -44,7 +40,6 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\Collection;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -314,12 +309,8 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
 
         $serviceSortFieldMapping = static::SERVICE_SORT_FIELD_MAPPING;
         foreach ($sspServiceCriteriaTransfer->getSortCollection() as $sortTransfer) {
-            $direction = $sortTransfer->getDirection() === static::SORT_DIRECTION_ASC
-                ? Criteria::ASC
-                : Criteria::DESC;
-
             if (isset($serviceSortFieldMapping[$sortTransfer->getField()])) {
-                $query->orderBy($serviceSortFieldMapping[$sortTransfer->getField()], $direction);
+                $query->orderBy($serviceSortFieldMapping[$sortTransfer->getField()], $sortTransfer->getDirection() ?: Criteria::DESC);
             }
         }
 
@@ -424,328 +415,25 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
      *
      * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
      */
-    public function getFileAttachmentCollection(FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): FileAttachmentCollectionTransfer
-    {
-        $fileAttachmentCollectionTransfer = new FileAttachmentCollectionTransfer();
-
-        $companyFiles = $this->getCompanyFiles($fileAttachmentCriteriaTransfer);
-        $companyUserFiles = $this->getCompanyUserFiles($fileAttachmentCriteriaTransfer);
-        $companyBusinessUnitFiles = $this->getCompanyBusinessUnitFiles($fileAttachmentCriteriaTransfer);
-        $sspAssetFiles = $this->getSspAssetFiles($fileAttachmentCriteriaTransfer);
-
-        $fileAttachmentTransfers = array_merge(
-            $this->getFactory()->createCompanyFileMapper()->mapCompanyFileEntitiesToFileAttachmentTransfers($companyFiles),
-            $this->getFactory()->createCompanyUserFileMapper()->mapCompanyUserFileEntitiesToFileAttachmentTransfers($companyUserFiles),
-            $this->getFactory()->createCompanyBusinessUnitFileMapper()->mapCompanyBusinessUnitFileEntitiesToFileAttachmentTransfers($companyBusinessUnitFiles),
-            $this->getFactory()->createSspAssetFileMapper()->mapSspAssetFileEntitiesToFileAttachmentTransfers($sspAssetFiles),
-        );
-
-        return $fileAttachmentCollectionTransfer->setFileAttachments(new ArrayObject($fileAttachmentTransfers));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFile>
-     */
-    protected function getCompanyFiles(FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): ObjectCollection
-    {
-        $query = $this->getFactory()
-            ->createCompanyFileQuery();
-
-        $idFiles = $fileAttachmentCriteriaTransfer->getFileAttachmentConditionsOrFail()->getIdFiles();
-
-        if ($idFiles !== null) {
-            $query->filterByFkFile_In($idFiles);
-        }
-
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFile> $companyFilesCollection */
-        $companyFilesCollection = $query->find();
-
-        return $companyFilesCollection;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFile>
-     */
-    protected function getCompanyUserFiles(FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): ObjectCollection
-    {
-        $query = $this->getFactory()
-            ->createCompanyUserFileQuery();
-
-        $idFiles = $fileAttachmentCriteriaTransfer->getFileAttachmentConditionsOrFail()->getIdFiles();
-
-        if ($idFiles !== null) {
-            $query->filterByFkFile_In($idFiles);
-        }
-
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFile> $companyUserFilesCollection */
-        $companyUserFilesCollection = $query->find();
-
-        return $companyUserFilesCollection;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFile>
-     */
-    protected function getCompanyBusinessUnitFiles(FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): ObjectCollection
-    {
-        $query = $this->getFactory()
-            ->createCompanyBusinessUnitFileQuery();
-
-        $idFiles = $fileAttachmentCriteriaTransfer->getFileAttachmentConditionsOrFail()->getIdFiles();
-
-        if ($idFiles !== null) {
-            $query->filterByFkFile_In($idFiles);
-        }
-
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFile> $companyBusinessUnitFilesCollection */
-        $companyBusinessUnitFilesCollection = $query->find();
-
-        return $companyBusinessUnitFilesCollection;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFile>
-     */
-    protected function getSspAssetFiles(FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): ObjectCollection
-    {
-        $query = $this->getFactory()
-            ->createSspAssetFileQuery();
-
-        $idFiles = $fileAttachmentCriteriaTransfer->getFileAttachmentConditionsOrFail()->getIdFiles();
-
-        if ($idFiles !== null) {
-            $query->filterByFkFile_In($idFiles);
-        }
-
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFile> $assetFilesCollection */
-        $assetFilesCollection = $query->find();
-
-        return $assetFilesCollection;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-     * @param array<\SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\FilePermissionQueryStrategyInterface> $queryStrategies
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer
-     */
-    public function getFileAttachmentFileCollectionAccordingToPermissions(
-        FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer,
-        array $queryStrategies
-    ): FileAttachmentFileCollectionTransfer {
+    public function getFileAttachmentCollection(
+        FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
+    ): FileAttachmentCollectionTransfer {
         $query = $this->getFactory()
             ->getFilePropelQuery()
             ->leftJoinSpyFileInfo()
             ->groupBy(SpyFileTableMap::COL_ID_FILE);
 
-        $query = $this->applyFileAttachmentPermissionStrategies($query, $fileAttachmentFileCriteriaTransfer, $queryStrategies);
-        $query = $this->applyFileAttachmentSearch($query, $fileAttachmentFileCriteriaTransfer);
-        $query = $this->applyFileAttachmentTypeFilter($query, $fileAttachmentFileCriteriaTransfer);
-        $query = $this->applyFileAttachmentDateRangeFilter($query, $fileAttachmentFileCriteriaTransfer);
-        $query = $this->applyFileAttachmentUuidFilter($query, $fileAttachmentFileCriteriaTransfer);
+        $query = $this->getFactory()->createFileAttachmentQueryBuilder()->applyCriteria($query, $fileAttachmentCriteriaTransfer);
 
-        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers */
-        $sortTransfers = $fileAttachmentFileCriteriaTransfer->getSortCollection();
-        $query = $this->applyFileAttachmentSorting($query, $sortTransfers);
-
-        $fileAttachmentFileCollectionTransfer = new FileAttachmentFileCollectionTransfer();
-        $paginationTransfer = $fileAttachmentFileCriteriaTransfer->getPagination();
-        if ($paginationTransfer !== null) {
-            $query = $this->applyPagination($query, $paginationTransfer);
-            $fileAttachmentFileCollectionTransfer->setPagination($paginationTransfer);
-        }
+        $fileAttachmentCollectionTransfer = (new FileAttachmentCollectionTransfer())
+            ->setPagination($fileAttachmentCriteriaTransfer->getPagination());
 
         return $this->getFactory()
             ->createFileMapper()
-            ->mapEntityCollectionToTransferCollection(
-                $query->find(),
-                $fileAttachmentFileCollectionTransfer,
+            ->mapFileEntityCollectionToFileAttachmentCollectionTransfer(
+                $this->getPaginatedFileAttachmentCollection($query, $fileAttachmentCriteriaTransfer->getPagination()),
+                $fileAttachmentCollectionTransfer,
             );
-    }
-
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $query
-     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-     * @param array<\SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\FilePermissionQueryStrategyInterface> $queryStrategies
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
-    protected function applyFileAttachmentPermissionStrategies(
-        SpyFileQuery $query,
-        FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer,
-        array $queryStrategies
-    ): SpyFileQuery {
-        foreach ($queryStrategies as $strategy) {
-            $query = $strategy->apply($query, $fileAttachmentFileCriteriaTransfer);
-        }
-
-        return $query;
-    }
-
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $query
-     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
-    protected function applyFileAttachmentSearch(
-        SpyFileQuery $query,
-        FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-    ): SpyFileQuery {
-        $searchString = $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileSearchConditionsOrFail()->getSearchString();
-        if ($searchString) {
-            $query->filterByFileName_Like(sprintf('%%%s%%', $searchString))
-                ->_or()
-                ->filterByFileReference_Like(sprintf('%%%s%%', $searchString));
-        }
-
-        return $query;
-    }
-
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $query
-     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
-    protected function applyFileAttachmentTypeFilter(
-        SpyFileQuery $query,
-        FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-    ): SpyFileQuery {
-        $fileTypes = $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()->getFileTypes();
-
-        if (!$fileTypes) {
-            return $query;
-        }
-
-        return $query
-            ->useSpyFileInfoQuery()
-                ->filterByExtension_In($fileTypes)
-            ->endUse();
-    }
-
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $query
-     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
-    protected function applyFileAttachmentDateRangeFilter(
-        SpyFileQuery $query,
-        FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-    ): SpyFileQuery {
-        $rangeCreatedAt = $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()->getRangeCreatedAt();
-        if (!$rangeCreatedAt) {
-            return $query;
-        }
-
-        if ($rangeCreatedAt->getFrom()) {
-            $query->useSpyFileInfoQuery()
-                    ->filterByCreatedAt($rangeCreatedAt->getFrom(), Criteria::GREATER_EQUAL)
-                ->endUse();
-        }
-
-        if ($rangeCreatedAt->getTo()) {
-            $query->useSpyFileInfoQuery()
-                    ->filterByCreatedAt($rangeCreatedAt->getTo(), Criteria::LESS_EQUAL)
-                ->endUse();
-        }
-
-        return $query;
-    }
-
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $query
-     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
-    protected function applyFileAttachmentUuidFilter(
-        SpyFileQuery $query,
-        FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-    ): SpyFileQuery {
-        $uuids = $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()->getUuids();
-        if ($uuids !== []) {
-            $query
-                ->filterByUuid_In($uuids);
-        }
-
-        return $query;
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    protected function applyPagination(ModelCriteria $query, PaginationTransfer $paginationTransfer): ModelCriteria
-    {
-        if ($paginationTransfer->getLimit() === null || $paginationTransfer->getOffset() === null) {
-            $paginationTransfer = $this->getPaginationTransfer($query, $paginationTransfer);
-        }
-
-        $query
-            ->setLimit($paginationTransfer->getLimitOrFail())
-            ->setOffset($paginationTransfer->getOffsetOrFail());
-
-        return $query;
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
-     */
-    protected function getPaginationTransfer(
-        ModelCriteria $query,
-        PaginationTransfer $paginationTransfer
-    ): PaginationTransfer {
-        $page = $paginationTransfer->getPage() ?? 1;
-        $maxPerPage = $paginationTransfer->getMaxPerPage() ?? 10;
-        $paginationModel = $query->paginate($page, $maxPerPage);
-        $nbResults = $paginationModel->getNbResults();
-
-        return $paginationTransfer
-            ->setNbResults($nbResults)
-            ->setFirstIndex($paginationModel->getFirstIndex())
-            ->setLastIndex($paginationModel->getLastIndex())
-            ->setFirstPage($paginationModel->getFirstPage())
-            ->setLastPage($paginationModel->getLastPage())
-            ->setNextPage($paginationModel->getNextPage())
-            ->setPreviousPage($paginationModel->getPreviousPage())
-            ->setOffset(($page - 1) * $maxPerPage)
-            ->setLimit($maxPerPage);
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    protected function applyFileAttachmentSorting(ModelCriteria $query, ArrayObject $sortTransfers): ModelCriteria
-    {
-        $fileAttachmentSortFieldMapping = $this->getFileAttachmentSortFieldMapping();
-        foreach ($sortTransfers as $sortTransfer) {
-            $query
-                ->groupBy($fileAttachmentSortFieldMapping[$sortTransfer->getFieldOrFail()] ?? $sortTransfer->getFieldOrFail())
-                ->orderBy(
-                    $fileAttachmentSortFieldMapping[$sortTransfer->getFieldOrFail()] ?? $sortTransfer->getFieldOrFail(),
-                    $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
-                );
-        }
-
-        return $query;
     }
 
     /**
@@ -1051,15 +739,36 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
     }
 
     /**
-     * @return array<string, string>
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
+     *
+     * @return \Propel\Runtime\Collection\Collection
      */
-    protected function getFileAttachmentSortFieldMapping(): array
+    protected function getPaginatedFileAttachmentCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null): Collection
     {
-        return [
-            'fileType' => SpyFileInfoTableMap::COL_EXTENSION,
-            'size' => SpyFileInfoTableMap::COL_SIZE,
-            'createdAt' => SpyFileInfoTableMap::COL_CREATED_AT,
-        ];
+        if ($paginationTransfer === null) {
+            return $query->find();
+        }
+
+        $page = $paginationTransfer
+            ->requirePage()
+            ->getPageOrFail();
+
+        $maxPerPage = $paginationTransfer
+            ->requireMaxPerPage()
+            ->getMaxPerPageOrFail();
+
+        $paginationModel = $query->paginate($page, $maxPerPage);
+
+        $paginationTransfer->setNbResults($paginationModel->getNbResults());
+        $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
+        $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
+        $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
+        $paginationTransfer->setLastPage($paginationModel->getLastPage());
+        $paginationTransfer->setNextPage($paginationModel->getNextPage());
+        $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
+
+        return $paginationModel->getResults();
     }
 
     /**

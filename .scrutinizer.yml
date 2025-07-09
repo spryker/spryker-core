@@ -23,6 +23,10 @@ filter:
         - Bundles/*/src/Spryker/*/*/*DependencyProvider.php
         - Bundles/Transfer/tests/_data/test_files/*
         - Bundles/Development/*
+        - Features/*/src/SprykerFeature/Zed/*/*/*Factory.php
+        - Features/*/src/SprykerFeature/*/*/*DependencyProvider.php
+        - Features/*/src/SprykerFeature/*/*/*Repository.php
+        - Features/*/src/SprykerFeature/*/*/*EntityManager.php
 
 build_failure_conditions:
     - 'project.metric("scrutinizer.quality", < 9.80)'

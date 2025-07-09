@@ -127,7 +127,7 @@
             <unique-column name="fk_file"/>
         </unique>
 
-        <foreign-key name="spy_ssp_inquiry_file-fk_ssp_inquiry" foreignTable="spy_ssp_inquiry">
+        <foreign-key name="spy_ssp_inquiry_file-fk_ssp_inquiry" foreignTable="spy_ssp_inquiry" onDelete="CASCADE">
             <reference local="fk_ssp_inquiry" foreign="id_ssp_inquiry"/>
         </foreign-key>
 

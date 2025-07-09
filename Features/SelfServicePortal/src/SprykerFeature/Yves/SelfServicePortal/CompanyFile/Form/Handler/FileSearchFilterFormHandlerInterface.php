@@ -7,7 +7,7 @@
 
 namespace SprykerFeature\Yves\SelfServicePortal\CompanyFile\Form\Handler;
 
-use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
+use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,10 +17,10 @@ interface FileSearchFilterFormHandlerInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $fileSearchFilterForm
      *
-     * @return \Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer
+     * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
      */
     public function handleSearchFormSubmit(
         Request $request,
         FormInterface $fileSearchFilterForm
-    ): FileAttachmentFileCollectionTransfer;
+    ): FileAttachmentCollectionTransfer;
 }

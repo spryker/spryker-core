@@ -14,7 +14,7 @@
         <foreign-key foreignTable="spy_ssp_asset" phpName="SspAsset">
             <reference local="fk_ssp_asset" foreign="id_ssp_asset"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_file" phpName="File">
+        <foreign-key foreignTable="spy_file" phpName="File" onDelete="CASCADE">
             <reference local="fk_file" foreign="id_file"/>
         </foreign-key>
         <behavior name="timestampable"/>
@@ -33,6 +33,10 @@
 
         <foreign-key foreignTable="spy_company_business_unit">
             <reference local="fk_company_business_unit" foreign="id_company_business_unit"/>
+        </foreign-key>
+
+        <foreign-key foreignTable="spy_file" phpName="File" onDelete="SET NULL">
+            <reference local="fk_image_file" foreign="id_file"/>
         </foreign-key>
 
         <behavior name="timestampable"/>

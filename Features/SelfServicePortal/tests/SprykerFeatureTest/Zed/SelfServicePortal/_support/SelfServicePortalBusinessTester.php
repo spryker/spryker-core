@@ -124,6 +124,7 @@ class SelfServicePortalBusinessTester extends Actor
             CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
             CompanyUserTransfer::CUSTOMER => $customerTransfer,
             CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUserTransfer::COMPANY => $companyTransfer,
         ]);
     }
 

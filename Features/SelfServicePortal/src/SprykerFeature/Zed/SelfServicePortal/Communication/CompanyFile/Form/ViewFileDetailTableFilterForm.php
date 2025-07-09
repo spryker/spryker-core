@@ -8,7 +8,7 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form;
 
 use DateTime;
-use Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -99,7 +99,7 @@ class ViewFileDetailTableFilterForm extends AbstractType
 
         $resolver->setDefaults([
             'csrf_protection' => false,
-            'data_class' => FileAttachmentFileViewDetailTableCriteriaTransfer::class,
+            'data_class' => FileAttachmentViewDetailTableCriteriaTransfer::class,
         ]);
     }
 
@@ -184,7 +184,7 @@ class ViewFileDetailTableFilterForm extends AbstractType
     {
         $builder->add(static::FIELD_ID_FILE, HiddenType::class, [
             'required' => true,
-            'property_path' => FileAttachmentFileViewDetailTableCriteriaTransfer::ID_FILE,
+            'property_path' => FileAttachmentViewDetailTableCriteriaTransfer::ID_FILE,
         ]);
 
         return $this;

@@ -7,12 +7,17 @@
 
 namespace SprykerFeature\Yves\SelfServicePortal\CompanyFile\Form\DataProvider;
 
-use Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface;
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
+use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
+use Spryker\Client\CompanyBusinessUnit\CompanyBusinessUnitClientInterface;
+use Spryker\Client\CompanyUser\CompanyUserClientInterface;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
+use SprykerFeature\Client\SelfServicePortal\SelfServicePortalClientInterface;
+use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewBusinessUnitSspAssetPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewCompanyBusinessUnitFilesPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewCompanyFilesPermissionPlugin;
+use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewCompanySspAssetPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewCompanyUserFilesPermissionPlugin;
-use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig as SharedSelfServicePortalConfig;
 use SprykerFeature\Yves\SelfServicePortal\CompanyFile\Form\FileSearchFilterForm;
 use SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig;
 
@@ -23,37 +28,76 @@ class FileSearchFilterFormDataProvider
     /**
      * @var string
      */
-    protected const GLOSSARY_KEY_PREFIX_ENTITY_TYPE = 'self_service_portal.company_file.file_search_filter_form.field.type';
+    public const FILE_ATTACHMENT_TYPE_COMPANY = 'company';
 
     /**
-     * @var array<string, string>
+     * @var string
      */
-    protected const ENTITY_TO_PERMISSION_MAP = [
-        SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER => ViewCompanyUserFilesPermissionPlugin::KEY,
-        SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY => ViewCompanyFilesPermissionPlugin::KEY,
-        SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT => ViewCompanyBusinessUnitFilesPermissionPlugin::KEY,
-    ];
+    public const FILE_ATTACHMENT_TYPE_COMPANY_LABEL = 'self_service_portal.company_file.file_attachment_type.company';
+
+    /**
+     * @var string
+     */
+    public const FILE_ATTACHMENT_TYPE_COMPANY_USER = 'company_user';
+
+    /**
+     * @var string
+     */
+    public const FILE_ATTACHMENT_TYPE_COMPANY_USER_LABEL = 'self_service_portal.company_file.file_attachment_type.company_user';
+
+    /**
+     * @var string
+     */
+    public const FILE_ATTACHMENT_TYPE_SSP_ASSET = 'ssp_asset';
+
+    /**
+     * @var string
+     */
+    public const FILE_ATTACHMENT_TYPE_NONE = 'none';
+
+    /**
+     * @var string
+     */
+    public const BUSINESS_FILE_ATTACHMENT_TYPE_NONE_LABEL = 'self_service_portal.company_file.file_attachment_business_type.none';
+
+    /**
+     * @var string
+     */
+    public const SSP_ASSET_FILE_ATTACHMENT_TYPE_NONE_LABEL = 'self_service_portal.company_file.file_attachment_ssp_asset_type.none';
+
+    /**
+     * @var string
+     */
+    public const FILE_ATTACHMENT_TYPE_ALL = 'all';
+
+    /**
+     * @var string
+     */
+    public const FILE_ATTACHMENT_TYPE_ALL_LABEL = 'self_service_portal.company_file.file_attachment_type.all';
 
     /**
      * @param \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     * @param \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface $glossaryStorageClient
+     * @param \Spryker\Client\CompanyUser\CompanyUserClientInterface $companyUserClient
+     * @param \Spryker\Client\CompanyBusinessUnit\CompanyBusinessUnitClientInterface $companyBusinessUnitClient
+     * @param \SprykerFeature\Client\SelfServicePortal\SelfServicePortalClientInterface $selfServicePortalClient
      */
     public function __construct(
         protected SelfServicePortalConfig $selfServicePortalConfig,
-        protected GlossaryStorageClientInterface $glossaryStorageClient
+        protected CompanyUserClientInterface $companyUserClient,
+        protected CompanyBusinessUnitClientInterface $companyBusinessUnitClient,
+        protected SelfServicePortalClientInterface $selfServicePortalClient
     ) {
     }
 
     /**
-     * @param string $localeName
-     *
      * @return array<string, array<string, string>>
      */
-    public function getOptions(string $localeName): array
+    public function getOptions(): array
     {
         return [
             FileSearchFilterForm::OPTION_FILE_TYPES => $this->getFileTypesChoices(),
-            FileSearchFilterForm::OPTION_ACCESS_LEVELS => $this->getAccessLevelChoices($localeName),
+            FileSearchFilterForm::OPTION_BUSINESS_ENTITIES => $this->getBusinessEntityChoices(),
+            FileSearchFilterForm::OPTION_SSP_ASSET_ENTITIES => $this->getSspAssetEntityChoices(),
         ];
     }
 
@@ -69,38 +113,73 @@ class FileSearchFilterFormDataProvider
     }
 
     /**
-     * @param string $localeName
-     *
-     * @return array<string, string>
+     * @return array<string, mixed>
      */
-    protected function getAccessLevelChoices(string $localeName): array
+    protected function getBusinessEntityChoices(): array
     {
-        $accessLevelChoices = [];
-        $translationKeys = [];
+        $companyUserTransfer = $this->companyUserClient->findCompanyUser();
+        if (!$companyUserTransfer?->getIdCompanyUser()) {
+            return [];
+        }
+        $companyUserId = $companyUserTransfer->getIdCompanyUserOrFail();
+        $businessEntityTypes = [
+            static::FILE_ATTACHMENT_TYPE_ALL => static::FILE_ATTACHMENT_TYPE_ALL_LABEL,
+        ];
 
-        foreach ($this->selfServicePortalConfig->getAttachableEntityTypesForCompanyFiles() as $entityType) {
-            $translationKeys[] = $this->getTranslationKey($entityType);
+        if ($this->can(ViewCompanyUserFilesPermissionPlugin::KEY, $companyUserId)) {
+            $businessEntityTypes[static::FILE_ATTACHMENT_TYPE_COMPANY_USER] = static::FILE_ATTACHMENT_TYPE_COMPANY_USER_LABEL;
         }
 
-        $translatedEntityTypes = $this->glossaryStorageClient->translateBulk($translationKeys, $localeName);
-        foreach ($this->selfServicePortalConfig->getAttachableEntityTypesForCompanyFiles() as $entityType) {
-            if (isset(static::ENTITY_TO_PERMISSION_MAP[$entityType]) && !$this->can(static::ENTITY_TO_PERMISSION_MAP[$entityType])) {
-                continue;
+        if ($this->can(ViewCompanyFilesPermissionPlugin::KEY, $companyUserId)) {
+            $businessEntityTypes[static::FILE_ATTACHMENT_TYPE_COMPANY] = static::FILE_ATTACHMENT_TYPE_COMPANY_LABEL;
+
+            $businessEntityTypes[static::FILE_ATTACHMENT_TYPE_COMPANY_USER] = static::FILE_ATTACHMENT_TYPE_COMPANY_USER_LABEL;
+
+            $companyBusinessUnitCollectionTransfer = $this->companyBusinessUnitClient->getCompanyBusinessUnitCollection(
+                (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompany($companyUserTransfer->getCompanyOrFail()->getIdCompanyOrFail()),
+            );
+
+            foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
+                $businessEntityTypes[$companyBusinessUnitTransfer->getUuidOrFail()] = $companyBusinessUnitTransfer->getNameOrFail();
             }
-
-            $accessLevelChoices[$entityType] = $translatedEntityTypes[$this->getTranslationKey($entityType)] ?? $entityType;
         }
 
-        return $accessLevelChoices;
+        if ($this->can(ViewCompanyBusinessUnitFilesPermissionPlugin::KEY, $companyUserId)) {
+            $companyBusinessUnitTransfer = $companyUserTransfer->getCompanyBusinessUnitOrFail();
+            $businessEntityTypes[$companyBusinessUnitTransfer->getUuidOrFail()] = $companyBusinessUnitTransfer->getNameOrFail();
+        }
+
+        $businessEntityTypes[static::FILE_ATTACHMENT_TYPE_NONE] = static::BUSINESS_FILE_ATTACHMENT_TYPE_NONE_LABEL;
+
+        return $businessEntityTypes;
     }
 
     /**
-     * @param string $entityType
-     *
-     * @return string
+     * @return array<string, string>
      */
-    protected function getTranslationKey(string $entityType): string
+    protected function getSspAssetEntityChoices(): array
     {
-        return sprintf('%s.%s', static::GLOSSARY_KEY_PREFIX_ENTITY_TYPE, $entityType);
+        $companyUserTransfer = $this->companyUserClient->findCompanyUser();
+        if (!$companyUserTransfer?->getIdCompanyUser()) {
+            return [];
+        }
+        $companyUserId = $companyUserTransfer->getIdCompanyUserOrFail();
+        $businessEntityTypes = [
+            static::FILE_ATTACHMENT_TYPE_ALL => static::FILE_ATTACHMENT_TYPE_ALL_LABEL,
+        ];
+
+        if ($this->can(ViewCompanySspAssetPermissionPlugin::KEY, $companyUserId) || $this->can(ViewBusinessUnitSspAssetPermissionPlugin::KEY, $companyUserId)) {
+            $sspAssetCollectionTransfer = $this->selfServicePortalClient->getSspAssetCollection(
+                (new SspAssetCriteriaTransfer())->setCompanyUser($companyUserTransfer),
+            );
+
+            foreach ($sspAssetCollectionTransfer->getSspAssets() as $sspAssetTransfer) {
+                $businessEntityTypes[$sspAssetTransfer->getReferenceOrFail()] = $sspAssetTransfer->getNameOrFail();
+            }
+        }
+
+        $businessEntityTypes[static::FILE_ATTACHMENT_TYPE_NONE] = static::SSP_ASSET_FILE_ATTACHMENT_TYPE_NONE_LABEL;
+
+        return $businessEntityTypes;
     }
 }

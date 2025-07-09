@@ -50,16 +50,16 @@ class CreateSspInquiryFormDataToTransferMapper implements CreateSspInquiryFormDa
         if (!$companyUserTransfer) {
             throw new Exception('self_service_portal.inquiry.error.company_user_not_found');
         }
-        $companyUserTransfer->setCustomer($this->customerClient->getCustomerById($companyUserTransfer->getFkCustomerOrFail())); // TODO: optimise if possible
+        $companyUserTransfer->setCustomer($this->customerClient->getCustomerById($companyUserTransfer->getFkCustomerOrFail()));
 
-          $sspInquiryTransfer = (new SspInquiryTransfer())
+        $sspInquiryTransfer = (new SspInquiryTransfer())
             ->fromArray($formData, true)
             ->setCompanyUser($companyUserTransfer)
             ->setFiles(new ArrayObject($fileManagerDataTransfers))
             ->setStore($this->storeClient->getCurrentStore());
 
         if (isset($formData['orderReference'])) {
-              $sspInquiryTransfer->setOrder((new OrderTransfer())
+            $sspInquiryTransfer->setOrder((new OrderTransfer())
                 ->setOrderReference($formData['orderReference'])
                 ->setCustomerReference($companyUserTransfer->getCustomerOrFail()->getCustomerReference()));
         }

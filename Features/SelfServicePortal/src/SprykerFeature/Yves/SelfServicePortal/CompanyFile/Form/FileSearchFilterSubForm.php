@@ -9,6 +9,7 @@ namespace SprykerFeature\Yves\SelfServicePortal\CompanyFile\Form;
 
 use DateTime;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use SprykerFeature\Yves\SelfServicePortal\CompanyFile\Form\DataProvider\FileSearchFilterFormDataProvider;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -40,7 +41,12 @@ class FileSearchFilterSubForm extends AbstractType
     /**
      * @var string
      */
-    public const FIELD_ACCESS_LEVEL = 'accessLevel';
+    public const FIELD_BUSINESS_ENTITY = 'businessEntity';
+
+    /**
+     * @var string
+     */
+    public const FIELD_SSP_ASSET_ENTITY = 'sspAssetEntity';
 
     /**
      * @var string
@@ -63,7 +69,8 @@ class FileSearchFilterSubForm extends AbstractType
 
         $resolver->setRequired([
             FileSearchFilterForm::OPTION_FILE_TYPES,
-            FileSearchFilterForm::OPTION_ACCESS_LEVELS,
+            FileSearchFilterForm::OPTION_BUSINESS_ENTITIES,
+            FileSearchFilterForm::OPTION_SSP_ASSET_ENTITIES,
         ]);
     }
 
@@ -79,7 +86,8 @@ class FileSearchFilterSubForm extends AbstractType
             ->addTypeField($builder, $options)
             ->addDateFromField($builder)
             ->addDateToField($builder)
-            ->addAccessLevelField($builder, $options)
+            ->addBusinessEntityField($builder, $options)
+            ->addSspAssetEntityField($builder, $options)
             ->addSearchField($builder);
     }
 
@@ -148,13 +156,39 @@ class FileSearchFilterSubForm extends AbstractType
      *
      * @return $this
      */
-    protected function addAccessLevelField(FormBuilderInterface $builder, array $options)
+    protected function addBusinessEntityField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_ACCESS_LEVEL, ChoiceType::class, [
-            'choices' => array_flip($options[FileSearchFilterForm::OPTION_ACCESS_LEVELS]),
+        $builder->add(static::FIELD_BUSINESS_ENTITY, ChoiceType::class, [
+            'choices' => array_flip($options[FileSearchFilterForm::OPTION_BUSINESS_ENTITIES]),
             'required' => false,
-            'placeholder' => 'self_service_portal.company_file.file_search_filter_form.field.access_level.placeholder',
-            'label' => 'self_service_portal.company_file.file_search_filter_form.field.access_level.label',
+            'placeholder' => false,
+            'label' => 'self_service_portal.company_file.file_search_filter_form.field.business_entity.label',
+            'data' => FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_ALL,
+            'attr' => [
+                'data-qa' => 'filter-business-entity',
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
+     *
+     * @return $this
+     */
+    protected function addSspAssetEntityField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_SSP_ASSET_ENTITY, ChoiceType::class, [
+            'choices' => array_flip($options[FileSearchFilterForm::OPTION_SSP_ASSET_ENTITIES]),
+            'required' => false,
+            'placeholder' => false,
+            'label' => 'self_service_portal.company_file.file_search_filter_form.field.ssp_asset_entity.label',
+            'data' => FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_ALL,
+            'attr' => [
+                'data-qa' => 'filter-ssp-asset-entity',
+            ],
         ]);
 
         return $this;

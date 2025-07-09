@@ -41,7 +41,7 @@ class FileAttachmentCreator implements FileAttachmentCreatorInterface
     public function createFileAttachmentCollection(
         FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
     ): FileAttachmentCollectionResponseTransfer {
-        $fileAttachments = $fileAttachmentCollectionRequestTransfer->getFileAttachments();
+        $fileAttachments = $fileAttachmentCollectionRequestTransfer->getFileAttachmentsToAdd();
 
         $this->getTransactionHandler()->handleTransaction(function () use ($fileAttachments): void {
             foreach ($fileAttachments as $fileAttachmentTransfer) {

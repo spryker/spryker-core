@@ -10,12 +10,11 @@ namespace SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\Da
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
+use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Company\Business\CompanyFacadeInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
-use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig as SharedSelfServicePortalConfig;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\AttachFileForm;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
@@ -50,32 +49,32 @@ class FileAttachFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionTransfer $fileAttachmentCollectionTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
      *
      * @return array<string, array<string, int>>
      */
-    public function getOptions(FileAttachmentCollectionTransfer $fileAttachmentCollectionTransfer): array
+    public function getOptions(FileAttachmentTransfer $fileAttachmentTransfer): array
     {
         return [
-            AttachFileForm::OPTION_COMPANY_CHOICES => $this->getCompanyChoices($fileAttachmentCollectionTransfer),
-            AttachFileForm::OPTION_COMPANY_USER_CHOICES => $this->getCompanyUserChoices($fileAttachmentCollectionTransfer),
-            AttachFileForm::OPTION_COMPANY_BUSINESS_UNIT_CHOICES => $this->getCompanyBusinessUnitChoices($fileAttachmentCollectionTransfer),
+            AttachFileForm::OPTION_COMPANY_CHOICES => $this->getCompanyChoices($fileAttachmentTransfer),
+            AttachFileForm::OPTION_COMPANY_USER_CHOICES => $this->getCompanyUserChoices($fileAttachmentTransfer),
+            AttachFileForm::OPTION_COMPANY_BUSINESS_UNIT_CHOICES => $this->getCompanyBusinessUnitChoices($fileAttachmentTransfer),
         ];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionTransfer $fileAttachmentCollectionTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
      *
      * @return array<string, int>
      */
-    protected function getCompanyChoices(FileAttachmentCollectionTransfer $fileAttachmentCollectionTransfer): array
+    protected function getCompanyChoices(FileAttachmentTransfer $fileAttachmentTransfer): array
     {
         $companyIds = [];
-        foreach ($fileAttachmentCollectionTransfer->getFileAttachments() as $fileAttachmentTransfer) {
-            if ($fileAttachmentTransfer->getEntityName() === SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY) {
-                $companyIds[] = $fileAttachmentTransfer->getEntityIdOrFail();
-            }
+
+        foreach ($fileAttachmentTransfer->getCompanyCollectionOrFail()->getCompanies() as $companyTransfer) {
+            $companyIds[] = $companyTransfer->getIdCompanyOrFail();
         }
+
         $companyCriteriaFilterTransfer = (new CompanyCriteriaFilterTransfer())
             ->setCompanyIds($companyIds);
 
@@ -83,25 +82,25 @@ class FileAttachFormDataProvider
         $companyChoices = [];
 
         foreach ($companyCollectionTransfer->getCompanies() as $companyTransfer) {
-            $companyChoices[$companyTransfer->getNameOrFail()] = $companyTransfer->getIdCompanyOrFail();
+            $companyChoices[sprintf('%s (ID: %s)', $companyTransfer->getNameOrFail(), $companyTransfer->getIdCompanyOrFail())] = $companyTransfer->getIdCompanyOrFail();
         }
 
         return $companyChoices;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionTransfer $fileAttachmentCollectionTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
      *
      * @return array<string, int>
      */
-    protected function getCompanyUserChoices(FileAttachmentCollectionTransfer $fileAttachmentCollectionTransfer): array
+    protected function getCompanyUserChoices(FileAttachmentTransfer $fileAttachmentTransfer): array
     {
         $companyUserIds = [];
-        foreach ($fileAttachmentCollectionTransfer->getFileAttachments() as $fileAttachmentTransfer) {
-            if ($fileAttachmentTransfer->getEntityName() === SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER) {
-                $companyUserIds[] = $fileAttachmentTransfer->getEntityIdOrFail();
-            }
+
+        foreach ($fileAttachmentTransfer->getCompanyUserCollectionOrFail()->getCompanyUsers() as $companyUserTransfer) {
+            $companyUserIds[] = $companyUserTransfer->getIdCompanyUserOrFail();
         }
+
         $companyUserCollectionTransfer = $this->companyUserFacade
             ->getCompanyUserCollection((new CompanyUserCriteriaFilterTransfer())
                 ->setCompanyUserIds($companyUserIds));
@@ -121,18 +120,17 @@ class FileAttachFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionTransfer $fileAttachmentCollectionTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
      *
      * @return array<string, int>
      */
-    protected function getCompanyBusinessUnitChoices(FileAttachmentCollectionTransfer $fileAttachmentCollectionTransfer): array
+    protected function getCompanyBusinessUnitChoices(FileAttachmentTransfer $fileAttachmentTransfer): array
     {
         $companyBusinessUnitIds = [];
-        foreach ($fileAttachmentCollectionTransfer->getFileAttachments() as $fileAttachmentTransfer) {
-            if ($fileAttachmentTransfer->getEntityName() === SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT) {
-                $companyBusinessUnitIds[] = $fileAttachmentTransfer->getEntityIdOrFail();
-            }
+        foreach ($fileAttachmentTransfer->getBusinessUnitCollectionOrFail()->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
+            $companyBusinessUnitIds[] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail();
         }
+
         $companyBusinessUnitCollectionTransfer = $this->companyBusinessUnitFacade
             ->getCompanyBusinessUnitCollection((new CompanyBusinessUnitCriteriaFilterTransfer())
                 ->setCompanyBusinessUnitIds($companyBusinessUnitIds));
@@ -140,7 +138,7 @@ class FileAttachFormDataProvider
         $companyBusinessUnitChoices = [];
 
         foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
-            $companyBusinessUnitChoices[$companyBusinessUnitTransfer->getNameOrFail()] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail();
+            $companyBusinessUnitChoices[sprintf('%s (ID: %s)', $companyBusinessUnitTransfer->getNameOrFail(), $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail())] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail();
         }
 
         return $companyBusinessUnitChoices;
@@ -164,7 +162,7 @@ class FileAttachFormDataProvider
         foreach ($companies->getCompanies() as $companyTransfer) {
             $result['results'][] = [
                 'id' => $companyTransfer->getIdCompanyOrFail(),
-                'text' => $companyTransfer->getNameOrFail(),
+                'text' => sprintf('%s (ID: %s)', $companyTransfer->getNameOrFail(), $companyTransfer->getIdCompanyOrFail()),
             ];
         }
 
@@ -212,7 +210,7 @@ class FileAttachFormDataProvider
         foreach ($companyBusinessUnits->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
             $result['results'][] = [
                 'id' => $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
-                'text' => $companyBusinessUnitTransfer->getNameOrFail(),
+                'text' => sprintf('%s (ID: %s)', $companyBusinessUnitTransfer->getNameOrFail(), $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail()),
             ];
         }
 

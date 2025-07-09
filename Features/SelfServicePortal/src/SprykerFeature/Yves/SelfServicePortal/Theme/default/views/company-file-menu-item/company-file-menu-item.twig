@@ -3,15 +3,12 @@
 {% define data = {
     isActivePage: _widget.isActivePage,
     isVisible: _widget.isVisible,
-    canViewFiles: can('ViewCompanyFilesPermissionPlugin') or can('ViewCompanyUserFilesPermissionPlugin') or can('ViewCompanyBusinessUnitFilesPermissionPlugin'),
 } %}
 
 {% set itemClass = data.isActivePage ? ' menu__item--active' : '' %}
 
 {% block body %}
-    {% if data.canViewFiles %}
-        <li class="menu__item {{ itemClass }}">
-            <a href="{{ url('ssp/company-file/list-file') }}" data-id="sidebar-file-management" data-qa="my-files">{{ 'self_service_portal.company_file' | trans }}</a>
-        </li>
-    {% endif %}
+    <li class="menu__item {{ itemClass }}">
+        <a href="{{ url('ssp/company-file/list-file') }}" data-id="sidebar-file-management" data-qa="my-files">{{ 'self_service_portal.company_file' | trans }}</a>
+    </li>
 {% endblock %}

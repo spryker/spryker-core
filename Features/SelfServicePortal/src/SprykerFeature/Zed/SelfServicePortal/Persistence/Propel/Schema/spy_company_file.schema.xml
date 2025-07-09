@@ -14,7 +14,7 @@
         <foreign-key foreignTable="spy_company" phpName="Company">
             <reference local="fk_company" foreign="id_company"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_file" phpName="File">
+        <foreign-key foreignTable="spy_file" phpName="File" onDelete="CASCADE">
             <reference local="fk_file" foreign="id_file"/>
         </foreign-key>
 
@@ -38,7 +38,7 @@
         <foreign-key foreignTable="spy_company_user" phpName="CompanyUser">
             <reference local="fk_company_user" foreign="id_company_user"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_file" phpName="File">
+        <foreign-key foreignTable="spy_file" phpName="File" onDelete="CASCADE">
             <reference local="fk_file" foreign="id_file"/>
         </foreign-key>
 
@@ -63,7 +63,7 @@
         <foreign-key foreignTable="spy_company_business_unit" phpName="CompanyBusinessUnit">
             <reference local="fk_company_business_unit" foreign="id_company_business_unit"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_file" phpName="File">
+        <foreign-key foreignTable="spy_file" phpName="File" onDelete="CASCADE">
             <reference local="fk_file" foreign="id_file"/>
         </foreign-key>
 

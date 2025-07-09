@@ -12,14 +12,12 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\CmsBlockBuilder;
 use Generated\Shared\DataBuilder\CmsBlockGlossaryPlaceholderBuilder;
 use Generated\Shared\DataBuilder\CmsBlockGlossaryPlaceholderTranslationBuilder;
-use Generated\Shared\DataBuilder\FileAttachmentBuilder;
 use Generated\Shared\DataBuilder\ProductClassBuilder;
 use Generated\Shared\DataBuilder\SalesProductClassBuilder;
 use Generated\Shared\DataBuilder\SspAssetBuilder;
 use Generated\Shared\DataBuilder\SspInquiryBuilder;
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
@@ -31,7 +29,6 @@ use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
-use InvalidArgumentException;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery;
@@ -230,32 +227,6 @@ class SelfServicePortalHelper extends Module
         $this->createTranslations($cmsBlockTransfer);
 
         return $this->getCmsBlockFacade()->findGlossary($cmsBlockTransfer->getIdCmsBlockOrFail());
-    }
-
-    /**
-     * @param array<string, mixed> $seedData
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentTransfer
-     */
-    public function haveFileAttachment(array $seedData): FileAttachmentTransfer
-    {
-        $fileAttachmentTransfer = (new FileAttachmentBuilder($seedData))->build();
-
-        $entityName = $fileAttachmentTransfer->getEntityNameOrFail();
-        $entityId = $fileAttachmentTransfer->getEntityIdOrFail();
-        $idFile = $fileAttachmentTransfer->getFileOrFail()->getIdFileOrFail();
-
-        match ($entityName) {
-            SelfServicePortalConfig::ENTITY_TYPE_COMPANY => $this->createCompanyFileAttachment($idFile, $entityId),
-            SelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER => $this->createCompanyUserFileAttachment($idFile, $entityId),
-            SelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT => $this->createCompanyBusinessUnitFileAttachment($idFile, $entityId),
-            SelfServicePortalConfig::ENTITY_TYPE_SSP_ASSET => $this->createSspAssetFileAttachment($idFile, $entityId),
-            default => throw new InvalidArgumentException("Invalid entity type: $entityName"),
-        };
-
-        return $fileAttachmentTransfer;
     }
 
     /**
@@ -538,6 +509,7 @@ class SelfServicePortalHelper extends Module
             $fileManagerDataTransfer = new FileManagerDataTransfer();
             $fileManagerDataTransfer->setFileInfo(
                 (new FileInfoTransfer())
+                    ->setStorageName((new SelfServicePortalConfig())->getInquiryStorageName())
                     ->setStorageFileName($fileName)
                     ->setStorageName((new SelfServicePortalConfig())->getInquiryStorageName())
                     ->setExtension($file['extension'])
@@ -762,16 +734,15 @@ class SelfServicePortalHelper extends Module
     }
 
     /**
-     * @param int $idFile
-     * @param int $idCompany
+     * @param array<string, int> $data
      *
      * @return void
      */
-    protected function createCompanyFileAttachment(int $idFile, int $idCompany): void
+    public function haveCompanyFileAttachment(array $data): void
     {
         $companyFileEntity = $this->createCompanyFileQuery()
-            ->filterByFkFile($idFile)
-            ->filterByFkCompany($idCompany)
+            ->filterByFkFile($data['idFile'])
+            ->filterByFkCompany($data['idCompany'])
             ->findOneOrCreate();
 
         $companyFileEntity->save();
@@ -782,17 +753,20 @@ class SelfServicePortalHelper extends Module
     }
 
     /**
-     * @param int $idFile
-     * @param int $idCompanyUser
+     * @param array<string, int> $data
      *
      * @return void
      */
-    protected function createCompanyUserFileAttachment(int $idFile, int $idCompanyUser): void
+    public function haveCompanyUserFileAttachment(array $data): void
     {
         $companyUserFileEntity = $this->createCompanyUserFileQuery()
-            ->filterByFkFile($idFile)
-            ->filterByFkCompanyUser($idCompanyUser)
+            ->filterByFkFile($data['idFile'])
+            ->filterByFkCompanyUser($data['idCompanyUser'])
             ->findOneOrCreate();
+
+        if (isset($data['attachedAt'])) {
+            $companyUserFileEntity->setCreatedAt($data['attachedAt']);
+        }
 
         $companyUserFileEntity->save();
 
@@ -802,18 +776,15 @@ class SelfServicePortalHelper extends Module
     }
 
     /**
-     * @param int $idFile
-     * @param int $idCompanyBusinessUnit
+     * @param array $data
      *
      * @return void
      */
-    protected function createCompanyBusinessUnitFileAttachment(
-        int $idFile,
-        int $idCompanyBusinessUnit
-    ): void {
+    public function haveCompanyBusinessUnitFileAttachment(array $data): void
+    {
         $companyBusinessUnitFileEntity = $this->createCompanyBusinessUnitFileQuery()
-            ->filterByFkFile($idFile)
-            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->filterByFkFile($data['idFile'])
+            ->filterByFkCompanyBusinessUnit($data['idCompanyBusinessUnit'])
             ->findOneOrCreate();
 
         $companyBusinessUnitFileEntity->save();
@@ -824,18 +795,15 @@ class SelfServicePortalHelper extends Module
     }
 
     /**
-     * @param int $idFile
-     * @param int $idSspAsset
+     * @param array $data
      *
      * @return void
      */
-    protected function createSspAssetFileAttachment(
-        int $idFile,
-        int $idSspAsset
-    ): void {
+    public function haveSspAssetFileAttachment(array $data): void
+    {
         $sspAssetFileEntity = $this->createSspAssetFileQuery()
-            ->filterByFkFile($idFile)
-            ->filterByFkSspAsset($idSspAsset)
+            ->filterByFkFile($data['idFile'])
+            ->filterByFkSspAsset($data['idSspAsset'])
             ->findOneOrCreate();
 
         $sspAssetFileEntity->save();

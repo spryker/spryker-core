@@ -7,7 +7,7 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table;
 
-use Generated\Shared\Transfer\FileAttachmentFileTableCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentTableCriteriaTransfer;
 use Orm\Zed\FileManager\Persistence\Map\SpyFileInfoTableMap;
 use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
@@ -87,14 +87,14 @@ class FileTable extends AbstractTable
      * @param \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatter\FileSizeFormatterInterface $fileSizeFormatter
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      * @param \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatter\TimeZoneFormatterInterface $timeZoneFormatter
-     * @param \Generated\Shared\Transfer\FileAttachmentFileTableCriteriaTransfer $fileAttachmentFileTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer
      */
     public function __construct(
         protected SpyFileQuery $fileQuery,
         protected FileSizeFormatterInterface $fileSizeFormatter,
         protected UtilDateTimeServiceInterface $utilDateTimeService,
         protected TimeZoneFormatterInterface $timeZoneFormatter,
-        protected FileAttachmentFileTableCriteriaTransfer $fileAttachmentFileTableCriteriaTransfer
+        protected FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer
     ) {
     }
 
@@ -197,39 +197,39 @@ class FileTable extends AbstractTable
             ->withColumn(SpyFileInfoTableMap::COL_ID_FILE_INFO, static::COL_ID_FILE_INFO)
             ->withColumn(SpyFileInfoTableMap::COL_CREATED_AT, static::COL_CREATED_AT);
 
-        $fileQuery = $this->applyFilters($fileQuery, $this->fileAttachmentFileTableCriteriaTransfer);
+        $fileQuery = $this->applyFilters($fileQuery, $this->fileAttachmentTableCriteriaTransfer);
 
         return $fileQuery;
     }
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
-     * @param \Generated\Shared\Transfer\FileAttachmentFileTableCriteriaTransfer $fileAttachmentFileTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
     protected function applyFilters(
         SpyFileQuery $fileQuery,
-        FileAttachmentFileTableCriteriaTransfer $fileAttachmentFileTableCriteriaTransfer
+        FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer
     ): SpyFileQuery {
-        if ($fileAttachmentFileTableCriteriaTransfer->getExtension()) {
+        if ($fileAttachmentTableCriteriaTransfer->getExtension()) {
             $fileQuery
                 ->useSpyFileInfoQuery()
-                    ->filterByExtension($this->fileAttachmentFileTableCriteriaTransfer->getExtension())
+                    ->filterByExtension($this->fileAttachmentTableCriteriaTransfer->getExtension())
                 ->endUse();
         }
 
-        if ($fileAttachmentFileTableCriteriaTransfer->getDateFrom()) {
+        if ($fileAttachmentTableCriteriaTransfer->getDateFrom()) {
             $fileQuery
                 ->useSpyFileInfoQuery()
-                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentFileTableCriteriaTransfer->getDateFrom()), Criteria::GREATER_EQUAL)
+                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentTableCriteriaTransfer->getDateFrom()), Criteria::GREATER_EQUAL)
                 ->endUse();
         }
 
-        if ($fileAttachmentFileTableCriteriaTransfer->getDateTo()) {
+        if ($fileAttachmentTableCriteriaTransfer->getDateTo()) {
             $fileQuery
                 ->useSpyFileInfoQuery()
-                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentFileTableCriteriaTransfer->getDateTo()), Criteria::LESS_THAN)
+                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentTableCriteriaTransfer->getDateTo()), Criteria::LESS_THAN)
                 ->endUse();
         }
 

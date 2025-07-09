@@ -7,21 +7,20 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander;
 
-use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileConditionsTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileSearchConditionsTransfer;
+use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
+use Generated\Shared\Transfer\FileAttachmentConditionsTransfer;
+use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentSearchConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
-use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig as SharedSelfServicePortalConfig;
-use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Reader\CompanyFileReaderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
 
 class AssetFileExpander implements AssetFileExpanderInterface
 {
     /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Reader\CompanyFileReaderInterface $companyFileReader
+     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
      */
-    public function __construct(protected CompanyFileReaderInterface $companyFileReader)
+    public function __construct(protected SelfServicePortalRepositoryInterface $selfServicePortalRepository)
     {
     }
 
@@ -44,25 +43,24 @@ class AssetFileExpander implements AssetFileExpanderInterface
             $sspAssetReferences[] = $sspAssetTransfer->getReferenceOrFail();
         }
 
-        $fileAttachmentFileCollectionTransfer = $this->companyFileReader->getFileAttachmentFileCollectionAccordingToPermissions(
-            (new FileAttachmentFileCriteriaTransfer())
+        $fileAttachmentCollectionTransfer = $this->selfServicePortalRepository->getFileAttachmentCollection(
+            (new FileAttachmentCriteriaTransfer())
                 ->setCompanyUser($sspAssetCriteriaTransfer->getCompanyUserOrFail())
-                ->setFileAttachmentFileConditions(
-                    (new FileAttachmentFileConditionsTransfer())
-                        ->setAssetReferences($sspAssetReferences)
-                        ->addEntityType(SharedSelfServicePortalConfig::ENTITY_TYPE_SSP_ASSET),
+                ->setFileAttachmentConditions(
+                    (new FileAttachmentConditionsTransfer())
+                        ->setAssetReferences($sspAssetReferences),
                 )
-                ->setFileAttachmentFileSearchConditions((new FileAttachmentFileSearchConditionsTransfer())),
+                ->setWithSspAssetRelation(true)
+                ->setFileAttachmentSearchConditions((new FileAttachmentSearchConditionsTransfer())),
         );
 
         foreach ($sspAssetCollectionTransfer->getSspAssets() as $sspAssetTransfer) {
-            $sspAssetTransfer->setFileAttachmentFileCollection(new FileAttachmentFileCollectionTransfer());
-            foreach ($fileAttachmentFileCollectionTransfer->getFileAttachments() as $fileAttachmentTransfer) {
-                if ($fileAttachmentTransfer->getEntityNameOrFail() !== SharedSelfServicePortalConfig::ENTITY_TYPE_SSP_ASSET) {
-                    continue;
-                }
-                if ($fileAttachmentTransfer->getEntityId() === $sspAssetTransfer->getIdSspAssetOrFail()) {
-                    $sspAssetTransfer->getFileAttachmentFileCollectionOrFail()->addFileAttachment($fileAttachmentTransfer);
+            $sspAssetTransfer->setFileAttachmentCollection(new FileAttachmentCollectionTransfer());
+            foreach ($fileAttachmentCollectionTransfer->getFileAttachments() as $fileAttachmentTransfer) {
+                foreach ($fileAttachmentTransfer->getSspAssetCollectionOrFail()->getSspAssets() as $fileSspAssetTransfer) {
+                    if ($fileSspAssetTransfer->getIdSspAssetOrFail() === $sspAssetTransfer->getIdSspAssetOrFail()) {
+                        $sspAssetTransfer->getFileAttachmentCollectionOrFail()->addFileAttachment($fileAttachmentTransfer);
+                    }
                 }
             }
         }

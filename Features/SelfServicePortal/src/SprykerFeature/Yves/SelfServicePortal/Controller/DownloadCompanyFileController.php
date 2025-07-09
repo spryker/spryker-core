@@ -7,13 +7,12 @@
 
 namespace SprykerFeature\Yves\SelfServicePortal\Controller;
 
-use Generated\Shared\Transfer\FileAttachmentFileConditionsTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileSearchConditionsTransfer;
+use Generated\Shared\Transfer\FileAttachmentConditionsTransfer;
+use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentSearchConditionsTransfer;
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\DownloadCompanyFilesPermissionPlugin;
-use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig as SharedSelfServicePortalConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -48,8 +47,8 @@ class DownloadCompanyFileController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
      *
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
@@ -64,28 +63,16 @@ class DownloadCompanyFileController extends AbstractController
             throw new AccessDeniedHttpException();
         }
 
-        $fileAttachmentFileCriteriaTransfer = $this->createFileAttachmentFileCriteriaTransfer($request);
-        $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()->setEntityTypes([
-            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT,
-            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY,
-            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER,
-        ]);
-        $fileAttachmentFileCollectionTransfer = $this->getClient()
-            ->getFileAttachmentFileCollectionAccordingToPermissions($fileAttachmentFileCriteriaTransfer);
+        $fileAttachmentCriteriaTransfer = $this->createFileAttachmentCriteriaTransfer($request);
 
-        if (!$fileAttachmentFileCollectionTransfer->getFileAttachments()->count()) {
-            $fileAttachmentFileCriteriaTransfer->getFileAttachmentFileConditionsOrFail()->setEntityTypes([
-                SharedSelfServicePortalConfig::ENTITY_TYPE_SSP_ASSET,
-            ]);
-            $fileAttachmentFileCollectionTransfer = $this->getClient()
-                ->getFileAttachmentFileCollectionAccordingToPermissions($fileAttachmentFileCriteriaTransfer);
+        $fileAttachmentCollectionTransfer = $this->getClient()
+            ->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
 
-            if (!$fileAttachmentFileCollectionTransfer->getFileAttachments()->count()) {
-                throw new NotFoundHttpException();
-            }
+        if (!$fileAttachmentCollectionTransfer->getFileAttachments()->count()) {
+            throw new NotFoundHttpException();
         }
 
-        return $this->createDownloadResponse($fileAttachmentFileCollectionTransfer->getFileAttachments()->offsetGet(0));
+        return $this->createDownloadResponse($fileAttachmentCollectionTransfer->getFileAttachments()->offsetGet(0));
     }
 
     /**
@@ -124,17 +111,21 @@ class DownloadCompanyFileController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer
+     * @return \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer
      */
-    protected function createFileAttachmentFileCriteriaTransfer(Request $request): FileAttachmentFileCriteriaTransfer
+    protected function createFileAttachmentCriteriaTransfer(Request $request): FileAttachmentCriteriaTransfer
     {
         $uuidFile = (string)$request->query->get(static::PARAM_ID_FILE);
 
-        return (new FileAttachmentFileCriteriaTransfer())
+        return (new FileAttachmentCriteriaTransfer())
             ->setCompanyUser($this->getFactory()->createCompanyUserReader()->getCurrentCompanyUser())
-            ->setFileAttachmentFileSearchConditions(new FileAttachmentFileSearchConditionsTransfer())
-            ->setFileAttachmentFileConditions(
-                (new FileAttachmentFileConditionsTransfer())->setUuids([$uuidFile]),
-            );
+            ->setFileAttachmentSearchConditions(new FileAttachmentSearchConditionsTransfer())
+            ->setFileAttachmentConditions(
+                (new FileAttachmentConditionsTransfer())->setUuids([$uuidFile]),
+            )
+            ->setWithCompanyRelation(true)
+            ->setWithBusinessUnitRelation(true)
+            ->setWithCompanyUserRelation(true)
+            ->setWithSspAssetRelation(true);
     }
 }

@@ -93,7 +93,7 @@ class GetServiceCollectionTest extends Unit
         $companyUserTransfer = $this->haveCompanyWithUserWithPermissions();
         $saveOrderTransfer = $this->haveCompanyUserOrder($companyUserTransfer);
 
-        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail());
+        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['process' => static::DEFAULT_OMS_PROCESS_NAME]);
         $idSalesOrderItem = $salesOrderItemEntity->getIdSalesOrderItem();
 
         $salesProductClassTransfer = $this->tester->haveSalesProductClass();
@@ -120,7 +120,7 @@ class GetServiceCollectionTest extends Unit
         $companyUserTransfer = $this->haveCompanyWithUserWithPermissions();
         $saveOrderTransfer = $this->haveCompanyUserOrder($companyUserTransfer);
 
-        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail());
+        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['process' => static::DEFAULT_OMS_PROCESS_NAME]);
         $idSalesOrderItem = $salesOrderItemEntity->getIdSalesOrderItem();
 
         $salesProductClassTransfer = $this->tester->haveSalesProductClass();
@@ -144,8 +144,8 @@ class GetServiceCollectionTest extends Unit
         // Arrange
         $companyUserTransfer = $this->haveCompanyWithUserWithPermissions();
         $saveOrderTransfer = $this->haveCompanyUserOrder($companyUserTransfer);
-        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['name' => 'product-to-find']);
-        $salesOrderItemEntityTwo = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['name' => 'another-product']);
+        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['name' => 'product-to-find', 'process' => static::DEFAULT_OMS_PROCESS_NAME]);
+        $salesOrderItemEntityTwo = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['name' => 'another-product', 'process' => static::DEFAULT_OMS_PROCESS_NAME]);
 
         $salesProductClassTransfer = $this->tester->haveSalesProductClass([
             SalesProductClassTransfer::NAME => static::DEFAULT_PRODUCT_CLASS_NAME,
@@ -174,8 +174,8 @@ class GetServiceCollectionTest extends Unit
         // Arrange
         $companyUserTransfer = $this->haveCompanyWithUserWithPermissions();
         $saveOrderTransfer = $this->haveCompanyUserOrder($companyUserTransfer);
-        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['sku' => 'sku-to-find-123']);
-        $salesOrderItemEntityTwo = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['sku' => 'another-sku-456']);
+        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['sku' => 'sku-to-find-123', 'process' => static::DEFAULT_OMS_PROCESS_NAME]);
+        $salesOrderItemEntityTwo = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['sku' => 'another-sku-456', 'process' => static::DEFAULT_OMS_PROCESS_NAME]);
 
         $salesProductClassTransfer = $this->tester->haveSalesProductClass([
             SalesProductClassTransfer::NAME => static::DEFAULT_PRODUCT_CLASS_NAME,
@@ -204,7 +204,7 @@ class GetServiceCollectionTest extends Unit
         $companyUserTransfer = $this->haveCompanyWithUserWithPermissions();
         $saveOrderTransferToFind = $this->haveCompanyUserOrder($companyUserTransfer);
 
-        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransferToFind->getIdSalesOrderOrFail());
+        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransferToFind->getIdSalesOrderOrFail(), ['process' => static::DEFAULT_OMS_PROCESS_NAME]);
 
         $salesProductClassTransfer = $this->tester->haveSalesProductClass([
             SalesProductClassTransfer::NAME => static::DEFAULT_PRODUCT_CLASS_NAME,
@@ -234,7 +234,7 @@ class GetServiceCollectionTest extends Unit
         $companyUserTransfer = $this->haveCompanyWithUserWithPermissions();
         $saveOrderTransferToFind = $this->haveCompanyUserOrder($companyUserTransfer);
 
-        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransferToFind->getIdSalesOrderOrFail());
+        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransferToFind->getIdSalesOrderOrFail(), ['process' => static::DEFAULT_OMS_PROCESS_NAME]);
 
         $salesProductClassTransfer = $this->tester->haveSalesProductClass([
             SalesProductClassTransfer::NAME => static::DEFAULT_PRODUCT_CLASS_NAME,
@@ -262,7 +262,7 @@ class GetServiceCollectionTest extends Unit
         // Arrange
         $companyUserTransfer = $this->haveCompanyWithUserWithPermissions();
         $saveOrderTransfer = $this->haveCompanyUserOrder($companyUserTransfer);
-        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail());
+        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['process' => static::DEFAULT_OMS_PROCESS_NAME]);
 
         $salesProductClassTransfer = $this->tester->haveSalesProductClass([
             SalesProductClassTransfer::NAME => static::DEFAULT_PRODUCT_CLASS_NAME,
@@ -298,7 +298,7 @@ class GetServiceCollectionTest extends Unit
         // Arrange
         $companyUserTransfer = $this->haveCompanyWithUserWithPermissions(false);
         $saveOrderTransfer = $this->haveCompanyUserOrder($companyUserTransfer);
-        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail());
+        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['process' => static::DEFAULT_OMS_PROCESS_NAME]);
 
         $salesProductClassTransfer = $this->tester->haveSalesProductClass([
             SalesProductClassTransfer::NAME => static::DEFAULT_PRODUCT_CLASS_NAME,
@@ -335,7 +335,7 @@ class GetServiceCollectionTest extends Unit
         );
 
         $saveOrderTransfer = $this->haveCompanyUserOrder($companyUserTransfer);
-        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail());
+        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['process' => static::DEFAULT_OMS_PROCESS_NAME]);
 
         $anotherCompanyTransfer = $this->tester->haveCompany();
         $anotherCompanyUserTransfer = $this->tester->haveCompanyUserWithPermissions(
@@ -344,7 +344,7 @@ class GetServiceCollectionTest extends Unit
         );
 
         $anotherSaveOrderTransfer = $this->haveCompanyUserOrder($anotherCompanyUserTransfer);
-        $salesOrderItemEntityTwo = $this->tester->createSalesOrderItemForOrder($anotherSaveOrderTransfer->getIdSalesOrderOrFail());
+        $salesOrderItemEntityTwo = $this->tester->createSalesOrderItemForOrder($anotherSaveOrderTransfer->getIdSalesOrderOrFail(), ['process' => static::DEFAULT_OMS_PROCESS_NAME]);
 
         $salesProductClassTransfer = $this->tester->haveSalesProductClass([
             SalesProductClassTransfer::NAME => static::DEFAULT_PRODUCT_CLASS_NAME,
@@ -381,7 +381,7 @@ class GetServiceCollectionTest extends Unit
         );
 
         $saveOrderTransfer = $this->haveCompanyUserOrder($companyUserTransfer);
-        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail());
+        $salesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['process' => static::DEFAULT_OMS_PROCESS_NAME]);
 
         $anotherCompanyTransfer = $this->tester->haveCompany();
         $anotherCompanyUserTransfer = $this->tester->haveCompanyUserWithPermissions(
@@ -390,7 +390,7 @@ class GetServiceCollectionTest extends Unit
         );
 
         $anotherSaveOrderTransfer = $this->haveCompanyUserOrder($anotherCompanyUserTransfer);
-        $salesOrderItemEntityTwo = $this->tester->createSalesOrderItemForOrder($anotherSaveOrderTransfer->getIdSalesOrderOrFail());
+        $salesOrderItemEntityTwo = $this->tester->createSalesOrderItemForOrder($anotherSaveOrderTransfer->getIdSalesOrderOrFail(), ['process' => static::DEFAULT_OMS_PROCESS_NAME]);
 
         $salesProductClassTransfer = $this->tester->haveSalesProductClass([
             SalesProductClassTransfer::NAME => static::DEFAULT_PRODUCT_CLASS_NAME,
@@ -418,8 +418,8 @@ class GetServiceCollectionTest extends Unit
         $companyUserTransfer = $this->haveCompanyWithUserWithPermissions();
         $saveOrderTransfer = $this->haveCompanyUserOrder($companyUserTransfer);
 
-        $salesOrderItemEntityA = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['name' => 'A Product']);
-        $salesOrderItemEntityB = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['name' => 'B Product']);
+        $salesOrderItemEntityA = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['name' => 'A Product', 'process' => static::DEFAULT_OMS_PROCESS_NAME]);
+        $salesOrderItemEntityB = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['name' => 'B Product', 'process' => static::DEFAULT_OMS_PROCESS_NAME]);
 
         $salesProductClassTransfer = $this->tester->haveSalesProductClass([SalesProductClassTransfer::NAME => static::DEFAULT_PRODUCT_CLASS_NAME]);
         $this->tester->haveSalesOrderItemToProductClass($salesOrderItemEntityA->getIdSalesOrderItem(), $salesProductClassTransfer->getIdSalesProductClassOrFail());
@@ -452,11 +452,11 @@ class GetServiceCollectionTest extends Unit
 
         $salesProductClassTransfer = $this->tester->haveSalesProductClass([SalesProductClassTransfer::NAME => static::DEFAULT_PRODUCT_CLASS_NAME]);
 
-        $salesOrderItemEntity1 = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['name' => 'Product 1']);
+        $salesOrderItemEntity1 = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['name' => 'Product 1', 'process' => static::DEFAULT_OMS_PROCESS_NAME]);
         $this->tester->haveSalesOrderItemToProductClass($salesOrderItemEntity1->getIdSalesOrderItem(), $salesProductClassTransfer->getIdSalesProductClassOrFail());
-        $salesOrderItemEntity2 = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['name' => 'Product 2']);
+        $salesOrderItemEntity2 = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['name' => 'Product 2', 'process' => static::DEFAULT_OMS_PROCESS_NAME]);
         $this->tester->haveSalesOrderItemToProductClass($salesOrderItemEntity2->getIdSalesOrderItem(), $salesProductClassTransfer->getIdSalesProductClassOrFail());
-        $salesOrderItemEntity3 = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['name' => 'Product 3']);
+        $salesOrderItemEntity3 = $this->tester->createSalesOrderItemForOrder($saveOrderTransfer->getIdSalesOrderOrFail(), ['name' => 'Product 3', 'process' => static::DEFAULT_OMS_PROCESS_NAME]);
         $this->tester->haveSalesOrderItemToProductClass($salesOrderItemEntity3->getIdSalesOrderItem(), $salesProductClassTransfer->getIdSalesProductClassOrFail());
 
         $sspServiceCriteriaTransfer = $this->createSspServiceCriteriaTransfer($companyUserTransfer);

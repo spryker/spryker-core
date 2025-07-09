@@ -7,7 +7,7 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table;
 
-use Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
@@ -116,14 +116,14 @@ class ViewFileDetailTable extends AbstractTable
      * @param int $idFile
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      * @param \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatter\TimeZoneFormatterInterface $timeZoneFormatter
-     * @param \Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
      */
     public function __construct(
         protected SpyFileQuery $fileQuery,
         protected int $idFile,
         protected UtilDateTimeServiceInterface $utilDateTimeService,
         protected TimeZoneFormatterInterface $timeZoneFormatter,
-        protected FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+        protected FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ) {
     }
 
@@ -164,11 +164,11 @@ class ViewFileDetailTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        $countQuery = $this->prepareRowCountQuery($this->fileAttachmentFileViewDetailTableCriteriaTransfer);
+        $countQuery = $this->prepareRowCountQuery($this->fileAttachmentViewDetailTableCriteriaTransfer);
         $countQuery->execute();
         $totalRows = $countQuery->fetchColumn();
 
-        $query = $this->prepareRawQuery($config, $this->fileAttachmentFileViewDetailTableCriteriaTransfer);
+        $query = $this->prepareRawQuery($config, $this->fileAttachmentViewDetailTableCriteriaTransfer);
         $query->execute();
         $queryResults = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -240,12 +240,12 @@ class ViewFileDetailTable extends AbstractTable
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
     protected function prepareCompanyFileQuery(
-        FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+        FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ): SpyFileQuery {
         $companyFileQuery = $this->fileQuery::create()
             ->filterByIdFile($this->idFile)
@@ -267,19 +267,19 @@ class ViewFileDetailTable extends AbstractTable
                 static::COL_ENTITY_TYPE,
             ]);
 
-        if ($fileAttachmentFileViewDetailTableCriteriaTransfer->getDateFrom()) {
+        if ($fileAttachmentViewDetailTableCriteriaTransfer->getDateFrom()) {
             // @phpstan-ignore-next-line
             $companyFileQuery
                 ->useSpyCompanyFileQuery()
-                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentFileViewDetailTableCriteriaTransfer->getDateFrom()), Criteria::GREATER_EQUAL)
+                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentViewDetailTableCriteriaTransfer->getDateFrom()), Criteria::GREATER_EQUAL)
                 ->endUse();
         }
 
-        if ($fileAttachmentFileViewDetailTableCriteriaTransfer->getDateTo()) {
+        if ($fileAttachmentViewDetailTableCriteriaTransfer->getDateTo()) {
             // @phpstan-ignore-next-line
             $companyFileQuery
                 ->useSpyCompanyFileQuery()
-                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentFileViewDetailTableCriteriaTransfer->getDateTo()), Criteria::LESS_THAN)
+                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentViewDetailTableCriteriaTransfer->getDateTo()), Criteria::LESS_THAN)
                 ->endUse();
         }
 
@@ -288,12 +288,12 @@ class ViewFileDetailTable extends AbstractTable
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
     protected function prepareCompanyBusinessUnitFileQuery(
-        FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+        FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ): SpyFileQuery {
         $companyBusinessUnitFileQuery = $this->fileQuery::create()
             ->filterByIdFile($this->idFile)
@@ -315,19 +315,19 @@ class ViewFileDetailTable extends AbstractTable
                 static::COL_ENTITY_TYPE,
             ]);
 
-        if ($fileAttachmentFileViewDetailTableCriteriaTransfer->getDateFrom()) {
+        if ($fileAttachmentViewDetailTableCriteriaTransfer->getDateFrom()) {
             // @phpstan-ignore-next-line
             $companyBusinessUnitFileQuery
                 ->useSpyCompanyBusinessUnitFileQuery()
-                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentFileViewDetailTableCriteriaTransfer->getDateFrom()), Criteria::GREATER_EQUAL)
+                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentViewDetailTableCriteriaTransfer->getDateFrom()), Criteria::GREATER_EQUAL)
                 ->endUse();
         }
 
-        if ($fileAttachmentFileViewDetailTableCriteriaTransfer->getDateTo()) {
+        if ($fileAttachmentViewDetailTableCriteriaTransfer->getDateTo()) {
             // @phpstan-ignore-next-line
             $companyBusinessUnitFileQuery
                 ->useSpyCompanyBusinessUnitFileQuery()
-                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentFileViewDetailTableCriteriaTransfer->getDateTo()), Criteria::LESS_THAN)
+                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentViewDetailTableCriteriaTransfer->getDateTo()), Criteria::LESS_THAN)
                 ->endUse();
         }
 
@@ -336,12 +336,12 @@ class ViewFileDetailTable extends AbstractTable
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
     protected function prepareCompanyUserFileQuery(
-        FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+        FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ): SpyFileQuery {
         $companyUserFileQuery = $this->fileQuery::create()
             ->filterByIdFile($this->idFile)
@@ -370,19 +370,19 @@ class ViewFileDetailTable extends AbstractTable
                 static::COL_ENTITY_TYPE,
             ]);
 
-        if ($fileAttachmentFileViewDetailTableCriteriaTransfer->getDateFrom()) {
+        if ($fileAttachmentViewDetailTableCriteriaTransfer->getDateFrom()) {
             // @phpstan-ignore-next-line
             $companyUserFileQuery
                 ->useSpyCompanyUserFileQuery()
-                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentFileViewDetailTableCriteriaTransfer->getDateFrom()), Criteria::GREATER_EQUAL)
+                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentViewDetailTableCriteriaTransfer->getDateFrom()), Criteria::GREATER_EQUAL)
                 ->endUse();
         }
 
-        if ($fileAttachmentFileViewDetailTableCriteriaTransfer->getDateTo()) {
+        if ($fileAttachmentViewDetailTableCriteriaTransfer->getDateTo()) {
             // @phpstan-ignore-next-line
             $companyUserFileQuery
                 ->useSpyCompanyUserFileQuery()
-                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentFileViewDetailTableCriteriaTransfer->getDateTo()), Criteria::LESS_THAN)
+                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentViewDetailTableCriteriaTransfer->getDateTo()), Criteria::LESS_THAN)
                 ->endUse();
         }
 
@@ -391,12 +391,12 @@ class ViewFileDetailTable extends AbstractTable
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
     protected function prepareAssetFileQuery(
-        FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+        FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ): SpyFileQuery {
         $fileQuery = $this->fileQuery::create();
 
@@ -423,11 +423,11 @@ class ViewFileDetailTable extends AbstractTable
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
      *
      * @return array<int, array<int, mixed>|string>
      */
-    protected function getFileUnionQuerySql(FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer): array
+    protected function getFileUnionQuerySql(FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer): array
     {
         $companyFileParams = [];
         $companyBusinessUnitFileParams = [];
@@ -435,23 +435,23 @@ class ViewFileDetailTable extends AbstractTable
         $assetFileParams = [];
         $unionParts = [];
 
-        if (!$fileAttachmentFileViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentFileViewDetailTableCriteriaTransfer->getEntityType() === SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY) {
-            $companyFileQuery = $this->prepareCompanyFileQuery($fileAttachmentFileViewDetailTableCriteriaTransfer);
+        if (!$fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() === SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY) {
+            $companyFileQuery = $this->prepareCompanyFileQuery($fileAttachmentViewDetailTableCriteriaTransfer);
             $unionParts[] = $companyFileQuery->createSelectSql($companyFileParams);
         }
 
-        if (!$fileAttachmentFileViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentFileViewDetailTableCriteriaTransfer->getEntityType() === SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT) {
-            $companyBusinessUnitFileQuery = $this->prepareCompanyBusinessUnitFileQuery($fileAttachmentFileViewDetailTableCriteriaTransfer);
+        if (!$fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() === SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT) {
+            $companyBusinessUnitFileQuery = $this->prepareCompanyBusinessUnitFileQuery($fileAttachmentViewDetailTableCriteriaTransfer);
             $unionParts[] = $companyBusinessUnitFileQuery->createSelectSql($companyBusinessUnitFileParams);
         }
 
-        if (!$fileAttachmentFileViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentFileViewDetailTableCriteriaTransfer->getEntityType() === SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER) {
-            $companyUserFileQuery = $this->prepareCompanyUserFileQuery($fileAttachmentFileViewDetailTableCriteriaTransfer);
+        if (!$fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() === SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER) {
+            $companyUserFileQuery = $this->prepareCompanyUserFileQuery($fileAttachmentViewDetailTableCriteriaTransfer);
             $unionParts[] = $companyUserFileQuery->createSelectSql($companyUserFileParams);
         }
 
-        if (!$fileAttachmentFileViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentFileViewDetailTableCriteriaTransfer->getEntityType() === SharedSelfServicePortalConfig::ENTITY_TYPE_SSP_ASSET) {
-            $assetFileQuery = $this->prepareAssetFileQuery($fileAttachmentFileViewDetailTableCriteriaTransfer);
+        if (!$fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() === SharedSelfServicePortalConfig::ENTITY_TYPE_SSP_ASSET) {
+            $assetFileQuery = $this->prepareAssetFileQuery($fileAttachmentViewDetailTableCriteriaTransfer);
             $unionParts[] = $assetFileQuery->createSelectSql($assetFileParams);
         }
 
@@ -464,13 +464,13 @@ class ViewFileDetailTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     * @param \Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
      *
      * @return \Propel\Runtime\Connection\StatementWrapper
      */
     protected function prepareRawQuery(
         TableConfiguration $config,
-        FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+        FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ): StatementWrapper {
         $orderBy = $this->getOrderBy($config);
 
@@ -478,7 +478,7 @@ class ViewFileDetailTable extends AbstractTable
          * @var array<int, mixed> $params
          * @var string $unionSql
          */
-        [$unionSql, $params] = $this->getFileUnionQuerySql($fileAttachmentFileViewDetailTableCriteriaTransfer);
+        [$unionSql, $params] = $this->getFileUnionQuerySql($fileAttachmentViewDetailTableCriteriaTransfer);
 
         $sql = <<<SQL
             SELECT *
@@ -508,18 +508,18 @@ class ViewFileDetailTable extends AbstractTable
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
      *
      * @return \Propel\Runtime\Connection\StatementWrapper
      */
     protected function prepareRowCountQuery(
-        FileAttachmentFileViewDetailTableCriteriaTransfer $fileAttachmentFileViewDetailTableCriteriaTransfer
+        FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ): StatementWrapper {
         /**
          * @var array<int, mixed> $params
          * @var string $unionSql
          */
-        [$unionSql, $params] = $this->getFileUnionQuerySql($fileAttachmentFileViewDetailTableCriteriaTransfer);
+        [$unionSql, $params] = $this->getFileUnionQuerySql($fileAttachmentViewDetailTableCriteriaTransfer);
 
         $sql = <<<SQL
             SELECT COUNT(*) AS total

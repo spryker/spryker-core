@@ -52,14 +52,13 @@ class ListCompanyFileController extends AbstractController
                     FileSearchFilterSubForm::FIELD_SEARCH => $request->query->has(static::QUERY_PARAM_SSP_ASSET_REFERENCE) ? $request->query->get(static::QUERY_PARAM_SSP_ASSET_REFERENCE) : null,
                 ],
             ],
-            $this->getLocale(),
         );
         $fileSearchFilterHandler = $this->getFactory()->createFileSearchFilterHandler();
-        $fileAttachmentFileCollectionTransfer = $fileSearchFilterHandler->handleSearchFormSubmit($request, $fileSearchFilterForm);
+        $fileAttachmentCollectionTransfer = $fileSearchFilterHandler->handleSearchFormSubmit($request, $fileSearchFilterForm);
 
         return [
-            'fileAttachments' => $fileAttachmentFileCollectionTransfer->getFileAttachments(),
-            'pagination' => $fileAttachmentFileCollectionTransfer->getPagination(),
+            'fileAttachments' => $fileAttachmentCollectionTransfer->getFileAttachments(),
+            'pagination' => $fileAttachmentCollectionTransfer->getPagination(),
             'fileSearchFilterForm' => $fileSearchFilterForm->createView(),
         ];
     }

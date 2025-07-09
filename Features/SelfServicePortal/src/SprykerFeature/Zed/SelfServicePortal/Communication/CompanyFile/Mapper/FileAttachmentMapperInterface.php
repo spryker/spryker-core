@@ -7,40 +7,28 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Mapper;
 
-use Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer;
-use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
+use Generated\Shared\Transfer\FileAttachmentTransfer;
 
 interface FileAttachmentMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionTransfer $currentFileAttachmentCollectionTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
      * @param array<string, mixed> $formData
      * @param int $idFile
      *
      * @return \Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer
      */
     public function mapFormDataToFileAttachmentCollectionTransfer(
-        FileAttachmentCollectionTransfer $currentFileAttachmentCollectionTransfer,
+        FileAttachmentTransfer $fileAttachmentTransfer,
         array $formData,
         int $idFile
     ): FileAttachmentCollectionRequestTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionTransfer $fileAttachmentCollectionTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
      *
      * @return array<string, array<int>>
      */
-    public function mapFileAttachmentCollectionTransferToFormData(FileAttachmentCollectionTransfer $fileAttachmentCollectionTransfer): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionTransfer $currentFileAttachmentCollectionTransfer
-     * @param array<string, mixed> $businessFormData
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer|null
-     */
-    public function mapFormDataToFileAttachmentCollectionDeleteCriteriaTransfer(
-        FileAttachmentCollectionTransfer $currentFileAttachmentCollectionTransfer,
-        array $businessFormData
-    ): ?FileAttachmentCollectionDeleteCriteriaTransfer;
+    public function mapFileAttachmentCollectionTransferToFormData(FileAttachmentTransfer $fileAttachmentTransfer): array;
 }

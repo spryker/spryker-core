@@ -7,19 +7,19 @@
 
 namespace SprykerFeature\Yves\SelfServicePortal\Widget;
 
-use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
+use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 class SspFileListWidget extends AbstractWidget
 {
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer|null $fileAttachmentFileCollectionTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentCollectionTransfer|null $fileAttachmentCollectionTransfer
      * @param string|null $moreLink
      */
-    public function __construct(?FileAttachmentFileCollectionTransfer $fileAttachmentFileCollectionTransfer, ?string $moreLink = null)
+    public function __construct(?FileAttachmentCollectionTransfer $fileAttachmentCollectionTransfer, ?string $moreLink = null)
     {
-        $this->addParameter('totalItems', $fileAttachmentFileCollectionTransfer?->getPagination()?->getNbResults());
-        $this->addParameter('fileAttachments', $fileAttachmentFileCollectionTransfer?->getFileAttachments());
+        $this->addParameter('totalItems', $fileAttachmentCollectionTransfer?->getPagination()?->getNbResults());
+        $this->addParameter('fileAttachments', $fileAttachmentCollectionTransfer?->getFileAttachments());
         $this->addParameter('moreLink', $moreLink);
     }
 

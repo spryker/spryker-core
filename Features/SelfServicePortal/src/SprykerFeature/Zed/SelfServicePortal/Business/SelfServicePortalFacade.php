@@ -9,13 +9,10 @@ namespace SprykerFeature\Zed\SelfServicePortal\Business;
 
 use Generated\Shared\Transfer\DashboardRequestTransfer;
 use Generated\Shared\Transfer\DashboardResponseTransfer;
-use Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
@@ -63,26 +60,12 @@ class SelfServicePortalFacade extends AbstractFacade implements SelfServicePorta
      *
      * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
      */
-    public function getFileAttachmentCollection(FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): FileAttachmentCollectionTransfer
-    {
-        return $this->getRepository()->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer
-     */
-    public function getFileAttachmentFileCollectionAccordingToPermissions(
-        FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-    ): FileAttachmentFileCollectionTransfer {
+    public function getFileAttachmentCollection(
+        FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
+    ): FileAttachmentCollectionTransfer {
         return $this->getFactory()
             ->createCompanyFileReader()
-            ->getFileAttachmentFileCollectionAccordingToPermissions($fileAttachmentFileCriteriaTransfer);
+            ->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
     }
 
     /**
@@ -141,16 +124,16 @@ class SelfServicePortalFacade extends AbstractFacade implements SelfServicePorta
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer $fileAttachmentCollectionDeleteCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer
      */
     public function deleteFileAttachmentCollection(
-        FileAttachmentCollectionDeleteCriteriaTransfer $fileAttachmentCollectionDeleteCriteriaTransfer
+        FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
     ): FileAttachmentCollectionResponseTransfer {
         return $this->getFactory()
             ->createFileAttachmentDeleter()
-            ->deleteFileAttachmentCollection($fileAttachmentCollectionDeleteCriteriaTransfer);
+            ->deleteFileAttachmentCollection($fileAttachmentCollectionRequestTransfer);
     }
 
     /**

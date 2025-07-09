@@ -7,25 +7,17 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Deleter;
 
-use Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer;
-use Generated\Shared\Transfer\FileCollectionTransfer;
 
 interface FileAttachmentDeleterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\FileCollectionTransfer $fileCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileCollectionTransfer
-     */
-    public function deleteFileAttachmentsByFileCollection(FileCollectionTransfer $fileCollectionTransfer): FileCollectionTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer $fileAttachmentCollectionDeleteCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer
      */
     public function deleteFileAttachmentCollection(
-        FileAttachmentCollectionDeleteCriteriaTransfer $fileAttachmentCollectionDeleteCriteriaTransfer
+        FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
     ): FileAttachmentCollectionResponseTransfer;
 }

@@ -7,8 +7,19 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\Controller;
 
-use Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer;
+use Exception;
+use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyCollectionTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer;
+use Generated\Shared\Transfer\FileAttachmentTransfer;
+use Generated\Shared\Transfer\FileTransfer;
+use Generated\Shared\Transfer\SspAssetCollectionTransfer;
+use Generated\Shared\Transfer\SspAssetTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig as SharedSelfServicePortalConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -53,7 +64,9 @@ class UnlinkFileController extends FileAbstractController
             return $this->redirectResponse($redirectUrl);
         }
 
-        $fileAttachmentCollectionResponseTransfer = $this->getFacade()->deleteFileAttachmentCollection($this->createDeleteCriteriaTransfer($request));
+        $fileAttachmentCollectionResponseTransfer = $this->getFacade()->deleteFileAttachmentCollection(
+            $this->createDeleteCriteriaTransfer($request),
+        );
 
         if ($fileAttachmentCollectionResponseTransfer->getErrors()->count() > 0) {
             $this->addErrorMessagesFromFileAttachmentCollectionResponse($fileAttachmentCollectionResponseTransfer);
@@ -85,23 +98,27 @@ class UnlinkFileController extends FileAbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer
+     * @throws \Exception
+     *
+     * @return \Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer
      */
-    protected function createDeleteCriteriaTransfer(Request $request): FileAttachmentCollectionDeleteCriteriaTransfer
+    protected function createDeleteCriteriaTransfer(Request $request): FileAttachmentCollectionRequestTransfer
     {
-        $entityId = $request->query->getInt(static::REQUEST_PARAM_ENTITY_ID);
+        $entityId = $this->castId($request->query->getInt(static::REQUEST_PARAM_ENTITY_ID));
 
-        $fileAttachmentCollectionDeleteCriteriaTransfer = new FileAttachmentCollectionDeleteCriteriaTransfer();
-        $fileAttachmentCollectionDeleteCriteriaTransfer->addIdFile($request->query->getInt(static::REQUEST_PARAM_ID_FILE));
+        $idFile = $this->castId($request->query->getInt(static::REQUEST_PARAM_ID_FILE));
 
-        $fileAttachmentCollectionDeleteCriteriaTransfer = match ($request->query->get(static::REQUEST_PARAM_ENTITY_TYPE)) {
-            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY => $fileAttachmentCollectionDeleteCriteriaTransfer->addIdCompany($entityId),
-            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT => $fileAttachmentCollectionDeleteCriteriaTransfer->addIdCompanyBusinessUnit($entityId),
-            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER => $fileAttachmentCollectionDeleteCriteriaTransfer->addIdCompanyUser($entityId),
-            SharedSelfServicePortalConfig::ENTITY_TYPE_SSP_ASSET => $fileAttachmentCollectionDeleteCriteriaTransfer->addIdSspAsset($entityId),
-            default => $fileAttachmentCollectionDeleteCriteriaTransfer,
+        $fileAttachmentTransfer = (new FileAttachmentTransfer())->setFile((new FileTransfer())->setIdFile($idFile));
+
+        $fileAttachmentTransfer = match ($request->query->get(static::REQUEST_PARAM_ENTITY_TYPE)) {
+            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY => $fileAttachmentTransfer->setCompanyCollection((new CompanyCollectionTransfer())->addCompany((new CompanyTransfer())->setIdCompany($entityId))),
+            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT => $fileAttachmentTransfer->setBusinessUnitCollection((new CompanyBusinessUnitCollectionTransfer())->addCompanyBusinessUnit((new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($entityId))),
+            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER => $fileAttachmentTransfer->setCompanyUserCollection((new CompanyUserCollectionTransfer())->addCompanyUser((new CompanyUserTransfer())->setIdCompanyUser($entityId))),
+            SharedSelfServicePortalConfig::ENTITY_TYPE_SSP_ASSET => $fileAttachmentTransfer->setSspAssetCollection((new SspAssetCollectionTransfer())->addSspAsset((new SspAssetTransfer())->setIdSspAsset($entityId))),
+            default => throw new Exception(static::ERROR_MESSAGE_INVALID_ENTITY_TYPE),
         };
 
-        return $fileAttachmentCollectionDeleteCriteriaTransfer;
+        return (new FileAttachmentCollectionRequestTransfer())
+            ->addFileAttachmentToDelete($fileAttachmentTransfer);
     }
 }

@@ -58,6 +58,10 @@ use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\DashboardDataExpan
 use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\DashboardDataExpander\FileDashboardDataExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Deleter\FileAttachmentDeleter;
 use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Deleter\FileAttachmentDeleterInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Permission\FileAttachmentCriteriaPermissionExpander;
+use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Permission\FileAttachmentPermissionChecker;
+use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Permission\FileAttachmentPermissionCheckerInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Permission\FileAttachmentPermissionExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Reader\CompanyFileReader;
 use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Reader\CompanyFileReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Dashboard\Reader\DashboardReader;
@@ -159,12 +163,6 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Service\Updater\OrderItemSched
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Updater\OrderItemScheduleUpdaterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePointSearchCoordinatesExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePointSearchCoordinatesExpanderInterface;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\CompanyBusinessUnitFileQueryStrategy;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\CompanyFileQueryStrategy;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\CompanyUserFileQueryStrategy;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\FilePermissionQueryStrategyInterface;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\ViewBusinessUnitSspAssetSspAssetFileQueryStrategy;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\ViewCompanySspAssetSspAssetFileQueryStrategy;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalDependencyProvider;
 
@@ -178,68 +176,23 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     use DataImportFactoryTrait;
 
     /**
-     * @return list<\SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\FilePermissionQueryStrategyInterface>
-     */
-    public function createFileQueryStrategies(): array
-    {
-        return [
-            $this->createCompanyUserFileQueryStrategy(),
-            $this->createCompanyFileQueryStrategy(),
-            $this->createCompanyBusinessUnitFileQueryStrategy(),
-            $this->createViewBusinessUnitSspAssetSspAssetFileQueryStrategy(),
-            $this->createViewCompanySspAssetSspAssetFileQueryStrategy(),
-        ];
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\FilePermissionQueryStrategyInterface
-     */
-    public function createCompanyUserFileQueryStrategy(): FilePermissionQueryStrategyInterface
-    {
-        return new CompanyUserFileQueryStrategy();
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\FilePermissionQueryStrategyInterface
-     */
-    public function createCompanyFileQueryStrategy(): FilePermissionQueryStrategyInterface
-    {
-        return new CompanyFileQueryStrategy();
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\FilePermissionQueryStrategyInterface
-     */
-    public function createCompanyBusinessUnitFileQueryStrategy(): FilePermissionQueryStrategyInterface
-    {
-        return new CompanyBusinessUnitFileQueryStrategy();
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\FilePermissionQueryStrategyInterface
-     */
-    public function createViewBusinessUnitSspAssetSspAssetFileQueryStrategy(): FilePermissionQueryStrategyInterface
-    {
-        return new ViewBusinessUnitSspAssetSspAssetFileQueryStrategy();
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\QueryStrategy\ViewCompanySspAssetSspAssetFileQueryStrategy
-     */
-    public function createViewCompanySspAssetSspAssetFileQueryStrategy(): ViewCompanySspAssetSspAssetFileQueryStrategy
-    {
-        return new ViewCompanySspAssetSspAssetFileQueryStrategy();
-    }
-
-    /**
      * @return \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Reader\CompanyFileReaderInterface
      */
     public function createCompanyFileReader(): CompanyFileReaderInterface
     {
         return new CompanyFileReader(
             $this->getRepository(),
-            $this->createFileQueryStrategies(),
+            $this->createFileAttachmentPermissionChecker(),
+            $this->createFileAttachmentPermissionExpander(),
         );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Permission\FileAttachmentPermissionCheckerInterface
+     */
+    public function createFileAttachmentPermissionChecker(): FileAttachmentPermissionCheckerInterface
+    {
+        return new FileAttachmentPermissionChecker();
     }
 
     /**
@@ -277,7 +230,7 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     public function createAssetFileExpander(): AssetFileExpanderInterface
     {
         return new AssetFileExpander(
-            $this->createCompanyFileReader(),
+            $this->getRepository(),
         );
     }
 
@@ -388,6 +341,14 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     public function createSspServiceCustomerPermissionExpander(): SspServiceCustomerPermissionExpanderInterface
     {
         return new SspServiceCustomerPermissionExpander();
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Permission\FileAttachmentPermissionExpanderInterface
+     */
+    public function createFileAttachmentPermissionExpander(): FileAttachmentPermissionExpanderInterface
+    {
+        return new FileAttachmentCriteriaPermissionExpander();
     }
 
     /**

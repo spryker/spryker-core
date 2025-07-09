@@ -7,7 +7,7 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\Controller;
 
-use Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,14 +38,14 @@ class ViewFileController extends FileAbstractController
             return $this->redirectResponse(static::URL_PATH_LIST_FILE);
         }
 
-        $fileAttachmentFileViewDetailTableCriteriaTransfer = $this
-            ->createFileAttachmentFileViewDetailTableCriteriaTransfer($request, $idFile);
+        $fileAttachmentViewDetailTableCriteriaTransfer = $this
+            ->createFileAttachmentViewDetailTableCriteriaTransfer($request, $idFile);
 
         $viewFileDetailTableFilterForm = $this->getFactory()
-            ->createViewFileDetailTableFilterForm($fileAttachmentFileViewDetailTableCriteriaTransfer);
+            ->createViewFileDetailTableFilterForm($fileAttachmentViewDetailTableCriteriaTransfer);
 
         $viewFileDetailTable = $this->getFactory()
-            ->createViewFileDetailTable($idFile, $fileAttachmentFileViewDetailTableCriteriaTransfer)
+            ->createViewFileDetailTable($idFile, $fileAttachmentViewDetailTableCriteriaTransfer)
             ->render();
 
         return $this->viewResponse([
@@ -70,11 +70,11 @@ class ViewFileController extends FileAbstractController
     {
         $idFile = $this->castId($request->get(static::REQUEST_PARAM_ID_FILE));
 
-        $fileAttachmentFileViewDetailTableCriteriaTransfer = $this
-            ->createFileAttachmentFileViewDetailTableCriteriaTransfer($request, $idFile);
+        $fileAttachmentViewDetailTableCriteriaTransfer = $this
+            ->createFileAttachmentViewDetailTableCriteriaTransfer($request, $idFile);
 
         $viewFileDetailTable = $this->getFactory()
-            ->createViewFileDetailTable($idFile, $fileAttachmentFileViewDetailTableCriteriaTransfer);
+            ->createViewFileDetailTable($idFile, $fileAttachmentViewDetailTableCriteriaTransfer);
 
         return $this->jsonResponse($viewFileDetailTable->fetchData());
     }
@@ -83,13 +83,13 @@ class ViewFileController extends FileAbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $idFile
      *
-     * @return \Generated\Shared\Transfer\FileAttachmentFileViewDetailTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer
      */
-    protected function createFileAttachmentFileViewDetailTableCriteriaTransfer(
+    protected function createFileAttachmentViewDetailTableCriteriaTransfer(
         Request $request,
         int $idFile
-    ): FileAttachmentFileViewDetailTableCriteriaTransfer {
-        return (new FileAttachmentFileViewDetailTableCriteriaTransfer())
+    ): FileAttachmentViewDetailTableCriteriaTransfer {
+        return (new FileAttachmentViewDetailTableCriteriaTransfer())
             ->setIdFile($idFile)
             ->fromArray($request->query->all(), true);
     }

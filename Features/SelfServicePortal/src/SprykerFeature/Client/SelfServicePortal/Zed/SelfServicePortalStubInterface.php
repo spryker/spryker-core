@@ -9,8 +9,8 @@ namespace SprykerFeature\Client\SelfServicePortal\Zed;
 
 use Generated\Shared\Transfer\DashboardRequestTransfer;
 use Generated\Shared\Transfer\DashboardResponseTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer;
-use Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
+use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
@@ -54,13 +54,13 @@ interface SelfServicePortalStubInterface
     ): SalesOrderItemCollectionResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\FileAttachmentFileCollectionTransfer
+     * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
      */
-    public function getFileAttachmentFileCollectionAccordingToPermissions(
-        FileAttachmentFileCriteriaTransfer $fileAttachmentFileCriteriaTransfer
-    ): FileAttachmentFileCollectionTransfer;
+    public function getFileAttachmentCollection(
+        FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
+    ): FileAttachmentCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\DashboardRequestTransfer $dashboardRequestTransfer

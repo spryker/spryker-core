@@ -404,21 +404,25 @@ class SelfServicePortalFactory extends AbstractFactory
          */
     public function createFileSearchFilterFormDataProvider(): FileSearchFilterFormDataProvider
     {
-        return new FileSearchFilterFormDataProvider($this->getConfig(), $this->getGlossaryStorageClient());
+        return new FileSearchFilterFormDataProvider(
+            $this->getConfig(),
+            $this->getCompanyUserClient(),
+            $this->getCompanyBusinessUnitClient(),
+            $this->getClient(),
+        );
     }
 
     /**
      * @param array<string, mixed> $data
-     * @param string $localeName
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createFileSearchFilterForm(array $data, string $localeName): FormInterface
+    public function createFileSearchFilterForm(array $data): FormInterface
     {
         return $this->getFormFactory()->create(
             FileSearchFilterForm::class,
             $data,
-            $this->createFileSearchFilterFormDataProvider()->getOptions($localeName),
+            $this->createFileSearchFilterFormDataProvider()->getOptions(),
         );
     }
 

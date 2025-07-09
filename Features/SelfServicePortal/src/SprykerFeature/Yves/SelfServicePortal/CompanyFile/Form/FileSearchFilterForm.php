@@ -27,7 +27,12 @@ class FileSearchFilterForm extends AbstractType
     /**
      * @var string
      */
-    public const OPTION_ACCESS_LEVELS = 'option_access_levels';
+    public const OPTION_BUSINESS_ENTITIES = 'option_business_entity_types';
+
+    /**
+     * @var string
+     */
+    public const OPTION_SSP_ASSET_ENTITIES = 'option_ssp_asset_entity_types';
 
     /**
      * @var string
@@ -65,7 +70,8 @@ class FileSearchFilterForm extends AbstractType
 
         $resolver->setRequired([
             static::OPTION_FILE_TYPES,
-            static::OPTION_ACCESS_LEVELS,
+            static::OPTION_BUSINESS_ENTITIES,
+            static::OPTION_SSP_ASSET_ENTITIES,
         ]);
     }
 
@@ -151,7 +157,8 @@ class FileSearchFilterForm extends AbstractType
             FileSearchFilterSubForm::class,
             [
                 static::OPTION_FILE_TYPES => $options[static::OPTION_FILE_TYPES],
-                static::OPTION_ACCESS_LEVELS => $options[static::OPTION_ACCESS_LEVELS],
+                static::OPTION_BUSINESS_ENTITIES => $options[static::OPTION_BUSINESS_ENTITIES],
+                static::OPTION_SSP_ASSET_ENTITIES => $options[static::OPTION_SSP_ASSET_ENTITIES],
             ],
         );
 

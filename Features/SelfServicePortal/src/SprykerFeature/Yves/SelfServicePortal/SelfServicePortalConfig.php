@@ -8,7 +8,6 @@
 namespace SprykerFeature\Yves\SelfServicePortal;
 
 use Spryker\Yves\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig as SharedSelfServicePortalConfig;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 
 /**
@@ -261,24 +260,6 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     public function getSearchResultLimit(): int
     {
         return static::SEARCH_RESULT_LIMIT;
-    }
-
-    /**
-     * Specification:
-     * - Returns a list of entity types that can be attached to company files.
-     * - These entity types are used to filter files by the entity they are attached to.
-     *
-     * @api
-     *
-     * @return list<string>
-     */
-    public function getAttachableEntityTypesForCompanyFiles(): array
-    {
-        return [
-            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER,
-            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY,
-            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT,
-        ];
     }
 
     /**

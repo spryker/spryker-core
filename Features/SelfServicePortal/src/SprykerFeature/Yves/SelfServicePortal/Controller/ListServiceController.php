@@ -75,7 +75,8 @@ class ListServiceController extends AbstractController
             throw new NotFoundHttpException('Company user not found.');
         }
 
-        $companyUserTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomerById($companyUserTransfer->getFkCustomerOrFail()));
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomerById($companyUserTransfer->getFkCustomerOrFail());
+        $companyUserTransfer->setCustomer($customerTransfer);
         $sspServiceCriteriaTransfer->setCompanyUser($companyUserTransfer);
 
         $sspServiceCollectionTransfer = $this->getClient()->getServiceCollection($sspServiceCriteriaTransfer);

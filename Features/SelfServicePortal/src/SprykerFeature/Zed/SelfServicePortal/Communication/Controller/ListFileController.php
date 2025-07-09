@@ -7,7 +7,7 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\Controller;
 
-use Generated\Shared\Transfer\FileAttachmentFileTableCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentTableCriteriaTransfer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,14 +25,14 @@ class ListFileController extends FileAbstractController
      */
     public function indexAction(Request $request): array
     {
-        $fileAttachmentFileTableCriteriaTransfer = $this
-            ->createFileAttachmentFileTableCriteriaTransfer($request);
+        $fileAttachmentTableCriteriaTransfer = $this
+            ->createFileAttachmentTableCriteriaTransfer($request);
 
         $fileTableFilterForm = $this->getFactory()
-            ->createFileTableFilterForm($fileAttachmentFileTableCriteriaTransfer);
+            ->createFileTableFilterForm($fileAttachmentTableCriteriaTransfer);
 
         $fileTable = $this->getFactory()
-            ->createFileTable($fileAttachmentFileTableCriteriaTransfer);
+            ->createFileTable($fileAttachmentTableCriteriaTransfer);
 
         return [
             'fileTable' => $fileTable->render(),
@@ -48,11 +48,11 @@ class ListFileController extends FileAbstractController
      */
     public function tableAction(Request $request): JsonResponse
     {
-        $fileAttachmentFileTableCriteriaTransfer = $this
-            ->createFileAttachmentFileTableCriteriaTransfer($request);
+        $fileAttachmentTableCriteriaTransfer = $this
+            ->createFileAttachmentTableCriteriaTransfer($request);
 
         $fileTable = $this->getFactory()
-            ->createFileTable($fileAttachmentFileTableCriteriaTransfer);
+            ->createFileTable($fileAttachmentTableCriteriaTransfer);
 
         return $this->jsonResponse($fileTable->fetchData());
     }
@@ -60,12 +60,12 @@ class ListFileController extends FileAbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\FileAttachmentFileTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\FileAttachmentTableCriteriaTransfer
      */
-    protected function createFileAttachmentFileTableCriteriaTransfer(
+    protected function createFileAttachmentTableCriteriaTransfer(
         Request $request
-    ): FileAttachmentFileTableCriteriaTransfer {
-        return (new FileAttachmentFileTableCriteriaTransfer())
+    ): FileAttachmentTableCriteriaTransfer {
+        return (new FileAttachmentTableCriteriaTransfer())
             ->fromArray($request->query->all(), true);
     }
 }

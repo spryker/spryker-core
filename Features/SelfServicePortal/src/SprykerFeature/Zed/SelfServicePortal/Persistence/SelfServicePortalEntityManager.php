@@ -7,14 +7,15 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 
-use Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileCollectionTransfer;
 use Generated\Shared\Transfer\ProductClassTransfer;
 use Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
-use LogicException;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery;
@@ -130,53 +131,54 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionDeleteCriteriaTransfer $fileAttachmentCollectionDeleteCriteriaTransfer
-     *
-     * @throws \LogicException
+     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
      *
      * @return void
      */
     public function deleteFileAttachmentCollection(
-        FileAttachmentCollectionDeleteCriteriaTransfer $fileAttachmentCollectionDeleteCriteriaTransfer
+        FileAttachmentTransfer $fileAttachmentTransfer
     ): void {
-        /** @var list<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery> $fileAttachmentQueryList */
-        $fileAttachmentQueryList = $this->getFactory()->getFileAttachmentQueryList();
-        $isUnconditionalDeletion = true;
+        $idFile = $fileAttachmentTransfer->getFileOrFail()->getIdFileOrFail();
 
-        if ($fileAttachmentCollectionDeleteCriteriaTransfer->getCompanyIds() !== []) {
-            $isUnconditionalDeletion = false;
-            $fileAttachmentQueryList = $this->applyFileAttachmentByCompanyIdsCondition($fileAttachmentQueryList, $fileAttachmentCollectionDeleteCriteriaTransfer->getCompanyIds());
-        }
+        $companyIds = array_map(
+            static fn (CompanyTransfer $companyTransfer): int => $companyTransfer->getIdCompanyOrFail(),
+            $fileAttachmentTransfer->getCompanyCollection()?->getCompanies()?->getArrayCopy() ?? [],
+        );
 
-        if ($fileAttachmentCollectionDeleteCriteriaTransfer->getCompanyUserIds() !== []) {
-            $isUnconditionalDeletion = false;
-            $fileAttachmentQueryList = $this->applyFileAttachmentByCompanyUserIdsCondition($fileAttachmentQueryList, $fileAttachmentCollectionDeleteCriteriaTransfer->getCompanyUserIds());
-        }
+        $this->getFactory()->createCompanyFileQuery()
+            ->filterByFkCompany_In($companyIds)
+            ->filterByFkFile($idFile)
+            ->delete();
 
-        if ($fileAttachmentCollectionDeleteCriteriaTransfer->getCompanyBusinessUnitIds() !== []) {
-            $isUnconditionalDeletion = false;
-            $fileAttachmentQueryList = $this->applyFileAttachmentByCompanyBusinessUnitIdsCondition($fileAttachmentQueryList, $fileAttachmentCollectionDeleteCriteriaTransfer->getCompanyBusinessUnitIds());
-        }
+        $businessUnitIds = array_map(
+            static fn (CompanyBusinessUnitTransfer $businessUnitTransfer): int => $businessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
+            $fileAttachmentTransfer->getBusinessUnitCollection()?->getCompanyBusinessUnits()?->getArrayCopy() ?? [],
+        );
 
-        if ($fileAttachmentCollectionDeleteCriteriaTransfer->getSspAssetIds() !== []) {
-            $isUnconditionalDeletion = false;
-            $fileAttachmentQueryList = $this->applyFileAttachmentByAssetIdsCondition($fileAttachmentQueryList, $fileAttachmentCollectionDeleteCriteriaTransfer->getSspAssetIds());
-        }
+        $this->getFactory()->createCompanyBusinessUnitFileQuery()
+            ->filterByFkCompanyBusinessUnit_In($businessUnitIds)
+            ->filterByFkFile($idFile)
+            ->delete();
 
-        if ($fileAttachmentCollectionDeleteCriteriaTransfer->getFileIds() !== []) {
-            $isUnconditionalDeletion = false;
-            $fileAttachmentQueryList = $this->applyFileAttachmentByFileIdsCondition(
-                $fileAttachmentQueryList,
-                $fileAttachmentCollectionDeleteCriteriaTransfer->getFileIds(),
-                count($fileAttachmentCollectionDeleteCriteriaTransfer->modifiedToArray()) > 1,
-            );
-        }
+        $companyUserIds = array_map(
+            static fn (CompanyUserTransfer $companyUserTransfer): int => $companyUserTransfer->getIdCompanyUserOrFail(),
+            $fileAttachmentTransfer->getCompanyUserCollection()?->getCompanyUsers()?->getArrayCopy() ?? [],
+        );
 
-        if ($isUnconditionalDeletion && !$fileAttachmentCollectionDeleteCriteriaTransfer->getIsUnconditionalDeletionAllowed()) {
-            throw new LogicException('Unconditional deletion is not allowed.');
-        }
+        $this->getFactory()->createCompanyUserFileQuery()
+            ->filterByFkCompanyUser_In($companyUserIds)
+            ->filterByFkFile($idFile)
+            ->delete();
 
-        $this->deleteFileAttachments($fileAttachmentQueryList);
+        $sspAssetIds = array_map(
+            static fn (SspAssetTransfer $sspAssetTransfer): int => $sspAssetTransfer->getIdSspAssetOrFail(),
+            $fileAttachmentTransfer->getSspAssetCollection()?->getSspAssets()?->getArrayCopy() ?? [],
+        );
+
+        $this->getFactory()->createSspAssetFileQuery()
+            ->filterByFkSspAsset_In($sspAssetIds)
+            ->filterByFkFile($idFile)
+            ->delete();
     }
 
     /**
@@ -297,25 +299,18 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
     /**
      * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
      *
-     * @throws \LogicException
-     *
      * @return \Generated\Shared\Transfer\FileAttachmentTransfer
      */
     public function saveFileAttachment(FileAttachmentTransfer $fileAttachmentTransfer): FileAttachmentTransfer
     {
-        $fileAttachmentSaver = null;
+        $fileAttachmentSaver = $this->getFactory()->createFileAttachmentSaver();
 
-        foreach ($this->getFactory()->createFileAttachmentSavers() as $fileAttachmentSaverOption) {
-            if ($fileAttachmentSaverOption->isApplicable($fileAttachmentTransfer)) {
-                $fileAttachmentSaver = $fileAttachmentSaverOption;
-            }
-        }
+        $fileAttachmentSaver->saveBusinessUnitFileAttachment($fileAttachmentTransfer);
+        $fileAttachmentSaver->saveCompanyFileAttachments($fileAttachmentTransfer);
+        $fileAttachmentSaver->saveCompanyUserAttachment($fileAttachmentTransfer);
+        $fileAttachmentSaver->saveSspAssetFileAttachment($fileAttachmentTransfer);
 
-        if (!$fileAttachmentSaver) {
-            throw new LogicException(sprintf('Saver for entity "%s" is not implemented.', $fileAttachmentTransfer->getEntityName()));
-        }
-
-        return $fileAttachmentSaver->save($fileAttachmentTransfer);
+        return $fileAttachmentTransfer;
     }
 
     /**

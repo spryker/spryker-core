@@ -45,6 +45,7 @@ use Spryker\Zed\ServicePoint\Business\ServicePointFacadeInterface;
 use Spryker\Zed\ShipmentType\Business\ShipmentTypeFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Spryker\Zed\Translator\Business\TranslatorFacadeInterface;
+use Spryker\Zed\User\Business\UserFacadeInterface;
 
 /**
  * @method \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig getConfig()
@@ -145,6 +146,11 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+
+    /**
+     * @var string
+     */
+    public const FACADE_USER = 'FACADE_USER';
 
     /**
      * @var string
@@ -297,6 +303,7 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addTranslatorFacade($container);
         $container = $this->addCompanyFacade($container);
         $container = $this->addCompanyUserFacade($container);
+        $container = $this->addUserFacade($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addSequenceNumberFacade($container);
@@ -687,6 +694,20 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_COMPANY_USER, function (Container $container): CompanyUserFacadeInterface {
             return $container->getLocator()->companyUser()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUserFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_USER, function (Container $container): UserFacadeInterface {
+            return $container->getLocator()->user()->facade();
         });
 
         return $container;
