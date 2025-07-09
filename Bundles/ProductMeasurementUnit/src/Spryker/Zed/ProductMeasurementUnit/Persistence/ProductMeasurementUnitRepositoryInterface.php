@@ -10,9 +10,38 @@ namespace Spryker\Zed\ProductMeasurementUnit\Persistence;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCollectionTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCriteriaTransfer;
 
 interface ProductMeasurementUnitRepositoryInterface
 {
+    /**
+     * @param array<string> $codes
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return array<string>
+     */
+    public function getProductMeasurementUnitCodesByCodes(array $codes): array;
+
+    /**
+     * @param int $idProductMeasurementUnit
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return int
+     */
+    public function countProductAssignments(int $idProductMeasurementUnit): int;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitCriteriaTransfer $productMeasurementUnitCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitCollectionTransfer
+     */
+    public function getProductMeasurementUnitCollection(
+        ProductMeasurementUnitCriteriaTransfer $productMeasurementUnitCriteriaTransfer
+    ): ProductMeasurementUnitCollectionTransfer;
+
     /**
      * @param int $idProductMeasurementSalesUnit
      *
@@ -68,6 +97,8 @@ interface ProductMeasurementUnitRepositoryInterface
     public function getMappedProductMeasurementSalesUnits(array $salesOrderItemIds): array;
 
     /**
+     * @deprecated Use {@link ProductMeasurementUnitRepository::getProductMeasurementUnitCollection()} instead.
+     *
      * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function findAllProductMeasurementUnitTransfers(): array;

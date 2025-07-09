@@ -1,0 +1,14 @@
+"Measurement unit [%s] deleted.","Measurement unit [%s] deleted."
+measurement_unit.code.not_found,"Measurement unit [%s] not found."
+measurement_unit.code.in_use,"Measurement unit [%s] is assigned to products and cannot be deleted."
+measurement_unit.code.already_exists,"Measurement unit [%s] already exists."
+measurement_unit.codes.empty,"Measurement units were not selected."
+"Measurement unit created successfully.","Measurement unit created successfully."
+"Measurement Unit"," Measurement Unit"
+"Create Measurement Unit"," Create Measurement Unit"
+Save,Save
+Update,Update
+"Edit Measurement Unit"," Edit Measurement Unit"
+"Back to Measurement Unit list"," Back to Measurement Unit list"
+"Measurement unit [%s] not found.","Measurement unit [%s] not found."
+"Measurement unit updated successfully.","Measurement unit updated successfully."

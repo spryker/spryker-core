@@ -38,6 +38,8 @@ interface ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
 
     /**
+     * @deprecated Will be removed without replacement. Unused method.
+     *
      * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function findAllProductMeasurementUnitTransfers(): array;

@@ -41,6 +41,17 @@ class ProductMeasurementUnitBusinessTester extends Actor
     use _generated\ProductMeasurementUnitBusinessTesterActions;
 
     /**
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer
+     */
+    public function buildRandomProductMeasurementUnit(): SpyProductMeasurementUnitEntityTransfer
+    {
+        return $this->buildProductMeasurementUnit([
+            'code' => 'MU-' . rand(1000, 100000000),
+            'default_precision' => rand(1, 1000),
+        ]);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function createEmptyCartChangeTransfer(): CartChangeTransfer

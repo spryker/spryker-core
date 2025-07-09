@@ -15,6 +15,11 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCollectionRequestTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCollectionResponseTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCollectionTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -26,6 +31,73 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeasurementUnitFacadeInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitCollectionRequestTransfer $productMeasurementUnitCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitCollectionResponseTransfer
+     */
+    public function createProductMeasurementUnitCollection(
+        ProductMeasurementUnitCollectionRequestTransfer $productMeasurementUnitCollectionRequestTransfer
+    ): ProductMeasurementUnitCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createProductMeasurementUnitCreator()
+            ->create($productMeasurementUnitCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitCollectionRequestTransfer $productMeasurementUnitCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitCollectionResponseTransfer
+     */
+    public function updateProductMeasurementUnitCollection(
+        ProductMeasurementUnitCollectionRequestTransfer $productMeasurementUnitCollectionRequestTransfer
+    ): ProductMeasurementUnitCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createProductMeasurementUnitUpdater()
+            ->update($productMeasurementUnitCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitCollectionDeleteCriteriaTransfer $productMeasurementUnitCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitCollectionResponseTransfer
+     */
+    public function deleteProductMeasurementUnitCollection(
+        ProductMeasurementUnitCollectionDeleteCriteriaTransfer $productMeasurementUnitCollectionDeleteCriteriaTransfer
+    ): ProductMeasurementUnitCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createProductMeasurementUnitDeleter()
+            ->delete($productMeasurementUnitCollectionDeleteCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitCriteriaTransfer $productMeasurementUnitCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitCollectionTransfer
+     */
+    public function getProductMeasurementUnitCollection(
+        ProductMeasurementUnitCriteriaTransfer $productMeasurementUnitCriteriaTransfer
+    ): ProductMeasurementUnitCollectionTransfer {
+        return $this->getRepository()
+            ->getProductMeasurementUnitCollection($productMeasurementUnitCriteriaTransfer);
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -138,6 +210,8 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link ProductMeasurementUnitFacade::getProductMeasurementUnitCollection()} instead.
      *
      * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */

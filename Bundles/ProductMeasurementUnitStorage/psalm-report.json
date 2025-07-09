@@ -5,7 +5,7 @@
             "line_from": 79,
             "line_to": 79,
             "type": "InvalidArgument",
-            "message": "Argument 1 of Spryker\\Client\\ProductMeasurementUnitStorage\\Storage\\ProductMeasurementUnitReaderInterface::getProductMeasurementUnits expects array<array-key, int>, non-empty-array<array-key, int|null> provided",
+            "message": "Argument 1 of Spryker\\Client\\ProductMeasurementUnitStorage\\Storage\\ProductMeasurementUnitReaderInterface::getProductMeasurementUnits expects array<array-key, int>, but non-empty-array<array-key, int|null> provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Client/ProductMeasurementUnitStorage/Storage/ProductMeasurementBaseUnitReader.php",
             "snippet": "            ->getProductMeasurementUnits($productMeasurementUnitIds);",
             "selected_text": "$productMeasurementUnitIds",
@@ -14,46 +14,22 @@
         },
         {
             "severity": "error",
-            "line_from": 115,
-            "line_to": 115,
+            "line_from": 87,
+            "line_to": 87,
             "type": "InvalidArgument",
-            "message": "Argument 1 of Spryker\\Client\\ProductMeasurementUnitStorage\\Storage\\ProductMeasurementSalesUnitReader::getIndexedProductMeasurementUnitTransfers expects array<array-key, int>, list<int|mixed|null> provided",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\ProductConcreteProductMeasurementSalesUnitTransfer::setProductMeasurementSalesUnits expects ArrayObject<Generated\\Shared\\Transfer\\ProductMeasurementSalesUnitTransfer>, but ArrayObject<array-key, mixed> provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Client/ProductMeasurementUnitStorage/Storage/ProductMeasurementSalesUnitReader.php",
-            "snippet": "            $this->getIndexedProductMeasurementUnitTransfers($productMeasurementUnitIds),",
-            "selected_text": "$productMeasurementUnitIds",
+            "snippet": "                ->setProductMeasurementSalesUnits(new ArrayObject($productMeasurementSalesUnitTransfers));",
+            "selected_text": "new ArrayObject($productMeasurementSalesUnitTransfers)",
             "error_level": 6,
             "shortcode": 4
-        },
-        {
-            "severity": "error",
-            "line_from": 97,
-            "line_to": 97,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\ProductMeasurementUnitStorage\\Business\\Model\\ProductConcreteMeasurementUnitStorageReader::extractRelatedStoreNames is incorrect, got 'list<mixed|null|string>'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Business/Model/ProductConcreteMeasurementUnitStorageReader.php",
-            "snippet": "     * @return array<string>",
-            "selected_text": "array<string>",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 112,
-            "line_to": 112,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'list<mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\ProductMeasurementUnitStorage\\Business\\Model\\ProductConcreteMeasurementUnitStorageReader::extractRelatedStoreNames",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Business/Model/ProductConcreteMeasurementUnitStorageReader.php",
-            "snippet": "        return $relatedStores;",
-            "selected_text": "$relatedStores",
-            "error_level": 6,
-            "shortcode": 128
         },
         {
             "severity": "error",
             "line_from": 100,
             "line_to": 100,
             "type": "InvalidArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\SpyProductConcreteMeasurementUnitStorageEntityTransfer::setData expects null|string, Generated\\Shared\\Transfer\\ProductConcreteMeasurementUnitStorageTransfer provided",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\SpyProductConcreteMeasurementUnitStorageEntityTransfer::setData expects null|string, but Generated\\Shared\\Transfer\\ProductConcreteMeasurementUnitStorageTransfer provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Business/Model/ProductConcreteMeasurementUnitStorageWriter.php",
             "snippet": "                ->setData($storageData);",
             "selected_text": "$storageData",
@@ -65,7 +41,7 @@
             "line_from": 85,
             "line_to": 87,
             "type": "InvalidArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\SpyProductMeasurementUnitStorageEntityTransfer::setData expects null|string, array<string, mixed> provided",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\SpyProductMeasurementUnitStorageEntityTransfer::setData expects null|string, but array<string, mixed> provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Business/Model/ProductMeasurementUnitStorageWriter.php",
             "snippet": "                (new ProductMeasurementUnitStorageTransfer())\n                    ->fromArray($productMeasurementUnitTransfer->toArray(), true)\n                    ->toArray(),",
             "selected_text": "(new ProductMeasurementUnitStorageTransfer())\n                    ->fromArray($productMeasurementUnitTransfer->toArray(), true)\n                    ->toArray()",
@@ -175,7 +151,7 @@
             "line_from": 169,
             "line_to": 169,
             "type": "InvalidScalarArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\SynchronizationDataTransfer::setReference expects null|string, int provided",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\SynchronizationDataTransfer::setReference expects null|string, but int provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Client/ProductMeasurementUnitStorage/Storage/ProductConcreteMeasurementUnitStorageReader.php",
             "snippet": "            ->setReference($idProduct);",
             "selected_text": "$idProduct",
@@ -277,18 +253,6 @@
             "selected_text": "getStores",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $mappedProductConcreteMeasurementSalesUnitTransfers[mixed|null|string] using possibly null offset mixed|null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Business/Model/ProductConcreteMeasurementUnitStorageReader.php",
-            "snippet": "                $mappedProductConcreteMeasurementSalesUnitTransfers[$storeTransfer->getName()][] = (new ProductConcreteMeasurementSalesUnitTransfer())",
-            "selected_text": "$mappedProductConcreteMeasurementSalesUnitTransfers",
-            "error_level": 3,
-            "shortcode": 125
         },
         {
             "severity": "info",
@@ -412,5 +376,5 @@
         }
     ],
     "deprecation": [],
-    "count": 34
+    "count": 31
 }

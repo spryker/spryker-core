@@ -1,0 +1,23 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'Create Measurement Unit' | trans %}
+{% block head_title 'Create Measurement Unit' | trans %}
+
+{% block action %}
+    {{ backActionButton('/product-measurement-unit-gui', 'Back to Measurement Unit list' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+
+            {{ form_start(form) }}
+                {{ form_row(form.code) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.default_precision) }}
+                <button class="btn btn-create" type="submit">{{ 'Save' | trans}}</button>
+            {{ form_end(form) }}
+
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

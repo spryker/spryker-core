@@ -9,10 +9,12 @@ namespace Spryker\Zed\ProductMeasurementUnit\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCollectionTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementBaseUnit;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnit;
+use Propel\Runtime\Collection\Collection;
 
 interface ProductMeasurementUnitMapperInterface
 {
@@ -48,4 +50,15 @@ interface ProductMeasurementUnitMapperInterface
         SpyProductMeasurementUnit $productMeasurementUnitEntity,
         ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
     ): ProductMeasurementUnitTransfer;
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection $productMeasurementUnitEntities
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitCollectionTransfer $productMeasurementUnitCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitCollectionTransfer
+     */
+    public function mapProductMeasurementUnitCollectionTransfer(
+        Collection $productMeasurementUnitEntities,
+        ProductMeasurementUnitCollectionTransfer $productMeasurementUnitCollectionTransfer
+    ): ProductMeasurementUnitCollectionTransfer;
 }

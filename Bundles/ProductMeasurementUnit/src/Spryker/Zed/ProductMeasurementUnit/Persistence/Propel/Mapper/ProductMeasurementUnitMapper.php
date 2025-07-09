@@ -10,12 +10,14 @@ namespace Spryker\Zed\ProductMeasurementUnit\Persistence\Propel\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCollectionTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementBaseUnit;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnit;
+use Propel\Runtime\Collection\Collection;
 
 class ProductMeasurementUnitMapper implements ProductMeasurementUnitMapperInterface
 {
@@ -84,6 +86,28 @@ class ProductMeasurementUnitMapper implements ProductMeasurementUnitMapperInterf
         $productMeasurementUnitTransfer->fromArray($productMeasurementUnitEntity->toArray(), true);
 
         return $productMeasurementUnitTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection $productMeasurementUnitEntities
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitCollectionTransfer $productMeasurementUnitCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitCollectionTransfer
+     */
+    public function mapProductMeasurementUnitCollectionTransfer(
+        Collection $productMeasurementUnitEntities,
+        ProductMeasurementUnitCollectionTransfer $productMeasurementUnitCollectionTransfer
+    ): ProductMeasurementUnitCollectionTransfer {
+        foreach ($productMeasurementUnitEntities as $productMeasurementUnitEntity) {
+            $productMeasurementUnitCollectionTransfer->addProductMeasurementUnit(
+                $this->mapProductMeasurementUnitTransfer(
+                    $productMeasurementUnitEntity,
+                    new ProductMeasurementUnitTransfer(),
+                ),
+            );
+        }
+
+        return $productMeasurementUnitCollectionTransfer;
     }
 
     /**

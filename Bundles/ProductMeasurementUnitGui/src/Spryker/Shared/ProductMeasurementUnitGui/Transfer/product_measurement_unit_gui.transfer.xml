@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="ProductMeasurementUnitCollectionRequest" strict="true">
+        <property name="productMeasurementUnits" type="ProductMeasurementUnit[]" singular="productMeasurementUnit"/>
+        <property name="isTransactional" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnitCriteria" strict="true">
+        <property name="productMeasurementUnitConditions" type="ProductMeasurementUnitConditions"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnitConditions" strict="true">
+        <property name="codes" type="string[]" singular="code"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnitCollection" strict="true">
+        <property name="productMeasurementUnits" type="ProductMeasurementUnit[]" singular="productMeasurementUnit"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnitCollectionDeleteCriteria" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="codes" type="string[]" singular="code"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnitCollectionResponse" strict="true">
+        <property name="productMeasurementUnits" type="ProductMeasurementUnit[]" singular="productMeasurementUnit"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnit">
+    </transfer>
+</transfers>

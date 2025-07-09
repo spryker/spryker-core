@@ -1,0 +1,14 @@
+"Measurement unit [%s] deleted.","Maßeinheit [%s] gelöscht."
+measurement_unit.code.not_found,"Maßeinheit [%s] nicht gefunden."
+measurement_unit.code.in_use,"Maßeinheit [%s] ist Produkten zugewiesen und kann nicht gelöscht werden."
+measurement_unit.code.already_exists,"Maßeinheit [%s] existiert bereits."
+measurement_unit.codes.empty,"Keine Maßeinheiten ausgewählt."
+"Measurement unit created successfully.","Maßeinheit erfolgreich erstellt."
+"Measurement Unit",Maßeinheit
+"Create Measurement Unit","Maßeinheit erstellen"
+Save,Speichern
+Update,Aktualisieren
+"Edit Measurement Unit","Maßeinheit bearbeiten"
+"Back to Measurement Unit list","Zurück zur Liste der Maßeinheiten"
+"Measurement unit [%s] not found.","Maßeinheit [%s] nicht gefunden."
+"Measurement unit updated successfully.","Maßeinheit erfolgreich aktualisiert."

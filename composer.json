@@ -748,6 +748,7 @@
         "spryker/product-management-extension": "*",
         "spryker/product-measurement-unit": "*",
         "spryker/product-measurement-unit-data-import": "*",
+        "spryker/product-measurement-unit-gui": "*",
         "spryker/product-measurement-unit-storage": "*",
         "spryker/product-measurement-units-rest-api": "*",
         "spryker/product-merchant-commission-connector": "*",

@@ -10,11 +10,16 @@ namespace Spryker\Zed\ProductMeasurementUnit\Persistence;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCollectionTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitConditionsTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCriteriaTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductMeasurementUnit\Persistence\Map\SpyProductMeasurementBaseUnitTableMap;
 use Orm\Zed\ProductMeasurementUnit\Persistence\Map\SpyProductMeasurementSalesUnitTableMap;
+use Orm\Zed\ProductMeasurementUnit\Persistence\Map\SpyProductMeasurementUnitTableMap;
+use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Exception\EntityNotFoundException;
@@ -56,6 +61,90 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      * @var string
      */
     protected const COL_COUNT = 'count';
+
+    /**
+     * @param array<string> $codes
+     *
+     * @return array<string>
+     */
+    public function getProductMeasurementUnitCodesByCodes(array $codes): array
+    {
+        $existingCodes = $this->getFactory()
+            ->createProductMeasurementUnitQuery()
+            ->select([SpyProductMeasurementUnitTableMap::COL_CODE])
+            ->filterByCode_In($codes)
+            ->find();
+
+        return $existingCodes->getArrayCopy();
+    }
+
+    /**
+     * @param int $idProductMeasurementUnit
+     *
+     * @return int
+     */
+    public function countProductAssignments(int $idProductMeasurementUnit): int
+    {
+        $abstractCount = $this->getFactory()
+            ->createProductMeasurementBaseUnitQuery()
+            ->filterByFkProductMeasurementUnit($idProductMeasurementUnit)
+            ->count();
+
+        $concreteCount = $this->getFactory()
+            ->createProductMeasurementSalesUnitQuery()
+            ->filterByFkProductMeasurementUnit($idProductMeasurementUnit)
+            ->count();
+
+        return $abstractCount + $concreteCount;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitCriteriaTransfer $productMeasurementUnitCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitCollectionTransfer
+     */
+    public function getProductMeasurementUnitCollection(
+        ProductMeasurementUnitCriteriaTransfer $productMeasurementUnitCriteriaTransfer
+    ): ProductMeasurementUnitCollectionTransfer {
+        $productMeasurementUnitQuery = $this->getFactory()
+            ->createProductMeasurementUnitQuery();
+
+        $productMeasurementUnitQuery = $this->applyProductMeasurementUnitCriteria(
+            $productMeasurementUnitQuery,
+            $productMeasurementUnitCriteriaTransfer,
+        );
+
+        $productMeasurementUnitEntities = $productMeasurementUnitQuery->find();
+
+        $productMeasurementUnitCollectionTransfer = $this->getFactory()
+            ->createProductMeasurementUnitMapper()
+            ->mapProductMeasurementUnitCollectionTransfer(
+                $productMeasurementUnitEntities,
+                new ProductMeasurementUnitCollectionTransfer(),
+            );
+
+        return $productMeasurementUnitCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery $productMeasurementUnitQuery
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitCriteriaTransfer $productMeasurementUnitCriteriaTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applyProductMeasurementUnitCriteria(
+        SpyProductMeasurementUnitQuery $productMeasurementUnitQuery,
+        ProductMeasurementUnitCriteriaTransfer $productMeasurementUnitCriteriaTransfer
+    ): ModelCriteria {
+        $conditions = $productMeasurementUnitCriteriaTransfer->getProductMeasurementUnitConditions() ?? new ProductMeasurementUnitConditionsTransfer();
+
+        $codes = $conditions->getCodes();
+        if (count($codes) > 0) {
+            $productMeasurementUnitQuery->filterByCode_In($codes);
+        }
+
+        return $productMeasurementUnitQuery;
+    }
 
     /**
      * @module Store
@@ -237,6 +326,8 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
+     * @deprecated Use {@link ProductMeasurementUnitRepository::getProductMeasurementUnitCollection()} instead.
+     *
      * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function findAllProductMeasurementUnitTransfers(): array

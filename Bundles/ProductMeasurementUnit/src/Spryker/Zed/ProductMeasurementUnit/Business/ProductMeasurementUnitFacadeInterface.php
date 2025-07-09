@@ -15,6 +15,11 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCollectionRequestTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCollectionResponseTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCollectionTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
@@ -120,6 +125,8 @@ interface ProductMeasurementUnitFacadeInterface
      * - Retrieves a collection of product measurement unit entities.
      *
      * @api
+     *
+     * @deprecated Use {@link ProductMeasurementUnitFacade::getProductMeasurementUnitCollection()} instead.
      *
      * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
@@ -312,4 +319,73 @@ interface ProductMeasurementUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CartReorderTransfer
      */
     public function hydrateCartReorderItemsWithQuantitySalesUnit(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer;
+
+    /**
+     * Specification:
+     * - Creates product measurement units.
+     * - Supports transactional creation, defaulted to true.
+     * - Validates that the provided codes are unique.
+     * - Validates that precisions are integer, > 0.
+     * - Stores code, name, default precision.
+     * - Returns created measurement units.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitCollectionRequestTransfer $productMeasurementUnitCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitCollectionResponseTransfer
+     */
+    public function createProductMeasurementUnitCollection(
+        ProductMeasurementUnitCollectionRequestTransfer $productMeasurementUnitCollectionRequestTransfer
+    ): ProductMeasurementUnitCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Updates product measurement units.
+     * - Supports transactional update, defaulted to true.
+     * - Validates that precisions are integer, > 0.
+     * - Updates name and default precision.
+     * - Returns updated measurement units.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitCollectionRequestTransfer $productMeasurementUnitCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitCollectionResponseTransfer
+     */
+    public function updateProductMeasurementUnitCollection(
+        ProductMeasurementUnitCollectionRequestTransfer $productMeasurementUnitCollectionRequestTransfer
+    ): ProductMeasurementUnitCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Deletes product measurement units based on the provided criteria.
+     * - Does not delete measurement units if criteria is empty.
+     * - Supports transactional deletion, defaulted to true.
+     * - Uses IN operation to filter entities for deletion.
+     * - Returns a response transfer containing the list of deleted entities.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitCollectionDeleteCriteriaTransfer $productMeasurementUnitCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitCollectionResponseTransfer
+     */
+    public function deleteProductMeasurementUnitCollection(
+        ProductMeasurementUnitCollectionDeleteCriteriaTransfer $productMeasurementUnitCollectionDeleteCriteriaTransfer
+    ): ProductMeasurementUnitCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns all product measurement units if empty criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitCriteriaTransfer $productMeasurementUnitCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitCollectionTransfer
+     */
+    public function getProductMeasurementUnitCollection(
+        ProductMeasurementUnitCriteriaTransfer $productMeasurementUnitCriteriaTransfer
+    ): ProductMeasurementUnitCollectionTransfer;
 }

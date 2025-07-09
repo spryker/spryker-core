@@ -1,0 +1,18 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Measurement Unit' | trans %}
+
+{% block head_title widget_title | trans %}
+{% block section_title widget_title | trans %}
+
+{% block action %}
+    {{ createActionButton('/product-measurement-unit-gui/index/create', 'Create Measurement Unit' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            {{ productMeasurementUnitTable | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

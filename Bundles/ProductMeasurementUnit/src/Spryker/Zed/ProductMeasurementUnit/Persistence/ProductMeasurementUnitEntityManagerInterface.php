@@ -12,6 +12,15 @@ use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 interface ProductMeasurementUnitEntityManagerInterface
 {
     /**
+     * @param int $idProductMeasurementUnit
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
+     */
+    public function deleteProductMeasurementUnit(int $idProductMeasurementUnit): void;
+
+    /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer

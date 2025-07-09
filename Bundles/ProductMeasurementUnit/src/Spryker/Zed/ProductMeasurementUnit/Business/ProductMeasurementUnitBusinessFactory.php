@@ -12,6 +12,10 @@ use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\CartChangeSalesUnitEx
 use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\CartChangeSalesUnitExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\Checker\ItemProductMeasurementSalesUnitChecker;
 use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\Checker\ItemProductMeasurementSalesUnitCheckerInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Creator\ProductMeasurementUnitCreator;
+use Spryker\Zed\ProductMeasurementUnit\Business\Creator\ProductMeasurementUnitCreatorInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Deleter\ProductMeasurementUnitDeleter;
+use Spryker\Zed\ProductMeasurementUnit\Business\Deleter\ProductMeasurementUnitDeleterInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Extractor\ProductMeasurementUnitItemExtractor;
 use Spryker\Zed\ProductMeasurementUnit\Business\Extractor\ProductMeasurementUnitItemExtractorInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Hydrator\CartReorderItemHydrator;
@@ -36,6 +40,10 @@ use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasure
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Reader\ProductMeasurementUnitReader;
 use Spryker\Zed\ProductMeasurementUnit\Business\Reader\ProductMeasurementUnitReaderInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Updater\ProductMeasurementUnitUpdater;
+use Spryker\Zed\ProductMeasurementUnit\Business\Updater\ProductMeasurementUnitUpdaterInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Validator\ProductMeasurementUnitValidator;
+use Spryker\Zed\ProductMeasurementUnit\Business\Validator\ProductMeasurementUnitValidatorInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToStoreFacadeInterface;
@@ -49,6 +57,49 @@ use Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitDependencyProvider;
  */
 class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Creator\ProductMeasurementUnitCreatorInterface
+     */
+    public function createProductMeasurementUnitCreator(): ProductMeasurementUnitCreatorInterface
+    {
+        return new ProductMeasurementUnitCreator(
+            $this->createProductMeasurementUnitValidator(),
+            $this->getEntityManager(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Updater\ProductMeasurementUnitUpdaterInterface
+     */
+    public function createProductMeasurementUnitUpdater(): ProductMeasurementUnitUpdaterInterface
+    {
+        return new ProductMeasurementUnitUpdater(
+            $this->createProductMeasurementUnitValidator(),
+            $this->getEntityManager(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Deleter\ProductMeasurementUnitDeleterInterface
+     */
+    public function createProductMeasurementUnitDeleter(): ProductMeasurementUnitDeleterInterface
+    {
+        return new ProductMeasurementUnitDeleter(
+            $this->createProductMeasurementUnitValidator(),
+            $this->getEntityManager(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Validator\ProductMeasurementUnitValidatorInterface
+     */
+    public function createProductMeasurementUnitValidator(): ProductMeasurementUnitValidatorInterface
+    {
+        return new ProductMeasurementUnitValidator(
+            $this->getRepository(),
+        );
+    }
+
     /**
      * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValueInterface
      */

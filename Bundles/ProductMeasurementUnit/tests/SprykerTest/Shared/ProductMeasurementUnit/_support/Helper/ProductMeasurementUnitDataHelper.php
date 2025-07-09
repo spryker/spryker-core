@@ -27,6 +27,19 @@ class ProductMeasurementUnitDataHelper extends Module
     use DataCleanupHelperTrait;
 
     /**
+     * @param array<string, mixed> $override
+     *
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer
+     */
+    public function buildProductMeasurementUnit(array $override = []): SpyProductMeasurementUnitEntityTransfer
+    {
+        $productMeasurementUnitEntity = (new SpyProductMeasurementUnitEntityBuilder())->build();
+        $productMeasurementUnitEntity->fromArray($override, true);
+
+        return $productMeasurementUnitEntity;
+    }
+
+    /**
      * @param array $override
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer

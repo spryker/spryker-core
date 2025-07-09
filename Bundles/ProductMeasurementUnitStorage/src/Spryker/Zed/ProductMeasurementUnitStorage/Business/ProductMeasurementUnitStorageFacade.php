@@ -50,6 +50,8 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @api
      *
+     * @deprecated Will be removed without replacement. Unused method.
+     *
      * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer>
      */
     public function findAllProductMeasurementUnitTransfers(): array

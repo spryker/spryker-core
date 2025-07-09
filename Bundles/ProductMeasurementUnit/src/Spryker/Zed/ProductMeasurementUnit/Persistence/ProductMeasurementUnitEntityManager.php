@@ -34,4 +34,17 @@ class ProductMeasurementUnitEntityManager extends AbstractEntityManager implemen
 
         return $productMeasurementUnitTransfer;
     }
+
+    /**
+     * @param int $idProductMeasurementUnit
+     *
+     * @return void
+     */
+    public function deleteProductMeasurementUnit(int $idProductMeasurementUnit): void
+    {
+        $this->getFactory()
+            ->createProductMeasurementUnitQuery()
+            ->findOneByIdProductMeasurementUnit($idProductMeasurementUnit)
+            ->delete();
+    }
 }

@@ -8,6 +8,39 @@
         <property name="defaultPrecision" type="int"/>
     </transfer>
 
+    <transfer name="ProductMeasurementUnitCollectionRequest" strict="true">
+        <property name="productMeasurementUnits" type="ProductMeasurementUnit[]" singular="productMeasurementUnit"/>
+        <property name="isTransactional" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnitCriteria" strict="true">
+        <property name="productMeasurementUnitConditions" type="ProductMeasurementUnitConditions"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnitConditions" strict="true">
+        <property name="codes" type="string[]" singular="code"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnitCollection" strict="true">
+        <property name="productMeasurementUnits" type="ProductMeasurementUnit[]" singular="productMeasurementUnit"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnitCollectionDeleteCriteria" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="codes" type="string[]" singular="code"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnitCollectionResponse" strict="true">
+        <property name="productMeasurementUnits" type="ProductMeasurementUnit[]" singular="productMeasurementUnit"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
     <transfer name="ProductMeasurementBaseUnit">
         <property name="idProductMeasurementBaseUnit" type="int"/>
         <property name="fkProductMeasurementUnit" type="int"/>
