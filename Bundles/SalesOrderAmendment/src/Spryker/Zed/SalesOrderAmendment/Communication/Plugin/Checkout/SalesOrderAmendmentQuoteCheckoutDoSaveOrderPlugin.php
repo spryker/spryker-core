@@ -8,8 +8,6 @@
 namespace Spryker\Zed\SalesOrderAmendment\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionRequestTransfer;
-use Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -23,9 +21,10 @@ class SalesOrderAmendmentQuoteCheckoutDoSaveOrderPlugin extends AbstractPlugin i
 {
     /**
      * {@inheritDoc}
+     * - Does nothing if a sales order amendment quote already exists for the provided `QuoteTransfer.amendmentOrderReference`.
+     * - Requires `QuoteTransfer.amendmentOrderReference` to be set.
      * - Requires `QuoteTransfer.customer` to be set.
      * - Requires `QuoteTransfer.customer.customerReference` to be set.
-     * - Requires `QuoteTransfer.amendmentOrderReference` to be set.
      * - Creates a new sales order amendment quote entity based on the provided `QuoteTransfer`.
      *
      * @api
@@ -37,14 +36,8 @@ class SalesOrderAmendmentQuoteCheckoutDoSaveOrderPlugin extends AbstractPlugin i
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
-        $salesOrderAmendmentQuoteCollectionRequestTransfer = (new SalesOrderAmendmentQuoteCollectionRequestTransfer())
-            ->addSalesOrderAmendmentQuote(
-                (new SalesOrderAmendmentQuoteTransfer())
-                    ->setQuote($quoteTransfer)
-                    ->setCustomerReference($quoteTransfer->getCustomerOrFail()->getCustomerReferenceOrFail())
-                    ->setAmendmentOrderReference($quoteTransfer->getAmendmentOrderReferenceOrFail()),
-            );
-
-        $this->getFacade()->createSalesOrderAmendmentQuoteCollection($salesOrderAmendmentQuoteCollectionRequestTransfer);
+        $this->getBusinessFactory()
+            ->createSalesOrderAmendmentQuoteSaver()
+            ->saveNotExistingSalesOrderAmendmentQuote($quoteTransfer);
     }
 }

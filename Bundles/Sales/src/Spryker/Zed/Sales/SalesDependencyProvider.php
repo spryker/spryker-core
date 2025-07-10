@@ -132,6 +132,11 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT_ASYNC = 'PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT_ASYNC';
+
+    /**
+     * @var string
+     */
     public const PLUGINS_ITEM_PRE_TRANSFORMER = 'PLUGINS_ITEM_PRE_TRANSFORMER';
 
     /**
@@ -220,6 +225,11 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER_FOR_ORDER_AMENDMENT = 'PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER_FOR_ORDER_AMENDMENT';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER_FOR_ORDER_AMENDMENT_ASYNC = 'PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER_FOR_ORDER_AMENDMENT_ASYNC';
+
+    /**
      * @deprecated Will be removed in the next major version.
      *
      * @var string
@@ -260,6 +270,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addItemTransformerStrategyPlugins($container);
         $container = $this->addOrderPostSavePlugins($container);
         $container = $this->addOrderPostSavePluginsForOrderAmendment($container);
+        $container = $this->addOrderPostSavePluginsForOrderAmendmentAsync($container);
         $container = $this->addItemPreTransformerPlugins($container);
         $container = $this->addUniqueOrderItemsExpanderPlugins($container);
         $container = $this->addOrderItemExpanderPlugins($container);
@@ -277,6 +288,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOrderItemCollectionPostUpdatePlugins($container);
         $container = $this->addOrderItemInitialStateProviderPlugins($container);
         $container = $this->addOrderItemInitialStateProviderPluginsForOrderAmendment($container);
+        $container = $this->addOrderItemInitialStateProviderPluginsForOrderAmendmentAsync($container);
         $container = $this->addUtilUuidGeneratorService($container);
 
         return $container;
@@ -633,6 +645,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addOrderPostSavePluginsForOrderAmendmentAsync(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT_ASYNC, function () {
+            return $this->getOrderPostSavePluginsForOrderAmendmentAsync();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addItemPreTransformerPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_ITEM_PRE_TRANSFORMER, function () {
@@ -895,6 +921,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderItemInitialStateProviderPluginsForOrderAmendmentAsync(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER_FOR_ORDER_AMENDMENT_ASYNC, function () {
+            return $this->getOrderItemInitialStateProviderPluginsForOrderAmendmentAsync();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface>
      */
     protected function getOrderExpanderPreSavePlugins()
@@ -946,6 +986,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>
      */
     protected function getOrderPostSavePluginsForOrderAmendment()
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>
+     */
+    protected function getOrderPostSavePluginsForOrderAmendmentAsync()
     {
         return [];
     }
@@ -1090,6 +1138,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemInitialStateProviderPluginInterface>
      */
     protected function getOrderItemInitialStateProviderPluginsForOrderAmendment(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemInitialStateProviderPluginInterface>
+     */
+    protected function getOrderItemInitialStateProviderPluginsForOrderAmendmentAsync(): array
     {
         return [];
     }

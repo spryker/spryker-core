@@ -294,6 +294,30 @@ class ReorderTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testOrderAmendmentAsyncContextIsCalled(): void
+    {
+        // Assert
+        $this->tester->setDependency(CartReorderDependencyProvider::PLUGINS_CART_REORDER_VALIDATOR_FOR_ORDER_AMENDMENT_ASYNC, [$this->getCartReorderValidatorPluginMock()]);
+        $this->tester->setDependency(CartReorderDependencyProvider::PLUGINS_CART_REORDER_PRE_ADD_TO_CART_FOR_ORDER_AMENDMENT_ASYNC, [$this->getCartReorderPreAddToCartPluginMock()]);
+
+        // Arrange
+        $orderTransfer = $this->tester->createOrder();
+        $quoteProcessFlowTransfer = (new QuoteProcessFlowTransfer())
+            ->setName(SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT_ASYNC);
+        $quoteTransfer = (new QuoteTransfer())
+            ->setQuoteProcessFlow($quoteProcessFlowTransfer);
+        $cartReorderRequestTransfer = (new CartReorderRequestTransfer())
+            ->setCustomerReference($orderTransfer->getCustomerReference())
+            ->setOrderReference($orderTransfer->getOrderReference())
+            ->setQuote($quoteTransfer);
+
+        // Act
+        $this->tester->getFacade()->reorder($cartReorderRequestTransfer);
+    }
+
+    /**
      * @return \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderRequestValidatorPluginInterface
      */
     protected function getCartReorderRequestValidatorPluginMock(): CartReorderRequestValidatorPluginInterface

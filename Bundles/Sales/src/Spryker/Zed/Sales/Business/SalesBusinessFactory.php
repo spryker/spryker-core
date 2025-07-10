@@ -647,6 +647,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             [
                 CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT => $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE, static::LOADING_LAZY),
                 SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT => $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT, static::LOADING_LAZY),
+                SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT_ASYNC => $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT_ASYNC, static::LOADING_LAZY),
             ],
             CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT,
         );
@@ -661,6 +662,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             [
                 CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT => $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER, static::LOADING_LAZY),
                 SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT => $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER_FOR_ORDER_AMENDMENT, static::LOADING_LAZY),
+                SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT_ASYNC => $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER_FOR_ORDER_AMENDMENT_ASYNC, static::LOADING_LAZY),
             ],
             CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT,
         );

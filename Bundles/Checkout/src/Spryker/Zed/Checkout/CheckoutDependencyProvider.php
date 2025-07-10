@@ -30,12 +30,22 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const CHECKOUT_PRE_CONDITIONS_FOR_ORDER_AMENDMENT_ASYNC = 'CHECKOUT_PRE_CONDITIONS_FOR_ORDER_AMENDMENT_ASYNC';
+
+    /**
+     * @var string
+     */
     public const CHECKOUT_POST_HOOKS = 'checkout_post_hooks';
 
     /**
      * @var string
      */
     public const CHECKOUT_POST_HOOKS_FOR_ORDER_AMENDMENT = 'CHECKOUT_POST_HOOKS_FOR_ORDER_AMENDMENT';
+
+    /**
+     * @var string
+     */
+    public const CHECKOUT_POST_HOOKS_FOR_ORDER_AMENDMENT_ASYNC = 'CHECKOUT_POST_HOOKS_FOR_ORDER_AMENDMENT_ASYNC';
 
     /**
      * @var string
@@ -50,12 +60,22 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const CHECKOUT_ORDER_SAVERS_FOR_ORDER_AMENDMENT_ASYNC = 'CHECKOUT_ORDER_SAVERS_FOR_ORDER_AMENDMENT_ASYNC';
+
+    /**
+     * @var string
+     */
     public const CHECKOUT_PRE_SAVE_HOOKS = 'checkout_pre_save_hooks';
 
     /**
      * @var string
      */
     public const CHECKOUT_PRE_SAVE_HOOKS_FOR_ORDER_AMENDMENT = 'CHECKOUT_PRE_SAVE_HOOKS_FOR_ORDER_AMENDMENT';
+
+    /**
+     * @var string
+     */
+    public const CHECKOUT_PRE_SAVE_HOOKS_FOR_ORDER_AMENDMENT_ASYNC = 'CHECKOUT_PRE_SAVE_HOOKS_FOR_ORDER_AMENDMENT_ASYNC';
 
     /**
      * @var string
@@ -82,12 +102,20 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getCheckoutPreConditionsForOrderAmendment($container);
         });
 
+        $container->set(static::CHECKOUT_PRE_CONDITIONS_FOR_ORDER_AMENDMENT_ASYNC, function (Container $container) {
+            return $this->getCheckoutPreConditionsForOrderAmendmentAsync($container);
+        });
+
         $container->set(static::CHECKOUT_ORDER_SAVERS, function (Container $container) {
             return $this->getCheckoutOrderSavers($container);
         });
 
         $container->set(static::CHECKOUT_ORDER_SAVERS_FOR_ORDER_AMENDMENT, function (Container $container) {
             return $this->getCheckoutOrderSaversForOrderAmendment($container);
+        });
+
+        $container->set(static::CHECKOUT_ORDER_SAVERS_FOR_ORDER_AMENDMENT_ASYNC, function (Container $container) {
+            return $this->getCheckoutOrderSaversForOrderAmendmentAsync($container);
         });
 
         $container->set(static::CHECKOUT_POST_HOOKS, function (Container $container) {
@@ -98,12 +126,20 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getCheckoutPostHooksForOrderAmendment($container);
         });
 
+        $container->set(static::CHECKOUT_POST_HOOKS_FOR_ORDER_AMENDMENT_ASYNC, function (Container $container) {
+            return $this->getCheckoutPostHooksForOrderAmendmentAsync($container);
+        });
+
         $container->set(static::CHECKOUT_PRE_SAVE_HOOKS, function (Container $container) {
             return $this->getCheckoutPreSaveHooks($container);
         });
 
         $container->set(static::CHECKOUT_PRE_SAVE_HOOKS_FOR_ORDER_AMENDMENT, function (Container $container) {
             return $this->getCheckoutPreSaveHooksForOrderAmendment($container);
+        });
+
+        $container->set(static::CHECKOUT_PRE_SAVE_HOOKS_FOR_ORDER_AMENDMENT_ASYNC, function (Container $container) {
+            return $this->getCheckoutPreSaveHooksForOrderAmendmentAsync($container);
         });
 
         $container = $this->addOmsFacade($container);
@@ -165,6 +201,16 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
+     * @return list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface>
+     */
+    protected function getCheckoutPreConditionsForOrderAmendmentAsync(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface>
      */
     protected function getCheckoutOrderSavers(Container $container)
@@ -178,6 +224,16 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      * @return list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface>
      */
     protected function getCheckoutOrderSaversForOrderAmendment(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface>
+     */
+    protected function getCheckoutOrderSaversForOrderAmendmentAsync(Container $container)
     {
         return [];
     }
@@ -205,6 +261,16 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
+     * @return list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPostSaveInterface>
+     */
+    protected function getCheckoutPostHooksForOrderAmendmentAsync(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface>
      */
     protected function getCheckoutPreSaveHooks(Container $container)
@@ -218,6 +284,16 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      * @return list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface>
      */
     protected function getCheckoutPreSaveHooksForOrderAmendment(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface>
+     */
+    protected function getCheckoutPreSaveHooksForOrderAmendmentAsync(Container $container)
     {
         return [];
     }

@@ -9,9 +9,7 @@ namespace Spryker\Zed\SalesOrderAmendment\Communication\Plugin\CartReorder;
 
 use Generated\Shared\Transfer\CartReorderRequestTransfer;
 use Generated\Shared\Transfer\CartReorderTransfer;
-use Generated\Shared\Transfer\QuoteProcessFlowTransfer;
 use RuntimeException;
-use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPreReorderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -54,7 +52,7 @@ class OrderAmendmentQuoteProcessFlowExpanderCartPreReorderPlugin extends Abstrac
         $this->assertQuoteStorageStrategy();
 
         $cartReorderTransfer->getQuoteOrFail()->setQuoteProcessFlow(
-            (new QuoteProcessFlowTransfer())->setName(SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT),
+            $this->getConfig()->getDefaultOrderAmendmentQuoteProcessFlow(),
         );
 
         return $cartReorderTransfer;

@@ -11,6 +11,9 @@ use Codeception\Actor;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuoteQuery;
 
 /**
  * Inherited Methods
@@ -59,6 +62,36 @@ class SalesOrderAmendmentOmsCommunicationTester extends Actor
     }
 
     /**
+     * @param int $idOrderItem
+     *
+     * @return string
+     */
+    public function getOrderItemCurrentState(int $idOrderItem): string
+    {
+        return $this->getSalesOrderItemQuery()
+            ->joinState()
+            ->filterByIdSalesOrderItem($idOrderItem)
+            ->select(SpyOmsOrderItemStateTableMap::COL_NAME)
+            ->findOne();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureSalesOrderAmendmentQuoteTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getSalesOrderAmendmentQuoteQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuoteQuery
+     */
+    protected function getSalesOrderAmendmentQuoteQuery(): SpySalesOrderAmendmentQuoteQuery
+    {
+        return SpySalesOrderAmendmentQuoteQuery::create();
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransfer(): QuoteTransfer
@@ -73,5 +106,13 @@ class SalesOrderAmendmentOmsCommunicationTester extends Actor
             ->withStore()
             ->withCurrency()
             ->build();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function getSalesOrderItemQuery(): SpySalesOrderItemQuery
+    {
+        return SpySalesOrderItemQuery::create();
     }
 }

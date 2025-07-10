@@ -587,6 +587,7 @@
         "spryker/oms-multi-thread": "*",
         "spryker/oms-product-offer-reservation": "*",
         "spryker/oms-rest-api": "*",
+        "spryker/order-amendment-example": "*",
         "spryker/order-amendments-rest-api": "*",
         "spryker/order-custom-reference": "*",
         "spryker/order-custom-reference-gui": "*",

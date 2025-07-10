@@ -32,4 +32,11 @@ interface OrderAmendmentProcessorInterface
      * @return void
      */
     public function finishOrderAmendment(QuoteTransfer $quoteTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function startOrderAmendmentDraft(QuoteTransfer $quoteTransfer): void;
 }

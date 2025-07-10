@@ -924,6 +924,11 @@ class CartFacadeTest extends Unit
                 CartDependencyProvider::CART_PRE_CHECK_PLUGINS_FOR_ORDER_AMENDMENT,
                 CartDependencyProvider::CART_PRE_CHECK_PLUGINS,
             ],
+            'Calls order amendment context when order amendment async context is set' => [
+                (new QuoteProcessFlowTransfer())->setName(SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT_ASYNC),
+                CartDependencyProvider::CART_PRE_CHECK_PLUGINS_FOR_ORDER_AMENDMENT_ASYNC,
+                CartDependencyProvider::CART_PRE_CHECK_PLUGINS,
+            ],
         ];
     }
 

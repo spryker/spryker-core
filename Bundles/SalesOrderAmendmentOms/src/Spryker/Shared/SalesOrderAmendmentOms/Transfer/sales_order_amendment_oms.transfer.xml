@@ -5,6 +5,10 @@
         <property name="amendmentOrderReference" type="string" strict="true"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="originalSalesOrderItems" type="OriginalSalesOrderItem[]" singular="originalSalesOrderItem" strict="true"/>
+        <property name="customer" type="Customer"/>
+        <property name="store" type="Store"/>
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="defaultOmsOrderItemState" type="string" strict="true"/>
     </transfer>
 
     <transfer name="ErrorCollection" strict="true">
@@ -20,6 +24,11 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="orderReference" type="string"/>
         <property name="isAmendable" type="bool" strict="true"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="store" type="string"/>
+        <property name="idSalesOrder" type="int"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="OrderConditions" strict="true">
@@ -91,6 +100,7 @@
 
     <transfer name="SalesOrderAmendmentQuoteCriteria" strict="true">
         <property name="salesOrderAmendmentQuoteConditions" type="SalesOrderAmendmentQuoteConditions"/>
+        <property name="withExpanderPlugins" type="bool"/>
     </transfer>
 
     <transfer name="SalesOrderAmendmentQuoteConditions" strict="true">
@@ -107,6 +117,37 @@
     </transfer>
 
     <transfer name="ReservationRequest">
+    </transfer>
+
+    <transfer name="Mail">
+        <property name="type" type="string"/>
+        <property name="quote" type="Quote" strict="true"/>
+        <property name="subject" type="string"/>
+        <property name="templates" type="MailTemplate[]" singular="template"/>
+        <property name="recipients" type="MailRecipient[]" singular="recipient"/>
+        <property name="order" type="Order"/>
+        <property name="locale" type="Locale"/>
+        <property name="storeName" type="string"/>
+    </transfer>
+
+    <transfer name="MailTemplate">
+        <property name="name" type="string"/>
+        <property name="isHtml" type="bool"/>
+    </transfer>
+
+    <transfer name="MailRecipient">
+        <property name="email" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="email" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
     </transfer>
 
 </transfers>

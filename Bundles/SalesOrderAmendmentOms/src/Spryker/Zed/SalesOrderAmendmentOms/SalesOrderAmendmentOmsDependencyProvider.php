@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesOrderAmendmentOms;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToMailFacadeBridge;
 use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToOmsFacadeBridge;
 use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToSalesFacadeBridge;
 use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToSalesOrderAmendmentFacadeBridge;
@@ -37,6 +38,11 @@ class SalesOrderAmendmentOmsDependencyProvider extends AbstractBundleDependencyP
     /**
      * @var string
      */
+    public const FACADE_MAIL = 'FACADE_MAIL';
+
+    /**
+     * @var string
+     */
     public const SERVICE_SALES_ORDER_AMENDMENT = 'SERVICE_SALES_ORDER_AMENDMENT';
 
     /**
@@ -51,6 +57,7 @@ class SalesOrderAmendmentOmsDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addSalesFacade($container);
         $container = $this->addSalesOrderAmendmentService($container);
         $container = $this->addSalesOrderAmendmentFacade($container);
+        $container = $this->addMailFacade($container);
 
         return $container;
     }
@@ -109,6 +116,22 @@ class SalesOrderAmendmentOmsDependencyProvider extends AbstractBundleDependencyP
         $container->set(static::FACADE_SALES_ORDER_AMENDMENT, function (Container $container) {
             return new SalesOrderAmendmentOmsToSalesOrderAmendmentFacadeBridge(
                 $container->getLocator()->salesOrderAmendment()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMailFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MAIL, function (Container $container) {
+            return new SalesOrderAmendmentOmsToMailFacadeBridge(
+                $container->getLocator()->mail()->facade(),
             );
         });
 

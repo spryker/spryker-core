@@ -61,7 +61,9 @@ class SalesOrderAmendmentFacade extends AbstractFacade implements SalesOrderAmen
     public function getSalesOrderAmendmentQuoteCollection(
         SalesOrderAmendmentQuoteCriteriaTransfer $salesOrderAmendmentQuoteCriteriaTransfer
     ): SalesOrderAmendmentQuoteCollectionTransfer {
-        return $this->getRepository()->getSalesOrderAmendmentQuoteCollection($salesOrderAmendmentQuoteCriteriaTransfer);
+        return $this->getFactory()
+            ->createSalesOrderAmendmentQuoteReader()
+            ->getSalesOrderAmendmentQuoteCollection($salesOrderAmendmentQuoteCriteriaTransfer);
     }
 
     /**
@@ -96,6 +98,23 @@ class SalesOrderAmendmentFacade extends AbstractFacade implements SalesOrderAmen
         return $this->getFactory()
             ->createSalesOrderAmendmentQuoteCreator()
             ->createSalesOrderAmendmentQuoteCollection($salesOrderAmendmentQuoteCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionRequestTransfer $salesOrderAmendmentQuoteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionResponseTransfer
+     */
+    public function updateSalesOrderAmendmentQuoteCollection(
+        SalesOrderAmendmentQuoteCollectionRequestTransfer $salesOrderAmendmentQuoteCollectionRequestTransfer
+    ): SalesOrderAmendmentQuoteCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSalesOrderAmendmentQuoteUpdater()
+            ->updateSalesOrderAmendmentQuoteCollection($salesOrderAmendmentQuoteCollectionRequestTransfer);
     }
 
     /**

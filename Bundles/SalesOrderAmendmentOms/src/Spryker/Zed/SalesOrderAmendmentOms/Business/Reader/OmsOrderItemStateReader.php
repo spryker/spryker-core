@@ -35,6 +35,10 @@ class OmsOrderItemStateReader implements OmsOrderItemStateReaderInterface
         QuoteTransfer $quoteTransfer,
         SaveOrderTransfer $saveOrderTransfer
     ): OmsOrderItemStateTransfer {
+        if ($quoteTransfer->getDefaultOmsOrderItemState()) {
+            return $this->omsFacade->getOmsOrderItemState($quoteTransfer->getDefaultOmsOrderItemStateOrFail());
+        }
+
         return $this->omsFacade->getOmsOrderItemState(
             $this->salesOrderAmendmentOmsConfig->getOrderAmendmentOrderItemInitialState(),
         );

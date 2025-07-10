@@ -307,6 +307,18 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
+     * @param int $idSalesOrderItem
+     *
+     * @return void
+     */
+    public function deleteLog(int $idSalesOrderItem): void
+    {
+        if (isset($this->logEntities[$idSalesOrderItem])) {
+            unset($this->logEntities[$idSalesOrderItem]);
+        }
+    }
+
+    /**
      * @param string $queryString
      *
      * @return array<string>

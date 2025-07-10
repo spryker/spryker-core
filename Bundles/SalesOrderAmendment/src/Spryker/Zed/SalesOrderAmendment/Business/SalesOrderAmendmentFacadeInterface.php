@@ -61,6 +61,8 @@ interface SalesOrderAmendmentFacadeInterface
      * - Uses `SalesOrderAmendmentQuoteCriteriaTransfer.sort.isAscending` to set ascending/descending order.
      * - Uses `SalesOrderAmendmentQuoteCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.
      * - Uses `SalesOrderAmendmentQuoteCriteriaTransfer.pagination.{page, maxPerPage}` to paginate results with page and maxPerPage.
+     * - Executes a stack of {@link \Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentQuoteExpanderPluginInterface} plugins
+     * when `SalesOrderAmendmentQuoteCriteriaTransfer.withExpanderPlugins` is set to `true`.
      * - Returns `SalesOrderAmendmentQuoteCollectionTransfer` filled with found sales order amendment quotes.
      *
      * @api
@@ -113,6 +115,29 @@ interface SalesOrderAmendmentFacadeInterface
      * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionResponseTransfer
      */
     public function createSalesOrderAmendmentQuoteCollection(
+        SalesOrderAmendmentQuoteCollectionRequestTransfer $salesOrderAmendmentQuoteCollectionRequestTransfer
+    ): SalesOrderAmendmentQuoteCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `SalesOrderAmendmentQuoteCollectionRequestTransfer.salesOrderAmendmentQuotes` to be set.
+     * - Requires `SalesOrderAmendmentQuoteCollectionRequestTransfer.salesOrderAmendmentQuotes.idSalesOrderAmendmentQuote` to be set.
+     * - Requires `SalesOrderAmendmentQuoteCollectionRequestTransfer.salesOrderAmendmentQuotes.quote` to be set.
+     * - Requires `SalesOrderAmendmentQuoteCollectionRequestTransfer.salesOrderAmendmentQuotes.customerReference` to be set.
+     * - Requires `SalesOrderAmendmentQuoteCollectionRequestTransfer.salesOrderAmendmentQuotes.amendmentOrderReference` to be set.
+     * - Validates if sales order amendment quotes exist in Persistence, returns `SalesOrderAmendmentQuoteCollectionRequestTransfer` with errors if not.
+     * - Updates sales order amendment quotes in Persistence.
+     * - Filters quote fields based on the {@link \Spryker\Zed\SalesOrderAmendment\SalesOrderAmendmentConfig::getQuoteFieldsAllowedForSaving()} configuration.
+     * - Filters quote item fields based on the {@link \Spryker\Zed\SalesOrderAmendment\SalesOrderAmendmentConfig::getQuoteItemFieldsAllowedForSaving()} configuration.
+     * - Returns `SalesOrderAmendmentQuoteCollectionResponseTransfer` with updated sales order amendment quotes.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionRequestTransfer $salesOrderAmendmentQuoteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionResponseTransfer
+     */
+    public function updateSalesOrderAmendmentQuoteCollection(
         SalesOrderAmendmentQuoteCollectionRequestTransfer $salesOrderAmendmentQuoteCollectionRequestTransfer
     ): SalesOrderAmendmentQuoteCollectionResponseTransfer;
 

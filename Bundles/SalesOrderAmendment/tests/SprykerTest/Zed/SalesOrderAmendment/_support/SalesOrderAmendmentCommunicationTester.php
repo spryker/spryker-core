@@ -70,6 +70,18 @@ class SalesOrderAmendmentCommunicationTester extends Actor
     }
 
     /**
+     * @param string $amendmentOrderReference
+     *
+     * @return int
+     */
+    public function countSalesOrderAmendmentQuoteByAmendmentOrderReference(string $amendmentOrderReference): int
+    {
+        return $this->getSalesOrderAmendmentQuoteQuery()
+            ->filterByAmendmentOrderReference($amendmentOrderReference)
+            ->count();
+    }
+
+    /**
      * @return void
      */
     public function ensureSalesOrderAmendmentQuoteTableIsEmpty(): void

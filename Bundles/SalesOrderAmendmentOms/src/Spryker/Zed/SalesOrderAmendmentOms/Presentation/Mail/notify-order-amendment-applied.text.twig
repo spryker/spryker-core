@@ -1,0 +1,16 @@
+{{ 'sales_order_amendment_oms.mail.order_amendment_applied.salutation' | trans }} {{ mail.order.firstName }} {{ mail.order.lastName }},
+
+{{ 'sales_order_amendment_oms.mail.order_amendment_applied.title' | trans }}
+
+{{ 'sales_order_amendment_oms.mail.order_amendment_applied.text.line_1' | trans }}
+
+{{ 'sales_order_amendment_oms.mail.order_amendment_applied.text.line_2' | trans }}
+
+{{ 'sales_order_amendment_oms.mail.order_amendment_applied.text.line_3' | trans }}
+
+{{ 'sales_order_amendment_oms.mail.footer.text.line_1' | trans }},
+{{ 'sales_order_amendment_oms.mail.footer.text.line_2' | trans }}
+
+- - - - - - - - - -
+
+{% include '@Oms/Mail/order-details.text.twig' %}

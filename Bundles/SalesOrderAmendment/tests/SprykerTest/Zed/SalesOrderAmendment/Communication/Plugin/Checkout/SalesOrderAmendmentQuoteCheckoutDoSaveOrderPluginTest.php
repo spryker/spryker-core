@@ -106,4 +106,24 @@ class SalesOrderAmendmentQuoteCheckoutDoSaveOrderPluginTest extends Unit
         // Act
         (new SalesOrderAmendmentQuoteCheckoutDoSaveOrderPlugin())->saveOrder($quoteTransfer, new SaveOrderTransfer());
     }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderShouldDoNothingWhenSalesOrderAmendmentQuoteExists(): void
+    {
+        // Arrange
+        $this->tester->ensureSalesOrderAmendmentQuoteTableIsEmpty();
+        $salesOrderAmendmentQuoteTransfer = $this->tester->haveSalesOrderAmendmentQuote();
+        $amendmentOrderReference = $salesOrderAmendmentQuoteTransfer->getAmendmentOrderReference();
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer((new CustomerTransfer())->setCustomerReference('test-customer-reference'))
+            ->setAmendmentOrderReference($amendmentOrderReference);
+
+        // Act
+        (new SalesOrderAmendmentQuoteCheckoutDoSaveOrderPlugin())->saveOrder($quoteTransfer, new SaveOrderTransfer());
+
+        // Assert
+        $this->assertEquals(1, $this->tester->countSalesOrderAmendmentQuoteByAmendmentOrderReference($amendmentOrderReference));
+    }
 }

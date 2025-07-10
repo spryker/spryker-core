@@ -17,6 +17,7 @@
             <state name="order amendment">
                 <flag>amendment in progress</flag>
             </state>
+            <state name="order amendment draft"/>
             <state name="invalid"/>
             <state name="cancelled"/>
             <state name="paid" reserved="true"/>
@@ -58,6 +59,12 @@
             </transition>
 
             <transition>
+                <source>order amendment</source>
+                <target>order amendment draft</target>
+                <event>start-order-amendment-draft</event>
+            </transition>
+
+            <transition>
                 <source>payment pending</source>
                 <target>cancelled</target>
                 <event>pay</event>
@@ -93,6 +100,7 @@
             <event name="start-order-amendment"/>
             <event name="finish-order-amendment"/>
             <event name="cancel-order-amendment"/>
+            <event name="start-order-amendment-draft"/>
             <event name="authorize" manual="true"/>
             <event name="authorization-failed" manual="true"/>
             <event name="pay" manual="true" timeout="1 hour"/>

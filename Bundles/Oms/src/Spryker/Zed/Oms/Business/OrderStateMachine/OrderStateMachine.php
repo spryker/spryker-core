@@ -64,6 +64,11 @@ class OrderStateMachine implements OrderStateMachineInterface
     public const MAX_ON_ENTER = 50;
 
     /**
+     * @var string
+     */
+    protected const RETURN_DATA_UPDATED_ORDER_ITEMS = 'updatedOrderItems';
+
+    /**
      * @var array
      */
     protected $eventCounter = [];
@@ -593,6 +598,7 @@ class OrderStateMachine implements OrderStateMachineInterface
                     $returnData = $command->run($orderItems, $orderEntity, $data);
                     if (is_array($returnData)) {
                         $this->returnData = array_merge($this->returnData, $returnData);
+                        $orderItems = $this->handleUpdatedOrderItems($orderItems, $returnData, $log);
                     }
 
                     return $orderItems;
@@ -1196,5 +1202,37 @@ class OrderStateMachine implements OrderStateMachineInterface
 
         $this->timeout->dropOldTimeouts($orderItems, $processes, $sourceStateBuffer);
         $this->timeout->setNewTimeouts($orderItems, $currentTime, $processes);
+    }
+
+    /**
+     * @param list<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
+     * @param array<mixed> $returnData
+     * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $log
+     *
+     * @return list<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
+     */
+    protected function handleUpdatedOrderItems(array $orderItems, array $returnData, TransitionLogInterface $log): array
+    {
+        if (!isset($returnData[static::RETURN_DATA_UPDATED_ORDER_ITEMS])) {
+            return $orderItems;
+        }
+
+        $originalSalesOrderItemIds = array_map(
+            static fn (SpySalesOrderItem $orderItem): int => $orderItem->getIdSalesOrderItem(),
+            $orderItems,
+        );
+        $updatedOrderItemIds = array_map(
+            static fn (SpySalesOrderItem $orderItem): int => $orderItem->getIdSalesOrderItem(),
+            $returnData[static::RETURN_DATA_UPDATED_ORDER_ITEMS],
+        );
+        $originalSalesOrderItemIdsToDelete = array_diff($originalSalesOrderItemIds, $updatedOrderItemIds);
+
+        if (count($originalSalesOrderItemIdsToDelete) > 0) {
+            foreach ($originalSalesOrderItemIdsToDelete as $orderItemId) {
+                $log->deleteLog($orderItemId);
+            }
+        }
+
+        return $returnData[static::RETURN_DATA_UPDATED_ORDER_ITEMS];
     }
 }

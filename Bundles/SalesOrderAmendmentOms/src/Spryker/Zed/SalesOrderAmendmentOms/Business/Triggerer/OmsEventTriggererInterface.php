@@ -31,4 +31,11 @@ interface OmsEventTriggererInterface
      * @return array<mixed>|null
      */
     public function triggerFinishSalesOrderAmendmentEvent(QuoteTransfer $quoteTransfer): ?array;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array<mixed>|null
+     */
+    public function triggerStartOrderAmendmentDraftEvent(QuoteTransfer $quoteTransfer): ?array;
 }

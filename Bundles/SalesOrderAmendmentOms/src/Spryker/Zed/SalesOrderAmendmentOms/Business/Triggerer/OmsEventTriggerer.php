@@ -68,6 +68,19 @@ class OmsEventTriggerer implements OmsEventTriggererInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array<mixed>|null
+     */
+    public function triggerStartOrderAmendmentDraftEvent(QuoteTransfer $quoteTransfer): ?array
+    {
+        return $this->triggerOrderAmendmentEventByName(
+            $quoteTransfer,
+            $this->salesOrderAmendmentOmsConfig->getStartOrderAmendmentDraftEvent(),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $eventName
      *
      * @return array<mixed>|null

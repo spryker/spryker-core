@@ -69,6 +69,40 @@ class SalesOrderAmendmentEntityManager extends AbstractEntityManager implements 
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer $salesOrderAmendmentQuoteTransfer
+     * @param array<string|array<string>> $quoteFieldsAllowedForSaving
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer
+     */
+    public function updateSalesOrderAmendmentQuote(
+        SalesOrderAmendmentQuoteTransfer $salesOrderAmendmentQuoteTransfer,
+        array $quoteFieldsAllowedForSaving
+    ): SalesOrderAmendmentQuoteTransfer {
+        /** @var \Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendmentQuote $salesOrderAmendmentQuoteEntity */
+        $salesOrderAmendmentQuoteEntity = $this->getFactory()
+            ->getSalesOrderAmendmentQuoteQuery()
+            ->filterByIdSalesOrderAmendmentQuote($salesOrderAmendmentQuoteTransfer->getIdSalesOrderAmendmentQuoteOrFail())
+            ->findOne();
+
+        $salesOrderAmendmentQuoteEntity = $this->getFactory()
+            ->createSalesOrderAmendmentQuoteMapper()
+            ->mapSalesOrderAmendmentQuoteTransferToSalesOrderAmendmentQuoteEntity(
+                $salesOrderAmendmentQuoteTransfer,
+                $salesOrderAmendmentQuoteEntity,
+                $quoteFieldsAllowedForSaving,
+            );
+
+        $salesOrderAmendmentQuoteEntity->save();
+
+        return $this->getFactory()
+            ->createSalesOrderAmendmentQuoteMapper()
+            ->mapSalesOrderAmendmentQuoteEntityToSalesOrderAmendmentQuoteTransfer(
+                $salesOrderAmendmentQuoteEntity,
+                $salesOrderAmendmentQuoteTransfer,
+            );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\SalesOrderAmendmentTransfer $salesOrderAmendmentTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderAmendmentTransfer

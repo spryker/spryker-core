@@ -19,6 +19,7 @@ use Spryker\Shared\Kernel\StrategyResolverInterface;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Spryker\Zed\Checkout\CheckoutConfig;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeBridge;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeAdapter;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
@@ -364,6 +365,73 @@ class CheckoutWorkflowTest extends Unit
         $result = $checkoutWorkflow->placeOrder($quoteTransfer);
 
         $this->assertTrue($result->getIsSuccess());
+    }
+
+    /**
+     * @dataProvider placeOrderShouldTriggerOmsDataProvider
+     *
+     * @param bool|null $shouldSkipStateMachineRun
+     *
+     * @return void
+     */
+    public function testPlaceOrderShouldTriggerOms(?bool $shouldSkipStateMachineRun): void
+    {
+        // Arrange
+        $quoteTransfer = (new QuoteBuilder())->withItem()->build();
+        $quoteTransfer->setShouldSkipStateMachineRun($shouldSkipStateMachineRun);
+
+        $omsFacadeMock = $this->getMockBuilder(CheckoutToOmsFacadeInterface::class)->getMock();
+        $omsFacadeMock->expects($this->once())->method('triggerEventForNewOrderItems');
+
+        $checkoutWorkflow = new CheckoutWorkflow(
+            $omsFacadeMock,
+            $this->createVanillaStrategyResolver([]),
+            $this->createVanillaStrategyResolver([]),
+            $this->createVanillaStrategyResolver([]),
+            $this->createVanillaStrategyResolver([]),
+            new CheckoutConfig(),
+            $this->createQuoteFacadeMock(),
+        );
+
+        // Act
+        $checkoutWorkflow->placeOrder($quoteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPlaceOrderShouldNotTriggerOmsWhenShouldSkipStateMachineRunPropertyIsSetToQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = (new QuoteBuilder())->withItem()->build();
+        $quoteTransfer->setShouldSkipStateMachineRun(true);
+
+        $omsFacadeMock = $this->getMockBuilder(CheckoutToOmsFacadeInterface::class)->getMock();
+        $omsFacadeMock->expects($this->never())->method('triggerEventForNewOrderItems');
+
+        $checkoutWorkflow = new CheckoutWorkflow(
+            $omsFacadeMock,
+            $this->createVanillaStrategyResolver([]),
+            $this->createVanillaStrategyResolver([]),
+            $this->createVanillaStrategyResolver([]),
+            $this->createVanillaStrategyResolver([]),
+            new CheckoutConfig(),
+            $this->createQuoteFacadeMock(),
+        );
+
+        // Act
+        $checkoutWorkflow->placeOrder($quoteTransfer);
+    }
+
+    /**
+     * @return array<string, list<bool|null>>
+     */
+    protected function placeOrderShouldTriggerOmsDataProvider(): array
+    {
+        return [
+            'shouldSkipStateMachineRun is set to false' => [false],
+            'shouldSkipStateMachineRun is not set' => [null],
+        ];
     }
 
     /**

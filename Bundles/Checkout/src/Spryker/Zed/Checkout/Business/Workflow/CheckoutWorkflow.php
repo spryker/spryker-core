@@ -59,7 +59,10 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         $quoteTransfer = $this->doPreSave($quoteTransfer, $checkoutResponseTransfer);
         $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponseTransfer);
 
-        $this->runStateMachine($checkoutResponseTransfer->getSaveOrder());
+        if (!$this->shouldSkipStateMachineRun($quoteTransfer)) {
+            $this->runStateMachine($checkoutResponseTransfer->getSaveOrder());
+        }
+
         $this->doPostSave($quoteTransfer, $checkoutResponseTransfer);
 
         return $checkoutResponseTransfer;
@@ -256,5 +259,15 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         }
 
         return $preSavePlugin->preSave($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function shouldSkipStateMachineRun(QuoteTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getShouldSkipStateMachineRun() === true;
     }
 }

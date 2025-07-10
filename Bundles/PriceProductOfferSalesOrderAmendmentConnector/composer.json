@@ -8,7 +8,7 @@
         "spryker/kernel": "^3.76.0",
         "spryker/price-product-offer": "^1.0.0",
         "spryker/price-product-sales-order-amendment-extension": "^1.0.0",
-        "spryker/sales-order-amendment": "^0.6.0"
+        "spryker/sales-order-amendment": "^0.7.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

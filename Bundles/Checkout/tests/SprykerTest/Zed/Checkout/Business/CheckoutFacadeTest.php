@@ -717,6 +717,7 @@ class CheckoutFacadeTest extends Unit
     {
         $checkoutContext = CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT;
         $orderAmendmentContext = SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT;
+        $orderAmendmentAsyncContext = SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT_ASYNC;
         $wrongContext = 'something-else-context';
 
         return [
@@ -812,7 +813,7 @@ class CheckoutFacadeTest extends Unit
                 ],
                 (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($wrongContext)),
             ],
-            'Executes CheckoutPreConditionPluginInterface plugins found by flow name' => [
+            'Executes CheckoutPreConditionPluginInterface plugins for order amendment flow' => [
                 [
                     CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => ['getNeverCalledCheckoutPreConditionPluginMock'],
                     CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS_FOR_ORDER_AMENDMENT => ['getCheckoutPreConditionPluginMock'],
@@ -821,6 +822,16 @@ class CheckoutFacadeTest extends Unit
                     CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
                 ],
                 (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($orderAmendmentContext)),
+            ],
+            'Executes CheckoutPreConditionPluginInterface plugins for order amendment async flow' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => ['getNeverCalledCheckoutPreConditionPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS_FOR_ORDER_AMENDMENT_ASYNC => ['getCheckoutPreConditionPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($orderAmendmentAsyncContext)),
             ],
             'Executes default CheckoutPreSavePluginInterface plugins when flow name is not set' => [
                 [
@@ -842,7 +853,7 @@ class CheckoutFacadeTest extends Unit
                 ],
                 (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($wrongContext)),
             ],
-            'Executes CheckoutPreSavePluginInterface plugins found by flow name' => [
+            'Executes CheckoutPreSavePluginInterface plugins for order amendment flow' => [
                 [
                     CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
                     CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => ['getNeverCalledCheckoutPreSavePluginMock'],
@@ -851,6 +862,16 @@ class CheckoutFacadeTest extends Unit
                     CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
                 ],
                 (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($orderAmendmentContext)),
+            ],
+            'Executes CheckoutPreSavePluginInterface plugins for order amendment async flow' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => ['getNeverCalledCheckoutPreSavePluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS_FOR_ORDER_AMENDMENT_ASYNC => ['getCheckoutPreSavePluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($orderAmendmentAsyncContext)),
             ],
             'Executes default CheckoutDoSaveOrderInterface plugins when flow name is not set' => [
                 [
@@ -872,7 +893,7 @@ class CheckoutFacadeTest extends Unit
                 ],
                 (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($wrongContext)),
             ],
-            'Executes CheckoutDoSaveOrderInterface plugins found by flow name' => [
+            'Executes CheckoutDoSaveOrderInterface plugins for order amendment flow' => [
                 [
                     CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
                     CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
@@ -881,6 +902,16 @@ class CheckoutFacadeTest extends Unit
                     CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
                 ],
                 (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($orderAmendmentContext)),
+            ],
+            'Executes CheckoutDoSaveOrderInterface plugins for order amendment async flow' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => ['getNeverCalledCheckoutDoSaveOrderPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS_FOR_ORDER_AMENDMENT_ASYNC => ['getCheckoutDoSaveOrderPluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => [],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($orderAmendmentAsyncContext)),
             ],
             'Executes default CheckoutPostSaveInterface plugins when flow name is not set' => [
                 [
@@ -902,7 +933,7 @@ class CheckoutFacadeTest extends Unit
                 ],
                 (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($wrongContext)),
             ],
-            'Executes CheckoutPostSaveInterface plugins found by flow name' => [
+            'Executes CheckoutPostSaveInterface plugins for order amendment flow' => [
                 [
                     CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
                     CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
@@ -911,6 +942,16 @@ class CheckoutFacadeTest extends Unit
                     CheckoutDependencyProvider::CHECKOUT_POST_HOOKS_FOR_ORDER_AMENDMENT => ['getCheckoutPostSavePluginMock'],
                 ],
                 (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($orderAmendmentContext)),
+            ],
+            'Executes CheckoutPostSaveInterface plugins for order amendment async flow' => [
+                [
+                    CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS => [],
+                    CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS => [],
+                    CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS => [],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS => ['getNeverCalledCheckoutPostSavePluginMock'],
+                    CheckoutDependencyProvider::CHECKOUT_POST_HOOKS_FOR_ORDER_AMENDMENT_ASYNC => ['getCheckoutPostSavePluginMock'],
+                ],
+                (new QuoteTransfer())->setQuoteProcessFlow((new QuoteProcessFlowTransfer())->setName($orderAmendmentAsyncContext)),
             ],
         ];
     }

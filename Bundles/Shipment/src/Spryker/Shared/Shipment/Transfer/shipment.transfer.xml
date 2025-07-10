@@ -351,4 +351,13 @@
         <property name="itemsToSkip" type="Item[]" singular="itemToSkip"/>
     </transfer>
 
+    <transfer name="SalesOrderAmendmentQuote" strict="true">
+        <property name="quote" type="Quote"/>
+        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuoteCollection" strict="true">
+        <property name="salesOrderAmendmentQuotes" type="SalesOrderAmendmentQuote[]" singular="salesOrderAmendmentQuote"/>
+    </transfer>
+
 </transfers>

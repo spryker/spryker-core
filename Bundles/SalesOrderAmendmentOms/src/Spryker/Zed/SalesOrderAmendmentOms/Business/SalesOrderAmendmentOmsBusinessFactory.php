@@ -8,14 +8,22 @@
 namespace Spryker\Zed\SalesOrderAmendmentOms\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Checker\ConditionChecker;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Checker\ConditionCheckerInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Expander\OrderExpander;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Expander\OrderExpanderInterface;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Mapper\OrderMapper;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Mapper\OrderMapperInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Processor\OrderAmendmentProcessor;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Processor\OrderAmendmentProcessorInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OmsOrderItemStateReader;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OmsOrderItemStateReaderInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OrderReader;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\OrderReaderInterface;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\SalesOrderAmendmentQuoteReader;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\SalesOrderAmendmentQuoteReaderInterface;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Sender\OrderAmendmentStatusMailNotificationSender;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Sender\OrderAmendmentStatusMailNotificationSenderInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Triggerer\OmsEventTriggerer;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Triggerer\OmsEventTriggererInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Updater\ItemReservationUpdater;
@@ -28,6 +36,7 @@ use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\QuoteValidator;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\QuoteValidatorInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\SalesOrderAmendmentValidator;
 use Spryker\Zed\SalesOrderAmendmentOms\Business\Validator\SalesOrderAmendmentValidatorInterface;
+use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToMailFacadeInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToOmsFacadeInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToSalesFacadeInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToSalesOrderAmendmentFacadeInterface;
@@ -132,9 +141,46 @@ class SalesOrderAmendmentOmsBusinessFactory extends AbstractBusinessFactory
     {
         return new ItemReservationUpdater(
             $this->getOmsFacade(),
-            $this->getSalesOrderAmendmentFacade(),
+            $this->createSalesOrderAmendmentQuoteReader(),
             $this->getSalesOrderAmendmentService(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendmentOms\Business\Checker\ConditionCheckerInterface
+     */
+    public function createConditionChecker(): ConditionCheckerInterface
+    {
+        return new ConditionChecker($this->createSalesOrderAmendmentQuoteReader());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendmentOms\Business\Sender\OrderAmendmentStatusMailNotificationSenderInterface
+     */
+    public function createOrderAmendmentStatusMailNotificationSender(): OrderAmendmentStatusMailNotificationSenderInterface
+    {
+        return new OrderAmendmentStatusMailNotificationSender(
+            $this->getMailFacade(),
+            $this->createSalesOrderAmendmentQuoteReader(),
+            $this->getSalesOrderAmendmentFacade(),
+            $this->createOrderMapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendmentOms\Business\Mapper\OrderMapperInterface
+     */
+    public function createOrderMapper(): OrderMapperInterface
+    {
+        return new OrderMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\SalesOrderAmendmentQuoteReaderInterface
+     */
+    public function createSalesOrderAmendmentQuoteReader(): SalesOrderAmendmentQuoteReaderInterface
+    {
+        return new SalesOrderAmendmentQuoteReader($this->getSalesOrderAmendmentFacade());
     }
 
     /**
@@ -159,6 +205,14 @@ class SalesOrderAmendmentOmsBusinessFactory extends AbstractBusinessFactory
     public function getSalesOrderAmendmentFacade(): SalesOrderAmendmentOmsToSalesOrderAmendmentFacadeInterface
     {
         return $this->getProvidedDependency(SalesOrderAmendmentOmsDependencyProvider::FACADE_SALES_ORDER_AMENDMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToMailFacadeInterface
+     */
+    public function getMailFacade(): SalesOrderAmendmentOmsToMailFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesOrderAmendmentOmsDependencyProvider::FACADE_MAIL);
     }
 
     /**

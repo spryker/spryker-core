@@ -19,6 +19,11 @@ class SalesOrderAmendmentOmsConfig extends AbstractBundleConfig
     /**
      * @var string
      */
+    protected const EVENT_START_ORDER_AMENDMENT_DRAFT = 'start-order-amendment-draft';
+
+    /**
+     * @var string
+     */
     protected const EVENT_FINISH_ORDER_AMENDMENT = 'finish-order-amendment';
 
     /**
@@ -60,6 +65,19 @@ class SalesOrderAmendmentOmsConfig extends AbstractBundleConfig
     public function getStartOrderAmendmentEvent(): string
     {
         return static::EVENT_START_ORDER_AMENDMENT;
+    }
+
+    /**
+     * Specification:
+     * - Returns a start order amendment draft event name.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getStartOrderAmendmentDraftEvent(): string
+    {
+        return static::EVENT_START_ORDER_AMENDMENT_DRAFT;
     }
 
     /**

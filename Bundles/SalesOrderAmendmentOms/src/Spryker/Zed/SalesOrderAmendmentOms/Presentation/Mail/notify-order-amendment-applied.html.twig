@@ -1,0 +1,15 @@
+<div>
+    <div style="text-align: center;">{{ 'sales_order_amendment_oms.mail.order_amendment_applied.salutation' | trans }} {{ mail.order.firstName }} {{ mail.order.lastName }},</div>
+    <br />
+    <div style="text-align: center;"><h1>{{ 'sales_order_amendment_oms.mail.order_amendment_applied.title' | trans }}</h1></div>
+    <br />
+    <div style="text-align: center;">{{ 'sales_order_amendment_oms.mail.order_amendment_applied.text.line_1' | trans }}</div>
+    <br />
+    <div style="text-align: center;">{{ 'sales_order_amendment_oms.mail.order_amendment_applied.text.line_2' | trans }}</div>
+    <div style="text-align: center;">{{ 'sales_order_amendment_oms.mail.order_amendment_applied.text.line_3' | trans }}</div>
+    <br />
+    <div style="text-align: center;">{{ 'sales_order_amendment_oms.mail.footer.text.line_1' | trans }}</div>
+    <div style="text-align: center;">{{ 'sales_order_amendment_oms.mail.footer.text.line_2' | trans }}</div>
+    <hr /> <br />
+    {% include '@Oms/Mail/order-details.html.twig' %}
+</div>

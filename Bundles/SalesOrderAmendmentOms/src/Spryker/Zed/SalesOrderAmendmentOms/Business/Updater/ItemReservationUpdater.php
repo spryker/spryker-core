@@ -9,23 +9,20 @@ namespace Spryker\Zed\SalesOrderAmendmentOms\Business\Updater;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
-use Generated\Shared\Transfer\SalesOrderAmendmentQuoteConditionsTransfer;
-use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCriteriaTransfer;
-use Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer;
+use Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\SalesOrderAmendmentQuoteReaderInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToOmsFacadeInterface;
-use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToSalesOrderAmendmentFacadeInterface;
 use Spryker\Zed\SalesOrderAmendmentOms\Dependency\Service\SalesOrderAmendmentOmsToSalesOrderAmendmentServiceInterface;
 
 class ItemReservationUpdater implements ItemReservationUpdaterInterface
 {
     /**
      * @param \Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToOmsFacadeInterface $omsFacade
-     * @param \Spryker\Zed\SalesOrderAmendmentOms\Dependency\Facade\SalesOrderAmendmentOmsToSalesOrderAmendmentFacadeInterface $salesOrderAmendmentFacade
+     * @param \Spryker\Zed\SalesOrderAmendmentOms\Business\Reader\SalesOrderAmendmentQuoteReaderInterface $salesOrderAmendmentQuoteReader
      * @param \Spryker\Zed\SalesOrderAmendmentOms\Dependency\Service\SalesOrderAmendmentOmsToSalesOrderAmendmentServiceInterface $salesOrderAmendmentService
      */
     public function __construct(
         protected SalesOrderAmendmentOmsToOmsFacadeInterface $omsFacade,
-        protected SalesOrderAmendmentOmsToSalesOrderAmendmentFacadeInterface $salesOrderAmendmentFacade,
+        protected SalesOrderAmendmentQuoteReaderInterface $salesOrderAmendmentQuoteReader,
         protected SalesOrderAmendmentOmsToSalesOrderAmendmentServiceInterface $salesOrderAmendmentService
     ) {
     }
@@ -35,10 +32,10 @@ class ItemReservationUpdater implements ItemReservationUpdaterInterface
      *
      * @return void
      */
-    public function updateDeletedItemsReservations(
-        string $orderReference
-    ): void {
-        $salesOrderAmendmentQuoteTransfer = $this->findSalesOrderAmendmentQuote($orderReference);
+    public function updateDeletedItemsReservations(string $orderReference): void
+    {
+        $salesOrderAmendmentQuoteTransfer = $this->salesOrderAmendmentQuoteReader
+        ->findSalesOrderAmendmentQuoteByOrderReference($orderReference);
 
         if (!$salesOrderAmendmentQuoteTransfer) {
             return;
@@ -86,27 +83,5 @@ class ItemReservationUpdater implements ItemReservationUpdaterInterface
         }
 
         return $salesOrderItemTransfersIndexedByGroupKey;
-    }
-
-    /**
-     * @param string $orderReference
-     *
-     * @return \Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer|null
-     */
-    protected function findSalesOrderAmendmentQuote(string $orderReference): ?SalesOrderAmendmentQuoteTransfer
-    {
-        $salesOrderAmendmentQuoteCollectionTransfer = $this->salesOrderAmendmentFacade->getSalesOrderAmendmentQuoteCollection(
-            (new SalesOrderAmendmentQuoteCriteriaTransfer())->setSalesOrderAmendmentQuoteConditions(
-                (new SalesOrderAmendmentQuoteConditionsTransfer())->addAmendmentOrderReference(
-                    $orderReference,
-                ),
-            ),
-        );
-
-        if ($salesOrderAmendmentQuoteCollectionTransfer->getSalesOrderAmendmentQuotes()->offsetExists(0)) {
-            return $salesOrderAmendmentQuoteCollectionTransfer->getSalesOrderAmendmentQuotes()->offsetGet(0);
-        }
-
-        return null;
     }
 }

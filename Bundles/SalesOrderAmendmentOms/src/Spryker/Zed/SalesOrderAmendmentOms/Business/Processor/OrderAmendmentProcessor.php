@@ -61,4 +61,18 @@ class OrderAmendmentProcessor implements OrderAmendmentProcessorInterface
 
         $this->omsEventTriggerer->triggerFinishSalesOrderAmendmentEvent($quoteTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function startOrderAmendmentDraft(QuoteTransfer $quoteTransfer): void
+    {
+        if ($quoteTransfer->getAmendmentOrderReference() === null) {
+            return;
+        }
+
+        $this->omsEventTriggerer->triggerStartOrderAmendmentDraftEvent($quoteTransfer);
+    }
 }

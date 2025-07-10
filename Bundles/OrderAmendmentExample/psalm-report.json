@@ -1,0 +1,55 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 148,
+            "line_to": 148,
+            "type": "InvalidArgument",
+            "message": "Argument 2 of array_map expects array<array-key, mixed>, but array<Generated\\Shared\\Transfer\\ItemTransfer, mixed> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OrderAmendmentExample/src/Spryker/Zed/OrderAmendmentExample/Business/Processor/OrderAmendmentCheckoutProcessor.php",
+            "snippet": "            $itemCollectionTransfer->getItems()->getArrayCopy(),",
+            "selected_text": "$itemCollectionTransfer->getItems()->getArrayCopy()",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 152,
+            "line_to": 152,
+            "type": "InvalidArgument",
+            "message": "Argument 2 of in_array expects array<array-key, mixed>, but array<Generated\\Shared\\Transfer\\ItemTransfer, int> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OrderAmendmentExample/src/Spryker/Zed/OrderAmendmentExample/Business/Processor/OrderAmendmentCheckoutProcessor.php",
+            "snippet": "            if (!in_array($orderItem->getIdSalesOrderItem(), $updatedOrderItemsIds, true)) {",
+            "selected_text": "$updatedOrderItemsIds",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of ArrayObject::offsetExists expects Generated\\Shared\\Transfer\\SalesOrderAmendmentQuoteTransfer, but 0 provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OrderAmendmentExample/src/Spryker/Zed/OrderAmendmentExample/Business/Reader/SalesOrderAmendmentQuoteReader.php",
+            "snippet": "        if ($salesOrderAmendmentQuoteCollectionTransfer->getSalesOrderAmendmentQuotes()->offsetExists(0)) {",
+            "selected_text": "0",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of ArrayObject::offsetGet expects Generated\\Shared\\Transfer\\SalesOrderAmendmentQuoteTransfer, but 0 provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OrderAmendmentExample/src/Spryker/Zed/OrderAmendmentExample/Business/Reader/SalesOrderAmendmentQuoteReader.php",
+            "snippet": "            return $salesOrderAmendmentQuoteCollectionTransfer->getSalesOrderAmendmentQuotes()->offsetGet(0);",
+            "selected_text": "0",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [],
+    "deprecation": [],
+    "count": 4
+}

@@ -7,6 +7,9 @@
     <transfer name="SalesOrderAmendmentCollection" strict="true">
     </transfer>
 
+    <transfer name="SalesOrderAmendmentQuoteCollection" strict="true">
+    </transfer>
+
     <transfer name="SalesOrderAmendmentItemCollection" strict="true">
     </transfer>
 

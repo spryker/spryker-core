@@ -46,3 +46,5 @@ suites:
                 - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Shared\SalesOrderAmendment\Helper\SalesOrderAmendmentHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper

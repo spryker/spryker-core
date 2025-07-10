@@ -81,6 +81,11 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
     /**
      * @var string
      */
+    public const PLUGINS_SALES_ORDER_AMENDMENT_QUOTE_EXPANDER = 'PLUGINS_SALES_ORDER_AMENDMENT_QUOTE_EXPANDER';
+
+    /**
+     * @var string
+     */
     public const FACADE_SALES = 'FACADE_SALES';
 
     /**
@@ -115,6 +120,7 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addSalesOrderAmendmentItemCollectorStrategyPlugins($container);
         $container = $this->addSalesOrderItemCollectorPlugins($container);
         $container = $this->addSalesOrderAmendmentService($container);
+        $container = $this->addSalesOrderAmendmentQuoteExpanderPlugins($container);
 
         return $container;
     }
@@ -342,6 +348,20 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesOrderAmendmentQuoteExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SALES_ORDER_AMENDMENT_QUOTE_EXPANDER, function () {
+            return $this->getSalesOrderAmendmentQuoteExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentExpanderPluginInterface>
      */
     protected function getSalesOrderAmendmentExpanderPlugins(): array
@@ -425,6 +445,14 @@ class SalesOrderAmendmentDependencyProvider extends AbstractBundleDependencyProv
      * @return list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderItemCollectorPluginInterface>
      */
     protected function getSalesOrderItemCollectorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentQuoteExpanderPluginInterface>
+     */
+    protected function getSalesOrderAmendmentQuoteExpanderPlugins(): array
     {
         return [];
     }

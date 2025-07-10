@@ -9,10 +9,13 @@ namespace SprykerTest\Zed\SalesOrderAmendment\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCollectionTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentQuoteConditionsTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentQuoteCriteriaTransfer;
 use Generated\Shared\Transfer\SalesOrderAmendmentQuoteTransfer;
 use Generated\Shared\Transfer\SortTransfer;
+use Spryker\Zed\SalesOrderAmendment\SalesOrderAmendmentDependencyProvider;
+use Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentQuoteExpanderPluginInterface;
 use SprykerTest\Zed\SalesOrderAmendment\SalesOrderAmendmentBusinessTester;
 
 /**
@@ -330,5 +333,75 @@ class GetSalesOrderAmendmentQuoteCollectionTest extends Unit
         $this->assertSame(3, $paginationTransfer->getLastPageOrFail());
         $this->assertSame(3, $paginationTransfer->getNextPageOrFail());
         $this->assertSame(1, $paginationTransfer->getPreviousPageOrFail());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldExecuteSalesOrderAmendmentQuoteExpanderPluginStackWhenWithExpanderPluginsIsTrue(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            SalesOrderAmendmentDependencyProvider::PLUGINS_SALES_ORDER_AMENDMENT_QUOTE_EXPANDER,
+            [$this->createSalesOrderAmendmentQuoteExpanderPluginMock(true)],
+        );
+        $this->tester->haveSalesOrderAmendmentQuote();
+        $salesOrderAmendmentQuoteCriteriaTransfer = (new SalesOrderAmendmentQuoteCriteriaTransfer())
+            ->setWithExpanderPlugins(true);
+
+        // Act
+        $this->tester->getFacade()->getSalesOrderAmendmentQuoteCollection($salesOrderAmendmentQuoteCriteriaTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldNotExecuteSalesOrderAmendmentQuoteExpanderPluginStackWhenWithExpanderPluginsIsFalse(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            SalesOrderAmendmentDependencyProvider::PLUGINS_SALES_ORDER_AMENDMENT_QUOTE_EXPANDER,
+            [$this->createSalesOrderAmendmentQuoteExpanderPluginMock(false)],
+        );
+        $this->tester->haveSalesOrderAmendmentQuote();
+        $salesOrderAmendmentQuoteCriteriaTransfer = (new SalesOrderAmendmentQuoteCriteriaTransfer())
+            ->setWithExpanderPlugins(false);
+
+        // Act
+        $this->tester->getFacade()->getSalesOrderAmendmentQuoteCollection($salesOrderAmendmentQuoteCriteriaTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldNotExecuteSalesOrderAmendmentQuoteExpanderPluginStackWhenWithExpanderPluginsIsNull(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            SalesOrderAmendmentDependencyProvider::PLUGINS_SALES_ORDER_AMENDMENT_QUOTE_EXPANDER,
+            [$this->createSalesOrderAmendmentQuoteExpanderPluginMock(false)],
+        );
+        $this->tester->haveSalesOrderAmendmentQuote();
+
+        // Act
+        $this->tester->getFacade()->getSalesOrderAmendmentQuoteCollection(new SalesOrderAmendmentQuoteCriteriaTransfer());
+    }
+
+    /**
+     * @param bool $shouldBeCalled
+     *
+     * @return \Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentQuoteExpanderPluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createSalesOrderAmendmentQuoteExpanderPluginMock(
+        bool $shouldBeCalled
+    ): SalesOrderAmendmentQuoteExpanderPluginInterface {
+        $salesOrderAmendmentQuoteExpanderPluginMock = $this->getMockBuilder(SalesOrderAmendmentQuoteExpanderPluginInterface::class)
+            ->getMock();
+        $salesOrderAmendmentQuoteExpanderPluginMock->expects($shouldBeCalled ? $this->once() : $this->never())
+            ->method('expand')
+            ->with($this->isInstanceOf(SalesOrderAmendmentQuoteCollectionTransfer::class))
+            ->willReturnArgument(0);
+
+        return $salesOrderAmendmentQuoteExpanderPluginMock;
     }
 }

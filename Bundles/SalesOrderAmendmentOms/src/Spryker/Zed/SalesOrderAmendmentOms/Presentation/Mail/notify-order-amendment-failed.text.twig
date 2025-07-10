@@ -1,0 +1,20 @@
+{{ 'sales_order_amendment_oms.mail.order_amendment_failed.salutation' | trans }} {{ mail.order.firstName }} {{ mail.order.lastName }},
+
+{{ 'sales_order_amendment_oms.mail.order_amendment_failed.title' | trans }}
+
+{{ 'sales_order_amendment_oms.mail.order_amendment_failed.text.line_1' | trans }}
+
+{{ 'sales_order_amendment_oms.mail.order_amendment_failed.text.line_2' | trans }}
+
+{% for error in mail.quote.errors %}
+    {{ error.message | trans }}
+{% endfor %}
+
+{{ 'sales_order_amendment_oms.mail.order_amendment_failed.text.line_3' | trans }}
+
+{{ 'sales_order_amendment_oms.mail.footer.text.line_1' | trans }},
+{{ 'sales_order_amendment_oms.mail.footer.text.line_2' | trans }}
+
+- - - - - - - - - -
+
+{% include '@Oms/Mail/order-details.text.twig' %}

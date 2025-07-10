@@ -344,6 +344,38 @@ class OrderStateMachineTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testTriggerEventShouldFilterOrderItemsWhenCommandReturnsUpdatedOrderItems(): void
+    {
+        // Arrange
+        $orderItemId1 = 1;
+        $orderItemId2 = 2;
+        $processName = 'test-process';
+
+        $salesOrderItemMock1 = $this->createSalesOrderItemMock($orderItemId1, $processName);
+        $salesOrderItemMock2 = $this->createSalesOrderItemMock($orderItemId2, $processName);
+
+        $commandMock = $this->getMockBuilder(CommandByOrderInterface::class)->getMock();
+        $commandMock->method('run')->willReturn([
+            'updatedOrderItems' => [$salesOrderItemMock1],
+        ]);
+
+        $transitionLogMock = $this->getMockBuilder(TransitionLogInterface::class)->getMock();
+        $transitionLogMock->expects($this->once())->method('deleteLog')->with($orderItemId2);
+
+        $orderStateMachineMock = $this->createOrderStateMachineForTriggerEventTest(
+            $commandMock,
+            $transitionLogMock,
+            $processName,
+        );
+        $orderStateMachineMock->method('groupByOrderAndState')->willReturn(['key' => [$salesOrderItemMock1, $salesOrderItemMock2]]);
+
+        // Act
+        $orderStateMachineMock->triggerEvent('test-event', [$salesOrderItemMock1, $salesOrderItemMock2], []);
+    }
+
+    /**
      * @return array<array>
      */
     public function errorMessagesDataProvider(): array
@@ -482,6 +514,64 @@ class OrderStateMachineTest extends Unit
             ])
             ->onlyMethods($methods)
             ->getMock();
+    }
+
+    /**
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface $commandMock
+     * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $transitionLogMock
+     * @param string $processName
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine
+     */
+    protected function createOrderStateMachineForTriggerEventTest(
+        CommandInterface $commandMock,
+        TransitionLogInterface $transitionLogMock,
+        string $processName
+    ): OrderStateMachine {
+        $orderStateMachineMock = $this->getOrderStatemachineMockForConditionsWithCriteriaTest([
+            'getCommand',
+            'groupByOrderAndState',
+            'logSourceState',
+            'getProcesses',
+            'initTransitionLog',
+            'updateStateByEvent',
+            'saveOrderItems',
+        ]);
+
+        $orderStateMachineMock->method('getCommand')->willReturn($commandMock);
+        $orderStateMachineMock->method('initTransitionLog')->willReturn($transitionLogMock);
+
+        $eventMock = $this->getMockBuilder(EventInterface::class)->getMock();
+        $eventMock->method('hasCommand')->willReturn(true);
+        $stateMock = $this->getMockBuilder(StateInterface::class)->getMock();
+        $stateMock->method('getEvent')->willReturn($eventMock);
+        $processMock = $this->getMockBuilder(ProcessInterface::class)->getMock();
+        $processMock->method('getStateFromAllProcesses')->willReturn($stateMock);
+
+        $orderStateMachineMock->method('getProcesses')->willReturn([$processName => $processMock]);
+        $orderStateMachineMock->method('updateStateByEvent')->willReturn([]);
+
+        return $orderStateMachineMock;
+    }
+
+    /**
+     * @param int $orderItemId
+     * @param string $processName
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     */
+    protected function createSalesOrderItemMock(int $orderItemId, string $processName): SpySalesOrderItem
+    {
+        $salesOrderItemMock = $this->getMockBuilder(SpySalesOrderItem::class)->getMock();
+        $salesOrderItemMock->method('getIdSalesOrderItem')->willReturn($orderItemId);
+        $salesOrderItemMock->method('getState')->willReturn($this->getMockBuilder(SpyOmsOrderItemState::class)->getMock());
+        $salesOrderItemMock->method('getOrder')->willReturn($this->getMockBuilder(ChildSpySalesOrder::class)->getMock());
+
+        $processMock = $this->getMockBuilder(SpyOmsOrderProcess::class)->getMock();
+        $processMock->method('getName')->willReturn($processName);
+        $salesOrderItemMock->method('getProcess')->willReturn($processMock);
+
+        return $salesOrderItemMock;
     }
 
     /**

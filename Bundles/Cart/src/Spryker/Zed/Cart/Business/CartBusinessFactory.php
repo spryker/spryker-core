@@ -127,6 +127,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
             [
                 CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT => $this->getProvidedDependency(CartDependencyProvider::CART_PRE_CHECK_PLUGINS, static::LOADING_LAZY),
                 SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT => $this->getProvidedDependency(CartDependencyProvider::CART_PRE_CHECK_PLUGINS_FOR_ORDER_AMENDMENT, static::LOADING_LAZY),
+                SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT_ASYNC => $this->getProvidedDependency(CartDependencyProvider::CART_PRE_CHECK_PLUGINS_FOR_ORDER_AMENDMENT_ASYNC, static::LOADING_LAZY),
             ],
             CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT,
         );
@@ -141,6 +142,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
             [
                 CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT => $this->getProvidedDependency(CartDependencyProvider::CART_PRE_RELOAD_PLUGINS, static::LOADING_LAZY),
                 SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT => $this->getProvidedDependency(CartDependencyProvider::CART_PRE_RELOAD_PLUGINS_FOR_ORDER_AMENDMENT, static::LOADING_LAZY),
+                SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT_ASYNC => $this->getProvidedDependency(CartDependencyProvider::CART_PRE_RELOAD_PLUGINS_FOR_ORDER_AMENDMENT_ASYNC, static::LOADING_LAZY),
             ],
             CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT,
         );
@@ -155,6 +157,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
             [
                 CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT => $this->getProvidedDependency(CartDependencyProvider::CART_EXPANDER_PLUGINS, static::LOADING_LAZY),
                 SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT => $this->getProvidedDependency(CartDependencyProvider::CART_EXPANDER_PLUGINS_FOR_ORDER_AMENDMENT, static::LOADING_LAZY),
+                SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT_ASYNC => $this->getProvidedDependency(CartDependencyProvider::CART_EXPANDER_PLUGINS_FOR_ORDER_AMENDMENT_ASYNC, static::LOADING_LAZY),
             ],
             CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT,
         );

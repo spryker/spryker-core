@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="SalesOrderAmendmentQuoteCriteria" strict="true">
+        <property name="salesOrderAmendmentQuoteConditions" type="SalesOrderAmendmentQuoteConditions"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuoteConditions" strict="true">
+        <property name="amendmentOrderReferences" type="string[]" singular="amendmentOrderReference"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuoteCollection" strict="true">
+        <property name="salesOrderAmendmentQuotes" type="SalesOrderAmendmentQuote[]" singular="salesOrderAmendmentQuote"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuoteCollectionRequest" strict="true">
+        <property name="salesOrderAmendmentQuotes" type="SalesOrderAmendmentQuote[]" singular="salesOrderAmendmentQuote"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuoteCollectionResponse" strict="true">
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentQuote" strict="true">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="quoteProcessFlow" type="QuoteProcessFlow" strict="true"/>
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="payment" type="Payment" deprecated="Use payments property instead."/>
+        <property name="shouldSkipStateMachineRun" type="bool" strict="true"/>
+        <property name="defaultOmsOrderItemState" type="string" strict="true"/>
+    </transfer>
+
+    <transfer name="QuoteProcessFlow" strict="true">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderIds" type="int[]" singular="salesOrderId"/>
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="idSalesOrderItem" type="int"/>
+    </transfer>
+
+    <transfer name="Payment">
+        <property name="paymentSelection" type="string"/>
+    </transfer>
+
+</transfers>

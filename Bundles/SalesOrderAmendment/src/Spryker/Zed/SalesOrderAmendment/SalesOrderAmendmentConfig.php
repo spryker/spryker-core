@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\SalesOrderAmendment;
 
+use Generated\Shared\Transfer\QuoteProcessFlowTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SalesOrderAmendmentConfig extends AbstractBundleConfig
@@ -59,5 +61,18 @@ class SalesOrderAmendmentConfig extends AbstractBundleConfig
     public function getQuoteItemFieldsAllowedForSaving(): array
     {
         return [];
+    }
+
+    /**
+     * Specification:
+     * - Returns the default order amendment quote process flow.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QuoteProcessFlowTransfer
+     */
+    public function getDefaultOrderAmendmentQuoteProcessFlow(): QuoteProcessFlowTransfer
+    {
+        return (new QuoteProcessFlowTransfer())->setName(SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT);
     }
 }

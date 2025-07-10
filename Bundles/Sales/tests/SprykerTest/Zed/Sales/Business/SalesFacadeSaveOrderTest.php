@@ -148,6 +148,7 @@ class SalesFacadeSaveOrderTest extends Unit
         $this->businessFactoryContainer[SalesDependencyProvider::ORDER_EXPANDER_PRE_SAVE_PLUGINS] = [];
         $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE] = [];
         $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT] = [];
+        $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT_ASYNC] = [];
         $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_ITEM_EXPANDER] = [];
         $this->businessFactoryContainer[SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
             return [];
@@ -157,6 +158,7 @@ class SalesFacadeSaveOrderTest extends Unit
         };
         $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER] = [];
         $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER_FOR_ORDER_AMENDMENT] = [];
+        $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_ITEM_INITIAL_STATE_PROVIDER_FOR_ORDER_AMENDMENT_ASYNC] = [];
 
         $this->salesFacade = new SalesFacade();
         $this->salesBusinessFactory = new SalesBusinessFactory();
@@ -173,11 +175,16 @@ class SalesFacadeSaveOrderTest extends Unit
      * @param \Generated\Shared\Transfer\QuoteProcessFlowTransfer|null $quoteProcessFlowTransfer
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface $checkoutContextPluginMock
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface $orderAmendmentContextPluginMock
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface $orderAmendmentAsyncContextPluginMock
      *
      * @return void
      */
-    public function testSaveSalesOrderSelectsContextCorrectly($quoteProcessFlowTransfer, $checkoutContextPluginMock, $orderAmendmentContextPluginMock): void
-    {
+    public function testSaveSalesOrderSelectsContextCorrectly(
+        $quoteProcessFlowTransfer,
+        $checkoutContextPluginMock,
+        $orderAmendmentContextPluginMock,
+        $orderAmendmentAsyncContextPluginMock
+    ): void {
         // Arrange
         $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
         $quoteTransfer->setQuoteProcessFlow($quoteProcessFlowTransfer);
@@ -186,6 +193,7 @@ class SalesFacadeSaveOrderTest extends Unit
         // Assert
         $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE] = [$checkoutContextPluginMock];
         $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT] = [$orderAmendmentContextPluginMock];
+        $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT_ASYNC] = [$orderAmendmentAsyncContextPluginMock];
 
         // Act
         $this->salesFacade->saveSalesOrder($quoteTransfer, $checkoutResponseTransfer->getSaveOrder());
@@ -227,19 +235,29 @@ class SalesFacadeSaveOrderTest extends Unit
                 (new QuoteProcessFlowTransfer())->setName(CheckoutExtensionContextsInterface::CONTEXT_CHECKOUT),
                 $this->getOnceCalledOrderPostSavePluginMock(),
                 $this->getNeverCalledOrderPostSavePluginMock(),
+                $this->getNeverCalledOrderPostSavePluginMock(),
             ],
             'Calls default context when quote process flow is not set' => [
                 null,
                 $this->getOnceCalledOrderPostSavePluginMock(),
+                $this->getNeverCalledOrderPostSavePluginMock(),
                 $this->getNeverCalledOrderPostSavePluginMock(),
             ],
             'Calls default context when context is not defined' => [
                 (new QuoteProcessFlowTransfer())->setName('wrong-context'),
                 $this->getOnceCalledOrderPostSavePluginMock(),
                 $this->getNeverCalledOrderPostSavePluginMock(),
+                $this->getNeverCalledOrderPostSavePluginMock(),
             ],
             'Calls order amendment context when order amendment context is set' => [
                 (new QuoteProcessFlowTransfer())->setName(SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT),
+                $this->getNeverCalledOrderPostSavePluginMock(),
+                $this->getOnceCalledOrderPostSavePluginMock(),
+                $this->getNeverCalledOrderPostSavePluginMock(),
+            ],
+            'Calls order amendment context when order amendment async context is set' => [
+                (new QuoteProcessFlowTransfer())->setName(SalesOrderAmendmentExtensionContextsInterface::CONTEXT_ORDER_AMENDMENT_ASYNC),
+                $this->getNeverCalledOrderPostSavePluginMock(),
                 $this->getNeverCalledOrderPostSavePluginMock(),
                 $this->getOnceCalledOrderPostSavePluginMock(),
             ],
@@ -551,11 +569,16 @@ class SalesFacadeSaveOrderTest extends Unit
      * @param \Generated\Shared\Transfer\QuoteProcessFlowTransfer|null $quoteProcessFlowTransfer
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface $checkoutContextPluginMock
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface $orderAmendmentContextPluginMock
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface $orderAmendmentAsyncContextPluginMock
      *
      * @return void
      */
-    public function testSaveOrderRawSelectsContextCorrectly($quoteProcessFlowTransfer, $checkoutContextPluginMock, $orderAmendmentContextPluginMock): void
-    {
+    public function testSaveOrderRawSelectsContextCorrectly(
+        $quoteProcessFlowTransfer,
+        $checkoutContextPluginMock,
+        $orderAmendmentContextPluginMock,
+        $orderAmendmentAsyncContextPluginMock
+    ): void {
         //Arrange
         $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
         $quoteTransfer->setQuoteProcessFlow($quoteProcessFlowTransfer);
@@ -564,6 +587,7 @@ class SalesFacadeSaveOrderTest extends Unit
         //Assert
         $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE] = [$checkoutContextPluginMock];
         $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT] = [$orderAmendmentContextPluginMock];
+        $this->businessFactoryContainer[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE_FOR_ORDER_AMENDMENT_ASYNC] = [$orderAmendmentAsyncContextPluginMock];
 
         //Act
         $this->salesFacade->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
