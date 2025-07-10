@@ -29,11 +29,6 @@ class PaymentAppOmsSalesHelper extends Module
     use SalesOmsHelperTrait;
     use AsyncApiHelperTrait;
 
-    /**
-     * @var string
-     */
-    protected const STATE_MACHINE_NAME = 'ForeignPaymentStateMachine01';
-
     protected string $transactionReference;
 
     /**
@@ -47,8 +42,7 @@ class PaymentAppOmsSalesHelper extends Module
 
         $this->transactionReference = Uuid::uuid4()->toString();
 
-        $xmlFileDirectory = APPLICATION_VENDOR_DIR . 'spryker/spryker/Bundles/SalesPayment/config/Zed/Oms/';
-        $this->getSalesOmsHelper()->setupStateMachine(static::STATE_MACHINE_NAME, $xmlFileDirectory);
+        $this->getSalesOmsHelper()->setupStateMachine();
     }
 
     /**

@@ -69,7 +69,9 @@ class OmsFlowNewToCaptureToOverpaidTest extends Unit
         $this->tester->tryToTransitionOrderItems();
         $this->tester->assertOrderItemIsInState(SalesPaymentHelper::STATE_PAYMENT_CAPTURED);
 
-        $this->tester->tryToTransitionOrderItems(SalesPaymentHelper::EVENT_PAYMENT_OVERPAY_CHECKED);
-        $this->tester->assertOrderItemIsInState(SalesPaymentHelper::STATE_SENT_TO_MERCHANT);
+        if ($this->tester->isStateMachine('ForeignPaymentStateMachine01')) {
+            $this->tester->tryToTransitionOrderItems(SalesPaymentHelper::EVENT_PAYMENT_OVERPAY_CHECKED);
+            $this->tester->assertOrderItemIsInState(SalesPaymentHelper::STATE_SENT_TO_MERCHANT);
+        }
     }
 }

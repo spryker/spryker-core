@@ -34,6 +34,18 @@ class SalesOmsHelper extends Module
     protected string $orderReference;
 
     /**
+     * @var string
+     */
+    protected const STATE_MACHINE_NAME = 'stateMachineName';
+
+    /**
+     * @var array<string, mixed>
+     */
+    protected array $config = [
+        self::STATE_MACHINE_NAME => 'ForeignPaymentStateMachine01',
+    ];
+
+    /**
      * @param \Codeception\TestInterface $test
      *
      * @return void
@@ -68,16 +80,24 @@ class SalesOmsHelper extends Module
     }
 
     /**
-     * @param string $stateMachineName
-     * @param string|null $xmlFolder
-     *
      * @return void
      */
-    public function setupStateMachine(string $stateMachineName, ?string $xmlFolder = null): void
+    public function setupStateMachine(): void
     {
-        $this->stateMachineName = $stateMachineName;
+        $this->stateMachineName = $this->config[static::STATE_MACHINE_NAME];
+        $xmlFileDirectory = APPLICATION_VENDOR_DIR . 'spryker/spryker/Bundles/SalesPayment/config/Zed/Oms/';
 
-        $this->getOmsHelper()->configureTestStateMachine([$this->stateMachineName], $xmlFolder);
+        $this->getOmsHelper()->configureTestStateMachine([$this->stateMachineName], $xmlFileDirectory);
+    }
+
+    /**
+     * @param string $stateMachineName
+     *
+     * @return bool
+     */
+    public function isStateMachine(string $stateMachineName): bool
+    {
+        return $stateMachineName === $this->stateMachineName;
     }
 
     /**

@@ -48,13 +48,22 @@ class OmsFlowNewToClosedTest extends Unit
         $this->tester->tryToTransitionOrderItems();
         $this->tester->assertOrderItemIsInState(SalesPaymentHelper::STATE_PAYMENT_CAPTURED);
 
-        $this->tester->tryToTransitionOrderItems(SalesPaymentHelper::EVENT_PAYMENT_OVERPAY_CHECKED);
-        $this->tester->assertOrderItemIsInState(SalesPaymentHelper::STATE_SENT_TO_MERCHANT);
+        if ($this->tester->isStateMachine('ForeignPaymentStateMachine01')) {
+            $this->tester->tryToTransitionOrderItems(SalesPaymentHelper::EVENT_PAYMENT_OVERPAY_CHECKED);
+            $this->tester->assertOrderItemIsInState(SalesPaymentHelper::STATE_SENT_TO_MERCHANT);
+        }
 
         $this->tester->tryToTransitionOrderItems(SalesPaymentHelper::EVENT_DELIVER);
         $this->tester->assertOrderItemIsInState(SalesPaymentHelper::STATE_DELIVERED);
 
-        $this->tester->tryToTransitionOrderItems(SalesPaymentHelper::EVENT_MERCHANT_PAYOUT);
-        $this->tester->assertOrderItemIsInState(SalesPaymentHelper::STATE_CLOSED);
+        if ($this->tester->isStateMachine('ForeignPaymentStateMachine01')) {
+            $this->tester->tryToTransitionOrderItems(SalesPaymentHelper::EVENT_MERCHANT_PAYOUT);
+            $this->tester->assertOrderItemIsInState(SalesPaymentHelper::STATE_CLOSED);
+        }
+
+        if ($this->tester->isStateMachine('ForeignPaymentB2CStateMachine01')) {
+            $this->tester->tryToTransitionOrderItems(SalesPaymentHelper::EVENT_CLOSE);
+            $this->tester->assertOrderItemIsInState(SalesPaymentHelper::STATE_CLOSED);
+        }
     }
 }

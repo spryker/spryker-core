@@ -30,11 +30,6 @@ class PaymentAppMessageHelper extends Module
     use SalesOmsHelperTrait;
     use AsyncApiHelperTrait;
 
-    /**
-     * @var string
-     */
-    protected const STATE_MACHINE_NAME = 'ForeignPaymentStateMachine01';
-
     protected string $transactionReference;
 
     /**
@@ -47,9 +42,7 @@ class PaymentAppMessageHelper extends Module
         parent::_before($test);
 
         $this->transactionReference = Uuid::uuid4()->toString();
-
-        $xmlFileDirectory = APPLICATION_VENDOR_DIR . 'spryker/spryker/Bundles/SalesPayment/config/Zed/Oms/';
-        $this->getSalesOmsHelper()->setupStateMachine(static::STATE_MACHINE_NAME, $xmlFileDirectory);
+        $this->getSalesOmsHelper()->setupStateMachine();
 
         $this->getSalesOmsHelper()->haveOrderItemInState(PaymentStatus::STATUS_NEW);
     }
