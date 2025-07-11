@@ -1,0 +1,7 @@
+{% block content %}
+    <web-mp-mfa-handler
+        form-selector="{{ formSelector | default('') }}"
+        url="{{ url }}"
+        ajax-form-selector="{{ ajaxFormSelector | default('') }}"
+    ></web-mp-mfa-handler>
+{% endblock %}

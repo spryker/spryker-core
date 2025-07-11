@@ -8,8 +8,10 @@
 namespace Spryker\Zed\SecurityMerchantPortalGui\Communication;
 
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Spryker\Shared\ZedUi\ZedUiFactoryInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Authenticator\MerchantLoginFormAuthenticator;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Badge\MultiFactorAuthBadge;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Builder\OptionsBuilder;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Builder\OptionsBuilderInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Expander\SecurityBuilderExpander;
@@ -28,8 +30,10 @@ use Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUserInt
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Updater\SecurityTokenUpdater;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Updater\SecurityTokenUpdaterInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Client\SecurityMerchantPortalGuiToSecurityBlockerClientInterface;
+use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Client\SecurityMerchantPortalGuiToSessionClientInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToMessengerFacadeInterface;
+use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToRouterFacadeInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToSecurityFacadeInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConfig;
 use Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiDependencyProvider;
@@ -155,6 +159,14 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     }
 
     /**
+     * @return \Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToRouterFacadeInterface
+     */
+    public function getRouterFacade(): SecurityMerchantPortalGuiToRouterFacadeInterface
+    {
+        return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::FACADE_ROUTER);
+    }
+
+    /**
      * @return \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
      */
     public function getTokenStorageService(): TokenStorageInterface
@@ -188,6 +200,7 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
             $this->createMerchantUserAuthenticationSuccessHandler(),
             $this->createMerchantUserAuthenticationFailureHandler(),
             $this->getConfig(),
+            $this->createMultiFactorAuthBadge(),
         );
     }
 
@@ -231,5 +244,37 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     public function getAuthorizationCheckerService(): AuthorizationCheckerInterface
     {
         return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::SERVICE_SECURITY_AUTHORIZATION_CHECKER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityMerchantPortalGui\Communication\Badge\MultiFactorAuthBadge
+     */
+    public function createMultiFactorAuthBadge(): MultiFactorAuthBadge
+    {
+        return new MultiFactorAuthBadge($this->getMerchantUserMultiFactorAuthenticationHandlerPlugins());
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\AuthenticationHandlerPluginInterface>
+     */
+    public function getMerchantUserMultiFactorAuthenticationHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::PLUGINS_MERCHANT_USER_AUTHENTICATION_HANDLER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityMerchantPortalGui\Dependency\Client\SecurityMerchantPortalGuiToSessionClientInterface
+     */
+    public function getSessionClient(): SecurityMerchantPortalGuiToSessionClientInterface
+    {
+        return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::CLIENT_SESSION);
+    }
+
+    /**
+     * @return \Spryker\Shared\ZedUi\ZedUiFactoryInterface
+     */
+    public function getZedUiFactory(): ZedUiFactoryInterface
+    {
+        return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::SERVICE_ZED_UI_FACTORY);
     }
 }

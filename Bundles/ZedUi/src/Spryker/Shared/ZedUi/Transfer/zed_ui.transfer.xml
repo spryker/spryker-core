@@ -9,5 +9,13 @@
         <property name="url" type="string"/>
         <property name="tableId" type="string"/>
         <property name="notifications" type="array" singular="notification"/>
+        <property name="form" type="string"/>
+        <property name="result" type="string"/>
+        <property name="formSelector" type="string"/>
+        <property name="isLogin" type="bool"/>
+        <property name="ajaxFormSelector" type="string"/>
+    </transfer>
+
+    <transfer name="ZedUiFormRequestAction" strict="true">
     </transfer>
 </transfers>

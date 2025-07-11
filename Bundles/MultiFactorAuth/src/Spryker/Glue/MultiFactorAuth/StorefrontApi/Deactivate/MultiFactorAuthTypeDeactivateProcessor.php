@@ -11,6 +11,7 @@ namespace Spryker\Glue\MultiFactorAuth\StorefrontApi\Deactivate;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\RestMultiFactorAuthAttributesTransfer;
 use Spryker\Glue\MultiFactorAuth\Dependency\Client\MultiFactorAuthToCustomerClientInterface;
 use Spryker\Glue\MultiFactorAuth\Dependency\Client\MultiFactorAuthToMultiFactorAuthClientInterface;
@@ -63,8 +64,9 @@ class MultiFactorAuthTypeDeactivateProcessor implements MultiFactorAuthTypeDeact
 
         $multiFactorAuthType = $restMultiFactorAuthAttributesTransfer->getTypeOrFail();
         $customerTransfer = $this->customerClient->getCustomerById((int)$glueRequestTransfer->getRequestCustomer()?->getSurrogateIdentifierOrFail());
-        $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient
-            ->getCustomerMultiFactorAuthTypes($customerTransfer);
+        $multiFactorAuthCriteriaTransfer = (new MultiFactorAuthCriteriaTransfer())->setCustomer($customerTransfer);
+
+        $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient->getCustomerMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
 
         if ($this->multiFactorAuthValidator->isActivatedMultiFactorAuthType($multiFactorAuthTypesCollectionTransfer, $multiFactorAuthType) === false) {
             return $this->multiFactorAuthResponseBuilder->createNotFoundTypeErrorResponse();

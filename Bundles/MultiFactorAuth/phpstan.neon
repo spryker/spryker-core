@@ -1,5 +1,2 @@
 parameters:
     level: 8
-    ignoreErrors:
-       - '#Call to an undefined method .+AbstractTransfer::getEmail\(\).#'
-       - '#Call to an undefined method .+AbstractTransfer::getUsername\(\).#'

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,13 @@ class AgentMultiFactorAuthFlowController extends AbstractMultiFactorAuthControll
      * @var string
      */
     protected const AGENT_POST_AUTHENTICATION_TYPE = 'AGENT_POST_AUTHENTICATION_TYPE';
+
+    /**
+     * @uses {@link \SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationSuccessHandler::MULTI_FACTOR_AUTH_LOGIN_AGENT_EMAIL_SESSION_KEY}
+     *
+     * @var string
+     */
+    protected const MULTI_FACTOR_AUTH_LOGIN_AGENT_EMAIL_SESSION_KEY = '_multi_factor_auth_login_agent_email';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -96,18 +104,15 @@ class AgentMultiFactorAuthFlowController extends AbstractMultiFactorAuthControll
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string|null $formName
-     *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function getIdentity(Request $request, ?string $formName = null): UserTransfer
+    protected function getIdentity(): UserTransfer
     {
         if ($this->getFactory()->getAgentClient()->isLoggedIn() === true) {
             return $this->getFactory()->getAgentClient()->getAgent();
         }
 
-        $email = $this->getParameterFromRequest($request, UserTransfer::EMAIL, $formName);
+        $email = $this->getFactory()->getSessionClient()->get(static::MULTI_FACTOR_AUTH_LOGIN_AGENT_EMAIL_SESSION_KEY);
 
         /** @var \Generated\Shared\Transfer\UserTransfer $userTransfer */
         $userTransfer = $this->getFactory()->getAgentClient()->findAgentByUsername((new UserTransfer())->setUsername($email));
@@ -125,8 +130,16 @@ class AgentMultiFactorAuthFlowController extends AbstractMultiFactorAuthControll
         AbstractTransfer $userTransfer,
         FormInterface $codeValidationForm
     ): MultiFactorAuthValidationResponseTransfer {
+        $code = $codeValidationForm->getData()[static::AUTHENTICATION_CODE] ?? null;
+
+        if ($code === null) {
+            return (new MultiFactorAuthValidationResponseTransfer())
+                ->setStatus(MultiFactorAuthConstants::CODE_UNVERIFIED)
+                ->setMessage(static::MESSAGE_CORRUPTED_CODE_ERROR);
+        }
+
         $multiFactorAuthCodeTransfer = (new MultiFactorAuthCodeTransfer())
-            ->setCode($codeValidationForm->getData()[static::AUTHENTICATION_CODE]);
+            ->setCode($code);
 
         $multiFactorAuthTransfer = (new MultiFactorAuthTransfer())
             ->setUser($userTransfer)
@@ -155,13 +168,12 @@ class AgentMultiFactorAuthFlowController extends AbstractMultiFactorAuthControll
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Form\FormInterface|null $form
      *
      * @return array<string, mixed>
      */
-    protected function getOptions(Request $request, ?FormInterface $form = null): array
+    protected function getOptions(Request $request): array
     {
-        $userTransfer = $this->getIdentity($request, $form?->getName());
+        $userTransfer = $this->getIdentity();
 
         $options = $this->getFactory()->createAgentTypeSelectionFormDataProvider()->getOptions($userTransfer);
         $multiFactorAuthValidationRequestTransfer = (new MultiFactorAuthValidationRequestTransfer())->setUser($userTransfer);
@@ -171,5 +183,13 @@ class AgentMultiFactorAuthFlowController extends AbstractMultiFactorAuthControll
         }
 
         return $options;
+    }
+
+    /**
+     * @return int
+     */
+    protected function resolveCodeLength(): int
+    {
+        return $this->getFactory()->getConfig()->getAgentCodeLength();
     }
 }

@@ -28,6 +28,11 @@ class ChangePasswordController extends AbstractController
     protected const RESPONSE_NOTIFICATION_MESSAGE_ERROR = 'Please resolve all errors.';
 
     /**
+     * @var string
+     */
+    protected const ERROR_ACCESS_DENIED_CAUSE = 'access_denied';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
@@ -76,13 +81,24 @@ class ChangePasswordController extends AbstractController
             return new JsonResponse($responseData);
         }
 
+        $errorMessage = static::RESPONSE_NOTIFICATION_MESSAGE_ERROR;
+
+        foreach ($changePasswordForm->getErrors(true) as $error) {
+            /** @var \Symfony\Component\Form\FormError $error */
+            if ($error->getCause() !== static::ERROR_ACCESS_DENIED_CAUSE) {
+                continue;
+            }
+
+            $errorMessage = $error->getMessage();
+        }
+
         $zedUiFormResponseTransfer = $this->getFactory()
             ->getZedUiFactory()
             ->createZedUiFormResponseBuilder()
             ->addErrorNotification(
                 $this->getFactory()
                     ->getTranslatorFacade()
-                    ->trans(static::RESPONSE_NOTIFICATION_MESSAGE_ERROR),
+                    ->trans($errorMessage),
             )
             ->createResponse();
 

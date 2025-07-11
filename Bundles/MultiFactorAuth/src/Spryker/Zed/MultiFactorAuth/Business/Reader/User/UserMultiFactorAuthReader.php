@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MultiFactorAuth\Business\Reader\User;
 
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
@@ -23,20 +24,20 @@ class UserMultiFactorAuthReader implements UserMultiFactorAuthReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      * @param array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface> $userMultiFactorAuthPlugins
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
     public function getAvailableUserMultiFactorAuthTypes(
-        UserTransfer $userTransfer,
+        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer,
         array $userMultiFactorAuthPlugins
     ): MultiFactorAuthTypesCollectionTransfer {
-        $multiFactorAuthTypes = $this->getActiveConfiguredMultiFactorAuthTypes($userTransfer);
+        $multiFactorAuthTypes = $this->getActiveConfiguredMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
 
         $multiFactorAuthTypes = $this->enrichWithWiredMultiFactorAuthTypes(
             $multiFactorAuthTypes,
-            $userTransfer,
+            $multiFactorAuthCriteriaTransfer->getUserOrFail(),
             $userMultiFactorAuthPlugins,
         );
 
@@ -44,13 +45,13 @@ class UserMultiFactorAuthReader implements UserMultiFactorAuthReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      *
      * @return array<string, \Generated\Shared\Transfer\MultiFactorAuthTransfer>
      */
-    protected function getActiveConfiguredMultiFactorAuthTypes(UserTransfer $userTransfer): array
+    protected function getActiveConfiguredMultiFactorAuthTypes(MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer): array
     {
-        $configuredTypes = $this->repository->getUserMultiFactorAuthTypes($userTransfer);
+        $configuredTypes = $this->repository->getUserMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
         $activeTypes = [];
 
         foreach ($configuredTypes->getMultiFactorAuthTypes() as $multiFactorAuthTransfer) {
@@ -102,8 +103,8 @@ class UserMultiFactorAuthReader implements UserMultiFactorAuthReaderInterface
         ksort($multiFactorAuthTypes);
 
         $collectionTransfer = new MultiFactorAuthTypesCollectionTransfer();
-        foreach ($multiFactorAuthTypes as $mfaTransfer) {
-            $collectionTransfer->addMultiFactorAuth($mfaTransfer);
+        foreach ($multiFactorAuthTypes as $multiFactorAuthTransfer) {
+            $collectionTransfer->addMultiFactorAuth($multiFactorAuthTransfer);
         }
 
         return $collectionTransfer;

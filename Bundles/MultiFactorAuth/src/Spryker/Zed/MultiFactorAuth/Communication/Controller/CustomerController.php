@@ -9,9 +9,11 @@ namespace Spryker\Zed\MultiFactorAuth\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerCriteriaTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfToken;
@@ -22,7 +24,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  * @method \Spryker\Zed\MultiFactorAuth\Communication\MultiFactorAuthCommunicationFactory getFactory()
  * @method \Spryker\Zed\MultiFactorAuth\Persistence\MultiFactorAuthRepositoryInterface getRepository()
  */
-class CustomerController extends AbstractUserMultiFactorAuthController
+class CustomerController extends AbstractController
 {
     /**
      * @var string
@@ -42,12 +44,12 @@ class CustomerController extends AbstractUserMultiFactorAuthController
     /**
      * @var string
      */
-    protected const URL_CUSTOMER_REMOVE_MFA_LIST = '/multi-factor-auth/customer/remove-mfa-list';
+    protected const URL_CUSTOMER_REMOVE_MULTI_FACTOR_AUTH_LIST = '/multi-factor-auth/customer/remove-multi-factor-auth-list';
 
     /**
      * @var string
      */
-    protected const URL_CUSTOMER_REMOVE_MFA = '/multi-factor-auth/customer/remove-mfa';
+    protected const URL_CUSTOMER_REMOVE_MULTI_FACTOR_AUTH = '/multi-factor-auth/customer/remove-multi-factor-auth';
 
     /**
      * @var string
@@ -92,7 +94,7 @@ class CustomerController extends AbstractUserMultiFactorAuthController
     /**
      * @var string
      */
-    protected const ERROR_MFA_TYPE_NOT_FOUND = 'MFA type "%s" not found for this customer.';
+    protected const ERROR_MULTI_FACTOR_AUTH_TYPE_NOT_FOUND = 'Multi-Factor Authentication type "%s" not found for this customer.';
 
     /**
      * @var \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
@@ -113,10 +115,10 @@ class CustomerController extends AbstractUserMultiFactorAuthController
      *
      * @return \Symfony\Component\HttpFoundation\Response|array<string, mixed>
      */
-    public function removeMfaAction(Request $request): Response|array
+    public function removeMultiFactorAuthAction(Request $request): Response|array
     {
         $idCustomer = $this->castId($this->getParameterFromRequest($request, static::PARAM_ID_CUSTOMER));
-        $type = $this->getParameterFromRequest($request, static::TYPE);
+        $type = $this->getParameterFromRequest($request, static::KEY_TYPE);
 
         $multiFactorAuthTypesCollectionTransfer = $this->getCustomerMultiFactorAuthCollection($idCustomer);
         $multiFactorAuthTypesCount = $multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes()->count();
@@ -129,7 +131,7 @@ class CustomerController extends AbstractUserMultiFactorAuthController
 
         if ($type !== null) {
             if (!$this->hasCustomerMultiFactorAuthType($multiFactorAuthTypesCollectionTransfer, $type)) {
-                $this->addErrorMessage(sprintf(static::ERROR_MFA_TYPE_NOT_FOUND, $type));
+                $this->addErrorMessage(sprintf(static::ERROR_MULTI_FACTOR_AUTH_TYPE_NOT_FOUND, $type));
 
                 return $this->redirectResponse(static::URL_REDIRECT_CUSTOMER_LIST);
             }
@@ -141,7 +143,7 @@ class CustomerController extends AbstractUserMultiFactorAuthController
             return $this->redirectResponse(
                 sprintf(
                     '%s?%s=%d',
-                    static::URL_CUSTOMER_REMOVE_MFA_LIST,
+                    static::URL_CUSTOMER_REMOVE_MULTI_FACTOR_AUTH_LIST,
                     static::PARAM_ID_CUSTOMER,
                     $idCustomer,
                 ),
@@ -158,7 +160,7 @@ class CustomerController extends AbstractUserMultiFactorAuthController
      *
      * @return \Symfony\Component\HttpFoundation\Response|array<string, mixed>
      */
-    public function removeMfaListAction(Request $request): Response|array
+    public function removeMultiFactorAuthListAction(Request $request): Response|array
     {
         $idCustomer = $this->castId($this->getParameterFromRequest($request, static::PARAM_ID_CUSTOMER));
         $multiFactorAuthTypesCollectionTransfer = $this->getCustomerMultiFactorAuthCollection($idCustomer);
@@ -167,7 +169,7 @@ class CustomerController extends AbstractUserMultiFactorAuthController
             return $this->redirectResponse(
                 sprintf(
                     '%s?%s=%d',
-                    static::URL_CUSTOMER_REMOVE_MFA,
+                    static::URL_CUSTOMER_REMOVE_MULTI_FACTOR_AUTH,
                     static::PARAM_ID_CUSTOMER,
                     $idCustomer,
                 ),
@@ -186,10 +188,10 @@ class CustomerController extends AbstractUserMultiFactorAuthController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function confirmRemoveMfaAction(Request $request): Response
+    public function confirmRemoveMultiFactorAuthAction(Request $request): Response
     {
         $idCustomer = $this->castId($this->getParameterFromRequest($request, static::PARAM_ID_CUSTOMER));
-        $type = $this->getParameterFromRequest($request, static::TYPE);
+        $type = $this->getParameterFromRequest($request, static::KEY_TYPE);
 
         if (!$this->validateCsrfToken($request)) {
             return $this->redirectResponse(static::URL_REDIRECT_CUSTOMER_LIST);
@@ -248,8 +250,9 @@ class CustomerController extends AbstractUserMultiFactorAuthController
         $customerResponseTransfer = $this->getFactory()->getCustomerFacade()->getCustomerByCriteria(
             (new CustomerCriteriaTransfer())->setIdCustomer($idCustomer),
         );
+        $multiFactorAuthCriteriaTransfer = (new MultiFactorAuthCriteriaTransfer())->setCustomer($customerResponseTransfer->getCustomerTransferOrFail());
 
-        return $this->getRepository()->getCustomerMultiFactorAuthTypes($customerResponseTransfer->getCustomerTransferOrFail());
+        return $this->getRepository()->getCustomerMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
     }
 
     /**
@@ -299,5 +302,17 @@ class CustomerController extends AbstractUserMultiFactorAuthController
         $csrfToken = new CsrfToken($tokenId, $token);
 
         return $this->csrfTokenManager->isTokenValid($csrfToken);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $parameter
+     * @param string|null $formName
+     *
+     * @return mixed
+     */
+    protected function getParameterFromRequest(Request $request, string $parameter, ?string $formName = null): mixed
+    {
+        return $this->getFactory()->createRequestReader()->get($request, $parameter, $formName);
     }
 }

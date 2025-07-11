@@ -39,4 +39,22 @@
         <property name="channelName" type="string"/>
     </transfer>
 
+    <transfer name="MultiFactorAuthValidationRequest" strict="true">
+        <property name="user" type="User"/>
+    </transfer>
+
+    <transfer name="MultiFactorAuthValidationResponse" strict="true">
+        <property name="isRequired" type="bool"/>
+        <property name="status" type="int"/>
+    </transfer>
+
+    <transfer name="ZedUiFormResponse" strict="true">
+    </transfer>
+
+    <transfer name="ZedUiFormRequestAction" strict="true">
+        <property name="url" type="string"/>
+        <property name="isLogin" type="bool"/>
+        <property name="formSelector" type="string"/>
+    </transfer>
+
 </transfers>

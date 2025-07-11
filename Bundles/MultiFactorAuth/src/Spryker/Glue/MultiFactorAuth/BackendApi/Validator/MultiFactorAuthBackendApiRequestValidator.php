@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueRequestValidationTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
@@ -57,8 +58,10 @@ class MultiFactorAuthBackendApiRequestValidator implements MultiFactorAuthBacken
         }
         $userCollectionTransfer = $this->userFacade->getUserCollection($this->multiFactorAuthTransferBuilder->createUserCriteriaTransfer([(int)$glueRequestTransfer->getRequestUser()?->getSurrogateIdentifier()]));
         $userTransfer = $userCollectionTransfer->getUsers()->getIterator()->current();
-        $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthFacade
-            ->getUserMultiFactorAuthTypes($userTransfer);
+        $multiFactorAuthCriteriaTransfer = (new MultiFactorAuthCriteriaTransfer())->setUser($userTransfer);
+
+        $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthFacade->getUserMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
+
         if ($multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes()->count() === 0) {
             return $glueRequestValidationTransfer;
         }

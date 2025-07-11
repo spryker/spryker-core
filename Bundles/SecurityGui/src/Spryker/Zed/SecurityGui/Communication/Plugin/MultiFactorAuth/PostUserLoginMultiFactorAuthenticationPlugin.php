@@ -32,6 +32,13 @@ class PostUserLoginMultiFactorAuthenticationPlugin extends AbstractPlugin implem
     protected const SECURITY_FIREWALL_NAME = 'User';
 
     /**
+     * @uses {@link \Spryker\Zed\SecurityGui\Communication\Plugin\Security\Handler\UserAuthenticationSuccessHandler::MULTI_FACTOR_AUTH_LOGIN_USER_EMAIL_SESSION_KEY}
+     *
+     * @var string
+     */
+    protected const MULTI_FACTOR_AUTH_LOGIN_USER_EMAIL_SESSION_KEY = '_multi_factor_auth_login_user_email';
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -65,6 +72,8 @@ class PostUserLoginMultiFactorAuthenticationPlugin extends AbstractPlugin implem
         );
         $tokenStorage = $this->getFactory()->getTokenStorage();
         $tokenStorage->setToken($token);
+
+        $this->getFactory()->getSessionClient()->remove(static::MULTI_FACTOR_AUTH_LOGIN_USER_EMAIL_SESSION_KEY);
     }
 
     /**

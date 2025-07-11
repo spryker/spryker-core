@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MultiFactorAuth\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\MultiFactorAuth\Persistence\MultiFactorAuthRepositoryInterface;
 
@@ -16,11 +17,6 @@ class TypeSelectionFormDataProvider
      * @var string
      */
     protected const OPTION_TYPES = 'types';
-
-    /**
-     * @var string
-     */
-    protected const OPTION_USERNAME = 'username';
 
     /**
      * @var string
@@ -56,7 +52,6 @@ class TypeSelectionFormDataProvider
     {
         return [
             static::OPTION_TYPES => $this->getEnabledTypes($userTransfer),
-            static::OPTION_USERNAME => $userTransfer->getUsername(),
             static::FIELD_IS_ACTIVATION => false,
             static::FIELD_IS_DEACTIVATION => false,
             static::FIELD_TYPE_TO_SET_UP => null,
@@ -70,7 +65,10 @@ class TypeSelectionFormDataProvider
      */
     protected function getEnabledTypes(UserTransfer $userTransfer): array
     {
-        $multiFactorAuthTypesCollectionTransfer = $this->repository->getUserMultiFactorAuthTypes($userTransfer);
+        $multiFactorAuthCriteraTransfer = (new MultiFactorAuthCriteriaTransfer())
+            ->setUser($userTransfer);
+
+        $multiFactorAuthTypesCollectionTransfer = $this->repository->getUserMultiFactorAuthTypes($multiFactorAuthCriteraTransfer);
         $multiFactorAuthTypePluginsIndexedByName = $this->indexMultiFactorAuthPluginsByName();
         $enabledTypes = [];
 

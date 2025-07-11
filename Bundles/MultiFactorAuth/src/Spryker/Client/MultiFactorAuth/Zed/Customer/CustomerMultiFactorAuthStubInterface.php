@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\MultiFactorAuth\Zed\Customer;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
@@ -18,11 +18,11 @@ use Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer;
 interface CustomerMultiFactorAuthStubInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
-    public function getCustomerMultiFactorAuthTypes(CustomerTransfer $customerTransfer): MultiFactorAuthTypesCollectionTransfer;
+    public function getCustomerMultiFactorAuthTypes(MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer): MultiFactorAuthTypesCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
@@ -69,11 +69,4 @@ interface CustomerMultiFactorAuthStubInterface
     public function findCustomerMultiFactorAuthType(
         MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
     ): MultiFactorAuthCodeTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
-     */
-    public function getPendingActivationCustomerMultiFactorAuthTypes(CustomerTransfer $customerTransfer): MultiFactorAuthTypesCollectionTransfer;
 }

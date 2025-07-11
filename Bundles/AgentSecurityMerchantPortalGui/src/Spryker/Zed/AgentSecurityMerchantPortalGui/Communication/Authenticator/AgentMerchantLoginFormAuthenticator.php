@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Authenticator;
 
 use Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig;
+use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Badge\MultiFactorAuthBadge;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Form\AgentMerchantLoginForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,41 +34,31 @@ class AgentMerchantLoginFormAuthenticator implements AuthenticatorInterface, Aut
     protected const AGENT_SECURITY_MERCHANT_PORTAL_GUI_REQUEST = 'agent-security-merchant-portal-gui';
 
     /**
-     * @var \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig
+     * @var string
      */
-    protected AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig;
+    protected const ACCESS_MODE_PRE_AUTH = 'ACCESS_MODE_PRE_AUTH';
 
     /**
-     * @var \Symfony\Component\Security\Core\User\UserProviderInterface $agentMerchantUserProvider
+     * @uses \Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants::CODE_BLOCKED
+     *
+     * @var int
      */
-    protected UserProviderInterface $agentMerchantUserProvider;
-
-    /**
-     * @var \Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface
-     */
-    protected AuthenticationSuccessHandlerInterface $authenticationSuccessHandler;
-
-    /**
-     * @var \Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface
-     */
-    protected AuthenticationFailureHandlerInterface $authenticationFailureHandler;
+    protected const CODE_BLOCKED = 1;
 
     /**
      * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig
      * @param \Symfony\Component\Security\Core\User\UserProviderInterface $agentMerchantUserProvider
      * @param \Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface $authenticationSuccessHandler
      * @param \Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface $authenticationFailureHandler
+     * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Badge\MultiFactorAuthBadge $multiFactorAuthBadge
      */
     public function __construct(
-        AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig,
-        UserProviderInterface $agentMerchantUserProvider,
-        AuthenticationSuccessHandlerInterface $authenticationSuccessHandler,
-        AuthenticationFailureHandlerInterface $authenticationFailureHandler
+        protected AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig,
+        protected UserProviderInterface $agentMerchantUserProvider,
+        protected AuthenticationSuccessHandlerInterface $authenticationSuccessHandler,
+        protected AuthenticationFailureHandlerInterface $authenticationFailureHandler,
+        protected MultiFactorAuthBadge $multiFactorAuthBadge
     ) {
-        $this->agentSecurityMerchantPortalGuiConfig = $agentSecurityMerchantPortalGuiConfig;
-        $this->agentMerchantUserProvider = $agentMerchantUserProvider;
-        $this->authenticationSuccessHandler = $authenticationSuccessHandler;
-        $this->authenticationFailureHandler = $authenticationFailureHandler;
     }
 
     /**
@@ -79,11 +70,16 @@ class AgentMerchantLoginFormAuthenticator implements AuthenticatorInterface, Aut
     {
         $data = $request->request->all(static::AGENT_SECURITY_MERCHANT_PORTAL_GUI_REQUEST);
 
+        /** @var \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Security\AgentMerchantUserInterface $user */
+        $user = $this->agentMerchantUserProvider->loadUserByIdentifier($data[AgentMerchantLoginForm::FIELD_USERNAME]);
+        $badges = [$this->multiFactorAuthBadge->enable($user->getUserTransfer())];
+
         return new Passport(
-            new UserBadge($data[AgentMerchantLoginForm::FIELD_USERNAME], function ($userEmail) {
-                return $this->agentMerchantUserProvider->loadUserByIdentifier($userEmail);
+            new UserBadge($data[AgentMerchantLoginForm::FIELD_USERNAME], function () use ($user) {
+                return $user;
             }),
             new PasswordCredentials($data[AgentMerchantLoginForm::FIELD_PASSWORD]),
+            $badges,
         );
     }
 
@@ -132,6 +128,11 @@ class AgentMerchantLoginFormAuthenticator implements AuthenticatorInterface, Aut
     }
 
     /**
+     * If the user requires Multi-Factor Authentication, we assign a temporary 'ACCESS_MODE_PRE_AUTH' role.
+     * This special role grants just enough access to complete the Multi-Factor Authentication verification
+     * but prevents access to the rest of the application. Once Multi-Factor Authentication is successful,
+     * a new token with the user's full roles will be created.
+     *
      * @param \Symfony\Component\Security\Http\Authenticator\Passport\Passport $passport
      * @param string $firewallName
      *
@@ -142,7 +143,7 @@ class AgentMerchantLoginFormAuthenticator implements AuthenticatorInterface, Aut
         return new PostAuthenticationToken(
             $passport->getUser(),
             $firewallName,
-            $passport->getUser()->getRoles(),
+            $this->assertUserIsPreAuthenticated($passport) ? [static::ACCESS_MODE_PRE_AUTH] : $passport->getUser()->getRoles(),
         );
     }
 
@@ -158,5 +159,18 @@ class AgentMerchantLoginFormAuthenticator implements AuthenticatorInterface, Aut
     public function createAuthenticatedToken(PassportInterface $passport, string $firewallName): TokenInterface /** @phpstan-ignore-line */
     {
         return $this->createToken($passport, $firewallName);
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Http\Authenticator\Passport\Passport $passport
+     *
+     * @return bool
+     */
+    protected function assertUserIsPreAuthenticated(Passport $passport): bool
+    {
+        /** @var \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Badge\MultiFactorAuthBadge $multiFactorAuthBadge */
+        $multiFactorAuthBadge = $passport->getBadge(MultiFactorAuthBadge::class);
+
+        return $multiFactorAuthBadge->getIsRequired() === true || $multiFactorAuthBadge->getStatus() === static::CODE_BLOCKED;
     }
 }

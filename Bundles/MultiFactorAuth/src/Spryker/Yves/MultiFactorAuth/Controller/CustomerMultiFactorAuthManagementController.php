@@ -8,6 +8,7 @@
 namespace Spryker\Yves\MultiFactorAuth\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
 use Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants;
@@ -143,7 +144,9 @@ class CustomerMultiFactorAuthManagementController extends AbstractController
 
         $customerMultiFactorAuthTypesCollection = $this->getFactory()
             ->createCustomerMultiFactorAuthReader()
-            ->getAvailableCustomerMultiFactorAuthTypes($customerTransfer);
+            ->getAvailableCustomerMultiFactorAuthTypes(
+                (new MultiFactorAuthCriteriaTransfer())->setCustomer($customerTransfer),
+            );
 
         return $this->view(
             [

@@ -21,3 +21,4 @@ Continue,Fortfahren
 "Note, any changes made here will also affect how MFA works in other environments like the Back Office, since your accounts are linked.","Hinweis: Alle hier vorgenommenen Änderungen wirken sich auch darauf aus, wie MFA in anderen Umgebungen wie dem Back Office funktioniert, da Ihre Konten verknüpft sind."
 "Enter code","Code eingeben"
 "Something went wrong while sending your code. Please try again later or contact the system administrator.","Beim Versenden Ihres Codes ist etwas schief gelaufen. Bitte versuchen Sie es erneut oder wenden Sie sich an den Systemadministrator."
+"The provided code is empty or invalid. Please try again.","Der angegebene Code ist leer oder ungültig. Bitte versuchen Sie es erneut."

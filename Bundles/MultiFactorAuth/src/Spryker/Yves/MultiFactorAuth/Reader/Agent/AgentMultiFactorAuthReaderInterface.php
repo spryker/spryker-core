@@ -7,17 +7,19 @@
 
 namespace Spryker\Yves\MultiFactorAuth\Reader\Agent;
 
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 
 interface AgentMultiFactorAuthReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
-    public function getAvailableAgentMultiFactorAuthTypes(UserTransfer $userTransfer): MultiFactorAuthTypesCollectionTransfer;
+    public function getAvailableAgentMultiFactorAuthTypes(
+        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
+    ): MultiFactorAuthTypesCollectionTransfer;
 
     /**
      * @return bool

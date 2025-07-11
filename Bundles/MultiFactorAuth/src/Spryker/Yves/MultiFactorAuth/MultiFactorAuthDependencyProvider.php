@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\MultiFactorAuth\Dependency\Client\MultiFactorAuthToAgentClientBridge;
 use Spryker\Yves\MultiFactorAuth\Dependency\Client\MultiFactorAuthToCustomerClientBridge;
+use Spryker\Yves\MultiFactorAuth\Dependency\Client\MultiFactorAuthToSessionClientBridge;
 
 /**
  * @method \Spryker\Yves\MultiFactorAuth\MultiFactorAuthConfig getConfig()
@@ -67,6 +68,11 @@ class MultiFactorAuthDependencyProvider extends AbstractBundleDependencyProvider
     public const TWIG_ENVIRONMENT = 'TWIG_ENVIRONMENT';
 
     /**
+     * @var string
+     */
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
+
+    /**
      * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
      *
      * @var string
@@ -91,6 +97,7 @@ class MultiFactorAuthDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRequestStackService($container);
         $container = $this->addTwigService($container);
         $container = $this->addCsrfTokenManager($container);
+        $container = $this->addSessionClient($container);
 
         return $container;
     }
@@ -244,6 +251,22 @@ class MultiFactorAuthDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_FORM_CSRF_PROVIDER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSessionClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
+            return new MultiFactorAuthToSessionClientBridge(
+                $container->getLocator()->session()->client(),
+            );
         });
 
         return $container;

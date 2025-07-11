@@ -1,0 +1,31 @@
+{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
+
+{% block content %}
+    {% set action = path('multi-factor-auth:merchant-user:get-enabled-types') %}
+
+    <web-spy-card
+        cloak
+        spy-title="{{ 'Select Authentication Method' | trans }}"
+    >
+        {% block body %}
+            {% if errorMessage is defined and errorMessage %}
+                <web-spy-alert type="error">
+                    {{ errorMessage | trans }}
+                </web-spy-alert>
+            {% endif %}
+
+            <web-mp-form-submitter
+                action="{{ action }}"
+                button-mode="true"
+            >
+                <span form>
+                    {{ form_start(form, {'attr': {'id': 'mfa-selection-form', excludeFormTag: true}}) }}
+                    {{ form_widget(form) }}
+                    {{ form_end(form) }}
+                </span>
+
+                <web-spy-button button-content size="sm">{{ 'Continue' | trans }}</web-spy-button>
+            </web-mp-form-submitter>
+        {% endblock %}
+    </web-spy-card>
+{% endblock %}

@@ -12,6 +12,7 @@ namespace Spryker\Glue\MultiFactorAuth\StorefrontApi\Reader;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\RestMultiFactorAuthAttributesTransfer;
 use Spryker\Glue\MultiFactorAuth\Dependency\Client\MultiFactorAuthToMultiFactorAuthClientInterface;
@@ -50,9 +51,8 @@ class MultiFactorAuthTypesReader implements MultiFactorAuthTypesReaderInterface
         }
 
         $customerTransfer = $this->multiFactorAuthTransferBuilder->buildCustomerTransfer($glueRequestTransfer);
-
-        $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient
-            ->getCustomerMultiFactorAuthTypes($customerTransfer);
+        $multiFactorAuthCriteriaTransfer = (new MultiFactorAuthCriteriaTransfer())->setCustomer($customerTransfer);
+        $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient->getCustomerMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
 
         $glueResponseTransfer = new GlueResponseTransfer();
         $availableTypes = $this->getMultiFactorAuthAvailableTypes();
@@ -63,8 +63,10 @@ class MultiFactorAuthTypesReader implements MultiFactorAuthTypesReaderInterface
             $glueResponseTransfer = $this->addMultiFactorAuthTypeResourceToResponse($glueResponseTransfer, $multiFactorAuthTransfer);
         }
 
-        $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient
-            ->getPendingActivationCustomerMultiFactorAuthTypes($customerTransfer);
+        $multiFactorAuthCriteriaTransfer = $multiFactorAuthCriteriaTransfer->setStatuses([MultiFactorAuthConstants::STATUS_PENDING_ACTIVATION]);
+
+        $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient->getCustomerMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
+
         foreach ($multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes() as $multiFactorAuthTransfer) {
             $processedTypes[$multiFactorAuthTransfer->getTypeOrFail()] = true;
             $glueResponseTransfer = $this->addMultiFactorAuthTypeResourceToResponse($glueResponseTransfer, $multiFactorAuthTransfer);

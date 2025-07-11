@@ -41,7 +41,9 @@ class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscribe
         $agentUsername = $this->findAgentUsername($switchUserEvent);
 
         if (is_a($targetUser, $this->getConfig()->getMerchantUserClassName(), true)) {
-            $merchantUserTransfer = $targetUser->getMerchantUserTransfer()->setAgentUsername($agentUsername);
+            /** @var \Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUser $merchantUser */
+            $merchantUser = $targetUser;
+            $merchantUserTransfer = $merchantUser->getMerchantUserTransfer()->setAgentUsername($agentUsername);
 
             $this->getFactory()->getMerchantUserFacade()->authenticateMerchantUser($merchantUserTransfer);
 

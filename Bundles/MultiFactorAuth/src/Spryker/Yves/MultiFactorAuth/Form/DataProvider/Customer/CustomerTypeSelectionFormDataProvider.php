@@ -8,6 +8,7 @@
 namespace Spryker\Yves\MultiFactorAuth\Form\DataProvider\Customer;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Spryker\Client\MultiFactorAuth\MultiFactorAuthClientInterface;
 
 class CustomerTypeSelectionFormDataProvider
@@ -16,11 +17,6 @@ class CustomerTypeSelectionFormDataProvider
      * @var string
      */
     protected const OPTIONS_TYPES = 'types';
-
-    /**
-     * @var string
-     */
-    protected const OPTION_EMAIL = 'email';
 
     /**
      * @var string
@@ -56,7 +52,6 @@ class CustomerTypeSelectionFormDataProvider
     {
         return [
             static::OPTIONS_TYPES => $this->getEnabledTypes($customerTransfer),
-            static::OPTION_EMAIL => $customerTransfer->getEmail(),
             static::FIELD_IS_ACTIVATION => false,
             static::FIELD_IS_DEACTIVATION => false,
             static::FIELD_TYPE_TO_SET_UP => null,
@@ -70,7 +65,9 @@ class CustomerTypeSelectionFormDataProvider
      */
     protected function getEnabledTypes(CustomerTransfer $customerTransfer): array
     {
-        $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient->getCustomerMultiFactorAuthTypes($customerTransfer);
+        $multiFactorAuthCriteriaTransfer = (new MultiFactorAuthCriteriaTransfer())
+            ->setCustomer($customerTransfer);
+        $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient->getCustomerMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
         $multiFactorAuthTypePluginsIndexedByName = $this->indexMultiFactorAuthPluginsByName();
         $enabledTypes = [];
 

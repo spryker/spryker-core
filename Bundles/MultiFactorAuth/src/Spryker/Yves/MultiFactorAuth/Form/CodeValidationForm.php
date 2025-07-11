@@ -8,7 +8,7 @@
 namespace Spryker\Yves\MultiFactorAuth\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -20,11 +20,16 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class CodeValidationForm extends BaseMultiFactorAuthForm
 {
     /**
-     * @uses \Spryker\Yves\MultiFactorAuth\Form\DataProvider\TypeSelectionDataProvider::OPTION_TYPES
+     * @uses {@link \Spryker\Yves\MultiFactorAuth\Form\DataProvider\Customer\CustomerTypeSelectionFormDataProvider::OPTIONS_TYPES}
      *
      * @var string
      */
     protected const OPTION_TYPES = 'types';
+
+    /**
+     * @var string
+     */
+    protected const OPTION_CODE_LENGTH = 'code_length';
 
     /**
      * @var string
@@ -65,6 +70,7 @@ class CodeValidationForm extends BaseMultiFactorAuthForm
 
         $resolver->setDefaults([
             static::OPTION_TYPES => [],
+            static::OPTION_CODE_LENGTH => null,
         ]);
     }
 
@@ -105,13 +111,16 @@ class CodeValidationForm extends BaseMultiFactorAuthForm
      */
     protected function addAuthenticationCodeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_AUTHENTICATION_CODE, TextType::class, [
+        $builder->add(static::FIELD_AUTHENTICATION_CODE, NumberType::class, [
             'label' => $this->getFactory()->getTranslatorService()->trans(static::ENTER_CODE_LABEL_PLACEHOLDER, [
                 static::PARAM_TYPE => $options[static::OPTION_TYPES][0] ?? '',
             ]),
             'attr' => [
                 'placeholder' => 'Enter your code here',
                 'autocomplete' => 'one-time-code',
+                'inputmode' => 'numeric',
+                'maxlength' => $options[static::OPTION_CODE_LENGTH],
+                'oninput' => sprintf('this.value = this.value.replace(/\\D/g, \'\').slice(0, %d);', $options[static::OPTION_CODE_LENGTH]),
             ],
             'constraints' => [
                 new NotBlank(),

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MultiFactorAuth\Communication;
 
+use Spryker\Shared\ZedUi\ZedUiFactoryInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MultiFactorAuth\Communication\Activator\User\UserMultiFactorAuthActivator;
 use Spryker\Zed\MultiFactorAuth\Communication\Activator\User\UserMultiFactorAuthActivatorInterface;
@@ -15,13 +16,17 @@ use Spryker\Zed\MultiFactorAuth\Communication\ButtonCreator\MultiFactorAuthButto
 use Spryker\Zed\MultiFactorAuth\Communication\Deactivator\User\UserMultiFactorAuthDeactivator;
 use Spryker\Zed\MultiFactorAuth\Communication\Deactivator\User\UserMultiFactorAuthDeactivatorInterface;
 use Spryker\Zed\MultiFactorAuth\Communication\Form\CodeValidationForm;
+use Spryker\Zed\MultiFactorAuth\Communication\Form\DataProvider\MerchantPortalTypeSelectionFormDataProvider;
 use Spryker\Zed\MultiFactorAuth\Communication\Form\DataProvider\TypeSelectionFormDataProvider;
+use Spryker\Zed\MultiFactorAuth\Communication\Form\MerchantPortalCodeValidationForm;
+use Spryker\Zed\MultiFactorAuth\Communication\Form\MerchantPortalTypeSelectionForm;
 use Spryker\Zed\MultiFactorAuth\Communication\Form\Type\Extension\MultiFactorAuthHandlerExtension;
 use Spryker\Zed\MultiFactorAuth\Communication\Form\Type\Extension\MultiFactorAuthValidationExtension;
 use Spryker\Zed\MultiFactorAuth\Communication\Form\TypeSelectionForm;
 use Spryker\Zed\MultiFactorAuth\Communication\Reader\Request\RequestReader;
 use Spryker\Zed\MultiFactorAuth\Communication\Reader\Request\RequestReaderInterface;
 use Spryker\Zed\MultiFactorAuth\Communication\Subscriber\MultiFactorAuthFormEventSubscriber;
+use Spryker\Zed\MultiFactorAuth\Dependency\Client\MultiFactorAuthToSessionClientInterface;
 use Spryker\Zed\MultiFactorAuth\Dependency\Facade\MultiFactorAuthToCustomerFacadeInterface;
 use Spryker\Zed\MultiFactorAuth\Dependency\Facade\MultiFactorAuthToMailFacadeInterface;
 use Spryker\Zed\MultiFactorAuth\Dependency\Facade\MultiFactorAuthToUserFacadeInterface;
@@ -70,6 +75,26 @@ class MultiFactorAuthCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param array<string, mixed> $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getMerchantPortalTypeSelectionForm(array $formOptions = []): FormInterface
+    {
+        return $this->getFormFactory()->create(MerchantPortalTypeSelectionForm::class, null, $formOptions);
+    }
+
+    /**
+     * @param array<string, mixed> $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getMerchantPortalCodeValidationForm(array $formOptions = []): FormInterface
+    {
+        return $this->getFormFactory()->create(MerchantPortalCodeValidationForm::class, null, $formOptions);
+    }
+
+    /**
      * @return array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface>
      */
     public function getUserMultiFactorAuthPlugins(): array
@@ -91,6 +116,17 @@ class MultiFactorAuthCommunicationFactory extends AbstractCommunicationFactory
     public function createTypeSelectionFormDataProvider(): TypeSelectionFormDataProvider
     {
         return new TypeSelectionFormDataProvider(
+            $this->getRepository(),
+            $this->getUserMultiFactorAuthPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MultiFactorAuth\Communication\Form\DataProvider\MerchantPortalTypeSelectionFormDataProvider
+     */
+    public function createMerchantPortalTypeSelectionFormDataProvider(): MerchantPortalTypeSelectionFormDataProvider
+    {
+        return new MerchantPortalTypeSelectionFormDataProvider(
             $this->getRepository(),
             $this->getUserMultiFactorAuthPlugins(),
         );
@@ -213,5 +249,21 @@ class MultiFactorAuthCommunicationFactory extends AbstractCommunicationFactory
             $this->getFacade(),
             $this->getUserFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MultiFactorAuth\Dependency\Client\MultiFactorAuthToSessionClientInterface
+     */
+    public function getSessionClient(): MultiFactorAuthToSessionClientInterface
+    {
+        return $this->getProvidedDependency(MultiFactorAuthDependencyProvider::CLIENT_SESSION);
+    }
+
+    /**
+     * @return \Spryker\Shared\ZedUi\ZedUiFactoryInterface
+     */
+    public function getZedUiFactory(): ZedUiFactoryInterface
+    {
+        return $this->getProvidedDependency(MultiFactorAuthDependencyProvider::SERVICE_ZED_UI_FACTORY);
     }
 }

@@ -6,6 +6,12 @@ interface AuthResponse {
     requires_additional_auth?: boolean;
 }
 
+interface AuthResult {
+    requiresAdditionalAuth: boolean;
+    failedLogin: boolean;
+    refresh: boolean;
+}
+
 export default class MultiFactorAuthenticationHandler extends Component {
     protected ajaxProvider: AjaxProvider;
     protected ajaxProviderDynamic: AjaxProvider;
@@ -54,15 +60,33 @@ export default class MultiFactorAuthenticationHandler extends Component {
             return;
         }
 
-        if (this.isLoginFlow && !(await this.isRequireAdditionalAuth())) {
+        if (!this.isLoginFlow) {
+            await this.initialRequest();
+            return;
+        }
+
+        const responseData = await this.isRequireAdditionalAuth();
+
+        if (responseData.failedLogin) {
             this.closePopup();
             return;
         }
 
-        await this.initialRequest();
+        if (responseData.requiresAdditionalAuth) {
+            await this.initialRequest();
+            return;
+        }
+
+        location.reload();
     }
 
-    protected async isRequireAdditionalAuth(): Promise<boolean> {
+    protected async isRequireAdditionalAuth(): Promise<AuthResult> {
+        const result: AuthResult = {
+            requiresAdditionalAuth: false,
+            failedLogin: false,
+            refresh: false,
+        };
+
         try {
             const formData = new FormData(this.form);
             const response = await fetch(this.form.action, {
@@ -74,21 +98,26 @@ export default class MultiFactorAuthenticationHandler extends Component {
 
             if (contentType?.includes('application/json')) {
                 const responseParams: AuthResponse = await response.json();
-
-                return responseParams.requires_additional_auth === true;
+                result.requiresAdditionalAuth = responseParams.requires_additional_auth;
+                return result;
             }
+
+            if (response.url.includes('/login')) {
+                result.failedLogin = true;
+                return result;
+            }
+
+            result.refresh = true;
+            return result;
         } catch (error) {
             console.error('Error checking additional auth requirement:', error);
+            return result;
         }
-
-        return false;
     }
 
     protected async initialRequest(): Promise<void> {
         try {
-            const emailInput = this.form.querySelector('input[type="email"]') as HTMLInputElement;
-            const data = this.isLoginFlow ? JSON.stringify({ email: emailInput.value }) : null;
-            const content = await this.ajaxProvider.fetch(data);
+            const content = await this.ajaxProvider.fetch();
 
             this.popup.togglePopup(true);
             this.popupContentRerender(content);

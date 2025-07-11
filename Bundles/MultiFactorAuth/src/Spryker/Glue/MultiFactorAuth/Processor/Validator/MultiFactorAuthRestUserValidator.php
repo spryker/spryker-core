@@ -12,6 +12,7 @@ namespace Spryker\Glue\MultiFactorAuth\Processor\Validator;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
@@ -53,7 +54,7 @@ class MultiFactorAuthRestUserValidator implements MultiFactorAuthRestUserValidat
         }
         $customerTransfer = $this->customerClient->getCustomerById((int)$restRequest->getRestUser()?->getSurrogateIdentifierOrFail());
         $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient
-            ->getCustomerMultiFactorAuthTypes($customerTransfer);
+            ->getCustomerMultiFactorAuthTypes((new MultiFactorAuthCriteriaTransfer())->setCustomer($customerTransfer));
         if ($multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes()->count() === 0) {
             return null;
         }

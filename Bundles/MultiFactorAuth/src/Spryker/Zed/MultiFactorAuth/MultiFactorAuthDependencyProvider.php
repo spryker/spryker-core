@@ -9,6 +9,7 @@ namespace Spryker\Zed\MultiFactorAuth;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MultiFactorAuth\Dependency\Client\MultiFactorAuthToSessionClientBridge;
 use Spryker\Zed\MultiFactorAuth\Dependency\Facade\MultiFactorAuthToCustomerFacadeBridge;
 use Spryker\Zed\MultiFactorAuth\Dependency\Facade\MultiFactorAuthToGlossaryFacadeBridge;
 use Spryker\Zed\MultiFactorAuth\Dependency\Facade\MultiFactorAuthToMailFacadeBridge;
@@ -91,6 +92,18 @@ class MultiFactorAuthDependencyProvider extends AbstractBundleDependencyProvider
     protected const SERVICE_TWIG = 'twig';
 
     /**
+     * @var string
+     */
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
+
+    /**
+     * @uses \Spryker\Zed\ZedUi\Communication\Plugin\Application\ZedUiApplicationPlugin::SERVICE_ZED_UI_FACTORY
+     *
+     * @var string
+     */
+    public const SERVICE_ZED_UI_FACTORY = 'SERVICE_ZED_UI_FACTORY';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -124,6 +137,8 @@ class MultiFactorAuthDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTranslatorService($container);
         $container = $this->addRequestStackService($container);
         $container = $this->addTwigService($container);
+        $container = $this->addSessionClient($container);
+        $container = $this->addZedUiFactory($container);
 
         return $container;
     }
@@ -329,6 +344,36 @@ class MultiFactorAuthDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::TWIG_ENVIRONMENT, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_TWIG);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSessionClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
+            return new MultiFactorAuthToSessionClientBridge(
+                $container->getLocator()->session()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addZedUiFactory(Container $container): Container
+    {
+        $container->set(static::SERVICE_ZED_UI_FACTORY, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_ZED_UI_FACTORY);
         });
 
         return $container;

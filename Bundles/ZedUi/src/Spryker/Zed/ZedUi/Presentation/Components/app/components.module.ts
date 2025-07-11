@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { ButtonComponent, ButtonModule } from '@spryker/button';
+import { ButtonComponent, ButtonModule, ButtonLinkComponent, ButtonLinkModule } from '@spryker/button';
+import { RadioComponent, RadioModule, RadioGroupComponent } from '@spryker/radio';
 import { CheckboxComponent, CheckboxModule } from '@spryker/checkbox';
 import { DatasourceDependableComponent, DatasourceDependableModule } from '@spryker/datasource.dependable';
 import { FormItemComponent, FormItemModule } from '@spryker/form-item';
@@ -29,6 +30,8 @@ import { MerchantLayoutContentComponent } from './merchant-layout-content/mercha
 import { MerchantLayoutContentModule } from './merchant-layout-content/merchant-layout-content.module';
 import { MerchantLayoutMainComponent } from './merchant-layout-main/merchant-layout-main.component';
 import { MerchantLayoutMainModule } from './merchant-layout-main/merchant-layout-main.module';
+import { AjaxFormComponent, AjaxFormModule } from '@spryker/ajax-form';
+import { HtmlRendererComponent, HtmlRendererComponentModule } from '@spryker/html-renderer';
 
 @NgModule({
     imports: [
@@ -57,6 +60,11 @@ import { MerchantLayoutMainModule } from './merchant-layout-main/merchant-layout
             DatasourceDependableComponent,
             FormSubmitterComponent,
             MerchantLayoutContentComponent,
+            AjaxFormComponent,
+            HtmlRendererComponent,
+            RadioComponent,
+            RadioGroupComponent,
+            ButtonLinkComponent,
         ]),
         LayoutCenteredModule,
         MerchantLayoutCenteredModule,
@@ -78,6 +86,10 @@ import { MerchantLayoutMainModule } from './merchant-layout-main/merchant-layout
         DatasourceDependableModule,
         FormSubmitterModule,
         MerchantLayoutContentModule,
+        AjaxFormModule,
+        HtmlRendererComponentModule,
+        RadioModule,
+        ButtonLinkModule,
     ],
     declarations: [RootComponent],
 })

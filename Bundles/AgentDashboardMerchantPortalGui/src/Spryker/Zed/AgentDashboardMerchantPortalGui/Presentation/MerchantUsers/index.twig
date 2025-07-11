@@ -2,24 +2,12 @@
 @var merchantUserTableConfiguration \Generated\Shared\Transfer\GuiTableConfigurationTransfer
 #}
 
-{% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+{% extends '@ZedUi/Layout/merchant-agent-layout-main.twig' %}
 {% import _self as view %}
 
 {% block headTitle %}
     {{ 'Merchant Users' | trans }}
 {% endblock %}
-
-{% block topSection %}
-    {% include '@AgentDashboardMerchantPortalGui/Partials/agent-bar.twig' with {
-        withJsAssets: false,
-        actionButtons: [{
-            url: '/agent-security-merchant-portal-gui/logout',
-            title: 'Log out Agent' | trans,
-        }],
-    } only %}
-{% endblock %}
-
-{% block header %}{% endblock %}
 
 {% block content %}
     <web-mp-agent-user-list

@@ -193,7 +193,7 @@ abstract class AbstractCodeValidator implements CodeValidatorInterface
      */
     protected function hasReachedMaxAttempts(MultiFactorAuthCodeTransfer $multiFactorAuthCodeTransfer): bool
     {
-        return $multiFactorAuthCodeTransfer->getAttempts() === $this->getAttemptsLimit();
+        return $multiFactorAuthCodeTransfer->getAttempts() >= $this->getAttemptsLimit();
     }
 
     /**

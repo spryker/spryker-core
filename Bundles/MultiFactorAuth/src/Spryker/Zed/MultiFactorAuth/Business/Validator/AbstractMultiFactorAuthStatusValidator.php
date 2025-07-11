@@ -20,24 +20,18 @@ abstract class AbstractMultiFactorAuthStatusValidator implements MultiFactorAuth
 {
     /**
      * @param \Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer
-     * @param array<int> $additionalStatuses
+     * @param array<int> $statuses
      * @param \DateTime|null $currentDateTime
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
      */
     public function validate(
         MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer,
-        array $additionalStatuses = [],
+        array $statuses = [],
         ?DateTime $currentDateTime = null
     ): MultiFactorAuthValidationResponseTransfer {
         $entityTransfer = $this->extractEntity($multiFactorAuthValidationRequestTransfer);
-        $multiFactorAuthTypesCollectionTransfer = $this->getMultiFactorAuthTypesCollectionTransfer(
-            $entityTransfer,
-            array_unique(array_merge(
-                $multiFactorAuthValidationRequestTransfer->getAdditionalStatuses(),
-                $additionalStatuses,
-            )),
-        );
+        $multiFactorAuthTypesCollectionTransfer = $this->getMultiFactorAuthTypesCollectionTransfer($entityTransfer, $statuses);
 
         if ($multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes()->count() === 0) {
             return $this->createMultiFactorAuthValidationResponseTransfer();
@@ -87,13 +81,13 @@ abstract class AbstractMultiFactorAuthStatusValidator implements MultiFactorAuth
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $entityTransfer
-     * @param array<int> $additionalStatuses
+     * @param array<int> $statuses
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
     abstract protected function getMultiFactorAuthTypesCollectionTransfer(
         AbstractTransfer $entityTransfer,
-        array $additionalStatuses = []
+        array $statuses = []
     ): MultiFactorAuthTypesCollectionTransfer;
 
     /**

@@ -10,6 +10,7 @@ namespace Spryker\Zed\MultiFactorAuth\Persistence;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
@@ -18,6 +19,7 @@ use Orm\Zed\MultiFactorAuth\Persistence\Map\SpyCustomerMultiFactorAuthTableMap;
 use Orm\Zed\MultiFactorAuth\Persistence\Map\SpyUserMultiFactorAuthCodesTableMap;
 use Orm\Zed\MultiFactorAuth\Persistence\Map\SpyUserMultiFactorAuthTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -132,23 +134,18 @@ class MultiFactorAuthRepository extends AbstractRepository implements MultiFacto
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param array<int> $additionalStatuses
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
-    public function getCustomerMultiFactorAuthTypes(CustomerTransfer $customerTransfer, array $additionalStatuses = []): MultiFactorAuthTypesCollectionTransfer
+    public function getCustomerMultiFactorAuthTypes(MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer): MultiFactorAuthTypesCollectionTransfer
     {
-        $statuses = array_unique(array_merge(
-            [MultiFactorAuthConstants::STATUS_ACTIVE],
-            $additionalStatuses,
-        ));
-
-        $customerMultiFactorAuthEntities = $this->getFactory()
+        $customerMultiFactorAuthQuery = $this->getFactory()
             ->createSpyCustomerMultiFactorAuthQuery()
-            ->filterByFkCustomer($customerTransfer->getIdCustomer())
-            ->filterByStatus($statuses, Criteria::IN)
-            ->find();
+            ->filterByFkCustomer($multiFactorAuthCriteriaTransfer->getCustomerOrFail()->getIdCustomer());
+
+        $customerMultiFactorAuthQuery = $this->addStatusFilter($customerMultiFactorAuthQuery, $multiFactorAuthCriteriaTransfer);
+        $customerMultiFactorAuthEntities = $customerMultiFactorAuthQuery->find();
 
         if ($customerMultiFactorAuthEntities->count() === 0) {
             return new MultiFactorAuthTypesCollectionTransfer();
@@ -160,23 +157,18 @@ class MultiFactorAuthRepository extends AbstractRepository implements MultiFacto
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param array<int> $additionalStatuses
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
-    public function getUserMultiFactorAuthTypes(UserTransfer $userTransfer, array $additionalStatuses = []): MultiFactorAuthTypesCollectionTransfer
+    public function getUserMultiFactorAuthTypes(MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer): MultiFactorAuthTypesCollectionTransfer
     {
-        $statuses = array_unique(array_merge(
-            [MultiFactorAuthConstants::STATUS_ACTIVE],
-            $additionalStatuses,
-        ));
-
-        $userMultiFactorAuthEntities = $this->getFactory()
+        $userMultiFactorAuthQuery = $this->getFactory()
             ->createSpyUserMultiFactorAuthQuery()
-            ->filterByFkUser($userTransfer->getIdUser())
-            ->filterByStatus($statuses, Criteria::IN)
-            ->find();
+            ->filterByFkUser($multiFactorAuthCriteriaTransfer->getUserOrFail()->getIdUser());
+
+        $userMultiFactorAuthQuery = $this->addStatusFilter($userMultiFactorAuthQuery, $multiFactorAuthCriteriaTransfer);
+        $userMultiFactorAuthEntities = $userMultiFactorAuthQuery->find();
 
         if ($userMultiFactorAuthEntities->count() === 0) {
             return new MultiFactorAuthTypesCollectionTransfer();
@@ -203,28 +195,6 @@ class MultiFactorAuthRepository extends AbstractRepository implements MultiFacto
             ->endUse()
             ->select([SpyCustomerMultiFactorAuthTableMap::COL_TYPE])
             ->findOne();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
-     */
-    public function getPendingActivationCustomerMultiFactorAuthTypes(CustomerTransfer $customerTransfer): MultiFactorAuthTypesCollectionTransfer
-    {
-        $customerMultiFactorAuthEntities = $this->getFactory()
-            ->createSpyCustomerMultiFactorAuthQuery()
-            ->filterByFkCustomer($customerTransfer->getIdCustomer())
-            ->filterByStatus(MultiFactorAuthConstants::STATUS_PENDING_ACTIVATION)
-            ->find();
-
-        if ($customerMultiFactorAuthEntities->count() === 0) {
-            return new MultiFactorAuthTypesCollectionTransfer();
-        }
-
-        return $this->getFactory()
-            ->createMultiFactorAuthMapper()
-            ->mapMultiFactorAuthEntitiesToMultiFactorAuthTypesCollectionTransfer($customerMultiFactorAuthEntities, new MultiFactorAuthTypesCollectionTransfer());
     }
 
     /**
@@ -316,24 +286,21 @@ class MultiFactorAuthRepository extends AbstractRepository implements MultiFacto
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Orm\Zed\MultiFactorAuth\Persistence\SpyCustomerMultiFactorAuthQuery|\Orm\Zed\MultiFactorAuth\Persistence\SpyUserMultiFactorAuthQuery $multiFactorAuthQuery
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function getPendingActivationUserMultiFactorAuthTypes(UserTransfer $userTransfer): MultiFactorAuthTypesCollectionTransfer
-    {
-        $userMultiFactorAuthEntities = $this->getFactory()
-            ->createSpyUserMultiFactorAuthQuery()
-            ->filterByFkUser($userTransfer->getIdUser())
-            ->filterByStatus(MultiFactorAuthConstants::STATUS_PENDING_ACTIVATION)
-            ->find();
-
-        if ($userMultiFactorAuthEntities->count() === 0) {
-            return new MultiFactorAuthTypesCollectionTransfer();
+    protected function addStatusFilter(
+        ModelCriteria $multiFactorAuthQuery,
+        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
+    ): ModelCriteria {
+        if ($multiFactorAuthCriteriaTransfer->getStatuses() === []) {
+            return $multiFactorAuthQuery->filterByStatus(MultiFactorAuthConstants::STATUS_ACTIVE);
         }
 
-        return $this->getFactory()
-            ->createMultiFactorAuthMapper()
-            ->mapMultiFactorAuthEntitiesToMultiFactorAuthTypesCollectionTransfer($userMultiFactorAuthEntities, new MultiFactorAuthTypesCollectionTransfer());
+        $multiFactorAuthQuery->filterByStatus($multiFactorAuthCriteriaTransfer->getStatuses(), Criteria::IN);
+
+        return $multiFactorAuthQuery;
     }
 }

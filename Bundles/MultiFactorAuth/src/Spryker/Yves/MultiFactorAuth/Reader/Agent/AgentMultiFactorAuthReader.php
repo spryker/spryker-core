@@ -7,9 +7,9 @@
 
 namespace Spryker\Yves\MultiFactorAuth\Reader\Agent;
 
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\MultiFactorAuth\MultiFactorAuthClientInterface;
 use Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants;
 
@@ -26,13 +26,14 @@ class AgentMultiFactorAuthReader implements AgentMultiFactorAuthReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
-    public function getAvailableAgentMultiFactorAuthTypes(UserTransfer $userTransfer): MultiFactorAuthTypesCollectionTransfer
-    {
-        $configuredMultiFactorAuthTypes = $this->client->getAgentMultiFactorAuthTypes($userTransfer);
+    public function getAvailableAgentMultiFactorAuthTypes(
+        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
+    ): MultiFactorAuthTypesCollectionTransfer {
+        $configuredMultiFactorAuthTypes = $this->client->getAgentMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
 
         $multiFactorAuthTypes = [];
         foreach ($configuredMultiFactorAuthTypes->getMultiFactorAuthTypes() as $multiFactorAuthTransfer) {
@@ -54,7 +55,7 @@ class AgentMultiFactorAuthReader implements AgentMultiFactorAuthReaderInterface
             $multiFactorAuthTransfer = (new MultiFactorAuthTransfer())
                 ->setType($plugin->getName())
                 ->setStatus(MultiFactorAuthConstants::STATUS_INACTIVE)
-                ->setUser($userTransfer);
+                ->setUser($multiFactorAuthCriteriaTransfer->getUserOrFail());
 
             $multiFactorAuthTypes[$plugin->getName()] = $multiFactorAuthTransfer;
         }

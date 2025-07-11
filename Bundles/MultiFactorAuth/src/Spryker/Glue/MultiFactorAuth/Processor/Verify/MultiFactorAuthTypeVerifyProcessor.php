@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Glue\MultiFactorAuth\Processor\Verify;
 
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\RestMultiFactorAuthAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -61,7 +62,7 @@ class MultiFactorAuthTypeVerifyProcessor implements MultiFactorAuthTypeVerifyPro
         $customerTransfer = $this->customerClient->getCustomerById((int)$restRequest->getRestUser()?->getSurrogateIdentifierOrFail());
 
         $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient
-            ->getCustomerMultiFactorAuthTypes($customerTransfer);
+            ->getCustomerMultiFactorAuthTypes((new MultiFactorAuthCriteriaTransfer())->setCustomer($customerTransfer));
 
         if ($this->multiFactorAuthValidator->isActivatedMultiFactorAuthType($multiFactorAuthTypesCollectionTransfer, $multiFactorAuthType) === true) {
             return $this->multiFactorAuthResponseBuilder->createAlreadyActivatedMultiFactorAuthError();

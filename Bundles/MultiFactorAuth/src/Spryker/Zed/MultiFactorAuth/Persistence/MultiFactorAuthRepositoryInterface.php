@@ -12,6 +12,7 @@ namespace Spryker\Zed\MultiFactorAuth\Persistence;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
@@ -26,12 +27,11 @@ interface MultiFactorAuthRepositoryInterface
     public function getCustomerCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthCodeTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param array<int> $additionalStatuses
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
-    public function getCustomerMultiFactorAuthTypes(CustomerTransfer $customerTransfer, array $additionalStatuses = []): MultiFactorAuthTypesCollectionTransfer;
+    public function getCustomerMultiFactorAuthTypes(MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer): MultiFactorAuthTypesCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
@@ -41,12 +41,11 @@ interface MultiFactorAuthRepositoryInterface
     public function getUserCode(MultiFactorAuthTransfer $multiFactorAuthTransfer): MultiFactorAuthCodeTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param array<int> $additionalStatuses
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
-    public function getUserMultiFactorAuthTypes(UserTransfer $userTransfer, array $additionalStatuses = []): MultiFactorAuthTypesCollectionTransfer;
+    public function getUserMultiFactorAuthTypes(MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer): MultiFactorAuthTypesCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -86,13 +85,6 @@ interface MultiFactorAuthRepositoryInterface
     ): MultiFactorAuthCodeTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
-     */
-    public function getPendingActivationCustomerMultiFactorAuthTypes(CustomerTransfer $customerTransfer): MultiFactorAuthTypesCollectionTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer
@@ -100,11 +92,4 @@ interface MultiFactorAuthRepositoryInterface
     public function findUserMultiFactorAuthCodeByCriteria(
         MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
     ): MultiFactorAuthCodeTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
-     */
-    public function getPendingActivationUserMultiFactorAuthTypes(UserTransfer $userTransfer): MultiFactorAuthTypesCollectionTransfer;
 }

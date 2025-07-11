@@ -1,7 +1,11 @@
 <ng-content></ng-content>
 
-<form class="mp-form-submitter__form" #form>
+<form class="mp-form-submitter__form" [class.mp-form-submitter__form--visible]="buttonMode" #form>
     <ng-content select="[form]"></ng-content>
 </form>
+
+<spy-button *ngIf="buttonMode" class="mp-form-submitter__button" (click)="onButtonClick($event)" type="submit">
+    <ng-content select="[button-content]"></ng-content>
+</spy-button>
 
 <spy-spinner class="mp-form-submitter__spinner" [isSpinning]="isLoading"></spy-spinner>

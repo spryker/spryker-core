@@ -1,0 +1,61 @@
+{% extends '@ZedUi/Layout/merchant-layout.twig' %}
+{% import _self as view %}
+
+{% block body %}
+    {% if app.twig.getFunction('navigation') != false %}
+        {% set mainMerchantNavigationType = mainMerchantNavigationType | default('main') %}
+        {% set secondaryMerchantNavigationType = secondaryMerchantNavigationType | default('secondary') %}
+        {% set navigationConfig = render_navigation_component_config(navigation(mainMerchantNavigationType).menu) %}
+        {% set userMenuNavigationItems = navigation(secondaryMerchantNavigationType).menu %}
+
+        {% block merchantLayoutMain %}
+            <web-mp-merchant-layout-main cloak navigation-config="{{ navigationConfig }}">
+                {% block logo %}
+                    <web-spy-logo cloak logo></web-spy-logo>
+                {% endblock %}
+
+                {% block header %}
+                    {% set navigationConfig = [] %}
+
+                    {% for userMenuNavigationItem in userMenuNavigationItems %}
+                        {% set navigationConfig = navigationConfig | merge([{
+                            url: userMenuNavigationItem.uri,
+                            type: userMenuNavigationItem.type,
+                            title: userMenuNavigationItem.title | trans,
+                        }]) %}
+                    {% endfor %}
+
+                    {% set navigationConfig = navigationConfig | merge([{
+                        url: '/agent-security-merchant-portal-gui/logout',
+                        type: 'danger',
+                        title: 'Logout' | trans
+                    }]) %}
+
+                    <header header>
+                        {% block headerMenu %}
+                            <web-mp-header-menu navigation-config="{{ navigationConfig | json_encode() }}" cloak menu>
+                                {% block infoPrimary %}
+                                    {% if username is not empty %}
+                                        <span info-primary>{{ username }}</span>
+                                    {% endif %}
+                                {% endblock %}
+
+                                {% block infoSecondary %}
+                                    {% if userEmail is not empty %}
+                                        <span info-secondary>{{ userEmail }}</span>
+                                    {% endif %}
+                                {% endblock %}
+                            </web-mp-header-menu>
+                        {% endblock %}
+                    </header>
+                {% endblock %}
+
+                {% block flashMessages %}
+                    {% include '@ZedUi/Partials/FlashMessages/flash-messages.twig' %}
+                {% endblock %}
+
+                {% block content %}{% endblock %}
+            </web-mp-merchant-layout-main>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

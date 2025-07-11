@@ -20,11 +20,6 @@ class BaseMultiFactorAuthForm extends AbstractType
     /**
      * @var string
      */
-    protected const FIELD_EMAIL = 'email';
-
-    /**
-     * @var string
-     */
     protected const FIELD_IS_ACTIVATION = 'is_activation';
 
     /**
@@ -45,7 +40,6 @@ class BaseMultiFactorAuthForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            static::FIELD_EMAIL => null,
             static::FIELD_IS_ACTIVATION => null,
             static::FIELD_IS_DEACTIVATION => null,
             static::FIELD_TYPE_TO_SET_UP => null,
@@ -60,26 +54,9 @@ class BaseMultiFactorAuthForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addEmailHiddenField($builder, $options);
         $this->addIsActivationHiddenField($builder, $options);
         $this->addIsDeactivationHiddenField($builder, $options);
         $this->addTypeToSetUpHiddenField($builder, $options);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array<string, mixed> $options
-     *
-     * @return $this
-     */
-    protected function addEmailHiddenField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(static::FIELD_EMAIL, HiddenType::class, [
-            'mapped' => false,
-            'data' => $options[static::FIELD_EMAIL],
-        ]);
-
-        return $this;
     }
 
     /**

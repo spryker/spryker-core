@@ -8,7 +8,7 @@ Continue,Continue
 "Verify Code","Verify Code"
 "We sent the authentication code to your %s. Type it below to continue.","We sent the authentication code to your %s. Type it below to continue."
 "Invalid multi-factor authentication code","Invalid multi-factor authentication code"
-"Please choose how you would like to verify your identity.","Bitte wählen Sie aus, wie Sie Ihre Identität überprüfen möchten."
+"Please choose how you would like to verify your identity.","Please choose how you would like to verify your identity."
 "Unable to proceed. A multi-factor authentication method must be selected. Please refresh the page and try again or contact support if the problem persists.","Unable to proceed. A multi-factor authentication method must be selected. Please refresh the page and try again or contact support if the problem persists."
 "Customer has no active multi-factor authentication methods.","Customer has no active multi-factor authentication methods."
 "CSRF token is invalid.","CSRF token is invalid."
@@ -21,3 +21,4 @@ Continue,Continue
 "Note, any changes made here will also affect how MFA works in other environments like the Back Office, since your accounts are linked.","Note, any changes made here will also affect how MFA works in other environments like the Back Office, since your accounts are linked."
 "Enter code","Enter code"
 "Something went wrong while sending your code. Please try again later or contact the system administrator.","Something went wrong while sending your code. Please try again later or contact the system administrator."
+"The provided code is empty or invalid. Please try again.","The provided code is empty or invalid. Please try again."

@@ -20,10 +20,10 @@ class MultiFactorAuthStorefrontApiRequestValidatorPlugin extends AbstractPlugin 
 {
     /**
      * {@inheritDoc}
-     *  - Validates that the X-MFA-Code header is present for MFA-protected resources.
-     *  - Checks if the requested resource is in the list of MFA-protected resources.
-     *  - Validates the MFA code using the MultiFactorAuthClient.
-     *  - Returns error message if MFA header is missing or code is invalid for protected resource.
+     *  - Validates that the X-MFA-Code header is present for Multi-Factor-Auth-protected resources.
+     *  - Checks if the requested resource is in the list of Multi-Factor-Auth-protected resources.
+     *  - Validates the Multi-Factor Authentication code using the MultiFactorAuthClient.
+     *  - Returns error message if Multi-Factor Authentication header is missing or code is invalid for protected resource.
      *
      * @api
      *

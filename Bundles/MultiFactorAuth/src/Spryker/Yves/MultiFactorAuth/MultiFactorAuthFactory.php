@@ -19,6 +19,7 @@ use Spryker\Yves\MultiFactorAuth\Deactivator\Customer\CustomerMultiFactorAuthDea
 use Spryker\Yves\MultiFactorAuth\Deactivator\Customer\CustomerMultiFactorAuthDeactivatorInterface;
 use Spryker\Yves\MultiFactorAuth\Dependency\Client\MultiFactorAuthToAgentClientInterface;
 use Spryker\Yves\MultiFactorAuth\Dependency\Client\MultiFactorAuthToCustomerClientInterface;
+use Spryker\Yves\MultiFactorAuth\Dependency\Client\MultiFactorAuthToSessionClientInterface;
 use Spryker\Yves\MultiFactorAuth\Form\CodeValidationForm;
 use Spryker\Yves\MultiFactorAuth\Form\DataProvider\Agent\AgentTypeSelectionFormDataProvider;
 use Spryker\Yves\MultiFactorAuth\Form\DataProvider\Customer\CustomerTypeSelectionFormDataProvider;
@@ -270,5 +271,13 @@ class MultiFactorAuthFactory extends AbstractFactory
     public function getCsrfTokenManager(): CsrfTokenManagerInterface
     {
         return $this->getProvidedDependency(MultiFactorAuthDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
+    }
+
+    /**
+     * @return \Spryker\Yves\MultiFactorAuth\Dependency\Client\MultiFactorAuthToSessionClientInterface
+     */
+    public function getSessionClient(): MultiFactorAuthToSessionClientInterface
+    {
+        return $this->getProvidedDependency(MultiFactorAuthDependencyProvider::CLIENT_SESSION);
     }
 }

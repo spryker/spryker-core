@@ -44,6 +44,11 @@ class UserAuthenticationSuccessHandler extends AbstractPlugin implements Authent
     protected const ACCESS_MODE_PRE_AUTH = 'ACCESS_MODE_PRE_AUTH';
 
     /**
+     * @var string
+     */
+    protected const MULTI_FACTOR_AUTH_LOGIN_USER_EMAIL_SESSION_KEY = '_multi_factor_auth_login_user_email';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      *
@@ -51,15 +56,19 @@ class UserAuthenticationSuccessHandler extends AbstractPlugin implements Authent
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
     {
+        /** @var \Spryker\Zed\SecurityGui\Communication\Security\UserInterface $user */
+        $user = $token->getUser();
+        $userTransfer = $user->getUserTransfer();
+
         if (in_array(static::ACCESS_MODE_PRE_AUTH, $token->getRoleNames())) {
+            $this->getFactory()->getSessionClient()->set(static::MULTI_FACTOR_AUTH_LOGIN_USER_EMAIL_SESSION_KEY, $userTransfer->getUsername());
+
             return new JsonResponse([
                 static::PARAMETER_REQUIRES_ADDITIONAL_AUTH => true,
             ]);
         }
 
-        /** @var \Spryker\Zed\SecurityGui\Communication\Security\User $user */
-        $user = $token->getUser();
-        $this->executeOnAuthenticationSuccess($user->getUserTransfer());
+        $this->executeOnAuthenticationSuccess($userTransfer);
 
         return $this->createRedirectResponse($request);
     }

@@ -33,7 +33,7 @@ abstract class AbstractMultiFactorAuthController extends AbstractController
     public const IS_DEACTIVATION = 'is_deactivation';
 
     /**
-     * @uses \Spryker\Yves\MultiFactorAuth\Form\DataProvider\TypeSelectionDataProvider::OPTION_TYPES
+     * @uses \Spryker\Yves\MultiFactorAuth\Form\DataProvider\Customer\CustomerTypeSelectionFormDataProvider::OPTIONS_TYPES
      *
      * @var string
      */
@@ -42,12 +42,12 @@ abstract class AbstractMultiFactorAuthController extends AbstractController
     /**
      * @var string
      */
-    protected const EMAIL = 'email';
+    protected const MESSAGE_REQUIRED_SELECTION_ERROR = 'multi_factor_auth.selection.error.required';
 
     /**
      * @var string
      */
-    protected const MESSAGE_REQUIRED_SELECTION_ERROR = 'multi_factor_auth.selection.error.required';
+    protected const MESSAGE_CORRUPTED_CODE_ERROR = 'multi_factor_auth.error.corrupted_code';
 
     /**
      * @var string
@@ -76,7 +76,7 @@ abstract class AbstractMultiFactorAuthController extends AbstractController
      */
     public function getEnabledTypesAction(Request $request): View
     {
-        $options = $this->getOptions($request, $this->getFactory()->getTypeSelectionForm([]));
+        $options = $this->getOptions($request);
 
         if ($this->assertNoTypesEnabled($options) && $this->isSetUpMultiFactorAuthStep($request) === true) {
             return $this->sendCodeAction($request, $this->getParameterFromRequest($request, static::TYPE_TO_SET_UP));
@@ -100,7 +100,7 @@ abstract class AbstractMultiFactorAuthController extends AbstractController
 
             if ($selectedType === null) {
                 $typeSelectionFormView = $this->getFactory()
-                    ->getTypeSelectionForm($this->getOptions($request, $typeSelectionForm))
+                    ->getTypeSelectionForm($this->getOptions($request))
                     ->handleRequest($request)
                     ->addError(new FormError(static::MESSAGE_REQUIRED_SELECTION_ERROR))
                     ->createView();
@@ -125,10 +125,10 @@ abstract class AbstractMultiFactorAuthController extends AbstractController
     {
         $formName = $form?->getName() ?? $this->getFactory()->getCodeValidationForm()->getName();
         $multiFactorAuthType = $multiFactorAuthType ?? $this->getParameterFromRequest($request, MultiFactorAuthTransfer::TYPE, $formName);
-        $identityTransfer = $this->getIdentity($request, $formName);
+        $identityTransfer = $this->getIdentity();
         $options = array_merge([
             static::OPTION_TYPES => [$multiFactorAuthType],
-            static::EMAIL => $identityTransfer->getEmail() ?? $identityTransfer->getUsername(),
+            'code_length' => $this->resolveCodeLength(),
         ], $this->extractSetupParameters($request, $formName));
 
         $codeValidationForm = $this->getFactory()
@@ -211,20 +211,16 @@ abstract class AbstractMultiFactorAuthController extends AbstractController
     abstract protected function validateCode(AbstractTransfer $identityTransfer, FormInterface $codeValidationForm): MultiFactorAuthValidationResponseTransfer;
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string|null $formName
-     *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    abstract protected function getIdentity(Request $request, ?string $formName = null): AbstractTransfer;
+    abstract protected function getIdentity(): AbstractTransfer;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Form\FormInterface|null $form
      *
      * @return array<string, mixed>
      */
-    abstract protected function getOptions(Request $request, ?FormInterface $form = null): array;
+    abstract protected function getOptions(Request $request): array;
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $identityTransfer
@@ -232,6 +228,11 @@ abstract class AbstractMultiFactorAuthController extends AbstractController
      * @return void
      */
     abstract protected function executePostLoginMultiFactorAuthenticationPlugins(AbstractTransfer $identityTransfer): void;
+
+    /**
+     * @return int
+     */
+    abstract protected function resolveCodeLength(): int;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

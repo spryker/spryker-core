@@ -8,9 +8,17 @@
 namespace Spryker\Shared\ZedUi\Configuration;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ZedUiFormRequestActionTransfer;
 use Generated\Shared\Transfer\ZedUiFormResponseActionTransfer;
 use Generated\Shared\Transfer\ZedUiFormResponseTransfer;
 
+/**
+ * Builds a standardized JSON response for AJAX form submissions in the Zed UI.
+ *
+ * This builder allows controllers to create responses that trigger specific frontend
+ * actions like opening/closing modals, refreshing tables, or displaying notifications,
+ * enabling a more dynamic and interactive user experience without full page reloads.
+ */
 class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
 {
     /**
@@ -242,6 +250,106 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
     public function addActionCloseDrawer()
     {
         $this->actions[] = $this->createResponseAction(static::RESPONSE_ACTION_TYPE_CLOSE_DRAWER);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer
+     *
+     * @return $this
+     */
+    public function addActionRefreshModal(ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer)
+    {
+        $zedUiFormResponseActionTransfer = $this->createResponseAction('refresh-modal');
+
+        $zedUiFormResponseActionTransfer->fromArray($zedUiFormRequestActionTransfer->toArray(), true);
+
+        $this->actions[] = $zedUiFormResponseActionTransfer;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer
+     *
+     * @return $this
+     */
+    public function addActionOpenModal(ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer)
+    {
+        $zedUiFormResponseActionTransfer = $this->createResponseAction('open-modal');
+
+        $zedUiFormResponseActionTransfer->fromArray($zedUiFormRequestActionTransfer->toArray(), true);
+
+        $this->actions[] = $zedUiFormResponseActionTransfer;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer
+     *
+     * @return $this
+     */
+    public function addActionCloseModal(ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer)
+    {
+        $zedUiFormResponseActionTransfer = $this->createResponseAction('close-modal');
+
+        $zedUiFormResponseActionTransfer->fromArray($zedUiFormRequestActionTransfer->toArray(), true);
+
+        $this->actions[] = $zedUiFormResponseActionTransfer;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer
+     *
+     * @return $this
+     */
+    public function addActionSubmitForm(ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer)
+    {
+        $zedUiFormResponseActionTransfer = $this->createResponseAction('submit-form');
+
+        $zedUiFormResponseActionTransfer->fromArray($zedUiFormRequestActionTransfer->toArray(), true);
+
+        $this->actions[] = $zedUiFormResponseActionTransfer;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer
+     *
+     * @return $this
+     */
+    public function addActionSubmitAjaxForm(ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer)
+    {
+        $zedUiFormResponseActionTransfer = $this->createResponseAction('submit-ajax-form');
+
+        $zedUiFormResponseActionTransfer->fromArray($zedUiFormRequestActionTransfer->toArray(), true);
+
+        $this->actions[] = $zedUiFormResponseActionTransfer;
 
         return $this;
     }

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,13 @@ class CustomerMultiFactorAuthFlowController extends AbstractMultiFactorAuthContr
      * @var string
      */
     protected const CUSTOMER_POST_AUTHENTICATION_TYPE = 'CUSTOMER_POST_AUTHENTICATION_TYPE';
+
+    /**
+     * @uses {@link \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler::MULTI_FACTOR_AUTH_LOGIN_CUSTOMER_EMAIL_SESSION_KEY}
+     *
+     * @var string
+     */
+    protected const MULTI_FACTOR_AUTH_LOGIN_CUSTOMER_EMAIL_SESSION_KEY = '_multi_factor_auth_login_customer_email';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -96,12 +104,9 @@ class CustomerMultiFactorAuthFlowController extends AbstractMultiFactorAuthContr
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string|null $formName
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function getIdentity(Request $request, ?string $formName = null): CustomerTransfer
+    protected function getIdentity(): CustomerTransfer
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
@@ -109,7 +114,7 @@ class CustomerMultiFactorAuthFlowController extends AbstractMultiFactorAuthContr
             return $customerTransfer;
         }
 
-        $email = $this->getParameterFromRequest($request, CustomerTransfer::EMAIL, $formName);
+        $email = $this->getFactory()->getSessionClient()->get(static::MULTI_FACTOR_AUTH_LOGIN_CUSTOMER_EMAIL_SESSION_KEY);
         $customerTransfer = (new CustomerTransfer())->setEmail($email);
 
         return $this->getFactory()->getCustomerClient()->getCustomerByEmail($customerTransfer);
@@ -125,8 +130,16 @@ class CustomerMultiFactorAuthFlowController extends AbstractMultiFactorAuthContr
         AbstractTransfer $customerTransfer,
         FormInterface $codeValidationForm
     ): MultiFactorAuthValidationResponseTransfer {
+        $code = $codeValidationForm->getData()[static::AUTHENTICATION_CODE] ?? null;
+
+        if ($code === null) {
+            return (new MultiFactorAuthValidationResponseTransfer())
+                ->setStatus(MultiFactorAuthConstants::CODE_UNVERIFIED)
+                ->setMessage(static::MESSAGE_CORRUPTED_CODE_ERROR);
+        }
+
         $multiFactorAuthCodeTransfer = (new MultiFactorAuthCodeTransfer())
-            ->setCode($codeValidationForm->getData()[static::AUTHENTICATION_CODE]);
+            ->setCode($code);
 
         $multiFactorAuthTransfer = (new MultiFactorAuthTransfer())
             ->setCustomer($customerTransfer)
@@ -155,13 +168,12 @@ class CustomerMultiFactorAuthFlowController extends AbstractMultiFactorAuthContr
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Form\FormInterface|null $form
      *
      * @return array<string, mixed>
      */
-    protected function getOptions(Request $request, ?FormInterface $form = null): array
+    protected function getOptions(Request $request): array
     {
-        $customerTransfer = $this->getIdentity($request, $form ? $form->getName() : null);
+        $customerTransfer = $this->getIdentity();
 
         $options = $this->getFactory()->createCustomerTypeSelectionFormDataProvider()->getOptions($customerTransfer);
         $multiFactorAuthValidationRequestTransfer = (new MultiFactorAuthValidationRequestTransfer())->setCustomer($customerTransfer);
@@ -171,5 +183,13 @@ class CustomerMultiFactorAuthFlowController extends AbstractMultiFactorAuthContr
         }
 
         return $options;
+    }
+
+    /**
+     * @return int
+     */
+    protected function resolveCodeLength(): int
+    {
+        return $this->getFactory()->getConfig()->getCustomerCodeLength();
     }
 }

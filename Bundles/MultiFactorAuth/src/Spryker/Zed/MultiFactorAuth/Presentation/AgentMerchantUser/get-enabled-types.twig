@@ -1,0 +1,7 @@
+{% extends '@MultiFactorAuth/MerchantUser/get-enabled-types.twig' %}
+
+{% block body %}
+    {% set action = path('multi-factor-auth:agent-merchant-user:get-enabled-types') %}
+
+    {{ parent() }}
+{% endblock %}

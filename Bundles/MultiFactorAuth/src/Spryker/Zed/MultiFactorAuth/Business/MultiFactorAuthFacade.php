@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\MultiFactorAuth\Business;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -115,20 +114,6 @@ class MultiFactorAuthFacade extends AbstractFacade implements MultiFactorAuthFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
-     */
-    public function getPendingActivationCustomerMultiFactorAuthTypes(CustomerTransfer $customerTransfer): MultiFactorAuthTypesCollectionTransfer
-    {
-        return $this->getRepository()->getPendingActivationCustomerMultiFactorAuthTypes($customerTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
@@ -144,15 +129,15 @@ class MultiFactorAuthFacade extends AbstractFacade implements MultiFactorAuthFac
      * @api
      *
      * @param \Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer
-     * @param array<int> $additionalStatuses
+     * @param array<int> $statuses
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
      */
     public function validateUserMultiFactorAuthStatus(
         MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer,
-        array $additionalStatuses = []
+        array $statuses = []
     ): MultiFactorAuthValidationResponseTransfer {
-        return $this->getFactory()->createUserMultiFactorAuthStatusValidator()->validate($multiFactorAuthValidationRequestTransfer, $additionalStatuses);
+        return $this->getFactory()->createUserMultiFactorAuthStatusValidator()->validate($multiFactorAuthValidationRequestTransfer, $statuses);
     }
 
     /**
@@ -202,16 +187,16 @@ class MultiFactorAuthFacade extends AbstractFacade implements MultiFactorAuthFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      * @param array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface> $userMultiFactorAuthPlugins
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
     public function getAvailableUserMultiFactorAuthTypes(
-        UserTransfer $userTransfer,
+        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer,
         array $userMultiFactorAuthPlugins
     ): MultiFactorAuthTypesCollectionTransfer {
-        return $this->getFactory()->createUserMultiFactorAuthReader()->getAvailableUserMultiFactorAuthTypes($userTransfer, $userMultiFactorAuthPlugins);
+        return $this->getFactory()->createUserMultiFactorAuthReader()->getAvailableUserMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer, $userMultiFactorAuthPlugins);
     }
 
     /**
@@ -234,27 +219,12 @@ class MultiFactorAuthFacade extends AbstractFacade implements MultiFactorAuthFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
-    public function getPendingActivationUserMultiFactorAuthTypes(UserTransfer $userTransfer): MultiFactorAuthTypesCollectionTransfer
+    public function getUserMultiFactorAuthTypes(MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer): MultiFactorAuthTypesCollectionTransfer
     {
-        return $this->getRepository()->getPendingActivationUserMultiFactorAuthTypes($userTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param array<int> $additionalStatuses
-     *
-     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
-     */
-    public function getUserMultiFactorAuthTypes(UserTransfer $userTransfer, array $additionalStatuses = []): MultiFactorAuthTypesCollectionTransfer
-    {
-        return $this->getRepository()->getUserMultiFactorAuthTypes($userTransfer, $additionalStatuses);
+        return $this->getRepository()->getUserMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
     }
 }

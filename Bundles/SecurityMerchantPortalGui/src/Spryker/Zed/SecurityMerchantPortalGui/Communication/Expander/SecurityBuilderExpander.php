@@ -36,6 +36,11 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
     protected const SECURITY_MERCHANT_PORTAL_LOGIN_FORM_AUTHENTICATOR = 'security.MerchantUser.login_form.authenticator';
 
     /**
+     * @var string
+     */
+    protected const ACCESS_MODE_PRE_AUTH = 'ACCESS_MODE_PRE_AUTH';
+
+    /**
      * @var \Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface
      */
     protected AuthenticatorInterface $authenticator;
@@ -108,6 +113,10 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
             [
                 $this->getMerchantPortalRoutePattern(),
                 SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER,
+            ],
+            [
+                $this->config->getIgnorablePathPattern(),
+                static::ACCESS_MODE_PRE_AUTH,
             ],
         ]);
     }

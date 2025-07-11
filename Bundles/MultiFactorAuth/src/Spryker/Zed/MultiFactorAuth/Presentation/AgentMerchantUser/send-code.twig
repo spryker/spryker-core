@@ -1,0 +1,7 @@
+{% extends '@MultiFactorAuth/MerchantUser/send-code.twig' %}
+
+{% block body %}
+    {% set action = path('multi-factor-auth:agent-merchant-user:send-code') %}
+
+    {{ parent() }}
+{% endblock %}

@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace SprykerTest\Zed\MultiFactorAuth\Business\Reader\User;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
@@ -109,15 +110,17 @@ class UserMultiFactorAuthReaderTest extends Unit
     public function testGetAvailableUserMultiFactorAuthTypesReturnsCollectionWithProperData(): void
     {
         // Arrange
+        $multiFactorAuthCriteriaTransfer = (new MultiFactorAuthCriteriaTransfer())
+            ->setUser($this->userTransfer);
         $this->multiFactorAuthRepositoryMock
             ->expects($this->once())
             ->method('getUserMultiFactorAuthTypes')
-            ->with($this->userTransfer)
+            ->with($multiFactorAuthCriteriaTransfer)
             ->willReturn($this->multiFactorAuthTypesCollection);
 
         // Act
         $multiFactorAuthTypesCollectionTransfer = $this->userMultiFactorAuthReader->getAvailableUserMultiFactorAuthTypes(
-            $this->userTransfer,
+            $multiFactorAuthCriteriaTransfer,
             $this->userMultiFactorAuthPlugins,
         );
 

@@ -10,6 +10,7 @@ namespace Spryker\Zed\SecurityGui;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SecurityGui\Dependency\Client\SecurityGuiToSecurityBlockerClientBridge;
+use Spryker\Zed\SecurityGui\Dependency\Client\SecurityGuiToSessionClientBridge;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToMessengerFacadeBridge;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToSecurityFacadeBridge;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserFacadeBridge;
@@ -73,6 +74,11 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
     /**
+     * @var string
+     */
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -91,6 +97,7 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSecurityBlockerClient($container);
         $container = $this->addUserAuthenticationHandlerPlugins($container);
         $container = $this->addSecurityTokenStorage($container);
+        $container = $this->addSessionClient($container);
 
         return $container;
     }
@@ -289,5 +296,21 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function getUserAuthenticationHandlerPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSessionClient(Container $container)
+    {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
+            return new SecurityGuiToSessionClientBridge(
+                $container->getLocator()->session()->client(),
+            );
+        });
+
+        return $container;
     }
 }

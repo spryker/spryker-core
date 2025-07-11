@@ -15,14 +15,14 @@ interface MultiFactorAuthStatusValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer
-     * @param array<int> $additionalStatuses
+     * @param array<int> $statuses
      * @param \DateTime|null $currentDateTime
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
      */
     public function validate(
         MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer,
-        array $additionalStatuses = [],
+        array $statuses = [],
         ?DateTime $currentDateTime = null
     ): MultiFactorAuthValidationResponseTransfer;
 }

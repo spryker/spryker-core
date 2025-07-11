@@ -9,6 +9,9 @@ namespace Spryker\Yves\MultiFactorAuth;
 
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\MultiFactorAuth\MultiFactorAuthConfig getSharedConfig()
+ */
 class MultiFactorAuthConfig extends AbstractBundleConfig
 {
     /**
@@ -71,5 +74,31 @@ class MultiFactorAuthConfig extends AbstractBundleConfig
             static::ROUTE_NAME_CUSTOMER_DELETE => [static::CUSTOMER_DELETE_FORM_NAME],
             static::ROUTE_NAME_CUSTOMER_DELETE_CONFIRM => [static::CUSTOMER_DELETE_FORM_NAME],
         ];
+    }
+
+    /**
+     * Specification:
+     * - Returns the multi-factor authentication code length for customer.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getCustomerCodeLength(): int
+    {
+        return $this->getSharedConfig()->getCustomerCodeLength();
+    }
+
+    /**
+     * Specification:
+     * - Returns the multi-factor authentication code length for agent.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getAgentCodeLength(): int
+    {
+        return $this->getSharedConfig()->getUserCodeLength();
     }
 }

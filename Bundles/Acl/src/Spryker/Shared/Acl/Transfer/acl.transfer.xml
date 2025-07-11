@@ -42,6 +42,7 @@
         <property name="idUser" type="int"/>
         <property name="username" type="string"/>
         <property name="aclGroups" type="Group[]" singular="aclGroup"/>
+        <property name="isMerchantAgent" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="AclRoleCriteria">

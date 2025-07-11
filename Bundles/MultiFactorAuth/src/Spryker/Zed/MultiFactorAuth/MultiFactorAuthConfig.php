@@ -9,6 +9,9 @@ namespace Spryker\Zed\MultiFactorAuth;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\MultiFactorAuth\MultiFactorAuthConfig getSharedConfig()
+ */
 class MultiFactorAuthConfig extends AbstractBundleConfig
 {
     /**
@@ -52,6 +55,13 @@ class MultiFactorAuthConfig extends AbstractBundleConfig
     protected const API_KEY_UPDATE_ROUTE = 'api-key-gui:edit:update';
 
     /**
+     * @uses {@link \Spryker\Zed\UserMerchantPortalGui\Communication\Controller\MyAccountController::ROUTE_MERCHANT_MY_ACCOUNT}
+     *
+     * @var string
+     */
+    protected const MERCHANT_POSTAL_CHANGE_PASSWORD_ROUTE = 'user-merchant-portal-gui:change-password';
+
+    /**
      * @uses {@link \Spryker\Zed\User\Communication\Form\ResetPasswordForm::getBlockPrefix()}
      *
      * @var string
@@ -87,14 +97,11 @@ class MultiFactorAuthConfig extends AbstractBundleConfig
     protected const API_KEY_DELETE_FORM_NAME = 'delete_api_key_form';
 
     /**
-     * @var int
+     * @uses {@link \Spryker\Zed\UserMerchantPortalGui\Communication\Form\ChangePasswordForm::FORM_NAME}
+     *
+     * @var string
      */
-    protected const CUSTOMER_CODE_LENGTH = 6;
-
-    /**
-     * @var int
-     */
-    protected const USER_CODE_LENGTH = 6;
+    protected const MERCHANT_POSTAL_CHANGE_PASSWORD_FORM_NAME = 'security-merchant-portal-gui_change-password';
 
     /**
      * @var int
@@ -126,7 +133,7 @@ class MultiFactorAuthConfig extends AbstractBundleConfig
      */
     public function getCustomerCodeLength(): int
     {
-        return static::CUSTOMER_CODE_LENGTH;
+        return $this->getSharedConfig()->getCustomerCodeLength();
     }
 
     /**
@@ -139,7 +146,7 @@ class MultiFactorAuthConfig extends AbstractBundleConfig
      */
     public function getUserCodeLength(): int
     {
-        return static::USER_CODE_LENGTH;
+        return $this->getSharedConfig()->getUserCodeLength();
     }
 
     /**
@@ -189,6 +196,7 @@ class MultiFactorAuthConfig extends AbstractBundleConfig
             static::API_KEY_EDIT_ROUTE => [static::API_KEY_FORM_NAME],
             static::API_KEY_DELETE_ROUTE => [static::API_KEY_DELETE_FORM_NAME],
             static::API_KEY_CREATE_ROUTE => [static::API_KEY_FORM_NAME],
+            static::MERCHANT_POSTAL_CHANGE_PASSWORD_ROUTE => [static::MERCHANT_POSTAL_CHANGE_PASSWORD_FORM_NAME],
         ];
     }
 

@@ -27,6 +27,7 @@ use Spryker\Zed\SecurityGui\Communication\Plugin\Security\UserSecurityPlugin;
 use Spryker\Zed\SecurityGui\Communication\Security\User;
 use Spryker\Zed\SecurityGui\Communication\Security\UserInterface;
 use Spryker\Zed\SecurityGui\Dependency\Client\SecurityGuiToSecurityBlockerClientInterface;
+use Spryker\Zed\SecurityGui\Dependency\Client\SecurityGuiToSessionClientInterface;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToMessengerFacadeInterface;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToSecurityFacadeInterface;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserFacadeInterface;
@@ -241,5 +242,13 @@ class SecurityGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getTokenStorage(): TokenStorageInterface
     {
         return $this->getProvidedDependency(SecurityGuiDependencyProvider::SERVICE_SECURITY_TOKEN_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityGui\Dependency\Client\SecurityGuiToSessionClientInterface
+     */
+    public function getSessionClient(): SecurityGuiToSessionClientInterface
+    {
+        return $this->getProvidedDependency(SecurityGuiDependencyProvider::CLIENT_SESSION);
     }
 }

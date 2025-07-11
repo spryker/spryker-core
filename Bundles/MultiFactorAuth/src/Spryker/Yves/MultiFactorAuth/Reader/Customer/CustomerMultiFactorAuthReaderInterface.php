@@ -7,18 +7,18 @@
 
 namespace Spryker\Yves\MultiFactorAuth\Reader\Customer;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 
 interface CustomerMultiFactorAuthReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
     public function getAvailableCustomerMultiFactorAuthTypes(
-        CustomerTransfer $customerTransfer
+        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
     ): MultiFactorAuthTypesCollectionTransfer;
 
     /**

@@ -11,6 +11,8 @@ import {
     OnInit,
     ViewChild,
     ViewEncapsulation,
+    ContentChild,
+    AfterContentInit,
 } from '@angular/core';
 import { AjaxActionService } from '@spryker/ajax-action';
 import { ConfirmModalData, ModalService } from '@spryker/modal';
@@ -25,7 +27,7 @@ import { Subject, catchError, defer, of, shareReplay, switchMap, takeUntil, tap 
     encapsulation: ViewEncapsulation.None,
     host: { class: 'mp-form-submitter', '[class.mp-form-submitter--loading]': 'isLoading' },
 })
-export class FormSubmitterComponent implements OnInit, OnDestroy {
+export class FormSubmitterComponent implements OnInit, OnDestroy, AfterContentInit {
     constructor(
         private modalService: ModalService,
         private ajaxActionService: AjaxActionService,
@@ -37,9 +39,12 @@ export class FormSubmitterComponent implements OnInit, OnDestroy {
     @Input() action: string;
     @Input() method = 'POST';
     @Input() @ToJson() confirmation?: ConfirmModalData;
+    @Input() buttonMode = false;
 
     @ViewChild('form') form: ElementRef<HTMLFormElement>;
+    @ContentChild('[button-content]') buttonContent: ElementRef;
 
+    buttonContentProvided = false;
     private destroyed$ = new Subject<void>();
     private submit$ = new Subject<void>();
     isLoading = false;
@@ -83,8 +88,32 @@ export class FormSubmitterComponent implements OnInit, OnDestroy {
         this.action$.pipe(takeUntil(this.destroyed$)).subscribe();
     }
 
+    ngAfterContentInit(): void {
+        this.buttonContentProvided = !!this.buttonContent;
+    }
+
     @HostListener('click', ['$event'])
     onClick() {
+        if (this.buttonMode) {
+            return;
+        }
+
+        if (!this.confirmation) {
+            this.isLoading = true;
+        }
+
+        this.submit$.next();
+    }
+
+    onButtonClick(event: Event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        if (!this.form || !this.form.nativeElement) {
+            console.error('Form element is not accessible');
+            return;
+        }
+
         if (!this.confirmation) {
             this.isLoading = true;
         }

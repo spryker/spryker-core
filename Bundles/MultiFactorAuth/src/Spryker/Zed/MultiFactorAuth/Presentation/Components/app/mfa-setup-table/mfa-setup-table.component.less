@@ -1,0 +1,61 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@mfa-setup-table-indention: var(--spy-mfa-setup-table-indention, 16px);
+
+.mfa-setup-table {
+    display: block;
+    background-color: @spy-white;
+    border-radius: @border-radius-base;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid @gray-light;
+        background-color: @spy-white;
+    }
+
+    &__title {
+        font-size: @mfa-setup-table-indention;
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        margin-left: @mfa-setup-table-indention / 2;
+    }
+
+    &__content {
+        padding: @mfa-setup-table-indention;
+    }
+
+    &__row {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid @gray-light;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    &__cell {
+        padding: @mfa-setup-table-indention;
+
+        &--type {
+            flex: 1;
+        }
+
+        &--status {
+            display: flex;
+            justify-content: center;
+            flex: 1;
+        }
+
+        &--actions {
+            display: flex;
+            justify-content: flex-end;
+            flex: 1;
+        }
+    }
+}

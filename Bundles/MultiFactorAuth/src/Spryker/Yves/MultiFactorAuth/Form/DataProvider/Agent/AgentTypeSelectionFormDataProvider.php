@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\MultiFactorAuth\Form\DataProvider\Agent;
 
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\MultiFactorAuth\MultiFactorAuthClientInterface;
 
@@ -70,7 +71,8 @@ class AgentTypeSelectionFormDataProvider
      */
     protected function getEnabledTypes(UserTransfer $userTransfer): array
     {
-        $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient->getAgentMultiFactorAuthTypes($userTransfer);
+        $multiFactorAuthCriteriaTransfer = (new MultiFactorAuthCriteriaTransfer())->setUser($userTransfer);
+        $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient->getAgentMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
         $multiFactorAuthTypePluginsIndexedByName = $this->indexMultiFactorAuthPluginsByName();
         $enabledTypes = [];
 

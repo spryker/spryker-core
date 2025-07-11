@@ -1,0 +1,77 @@
+{% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+{% import _self as view %}
+
+{% block headSubTitle %}
+    {{- 'Multi-Factor Authentication' | trans -}}
+{% endblock %}
+
+{% block section_title %}{{ 'Set up Multi-Factor Authentication' | trans }}{% endblock %}
+
+{% block content %}
+    <web-mp-mfa-setup-table cloak>
+        <h1 title>{{ 'Multi-Factor Authentication' | trans }}</h1>
+
+        <web-spy-card cloak spy-title="{{ 'Authentication Methods' | trans }}">
+            {% block table %}
+                <div class="spy-row spy-row-gutter-lg">
+                    <div class="spy-col spy-col-12 spy-col-gutter-lg">
+                        <div class="mfa-setup-table" data-qa="mfa-type-section">
+                            {% block tableHeader %}
+                                <div class="mfa-setup-table__row mfa-setup-table__header">
+                                    <div class="mfa-setup-table__cell mfa-setup-table__cell--type">
+                                        {{ 'Type' | trans }}
+                                    </div>
+                                    <div class="mfa-setup-table__cell mfa-setup-table__cell--status">
+                                        {{ 'Status' | trans }}
+                                    </div>
+                                    <div class="mfa-setup-table__cell mfa-setup-table__cell--actions">
+                                        {{ 'Actions' | trans }}
+                                    </div>
+                                </div>
+                            {% endblock %}
+
+                            {% for method in multiFactorAuthCollection.multiFactorAuthTypes %}
+                                {% set label = (method.status ? 'Active' : 'Inactive') | trans %}
+                                {% set formName = method.status ? 'deactivateForm' : 'activateForm' %}
+                                {% set action = method.status ? 'deactivate' : 'activate' %}
+                                {% set actionPath = url('/multi-factor-auth/user-management-merchant-portal/' ~ action, {'type': method.type}) %}
+                                {% set buttonText = (method.status ? 'Deactivate' : 'Activate') | trans %}
+                                {% set flowType = method.status ? 'is_deactivation' : 'is_activation' %}
+                                {% set buttonVariant = method.status ? 'critical' : 'primary' %}
+                                {% set csrfToken = method.status ? csrf_token_deactivate : csrf_token_activate %}
+
+                                {% block tableRow %}
+                                    <div class="mfa-setup-table__row">
+                                        <div class="mfa-setup-table__cell mfa-setup-table__cell--type">
+                                            {{ method.type | capitalize }}
+                                        </div>
+                                        <div class="mfa-setup-table__cell mfa-setup-table__cell--status">
+                                            <web-spy-chips color="grey">{{ label }}</web-spy-chips>
+                                        </div>
+                                        <div class="mfa-setup-table__cell mfa-setup-table__cell--actions">
+                                            {% set url = "/multi-factor-auth/merchant-user/get-enabled-types?#{flowType}=true&type_to_set_up=#{method.type}" %}
+
+                                            {% block form %}
+                                                <form method="post" name="{{ formName }}" class="mfa-form-{{ method.type }}" action="{{ actionPath }}">
+                                                    <input type="hidden" name="_csrf_token" value="{{ csrfToken }}">
+                                                    <input type="hidden" name="multi_factor_auth_enabled" value="true">
+
+                                                    <web-spy-button type="submit" size="sm" variant="{{ buttonVariant }}">{{ buttonText }}</web-spy-button>
+                                                </form>
+
+                                                {% include '@MultiFactorAuth/Partials/mp-mfa-handler.twig' ignore missing with {
+                                                    formSelector: ".mfa-form-#{method.type}",
+                                                    url: url,
+                                                } %}
+                                            {% endblock %}
+                                        </div>
+                                    </div>
+                                {% endblock %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+        </web-spy-card>
+    </web-mp-mfa-setup-table>
+{% endblock %}

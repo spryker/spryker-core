@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Glue\MultiFactorAuth\Processor\Reader;
 
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\RestMultiFactorAuthAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -54,7 +55,7 @@ class MultiFactorAuthTypesReader implements MultiFactorAuthTypesReaderInterface
         $customerTransfer = $this->multiFactorAuthTransferBuilder->buildCustomerTransfer($restRequest);
 
         $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient
-            ->getCustomerMultiFactorAuthTypes($customerTransfer);
+            ->getCustomerMultiFactorAuthTypes((new MultiFactorAuthCriteriaTransfer())->setCustomer($customerTransfer));
 
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $availableTypes = $this->getMultiFactorAuthAvailableTypes();
@@ -65,8 +66,12 @@ class MultiFactorAuthTypesReader implements MultiFactorAuthTypesReaderInterface
             $restResponse = $this->addMultiFactorAuthTypeResourceToResponse($restResponse, $multiFactorAuthTransfer);
         }
 
-        $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient
-            ->getPendingActivationCustomerMultiFactorAuthTypes($customerTransfer);
+        $multiFactorAuthCriteriaTransfer = (new MultiFactorAuthCriteriaTransfer())
+            ->setCustomer($customerTransfer)
+            ->setStatuses([MultiFactorAuthConstants::STATUS_PENDING_ACTIVATION]);
+
+        $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient->getCustomerMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
+
         foreach ($multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes() as $multiFactorAuthTransfer) {
             $processedTypes[$multiFactorAuthTransfer->getTypeOrFail()] = true;
             $restResponse = $this->addMultiFactorAuthTypeResourceToResponse($restResponse, $multiFactorAuthTransfer);

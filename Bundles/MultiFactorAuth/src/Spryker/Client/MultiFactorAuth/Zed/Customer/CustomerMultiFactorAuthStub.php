@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\MultiFactorAuth\Zed\Customer;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
@@ -26,19 +26,23 @@ class CustomerMultiFactorAuthStub implements CustomerMultiFactorAuthStubInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @uses {@link \Spryker\Zed\MultiFactorAuth\Communication\Controller\GatewayController::getCustomerMultiFactorAuthTypesAction()}
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
-    public function getCustomerMultiFactorAuthTypes(CustomerTransfer $customerTransfer): MultiFactorAuthTypesCollectionTransfer
+    public function getCustomerMultiFactorAuthTypes(MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer): MultiFactorAuthTypesCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer $multiFactorAuthTypesCollectionTransfer */
-        $multiFactorAuthTypesCollectionTransfer = $this->zedStub->call('/multi-factor-auth/gateway/get-customer-multi-factor-auth-types', $customerTransfer);
+        $multiFactorAuthTypesCollectionTransfer = $this->zedStub->call('/multi-factor-auth/gateway/get-customer-multi-factor-auth-types', $multiFactorAuthCriteriaTransfer);
 
         return $multiFactorAuthTypesCollectionTransfer;
     }
 
     /**
+     * @uses {@link \Spryker\Zed\MultiFactorAuth\Communication\Controller\GatewayController::sendCustomerCodeAction()}
+     *
      * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTransfer
@@ -52,6 +56,8 @@ class CustomerMultiFactorAuthStub implements CustomerMultiFactorAuthStubInterfac
     }
 
     /**
+     * @uses {@link \Spryker\Zed\MultiFactorAuth\Communication\Controller\GatewayController::validateCustomerMultiFactorAuthStatusAction()}
+     *
      * @param \Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
@@ -66,6 +72,8 @@ class CustomerMultiFactorAuthStub implements CustomerMultiFactorAuthStubInterfac
     }
 
     /**
+     * @uses {@link \Spryker\Zed\MultiFactorAuth\Communication\Controller\GatewayController::validateCustomerCodeAction()}
+     *
      * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
@@ -79,6 +87,8 @@ class CustomerMultiFactorAuthStub implements CustomerMultiFactorAuthStubInterfac
     }
 
     /**
+     * @uses {@link \Spryker\Zed\MultiFactorAuth\Communication\Controller\GatewayController::activateCustomerMultiFactorAuthAction()}
+     *
      * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTransfer
@@ -92,6 +102,8 @@ class CustomerMultiFactorAuthStub implements CustomerMultiFactorAuthStubInterfac
     }
 
     /**
+     * @uses {@link \Spryker\Zed\MultiFactorAuth\Communication\Controller\GatewayController::deactivateCustomerMultiFactorAuthAction()}
+     *
      * @param \Generated\Shared\Transfer\MultiFactorAuthTransfer $multiFactorAuthTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTransfer
@@ -105,6 +117,8 @@ class CustomerMultiFactorAuthStub implements CustomerMultiFactorAuthStubInterfac
     }
 
     /**
+     * @uses {@link \Spryker\Zed\MultiFactorAuth\Communication\Controller\GatewayController::findCustomerMultiFactorAuthTypeAction()}
+     *
      * @param \Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer $multiFactorAuthCodeCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthCodeTransfer
@@ -116,18 +130,5 @@ class CustomerMultiFactorAuthStub implements CustomerMultiFactorAuthStubInterfac
         $multiFactorAuthCodeTransfer = $this->zedStub->call('/multi-factor-auth/gateway/find-customer-multi-factor-auth-type', $multiFactorAuthCodeCriteriaTransfer);
 
         return $multiFactorAuthCodeTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
-     */
-    public function getPendingActivationCustomerMultiFactorAuthTypes(CustomerTransfer $customerTransfer): MultiFactorAuthTypesCollectionTransfer
-    {
-        /** @var \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer $multiFactorAuthTypesCollectionTransfer */
-        $multiFactorAuthTypesCollectionTransfer = $this->zedStub->call('/multi-factor-auth/gateway/get-pending-activation-customer-multi-factor-auth-types', $customerTransfer);
-
-        return $multiFactorAuthTypesCollectionTransfer;
     }
 }

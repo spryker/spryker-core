@@ -11,6 +11,7 @@ namespace Spryker\Glue\MultiFactorAuth\Processor\Validator;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
@@ -88,7 +89,12 @@ class MultiFactorAuthValidator implements MultiFactorAuthValidatorInterface
         CustomerTransfer $customerTransfer,
         string $multiFactorAuthType
     ): bool {
-        $pendingActivationMultiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient->getPendingActivationCustomerMultiFactorAuthTypes($customerTransfer);
+        $multiFactorAuthCriteriaTransfer = (new MultiFactorAuthCriteriaTransfer())
+            ->setCustomer($customerTransfer)
+            ->setStatuses([MultiFactorAuthConstants::STATUS_PENDING_ACTIVATION]);
+
+        $pendingActivationMultiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthClient->getCustomerMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
+
         if ($pendingActivationMultiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes()->count() === 0) {
             return false;
         }

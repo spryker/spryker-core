@@ -9,6 +9,7 @@ namespace Spryker\Zed\MultiFactorAuth\Business\Validator\Customer;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
@@ -37,17 +38,20 @@ class CustomerMultiFactorAuthStatusValidator extends AbstractMultiFactorAuthStat
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $customerTransfer
-     * @param array<int> $additionalStatuses
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param array<int> $statuses
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
     protected function getMultiFactorAuthTypesCollectionTransfer(
         AbstractTransfer $customerTransfer,
-        array $additionalStatuses = []
+        array $statuses = []
     ): MultiFactorAuthTypesCollectionTransfer {
-        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
-        return $this->repository->getCustomerMultiFactorAuthTypes($customerTransfer, $additionalStatuses);
+        $multiFactorAuthCriteriaTransfer = (new MultiFactorAuthCriteriaTransfer())
+            ->setCustomer($customerTransfer)
+            ->setStatuses($statuses);
+
+        return $this->repository->getCustomerMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
     }
 
     /**

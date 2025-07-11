@@ -184,26 +184,34 @@ For more information on this topic, see
 {%- endblock textarea_widget -%}
 
 {%- block choice_widget -%}
-    {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
-        {% set required = false %}
-    {%- endif -%}
-    {%- set options = choices -%}
-    {%- set render_preferred_choices = false -%}
-
-    {% if multiple %}
-        {% set selectedData = choices | filter(choice => choice.value in value) %}
-        {% set value = selectedData | reduce((accumulator, choice) => accumulator | merge([choice.value]), []) %}
-    {% endif %}
-
-    {% if attr.dependableId is not defined %}
-        {% block select %}
-            <web-spy-select control {{ block('widget_attributes') }} value="{{ value | json_encode() }}" {{ block('choice_widget_options') }}{% if multiple %} multiple="multiple"{% endif %}>
-            </web-spy-select>
-        {% endblock %}
+    {% if expanded %}
+        <web-spy-radio-group control {{ block('widget_attributes') }} value="{{ value }}">
+            {% for choice in choices %}
+                <web-spy-radio {{ block('widget_attributes') }} value="{{ choice.value }}">{{ choice.label }}</web-spy-radio>
+            {% endfor %}
+        </web-spy-radio-group>
     {% else %}
-        <web-spy-datasource-dependable control id="{{ attr.dependableId }}">
-            {{ block('select') }}
-        </web-spy-datasource-dependable>
+        {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
+            {% set required = false %}
+        {%- endif -%}
+        {%- set options = choices -%}
+        {%- set render_preferred_choices = false -%}
+
+        {% if multiple %}
+            {% set selectedData = choices | filter(choice => choice.value in value) %}
+            {% set value = selectedData | reduce((accumulator, choice) => accumulator | merge([choice.value]), []) %}
+        {% endif %}
+
+        {% if attr.dependableId is not defined %}
+            {% block select %}
+                <web-spy-select control {{ block('widget_attributes') }} value="{{ value | json_encode() }}" {{ block('choice_widget_options') }}{% if multiple %} multiple="multiple"{% endif %}>
+                </web-spy-select>
+            {% endblock %}
+        {% else %}
+            <web-spy-datasource-dependable control id="{{ attr.dependableId }}">
+                {{ block('select') }}
+            </web-spy-datasource-dependable>
+        {% endif %}
     {% endif %}
 {%- endblock choice_widget -%}
 
@@ -237,3 +245,10 @@ For more information on this topic, see
         >{{ label | trans }}</web-spy-checkbox>
     {% endif %}
 {%- endblock checkbox_widget -%}
+
+{%- block radio_widget -%}
+    <web-spy-radio
+        control
+        {{ block('widget_attributes') }}
+    >{{ label | trans }}</web-spy-radio>
+{%- endblock radio_widget -%}

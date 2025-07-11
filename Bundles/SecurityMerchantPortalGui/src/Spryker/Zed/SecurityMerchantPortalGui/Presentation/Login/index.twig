@@ -8,7 +8,13 @@
 {% endblock %}
 
 {% block formContent %}
+
     {{ form_row(form.username) }}
     {{ form_row(form.password) }}
     {{ form_row(form.login, {attr: {class: submitButtonClass}}) }}
+
+    {% include '@MultiFactorAuth/Partials/mp-mfa-handler.twig' ignore missing with {
+        formSelector: "form[name=#{form.vars.name}]",
+        url: form.vars.action,
+    } %}
 {% endblock %}

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MultiFactorAuth\Communication\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -107,13 +107,16 @@ class CodeValidationForm extends BaseMultiFactorAuthForm
      */
     protected function addAuthenticationCodeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_AUTHENTICATION_CODE, TextType::class, [
+        $builder->add(static::FIELD_AUTHENTICATION_CODE, NumberType::class, [
             'label' => $this->getFactory()->getTranslatorService()->trans(static::ENTER_CODE_LABEL_PLACEHOLDER, [
                 static::PARAM_TYPE => $options[static::OPTION_TYPES][0] ?? '',
             ]),
             'attr' => [
                 'placeholder' => 'Enter code',
                 'autocomplete' => 'one-time-code',
+                'inputmode' => 'numeric',
+                'maxlength' => $this->getConfig()->getUserCodeLength(),
+                'oninput' => sprintf('this.value = this.value.replace(/\\D/g, \'\').slice(0, %d);', $this->getConfig()->getUserCodeLength()),
             ],
             'constraints' => [
                 new NotBlank(),

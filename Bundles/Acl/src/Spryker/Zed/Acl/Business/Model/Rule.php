@@ -287,6 +287,19 @@ class Rule implements RuleInterface
      */
     public function isAllowed(UserTransfer $userTransfer, $bundle, $controller, $action): bool
     {
+        /*
+         * HOTFIX: Bypass ACL cache for merchant agents to prevent token persistence issues
+         *
+         * Problem: Merchant agents may have incomplete token initialization during session restoration,
+         * causing the ACL cache to store incorrect "access denied" results. This happens because:
+         *
+         * Performance Impact: Minimal - only affects merchant agent users, regular users keep cache.
+         * Alternative: Complex conditional caching based on token state (more error-prone).
+         */
+        if ($userTransfer->getIsMerchantAgent()) {
+            return $this->executeIsAllowed($userTransfer, $bundle, $controller, $action);
+        }
+
         if (!isset(static::$cache[$userTransfer->getIdUser()][$bundle][$controller][$action])) {
             static::$cache[$userTransfer->getIdUser()][$bundle][$controller][$action] = $this->executeIsAllowed($userTransfer, $bundle, $controller, $action);
         }
@@ -316,7 +329,7 @@ class Rule implements RuleInterface
             return false;
         }
 
-        $groupsTransfer = $this->getGroupsTransferByIdUser($userTransfer->getIdUser());
+        $groupsTransfer = $this->getGroupsTransferByIdUser($userTransfer);
         if (!$groupsTransfer->getGroups()) {
             return false;
         }
@@ -329,7 +342,7 @@ class Rule implements RuleInterface
         }
 
         foreach ($groupsTransfer->getGroups() as $groupTransfer) {
-            $rulesTransfer = $this->getRulesTransferByIdGroup($groupTransfer->getIdAclGroup());
+            $rulesTransfer = $this->getRulesTransferByIdGroup($groupTransfer->getIdAclGroup(), $userTransfer);
 
             if (!$rulesTransfer->getRules()) {
                 continue;
@@ -347,12 +360,27 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param int $idUser
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @return \Generated\Shared\Transfer\GroupsTransfer
      */
-    protected function getGroupsTransferByIdUser(int $idUser): GroupsTransfer
+    protected function getGroupsTransferByIdUser(UserTransfer $userTransfer): GroupsTransfer
     {
+        $idUser = $userTransfer->getIdUser();
+
+        /*
+         * HOTFIX: Bypass ACL cache for merchant agents to prevent token persistence issues
+         *
+         * Problem: Merchant agents may have incomplete token initialization during session restoration,
+         * causing the ACL cache to store incorrect "access denied" results. This happens because:
+         *
+         * Performance Impact: Minimal - only affects merchant agent users, regular users keep cache.
+         * Alternative: Complex conditional caching based on token state (more error-prone).
+         */
+        if ($userTransfer->getIsMerchantAgent()) {
+            return $this->group->getUserGroups($idUser);
+        }
+
         if (isset(static::$groupsTransferCache[$idUser])) {
             return static::$groupsTransferCache[$idUser];
         }
@@ -360,16 +388,30 @@ class Rule implements RuleInterface
         $groupsTransfer = $this->group->getUserGroups($idUser);
         static::$groupsTransferCache[$idUser] = $groupsTransfer;
 
-        return $this->group->getUserGroups($idUser);
+        return $groupsTransfer;
     }
 
     /**
      * @param int $idGroup
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @return \Generated\Shared\Transfer\RulesTransfer
      */
-    protected function getRulesTransferByIdGroup(int $idGroup): RulesTransfer
+    protected function getRulesTransferByIdGroup(int $idGroup, UserTransfer $userTransfer): RulesTransfer
     {
+        /*
+         * HOTFIX: Bypass ACL cache for merchant agents to prevent token persistence issues
+         *
+         * Problem: Merchant agents may have incomplete token initialization during session restoration,
+         * causing the ACL cache to store incorrect "access denied" results. This happens because:
+         *
+         * Performance Impact: Minimal - only affects merchant agent users, regular users keep cache.
+         * Alternative: Complex conditional caching based on token state (more error-prone).
+         */
+        if ($userTransfer->getIsMerchantAgent()) {
+            return $this->getRulesForGroupId($idGroup);
+        }
+
         if (isset(static::$rulesTransferCache[$idGroup])) {
             return static::$rulesTransferCache[$idGroup];
         }

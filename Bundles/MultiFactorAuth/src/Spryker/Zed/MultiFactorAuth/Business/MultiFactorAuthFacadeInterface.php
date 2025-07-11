@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\MultiFactorAuth\Business;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 
 interface MultiFactorAuthFacadeInterface
 {
@@ -100,18 +99,6 @@ interface MultiFactorAuthFacadeInterface
 
     /**
      * Specification:
-     *  - Returns pending activation multi-factor authentication types for the provided customer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
-     */
-    public function getPendingActivationCustomerMultiFactorAuthTypes(CustomerTransfer $customerTransfer): MultiFactorAuthTypesCollectionTransfer;
-
-    /**
-     * Specification:
      * - Validates a multi-factor authentication code for a user.
      *
      * @api
@@ -129,13 +116,13 @@ interface MultiFactorAuthFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer
-     * @param array<int> $additionalStatuses
+     * @param array<int> $statuses
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthValidationResponseTransfer
      */
     public function validateUserMultiFactorAuthStatus(
         MultiFactorAuthValidationRequestTransfer $multiFactorAuthValidationRequestTransfer,
-        array $additionalStatuses = []
+        array $statuses = []
     ): MultiFactorAuthValidationResponseTransfer;
 
     /**
@@ -180,13 +167,13 @@ interface MultiFactorAuthFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      * @param array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface> $userMultiFactorAuthPlugins
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
     public function getAvailableUserMultiFactorAuthTypes(
-        UserTransfer $userTransfer,
+        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer,
         array $userMultiFactorAuthPlugins
     ): MultiFactorAuthTypesCollectionTransfer;
 
@@ -208,27 +195,14 @@ interface MultiFactorAuthFacadeInterface
 
     /**
      * Specification:
-     *  - Returns pending activation multi-factor authentication types for the provided user.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
-     */
-    public function getPendingActivationUserMultiFactorAuthTypes(UserTransfer $userTransfer): MultiFactorAuthTypesCollectionTransfer;
-
-    /**
-     * Specification:
      * - Returns multi-factor authentication types for the provided user.
      * - Optionally filters by additional statuses.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param array<int> $additionalStatuses
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
-    public function getUserMultiFactorAuthTypes(UserTransfer $userTransfer, array $additionalStatuses = []): MultiFactorAuthTypesCollectionTransfer;
+    public function getUserMultiFactorAuthTypes(MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer): MultiFactorAuthTypesCollectionTransfer;
 }

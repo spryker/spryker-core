@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\MultiFactorAuth\Controller;
 
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
@@ -136,11 +137,12 @@ class AgentMultiFactorAuthManagementController extends AbstractController
             return $this->redirectResponseInternal(static::ROUTE_NAME_AGENT_OVERVIEW);
         }
 
-        $userTransfer = $this->getFactory()->getAgentClient()->getAgent();
+        $multiFactorAuthCriteriaTransfer = (new MultiFactorAuthCriteriaTransfer())
+            ->setUser($this->getFactory()->getAgentClient()->getAgent());
 
         $userMultiFactorAuthTypesCollection = $this->getFactory()
             ->createAgentMultiFactorAuthReader()
-            ->getAvailableAgentMultiFactorAuthTypes($userTransfer);
+            ->getAvailableAgentMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
 
         return $this->view(
             [

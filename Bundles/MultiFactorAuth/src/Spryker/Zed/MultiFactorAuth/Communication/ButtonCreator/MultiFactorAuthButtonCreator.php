@@ -9,6 +9,7 @@ namespace Spryker\Zed\MultiFactorAuth\Communication\ButtonCreator;
 
 use Generated\Shared\Transfer\ButtonTransfer;
 use Generated\Shared\Transfer\CustomerCriteriaTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Spryker\Zed\MultiFactorAuth\Dependency\Facade\MultiFactorAuthToCustomerFacadeInterface;
 use Spryker\Zed\MultiFactorAuth\Persistence\MultiFactorAuthRepositoryInterface;
 
@@ -17,12 +18,12 @@ class MultiFactorAuthButtonCreator implements MultiFactorAuthButtonCreatorInterf
     /**
      * @var string
      */
-    protected const BUTTON_TITLE = 'MFA';
+    protected const BUTTON_TITLE = 'Multi-Factor Authentication';
 
     /**
      * @var string
      */
-    protected const BUTTON_URL = '/multi-factor-auth/customer/remove-mfa';
+    protected const BUTTON_URL = '/multi-factor-auth/customer/remove-multi-factor-auth';
 
     /**
      * @var array<string, string>
@@ -52,7 +53,8 @@ class MultiFactorAuthButtonCreator implements MultiFactorAuthButtonCreatorInterf
     public function addRemoveMultiFactorAuthButton(int $idCustomer, array $buttonTransfers): array
     {
         $customerResponseTransfer = $this->customerFacade->getCustomerByCriteria((new CustomerCriteriaTransfer())->setIdCustomer($idCustomer));
-        $multiFactorAuthTypesCollectionTransfer = $this->repository->getCustomerMultiFactorAuthTypes($customerResponseTransfer->getCustomerTransferOrFail());
+        $multiFactorAuthCriteriaTransfer = (new MultiFactorAuthCriteriaTransfer())->setCustomer($customerResponseTransfer->getCustomerTransferOrFail());
+        $multiFactorAuthTypesCollectionTransfer = $this->repository->getCustomerMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
 
         if ($multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes()->count() === 0) {
             return $buttonTransfers;

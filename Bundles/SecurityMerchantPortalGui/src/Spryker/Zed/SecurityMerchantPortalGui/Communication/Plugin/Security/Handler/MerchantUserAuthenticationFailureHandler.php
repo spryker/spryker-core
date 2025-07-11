@@ -9,6 +9,7 @@ namespace Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Ha
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,6 +39,23 @@ class MerchantUserAuthenticationFailureHandler extends AbstractPlugin implements
 
         $this->getFactory()->createAuditLogger()->addFailedLoginAuditLog();
 
+        if ($this->getFactory()->getMerchantUserMultiFactorAuthenticationHandlerPlugins() !== []) {
+            return $this->createRedirectResponse();
+        }
+
         return new RedirectResponse($this->getConfig()->getUrlLogin());
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function createRedirectResponse(): JsonResponse
+    {
+        return new JsonResponse($this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addActionRedirect($this->getConfig()->getUrlLogin())
+            ->createResponse()
+            ->toArray());
     }
 }

@@ -9,9 +9,7 @@ export class MfaHandler {
             formSelectorAttribute: `data-form-selector`,
             modalIdAttribute: 'data-modal-id',
             isLogin: 'data-is-login',
-            authInputName: 'username',
             submitSelector: '.safe-submit',
-            authInputSelector: '#auth_username',
         };
     }
 
@@ -118,11 +116,6 @@ export class MfaHandler {
         try {
             const url = new URL(data.url, window.location.origin).toString();
             const formData = new FormData();
-            const userNameField = data.form.querySelector(this.options.authInputSelector);
-
-            if (userNameField) {
-                formData.append(this.options.authInputName, userNameField.value);
-            }
 
             const response = await fetch(url, {
                 method: 'POST',

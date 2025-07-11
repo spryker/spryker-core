@@ -8,8 +8,10 @@
 namespace Spryker\Zed\AgentSecurityMerchantPortalGui\Communication;
 
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Shared\ZedUi\ZedUiFactoryInterface;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiDependencyProvider;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Authenticator\AgentMerchantLoginFormAuthenticator;
+use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Badge\MultiFactorAuthBadge;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Builder\OptionsBuilder;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Builder\OptionsBuilderInterface;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Checker\SymfonyVersionChecker;
@@ -31,8 +33,10 @@ use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\Pro
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Subscriber\SwitchUserEventSubscriber;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Security\AgentMerchantUser;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Security\AgentMerchantUserInterface;
+use Spryker\Zed\AgentSecurityMerchantPortalGui\Dependency\Client\AgentSecurityMerchantPortalGuiToSessionClientInterface;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Dependency\Facade\AgentSecurityMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Dependency\Facade\AgentSecurityMerchantPortalGuiToMessengerFacadeInterface;
+use Spryker\Zed\AgentSecurityMerchantPortalGui\Dependency\Facade\AgentSecurityMerchantPortalGuiToRouterFacadeInterface;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Dependency\Facade\AgentSecurityMerchantPortalGuiToSecurityFacadeInterface;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Dependency\Facade\AgentSecurityMerchantPortalGuiToUserFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -93,6 +97,7 @@ class AgentSecurityMerchantPortalGuiCommunicationFactory extends AbstractCommuni
             $this->createAgentMerchantUserProvider(),
             $this->createAuthenticationSuccessHandler(),
             $this->createAuthenticationFailureHandler(),
+            $this->createMultiFactorAuthBadge(),
         );
     }
 
@@ -228,6 +233,14 @@ class AgentSecurityMerchantPortalGuiCommunicationFactory extends AbstractCommuni
     }
 
     /**
+     * @return \Spryker\Zed\AgentSecurityMerchantPortalGui\Dependency\Facade\AgentSecurityMerchantPortalGuiToRouterFacadeInterface
+     */
+    public function getRouterFacade(): AgentSecurityMerchantPortalGuiToRouterFacadeInterface
+    {
+        return $this->getProvidedDependency(AgentSecurityMerchantPortalGuiDependencyProvider::FACADE_ROUTER);
+    }
+
+    /**
      * @return \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
      */
     public function getAuthorizationCheckerService(): AuthorizationCheckerInterface
@@ -241,5 +254,39 @@ class AgentSecurityMerchantPortalGuiCommunicationFactory extends AbstractCommuni
     public function getTokenStorageService(): TokenStorageInterface
     {
         return $this->getProvidedDependency(AgentSecurityMerchantPortalGuiDependencyProvider::SERVICE_SECURITY_TOKEN_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Badge\MultiFactorAuthBadge
+     */
+    public function createMultiFactorAuthBadge(): MultiFactorAuthBadge
+    {
+        return new MultiFactorAuthBadge(
+            $this->getMerchantAgentUserMultiFactorAuthenticationHandlerPlugins(),
+        );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\AuthenticationHandlerPluginInterface>
+     */
+    public function getMerchantAgentUserMultiFactorAuthenticationHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(AgentSecurityMerchantPortalGuiDependencyProvider::PLUGINS_MERCHANT_AGENT_USER_AUTHENTICATION_HANDLER);
+    }
+
+    /**
+     * @return \Spryker\Zed\AgentSecurityMerchantPortalGui\Dependency\Client\AgentSecurityMerchantPortalGuiToSessionClientInterface
+     */
+    public function getSessionClient(): AgentSecurityMerchantPortalGuiToSessionClientInterface
+    {
+        return $this->getProvidedDependency(AgentSecurityMerchantPortalGuiDependencyProvider::CLIENT_SESSION);
+    }
+
+    /**
+     * @return \Spryker\Shared\ZedUi\ZedUiFactoryInterface
+     */
+    public function getZedUiFactory(): ZedUiFactoryInterface
+    {
+        return $this->getProvidedDependency(AgentSecurityMerchantPortalGuiDependencyProvider::SERVICE_ZED_UI_FACTORY);
     }
 }

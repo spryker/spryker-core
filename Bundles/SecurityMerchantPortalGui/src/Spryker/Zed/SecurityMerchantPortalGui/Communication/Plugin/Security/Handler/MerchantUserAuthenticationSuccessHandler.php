@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Handler;
 
+use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\ZedUiFormRequestActionTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
@@ -30,35 +34,123 @@ class MerchantUserAuthenticationSuccessHandler extends AbstractPlugin implements
     protected const SECURITY_FIREWALL_NAME = 'MerchantUser';
 
     /**
+     * @var string
+     */
+    protected const ACCESS_MODE_PRE_AUTH = 'ACCESS_MODE_PRE_AUTH';
+
+    /**
+     * @var string
+     */
+    protected const MULTI_FACTOR_AUTH_LOGIN_USER_EMAIL_SESSION_KEY = '_multi_factor_auth_login_user_email';
+
+    /**
+     * @uses {@link \Spryker\Zed\MultiFactorAuth\Communication\Controller\MerchantUserController::getEnabledTypesAction()}
+     *
+     * @var string
+     */
+    protected const MULTI_FACTOR_AUTH_ROUTE_NAME = 'multi-factor-auth:merchant-user:get-enabled-types';
+
+    /**
+     * Handles Agent Merchant Portal authentication success with Multi-Factor Authentication support.
+     *
+     * Flow scenarios:
+     * 1. Multi-Factor Authentication Required: Has `ACCESS_MODE_PRE_AUTH` role → Store user in session, return JSON to open Multi-Factor Authentication modal.
+     * 2. Standard Auth: No Multi-Factor Authentication required → Set current user, redirect based on Multi-Factor Authentication plugin availability.
+     * 3. Multi-Factor Authentication Completed: Full access granted → Standard redirect to target URL
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token): RedirectResponse
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
     {
         /** @var \Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUserInterface $user */
         $user = $token->getUser();
-        $this->getFactory()->getMerchantUserFacade()->authorizeMerchantUser($user->getMerchantUserTransfer());
+        $merchantUserTransfer = $user->getMerchantUserTransfer();
+
+        if (in_array(static::ACCESS_MODE_PRE_AUTH, $token->getRoleNames())) {
+            $this->getFactory()->getSessionClient()->set(static::MULTI_FACTOR_AUTH_LOGIN_USER_EMAIL_SESSION_KEY, $merchantUserTransfer->getUserOrFail()->getUsername());
+
+            return $this->createOpenModalResponse($request);
+        }
+
+        $this->executeOnAuthenticationSuccess($merchantUserTransfer);
+
+        if ($this->getFactory()->getMerchantUserMultiFactorAuthenticationHandlerPlugins() !== []) {
+            return $this->createRedirectResponse($request);
+        }
+
+        return new RedirectResponse($this->getTargetUrl($request));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return void
+     */
+    public function executeOnAuthenticationSuccess(MerchantUserTransfer $merchantUserTransfer): void
+    {
+        $this->getFactory()->getMerchantUserFacade()->authorizeMerchantUser($merchantUserTransfer);
 
         $this->getFactory()->createAuditLogger()->addSuccessfulLoginAuditLog();
-
-        return $this->createRedirectResponse($request);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return string
      */
-    protected function createRedirectResponse(Request $request): RedirectResponse
+    protected function getTargetUrl(Request $request): string
     {
-        $targetUrl = $this->getTargetPath($request->getSession(), static::SECURITY_FIREWALL_NAME);
+        return $this->getTargetPath($request->getSession(), static::SECURITY_FIREWALL_NAME) ?? $this->getConfig()->getDefaultTargetPath();
+    }
 
-        if ($targetUrl) {
-            return new RedirectResponse($targetUrl);
-        }
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function createOpenModalResponse(Request $request): JsonResponse
+    {
+        /** @var string|null $formSelector */
+        $formSelector = $request->request->get('form_selector') ?? null;
 
-        return new RedirectResponse($this->getConfig()->getDefaultTargetPath());
+        $zedUIFormRequestActionTransfer = (new ZedUiFormRequestActionTransfer())
+            ->setUrl($this->generateRoute())
+            ->setIsLogin(true)
+            ->setFormSelector($formSelector);
+
+        return new JsonResponse($this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addActionOpenModal($zedUIFormRequestActionTransfer)
+            ->createResponse()
+            ->toArray());
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function createRedirectResponse(Request $request): JsonResponse
+    {
+        return new JsonResponse($this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addActionRedirect($this->getTargetUrl($request))
+            ->createResponse()
+            ->toArray());
+    }
+
+    /**
+     * @return string
+     */
+    protected function generateRoute(): string
+    {
+        $router = $this->getFactory()->getRouterFacade()->getMerchantPortalChainRouter();
+
+        return $router->generate(static::MULTI_FACTOR_AUTH_ROUTE_NAME);
     }
 }

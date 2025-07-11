@@ -10,8 +10,10 @@ namespace Spryker\Zed\SecurityMerchantPortalGui;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Client\SecurityMerchantPortalGuiToSecurityBlockerClientBridge;
+use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Client\SecurityMerchantPortalGuiToSessionClientBridge;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToMessengerFacadeBridge;
+use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToRouterFacadeBridge;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToSecurityFacadeBridge;
 
 /**
@@ -33,6 +35,11 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const FACADE_SECURITY = 'FACADE_SECURITY';
+
+    /**
+     * @var string
+     */
+    public const FACADE_ROUTER = 'FACADE_ROUTER';
 
     /**
      * @var string
@@ -64,6 +71,23 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
     public const CLIENT_SECURITY_BLOCKER = 'CLIENT_SECURITY_BLOCKER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_MERCHANT_USER_AUTHENTICATION_HANDLER = 'PLUGINS_MERCHANT_USER_AUTHENTICATION_HANDLER';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
+
+    /**
+     * @uses \Spryker\Zed\ZedUi\Communication\Plugin\Application\ZedUiApplicationPlugin::SERVICE_ZED_UI_FACTORY
+     *
+     * @var string
+     */
+    public const SERVICE_ZED_UI_FACTORY = 'SERVICE_ZED_UI_FACTORY';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -75,11 +99,15 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addMessengerFacade($container);
         $container = $this->addSecurityFacade($container);
+        $container = $this->addRouterFacade($container);
         $container = $this->addTokenStorage($container);
         $container = $this->addAuthorizationCheckerService($container);
         $container = $this->addMerchantUserLoginRestrictionPlugins($container);
         $container = $this->addMerchantUserCriteriaExpanderPlugins($container);
         $container = $this->addSecurityBlockerClient($container);
+        $container = $this->addMerchantUserAuthenticationHandlerPlugins($container);
+        $container = $this->addSessionClient($container);
+        $container = $this->addZedUiFactory($container);
 
         return $container;
     }
@@ -189,6 +217,22 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRouterFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_ROUTER, function (Container $container) {
+            return new SecurityMerchantPortalGuiToRouterFacadeBridge(
+                $container->getLocator()->router()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserLoginRestrictionPluginInterface>
      */
     protected function getMerchantUserLoginRestrictionPlugins(): array
@@ -227,6 +271,58 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantUserAuthenticationHandlerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_USER_AUTHENTICATION_HANDLER, function () {
+            return $this->getMerchantUserAuthenticationHandlerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\AuthenticationHandlerPluginInterface>
+     */
+    protected function getMerchantUserAuthenticationHandlerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSessionClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
+            return new SecurityMerchantPortalGuiToSessionClientBridge(
+                $container->getLocator()->session()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addZedUiFactory(Container $container): Container
+    {
+        $container->set(static::SERVICE_ZED_UI_FACTORY, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_ZED_UI_FACTORY);
         });
 
         return $container;

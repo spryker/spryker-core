@@ -7,19 +7,19 @@
 
 namespace Spryker\Zed\MultiFactorAuth\Business\Reader\User;
 
+use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 
 interface UserMultiFactorAuthReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
      * @param array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface> $userMultiFactorAuthPlugins
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
     public function getAvailableUserMultiFactorAuthTypes(
-        UserTransfer $userTransfer,
+        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer,
         array $userMultiFactorAuthPlugins
     ): MultiFactorAuthTypesCollectionTransfer;
 }

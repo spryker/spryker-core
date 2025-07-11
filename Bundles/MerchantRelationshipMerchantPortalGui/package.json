@@ -17,7 +17,7 @@
         "@spryker/card": "^2.0.2",
         "@spryker/checkbox": "^2.0.8",
         "@spryker/headline": "^2.0.2",
-        "@spryker/modal": "^2.0.8",
+        "@spryker/modal": "^2.0.9",
         "@spryker/styles": "^2.0.11",
         "@spryker/table": "^2.0.8",
         "@spryker/web-components": "^2.0.9"

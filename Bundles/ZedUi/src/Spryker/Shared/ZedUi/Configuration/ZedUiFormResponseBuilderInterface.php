@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\ZedUi\Configuration;
 
+use Generated\Shared\Transfer\ZedUiFormRequestActionTransfer;
 use Generated\Shared\Transfer\ZedUiFormResponseTransfer;
 
 interface ZedUiFormResponseBuilderInterface
@@ -114,6 +115,66 @@ interface ZedUiFormResponseBuilderInterface
      * @return $this
      */
     public function addActionCloseDrawer();
+
+    /**
+     * Specification:
+     * - Adds refresh modal action.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer
+     *
+     * @return $this
+     */
+    public function addActionRefreshModal(ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer);
+
+    /**
+     * Specification:
+     * - Adds open modal action.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer
+     *
+     * @return $this
+     */
+    public function addActionOpenModal(ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer);
+
+    /**
+     * Specification:
+     * - Adds close modal action.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer
+     *
+     * @return $this
+     */
+    public function addActionCloseModal(ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer);
+
+    /**
+     * Specification:
+     * - Adds submit form action.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer
+     *
+     * @return $this
+     */
+    public function addActionSubmitForm(ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer);
+
+    /**
+     * Specification:
+     * - Adds submit ajax form action.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer
+     *
+     * @return $this
+     */
+    public function addActionSubmitAjaxForm(ZedUiFormRequestActionTransfer $zedUiFormRequestActionTransfer);
 
     /**
      * Specification:
