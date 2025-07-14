@@ -79,8 +79,7 @@ class MerchantRelationshipDeleter implements MerchantRelationshipDeleterInterfac
             $merchantRelationshipTransfer = $merchantRelationshipRequestTransfer->getMerchantRelationshipOrFail();
         }
 
-        $merchantRelationshipTransfer = $this->findMerchantRelationship($merchantRelationshipTransfer);
-        if (!$merchantRelationshipTransfer) {
+        if (!$this->findMerchantRelationship($merchantRelationshipTransfer)) {
             return;
         }
 
