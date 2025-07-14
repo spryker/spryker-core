@@ -15,47 +15,47 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
     /**
      * @var string
      */
-    public const ROUTE_NAME_SSP_SERVICE_POINT_WIDGET_CONTENT = 'ssp/service-point-widget-content';
+    public const ROUTE_NAME_SSP_SERVICE_POINT_WIDGET_CONTENT = 'customer/ssp-service-point-widget-content';
 
     /**
      * @var string
      */
-    public const ROUTE_NAME_SSP_SERVICE_POINT_SEARCH = 'ssp/service-point-widget/search';
+    public const ROUTE_NAME_SSP_SERVICE_POINT_SEARCH = 'customer/ssp-service-point-widget/search';
 
     /**
      * @var string
      */
-    public const ROUTE_NAME_SSP_SERVICE_LIST = 'ssp/service/list';
+    public const ROUTE_NAME_SSP_SERVICE_LIST = 'customer/ssp-service/list';
 
     /**
      * @var string
      */
-    public const ROUTE_NAME_SSP_SERVICE_UPDATE_SERVICE_TIME = 'ssp/service/update-service-time';
+    public const ROUTE_NAME_SSP_SERVICE_UPDATE_SERVICE_TIME = 'customer/ssp-service/update-service-time';
 
     /**
      * @var string
      */
-    public const ROUTE_NAME_SSP_SERVICE_CANCEL_SERVICE = 'ssp/service/cancel-service';
+    public const ROUTE_NAME_SSP_SERVICE_CANCEL_SERVICE = 'customer/ssp-service/cancel-service';
 
     /**
      * @var string
      */
-    protected const PATTERN_SSP_SERVICE_POINT_WIDGET_CONTENT = '/ssp/service-point-widget-content';
+    protected const PATTERN_SSP_SERVICE_POINT_WIDGET_CONTENT = '/customer/ssp-service-point-widget-content';
 
     /**
      * @var string
      */
-    protected const ROUTE_NAME_SSP_COMPANY_FILE_DOWNLOAD = 'ssp/company-file/download';
+    protected const ROUTE_NAME_SSP_COMPANY_FILE_DOWNLOAD = 'customer/ssp-file/download';
 
     /**
      * @var string
      */
-    protected const ROUTE_NAME_SSP_COMPANY_FILE_LIST_FILE = 'ssp/company-file/list-file';
+    protected const ROUTE_NAME_SSP_COMPANY_FILE_LIST_FILE = 'customer/ssp-file/list-file';
 
     /**
      * @var string
      */
-    public const ROUTE_NAME_DASHBOARD_INDEX = 'customer/dashboard';
+    public const ROUTE_NAME_DASHBOARD_INDEX = 'customer/ssp-dashboard';
 
     /**
      * @var string
@@ -85,72 +85,72 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
     /**
      * @var string
      */
-    protected const ROUTE_SSP_ASSET_MANAGEMENT_WIDGET_CONTENT = 'ssp/asset/widget-content';
+    protected const ROUTE_SSP_ASSET_MANAGEMENT_WIDGET_CONTENT = 'customer/ssp-asset/widget-content';
 
     /**
      * @var string
      */
-    public const ROUTE_NAME_ASSET_DETAILS = 'ssp/asset/details';
+    public const ROUTE_NAME_ASSET_DETAILS = 'customer/ssp-asset/details';
 
     /**
      * @var string
      */
-    public const ROUTE_NAME_ASSET_CREATE = 'ssp/asset/create';
+    public const ROUTE_NAME_ASSET_CREATE = 'customer/ssp-asset/create';
 
     /**
      * @var string
      */
-    public const ROUTE_NAME_ASSET_UPDATE = 'ssp/asset/update';
+    public const ROUTE_NAME_ASSET_UPDATE = 'customer/ssp-asset/update';
 
     /**
      * @var string
      */
-    public const ROUTE_NAME_ASSET_LIST = 'ssp/asset';
+    public const ROUTE_NAME_ASSET_LIST = 'customer/ssp-asset';
 
     /**
      * @var string
      */
-    public const ROUTE_NAME_ASSET_VIEW_IMAGE = 'ssp/asset/view-image';
+    public const ROUTE_NAME_ASSET_VIEW_IMAGE = 'customer/ssp-asset/view-image';
 
     /**
      * @var string
      */
-    public const ROUTE_NAME_ASSET_UPDATE_RELATIONS = 'ssp/asset/update-relations';
+    public const ROUTE_NAME_ASSET_UPDATE_RELATIONS = 'customer/ssp-asset/update-relations';
 
     /**
      * @var string
      */
-    public const ROUTE_NAME_ASSET_SEARCH = 'ssp/asset/search';
+    public const ROUTE_NAME_ASSET_SEARCH = 'customer/ssp-asset/search';
 
     /**
      * @var string
      */
-    protected const PATTERN_SSP_COMPANY_FILE_DOWNLOAD = '/ssp/company-file/download';
+    protected const PATTERN_SSP_COMPANY_FILE_DOWNLOAD = '/customer/ssp-file/download';
 
     /**
      * @var string
      */
-    protected const PATTERN_SSP_SERVICE_POINT_SEARCH = '/ssp/service-point-widget/search';
+    protected const PATTERN_SSP_SERVICE_POINT_SEARCH = '/customer/ssp-service-point-widget/search';
 
     /**
      * @var string
      */
-    protected const PATTERN_SSP_SERVICE_LIST = '/ssp/service/list';
+    protected const PATTERN_SSP_SERVICE_LIST = '/customer/ssp-service/list';
 
     /**
      * @var string
      */
-    protected const PATTERN_SSP_SERVICE_UPDATE_SERVICE_TIME = '/ssp/service/update-service-time';
+    protected const PATTERN_SSP_SERVICE_UPDATE_SERVICE_TIME = '/customer/ssp-service/update-service-time';
 
     /**
      * @var string
      */
-    protected const PATTERN_SSP_SERVICE_CANCEL_SERVICE = '/ssp/service/cancel-service';
+    protected const PATTERN_SSP_SERVICE_CANCEL_SERVICE = '/customer/ssp-service/cancel-service';
 
     /**
      * @var string
      */
-    protected const PATTERN_SSP_COMPANY_FILE_LIST_FILE = '/ssp/company-file/list-file';
+    protected const PATTERN_SSP_COMPANY_FILE_LIST_FILE = '/customer/ssp-file/list-file';
 
     /**
      * @var string
@@ -338,7 +338,7 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
      */
     protected function addCustomerDashboardRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildGetRoute('/customer/dashboard', 'SelfServicePortal', 'Dashboard');
+        $route = $this->buildGetRoute('/customer/ssp-dashboard', 'SelfServicePortal', 'Dashboard');
 
         $routeCollection->add(static::ROUTE_NAME_DASHBOARD_INDEX, $route);
 
@@ -434,7 +434,7 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
      */
     protected function addAssetWidgetContentRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/ssp/asset/widget-content', 'SelfServicePortal', 'AssetWidgetContent', 'indexAction');
+        $route = $this->buildRoute('/customer/ssp-asset/widget-content', 'SelfServicePortal', 'AssetWidgetContent', 'indexAction');
         $routeCollection->add(static::ROUTE_SSP_ASSET_MANAGEMENT_WIDGET_CONTENT, $route);
 
         return $routeCollection;
@@ -449,7 +449,7 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
      */
     protected function addAssetDetailsRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('ssp/asset/details', 'SelfServicePortal', 'Asset', 'detailsAction');
+        $route = $this->buildRoute('customer/ssp-asset/details', 'SelfServicePortal', 'Asset', 'detailsAction');
         $routeCollection->add(static::ROUTE_NAME_ASSET_DETAILS, $route);
 
         return $routeCollection;
@@ -464,7 +464,7 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
      */
     protected function addAssetCreateRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('ssp/asset/create', 'SelfServicePortal', 'Asset', 'createAction');
+        $route = $this->buildRoute('customer/ssp-asset/create', 'SelfServicePortal', 'Asset', 'createAction');
         $routeCollection->add(static::ROUTE_NAME_ASSET_CREATE, $route);
 
         return $routeCollection;
@@ -479,7 +479,7 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
      */
     protected function addAssetUpdateRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('ssp/asset/update', 'SelfServicePortal', 'Asset', 'updateAction');
+        $route = $this->buildRoute('customer/ssp-asset/update', 'SelfServicePortal', 'Asset', 'updateAction');
         $routeCollection->add(static::ROUTE_NAME_ASSET_UPDATE, $route);
 
         return $routeCollection;
@@ -494,7 +494,7 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
      */
     protected function addViewAssetImageRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('ssp/asset/view-image', 'SelfServicePortal', 'DownloadAssetImage', 'viewImageAction');
+        $route = $this->buildRoute('customer/ssp-asset/view-image', 'SelfServicePortal', 'DownloadAssetImage', 'viewImageAction');
         $routeCollection->add(static::ROUTE_NAME_ASSET_VIEW_IMAGE, $route);
 
         return $routeCollection;
@@ -509,7 +509,7 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
      */
     protected function addAssetListRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('ssp/asset', 'SelfServicePortal', 'Asset', 'listAction');
+        $route = $this->buildRoute('customer/ssp-asset', 'SelfServicePortal', 'Asset', 'listAction');
         $routeCollection->add(static::ROUTE_NAME_ASSET_LIST, $route);
 
         return $routeCollection;
@@ -524,7 +524,7 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
      */
     protected function addUnassignBusinessUnitRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildPostRoute('ssp/asset/update-relations', 'SelfServicePortal', 'Asset', 'updateBusinessUnitRelationAction');
+        $route = $this->buildPostRoute('customer/ssp-asset/update-relations', 'SelfServicePortal', 'Asset', 'updateBusinessUnitRelationAction');
         $routeCollection->add(static::ROUTE_NAME_ASSET_UPDATE_RELATIONS, $route);
 
         return $routeCollection;
@@ -539,7 +539,7 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
      */
     protected function addAssetSearchRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('ssp/asset/search', 'SelfServicePortal', 'Asset', 'searchAction');
+        $route = $this->buildRoute('customer/ssp-asset/search', 'SelfServicePortal', 'Asset', 'searchAction');
         $routeCollection->add(static::ROUTE_NAME_ASSET_SEARCH, $route);
 
         return $routeCollection;

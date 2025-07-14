@@ -4,7 +4,7 @@
     form: _view.form,
     asset: _view.sspAsset,
     currentCompanyBusinessUnitAssigment: _view.currentCompanyBusinessUnitAssigment,
-    formAction: url('ssp/asset/update', { 'reference': _view.sspAsset.reference }),
+    formAction: url('customer/ssp-asset/update', { 'reference': _view.sspAsset.reference }),
     title: 'self_service_portal.asset.update.title' | trans,
     activePage: 'asset',
 } %}
@@ -19,7 +19,7 @@
                 },
                 {
                     label: 'self_service_portal.asset.list.title' | trans,
-                    url: url('ssp/asset'),
+                    url: url('customer/ssp-asset'),
                 },
                 {
                     label: 'self_service_portal.asset.update.title' | trans ~ ' ' ~ data.asset.reference,

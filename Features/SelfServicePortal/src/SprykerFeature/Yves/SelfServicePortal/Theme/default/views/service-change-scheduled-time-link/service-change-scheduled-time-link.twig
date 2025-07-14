@@ -7,7 +7,7 @@
 
 {% block body %}
     {% if data.isVisible %}
-        <a href="{{ path('ssp/service/update-service-time', {
+        <a href="{{ path('customer/ssp-service/update-service-time', {
             'item-uuid': data.orderItem.uuid,
             'id-sales-order': data.orderItem.fkSalesOrder
         }) }}" class="button button--hollow" data-qa="reschedule-button">

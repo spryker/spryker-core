@@ -8,7 +8,7 @@
     pagination: {
         parameters: app.request.query.all(),
         currentPage: _view.pagination.page,
-        paginationPath: 'ssp/asset',
+        paginationPath: 'customer/ssp-asset',
         maxPage: _view.pagination.lastPage,
         showAlwaysFirstAndLast: true,
     },
@@ -38,7 +38,7 @@
         {% if can('CreateSspAssetPermissionPlugin') %}
             <div class="box text-right">
                 <a class="button" data-qa="create-ssp-asset"
-                   href="{{ url('ssp/asset/create') }}">
+                   href="{{ url('customer/ssp-asset/create') }}">
                     {{ 'customer.ssp_asset.create.button' | trans }}
                 </a>
             </div>
@@ -116,13 +116,13 @@
 
                     {% set rows = data.assets | map(sspAsset => {
                         reference: sspAsset.reference,
-                        image: sspAsset.image ? url('ssp/asset/view-image', { 'ssp-asset-reference': sspAsset.reference }) : null,
+                        image: sspAsset.image ? url('customer/ssp-asset/view-image', { 'ssp-asset-reference': sspAsset.reference }) : null,
                         name: sspAsset.name,
                         business_unit: sspAsset.companyBusinessUnit ? sspAsset.companyBusinessUnit.name : '',
                         serial_number: sspAsset.serialNumber,
                         status: { label: "ssp_asset.status.#{sspAsset.status}", status: sspAsset.status },
                         actions: [{
-                            url: path('ssp/asset/details', { reference: sspAsset.reference }),
+                            url: path('customer/ssp-asset/details', { reference: sspAsset.reference }),
                             label: 'customer.ssp_asset.view_ssp_asset'
                         }],
                     }) %}

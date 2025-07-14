@@ -10,7 +10,7 @@
 {% block body %}
     {% if data.isVisible %}
         <li class="menu__item {{ itemClass }}">
-            <a href="{{ url('ssp/service/list') }}" data-id="sidebar-ssp-services">{{ 'self_service_portal.service.list.widget.title' | trans }}</a>
+            <a href="{{ url('customer/ssp-service/list') }}" data-id="sidebar-ssp-services">{{ 'self_service_portal.service.list.widget.title' | trans }}</a>
         </li>
     {% endif %}
 {% endblock %}

@@ -43,7 +43,7 @@
                         {% block edit %}
                             {% if can('UpdateSspAssetPermissionPlugin') and data.isUpdateAllowed %}
                                 <a
-                                    href="{{ url('ssp/asset/update', { reference: data.reference }) }}"
+                                    href="{{ url('customer/ssp-asset/update', { reference: data.reference }) }}"
                                     title="{{ 'general.edit.button' | trans }}"
                                     data-qa="edit-ssp-asset">
                                     {% include atom('icon') with {
@@ -87,7 +87,7 @@
                 </div>
                 {% if data.unassignBusinessUnitForm %}
                     {{ form_start(data.unassignBusinessUnitForm, {
-                        'action': path('ssp/asset/update-relations', {'reference': data.reference})
+                        'action': path('customer/ssp-asset/update-relations', {'reference': data.reference})
                     }) }}
                         <div class="col spacing-left">
                             <button class="button button--primary" {{ qa('unassign-ssp-asset') }}>

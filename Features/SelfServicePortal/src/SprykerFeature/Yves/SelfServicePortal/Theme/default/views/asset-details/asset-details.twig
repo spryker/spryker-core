@@ -20,7 +20,7 @@
                 },
                 {
                     label: 'self_service_portal.asset.list.title' | trans,
-                    url: url('ssp/asset')
+                    url: url('customer/ssp-asset')
                 },
                 {
                     label: data.asset.name,
@@ -50,7 +50,7 @@
             {% block information %}
                 {% include molecule('asset-information', 'SelfServicePortal') with {
                     data: {
-                        image: data.asset.image is not empty ? url('ssp/asset/view-image', { 'ssp-asset-reference': data.asset.reference }) : publicPath('images/image-placeholder.png'),
+                        image: data.asset.image is not empty ? url('customer/ssp-asset/view-image', { 'ssp-asset-reference': data.asset.reference }) : publicPath('images/image-placeholder.png'),
                         name: data.asset.name,
                         reference: data.asset.reference,
                         information: [
@@ -72,12 +72,12 @@
 
             {% block tables %}
                 {% if data.asset.fileAttachmentCollection and data.asset.fileAttachmentCollection.fileAttachments.count and (can('ViewCompanyFilesPermissionPlugin') or can('ViewCompanyUserFilesPermissionPlugin') or can('ViewCompanyBusinessUnitFilesPermissionPlugin')) %}
-                    {% widget 'SspFileListWidget' args [data.asset.fileAttachmentCollection, url('ssp/company-file/list-file', {'ssp-asset-reference': data.asset.reference})] only %}{% endwidget %}
+                    {% widget 'SspFileListWidget' args [data.asset.fileAttachmentCollection, url('customer/ssp-file/list-file', {'ssp-asset-reference': data.asset.reference})] only %}{% endwidget %}
                 {% endif %}
                 {% if data.asset.sspInquiryCollection.sspInquiries.count and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}
                     {% widget 'SspInquiryListWidget' args [data.asset.sspInquiryCollection, url('customer/ssp-inquiry', {'ssp-asset-reference': data.asset.reference})] only %}{% endwidget %}
                 {% endif %}
-                {% widget 'ServiceListWidget' args [data.asset.sspServiceCollection, url('ssp/service/list', {'ssp-asset-reference': data.asset.reference})] only %}{% endwidget %}
+                {% widget 'ServiceListWidget' args [data.asset.sspServiceCollection, url('customer/ssp-service/list', {'ssp-asset-reference': data.asset.reference})] only %}{% endwidget %}
             {% endblock %}
         {% endblock %}
     </div>

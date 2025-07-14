@@ -92,7 +92,7 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      */
     protected const BACK_URL_TYPE_TO_PATH_MAP = [
         'order' => 'customer/order/details',
-        'ssp-asset' => 'ssp/asset/details',
+        'ssp-asset' => 'customer/ssp-asset/details',
     ];
 
     /**

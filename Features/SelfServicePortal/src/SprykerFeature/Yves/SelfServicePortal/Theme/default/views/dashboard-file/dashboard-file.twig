@@ -3,7 +3,7 @@
 {% define data = {
     totalItems: _widget.totalItems,
     fileAttachments: _widget.fileAttachments,
-    moreLink: _widget.moreLink | default(path('ssp/company-file/list-file')),
+    moreLink: _widget.moreLink | default(path('customer/ssp-file/list-file')),
     canViewFiles: can('ViewCompanyFilesPermissionPlugin') or can('ViewCompanyUserFilesPermissionPlugin') or can('ViewCompanyBusinessUnitFilesPermissionPlugin'),
 } %}
 
@@ -34,7 +34,7 @@
             type: fileAttachment.file.fileInfo[0].extension,
             actions: can('DownloadCompanyFilesPermissionPlugin')
             ? [{
-                url: path('ssp/company-file/download', {'id-file': fileAttachment.file.uuid }),
+                url: path('customer/ssp-file/download', {'id-file': fileAttachment.file.uuid }),
                 label: 'self_service_portal.company_file.table.actions.download'
             }] : [],
         }) %}

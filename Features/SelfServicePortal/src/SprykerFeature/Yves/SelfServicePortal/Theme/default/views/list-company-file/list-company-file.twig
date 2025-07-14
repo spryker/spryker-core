@@ -12,7 +12,7 @@
     pagination: {
         parameters: app.request.query.all(),
         currentPage: _view.pagination.page,
-        paginationPath: 'ssp/company-file/list-file',
+        paginationPath: 'customer/ssp-file/list-file',
         maxPage: _view.pagination.lastPage,
         showAlwaysFirstAndLast: true,
     },
@@ -115,7 +115,7 @@
                 size: fileAttachment.file.fileInfo[0].size | readable_bytesize,
                 actions: can('DownloadCompanyFilesPermissionPlugin')
                     ? [{
-                        url: path('ssp/company-file/download', { 'id-file': fileAttachment.file.uuid }),
+                        url: path('customer/ssp-file/download', { 'id-file': fileAttachment.file.uuid }),
                         label: 'self_service_portal.company_file.table.actions.download',
                         qa: 'download-button',
                     }]
