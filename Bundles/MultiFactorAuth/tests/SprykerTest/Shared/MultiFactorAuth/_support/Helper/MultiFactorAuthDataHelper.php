@@ -11,8 +11,10 @@ use Codeception\Module;
 use Generated\Shared\Transfer\MultiFactorAuthCodeTransfer;
 use Orm\Zed\MultiFactorAuth\Persistence\SpyCustomerMultiFactorAuthCodesAttemptsQuery;
 use Orm\Zed\MultiFactorAuth\Persistence\SpyCustomerMultiFactorAuthCodesQuery;
+use Orm\Zed\MultiFactorAuth\Persistence\SpyCustomerMultiFactorAuthQuery;
 use Orm\Zed\MultiFactorAuth\Persistence\SpyUserMultiFactorAuthCodesAttemptsQuery;
 use Orm\Zed\MultiFactorAuth\Persistence\SpyUserMultiFactorAuthCodesQuery;
+use Orm\Zed\MultiFactorAuth\Persistence\SpyUserMultiFactorAuthQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -97,5 +99,25 @@ class MultiFactorAuthDataHelper extends Module
         SpyUserMultiFactorAuthCodesQuery::create()
             ->filterByCode($code)
             ->delete();
+    }
+
+    /**
+     * @return void
+     */
+    public function cleanUpCustomerMultiFactorAuth(): void
+    {
+        SpyCustomerMultiFactorAuthCodesAttemptsQuery::create()->deleteAll();
+        SpyCustomerMultiFactorAuthCodesQuery::create()->deleteAll();
+        SpyCustomerMultiFactorAuthQuery::create()->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function cleanUpUserMultiFactorAuth(): void
+    {
+        SpyUserMultiFactorAuthCodesAttemptsQuery::create()->deleteAll();
+        SpyUserMultiFactorAuthCodesQuery::create()->deleteAll();
+        SpyUserMultiFactorAuthQuery::create()->deleteAll();
     }
 }
