@@ -8,11 +8,11 @@
 namespace SprykerFeatureTest\Zed\SelfServicePortal\Communication\Plugin\Sales;
 
 use Codeception\Test\Unit;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Expander\OrderItemSspAssetExpander;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Extractor\SalesOrderItemIdExtractor;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\OrderItemSspAssetExpander;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Extractor\SalesOrderItemIdExtractor;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalBusinessFactory;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspAssetOrderExpanderPlugin;
-use SprykerFeature\Zed\SelfServicePortal\Communication\SelfServicePortalCommunicationFactory;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
 use SprykerFeatureTest\Zed\SelfServicePortal\SelfServicePortalCommunicationTester;
 
 /**
@@ -40,17 +40,17 @@ class SspAssetOrderExpanderPluginTest extends Unit
         $orderTransfer = $this->tester->createOrderTransferWithItems();
         $sspAssetTransfersIndexedBySalesOrderItemId = $this->tester->createSspAssetTransfersIndexedBySalesOrderItemId();
 
-        $selfServicePortalRepositoryMock = $this->createMock(SelfServicePortalRepositoryInterface::class);
-        $selfServicePortalRepositoryMock->method('getSspAssetsIndexedByIdSalesOrderItem')
+        $sspAssetReaderMock = $this->createMock(SspAssetReaderInterface::class);
+        $sspAssetReaderMock->method('indexSspAssetsBySalesOrderItemIds')
             ->with([1, 2])
             ->willReturn($sspAssetTransfersIndexedBySalesOrderItemId);
 
-        $factoryMock = $this->createMock(SelfServicePortalCommunicationFactory::class);
-        $factoryMock->method('createOrderItemSspAssetExpander')
-            ->willReturn(new OrderItemSspAssetExpander($selfServicePortalRepositoryMock, new SalesOrderItemIdExtractor()));
+        $businessFactoryMock = $this->createMock(SelfServicePortalBusinessFactory::class);
+        $businessFactoryMock->method('createOrderItemSspAssetExpander')
+            ->willReturn(new OrderItemSspAssetExpander($sspAssetReaderMock, new SalesOrderItemIdExtractor()));
 
         $sspAssetOrderExpanderPlugin = new SspAssetOrderExpanderPlugin();
-        $sspAssetOrderExpanderPlugin->setFactory($factoryMock);
+        $sspAssetOrderExpanderPlugin->setBusinessFactory($businessFactoryMock);
 
         // Act
         $resultOrderTransfer = $sspAssetOrderExpanderPlugin->hydrate($orderTransfer);
@@ -80,16 +80,16 @@ class SspAssetOrderExpanderPluginTest extends Unit
         // Arrange
         $orderTransfer = $this->tester->createEmptyOrderTransfer();
 
-        $selfServicePortalRepositoryMock = $this->createMock(SelfServicePortalRepositoryInterface::class);
-        $selfServicePortalRepositoryMock->expects($this->never())
-            ->method('getSspAssetsIndexedByIdSalesOrderItem');
+        $sspAssetReaderMock = $this->createMock(SspAssetReaderInterface::class);
+        $sspAssetReaderMock->expects($this->never())
+            ->method('indexSspAssetsBySalesOrderItemIds');
 
-        $factoryMock = $this->createMock(SelfServicePortalCommunicationFactory::class);
-        $factoryMock->method('createOrderItemSspAssetExpander')
-            ->willReturn(new OrderItemSspAssetExpander($selfServicePortalRepositoryMock, new SalesOrderItemIdExtractor()));
+        $businessFactoryMock = $this->createMock(SelfServicePortalBusinessFactory::class);
+        $businessFactoryMock->method('createOrderItemSspAssetExpander')
+            ->willReturn(new OrderItemSspAssetExpander($sspAssetReaderMock, new SalesOrderItemIdExtractor()));
 
         $sspAssetOrderExpanderPlugin = new SspAssetOrderExpanderPlugin();
-        $sspAssetOrderExpanderPlugin->setFactory($factoryMock);
+        $sspAssetOrderExpanderPlugin->setBusinessFactory($businessFactoryMock);
 
         // Act
         $resultOrderTransfer = $sspAssetOrderExpanderPlugin->hydrate($orderTransfer);
@@ -106,16 +106,16 @@ class SspAssetOrderExpanderPluginTest extends Unit
         // Arrange
         $orderTransfer = $this->tester->createOrderTransferWithItems();
 
-        $selfServicePortalRepositoryMock = $this->createMock(SelfServicePortalRepositoryInterface::class);
-        $selfServicePortalRepositoryMock->method('getSspAssetsIndexedByIdSalesOrderItem')
+        $sspAssetReaderMock = $this->createMock(SspAssetReaderInterface::class);
+        $sspAssetReaderMock->method('indexSspAssetsBySalesOrderItemIds')
             ->willReturn([]);
 
-        $factoryMock = $this->createMock(SelfServicePortalCommunicationFactory::class);
-        $factoryMock->method('createOrderItemSspAssetExpander')
-            ->willReturn(new OrderItemSspAssetExpander($selfServicePortalRepositoryMock, new SalesOrderItemIdExtractor()));
+        $businessFactoryMock = $this->createMock(SelfServicePortalBusinessFactory::class);
+        $businessFactoryMock->method('createOrderItemSspAssetExpander')
+            ->willReturn(new OrderItemSspAssetExpander($sspAssetReaderMock, new SalesOrderItemIdExtractor()));
 
         $sspAssetOrderExpanderPlugin = new SspAssetOrderExpanderPlugin();
-        $sspAssetOrderExpanderPlugin->setFactory($factoryMock);
+        $sspAssetOrderExpanderPlugin->setBusinessFactory($businessFactoryMock);
 
         // Act
         $resultOrderTransfer = $sspAssetOrderExpanderPlugin->hydrate($orderTransfer);

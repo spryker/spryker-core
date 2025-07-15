@@ -66,7 +66,7 @@ class SspInquiryStateMachineHandlerPlugin extends AbstractPlugin implements Stat
      */
     public function getActiveProcesses(): array
     {
-        return array_unique($this->getConfig()->getInquiryStateMachineProcessInquiryTypeMap());
+        return array_unique($this->getConfig()->getSspInquiryStateMachineProcessInquiryTypeMap());
     }
 
     /**
@@ -80,7 +80,7 @@ class SspInquiryStateMachineHandlerPlugin extends AbstractPlugin implements Stat
      */
     public function getInitialStateForProcess($processName): string
     {
-        return $this->getConfig()->getInquiryInitialStateMap()[$processName];
+        return $this->getConfig()->getInquiryInitialStateMachineMap()[$processName];
     }
 
     /**

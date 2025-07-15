@@ -34,7 +34,7 @@ class StateMachineSspInquiryPostCreateHook implements SspInquiryPostCreateHookIn
      */
     public function execute(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
     {
-        $processName = $this->selfServicePortalConfig->getInquiryStateMachineProcessInquiryTypeMap()[$sspInquiryTransfer->getType()] ?? null;
+        $processName = $this->selfServicePortalConfig->getSspInquiryStateMachineProcessInquiryTypeMap()[$sspInquiryTransfer->getType()] ?? null;
         if (!$processName) {
             throw new InvalidArgumentException(
                 sprintf('There is no process name for inquiry type %s', $sspInquiryTransfer->getType()),
@@ -42,7 +42,7 @@ class StateMachineSspInquiryPostCreateHook implements SspInquiryPostCreateHookIn
         }
 
         $stateMachineProcessTransfer = (new StateMachineProcessTransfer())
-            ->setProcessName($this->selfServicePortalConfig->getInquiryStateMachineProcessInquiryTypeMap()[$sspInquiryTransfer->getType()])
+            ->setProcessName($this->selfServicePortalConfig->getSspInquiryStateMachineProcessInquiryTypeMap()[$sspInquiryTransfer->getType()])
             ->setStateMachineName($this->selfServicePortalConfig->getInquiryStateMachineName());
 
         $this->stateMachineFacade->triggerForNewStateMachineItem(

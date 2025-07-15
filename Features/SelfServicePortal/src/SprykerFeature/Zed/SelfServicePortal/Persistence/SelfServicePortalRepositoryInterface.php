@@ -10,6 +10,7 @@ namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
 use Generated\Shared\Transfer\ProductClassCollectionTransfer;
+use Generated\Shared\Transfer\ProductClassCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
@@ -35,51 +36,18 @@ interface SelfServicePortalRepositoryInterface
     public function getProductIdsWithShipmentType(array $productConcreteIds, string $shipmentTypeName): array;
 
     /**
+     * @param \Generated\Shared\Transfer\ProductClassCriteriaTransfer $productClassCriteriaTransfer
+     *
      * @return \Generated\Shared\Transfer\ProductClassCollectionTransfer
      */
-    public function getProductClassCollection(): ProductClassCollectionTransfer;
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return array<\Generated\Shared\Transfer\ProductClassTransfer>
-     */
-    public function getProductClassesByIdProductAbstract(int $idProductAbstract): array;
-
-    /**
-     * @param array<int> $productAbstractIds
-     *
-     * @return array<int, array<\Generated\Shared\Transfer\ProductClassTransfer>>
-     */
-    public function getProductClassesByProductAbstractIds(array $productAbstractIds): array;
-
-    /**
-     * @param array<int> $productConcreteIds
-     *
-     * @return array<int, array<\Generated\Shared\Transfer\ProductClassTransfer>>
-     */
-    public function getProductClassesByProductConcreteIds(array $productConcreteIds): array;
-
-    /**
-     * @param array<string> $skus
-     *
-     * @return array<string, array<\Generated\Shared\Transfer\ProductClassTransfer>>
-     */
-    public function getProductClassesForConcreteProductsBySkusIndexedBySku(array $skus): array;
-
-    /**
-     * @param array<int> $salesOrderItemIds
-     *
-     * @return array<int, array<\Generated\Shared\Transfer\ProductClassTransfer>>
-     */
-    public function getProductClassesGroupedBySalesOrderItemIds(array $salesOrderItemIds): array;
+    public function getProductClassCollection(ProductClassCriteriaTransfer $productClassCriteriaTransfer): ProductClassCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
      */
-    public function getServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer;
+    public function getSspServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
@@ -98,6 +66,13 @@ interface SelfServicePortalRepositoryInterface
     public function getSspInquiryCollection(
         SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
     ): SspInquiryCollectionTransfer;
+
+    /**
+     * @param array<int> $salesOrderItemIds
+     *
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
+     */
+    public function getSalesOrderItemsByIds(array $salesOrderItemIds): array;
 
     /**
      * @param array<int> $stateIds
@@ -135,6 +110,15 @@ interface SelfServicePortalRepositoryInterface
     public function getSspAssetCollection(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): SspAssetCollectionTransfer;
 
     /**
+     * @param array<int> $salesOrderItemIds
+     *
+     * @return array<\Generated\Shared\Transfer\SspAssetTransfer>
+     */
+    public function getSspAssetsBySalesOrderItemIds(array $salesOrderItemIds): array;
+
+    /**
+     * @deprecated Use getSspAssetsBySalesOrderItemIds() and business layer indexation instead.
+     *
      * @param array<int> $salesOrderItemIds
      *
      * @return array<int, \Generated\Shared\Transfer\SspAssetTransfer>

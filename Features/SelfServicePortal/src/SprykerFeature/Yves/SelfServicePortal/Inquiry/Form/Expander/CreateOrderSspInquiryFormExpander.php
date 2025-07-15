@@ -34,6 +34,36 @@ class CreateOrderSspInquiryFormExpander implements CreateSspInquiryFormExpanderI
     protected const SINGLE_OPTION_COUNT = 1;
 
     /**
+     * @var string
+     */
+    protected const REQUEST_PARAMETER_ORDER_REFERENCE = 'orderReference';
+
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_INQUIRY_TYPE_LABEL = 'self_service_portal.inquiry.type.label';
+
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_INQUIRY_TYPE_PLACEHOLDER = 'self_service_portal.inquiry.create.select_type';
+
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_INQUIRY_ORDER_REFERENCE_LABEL = 'self_service_portal.inquiry.order_reference.label';
+
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_INQUIRY_ORDER_REFERENCE_PLACEHOLDER = 'self_service_portal.inquiry.order_reference.placeholder';
+
+    /**
+     * @var string
+     */
+    protected const PATTERN_GLOSSARY_KEY_INQUIRY_TYPE = 'self_service_portal.inquiry.type.';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
     public function __construct(protected RequestStack $requestStack)
@@ -51,7 +81,7 @@ class CreateOrderSspInquiryFormExpander implements CreateSspInquiryFormExpanderI
             return false;
         }
 
-        return $request->query->has('orderReference') && !empty($request->query->get('orderReference'));
+        return $request->query->has(static::REQUEST_PARAMETER_ORDER_REFERENCE) && !empty($request->query->get(static::REQUEST_PARAMETER_ORDER_REFERENCE));
     }
 
     /**
@@ -79,16 +109,16 @@ class CreateOrderSspInquiryFormExpander implements CreateSspInquiryFormExpanderI
 
         $builder->add(static::FIELD_ORDER_REFERENCE . '_display', TextType::class, [
             'priority' => 2,
-            'label' => 'self_service_portal.inquiry.order_reference.label',
+            'label' => static::GLOSSARY_KEY_INQUIRY_ORDER_REFERENCE_LABEL,
             'constraints' => [
                 new NotBlank(),
             ],
-            'data' => $this->requestStack->getCurrentRequest()->query->get('orderReference'),
+            'data' => $this->requestStack->getCurrentRequest()->query->get(static::REQUEST_PARAMETER_ORDER_REFERENCE),
             'disabled' => true,
         ]);
 
         $builder->add(static::FIELD_ORDER_REFERENCE, HiddenType::class, [
-            'data' => $this->requestStack->getCurrentRequest()->query->get('orderReference'),
+            'data' => $this->requestStack->getCurrentRequest()->query->get(static::REQUEST_PARAMETER_ORDER_REFERENCE),
         ]);
 
         return $this;
@@ -104,7 +134,7 @@ class CreateOrderSspInquiryFormExpander implements CreateSspInquiryFormExpanderI
     {
         $selectableTypes = $options[SspInquiryForm::OPTION_SSP_INQUIRY_TYPE_CHOICES][SelfServicePortalConfig::ORDER_SSP_INQUIRY_SOURCE] ?? [];
 
-        $mappedTypes = array_combine(array_map(fn ($type) => 'self_service_portal.inquiry.type.' . $type, $selectableTypes), $selectableTypes);
+        $mappedTypes = array_combine(array_map(fn ($type) => static::PATTERN_GLOSSARY_KEY_INQUIRY_TYPE . $type, $selectableTypes), $selectableTypes);
 
         if (count($selectableTypes) === static::SINGLE_OPTION_COUNT) {
             $builder->add(static::FIELD_TYPE, HiddenType::class, [
@@ -116,8 +146,8 @@ class CreateOrderSspInquiryFormExpander implements CreateSspInquiryFormExpanderI
             'priority' => 1,
             'choices' => $mappedTypes,
             'required' => true,
-            'label' => 'self_service_portal.inquiry.type.label',
-            'placeholder' => 'self_service_portal.inquiry.create.select_type',
+            'label' => static::GLOSSARY_KEY_INQUIRY_TYPE_LABEL,
+            'placeholder' => static::GLOSSARY_KEY_INQUIRY_TYPE_PLACEHOLDER,
             'constraints' => [
                 new NotBlank(),
             ],

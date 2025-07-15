@@ -44,11 +44,11 @@ class SelfServicePortalFacade extends AbstractFacade implements SelfServicePorta
      *
      * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
      */
-    public function getServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer
+    public function getSspServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer
     {
         return $this->getFactory()
             ->createServiceReader()
-            ->getServiceCollection($sspServiceCriteriaTransfer);
+            ->getSspServiceCollection($sspServiceCriteriaTransfer);
     }
 
     /**

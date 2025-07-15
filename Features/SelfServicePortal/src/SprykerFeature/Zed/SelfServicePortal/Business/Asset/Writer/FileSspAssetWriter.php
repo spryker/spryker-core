@@ -93,7 +93,7 @@ class FileSspAssetWriter implements FileSspAssetWriterInterface
                     ->setType($fileUploadTransfer->getMimeTypeName())
                     ->setExtension($fileUploadTransfer->getClientOriginalExtension())
                     ->setSize($fileUploadTransfer->getSize())
-                    ->setStorageName($this->config->getAssetStorageName()),
+                    ->setStorageName($this->config->getAssetImageFileUploadStorageName()),
             )
             ->setContent($content);
 

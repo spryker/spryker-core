@@ -7,6 +7,7 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\DataImport\Step;
 
+use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -17,6 +18,16 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class SspInquiryWriterStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
+    protected const NAME_SSP_INQUIRY_REFERENCE = 'SspInquiryReference';
+
+    /**
+     * @var string
+     */
+    protected const SSP_INQUIRY_REFERENCE_PREFIX = 'INQR';
+
     /**
      * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
      * @param \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface $sequenceNumberFacade
@@ -36,11 +47,12 @@ class SspInquiryWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        if (!in_array($dataSet[SspInquiryDataSetInterface::TYPE], $this->config->getAllSelectableInquiryTypes())) {
+        $allSelectableSspInquiryTypes = array_merge(...array_values($this->config->getSelectableSspInquiryTypes()));
+        if (!in_array($dataSet[SspInquiryDataSetInterface::TYPE], $allSelectableSspInquiryTypes)) {
             throw new DataImportException('Selectable Ssp Inquiry types are not allowed.');
         }
 
-        $sequenceNumberSetting = $this->config->getInquirySequenceNumberSettings(
+        $sequenceNumberSetting = $this->getInquirySequenceNumberSettings(
             $dataSet[SspInquiryDataSetInterface::STORE],
         );
         $this->sequenceNumberFacade->generate($sequenceNumberSetting);
@@ -58,5 +70,31 @@ class SspInquiryWriterStep implements DataImportStepInterface
             return;
         }
         $dataSet[SspInquiryDataSetInterface::ID_SSP_INQUIRY] = $sspInquiryEntity->getIdSspInquiry();
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
+     */
+    protected function getInquirySequenceNumberSettings(string $storeName): SequenceNumberSettingsTransfer
+    {
+        return (new SequenceNumberSettingsTransfer())
+            ->setName(static::NAME_SSP_INQUIRY_REFERENCE)
+            ->setPrefix($this->createPrefix($storeName));
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return string
+     */
+    protected function createPrefix(string $storeName): string
+    {
+        $sequenceNumberPrefixParts = [];
+        $sequenceNumberPrefixParts[] = $storeName;
+        $sequenceNumberPrefixParts[] = static::SSP_INQUIRY_REFERENCE_PREFIX;
+
+        return sprintf('%s--', implode('-', $sequenceNumberPrefixParts));
     }
 }

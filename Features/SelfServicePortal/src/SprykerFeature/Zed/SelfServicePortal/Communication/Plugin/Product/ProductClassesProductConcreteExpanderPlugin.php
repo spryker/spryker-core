@@ -31,7 +31,7 @@ class ProductClassesProductConcreteExpanderPlugin extends AbstractPlugin impleme
      */
     public function expand(array $productConcreteTransfers): array
     {
-        return $this->getFactory()
+        return $this->getBusinessFactory()
             ->createProductConcreteClassExpander()
             ->expandProductConcretesWithProductClasses($productConcreteTransfers);
     }

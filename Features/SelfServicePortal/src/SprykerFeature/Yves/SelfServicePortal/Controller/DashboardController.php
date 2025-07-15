@@ -8,9 +8,10 @@
 namespace SprykerFeature\Yves\SelfServicePortal\Controller;
 
 use Generated\Shared\Transfer\DashboardRequestTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\View\View;
-use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewDashboardPermissionPlugin;
+use SprykerFeature\Yves\SelfServicePortal\Plugin\Permission\ViewDashboardPermissionPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +20,16 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 /**
  * @method \SprykerFeature\Client\SelfServicePortal\SelfServicePortalClientInterface getClient()
  * @method \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalFactory getFactory()
+ * @method \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig getConfig()
  */
 class DashboardController extends AbstractController
 {
     use PermissionAwareTrait;
+
+    /**
+     * @var int
+     */
+    protected const DEFAULT_FILE_DASHBOARD_PAGE_NUMBER = 1;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -55,10 +62,15 @@ class DashboardController extends AbstractController
         $dashboardRequestTransfer = (new DashboardRequestTransfer())
             ->setStore($this->getFactory()->getStoreClient()->getCurrentStore())
             ->setCompanyUser($customerTransfer?->getCompanyUserTransfer())
+            ->setPagination(
+                (new PaginationTransfer())
+                    ->setMaxPerPage($this->getFactory()->getConfig()->getDefaultFileDashboardMaxPerPage())
+                    ->setPage(static::DEFAULT_FILE_DASHBOARD_PAGE_NUMBER),
+            )
             ->setWithSspAssetCount(10);
 
         $dashboardResponseTransfer = $this->getClient()
-            ->getDashboard($dashboardRequestTransfer);
+            ->getDashboardData($dashboardRequestTransfer);
 
         return [
             'dashboard' => $dashboardResponseTransfer,

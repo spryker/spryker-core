@@ -9,16 +9,25 @@ namespace SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ProductClassConditionsTransfer;
+use Generated\Shared\Transfer\ProductClassCriteriaTransfer;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Indexer\ProductClassIndexerInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Utility\SkuExtractorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
 
 class ProductClassExpander implements ProductClassExpanderInterface
 {
     /**
      * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
+     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Indexer\ProductClassIndexerInterface $productClassIndexer
+     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Utility\SkuExtractorInterface $skuExtractor
      */
-    public function __construct(protected SelfServicePortalRepositoryInterface $selfServicePortalRepository)
-    {
+    public function __construct(
+        protected SelfServicePortalRepositoryInterface $selfServicePortalRepository,
+        protected ProductClassIndexerInterface $productClassIndexer,
+        protected SkuExtractorInterface $skuExtractor
+    ) {
     }
 
     /**
@@ -28,8 +37,17 @@ class ProductClassExpander implements ProductClassExpanderInterface
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        $skus = $this->extractSkus($cartChangeTransfer);
-        $indexedProductClasses = $this->selfServicePortalRepository->getProductClassesForConcreteProductsBySkusIndexedBySku($skus);
+        $skus = $this->skuExtractor->extractSkusFromCartChange($cartChangeTransfer);
+
+        if (!$skus) {
+            return $cartChangeTransfer;
+        }
+
+        $productClassConditionsTransfer = (new ProductClassConditionsTransfer())->setSkus($skus);
+        $productClassCriteriaTransfer = (new ProductClassCriteriaTransfer())->setProductClassConditions($productClassConditionsTransfer);
+        $productClassCollectionTransfer = $this->selfServicePortalRepository->getProductClassCollection($productClassCriteriaTransfer);
+
+        $indexedProductClasses = $this->productClassIndexer->getProductClassesIndexedBySku($productClassCollectionTransfer->getProductClasses()->getArrayCopy());
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $sku = $itemTransfer->getSku();
@@ -51,7 +69,12 @@ class ProductClassExpander implements ProductClassExpanderInterface
         ProductPageLoadTransfer $productPageLoadTransfer
     ): ProductPageLoadTransfer {
         $productAbstractIds = $this->extractProductAbstractIds($productPageLoadTransfer);
-        $indexedProductClasses = $this->selfServicePortalRepository->getProductClassesByProductAbstractIds($productAbstractIds);
+
+        if (!$productAbstractIds) {
+            return $productPageLoadTransfer;
+        }
+
+        $indexedProductClasses = $this->getProductClassesIndexedByProductAbstractIds($productAbstractIds);
 
         if (!$indexedProductClasses) {
             return $productPageLoadTransfer;
@@ -71,7 +94,7 @@ class ProductClassExpander implements ProductClassExpanderInterface
     /**
      * @param array<\Generated\Shared\Transfer\ProductClassTransfer> $productClassTransfers
      *
-     * @return array<string>
+     * @return array<int|string|null>
      */
     protected function getProductClassNames(array $productClassTransfers): array
     {
@@ -101,20 +124,37 @@ class ProductClassExpander implements ProductClassExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array<int> $productAbstractIds
      *
-     * @return array<string>
+     * @return array<int, array<\Generated\Shared\Transfer\ProductClassTransfer>>
      */
-    protected function extractSkus(CartChangeTransfer $cartChangeTransfer): array
+    protected function getProductClassesIndexedByProductAbstractIds(array $productAbstractIds): array
     {
-        $skus = [];
-
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getSku()) {
-                $skus[] = $itemTransfer->getSku();
-            }
+        if (!$productAbstractIds) {
+            return [];
         }
 
-        return $skus;
+        return $this->buildIndexedProductClassesByProductAbstractId($productAbstractIds);
+    }
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\ProductClassTransfer>>
+     */
+    protected function buildIndexedProductClassesByProductAbstractId(array $productAbstractIds): array
+    {
+        $productClassConditionsTransfer = (new ProductClassConditionsTransfer())
+            ->setProductAbstractIds($productAbstractIds);
+
+        $productClassCriteriaTransfer = (new ProductClassCriteriaTransfer())
+            ->setProductClassConditions($productClassConditionsTransfer);
+
+        $productClassCollectionTransfer = $this->selfServicePortalRepository
+            ->getProductClassCollection($productClassCriteriaTransfer);
+
+        return $this->productClassIndexer->getProductClassesIndexedByProductAbstractId(
+            $productClassCollectionTransfer->getProductClasses()->getArrayCopy(),
+        );
     }
 }

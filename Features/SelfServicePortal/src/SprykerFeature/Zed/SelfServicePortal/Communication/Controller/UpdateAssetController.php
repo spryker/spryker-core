@@ -120,7 +120,7 @@ class UpdateAssetController extends AbstractController
 
             return $this->redirectResponse(
                 sprintf(
-                    '/ssp-asset-management/update?%s=%d',
+                    '/self-service-portal/update-asset?%s=%d',
                     static::PARAM_ID_SSP_ASSET,
                     $sspAssetTransfer->getIdSspAssetOrFail(),
                 ),

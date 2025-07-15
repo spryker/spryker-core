@@ -12,9 +12,8 @@ use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentSearchConditionsTransfer;
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\DownloadCompanyFilesPermissionPlugin;
+use SprykerFeature\Yves\SelfServicePortal\Plugin\Permission\DownloadCompanyFilesPermissionPlugin;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -33,16 +32,6 @@ class DownloadCompanyFileController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_FILE = 'id-file';
-
-    /**
-     * @var string
-     */
-    protected const HEADER_CONTENT_TYPE = 'Content-Type';
-
-    /**
-     * @var string
-     */
-    protected const HEADER_CONTENT_DISPOSITION = 'Content-Disposition';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -82,30 +71,14 @@ class DownloadCompanyFileController extends AbstractController
      */
     protected function createDownloadResponse(FileAttachmentTransfer $fileAttachmentTransfer): StreamedResponse
     {
-        /** @var \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer */
-        $fileInfoTransfer = $fileAttachmentTransfer->getFileOrFail()->getFileInfo()->offsetGet(0);
+        $chunkSize = $this->getFactory()->getConfig()->getCompanyFileDownloadChunkSize();
 
-        $fileStream = $this->getFactory()
-            ->getFileManagerService()
-            ->readStream($fileInfoTransfer->getStorageFileNameOrFail(), $fileInfoTransfer->getStorageNameOrFail());
-
-        $chunkSize = max(1, $this->getFactory()->getConfig()->getCompanyFileDownloadChunkSize());
-
-        $response = new StreamedResponse(function () use ($fileStream, $chunkSize): void {
-            while (!feof($fileStream)) {
-                echo fread($fileStream, $chunkSize);
-                flush();
-            }
-            fclose($fileStream);
-        });
-
-        $fileName = basename($fileAttachmentTransfer->getFileOrFail()->getFileNameOrFail());
-        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
-
-        $response->headers->set(static::HEADER_CONTENT_DISPOSITION, $disposition);
-        $response->headers->set(static::HEADER_CONTENT_TYPE, $fileInfoTransfer->getTypeOrFail());
-
-        return $response;
+        return $this->getFactory()
+            ->getSelfServicePortalService()
+            ->createFileDownloadResponse(
+                $fileAttachmentTransfer->getFileOrFail(),
+                $chunkSize,
+            );
     }
 
     /**

@@ -7,17 +7,16 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\Controller;
 
-use Exception;
+use ArrayObject;
+use Generated\Shared\Transfer\FileConditionsTransfer;
+use Generated\Shared\Transfer\FileCriteriaTransfer;
 use Generated\Shared\Transfer\FileTransfer;
-use Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Transliterator;
 
 /**
  * @method \SprykerFeature\Zed\SelfServicePortal\Communication\SelfServicePortalCommunicationFactory getFactory()
@@ -34,17 +33,7 @@ class DownloadInquiryFileController extends AbstractController
     /**
      * @var string
      */
-    protected const CONTENT_DISPOSITION = 'Content-Disposition';
-
-    /**
-     * @var string
-     */
-    protected const TRANSLITERATOR_RULE = 'Any-Latin;Latin-ASCII;';
-
-    /**
-     * @var string
-     */
-    protected const CONTENT_TYPE = 'Content-Type';
+    protected const REQUEST_PARAM_ID_FILE = 'id-file';
 
     /**
      * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\ListInquiryController::indexAction()
@@ -60,73 +49,52 @@ class DownloadInquiryFileController extends AbstractController
      */
     public function downloadAction(Request $request): Response|RedirectResponse
     {
-        $idFileInfo = $request->get('id-file');
+        $idFile = $request->get(static::REQUEST_PARAM_ID_FILE);
+        $fileTransfers = $this->getFileTransfersByFileIds([$idFile]);
 
-        try {
-            $fileManagerDataTransfer = $this->getFactory()
-                ->getFileManagerFacade()
-                ->findFileByIdFile($idFileInfo);
-        } catch (FileSystemReadException $e) {
+        if ($fileTransfers->count() === 0) {
             $this->addErrorMessage(static::MESSAGE_FILE_UNAVAILABLE);
             $redirectUrl = Url::generate(static::REDIRECT_URL)->build();
 
             return $this->redirectResponse($redirectUrl);
         }
 
-        return $this->createResponse($fileManagerDataTransfer->getFileOrFail());
+        $fileTransfer = $fileTransfers->getIterator()->current();
+
+        return $this->createDownloadResponse($fileTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
-     * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    protected function createResponse(FileTransfer $fileTransfer): Response
+    protected function createDownloadResponse(FileTransfer $fileTransfer): StreamedResponse
     {
-        $transliterator = Transliterator::create(static::TRANSLITERATOR_RULE);
+        $chunkSize = $this->getFactory()->getConfig()->getSspInquiryFileReadChunkSize();
 
-        if ($transliterator === null) {
-            return new StreamedResponse();
-        }
+        return $this->getFactory()
+            ->getSelfServicePortalService()
+            ->createFileDownloadResponse(
+                $fileTransfer,
+                $chunkSize,
+            );
+    }
 
-        /** @var \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer */
-        $fileInfoTransfer = $fileTransfer->getFileInfo()->getIterator()->current();
+    /**
+     * @param list<int> $fileIds
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\FileTransfer>
+     */
+    protected function getFileTransfersByFileIds(array $fileIds): ArrayObject
+    {
+        $fileCriteriaTransfer = (new FileCriteriaTransfer())
+            ->setFileConditions(
+                (new FileConditionsTransfer())->setFileIds($fileIds),
+            );
 
-        $fileStream = $this->getFactory()
-            ->getFileManagerService()
-            ->readStream($fileInfoTransfer->getStorageFileNameOrFail(), $fileInfoTransfer->getStorageNameOrFail());
+        $fileCollectionTransfer = $this->getFactory()->getFileManagerFacade()->getFileCollection($fileCriteriaTransfer);
 
-        $chunkSize = $this->getFactory()->getConfig()->getInquiryFileReadChunkSize();
-
-        if ($chunkSize <= 0) {
-            throw new Exception('Chunk size is not valid');
-        }
-
-        $response = new StreamedResponse(function () use ($fileStream, $chunkSize): void {
-            while (!feof($fileStream)) {
-                $chunk = fread($fileStream, $chunkSize);
-                if ($chunk === false) {
-                    break;
-                }
-                echo $chunk;
-                flush();
-            }
-            fclose($fileStream);
-        });
-
-        $fileName = $fileTransfer->getFileNameOrFail();
-
-        $disposition = $response->headers->makeDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $fileName,
-            (string)$transliterator->transliterate($fileName),
-        );
-
-        $response->headers->set(static::CONTENT_DISPOSITION, $disposition);
-        $response->headers->set(static::CONTENT_TYPE, $fileInfoTransfer->getTypeOrFail());
-
-        return $response;
+        return $fileCollectionTransfer->getFiles();
     }
 }

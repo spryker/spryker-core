@@ -31,7 +31,7 @@ class SspAssetItemExpanderPlugin extends AbstractPlugin implements ItemExpanderP
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        return $this->getFactory()
+        return $this->getBusinessFactory()
             ->createSspAssetItemExpander()
             ->expandCartItemsWithSspAssets($cartChangeTransfer);
     }

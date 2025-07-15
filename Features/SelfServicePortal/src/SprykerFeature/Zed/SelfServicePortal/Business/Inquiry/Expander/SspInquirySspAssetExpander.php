@@ -26,6 +26,11 @@ class SspInquirySspAssetExpander implements SspInquirySspAssetExpanderInterface
     protected const DEFAULT_SORT_FIELD = 'created_at';
 
     /**
+     * @var int
+     */
+    protected const INQUIRY_ASSET_EXPANDER_PAGE_NUMBER = 1;
+
+    /**
      * @param \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Reader\SspInquiryReaderInterface $sspInquiryReader
      * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
      */
@@ -98,7 +103,7 @@ class SspInquirySspAssetExpander implements SspInquirySspAssetExpanderInterface
         SspInquiryOwnerConditionGroupTransfer $sspInquiryOwnerConditionGroupTransfer
     ): SspInquiryCollectionTransfer {
         $paginationTransfer = (new PaginationTransfer())
-            ->setPage($this->config->getInquiryAssetExpanderPageNumber())
+            ->setPage(static::INQUIRY_ASSET_EXPANDER_PAGE_NUMBER)
             ->setMaxPerPage($this->config->getInquiryAssetExpanderMaxPerPage());
 
         return $this->sspInquiryReader->getSspInquiryCollection(

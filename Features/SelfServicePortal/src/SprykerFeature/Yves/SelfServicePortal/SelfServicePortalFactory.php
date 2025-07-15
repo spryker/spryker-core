@@ -24,6 +24,7 @@ use Spryker\Service\FileManager\FileManagerServiceInterface;
 use Spryker\Shared\Twig\TwigExtension;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Router\Router\RouterInterface;
+use SprykerFeature\Service\SelfServicePortal\SelfServicePortalServiceInterface;
 use SprykerFeature\Yves\SelfServicePortal\Asset\Expander\SspAssetExpander;
 use SprykerFeature\Yves\SelfServicePortal\Asset\Expander\SspAssetExpanderInterface;
 use SprykerFeature\Yves\SelfServicePortal\Asset\Form\DataProvider\SspAssetFormDataProvider;
@@ -668,6 +669,14 @@ class SelfServicePortalFactory extends AbstractFactory
     public function getRouter(): RouterInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_ROUTER);
+    }
+
+    /**
+     * @return \SprykerFeature\Service\SelfServicePortal\SelfServicePortalServiceInterface
+     */
+    public function getSelfServicePortalService(): SelfServicePortalServiceInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_SELF_SERVICE_PORTAL);
     }
 
     /**

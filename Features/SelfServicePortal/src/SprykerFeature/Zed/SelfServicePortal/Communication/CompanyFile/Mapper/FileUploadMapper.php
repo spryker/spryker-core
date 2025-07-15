@@ -163,7 +163,7 @@ class FileUploadMapper implements FileUploadMapperInterface
         $fileInfo->setExtension($fileUploadTransfer->getClientOriginalExtension());
         $fileInfo->setSize($fileUploadTransfer->getSize());
         $fileInfo->setType($fileUploadTransfer->getMimeTypeName());
-        $fileInfo->setStorageName($this->selfServicePortalConfig->getFileUploadStorageName());
+        $fileInfo->setStorageName($this->selfServicePortalConfig->getCompanyFileUploadStorageName());
 
         return $fileInfo;
     }

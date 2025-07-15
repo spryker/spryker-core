@@ -7,7 +7,6 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\Controller;
 
-use Exception;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
@@ -15,7 +14,6 @@ use Generated\Shared\Transfer\SspAssetIncludeTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
@@ -74,50 +72,23 @@ class AssetImageController extends AbstractController
         /** @var \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer */
         $sspAssetTransfer = $sspAssetCollectionTransfer->getSspAssets()->getIterator()->current();
 
-        return $this->createResponse($sspAssetTransfer->getImageOrFail());
+        return $this->createDownloadResponse($sspAssetTransfer->getImageOrFail());
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
-     * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    protected function createResponse(FileTransfer $fileTransfer): Response
+    protected function createDownloadResponse(FileTransfer $fileTransfer): StreamedResponse
     {
-        /** @var \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer */
-        $fileInfoTransfer = $fileTransfer->getFileInfo()->getIterator()->current();
-
-        $fileStream = $this->getFactory()
-            ->getFileManagerService()
-            ->readStream($fileInfoTransfer->getStorageFileNameOrFail(), $fileInfoTransfer->getStorageNameOrFail());
-
         $chunkSize = $this->getFactory()->getConfig()->getSspAssetImageReadChunkSize();
 
-        if ($chunkSize <= 0) {
-            throw new Exception('Chunk size is not valid');
-        }
-
-        $response = new StreamedResponse(function () use ($fileStream, $chunkSize): void {
-            while (!feof($fileStream)) {
-                $chunk = fread($fileStream, $chunkSize);
-                if ($chunk === false) {
-                    break;
-                }
-                echo $chunk;
-                flush();
-            }
-            fclose($fileStream);
-        });
-
-        $fileName = basename($fileInfoTransfer->getStorageFileNameOrFail());
-
-        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $fileName);
-
-        $response->headers->set(static::HEADER_CONTENT_DISPOSITION, $disposition);
-        $response->headers->set(static::CONTENT_TYPE, $fileInfoTransfer->getTypeOrFail());
-
-        return $response;
+        return $this->getFactory()
+            ->getSelfServicePortalService()
+            ->createFileDownloadResponse(
+                $fileTransfer,
+                $chunkSize,
+            );
     }
 }

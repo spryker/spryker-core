@@ -111,11 +111,9 @@
                                     <td>{{ file.fileInfo[0].size | formatFileSize }}</td>
                                     <td>{{ file.fileInfo[0].extension | default('N/A') }}</td>
                                     <td>
-                                        <a class="btn btn-xs btn-outline" btn-view href="{{ url(
-                                            '/self-service-portal/download-inquiry-file/download',
-                                            {'id-file': file.idFile }
-                                        )
-                                        }}">{{ 'Download' | trans }}</a>
+                                        <a class="btn btn-xs btn-outline" btn-view href="{{ url('/self-service-portal/download-inquiry-file/download', {'id-file': file.idFile}) }}">
+                                         {{ 'Download' | trans }}
+                                        </a>
                                     </td>
                                 </tr>
                             {% endfor %}

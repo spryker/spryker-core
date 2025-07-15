@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DashboardRequestTransfer;
 use Generated\Shared\Transfer\DashboardResponseTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
-use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
@@ -22,7 +21,6 @@ use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
-use Generated\Shared\Transfer\SspInquiryFileDownloadRequestTransfer;
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
@@ -37,17 +35,17 @@ class SelfServicePortalStub implements SelfServicePortalStubInterface
     }
 
     /**
-     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\GatewayController::getServiceCollectionAction()
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\GatewayController::getSspServiceCollectionAction()
      *
      * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
      */
-    public function getServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer
+    public function getSspServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\SspServiceCollectionTransfer $sspServiceCollectionTransfer */
         $sspServiceCollectionTransfer = $this->zedRequestClient->call(
-            '/self-service-portal/gateway/get-service-collection',
+            '/self-service-portal/gateway/get-ssp-service-collection',
             $sspServiceCriteriaTransfer,
         );
 
@@ -172,21 +170,8 @@ class SelfServicePortalStub implements SelfServicePortalStubInterface
     }
 
     /**
-     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\GatewayController::downloadFileAction()
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\GatewayController::createSspAssetCollectionAction()
      *
-     * @param \Generated\Shared\Transfer\SspInquiryFileDownloadRequestTransfer $sspInquiryFileDownloadRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
-     */
-    public function downloadFile(SspInquiryFileDownloadRequestTransfer $sspInquiryFileDownloadRequestTransfer): FileManagerDataTransfer
-    {
-        /** @var \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer */
-        $fileManagerDataTransfer = $this->zedRequestClient->call('/self-service-portal/gateway/download-file', $sspInquiryFileDownloadRequestTransfer);
-
-        return $fileManagerDataTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
      *
      * @return \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer
@@ -200,6 +185,8 @@ class SelfServicePortalStub implements SelfServicePortalStubInterface
     }
 
     /**
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\GatewayController::getSspAssetCollectionAction()
+     *
      * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
@@ -213,6 +200,8 @@ class SelfServicePortalStub implements SelfServicePortalStubInterface
     }
 
     /**
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\GatewayController::updateSspAssetCollectionAction()
+     *
      * @param \Generated\Shared\Transfer\SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
      *
      * @return \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer

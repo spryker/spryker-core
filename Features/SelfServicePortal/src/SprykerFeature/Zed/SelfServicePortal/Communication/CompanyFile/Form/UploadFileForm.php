@@ -62,9 +62,9 @@ class UploadFileForm extends AbstractType
             'multiple' => true,
             'attr' => [
                 'multiple' => true,
-                'accept' => implode(',', $this->getConfig()->getAllowedFileExtensions()),
+                'accept' => implode(',', $this->getConfig()->getCompanyFileAllowedFileExtensions()),
                 'max' => 4,
-                'size' => $this->getConfig()->getMaxFileSize(),
+                'size' => $this->getConfig()->getCompanyFileMaxFileSize(),
                 'data-qa' => 'file-upload-button',
             ],
             'constraints' => [
@@ -72,8 +72,8 @@ class UploadFileForm extends AbstractType
                     'constraints' => [
                         new NotBlank(['message' => static::ERROR_FILE_REQUIRED]),
                         new File([
-                            'maxSize' => $this->getConfig()->getMaxFileSize(),
-                            'mimeTypes' => $this->getConfig()->getAllowedMimeTypes(),
+                            'maxSize' => $this->getConfig()->getCompanyFileMaxFileSize(),
+                            'mimeTypes' => $this->getConfig()->getCompanyFileAllowedMimeTypes(),
                             'mimeTypesMessage' => 'Please upload valid documents (PDF) or images (JPEG, PNG)',
                         ]),
                     ],

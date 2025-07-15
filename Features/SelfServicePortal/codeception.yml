@@ -2,6 +2,7 @@ namespace: SprykerFeatureTest
 include:
     - tests/SprykerFeatureTest/Zed/SelfServicePortal
     - tests/SprykerFeatureTest/Yves/SelfServicePortal
+    - tests/SprykerFeatureTest/Service/SelfServicePortal
 paths:
     tests: tests/
     log: tests/_output/

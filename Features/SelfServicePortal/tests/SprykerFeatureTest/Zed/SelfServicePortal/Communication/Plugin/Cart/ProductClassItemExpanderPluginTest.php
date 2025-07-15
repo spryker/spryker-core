@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductClassTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalBusinessFactory;
-use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassExpander;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Cart\ProductClassItemExpanderPlugin;
 use SprykerFeatureTest\Zed\SelfServicePortal\SelfServicePortalCommunicationTester;
 
@@ -182,23 +182,23 @@ class ProductClassItemExpanderPluginTest extends Unit
     }
 
     /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassExpander $productClassExpanderMock
+     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassExpanderInterface $productClassExpanderMock
      *
      * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Cart\ProductClassItemExpanderPlugin
      */
     protected function createProductClassItemExpanderPluginWithMock(
-        ProductClassExpander $productClassExpanderMock
+        ProductClassExpanderInterface $productClassExpanderMock
     ): ProductClassItemExpanderPlugin {
-        $factoryMock = $this->getMockBuilder(SelfServicePortalBusinessFactory::class)
+        $businessFactoryMock = $this->getMockBuilder(SelfServicePortalBusinessFactory::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $factoryMock->expects($this->once())
+        $businessFactoryMock->expects($this->once())
             ->method('createProductClassExpander')
             ->willReturn($productClassExpanderMock);
 
         $productClassItemExpanderPlugin = new ProductClassItemExpanderPlugin();
-        $productClassItemExpanderPlugin->setBusinessFactory($factoryMock);
+        $productClassItemExpanderPlugin->setBusinessFactory($businessFactoryMock);
 
         return $productClassItemExpanderPlugin;
     }
@@ -219,11 +219,11 @@ class ProductClassItemExpanderPluginTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassExpander
+     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassExpanderInterface
      */
-    protected function createProductClassExpanderMock(): ProductClassExpander
+    protected function createProductClassExpanderMock(): ProductClassExpanderInterface
     {
-        return $this->getMockBuilder(ProductClassExpander::class)
+        return $this->getMockBuilder(ProductClassExpanderInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
     }

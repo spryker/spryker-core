@@ -103,7 +103,7 @@ class FileSspInquiryPreCreateHook implements SspInquiryPreCreateHookInterface
             ->setType($fileUploadTransfer->getMimeTypeName())
             ->setExtension($fileUploadTransfer->getClientOriginalExtension())
             ->setSize($fileUploadTransfer->getSize())
-            ->setStorageName($this->selfServicePortalConfig->getInquiryFileStorageName());
+            ->setStorageName($this->selfServicePortalConfig->getInquiryFileUploadStorageName());
     }
 
     /**

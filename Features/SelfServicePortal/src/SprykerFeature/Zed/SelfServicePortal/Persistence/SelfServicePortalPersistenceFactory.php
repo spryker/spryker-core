@@ -31,6 +31,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\FileMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\ProductClassMapper;
+use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SalesOrderItemMapper;
+use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspAssetBusinessUnitAssignmentMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspAssetMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspInquiryMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspInquiryMapperInterface;
@@ -259,6 +261,14 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspAssetBusinessUnitAssignmentMapper
+     */
+    public function createSspAssetBusinessUnitAssignmentMapper(): SspAssetBusinessUnitAssignmentMapper
+    {
+        return new SspAssetBusinessUnitAssignmentMapper();
+    }
+
+    /**
      * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery
      */
     public function createSspAssetQuery(): SpySspAssetQuery
@@ -296,5 +306,13 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     public function createProductClassMapper(): ProductClassMapper
     {
         return new ProductClassMapper();
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SalesOrderItemMapper
+     */
+    public function createSalesOrderItemMapper(): SalesOrderItemMapper
+    {
+        return new SalesOrderItemMapper();
     }
 }

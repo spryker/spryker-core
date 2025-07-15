@@ -260,6 +260,11 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @var string
      */
+    public const SERVICE_SELF_SERVICE_PORTAL = 'SERVICE_SELF_SERVICE_PORTAL';
+
+    /**
+     * @var string
+     */
     public const PLUGINS_DASHBOARD_DATA_PROVIDER = 'PLUGINS_DASHBOARD_DATA_PROVIDER';
 
     /**
@@ -315,6 +320,7 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addStateMachineConditionPlugins($container);
         $container = $this->addStateMachineCommandPlugins($container);
         $container = $this->addSalesOrderItemPropelQuery($container);
+        $container = $this->addSelfServicePortalService($container);
 
         return $container;
     }
@@ -722,6 +728,20 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_CUSTOMER, static function (Container $container): CustomerFacadeInterface {
             return $container->getLocator()->customer()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSelfServicePortalService(Container $container): Container
+    {
+        $container->set(static::SERVICE_SELF_SERVICE_PORTAL, function (Container $container) {
+            return $container->getLocator()->selfServicePortal()->service();
         });
 
         return $container;

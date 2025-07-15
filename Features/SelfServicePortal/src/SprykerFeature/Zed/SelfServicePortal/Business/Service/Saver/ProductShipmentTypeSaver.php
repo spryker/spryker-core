@@ -64,17 +64,11 @@ class ProductShipmentTypeSaver implements ProductShipmentTypeSaverInterface
 
         if ($shipmentTypeIdsToDelete !== []) {
             $this->selfServicePortalEntityManager
-                ->deleteProductShipmentTypesByIdProductConcreteAndShipmentTypeIds(
-                    $idProductConcrete,
-                    $shipmentTypeIdsToDelete,
-                );
+                ->deleteProductShipmentTypes($productConcreteTransfer, $shipmentTypeIdsToDelete);
         }
 
         foreach ($shipmentTypeIdsToCreate as $idShipmentType) {
-            $this->selfServicePortalEntityManager->createProductShipmentType(
-                $idProductConcrete,
-                $idShipmentType,
-            );
+            $this->selfServicePortalEntityManager->createProductShipmentType($productConcreteTransfer, $idShipmentType);
         }
 
         if ($shipmentTypeIdsToCreate !== [] || $shipmentTypeIdsToDelete !== []) {

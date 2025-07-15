@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DashboardRequestTransfer;
 use Generated\Shared\Transfer\DashboardResponseTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
-use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
@@ -22,7 +21,6 @@ use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
-use Generated\Shared\Transfer\SspInquiryFileDownloadRequestTransfer;
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -39,9 +37,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
      */
-    public function getServiceCollectionAction(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer
+    public function getSspServiceCollectionAction(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer
     {
-        return $this->getFacade()->getServiceCollection($sspServiceCriteriaTransfer);
+        return $this->getFacade()->getSspServiceCollection($sspServiceCriteriaTransfer);
     }
 
     /**
@@ -117,20 +115,6 @@ class GatewayController extends AbstractGatewayController
         SspInquiryCollectionRequestTransfer $sspInquiryCollectionRequestTransfer
     ): SspInquiryCollectionResponseTransfer {
         return $this->getFacade()->cancelSspInquiryCollection($sspInquiryCollectionRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryFileDownloadRequestTransfer $sspInquiryFileDownloadRequest
-     *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
-     */
-    public function downloadFileAction(SspInquiryFileDownloadRequestTransfer $sspInquiryFileDownloadRequest): FileManagerDataTransfer
-    {
-        $fileManagerDataTransfer = $this->getFactory()->getFileManagerFacade()->findFileByIdFile($sspInquiryFileDownloadRequest->getFileIdOrFail());
-
-        $fileManagerDataTransfer->setContent(null);
-
-        return $fileManagerDataTransfer;
     }
 
     /**

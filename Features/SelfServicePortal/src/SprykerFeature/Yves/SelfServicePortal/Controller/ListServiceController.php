@@ -79,7 +79,7 @@ class ListServiceController extends AbstractController
         $companyUserTransfer->setCustomer($customerTransfer);
         $sspServiceCriteriaTransfer->setCompanyUser($companyUserTransfer);
 
-        $sspServiceCollectionTransfer = $this->getClient()->getServiceCollection($sspServiceCriteriaTransfer);
+        $sspServiceCollectionTransfer = $this->getClient()->getSspServiceCollection($sspServiceCriteriaTransfer);
 
         return [
             'pagination' => $sspServiceCollectionTransfer->getPagination(),

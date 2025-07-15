@@ -20,7 +20,6 @@ use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\CreateSspAssetPerm
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\UnassignSspAssetPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\UpdateSspAssetPermissionPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Asset\Form\SspAssetBusinessUnitRelationsForm;
-use SprykerFeature\Yves\SelfServicePortal\Asset\Form\SspAssetSearchForm;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\Router\SelfServicePortalPageRouteProviderPlugin;
 use SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -331,56 +330,6 @@ class AssetController extends AbstractController
             ],
             [],
             '@SelfServicePortal/views/asset-update/asset-update.twig',
-        );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return \Spryker\Yves\Kernel\View\View
-     */
-    public function listAction(Request $request): View
-    {
-        $companyUserTransfer = $this->getFactory()->getCompanyUserClient()->findCompanyUser();
-
-        if (!$companyUserTransfer) {
-            throw new NotFoundHttpException('company.error.company_user_not_found');
-        }
-
-        if (!$this->getFactory()->createSspAssetCustomerPermissionChecker()->canViewAsset()) {
-            throw new AccessDeniedHttpException('self_service_portal.asset.access.denied');
-        }
-
-        $sspAssetSearchForm = $this->getFactory()->createSspAssetSearchForm(
-            $this->getFactory()->createSspAssetSearchFormDataProvider()->getOptions(),
-        );
-
-        $data = $request->query->all()[SspAssetSearchForm::FORM_NAME] ?? [];
-        $isReset = $data[SspAssetSearchForm::FIELD_RESET] ?? null;
-
-        $sspAssetCriteriaTransfer = new SspAssetCriteriaTransfer();
-
-        if (!$isReset) {
-            $sspAssetSearchForm->handleRequest($request);
-
-            $sspAssetCriteriaTransfer = $this->getFactory()->createSspAssetSearchFormHandler()->handleSearchForm($sspAssetSearchForm, $sspAssetCriteriaTransfer, $companyUserTransfer);
-        }
-
-        $sspAssetCollectionTransfer = $this->getFactory()
-            ->createSspAssetReader()
-            ->getSspAssetCollection($request, $sspAssetCriteriaTransfer, $companyUserTransfer);
-
-        return $this->view(
-            [
-                'pagination' => $sspAssetCollectionTransfer->getPagination(),
-                'sspAssetList' => $sspAssetCollectionTransfer->getSspAssets(),
-                'sspAssetSearchForm' => $sspAssetSearchForm->createView(),
-            ],
-            [],
-            '@SelfServicePortal/views/list-asset/list-asset.twig',
         );
     }
 

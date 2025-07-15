@@ -12,11 +12,25 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Spryker\Client\CompanyBusinessUnit\CompanyBusinessUnitClientInterface;
 use Spryker\Client\Customer\CustomerClientInterface;
 use Spryker\Client\Permission\PermissionClientInterface;
-use SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConstants;
 use SprykerFeature\Yves\SelfServicePortal\Service\Form\ServiceSearchForm;
 
 class ServiceSearchFormDataProvider
 {
+    /**
+     * @var string
+     */
+    public const SEARCH_TYPE_SERVICE_NAME = 'serviceName';
+
+    /**
+     * @var string
+     */
+    public const SEARCH_TYPE_SERVICE_SKU = 'serviceSku';
+
+    /**
+     * @var string
+     */
+    public const SEARCH_TYPE_ORDER_REFERENCE = 'orderReference';
+
     /**
      * @var string
      */
@@ -116,9 +130,9 @@ class ServiceSearchFormDataProvider
     protected function getServiceSearchTypes(): array
     {
         return [
-            SelfServicePortalConstants::SEARCH_TYPE_SERVICE_NAME => static::GLOSSARY_KEY_PRODUCT_NAME,
-            SelfServicePortalConstants::SEARCH_TYPE_SERVICE_SKU => static::GLOSSARY_KEY_SERVICE_SKU,
-            SelfServicePortalConstants::SEARCH_TYPE_ORDER_REFERENCE => static::GLOSSARY_KEY_ORDER_REFERENCE,
+            static::SEARCH_TYPE_SERVICE_NAME => static::GLOSSARY_KEY_PRODUCT_NAME,
+            static::SEARCH_TYPE_SERVICE_SKU => static::GLOSSARY_KEY_SERVICE_SKU,
+            static::SEARCH_TYPE_ORDER_REFERENCE => static::GLOSSARY_KEY_ORDER_REFERENCE,
         ];
     }
 

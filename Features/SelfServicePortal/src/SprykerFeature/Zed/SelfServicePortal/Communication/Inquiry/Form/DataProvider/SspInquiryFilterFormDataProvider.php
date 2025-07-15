@@ -25,7 +25,7 @@ class SspInquiryFilterFormDataProvider implements SspInquiryFilterFormDataProvid
     public function getOptions(): array
     {
         $sspInquiryStatuses = array_keys($this->selfServicePortalConfig->getInquiryStatusClassMap());
-        $sspInquiryTypes = $this->selfServicePortalConfig->getAllSelectableInquiryTypes();
+        $sspInquiryTypes = array_merge(...array_values($this->selfServicePortalConfig->getSelectableSspInquiryTypes()));
 
         return [
             SspInquiryFilterForm::OPTION_STATUSES => array_combine($sspInquiryStatuses, $sspInquiryStatuses),

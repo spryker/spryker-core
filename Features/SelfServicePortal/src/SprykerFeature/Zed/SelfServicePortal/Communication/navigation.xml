@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <config>
     <self-service-portal-services>
-        <label>Services</label>
-        <title>Services</title>
+        <label>Bocked Services</label>
+        <title>Bocked Services</title>
         <bundle>self-service-portal</bundle>
         <controller>list-service</controller>
         <action>index</action>

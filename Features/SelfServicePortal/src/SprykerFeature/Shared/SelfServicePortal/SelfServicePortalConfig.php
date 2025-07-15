@@ -108,7 +108,12 @@ class SelfServicePortalConfig extends AbstractSharedConfig
     /**
      * @var int
      */
-    protected const READ_CHUNK_SIZE = 1048576; // 1024 * 1024;
+    protected const SSP_INQUIRY_FILE_READ_CHUNK_SIZE = 1048576; // 1024 * 1024;
+
+    /**
+     * @var int
+     */
+    protected const SSP_ASSET_IMAGE_READ_CHUNK_SIZE = 1048576; // 1024 * 1024;
 
     /**
      * @var string
@@ -148,12 +153,30 @@ class SelfServicePortalConfig extends AbstractSharedConfig
     /**
      * @var int
      */
-    public const SUBJECT_MAX_LENGTH = 255;
+    public const SSP_INQUIRY_SUBJECT_MAX_LENGTH = 255;
 
     /**
      * @var int
      */
-    public const DESCRIPTION_MAX_LENGTH = 1000;
+    public const SSP_INQUIRY_DESCRIPTION_MAX_LENGTH = 1000;
+
+    /**
+     * @var int
+     */
+    protected const DEFAULT_FILE_DASHBOARD_MAX_PER_PAGE = 3;
+
+    /**
+     * Specification:
+     * - Returns the default maximum items per page for file dashboard.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getDefaultFileDashboardMaxPerPage(): int
+    {
+        return static::DEFAULT_FILE_DASHBOARD_MAX_PER_PAGE;
+    }
 
     /**
      * Specification:
@@ -184,7 +207,7 @@ class SelfServicePortalConfig extends AbstractSharedConfig
     /**
      * Specification:
      * - Returns a list of entity types.
-     * - These entity types are used within the SelfServicePortal feature.
+     * - These entity types are used to build the file attachment entity type filter in the self-service portal.
      *
      * @api
      *
@@ -238,22 +261,9 @@ class SelfServicePortalConfig extends AbstractSharedConfig
      *
      * @return string
      */
-    public function getInquiryCancelStateMachineEventName(): string
+    public function getSspInquiryCancelStateMachineEventName(): string
     {
-        return throw new SspInquiryCancelStatusNotFound();
-    }
-
-    /**
-     * Specification:
-     * - Returns all selectable ssp inquiry types that can be selected by the user.
-     *
-     * @api
-     *
-     * @return array<string>
-     */
-    public function getAllSelectableSspInquiryTypes(): array
-    {
-        return array_merge(...array_values(static::SELECTABLE_SSP_INQUIRY_TYPES_TO_SSP_INQUIRY_SOURCE_MAP));
+        throw new SspInquiryCancelStatusNotFound();
     }
 
     /**
@@ -264,7 +274,7 @@ class SelfServicePortalConfig extends AbstractSharedConfig
      *
      * @return string
      */
-    public function getDefaultTotalFileMaxSize(): string
+    public function getSspInquiriesFilesMaxSize(): string
     {
         return $this->get(SelfServicePortalConstants::DEFAULT_TOTAL_FILE_MAX_SIZE);
     }
@@ -277,7 +287,20 @@ class SelfServicePortalConfig extends AbstractSharedConfig
      *
      * @return string
      */
-    public function getDefaultFileMaxSize(): string
+    public function getSspInquiryFileMaxSize(): string
+    {
+        return $this->get(SelfServicePortalConstants::DEFAULT_FILE_MAX_SIZE);
+    }
+
+    /**
+     * Specification:
+     * - Returns the default file max size per file upload during ssp inquiry creation.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getSspAssetImageFilesMaxSize(): string
     {
         return $this->get(SelfServicePortalConstants::DEFAULT_FILE_MAX_SIZE);
     }
@@ -290,7 +313,7 @@ class SelfServicePortalConfig extends AbstractSharedConfig
      *
      * @return int
      */
-    public function getFileMaxCount(): int
+    public function getSspInquiryFileMaxCount(): int
     {
         return 5;
     }
@@ -316,7 +339,7 @@ class SelfServicePortalConfig extends AbstractSharedConfig
      *
      * @return array<string>
      */
-    public function getAllowedFileMimeTypes(): array
+    public function getSspInquiryAllowedFileMimeTypes(): array
     {
         return [
             'image/png',
@@ -349,7 +372,7 @@ class SelfServicePortalConfig extends AbstractSharedConfig
      *
      * @return array<string, string>
      */
-    public function getInquiryStateMachineProcessInquiryTypeMap(): array
+    public function getSspInquiryStateMachineProcessInquiryTypeMap(): array
     {
         return [];
     }
@@ -358,11 +381,16 @@ class SelfServicePortalConfig extends AbstractSharedConfig
      * Specification:
      * - Returns the ssp inquiry state machine process => initial state map.
      *
+     * @example
+     * [
+     *     'SspInquiryDefaultStateMachine' => 'created',
+     * ]
+     *
      * @api
      *
      * @return array<string, string>
      */
-    public function getInquiryInitialStateMap(): array
+    public function getInquiryInitialStateMachineMap(): array
     {
         return [];
     }
@@ -382,29 +410,15 @@ class SelfServicePortalConfig extends AbstractSharedConfig
 
     /**
      * Specification:
-     * - Defines the Storage for ssp inquiry files.
-     * - A `FileSystemConstants::FILESYSTEM_SERVICE` with the same storage name must be defined.
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getInquiryStorageName(): string
-    {
-        return '';
-    }
-
-    /**
-     * Specification:
      * - Returns the maximum length of the subject field for ssp inquiry.
      *
      * @api
      *
      * @return int
      */
-    public function getSubjectMaxLength(): int
+    public function getSspInquirySubjectMaxLength(): int
     {
-        return static::SUBJECT_MAX_LENGTH;
+        return static::SSP_INQUIRY_SUBJECT_MAX_LENGTH;
     }
 
     /**
@@ -415,9 +429,9 @@ class SelfServicePortalConfig extends AbstractSharedConfig
      *
      * @return int
      */
-    public function getDescriptionMaxLength(): int
+    public function getSspInquiryDescriptionMaxLength(): int
     {
-        return static::DESCRIPTION_MAX_LENGTH;
+        return static::SSP_INQUIRY_DESCRIPTION_MAX_LENGTH;
     }
 
     /**
@@ -430,7 +444,7 @@ class SelfServicePortalConfig extends AbstractSharedConfig
      */
     public function getSspAssetImageReadChunkSize(): int
     {
-        return static::READ_CHUNK_SIZE;
+        return static::SSP_ASSET_IMAGE_READ_CHUNK_SIZE;
     }
 
     /**
@@ -448,7 +462,7 @@ class SelfServicePortalConfig extends AbstractSharedConfig
 
     /**
      * Specification:
-     * - Returns the allowed file mime types for file uploads during ssp asset creation.
+     * - Returns the allowed file mime types for file uploads during ssp asset create/update.
      *
      * @api
      *
@@ -484,9 +498,9 @@ class SelfServicePortalConfig extends AbstractSharedConfig
      *
      * @return int
      */
-    public function getInquiryFileReadChunkSize(): int
+    public function getSspInquiryFileReadChunkSize(): int
     {
-        return static::READ_CHUNK_SIZE;
+        return static::SSP_INQUIRY_FILE_READ_CHUNK_SIZE;
     }
 
     /**

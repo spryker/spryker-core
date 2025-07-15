@@ -12,16 +12,14 @@ use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileCollectionTransfer;
+use Generated\Shared\Transfer\ProductClassCriteriaTransfer;
 use Generated\Shared\Transfer\ProductClassTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
-use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAsset;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAsset;
-use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiry;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryFile;
@@ -36,16 +34,16 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class SelfServicePortalEntityManager extends AbstractEntityManager implements SelfServicePortalEntityManagerInterface
 {
     /**
-     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param int $idShipmentType
      *
      * @return void
      */
-    public function createProductShipmentType(int $idProductConcrete, int $idShipmentType): void
+    public function createProductShipmentType(ProductConcreteTransfer $productConcreteTransfer, int $idShipmentType): void
     {
         $productShipmentTypeEntity = $this->getFactory()
             ->createProductShipmentTypeQuery()
-            ->filterByFkProduct($idProductConcrete)
+            ->filterByFkProduct($productConcreteTransfer->getIdProductConcreteOrFail())
             ->filterByFkShipmentType($idShipmentType)
             ->findOneOrCreate();
 
@@ -53,39 +51,53 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param list<int> $shipmentTypeIds
      *
      * @return void
      */
-    public function deleteProductShipmentTypesByIdProductConcreteAndShipmentTypeIds(
-        int $idProductConcrete,
+    public function deleteProductShipmentTypes(
+        ProductConcreteTransfer $productConcreteTransfer,
         array $shipmentTypeIds
     ): void {
         $this->getFactory()
             ->createProductShipmentTypeQuery()
-            ->filterByFkProduct($idProductConcrete)
+            ->filterByFkProduct($productConcreteTransfer->getIdProductConcreteOrFail())
             ->filterByFkShipmentType_In($shipmentTypeIds)
             ->delete();
     }
 
     /**
-     * @param int $idProduct
-     * @param array<int> $productClassIds
+     * @param \Generated\Shared\Transfer\ProductClassCriteriaTransfer $productClassCriteriaTransfer
      *
      * @return void
      */
-    public function saveProductClassesForProduct(int $idProduct, array $productClassIds): void
+    public function saveProductClassesForProduct(ProductClassCriteriaTransfer $productClassCriteriaTransfer): void
     {
-        $this->deleteProductClassesByProductId($idProduct);
+        $productClassConditions = $productClassCriteriaTransfer->getProductClassConditions();
 
-        foreach ($productClassIds as $idProductClass) {
-            $productToProductClassEntity = $this->getFactory()->createProductToProductClassQuery()
-                ->filterByFkProduct($idProduct)
-                ->filterByFkProductClass($idProductClass)
-                ->findOneOrCreate();
+        if (!$productClassConditions) {
+            return;
+        }
 
-            $productToProductClassEntity->save();
+        $productConcreteIds = $productClassConditions->getProductConcreteIds();
+        $productClassIds = $productClassConditions->getProductClassIds();
+
+        if (!$productConcreteIds || !$productClassIds) {
+            return;
+        }
+
+        foreach ($productConcreteIds as $idProduct) {
+            $this->deleteProductClassesByProductId($idProduct);
+
+            foreach ($productClassIds as $idProductClass) {
+                $productToProductClassEntity = $this->getFactory()->createProductToProductClassQuery()
+                    ->filterByFkProduct($idProduct)
+                    ->filterByFkProductClass($idProductClass)
+                    ->findOneOrCreate();
+
+                $productToProductClassEntity->save();
+            }
         }
     }
 
@@ -182,121 +194,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
     }
 
     /**
-     * @param list<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery> $fileAttachmentQueryList
-     * @param list<int> $fileIds
-     * @param bool $applyOnlyToModifiedQueries
-     *
-     * @return list<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery>
-     */
-    protected function applyFileAttachmentByFileIdsCondition(
-        array $fileAttachmentQueryList,
-        array $fileIds,
-        bool $applyOnlyToModifiedQueries
-    ): array {
-        foreach ($fileAttachmentQueryList as $fileAttachmentQuery) {
-            if ($applyOnlyToModifiedQueries && !$fileAttachmentQuery->hasWhereClause()) {
-                continue;
-            }
-
-            $fileAttachmentQuery->filterByFkFile_In($fileIds);
-        }
-
-        return $fileAttachmentQueryList;
-    }
-
-    /**
-     * @param list<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery> $fileAttachmentQueryList
-     * @param list<int> $companyIds
-     *
-     * @return list<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery>
-     */
-    protected function applyFileAttachmentByCompanyIdsCondition(
-        array $fileAttachmentQueryList,
-        array $companyIds
-    ): array {
-        foreach ($fileAttachmentQueryList as $fileAttachmentQuery) {
-            if ($fileAttachmentQuery instanceof SpyCompanyFileQuery) {
-                $fileAttachmentQuery->filterByFkCompany_In($companyIds);
-            }
-        }
-
-        return $fileAttachmentQueryList;
-    }
-
-    /**
-     * @param list<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery> $fileAttachmentQueryList
-     * @param list<int> $companyUserIds
-     *
-     * @return list<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery>
-     */
-    protected function applyFileAttachmentByCompanyUserIdsCondition(
-        array $fileAttachmentQueryList,
-        array $companyUserIds
-    ): array {
-        foreach ($fileAttachmentQueryList as $fileAttachmentQuery) {
-            if ($fileAttachmentQuery instanceof SpyCompanyUserFileQuery) {
-                $fileAttachmentQuery->filterByFkCompanyUser_In($companyUserIds);
-            }
-        }
-
-        return $fileAttachmentQueryList;
-    }
-
-    /**
-     * @param list<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery> $fileAttachmentQueryList
-     * @param list<int> $companyBusinessUnitIds
-     *
-     * @return list<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery>
-     */
-    protected function applyFileAttachmentByCompanyBusinessUnitIdsCondition(
-        array $fileAttachmentQueryList,
-        array $companyBusinessUnitIds
-    ): array {
-        foreach ($fileAttachmentQueryList as $fileAttachmentQuery) {
-            if ($fileAttachmentQuery instanceof SpyCompanyBusinessUnitFileQuery) {
-                $fileAttachmentQuery->filterByFkCompanyBusinessUnit_In($companyBusinessUnitIds);
-            }
-        }
-
-        return $fileAttachmentQueryList;
-    }
-
-    /**
-     * @param list<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery> $fileAttachmentQueryList
-     * @param list<int> $assetIds
-     *
-     * @return list<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery>
-     */
-    protected function applyFileAttachmentByAssetIdsCondition(
-        array $fileAttachmentQueryList,
-        array $assetIds
-    ): array {
-        foreach ($fileAttachmentQueryList as $fileAttachmentQuery) {
-            if ($fileAttachmentQuery instanceof SpySspAssetFileQuery) {
-                $fileAttachmentQuery->filterByFkSspAsset_In($assetIds);
-            }
-        }
-
-        return $fileAttachmentQueryList;
-    }
-
-    /**
-     * @param list<\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery|\Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery> $fileAttachmentQueryList
-     *
-     * @return void
-     */
-    protected function deleteFileAttachments(array $fileAttachmentQueryList): void
-    {
-        foreach ($fileAttachmentQueryList as $fileAttachmentQuery) {
-            if (!$fileAttachmentQuery->hasWhereClause()) {
-                continue;
-            }
-
-            $fileAttachmentQuery->delete();
-        }
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
      *
      * @return \Generated\Shared\Transfer\FileAttachmentTransfer
@@ -321,24 +218,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
     public function createSspInquiry(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
     {
         return $this->saveSspInquiry($sspInquiryTransfer, new SpySspInquiry());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer|null
-     */
-    public function updateSspInquiry(SspInquiryTransfer $sspInquiryTransfer): ?SspInquiryTransfer
-    {
-        $sspInquiryQuery = $this->getFactory()->createSspInquiryQuery();
-
-        $sspInquiryEntity = $sspInquiryQuery->filterByIdSspInquiry($sspInquiryTransfer->getIdSspInquiry())->findOne();
-
-        if (!$sspInquiryEntity) {
-            return null;
-        }
-
-        return $this->saveSspInquiry($sspInquiryTransfer, $sspInquiryEntity);
     }
 
     /**

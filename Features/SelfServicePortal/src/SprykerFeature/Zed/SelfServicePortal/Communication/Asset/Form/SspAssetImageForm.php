@@ -63,7 +63,7 @@ class SspAssetImageForm extends AbstractType
             'required' => false,
             'constraints' => [
                 new File([
-                    'maxSize' => $this->getConfig()->getAssetDefaultFileMaxSize(),
+                    'maxSize' => $this->getConfig()->getSspAssetDefaultFileMaxSize(),
                     'mimeTypes' => $this->getConfig()->getSspAssetAllowedFileMimeTypes(),
                     'mimeTypesMessage' => 'Invalid file type. Allowed types: {{ types }}',
                 ]),
@@ -72,8 +72,8 @@ class SspAssetImageForm extends AbstractType
             'attr' => [
                 'accept' => implode(', ', $this->getConfig()->getSspAssetAllowedFileMimeTypes()),
                 'acceptExtensions' => implode(', ', $this->getConfig()->getSspAssetAllowedFileExtensions()),
-                'maxSize' => $this->convertToReadableSize($this->normalizeBinaryFormat($this->getConfig()->getAssetDefaultFileMaxSize())),
-                'maxTotalSize' => $this->convertToReadableSize($this->normalizeBinaryFormat($this->getConfig()->getAssetDefaultFileMaxSize())),
+                'maxSize' => $this->convertToReadableSize($this->normalizeBinaryFormat($this->getConfig()->getSspAssetDefaultFileMaxSize())),
+                'maxTotalSize' => $this->convertToReadableSize($this->normalizeBinaryFormat($this->getConfig()->getSspAssetDefaultFileMaxSize())),
                 'descriptionMessage' => 'Max up to %size%. Allowed file formats %format%',
                 'original-image-url' => $options[static::OPTION_ORIGINAL_IMAGE_URL] ?? null,
             ],

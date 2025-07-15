@@ -63,6 +63,37 @@ class SspAssetReader implements SspAssetReaderInterface
     }
 
     /**
+     * @param array<int> $salesOrderItemIds
+     *
+     * @return array<int, \Generated\Shared\Transfer\SspAssetTransfer>
+     */
+    public function indexSspAssetsBySalesOrderItemIds(array $salesOrderItemIds): array
+    {
+        $sspAssetTransfers = $this->selfServicePortalRepository->getSspAssetsBySalesOrderItemIds($salesOrderItemIds);
+
+        return $this->indexAssetsBySalesOrderItemId($sspAssetTransfers);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\SspAssetTransfer> $sspAssetTransfers
+     *
+     * @return array<int, \Generated\Shared\Transfer\SspAssetTransfer>
+     */
+    protected function indexAssetsBySalesOrderItemId(array $sspAssetTransfers): array
+    {
+        $indexedAssets = [];
+
+        foreach ($sspAssetTransfers as $sspAssetTransfer) {
+            $sspAssetData = $sspAssetTransfer->modifiedToArray();
+            if (isset($sspAssetData['idSalesOrderItem'])) {
+                $indexedAssets[(int)$sspAssetData['idSalesOrderItem']] = $sspAssetTransfer;
+            }
+        }
+
+        return $indexedAssets;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\SspAssetCollectionTransfer $sspAssetCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer

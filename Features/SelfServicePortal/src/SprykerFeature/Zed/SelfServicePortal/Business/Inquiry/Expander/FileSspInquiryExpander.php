@@ -8,7 +8,8 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Expander;
 
 use ArrayObject;
-use Generated\Shared\Transfer\FileTransfer;
+use Generated\Shared\Transfer\FileConditionsTransfer;
+use Generated\Shared\Transfer\FileCriteriaTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryConditionsTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
@@ -34,33 +35,106 @@ class FileSspInquiryExpander implements SspInquiryExpanderInterface
      */
     public function expand(SspInquiryCollectionTransfer $sspInquiryCollectionTransfer): SspInquiryCollectionTransfer
     {
-        $sspInquiryIds = array_map(fn ($sspInquiryTransfer) => $sspInquiryTransfer->getIdSspInquiry(), $sspInquiryCollectionTransfer->getSspInquiries()->getArrayCopy());
+        $sspInquiryIds = $this->extractSspInquiryIds($sspInquiryCollectionTransfer);
+        $fileIdToInquiryIdMapping = $this->buildFileIdToInquiryIdMapping($sspInquiryIds);
 
+        if ($fileIdToInquiryIdMapping === []) {
+            return $sspInquiryCollectionTransfer;
+        }
+
+        $fileTransfers = $this->getFileTransfersByFileIds(array_keys($fileIdToInquiryIdMapping));
+        $fileTransfersGroupedByInquiryId = $this->groupFileTransfersByInquiryId($fileTransfers, $fileIdToInquiryIdMapping);
+
+        return $this->expandInquiriesWithFiles($sspInquiryCollectionTransfer, $fileTransfersGroupedByInquiryId);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SspInquiryCollectionTransfer $sspInquiryCollectionTransfer
+     *
+     * @return list<int>
+     */
+    protected function extractSspInquiryIds(SspInquiryCollectionTransfer $sspInquiryCollectionTransfer): array
+    {
+        return array_map(
+            static fn ($sspInquiryTransfer) => $sspInquiryTransfer->getIdSspInquiry(),
+            $sspInquiryCollectionTransfer->getSspInquiries()->getArrayCopy(),
+        );
+    }
+
+    /**
+     * @param list<int> $sspInquiryIds
+     *
+     * @return array<int, int>
+     */
+    protected function buildFileIdToInquiryIdMapping(array $sspInquiryIds): array
+    {
         $sspInquiryFileCollectionTransfer = $this->selfServicePortalRepository->getSspInquiryFileCollection(
-            (new SspInquiryCriteriaTransfer())->setSspInquiryConditions((new SspInquiryConditionsTransfer())->setSspInquiryIds($sspInquiryIds)),
+            (new SspInquiryCriteriaTransfer())->setSspInquiryConditions(
+                (new SspInquiryConditionsTransfer())->setSspInquiryIds($sspInquiryIds),
+            ),
         );
 
-        $sspInquiryIdMappedByFileId = [];
+        $fileIdToInquiryIdMapping = [];
 
         foreach ($sspInquiryFileCollectionTransfer->getSspInquiries() as $sspInquiryTransfer) {
             foreach ($sspInquiryTransfer->getFiles() as $fileTransfer) {
-                $sspInquiryIdMappedByFileId[$fileTransfer->getIdFileOrFail()] = $sspInquiryTransfer->getIdSspInquiryOrFail();
+                $fileIdToInquiryIdMapping[$fileTransfer->getIdFileOrFail()] = $sspInquiryTransfer->getIdSspInquiryOrFail();
             }
         }
 
-        $fileManagerDataTransfers = $this->fileManagerFacade->getFilesByIds(array_keys($sspInquiryIdMappedByFileId));
-        $fileManagerDataTransfersGroupedBySspInquiryId = [];
-        foreach ($fileManagerDataTransfers as $fileManagerDataTransfer) {
-            $fileManagerDataTransfersGroupedBySspInquiryId[$sspInquiryIdMappedByFileId[$fileManagerDataTransfer->getFileOrFail()->getIdFileOrFail()]][] = $fileManagerDataTransfer;
+        return $fileIdToInquiryIdMapping;
+    }
+
+    /**
+     * @param list<int> $fileIds
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\FileTransfer>
+     */
+    protected function getFileTransfersByFileIds(array $fileIds): ArrayObject
+    {
+        $fileCriteriaTransfer = (new FileCriteriaTransfer())
+            ->setFileConditions(
+                (new FileConditionsTransfer())->setFileIds($fileIds),
+            );
+
+        $fileCollectionTransfer = $this->fileManagerFacade->getFileCollection($fileCriteriaTransfer);
+
+        return $fileCollectionTransfer->getFiles();
+    }
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileTransfer> $fileTransfers
+     * @param array<int, int> $fileIdToInquiryIdMapping
+     *
+     * @return array<int, list<\Generated\Shared\Transfer\FileTransfer>>
+     */
+    protected function groupFileTransfersByInquiryId(ArrayObject $fileTransfers, array $fileIdToInquiryIdMapping): array
+    {
+        $fileTransfersGroupedByInquiryId = [];
+
+        foreach ($fileTransfers as $fileTransfer) {
+            $inquiryId = $fileIdToInquiryIdMapping[$fileTransfer->getIdFileOrFail()];
+            $fileTransfersGroupedByInquiryId[$inquiryId][] = $fileTransfer;
         }
 
+        return $fileTransfersGroupedByInquiryId;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SspInquiryCollectionTransfer $sspInquiryCollectionTransfer
+     * @param array<int, list<\Generated\Shared\Transfer\FileTransfer>> $fileTransfersGroupedByInquiryId
+     *
+     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
+     */
+    protected function expandInquiriesWithFiles(
+        SspInquiryCollectionTransfer $sspInquiryCollectionTransfer,
+        array $fileTransfersGroupedByInquiryId
+    ): SspInquiryCollectionTransfer {
         foreach ($sspInquiryCollectionTransfer->getSspInquiries() as $sspInquiryTransfer) {
-            $sspInquiryTransfer->setFiles(new ArrayObject());
-            $fileManagerDataTransfers = $fileManagerDataTransfersGroupedBySspInquiryId[$sspInquiryTransfer->getIdSspInquiryOrFail()] ?? [];
-            foreach ($fileManagerDataTransfers as $fileManagerDataTransfer) {
-                $sspInquiryTransfer->getFiles()->append((new FileTransfer())
-                    ->addFileInfo($fileManagerDataTransfer->getFileInfoOrFail())
-                    ->setFileName($fileManagerDataTransfer->getFileOrFail()->getFileName()));
+            $fileTransfers = $fileTransfersGroupedByInquiryId[$sspInquiryTransfer->getIdSspInquiryOrFail()] ?? [];
+
+            foreach ($fileTransfers as $fileTransfer) {
+                $sspInquiryTransfer->addFile($fileTransfer);
             }
         }
 

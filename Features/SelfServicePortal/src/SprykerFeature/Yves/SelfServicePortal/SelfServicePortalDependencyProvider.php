@@ -106,7 +106,7 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @var string
      */
-    public const FORM_FACTORY = 'FORM_FACTORY';
+    public const SERVICE_SELF_SERVICE_PORTAL = 'SERVICE_SELF_SERVICE_PORTAL';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -131,6 +131,7 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addFileManagerService($container);
         $container = $this->addRouterService($container);
         $container = $this->addRequestStackService($container);
+        $container = $this->addSelfServicePortalService($container);
 
         return $container;
     }
@@ -340,6 +341,20 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::SERVICE_REQUEST_STACK, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_REQUEST_STACK);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSelfServicePortalService(Container $container): Container
+    {
+        $container->set(static::SERVICE_SELF_SERVICE_PORTAL, function (Container $container) {
+            return $container->getLocator()->selfServicePortal()->service();
         });
 
         return $container;

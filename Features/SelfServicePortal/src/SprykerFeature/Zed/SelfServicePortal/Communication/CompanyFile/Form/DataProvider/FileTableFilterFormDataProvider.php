@@ -26,7 +26,7 @@ class FileTableFilterFormDataProvider
     {
         $fileExtensions = array_map(function (string $fileExtension) {
             return trim($fileExtension, '.');
-        }, $this->config->getAllowedFileExtensions());
+        }, $this->config->getCompanyFileAllowedFileExtensions());
 
         return [
             FileTableFilterForm::OPTION_EXTENSIONS => array_combine($fileExtensions, $fileExtensions),

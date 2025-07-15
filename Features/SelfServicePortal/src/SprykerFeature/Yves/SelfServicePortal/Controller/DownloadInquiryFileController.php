@@ -9,18 +9,14 @@ namespace SprykerFeature\Yves\SelfServicePortal\Controller;
 
 use Exception;
 use Generated\Shared\Transfer\FileTransfer;
-use Generated\Shared\Transfer\SspInquiryFileDownloadRequestTransfer;
-use Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException;
+use Generated\Shared\Transfer\SspInquiryTransfer;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use SprykerFeature\Yves\SelfServicePortal\Plugin\Router\SelfServicePortalPageRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Transliterator;
 
 /**
  * @method \SprykerFeature\Client\SelfServicePortal\SelfServicePortalClientInterface getClient()
@@ -30,31 +26,17 @@ use Transliterator;
 class DownloadInquiryFileController extends AbstractController
 {
     use PermissionAwareTrait;
+    use LoggerTrait;
 
     /**
      * @var string
      */
-    protected const MESSAGE_FILE_UNAVAILABLE = 'self_service_portal.inquiry.file.unavailable';
+    protected const REQUEST_PARAM_UUID = 'uuid';
 
     /**
      * @var string
      */
-    protected const CONTENT_DISPOSITION = 'Content-Disposition';
-
-    /**
-     * @var string
-     */
-    protected const TRANSLITERATOR_RULE = 'Any-Latin;Latin-ASCII;';
-
-    /**
-     * @var string
-     */
-    protected const CONTENT_TYPE = 'Content-Type';
-
-    /**
-     * @var int
-     */
-    protected const INQUIRY_DOWNLOAD_CHUNK_SIZE = 1048576; // 1024 * 1024;
+    protected const REQUEST_PARAM_SSP_INQUIRY_REFERENCE = 'ssp-inquiry-reference';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -72,10 +54,10 @@ class DownloadInquiryFileController extends AbstractController
             throw new Exception('Customer not found');
         }
 
-         $sspInquiryFileUuid = $request->get('uuid');
-         $sspInquiryReference = $request->get('ssp-inquiry-reference');
+        $sspInquiryFileUuid = $request->get(static::REQUEST_PARAM_UUID);
+        $sspInquiryReference = $request->get(static::REQUEST_PARAM_SSP_INQUIRY_REFERENCE);
 
-         $sspInquiryTransfer = $this->getFactory()
+        $sspInquiryTransfer = $this->getFactory()
             ->createSspInquiryReader()
             ->getSspInquiry($sspInquiryReference, $customerTransfer->getCompanyUserTransferOrFail());
 
@@ -86,33 +68,33 @@ class DownloadInquiryFileController extends AbstractController
             ));
         }
 
-        $idFile = null;
-        foreach ($sspInquiryTransfer->getFiles() as $fileTransfer) {
-            if ($fileTransfer->getUuid() === $sspInquiryFileUuid) {
-                $idFile = $fileTransfer->getIdFile();
+        $fileTransfer = $this->findFileTransferByUuid($sspInquiryTransfer, $sspInquiryFileUuid);
 
-                break;
-            }
-        }
-
-        if ($idFile === null) {
+        if (!$fileTransfer) {
             throw new NotFoundHttpException(sprintf(
                 "File with provided UUID %s doesn't exist",
                 $sspInquiryFileUuid,
             ));
         }
 
-        try {
-            $fileManagerDataTransfer = $this->getClient()->downloadSspInquiryFile((new SspInquiryFileDownloadRequestTransfer())->setFileId($idFile));
-        } catch (FileSystemReadException $e) {
-            $this->addErrorMessage(static::MESSAGE_FILE_UNAVAILABLE);
+        return $this->createResponse($fileTransfer);
+    }
 
-            return $this->redirectResponseInternal(SelfServicePortalPageRouteProviderPlugin::ROUTE_NAME_SSP_INQUIRY_DETAILS, [
-                'reference' => $sspInquiryTransfer->getReference(),
-            ]);
+    /**
+     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
+     * @param string $fileUuid
+     *
+     * @return \Generated\Shared\Transfer\FileTransfer|null
+     */
+    protected function findFileTransferByUuid(SspInquiryTransfer $sspInquiryTransfer, string $fileUuid): ?FileTransfer
+    {
+        foreach ($sspInquiryTransfer->getFiles() as $fileTransfer) {
+            if ($fileTransfer->getUuid() === $fileUuid) {
+                return $fileTransfer;
+            }
         }
 
-        return $this->createResponse($fileManagerDataTransfer->getFileOrFail());
+        return null;
     }
 
     /**
@@ -122,42 +104,10 @@ class DownloadInquiryFileController extends AbstractController
      */
     protected function createResponse(FileTransfer $fileTransfer): Response
     {
-        $transliterator = Transliterator::create(static::TRANSLITERATOR_RULE);
+        $chunkSize = $this->getFactory()->getConfig()->getInquiryFileDownloadChunkSize();
 
-        if ($transliterator === null) {
-            return new StreamedResponse();
-        }
-
-        /** @var \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer */
-        $fileInfoTransfer = $fileTransfer->getFileInfo()->getIterator()->current();
-
-        $fileStream = $this->getFactory()
-            ->getFileManagerService()
-            ->readStream($fileInfoTransfer->getStorageFileNameOrFail(), $fileInfoTransfer->getStorageNameOrFail());
-
-        $response = new StreamedResponse(function () use ($fileStream): void {
-            while (!feof($fileStream)) {
-                $chunk = fread($fileStream, max(1, static::INQUIRY_DOWNLOAD_CHUNK_SIZE));
-                if ($chunk === false) {
-                    break;
-                }
-                echo $chunk;
-                flush();
-            }
-            fclose($fileStream);
-        });
-
-        $fileName = $fileTransfer->getFileNameOrFail();
-
-        $disposition = $response->headers->makeDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $fileName,
-            (string)$transliterator->transliterate($fileName),
-        );
-
-        $response->headers->set(static::CONTENT_DISPOSITION, $disposition);
-        $response->headers->set(static::CONTENT_TYPE, $fileInfoTransfer->getTypeOrFail());
-
-        return $response;
+        return $this->getFactory()
+            ->getSelfServicePortalService()
+            ->createFileDownloadResponse($fileTransfer, $chunkSize);
     }
 }

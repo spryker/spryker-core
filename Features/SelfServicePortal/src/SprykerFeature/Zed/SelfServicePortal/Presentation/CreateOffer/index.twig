@@ -8,25 +8,9 @@
 {% endblock %}
 
 {% block content %}
-    {% if productConcreteTable | default %}
-        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Select product for offer creation' | trans } %}
-            {% block widget_content %}
-                {{ productConcreteTable | raw }}
-            {% endblock %}
-        {% endembed %}
-    {% endif %}
-
-    {% if createOfferForm | default %}
-        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Offer' | trans } %}
-            {% block widget_content %}
-                {% include '@SelfServicePortal/Partials/offer-details.twig' with {
-                    productConcreteTransfer: productConcreteTransfer,
-                } %}
-
-                {% include '@SelfServicePortal/Partials/offer-form.twig' with {
-                    createOfferForm: createOfferForm,
-                } %}
-            {% endblock %}
-        {% endembed %}
-    {% endif %}
+   {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Select product for offer creation' | trans } %}
+        {% block widget_content %}
+            {{ productConcreteTable | raw }}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

@@ -12,13 +12,17 @@ use Generated\Shared\Transfer\DashboardRequestTransfer;
 use Generated\Shared\Transfer\DashboardResponseTransfer;
 use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
 use Generated\Shared\Transfer\FileAttachmentSearchConditionsTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\SortTransfer;
 use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Reader\CompanyFileReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class FileDashboardDataExpander implements FileDashboardDataExpanderInterface
 {
+    /**
+     * @var int
+     */
+    protected const DEFAULT_FILE_DASHBOARD_PAGE_NUMBER = 1;
+
     /**
      * @param \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Reader\CompanyFileReaderInterface $fileReader
      * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
@@ -62,15 +66,13 @@ class FileDashboardDataExpander implements FileDashboardDataExpanderInterface
                 (new FileAttachmentSearchConditionsTransfer()),
             )
             ->setPagination(
-                (new PaginationTransfer())
-                    ->setMaxPerPage($this->config->getDefaultFileDashboardMaxPerPage())
-                    ->setPage($this->config->getDefaultFileDashboardPageNumber()),
+                $dashboardRequestTransfer->getPagination(),
             )
             ->setCompanyUser($dashboardRequestTransfer->getCompanyUser())
             ->addSort(
                 (new SortTransfer())
                     ->setField($this->config->getDefaultFileDashboardSortField())
-                    ->setIsAscending($this->config->isDefaultFileDashboardSortAscending()),
+                    ->setIsAscending(false),
             )
             ->setWithCompanyRelation(true)
             ->setWithBusinessUnitRelation(true)

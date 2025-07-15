@@ -38,7 +38,7 @@ class ManualEventsSspInquiryExpander implements SspInquiryExpanderInterface
             $stateMachineItemTransfer = new StateMachineItemTransfer();
             $stateMachineItemTransfer->setIdentifier($sspInquiryTransfer->getIdSspInquiry())
                 ->setStateMachineName($this->selfServicePortalConfig->getInquiryStateMachineName())
-                ->setProcessName($this->selfServicePortalConfig->getInquiryStateMachineProcessInquiryTypeMap()[$sspInquiryTransfer->getType()])
+                ->setProcessName($this->selfServicePortalConfig->getSspInquiryStateMachineProcessInquiryTypeMap()[$sspInquiryTransfer->getType()])
                 ->setStateName($sspInquiryTransfer->getStatus());
 
             $stateMachineItemTransfers[] = $stateMachineItemTransfer;
@@ -52,8 +52,8 @@ class ManualEventsSspInquiryExpander implements SspInquiryExpanderInterface
              $sspInquiryTransfer
                 ->setManualEvents($manualEventsPerIdentifier[$sspInquiryTransfer->getIdSspInquiry()] ?? [])
                 ->setIsCancellable(
-                    $this->selfServicePortalConfig->getInquiryCancelStateMachineEventName()
-                    && in_array($this->selfServicePortalConfig->getInquiryCancelStateMachineEventName(), $sspInquiryTransfer->getManualEvents()),
+                    $this->selfServicePortalConfig->getSspInquiryCancelStateMachineEventName()
+                    && in_array($this->selfServicePortalConfig->getSspInquiryCancelStateMachineEventName(), $sspInquiryTransfer->getManualEvents()),
                 );
         }
 

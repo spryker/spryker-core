@@ -36,19 +36,11 @@ class ProductConcreteTable extends AbstractTable
     protected const COL_NAME = 'name';
 
     /**
-     * @var \Orm\Zed\Product\Persistence\SpyProductQuery
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\CreateOfferController::formAction()
+     *
+     * @var string
      */
-    protected SpyProductQuery $productQuery;
-
-    /**
-     * @var \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
-     */
-    protected SpyProductImageQuery $productImageQuery;
-
-    /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacade
-     */
-    protected LocaleFacade $localeFacade;
+    protected const URL_PATH_SELF_SERVICE_PORTAL_CREATE_OFFER_FORM = '/self-service-portal/create-offer/form';
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery
@@ -56,13 +48,10 @@ class ProductConcreteTable extends AbstractTable
      * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
      */
     public function __construct(
-        SpyProductQuery $productQuery,
-        SpyProductImageQuery $productImageQuery,
-        LocaleFacade $localeFacade
+        protected SpyProductQuery $productQuery,
+        protected SpyProductImageQuery $productImageQuery,
+        protected LocaleFacade $localeFacade
     ) {
-        $this->productQuery = $productQuery;
-        $this->productImageQuery = $productImageQuery;
-        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -232,7 +221,7 @@ class ProductConcreteTable extends AbstractTable
         $urls = [];
 
         $urls[] = $this->generateEditButton(
-            Url::generate('/self-service-portal/create-offer', [
+            Url::generate(static::URL_PATH_SELF_SERVICE_PORTAL_CREATE_OFFER_FORM, [
                 CreateOfferController::PARAM_ID_PRODUCT_CONCRETE => $productEntity->getIdProduct(),
             ]),
             'Create Offer',

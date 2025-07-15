@@ -27,7 +27,8 @@ class SspInquirySearchFormDataProvider
      */
     public function getOptions(): array
     {
-        $mappedTypes = array_combine(array_map(fn ($type) => 'self_service_portal.inquiry.type.' . $type, $this->selfServicePortalConfig->getAllSelectableSspInquiryTypes()), $this->selfServicePortalConfig->getAllSelectableSspInquiryTypes());
+        $allSelectableSspInquiryTypes = array_merge(...array_values($this->selfServicePortalConfig->getSelectableSspInquiryTypes()));
+        $mappedTypes = array_combine(array_map(fn ($type) => 'self_service_portal.inquiry.type.' . $type, $allSelectableSspInquiryTypes), $allSelectableSspInquiryTypes);
         $mappedStatuses = array_combine(array_map(fn ($status) => 'self_service_portal.inquiry.status.' . $status, $this->selfServicePortalConfig->getSspInquiryAvailableStatuses()), $this->selfServicePortalConfig->getSspInquiryAvailableStatuses());
 
         return [

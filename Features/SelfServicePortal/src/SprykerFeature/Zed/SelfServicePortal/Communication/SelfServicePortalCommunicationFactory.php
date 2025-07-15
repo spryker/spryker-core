@@ -48,12 +48,7 @@ use Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Spryker\Zed\Translator\Business\TranslatorFacadeInterface;
 use Spryker\Zed\User\Business\UserFacadeInterface;
-use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\SspAssetItemExpander;
-use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\SspAssetItemExpanderInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Expander\OrderItemSspAssetExpander;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Expander\OrderItemSspAssetExpanderInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Extractor\SalesOrderItemIdExtractor;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Extractor\SalesOrderItemIdExtractorInterface;
+use SprykerFeature\Service\SelfServicePortal\SelfServicePortalServiceInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Form\DataProvider\SspAssetFilterFormDataProvider;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Form\DataProvider\SspAssetFormDataProvider;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Form\SspAssetFilterForm;
@@ -104,8 +99,6 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\SspInquiryFi
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\TriggerEventForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Table\OrderSspInquiryTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Table\SspInquiryTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductConcreteClassExpander;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductConcreteClassExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductOfferTableActionExpander;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductOfferTableActionExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\CreateOfferForm;
@@ -1182,16 +1175,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\SspAssetItemExpanderInterface
-     */
-    public function createSspAssetItemExpander(): SspAssetItemExpanderInterface
-    {
-        return new SspAssetItemExpander(
-            $this->getFacade(),
-        );
-    }
-
-    /**
      * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Saver\SalesOrderItemSspAssetSaverInterface
      */
     public function createSalesOrderItemSspAssetSaver(): SalesOrderItemSspAssetSaverInterface
@@ -1211,39 +1194,18 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Extractor\SalesOrderItemIdExtractorInterface
-     */
-    public function createSalesOrderItemIdExtractor(): SalesOrderItemIdExtractorInterface
-    {
-        return new SalesOrderItemIdExtractor();
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Expander\OrderItemSspAssetExpanderInterface
-     */
-    public function createOrderItemSspAssetExpander(): OrderItemSspAssetExpanderInterface
-    {
-        return new OrderItemSspAssetExpander(
-            $this->getRepository(),
-            $this->createSalesOrderItemIdExtractor(),
-        );
-    }
-
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductConcreteClassExpanderInterface
-     */
-    public function createProductConcreteClassExpander(): ProductConcreteClassExpanderInterface
-    {
-        return new ProductConcreteClassExpander(
-            $this->getRepository(),
-        );
-    }
-
-    /**
      * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductOfferTableActionExpanderInterface
      */
     public function createProductOfferTableActionExpander(): ProductOfferTableActionExpanderInterface
     {
         return new ProductOfferTableActionExpander();
+    }
+
+    /**
+     * @return \SprykerFeature\Service\SelfServicePortal\SelfServicePortalServiceInterface
+     */
+    public function getSelfServicePortalService(): SelfServicePortalServiceInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_SELF_SERVICE_PORTAL);
     }
 }

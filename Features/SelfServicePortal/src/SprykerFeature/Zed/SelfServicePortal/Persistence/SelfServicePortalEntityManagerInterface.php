@@ -9,7 +9,9 @@ namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileCollectionTransfer;
+use Generated\Shared\Transfer\ProductClassCriteriaTransfer;
 use Generated\Shared\Transfer\ProductClassTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
@@ -17,21 +19,21 @@ use Generated\Shared\Transfer\SspInquiryTransfer;
 interface SelfServicePortalEntityManagerInterface
 {
     /**
-     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param int $idShipmentType
      *
      * @return void
      */
-    public function createProductShipmentType(int $idProductConcrete, int $idShipmentType): void;
+    public function createProductShipmentType(ProductConcreteTransfer $productConcreteTransfer, int $idShipmentType): void;
 
     /**
-     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param list<int> $shipmentTypeIds
      *
      * @return void
      */
-    public function deleteProductShipmentTypesByIdProductConcreteAndShipmentTypeIds(
-        int $idProductConcrete,
+    public function deleteProductShipmentTypes(
+        ProductConcreteTransfer $productConcreteTransfer,
         array $shipmentTypeIds
     ): void;
 
@@ -43,12 +45,11 @@ interface SelfServicePortalEntityManagerInterface
     public function deleteProductClassesByProductId(int $idProduct): void;
 
     /**
-     * @param int $idProduct
-     * @param array<int> $productClassIds
+     * @param \Generated\Shared\Transfer\ProductClassCriteriaTransfer $productClassCriteriaTransfer
      *
      * @return void
      */
-    public function saveProductClassesForProduct(int $idProduct, array $productClassIds): void;
+    public function saveProductClassesForProduct(ProductClassCriteriaTransfer $productClassCriteriaTransfer): void;
 
     /**
      * @param int $idSalesOrderItem

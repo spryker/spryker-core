@@ -141,7 +141,7 @@ class TriggerInquiryStateMachineController extends AbstractController
                 $config->getInquiryStateMachineName(),
             )
             ->setProcessName(
-                $config->getInquiryStateMachineProcessInquiryTypeMap()[$sspInquiryTransfer->getType()],
+                $config->getSspInquiryStateMachineProcessInquiryTypeMap()[$sspInquiryTransfer->getType()],
             );
 
         return $stateMachineItemTransfer;

@@ -8,6 +8,8 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Business\Service\Saver;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductClassConditionsTransfer;
+use Generated\Shared\Transfer\ProductClassCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface;
 use Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface;
@@ -42,17 +44,12 @@ class ProductClassSaver implements ProductClassSaverInterface
         }
 
         $idProductConcrete = $productConcreteTransfer->getIdProductConcreteOrFail();
-
-        $this->selfServicePortalEntityManager->deleteProductConcreteToProductClassRelations($idProductConcrete);
-
         $productClassIds = $this->extractProductClassIds($productConcreteTransfer->getProductClasses());
-        $this->selfServicePortalEntityManager->saveProductConcreteProductClassRelations(
-            $idProductConcrete,
-            $productClassIds,
-        );
+
+        $productClassCriteriaTransfer = $this->createProductClassCriteriaTransfer($idProductConcrete, $productClassIds);
+        $this->selfServicePortalEntityManager->saveProductClassesForProduct($productClassCriteriaTransfer);
 
         $idProductAbstract = $productConcreteTransfer->getFkProductAbstractOrFail();
-        $idProductConcrete = $productConcreteTransfer->getIdProductConcreteOrFail();
 
         $this->productPageSearchFacade->refresh([$idProductAbstract]);
         $this->productStorageFacade->publishConcreteProducts([$idProductConcrete]);
@@ -76,5 +73,21 @@ class ProductClassSaver implements ProductClassSaverInterface
         }
 
         return $productClassIds;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param array<int> $productClassIds
+     *
+     * @return \Generated\Shared\Transfer\ProductClassCriteriaTransfer
+     */
+    protected function createProductClassCriteriaTransfer(int $idProductConcrete, array $productClassIds): ProductClassCriteriaTransfer
+    {
+        $productClassConditionsTransfer = (new ProductClassConditionsTransfer())
+            ->setProductConcreteIds([$idProductConcrete])
+            ->setProductClassIds($productClassIds);
+
+        return (new ProductClassCriteriaTransfer())
+            ->setProductClassConditions($productClassConditionsTransfer);
     }
 }

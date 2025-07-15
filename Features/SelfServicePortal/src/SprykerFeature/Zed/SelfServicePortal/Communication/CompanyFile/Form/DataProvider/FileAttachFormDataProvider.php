@@ -152,7 +152,7 @@ class FileAttachFormDataProvider
     public function getCompanyAutocompleteData(string $searchTerm): array
     {
         $filterTransfer = (new FilterTransfer())
-            ->setLimit($this->selfServicePortalConfig->getFileAttachmentFormAutocompleteLimit());
+            ->setLimit($this->selfServicePortalConfig->getCompanyFileAutocompleteLimit());
         $companyCriteriaFilterTransfer = (new CompanyCriteriaFilterTransfer())
             ->setFilter($filterTransfer)
             ->setName($searchTerm);
@@ -177,7 +177,7 @@ class FileAttachFormDataProvider
     public function getCompanyUserAutocompleteData(string $searchTerm): array
     {
         $filterTransfer = (new FilterTransfer())
-            ->setLimit($this->selfServicePortalConfig->getFileAttachmentFormAutocompleteLimit());
+            ->setLimit($this->selfServicePortalConfig->getCompanyFileAutocompleteLimit());
         $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterTransfer())
             ->setFilter($filterTransfer)
             ->setCustomerName($searchTerm);
@@ -202,7 +202,7 @@ class FileAttachFormDataProvider
     public function getCompanyBusinessUnitAutocompleteData(string $searchTerm): array
     {
         $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
-            ->setFilter((new FilterTransfer())->setLimit($this->selfServicePortalConfig->getFileAttachmentFormAutocompleteLimit()))
+            ->setFilter((new FilterTransfer())->setLimit($this->selfServicePortalConfig->getCompanyFileAutocompleteLimit()))
             ->setName($searchTerm);
         $companyBusinessUnits = $this->companyBusinessUnitFacade->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
         $result = [];

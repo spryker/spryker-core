@@ -34,6 +34,26 @@ class SelfServicePortalConstants
     public const STORAGE_NAME = 'SELF_SERVICE_PORTAL:STORAGE_NAME';
 
     /**
+     * Specification:
+     * - Defines the storage name for Self Service Portal inquiry files related data.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const INQUIRY_STORAGE_NAME = 'SELF_SERVICE_PORTAL:INQUIRY_STORAGE_NAME';
+
+    /**
+     * Specification:
+     * - Defines the storage name for Self Service Portal asset image files related data.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ASSET_STORAGE_NAME = 'SELF_SERVICE_PORTAL:ASSET_STORAGE_NAME';
+
+    /**
      * Base URL for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
      *
      * @api

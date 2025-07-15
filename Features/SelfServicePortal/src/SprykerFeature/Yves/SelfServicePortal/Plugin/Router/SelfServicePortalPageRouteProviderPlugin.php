@@ -346,7 +346,7 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
     }
 
     /**
-     * @uses \SprykerFeature\Yves\SelfServicePortal\Controller\InquiryController::listAction()
+     * @uses \SprykerFeature\Yves\SelfServicePortal\Controller\ListInquiryController::indexAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
@@ -354,7 +354,7 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
      */
     protected function addCustomerSspInquiryListRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildGetRoute('/customer/ssp-inquiry', 'SelfServicePortal', 'Inquiry', 'listAction');
+        $route = $this->buildGetRoute('/customer/ssp-inquiry', 'SelfServicePortal', 'ListInquiry', 'indexAction');
 
         $routeCollection->add(static::ROUTE_NAME_SSP_INQUIRY_LIST, $route);
 
@@ -501,7 +501,7 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
     }
 
     /**
-     * @uses \SprykerFeature\Yves\SelfServicePortal\Controller\AssetController::listAction()
+     * @uses \SprykerFeature\Yves\SelfServicePortal\Controller\ListAssetController::indexAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
@@ -509,7 +509,7 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
      */
     protected function addAssetListRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('customer/ssp-asset', 'SelfServicePortal', 'Asset', 'listAction');
+        $route = $this->buildRoute('customer/ssp-asset', 'SelfServicePortal', 'ListAsset', 'indexAction');
         $routeCollection->add(static::ROUTE_NAME_ASSET_LIST, $route);
 
         return $routeCollection;

@@ -8,14 +8,12 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductClassCollectionTransfer;
-use Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer;
+use Generated\Shared\Transfer\ProductClassCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
@@ -147,9 +145,9 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
      *
      * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
      */
-    public function getServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer
+    public function getSspServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer
     {
-        $serviceCollectionTransfer = new SspServiceCollectionTransfer();
+        $sspServiceCollectionTransfer = new SspServiceCollectionTransfer();
 
         $query = $this->getFactory()->getSalesOrderItemPropelQuery();
 
@@ -157,37 +155,84 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
 
         $query->joinSalesOrderItemSspAsset(null, Criteria::LEFT_JOIN);
 
-        $query = $this->applyServiceFilters($query, $sspServiceCriteriaTransfer);
-        $query = $this->applyServiceSorting($query, $sspServiceCriteriaTransfer);
+        $query = $this->applySspServiceFilters($query, $sspServiceCriteriaTransfer);
+        $query = $this->applySspServiceSorting($query, $sspServiceCriteriaTransfer);
 
         $query = $query->groupByIdSalesOrderItem();
 
-        $serviceEntities = $this->getServicePaginatedCollection($query, $sspServiceCriteriaTransfer);
+        $sspServiceEntities = $this->getSspServicePaginatedCollection($query, $sspServiceCriteriaTransfer);
 
         $sspServiceMapper = $this->getFactory()->createSspServiceMapper();
-        $serviceTransfers = $sspServiceMapper->mapSalesOrderItemEntitiesToSspServiceTransfers($serviceEntities->getData());
+        $sspServiceTransfers = $sspServiceMapper->mapSalesOrderItemEntitiesToSspServiceTransfers($sspServiceEntities->getData());
 
-        foreach ($serviceTransfers as $serviceTransfer) {
-            $serviceCollectionTransfer->addService($serviceTransfer);
+        foreach ($sspServiceTransfers as $sspServiceTransfer) {
+            $sspServiceCollectionTransfer->addService($sspServiceTransfer);
         }
 
-        $serviceCollectionTransfer->setPagination($sspServiceCriteriaTransfer->getPagination());
+        $sspServiceCollectionTransfer->setPagination($sspServiceCriteriaTransfer->getPagination());
 
-        return $serviceCollectionTransfer;
+        return $sspServiceCollectionTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductClassCriteriaTransfer $productClassCriteriaTransfer
+     *
      * @return \Generated\Shared\Transfer\ProductClassCollectionTransfer
      */
-    public function getProductClassCollection(): ProductClassCollectionTransfer
+    public function getProductClassCollection(ProductClassCriteriaTransfer $productClassCriteriaTransfer): ProductClassCollectionTransfer
     {
-        $productClassEntities = $this->getFactory()
-            ->createProductClassQuery()
-            ->find()->getData();
+        $productClassCollectionTransfer = new ProductClassCollectionTransfer();
+
+        if (!$productClassCriteriaTransfer->getProductClassConditions()) {
+            $productClassEntities = $this->getFactory()
+                ->createProductClassQuery()
+                ->find()->getData();
+
+            return $this->getFactory()
+                ->createProductClassMapper()
+                ->mapProductClassEntitiesToProductClassCollectionTransfer($productClassEntities, $productClassCollectionTransfer);
+        }
+
+        $productClassConditions = $productClassCriteriaTransfer->getProductClassConditions();
+        $skus = $productClassConditions->getSkus();
+        $productAbstractIds = $productClassConditions->getProductAbstractIds();
+        $productConcreteIds = $productClassConditions->getProductConcreteIds();
+
+        if (!$skus && !$productAbstractIds && !$productConcreteIds) {
+            return $productClassCollectionTransfer;
+        }
+
+        $productToProductClassQuery = $this->getFactory()
+            ->createProductToProductClassQuery()
+            ->joinWithProductClass()
+            ->useProductQuery();
+
+        if ($skus) {
+            $productToProductClassQuery->filterBySku_In($skus);
+        }
+
+        if ($productAbstractIds) {
+            $productToProductClassQuery->filterByFkProductAbstract_In($productAbstractIds);
+        }
+
+        if ($productConcreteIds) {
+            $productToProductClassQuery->filterByIdProduct_In($productConcreteIds);
+        }
+
+        $productToProductClassEntities = $productToProductClassQuery
+            ->endUse()
+            ->find();
+
+        if ($productToProductClassEntities->isEmpty()) {
+            return $productClassCollectionTransfer;
+        }
 
         return $this->getFactory()
             ->createProductClassMapper()
-            ->mapProductClassEntitiesToProductClassCollectionTransfer($productClassEntities, new ProductClassCollectionTransfer());
+            ->mapProductToProductClassEntitiesToProductClassCollectionTransfer(
+                $productToProductClassEntities->getArrayCopy(),
+                $productClassCollectionTransfer,
+            );
     }
 
     /**
@@ -231,7 +276,7 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    protected function applyServiceFilters(SpySalesOrderItemQuery $query, SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SpySalesOrderItemQuery
+    protected function applySspServiceFilters(SpySalesOrderItemQuery $query, SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SpySalesOrderItemQuery
     {
         if (!$sspServiceCriteriaTransfer->getServiceConditions()) {
             return $query;
@@ -249,20 +294,20 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
             ->endUse();
         }
 
-        if ($serviceConditionsTransfer->getServicesSearchConditionGroup()) {
-            $servicesSearchConditionGroup = $serviceConditionsTransfer->getServicesSearchConditionGroup();
+        if ($serviceConditionsTransfer->getServicesSearchCondition()) {
+            $servicesSearchCondition = $serviceConditionsTransfer->getServicesSearchCondition();
 
-            if ($servicesSearchConditionGroup->getProductName()) {
-                $query->filterByName_Like(sprintf('%%%s%%', $servicesSearchConditionGroup->getProductName()));
+            if ($servicesSearchCondition->getProductName()) {
+                $query->filterByName_Like(sprintf('%%%s%%', $servicesSearchCondition->getProductName()));
             }
 
-            if ($servicesSearchConditionGroup->getSku()) {
-                $query->filterBySku_Like(sprintf('%%%s%%', $servicesSearchConditionGroup->getSku()));
+            if ($servicesSearchCondition->getSku()) {
+                $query->filterBySku_Like(sprintf('%%%s%%', $servicesSearchCondition->getSku()));
             }
 
-            if ($servicesSearchConditionGroup->getOrderReference()) {
+            if ($servicesSearchCondition->getOrderReference()) {
                 $query->useOrderQuery()
-                        ->filterByOrderReference_Like(sprintf('%%%s%%', $servicesSearchConditionGroup->getOrderReference()))
+                        ->filterByOrderReference_Like(sprintf('%%%s%%', $servicesSearchCondition->getOrderReference()))
                     ->endUse();
             }
         }
@@ -300,7 +345,7 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    protected function applyServiceSorting(SpySalesOrderItemQuery $query, SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SpySalesOrderItemQuery
+    protected function applySspServiceSorting(SpySalesOrderItemQuery $query, SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SpySalesOrderItemQuery
     {
         if (count($sspServiceCriteriaTransfer->getSortCollection()) === 0) {
             return $query->orderBy(static::FIELD_SCHEDULED_AT, Criteria::DESC)
@@ -320,94 +365,25 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
     }
 
     /**
-     * @param int $idProductAbstract
-     *
-     * @return array<\Generated\Shared\Transfer\ProductClassTransfer>
-     */
-    public function getProductClassesByIdProductAbstract(int $idProductAbstract): array
-    {
-        return $this->getProductClassesByProductAbstractIds([$idProductAbstract])[$idProductAbstract] ?? [];
-    }
-
-    /**
-     * @param array<int> $productAbstractIds
-     *
-     * @return array<int, array<\Generated\Shared\Transfer\ProductClassTransfer>>
-     */
-    public function getProductClassesByProductAbstractIds(array $productAbstractIds): array
-    {
-        if (!$productAbstractIds) {
-            return [];
-        }
-
-        $productToProductClassEntities = $this->getFactory()
-            ->createProductToProductClassQuery()
-            ->joinWithProductClass()
-            ->useProductQuery()
-                ->filterByFkProductAbstract_In($productAbstractIds)
-            ->endUse()
-            ->find();
-
-        if ($productToProductClassEntities->isEmpty()) {
-            return [];
-        }
-
-        $result = [];
-        $productClassMapper = $this->getFactory()->createProductClassMapper();
-
-        foreach ($productToProductClassEntities as $productToProductClassEntity) {
-            $idProductAbstract = (int)$productToProductClassEntity->getProduct()->getFkProductAbstract();
-
-            if (!isset($result[$idProductAbstract])) {
-                $result[$idProductAbstract] = [];
-            }
-
-            $result[$idProductAbstract][] = $productClassMapper->mapProductClassEntityToProductClassTransfer($productToProductClassEntity->getProductClass());
-        }
-
-        return $result;
-    }
-
-    /**
      * @param array<int> $salesOrderItemIds
      *
-     * @return array<int, array<\Generated\Shared\Transfer\ProductClassTransfer>>
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
-    public function getProductClassesGroupedBySalesOrderItemIds(array $salesOrderItemIds): array
+    public function getSalesOrderItemsByIds(array $salesOrderItemIds): array
     {
         if (!$salesOrderItemIds) {
             return [];
         }
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities */
         $salesOrderItemEntities = $this->getFactory()
             ->getSalesOrderItemPropelQuery()
             ->filterByIdSalesOrderItem_In($salesOrderItemIds)
             ->find();
 
-        if ($salesOrderItemEntities->isEmpty()) {
-            return [];
-        }
-
-        $salesOrderItemIdToSkuMap = [];
-        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
-            $salesOrderItemIdToSkuMap[$salesOrderItemEntity->getIdSalesOrderItem()] = $salesOrderItemEntity->getSku();
-        }
-
-        $skus = array_values($salesOrderItemIdToSkuMap);
-        $productClassesBySkus = $this->getProductClassesForConcreteProductsBySkusIndexedBySku($skus);
-
-        if (!$productClassesBySkus) {
-            return [];
-        }
-
-        $salesOrderItemIdToProductClasses = [];
-        foreach ($salesOrderItemIdToSkuMap as $salesOrderItemId => $sku) {
-            if (isset($productClassesBySkus[$sku])) {
-                $salesOrderItemIdToProductClasses[$salesOrderItemId] = $productClassesBySkus[$sku];
-            }
-        }
-
-        return $salesOrderItemIdToProductClasses;
+        return $this->getFactory()
+            ->createSalesOrderItemMapper()
+            ->mapSalesOrderItemEntitiesToItemTransfers($salesOrderItemEntities);
     }
 
     /**
@@ -839,28 +815,15 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
             }
         }
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnit> $sspAssetToCompanyBusinessUnitEntities */
         $sspAssetToCompanyBusinessUnitEntities = $sspAssetToCompanyBusinessUnitQuery->find();
 
-        foreach ($sspAssetCollectionTransfer->getSspAssets() as $sspAssetTransfer) {
-            foreach ($sspAssetToCompanyBusinessUnitEntities as $sspAssetToCompanyBusinessUnit) {
-                if ($sspAssetToCompanyBusinessUnit->getFkSspAsset() === $sspAssetTransfer->getIdSspAsset()) {
-                    $sspAssetTransfer->addBusinessUnitAssignment(
-                        (new SspAssetBusinessUnitAssignmentTransfer())
-                            ->setCompanyBusinessUnit(
-                                (new CompanyBusinessUnitTransfer())
-                                    ->setIdCompanyBusinessUnit($sspAssetToCompanyBusinessUnit->getFkCompanyBusinessUnit())
-                                    ->setName($sspAssetToCompanyBusinessUnit->getSpyCompanyBusinessUnit()->getName())
-                                    ->setCompany(
-                                        (new CompanyTransfer())
-                                            ->setIdCompany($sspAssetToCompanyBusinessUnit->getSpyCompanyBusinessUnit()->getFkCompany())
-                                            ->setName($sspAssetToCompanyBusinessUnit->getSpyCompanyBusinessUnit()->getCompany()->getName()),
-                                    ),
-                            )
-                            ->setAssignedAt($sspAssetToCompanyBusinessUnit->getCreatedAt()->format('Y-m-d H:i:s')),
-                    );
-                }
-            }
-        }
+        $sspAssetCollectionTransfer = $this->getFactory()
+            ->createSspAssetBusinessUnitAssignmentMapper()
+            ->mapSspAssetToCompanyBusinessUnitEntitiesToSspAssetCollection(
+                $sspAssetToCompanyBusinessUnitEntities,
+                $sspAssetCollectionTransfer,
+            );
 
         return $sspAssetCollectionTransfer;
     }
@@ -993,6 +956,37 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
     /**
      * @param array<int> $salesOrderItemIds
      *
+     * @return array<\Generated\Shared\Transfer\SspAssetTransfer>
+     */
+    public function getSspAssetsBySalesOrderItemIds(array $salesOrderItemIds): array
+    {
+        if (!$salesOrderItemIds) {
+            return [];
+        }
+
+        $salesOrderItemSspAssetQuery = $this->getFactory()
+            ->getSalesOrderItemSspAssetQuery()
+            ->filterByFkSalesOrderItem_In($salesOrderItemIds);
+
+        $salesOrderItemSspAssetEntities = $salesOrderItemSspAssetQuery->find();
+        $sspAssetTransfers = [];
+
+        foreach ($salesOrderItemSspAssetEntities as $salesOrderItemSspAssetEntity) {
+            $sspAssetTransfer = new SspAssetTransfer();
+            $sspAssetTransfer->fromArray($salesOrderItemSspAssetEntity->toArray(), true);
+            $sspAssetTransfer->offsetSet('idSalesOrderItem', $salesOrderItemSspAssetEntity->getFkSalesOrderItem());
+
+            $sspAssetTransfers[] = $sspAssetTransfer;
+        }
+
+        return $sspAssetTransfers;
+    }
+
+    /**
+     * @deprecated Use getSspAssetsBySalesOrderItemIds() and business layer indexation instead.
+     *
+     * @param array<int> $salesOrderItemIds
+     *
      * @return array<int, \Generated\Shared\Transfer\SspAssetTransfer>
      */
     public function getSspAssetsIndexedByIdSalesOrderItem(array $salesOrderItemIds): array
@@ -1036,82 +1030,12 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
     }
 
     /**
-     * @param array<string> $skus
-     *
-     * @return array<string, array<\Generated\Shared\Transfer\ProductClassTransfer>>
-     */
-    public function getProductClassesForConcreteProductsBySkusIndexedBySku(array $skus): array
-    {
-        if (!$skus) {
-            return [];
-        }
-
-        $productToProductClassEntities = $this->getFactory()
-            ->createProductToProductClassQuery()
-            ->joinWithProductClass()
-            ->useProductQuery()
-                ->filterBySku_In($skus)
-            ->endUse()
-            ->find();
-
-        if ($productToProductClassEntities->isEmpty()) {
-            return [];
-        }
-
-        $productClassTransfersIndexedBySku = [];
-
-        foreach ($productToProductClassEntities as $productToProductClassEntity) {
-            $productClassTransfersIndexedBySku[(string)$productToProductClassEntity->getProduct()->getSku()][] = $this->getFactory()->createProductClassMapper()->mapProductClassEntityToProductClassTransfer($productToProductClassEntity->getProductClass());
-        }
-
-        return $productClassTransfersIndexedBySku;
-    }
-
-    /**
-     * @param array<int> $productConcreteIds
-     *
-     * @return array<int, array<\Generated\Shared\Transfer\ProductClassTransfer>>
-     */
-    public function getProductClassesByProductConcreteIds(array $productConcreteIds): array
-    {
-        if (!$productConcreteIds) {
-            return [];
-        }
-
-        $productToProductClassQuery = $this->getFactory()
-            ->createProductToProductClassQuery()
-            ->filterByFkProduct_In($productConcreteIds)
-            ->joinWithProductClass();
-
-        $productToProductClassEntities = $productToProductClassQuery->find();
-
-        if ($productToProductClassEntities->isEmpty()) {
-            return [];
-        }
-
-        $result = [];
-        $productClassMapper = $this->getFactory()->createProductClassMapper();
-
-        foreach ($productToProductClassEntities as $productToProductClassEntity) {
-            $idProduct = (int)$productToProductClassEntity->getFkProduct();
-
-            if (!isset($result[$idProduct])) {
-                $result[$idProduct] = [];
-            }
-
-            $result[$idProduct][] = $productClassMapper->mapProductClassEntityToProductClassTransfer($productToProductClassEntity->getProductClass());
-        }
-
-        return $result;
-    }
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
      * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
      *
      * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
-    protected function getServicePaginatedCollection(
+    protected function getSspServicePaginatedCollection(
         SpySalesOrderItemQuery $query,
         SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
     ): Collection {

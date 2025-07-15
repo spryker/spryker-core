@@ -7,7 +7,6 @@
 
 namespace SprykerFeature\Yves\SelfServicePortal\Controller;
 
-use Exception;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
@@ -16,7 +15,6 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @method \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalFactory getFactory()
@@ -28,12 +26,7 @@ class DownloadAssetImageController extends AbstractController
     /**
      * @var string
      */
-    protected const CONTENT_TYPE = 'Content-Type';
-
-    /**
-     * @var string
-     */
-    protected const HEADER_CONTENT_DISPOSITION = 'Content-Disposition';
+    protected const REQUEST_PARAM_SSP_ASSET_REFERENCE = 'ssp-asset-reference';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -42,7 +35,7 @@ class DownloadAssetImageController extends AbstractController
      */
     public function viewImageAction(Request $request): Response
     {
-        $sspAssetReference = $request->get('ssp-asset-reference');
+        $sspAssetReference = $request->get(static::REQUEST_PARAM_SSP_ASSET_REFERENCE);
 
         $sspAssetCollectionTransfer = $this->getClient()->getSspAssetCollection(
             (new SspAssetCriteriaTransfer())
@@ -65,44 +58,18 @@ class DownloadAssetImageController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
-     * @throws \Exception
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function createResponse(FileTransfer $fileTransfer): Response
     {
-        /** @var \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer */
-        $fileInfoTransfer = $fileTransfer->getFileInfo()->getIterator()->current();
-
-        $fileStream = $this->getFactory()
-            ->getFileManagerService()
-            ->readStream($fileInfoTransfer->getStorageFileNameOrFail(), $fileInfoTransfer->getStorageNameOrFail());
-
         $chunkSize = $this->getFactory()->getConfig()->getSspAssetImageDownloadChunkSize();
 
-        if ($chunkSize <= 0) {
-            throw new Exception('Chunk size is not valid');
-        }
-
-        $response = new StreamedResponse(function () use ($fileStream, $chunkSize): void {
-            while (!feof($fileStream)) {
-                $chunk = fread($fileStream, $chunkSize);
-                if ($chunk === false) {
-                    break;
-                }
-                echo $chunk;
-                flush();
-            }
-            fclose($fileStream);
-        });
-
-        $fileName = basename($fileInfoTransfer->getStorageFileNameOrFail());
-
-        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $fileName);
-
-        $response->headers->set(static::HEADER_CONTENT_DISPOSITION, $disposition);
-        $response->headers->set(static::CONTENT_TYPE, $fileInfoTransfer->getTypeOrFail());
-
-        return $response;
+        return $this->getFactory()
+            ->getSelfServicePortalService()
+            ->createFileDownloadResponse(
+                $fileTransfer,
+                $chunkSize,
+                ResponseHeaderBag::DISPOSITION_INLINE,
+            );
     }
 }

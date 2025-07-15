@@ -8,6 +8,7 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductClassCriteriaTransfer;
 use Generated\Shared\Transfer\ProductClassTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
@@ -67,9 +68,10 @@ class ProductClassForm extends AbstractType
      */
     protected function getProductClassChoices(): array
     {
+        $productClassCriteriaTransfer = new ProductClassCriteriaTransfer();
         $productClassCollection = $this->getFactory()
             ->getRepository()
-            ->getProductClassCollection();
+            ->getProductClassCollection($productClassCriteriaTransfer);
 
         $choices = [];
         foreach ($productClassCollection->getProductClasses() as $productClassTransfer) {

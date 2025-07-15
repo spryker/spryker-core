@@ -112,7 +112,9 @@ class SspInquiryValidator implements SspInquiryValidatorInterface
             return;
         }
 
-        if (!in_array($sspInquiryTransfer->getType(), $this->selfServicePortalConfig->getAllSelectableInquiryTypes())) {
+        $allSelectableSspInquiryTypes = array_merge(...array_values($this->selfServicePortalConfig->getSelectableSspInquiryTypes()));
+
+        if (!in_array($sspInquiryTransfer->getType(), $allSelectableSspInquiryTypes)) {
             $validationErrors->append(
                 (new ErrorTransfer())->setMessage('self_service_portal.inquiry.validation.type.invalid'),
             );
@@ -135,7 +137,7 @@ class SspInquiryValidator implements SspInquiryValidatorInterface
             return;
         }
 
-        if (mb_strlen($sspInquiryTransfer->getSubject()) > $this->selfServicePortalConfig->getSubjectMaxLength()) {
+        if (mb_strlen($sspInquiryTransfer->getSubject()) > $this->selfServicePortalConfig->getSspInquirySubjectMaxLength()) {
             $validationErrors->append(
                 (new ErrorTransfer())->setMessage('self_service_portal.inquiry.validation.subject.too_long'),
             );
@@ -158,7 +160,7 @@ class SspInquiryValidator implements SspInquiryValidatorInterface
             return;
         }
 
-        if (mb_strlen($sspInquiryTransfer->getDescription()) > $this->selfServicePortalConfig->getDescriptionMaxLength()) {
+        if (mb_strlen($sspInquiryTransfer->getDescription()) > $this->selfServicePortalConfig->getSspInquiryDescriptionMaxLength()) {
             $validationErrors->append(
                 (new ErrorTransfer())->setMessage('self_service_portal.inquiry.validation.description.too_long'),
             );
@@ -193,7 +195,7 @@ class SspInquiryValidator implements SspInquiryValidatorInterface
      */
     protected function validateFileCount(array $fileUploads, ArrayObject $validationErrors): void
     {
-        $maxFileCount = $this->selfServicePortalConfig->getFileMaxCount();
+        $maxFileCount = $this->selfServicePortalConfig->getSspInquiryFileMaxCount();
 
         if (count($fileUploads) > $maxFileCount) {
             $validationErrors->append(
@@ -210,7 +212,7 @@ class SspInquiryValidator implements SspInquiryValidatorInterface
      */
     protected function validateFileTotalSize(array $fileUploads, ArrayObject $validationErrors): void
     {
-        $totalMaxSize = $this->normalizeBinaryFormat($this->selfServicePortalConfig->getFilesMaxSize());
+        $totalMaxSize = $this->normalizeBinaryFormat($this->selfServicePortalConfig->getSspInquiryFilesMaxSize());
         $totalSize = 0;
 
         foreach ($fileUploads as $fileUpload) {
@@ -232,7 +234,7 @@ class SspInquiryValidator implements SspInquiryValidatorInterface
      */
     protected function validateFileIndividualSizes(array $fileUploads, ArrayObject $validationErrors): void
     {
-        $maxFileSize = $this->normalizeBinaryFormat($this->selfServicePortalConfig->getFileMaxSize());
+        $maxFileSize = $this->normalizeBinaryFormat($this->selfServicePortalConfig->getSspInquiryFileMaxSize());
 
         foreach ($fileUploads as $fileUpload) {
             if ($fileUpload->getSize() > $maxFileSize) {
@@ -255,7 +257,7 @@ class SspInquiryValidator implements SspInquiryValidatorInterface
      */
     protected function validateFileTypes(array $fileUploads, ArrayObject $validationErrors): void
     {
-        $allowedMimeTypes = $this->selfServicePortalConfig->getAllowedFileMimeTypes();
+        $allowedMimeTypes = $this->selfServicePortalConfig->getSspInquiryAllowedFileMimeTypes();
         $allowedExtensions = $this->selfServicePortalConfig->getSspInquiryAllowedFileExtensions();
 
         foreach ($fileUploads as $fileUpload) {

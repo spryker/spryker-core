@@ -90,7 +90,7 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     /**
      * @var array<string, string>
      */
-    protected const BACK_URL_TYPE_TO_PATH_MAP = [
+    protected const INQUIRY_BACK_URL_TYPE_TO_PATH_MAP = [
         'order' => 'customer/order/details',
         'ssp-asset' => 'customer/ssp-asset/details',
     ];
@@ -98,7 +98,7 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     /**
      * @var array<string, string>
      */
-    protected const BACK_URL_TYPE_TO_IDENTIFIER_MAP = [
+    protected const INQUIRY_BACK_URL_TYPE_TO_IDENTIFIER_MAP = [
         'order' => 'id',
         'ssp-asset' => 'reference',
     ];
@@ -116,7 +116,7 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     /**
      * @var int
      */
-    protected const ASSET_DOWNLOAD_CHUNK_SIZE = 1048576; // 1024 * 1024;
+    protected const INQUIRY_DOWNLOAD_CHUNK_SIZE = 1048576;
 
     /**
      * @var string
@@ -343,19 +343,6 @@ class SelfServicePortalConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Returns all selectable ssp inquiry types that can be selected by the user.
-     *
-     * @api
-     *
-     * @return array<string>
-     */
-    public function getAllSelectableSspInquiryTypes(): array
-    {
-        return $this->getSharedConfig()->getAllSelectableSspInquiryTypes();
-    }
-
-    /**
-     * Specification:
      * - Returns the default total file max size for file uploads during ssp inquiry creation.
      * - File size can be given with units: Kb Mb or Gb.
      *
@@ -365,7 +352,7 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      */
     public function getSspInquiryFilesMaxSize(): string
     {
-        return $this->getSharedConfig()->getDefaultTotalFileMaxSize();
+        return $this->getSharedConfig()->getSspInquiriesFilesMaxSize();
     }
 
     /**
@@ -379,7 +366,7 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      */
     public function getSspInquiryFileMaxSize(): string
     {
-        return $this->getSharedConfig()->getDefaultFileMaxSize();
+        return $this->getSharedConfig()->getSspInquiryFileMaxSize();
     }
 
     /**
@@ -390,9 +377,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getInquiryFileMaxCount(): int
+    public function getSspInquiryFileMaxCount(): int
     {
-        return $this->getSharedConfig()->getFileMaxCount();
+        return $this->getSharedConfig()->getSspInquiryFileMaxCount();
     }
 
     /**
@@ -416,9 +403,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getSubjectMaxLength(): int
+    public function getSspInquirySubjectMaxLength(): int
     {
-        return $this->getSharedConfig()->getSubjectMaxLength();
+        return $this->getSharedConfig()->getSspInquirySubjectMaxLength();
     }
 
     /**
@@ -429,9 +416,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getDescriptionMaxLength(): int
+    public function getSspInquiryDescriptionMaxLength(): int
     {
-        return $this->getSharedConfig()->getDescriptionMaxLength();
+        return $this->getSharedConfig()->getSspInquiryDescriptionMaxLength();
     }
 
     /**
@@ -444,7 +431,7 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      */
     public function getSspInquiryAllowedFileMimeTypes(): array
     {
-        return $this->getSharedConfig()->getAllowedFileMimeTypes();
+        return $this->getSharedConfig()->getSspInquiryAllowedFileMimeTypes();
     }
 
     /**
@@ -458,7 +445,7 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      */
     public function getSspInquiryCancelStateMachineEventName(): string
     {
-        return $this->getSharedConfig()->getInquiryCancelStateMachineEventName();
+        return $this->getSharedConfig()->getSspInquiryCancelStateMachineEventName();
     }
 
     /**
@@ -515,15 +502,28 @@ class SelfServicePortalConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     * - Returns the default maximum items per page for file dashboard.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getDefaultFileDashboardMaxPerPage(): int
+    {
+        return $this->getSharedConfig()->getDefaultFileDashboardMaxPerPage();
+    }
+
+    /**
+     * Specification:
      * - Returns url path map for back navigation at ssp inquiry creation page.
      *
      * @api
      *
      * @return array<string, string>
      */
-    public function getBackUrlTypeToPathMap(): array
+    public function getInquiryBackUrlTypeToPathMap(): array
     {
-        return static::BACK_URL_TYPE_TO_PATH_MAP;
+        return static::INQUIRY_BACK_URL_TYPE_TO_PATH_MAP;
     }
 
     /**
@@ -537,9 +537,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return array<string, string>
      */
-    public function getBackUrlTypeToIdentifierMap(): array
+    public function getInquiryBackUrlTypeToIdentifierMap(): array
     {
-        return static::BACK_URL_TYPE_TO_IDENTIFIER_MAP;
+        return static::INQUIRY_BACK_URL_TYPE_TO_IDENTIFIER_MAP;
     }
 
     /**
@@ -593,6 +593,19 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     public function getSspAssetImageDownloadChunkSize(): int
     {
         return $this->getSharedConfig()->getSspAssetImageReadChunkSize();
+    }
+
+    /**
+     * Specification:
+     * - Defines the read chunk size in bytes for the inquiry file download on the storefront.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getInquiryFileDownloadChunkSize(): int
+    {
+        return static::INQUIRY_DOWNLOAD_CHUNK_SIZE;
     }
 
     /**

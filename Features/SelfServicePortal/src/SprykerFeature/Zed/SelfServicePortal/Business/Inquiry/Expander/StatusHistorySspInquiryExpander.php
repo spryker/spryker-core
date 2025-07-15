@@ -73,7 +73,7 @@ class StatusHistorySspInquiryExpander implements SspInquiryExpanderInterface
 
         $idProcess = $this->stateMachineFacade->getStateMachineProcessId(
             (new StateMachineProcessTransfer())
-                ->setProcessName($this->selfServicePortalConfig->getInquiryStateMachineProcessInquiryTypeMap()[$type])
+                ->setProcessName($this->selfServicePortalConfig->getSspInquiryStateMachineProcessInquiryTypeMap()[$type])
                 ->setStateMachineName($this->selfServicePortalConfig->getInquiryStateMachineName()),
         );
 

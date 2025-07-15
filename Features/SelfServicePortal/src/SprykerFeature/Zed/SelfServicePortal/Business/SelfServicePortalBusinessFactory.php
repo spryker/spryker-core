@@ -42,6 +42,12 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Deleter\SspAssetManageme
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Deleter\SspAssetManagementFileDeleterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\AssetFileExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\AssetFileExpanderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\OrderItemSspAssetExpander;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\OrderItemSspAssetExpanderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\SspAssetItemExpander;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\SspAssetItemExpanderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Extractor\SalesOrderItemIdExtractor;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Extractor\SalesOrderItemIdExtractorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Permission\SspAssetCustomerPermissionExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Permission\SspAssetCustomerPermissionExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReader;
@@ -125,22 +131,36 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemProd
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemProductClassExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemScheduleExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemScheduleExpanderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductAbstractClassExpander;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductAbstractClassExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassExpanderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassProductConcreteStorageExpander;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassProductConcreteStorageExpanderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductConcreteClassExpander;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductConcreteClassExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductConcreteShipmentTypeExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductConcreteShipmentTypeExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ServicePointItemExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ServicePointItemExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ShipmentTypeItemExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ShipmentTypeItemExpanderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ShipmentTypeProductConcreteStorageExpander;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ShipmentTypeProductConcreteStorageExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\SspAssetExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\SspAssetExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Filter\QuoteItemFilter;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Filter\QuoteItemFilterInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Grouper\ProductClassGrouper;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Grouper\ProductClassGrouperInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Grouper\ShipmentTypeGrouper;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Grouper\ShipmentTypeGrouperInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Indexer\ProductClassIndexer;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Indexer\ProductClassIndexerInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Permission\SspServiceCustomerPermissionExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Permission\SspServiceCustomerPermissionExpanderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ProductClassReader;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ProductClassReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ProductShipmentTypeReader;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ProductShipmentTypeReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ServicePointReader;
@@ -155,12 +175,10 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Service\Saver\ProductClassSave
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Saver\ProductClassSaverInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Saver\ProductShipmentTypeSaver;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Saver\ProductShipmentTypeSaverInterface;
-use SprykerFeature\Zed\SelfServicePortal\Business\Service\Storage\Expander\ProductClassProductConcreteStorageExpander;
-use SprykerFeature\Zed\SelfServicePortal\Business\Service\Storage\Expander\ProductClassProductConcreteStorageExpanderInterface;
-use SprykerFeature\Zed\SelfServicePortal\Business\Service\Storage\Expander\ShipmentTypeProductConcreteStorageExpander;
-use SprykerFeature\Zed\SelfServicePortal\Business\Service\Storage\Expander\ShipmentTypeProductConcreteStorageExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Updater\OrderItemScheduleUpdater;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Updater\OrderItemScheduleUpdaterInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Utility\SkuExtractor;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Utility\SkuExtractorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePointSearchCoordinatesExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePointSearchCoordinatesExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface;
@@ -275,16 +293,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemProductClassExpanderInterface
-     */
-    public function createOrderItemProductClassExpander(): OrderItemProductClassExpanderInterface
-    {
-        return new OrderItemProductClassExpander(
-            $this->getRepository(),
-        );
-    }
-
-    /**
      * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Grouper\ShipmentTypeGrouperInterface
      */
     public function createShipmentTypeGrouper(): ShipmentTypeGrouperInterface
@@ -293,7 +301,7 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Storage\Expander\ShipmentTypeProductConcreteStorageExpanderInterface
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ShipmentTypeProductConcreteStorageExpanderInterface
      */
     public function createShipmentTypeProductConcreteStorageExpander(): ShipmentTypeProductConcreteStorageExpanderInterface
     {
@@ -1025,6 +1033,25 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\OrderItemSspAssetExpanderInterface
+     */
+    public function createOrderItemSspAssetExpander(): OrderItemSspAssetExpanderInterface
+    {
+        return new OrderItemSspAssetExpander(
+            $this->createSspAssetReader(),
+            $this->createSalesOrderItemIdExtractor(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Extractor\SalesOrderItemIdExtractorInterface
+     */
+    public function createSalesOrderItemIdExtractor(): SalesOrderItemIdExtractorInterface
+    {
+        return new SalesOrderItemIdExtractor();
+    }
+
+    /**
      * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface
      */
     public function getPersistenceEntityManager(): SelfServicePortalEntityManagerInterface
@@ -1209,16 +1236,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassExpanderInterface
-     */
-    public function createProductClassExpander(): ProductClassExpanderInterface
-    {
-        return new ProductClassExpander(
-            $this->getRepository(),
-        );
-    }
-
-    /**
      * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Saver\ProductClassSaverInterface
      */
     public function createProductClassSaver(): ProductClassSaverInterface
@@ -1240,12 +1257,12 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Storage\Expander\ProductClassProductConcreteStorageExpanderInterface
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassProductConcreteStorageExpanderInterface
      */
     public function createProductClassProductConcreteStorageExpander(): ProductClassProductConcreteStorageExpanderInterface
     {
         return new ProductClassProductConcreteStorageExpander(
-            $this->getRepository(),
+            $this->createProductClassReader(),
         );
     }
 
@@ -1285,5 +1302,96 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     public function getCustomerFacade(): CustomerFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Grouper\ProductClassGrouperInterface
+     */
+    public function createProductClassGrouper(): ProductClassGrouperInterface
+    {
+        return new ProductClassGrouper();
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemProductClassExpanderInterface
+     */
+    public function createOrderItemProductClassExpander(): OrderItemProductClassExpanderInterface
+    {
+        return new OrderItemProductClassExpander(
+            $this->createProductClassGrouper(),
+            $this->getRepository(),
+            $this->createProductClassIndexer(),
+            $this->createSkuExtractor(),
+            $this->createSalesOrderItemIdExtractor(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\SspAssetItemExpanderInterface
+     */
+    public function createSspAssetItemExpander(): SspAssetItemExpanderInterface
+    {
+        return new SspAssetItemExpander(
+            $this->createSspAssetReader(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Indexer\ProductClassIndexerInterface
+     */
+    public function createProductClassIndexer(): ProductClassIndexerInterface
+    {
+        return new ProductClassIndexer();
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassExpanderInterface
+     */
+    public function createProductClassExpander(): ProductClassExpanderInterface
+    {
+        return new ProductClassExpander(
+            $this->getRepository(),
+            $this->createProductClassIndexer(),
+            $this->createSkuExtractor(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductConcreteClassExpanderInterface
+     */
+    public function createProductConcreteClassExpander(): ProductConcreteClassExpanderInterface
+    {
+        return new ProductConcreteClassExpander(
+            $this->createProductClassReader(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductAbstractClassExpanderInterface
+     */
+    public function createProductAbstractClassExpander(): ProductAbstractClassExpanderInterface
+    {
+        return new ProductAbstractClassExpander(
+            $this->getRepository(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Utility\SkuExtractorInterface
+     */
+    public function createSkuExtractor(): SkuExtractorInterface
+    {
+        return new SkuExtractor();
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ProductClassReaderInterface
+     */
+    public function createProductClassReader(): ProductClassReaderInterface
+    {
+        return new ProductClassReader(
+            $this->getRepository(),
+            $this->createProductClassIndexer(),
+        );
     }
 }

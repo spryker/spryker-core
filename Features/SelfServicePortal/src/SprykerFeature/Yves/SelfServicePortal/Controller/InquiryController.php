@@ -10,8 +10,6 @@ namespace SprykerFeature\Yves\SelfServicePortal\Controller;
 use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspInquiryConditionsTransfer;
-use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
-use Generated\Shared\Transfer\SspInquiryIncludeTransfer;
 use Generated\Shared\Transfer\SspInquiryOwnerConditionGroupTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
@@ -42,11 +40,6 @@ class InquiryController extends AbstractController
      * @var string
      */
     protected const GLOSSARY_KEY_SSP_INQUIRY_STATUS_CHANGE_ERROR = 'self_service_portal.inquiry.error.status_change';
-
-    /**
-     * @var string
-     */
-    protected const QUERY_PARAM_SSP_ASSET_REFERENCE = 'ssp-asset-reference';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -105,22 +98,6 @@ class InquiryController extends AbstractController
         $this->addSuccessMessage(static::GLOSSARY_KEY_SSP_INQUIRY_CANCELED);
 
         return $response;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Spryker\Yves\Kernel\View\View
-     */
-    public function listAction(Request $request): View|RedirectResponse
-    {
-        $viewData = $this->executeListAction($request);
-
-        return $this->view(
-            $viewData,
-            [],
-            '@SelfServicePortal/views/list-inquiry/list-inquiry.twig',
-        );
     }
 
     /**
@@ -198,8 +175,8 @@ class InquiryController extends AbstractController
         return $this->view(
             [
                 'form' => $sspInquiryForm->createView(),
-                'backUrlPath' => $backUrlType ? $this->getFactory()->getConfig()->getBackUrlTypeToPathMap()[$backUrlType] ?? null : null,
-                'backUrlParams' => $backUrlType ? [$this->getFactory()->getConfig()->getBackUrlTypeToIdentifierMap()[$backUrlType] => $request->query->get('backUrlIdentifier')] : [],
+                'backUrlPath' => $backUrlType ? $this->getFactory()->getConfig()->getInquiryBackUrlTypeToPathMap()[$backUrlType] ?? null : null,
+                'backUrlParams' => $backUrlType ? [$this->getFactory()->getConfig()->getInquiryBackUrlTypeToIdentifierMap()[$backUrlType] => $request->query->get('backUrlIdentifier')] : [],
             ],
             [],
             '@SelfServicePortal/views/inquiry-create/inquiry-create.twig',
@@ -216,61 +193,6 @@ class InquiryController extends AbstractController
         foreach ($sspInquiryCollectionResponseTransfer->getErrors() as $error) {
             $this->addErrorMessage($error->getMessageOrFail());
         }
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return array<string, mixed>
-     */
-    protected function executeListAction(Request $request): array
-    {
-        $companyUserTransfer = $this->getFactory()->getCompanyUserClient()->findCompanyUser();
-
-        if (!$companyUserTransfer) {
-            throw new NotFoundHttpException('self_service_portal.inquiry.error.company_user_not_found');
-        }
-
-        $sspInquirySearchForm = $this->getFactory()->getSspInquirySearchForm(
-            $this->getFactory()->getSspInquirySearchFormDataProvider()->getOptions(),
-        );
-
-        $sspInquiryConditionsTransfer = (new SspInquiryConditionsTransfer())
-            ->setSspInquiryOwnerConditionGroup(new SspInquiryOwnerConditionGroupTransfer());
-
-        $sspInquiryCriteriaTransfer = (new SspInquiryCriteriaTransfer())
-            ->setSspInquiryConditions($sspInquiryConditionsTransfer)
-            ->setInclude(
-                (new SspInquiryIncludeTransfer())
-                    ->setWithCompanyUser(true),
-            );
-
-        $sspInquiryConditionsTransfer->getSspInquiryOwnerConditionGroupOrFail()->setCompanyUser($companyUserTransfer);
-        $sspInquiryConditionsTransfer->getSspInquiryOwnerConditionGroupOrFail()->setIdCompany($companyUserTransfer->getFkCompany());
-        $sspInquiryConditionsTransfer->getSspInquiryOwnerConditionGroupOrFail()->setIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit());
-
-        $sspInquirySearchForm->handleRequest($request);
-
-        $sspInquiryCriteriaTransfer = $this->getFactory()
-            ->createSspInquirySearchFormHandler()
-            ->handleFormSubmit($sspInquirySearchForm, $sspInquiryCriteriaTransfer);
-
-        if ($request->query->has(static::QUERY_PARAM_SSP_ASSET_REFERENCE)) {
-            $sspInquiryConditionsTransfer->addSspAssetReference((string)$request->query->get(static::QUERY_PARAM_SSP_ASSET_REFERENCE));
-        }
-
-        $sspInquiryCollectionTransfer = $this->getFactory()->createSspInquiryReader()->getSspInquiryCollection(
-            $request,
-            $sspInquiryCriteriaTransfer,
-        );
-
-        return [
-            'pagination' => $sspInquiryCollectionTransfer->getPagination(),
-            'sspInquiryList' => $sspInquiryCollectionTransfer->getSspInquiries(),
-            'sspInquirySearchForm' => $sspInquirySearchForm->createView(),
-        ];
     }
 
     /**

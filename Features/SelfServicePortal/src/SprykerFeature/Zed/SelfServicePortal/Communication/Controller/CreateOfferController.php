@@ -39,20 +39,37 @@ class CreateOfferController extends AbstractController
     protected const URL_PATH_PRODUCT_OFFER_GUI_LIST = '/product-offer-gui/list';
 
     /**
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\CreateOfferController::indexAction()
+     *
+     * @var string
+     */
+    protected const URL_PATH_SELF_SERVICE_PORTAL_CREATE_OFFER = '/self-service-portal/create-offer';
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array<string, mixed>
+     */
+    public function indexAction(Request $request): array
+    {
+        $productConcreteTable = $this
+            ->getFactory()
+            ->createProductConcreteTable();
+
+        return $this->viewResponse([
+            'productConcreteTable' => $productConcreteTable->render(),
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
-    public function indexAction(Request $request): RedirectResponse|array
+    public function formAction(Request $request): RedirectResponse|array
     {
         if (!$request->query->has(static::PARAM_ID_PRODUCT_CONCRETE)) {
-            $productConcreteTable = $this
-                ->getFactory()
-                ->createProductConcreteTable();
-
-            return $this->viewResponse([
-                'productConcreteTable' => $productConcreteTable->render(),
-            ]);
+            return $this->redirectResponse(static::URL_PATH_SELF_SERVICE_PORTAL_CREATE_OFFER);
         }
 
         $productConcreteTransfer = $this->getFactory()->createProductReader()->getProductConcrete(

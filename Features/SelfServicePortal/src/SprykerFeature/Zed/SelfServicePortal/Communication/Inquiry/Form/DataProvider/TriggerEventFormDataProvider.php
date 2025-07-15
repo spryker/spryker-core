@@ -55,7 +55,7 @@ class TriggerEventFormDataProvider implements TriggerEventFormDataProviderInterf
         $stateMachineItemTransfer = new StateMachineItemTransfer();
         $stateMachineItemTransfer->setIdentifier($sspInquiryTransfer->getIdSspInquiry())
             ->setStateMachineName($this->selfServicePortalConfig->getInquiryStateMachineName())
-            ->setProcessName($this->selfServicePortalConfig->getInquiryStateMachineProcessInquiryTypeMap()[$sspInquiryTransfer->getType()])
+            ->setProcessName($this->selfServicePortalConfig->getSspInquiryStateMachineProcessInquiryTypeMap()[$sspInquiryTransfer->getType()])
             ->setStateName($sspInquiryTransfer->getStatus());
 
         return [

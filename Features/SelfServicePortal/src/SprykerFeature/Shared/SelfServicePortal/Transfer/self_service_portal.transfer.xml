@@ -18,6 +18,9 @@
         <property name="idProductClass" type="int"/>
         <property name="name" type="string"/>
         <property name="key" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="SalesProductClass" strict="true">
@@ -213,7 +216,7 @@
     </transfer>
 
     <transfer name="SspServiceConditions" strict="true">
-        <property name="servicesSearchConditionGroup" type="SspServicesSearchConditionGroup"/>
+        <property name="servicesSearchCondition" type="SspServicesSearchCondition"/>
         <property name="productClass" type="string"/>
         <property name="companyBusinessUnitUuid" type="string"/>
         <property name="companyUuid" type="string"/>
@@ -222,14 +225,14 @@
         <property name="sspAssetReferences" type="string[]" singular="sspAssetReference"/>
     </transfer>
 
-    <transfer name="ServicesSearchConditionGroup" strict="true">
+    <transfer name="ServicesSearchCondition" strict="true">
         <property name="productName" type="string"/>
         <property name="sku" type="string"/>
         <property name="orderReference" type="string"/>
         <property name="companyBusinessUnitUuid" type="string"/>
     </transfer>
 
-    <transfer name="SspServicesSearchConditionGroup" strict="true">
+    <transfer name="SspServicesSearchCondition" strict="true">
         <property name="productName" type="string"/>
         <property name="sku" type="string"/>
         <property name="orderReference" type="string"/>
@@ -355,15 +358,22 @@
 
     <transfer name="ProductClassCollection" strict="true">
         <property name="productClasses" type="ProductClass[]" singular="productClass"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="ProductClassCriteria" strict="true">
         <property name="productClassConditions" type="ProductClassConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="ProductClassConditions" strict="true">
         <property name="productClassIds" type="int[]" singular="idProductClass"/>
         <property name="keys" type="string[]" singular="key"/>
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+        <property name="skus" type="string[]" singular="sku"/>
+        <property name="productAbstractIds" type="int[]" singular="idProductAbstract"/>
+        <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
     </transfer>
 
     <transfer name="ProductPayload">
@@ -792,6 +802,7 @@
         <property name="companyUser" type="CompanyUser"/>
         <property name="store" type="Store"/>
         <property name="withSspAssetCount" type="int"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="DashboardResponse">

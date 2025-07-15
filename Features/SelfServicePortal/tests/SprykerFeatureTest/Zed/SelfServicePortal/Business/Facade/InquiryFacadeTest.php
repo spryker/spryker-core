@@ -95,19 +95,27 @@ class InquiryFacadeTest extends Unit
         $fileSystemServiceMock = $this->getMockBuilder(FileManagerToFileSystemServiceInterface::class)->getMock();
 
         $configMock = $this->getMockBuilder(SelfServicePortalConfig::class)->onlyMethods(
-            ['getInquiryInitialStateMap', 'getInquiryStateMachineProcessInquiryTypeMap'],
+            ['getInquiryInitialStateMachineMap', 'getSspInquiryStateMachineProcessInquiryTypeMap', 'getSelectableSspInquiryTypes'],
         )->getMock();
-        $configMock->method('getInquiryInitialStateMap')->willReturn([
+        $configMock->method('getInquiryInitialStateMachineMap')->willReturn([
             'test_general_ssp_inquiry' => 'new',
             'test_order_ssp_inquiry' => 'created',
         ]);
-        $configMock->method('getInquiryStateMachineProcessInquiryTypeMap')->willReturn([
+        $configMock->method('getSspInquiryStateMachineProcessInquiryTypeMap')->willReturn([
             'general' => 'test_general_ssp_inquiry',
             'order' => 'test_order_ssp_inquiry',
             'test_general_type' => 'test_general_ssp_inquiry',
             'test_order_type' => 'test_order_ssp_inquiry',
             'test_product_type' => 'test_product_type',
             'ssp_asset' => 'test_ssp_asset_ssp_inquiry',
+        ]);
+        $configMock->method('getSelectableSspInquiryTypes')->willReturn([
+            'general' => ['general'],
+            'order' => ['order'],
+            'ssp_asset' => ['ssp_asset'],
+            'test_general_type' => ['test_general_type'],
+            'test_order_type' => ['test_order_type'],
+            'test_product_type' => ['test_product_type'],
         ]);
 
         $this->tester->setDependency(static::SERVICE_FILE_SYSTEM, $fileSystemServiceMock);
@@ -355,6 +363,75 @@ class InquiryFacadeTest extends Unit
         foreach ($expectedSspInquiries as $key => $expectedSspInquiry) {
             $this->assertSame($expectedSspInquiry['type'], $sspInquiryCollectionTransfer->getSspInquiries()->offsetGet($key)->getType());
             $this->assertSame($expectedSspInquiry['status'], $sspInquiryCollectionTransfer->getSspInquiries()->offsetGet($key)->getStatus());
+        }
+    }
+
+    /**
+     * @dataProvider sspInquiryValidationErrorsDataProvider
+     *
+     * @param array<mixed> $sspInquiryData
+     * @param array<string> $expectedValidationErrorMessages
+     *
+     * @return void
+     */
+    public function testCreateSspInquiryCollectionValidationErrors(
+        array $sspInquiryData,
+        array $expectedValidationErrorMessages
+    ): void {
+        // Arrange
+        $sspInquiryTransfer = (new SspInquiryTransfer())
+            ->setStore($this->storeTransfer);
+
+        if (isset($sspInquiryData['companyUser'])) {
+            $sspInquiryTransfer->setCompanyUser($sspInquiryData['companyUser']);
+        }
+
+        if (isset($sspInquiryData['subject'])) {
+            $sspInquiryTransfer->setSubject($sspInquiryData['subject']);
+        }
+
+        if (isset($sspInquiryData['type'])) {
+            $sspInquiryTransfer->setType($sspInquiryData['type']);
+        }
+
+        if (isset($sspInquiryData['description'])) {
+            $sspInquiryTransfer->setDescription($sspInquiryData['description']);
+        }
+
+        foreach ($sspInquiryData['files'] ?? [] as $fileData) {
+            $fileTransfer = new FileTransfer();
+            $fileTransfer->setEncodedContent(base64_encode(gzencode($fileData['content'])));
+            $fileTransfer->setFileUpload(
+                (new FileUploadTransfer())
+                    ->setSize($fileData['size'])
+                    ->setMimeTypeName($fileData['mimeType'])
+                    ->setRealPath($fileData['realPath'])
+                    ->setClientOriginalExtension($fileData['extension'])
+                    ->setClientOriginalName($fileData['name'] ?? 'test_file.' . $fileData['extension']),
+            );
+            $sspInquiryTransfer->addFile($fileTransfer);
+        }
+
+        // Act
+        $sspInquiryCollectionResponseTransfer = $this->selfServicePortalFacade->createSspInquiryCollection(
+            (new SspInquiryCollectionRequestTransfer())->addSspInquiry($sspInquiryTransfer),
+        );
+
+        // Assert
+        $this->assertCount(0, $sspInquiryCollectionResponseTransfer->getSspInquiries());
+        $this->assertGreaterThan(0, $sspInquiryCollectionResponseTransfer->getErrors()->count());
+
+        $actualErrorMessages = array_map(
+            fn (ErrorTransfer $errorTransfer) => $errorTransfer->getMessage(),
+            $sspInquiryCollectionResponseTransfer->getErrors()->getArrayCopy(),
+        );
+
+        foreach ($expectedValidationErrorMessages as $expectedMessage) {
+            $this->assertContains(
+                $expectedMessage,
+                $actualErrorMessages,
+                sprintf('Expected validation error "%s" not found in: %s', $expectedMessage, implode(', ', $actualErrorMessages)),
+            );
         }
     }
 
@@ -619,6 +696,202 @@ class InquiryFacadeTest extends Unit
                         'type' => 'test_order_type',
                         'status' => 'test_initial_state',
                     ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function sspInquiryValidationErrorsDataProvider(): array
+    {
+        $longSubject = str_repeat('a', 256); // 256 chars (exceeds 255 limit)
+        $longDescription = str_repeat('b', 1001); // 1001 chars (exceeds 1000 limit)
+        $validCompanyUser = (new CompanyUserTransfer())->setIdCompanyUser(1);
+        $invalidCompanyUser = new CompanyUserTransfer(); // Missing ID
+
+        return [
+            'missing company user' => [
+                'sspInquiryData' => [
+                    'subject' => 'Valid Subject',
+                    'type' => 'general',
+                    'description' => 'Valid Description',
+                    'files' => [],
+                ],
+                'expectedValidationErrorMessages' => [
+                    'self_service_portal.inquiry.validation.company_user.not_set',
+                ],
+            ],
+            'invalid company user without ID' => [
+                'sspInquiryData' => [
+                    'companyUser' => $invalidCompanyUser,
+                    'subject' => 'Valid Subject',
+                    'type' => 'general',
+                    'description' => 'Valid Description',
+                    'files' => [],
+                ],
+                'expectedValidationErrorMessages' => [
+                    'self_service_portal.inquiry.validation.company_user.not_set',
+                ],
+            ],
+            'missing type' => [
+                'sspInquiryData' => [
+                    'companyUser' => $validCompanyUser,
+                    'subject' => 'Valid Subject',
+                    'description' => 'Valid Description',
+                    'files' => [],
+                ],
+                'expectedValidationErrorMessages' => [
+                    'self_service_portal.inquiry.validation.type.not_set',
+                ],
+            ],
+            'invalid type' => [
+                'sspInquiryData' => [
+                    'companyUser' => $validCompanyUser,
+                    'subject' => 'Valid Subject',
+                    'type' => 'invalid_type',
+                    'description' => 'Valid Description',
+                    'files' => [],
+                ],
+                'expectedValidationErrorMessages' => [
+                    'self_service_portal.inquiry.validation.type.invalid',
+                ],
+            ],
+            'missing subject' => [
+                'sspInquiryData' => [
+                    'companyUser' => $validCompanyUser,
+                    'type' => 'general',
+                    'description' => 'Valid Description',
+                    'files' => [],
+                ],
+                'expectedValidationErrorMessages' => [
+                    'self_service_portal.inquiry.validation.subject.not_set',
+                ],
+            ],
+            'subject too long' => [
+                'sspInquiryData' => [
+                    'companyUser' => $validCompanyUser,
+                    'subject' => $longSubject,
+                    'type' => 'general',
+                    'description' => 'Valid Description',
+                    'files' => [],
+                ],
+                'expectedValidationErrorMessages' => [
+                    'self_service_portal.inquiry.validation.subject.too_long',
+                ],
+            ],
+            'missing description' => [
+                'sspInquiryData' => [
+                    'companyUser' => $validCompanyUser,
+                    'subject' => 'Valid Subject',
+                    'type' => 'general',
+                    'files' => [],
+                ],
+                'expectedValidationErrorMessages' => [
+                    'self_service_portal.inquiry.validation.description.not_set',
+                ],
+            ],
+            'description too long' => [
+                'sspInquiryData' => [
+                    'companyUser' => $validCompanyUser,
+                    'subject' => 'Valid Subject',
+                    'type' => 'general',
+                    'description' => $longDescription,
+                    'files' => [],
+                ],
+                'expectedValidationErrorMessages' => [
+                    'self_service_portal.inquiry.validation.description.too_long',
+                ],
+            ],
+            'too many files' => [
+                'sspInquiryData' => [
+                    'companyUser' => $validCompanyUser,
+                    'subject' => 'Valid Subject',
+                    'type' => 'general',
+                    'description' => 'Valid Description',
+                    'files' => [
+                        ['content' => 'file1', 'size' => 100, 'mimeType' => 'image/png', 'realPath' => 'file1.png', 'extension' => 'png', 'name' => 'file1.png'],
+                        ['content' => 'file2', 'size' => 100, 'mimeType' => 'image/png', 'realPath' => 'file2.png', 'extension' => 'png', 'name' => 'file2.png'],
+                        ['content' => 'file3', 'size' => 100, 'mimeType' => 'image/png', 'realPath' => 'file3.png', 'extension' => 'png', 'name' => 'file3.png'],
+                        ['content' => 'file4', 'size' => 100, 'mimeType' => 'image/png', 'realPath' => 'file4.png', 'extension' => 'png', 'name' => 'file4.png'],
+                        ['content' => 'file5', 'size' => 100, 'mimeType' => 'image/png', 'realPath' => 'file5.png', 'extension' => 'png', 'name' => 'file5.png'],
+                        ['content' => 'file6', 'size' => 100, 'mimeType' => 'image/png', 'realPath' => 'file6.png', 'extension' => 'png', 'name' => 'file6.png'], // 6th file exceeds limit of 5
+                    ],
+                ],
+                'expectedValidationErrorMessages' => [
+                    'self_service_portal.inquiry.error.file.count.invalid',
+                ],
+            ],
+            'file too large individually' => [
+                'sspInquiryData' => [
+                    'companyUser' => $validCompanyUser,
+                    'subject' => 'Valid Subject',
+                    'type' => 'general',
+                    'description' => 'Valid Description',
+                    'files' => [
+                        ['content' => 'large_file', 'size' => 104857601, 'mimeType' => 'image/png', 'realPath' => 'large.png', 'extension' => 'png', 'name' => 'large.png'], // > 100MB
+                    ],
+                ],
+                'expectedValidationErrorMessages' => [
+                    'self_service_portal.inquiry.error.file.individual_size.invalid',
+                ],
+            ],
+            'total file size too large' => [
+                'sspInquiryData' => [
+                    'companyUser' => $validCompanyUser,
+                    'subject' => 'Valid Subject',
+                    'type' => 'general',
+                    'description' => 'Valid Description',
+                    'files' => [
+                        ['content' => 'file1', 'size' => 60000000, 'mimeType' => 'image/png', 'realPath' => 'file1.png', 'extension' => 'png', 'name' => 'file1.png'], // 60MB
+                        ['content' => 'file2', 'size' => 60000000, 'mimeType' => 'image/png', 'realPath' => 'file2.png', 'extension' => 'png', 'name' => 'file2.png'], // 60MB (total 120MB > 100MB limit)
+                    ],
+                ],
+                'expectedValidationErrorMessages' => [
+                    'self_service_portal.inquiry.error.file.size.invalid',
+                ],
+            ],
+            'invalid file mime type' => [
+                'sspInquiryData' => [
+                    'companyUser' => $validCompanyUser,
+                    'subject' => 'Valid Subject',
+                    'type' => 'general',
+                    'description' => 'Valid Description',
+                    'files' => [
+                        ['content' => 'file', 'size' => 100, 'mimeType' => 'application/zip', 'realPath' => 'file.zip', 'extension' => 'zip', 'name' => 'file.zip'],
+                    ],
+                ],
+                'expectedValidationErrorMessages' => [
+                    'self_service_portal.inquiry.file.mime_type.error',
+                ],
+            ],
+            'invalid file extension' => [
+                'sspInquiryData' => [
+                    'companyUser' => $validCompanyUser,
+                    'subject' => 'Valid Subject',
+                    'type' => 'general',
+                    'description' => 'Valid Description',
+                    'files' => [
+                        ['content' => 'file', 'size' => 100, 'mimeType' => 'image/png', 'realPath' => 'file.txt', 'extension' => 'txt', 'name' => 'file.txt'],
+                    ],
+                ],
+                'expectedValidationErrorMessages' => [
+                    'self_service_portal.inquiry.file.extension.error',
+                ],
+            ],
+            'multiple validation errors' => [
+                'sspInquiryData' => [
+                    'companyUser' => $invalidCompanyUser,
+                    'subject' => $longSubject,
+                    'description' => $longDescription,
+                    'files' => [],
+                ],
+                'expectedValidationErrorMessages' => [
+                    'self_service_portal.inquiry.validation.company_user.not_set',
+                    'self_service_portal.inquiry.validation.type.not_set',
+                    'self_service_portal.inquiry.validation.subject.too_long',
+                    'self_service_portal.inquiry.validation.description.too_long',
                 ],
             ],
         ];

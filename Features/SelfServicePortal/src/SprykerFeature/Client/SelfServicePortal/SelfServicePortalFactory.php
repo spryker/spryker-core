@@ -15,10 +15,10 @@ use Spryker\Client\Store\StoreClientInterface;
 use Spryker\Service\Synchronization\SynchronizationServiceInterface;
 use SprykerFeature\Client\SelfServicePortal\Dashboard\Reader\CmsBlockCompanyBusinessUnitStorageReader;
 use SprykerFeature\Client\SelfServicePortal\Dashboard\Reader\CmsBlockCompanyBusinessUnitStorageReaderInterface;
-use SprykerFeature\Client\SelfServicePortal\Service\Expander\ShipmentTypeProductViewExpander;
-use SprykerFeature\Client\SelfServicePortal\Service\Expander\ShipmentTypeProductViewExpanderInterface;
 use SprykerFeature\Client\SelfServicePortal\Service\Reader\ShipmentTypeStorageReader;
 use SprykerFeature\Client\SelfServicePortal\Service\Reader\ShipmentTypeStorageReaderInterface;
+use SprykerFeature\Client\SelfServicePortal\ShipmentType\Expander\ShipmentTypeProductViewExpander;
+use SprykerFeature\Client\SelfServicePortal\ShipmentType\Expander\ShipmentTypeProductViewExpanderInterface;
 use SprykerFeature\Client\SelfServicePortal\Zed\SelfServicePortalStub;
 use SprykerFeature\Client\SelfServicePortal\Zed\SelfServicePortalStubInterface;
 
@@ -43,7 +43,7 @@ class SelfServicePortalFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerFeature\Client\SelfServicePortal\Service\Expander\ShipmentTypeProductViewExpanderInterface
+     * @return \SprykerFeature\Client\SelfServicePortal\ShipmentType\Expander\ShipmentTypeProductViewExpanderInterface
      */
     public function createShipmentTypeProductViewExpander(): ShipmentTypeProductViewExpanderInterface
     {

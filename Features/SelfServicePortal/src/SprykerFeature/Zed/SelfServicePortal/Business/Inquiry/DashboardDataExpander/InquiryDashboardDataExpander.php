@@ -25,6 +25,11 @@ class InquiryDashboardDataExpander implements InquiryDashboardDataExpanderInterf
     use PermissionAwareTrait;
 
     /**
+     * @var int
+     */
+    protected const INQUIRY_DASHBOARD_PAGE_NUMBER = 1;
+
+    /**
      * @param \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Reader\SspInquiryReaderInterface $sspInquiryReader
      * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
      */
@@ -58,8 +63,8 @@ class InquiryDashboardDataExpander implements InquiryDashboardDataExpanderInterf
             ->setSspInquiryConditions($sspInquiryConditionsTransfer)
             ->setPagination(
                 (new PaginationTransfer())
-                    ->setMaxPerPage($this->selfServicePortalConfig->getDefaultInquiryDashboardMaxPerPage())
-                    ->setPage($this->selfServicePortalConfig->getDefaultInquiryDashboardPageNumber()),
+                    ->setMaxPerPage($this->selfServicePortalConfig->getDashboardInquiryMaxPerPage())
+                    ->setPage(static::INQUIRY_DASHBOARD_PAGE_NUMBER),
             );
         $sspInquiryCriteriaTransfer->addSort(
             (new SortTransfer())

@@ -119,7 +119,7 @@ class ServiceSspAssetManagementExpanderPluginTest extends Unit
             ->getMock();
 
         $serviceReaderMock
-            ->method('getServiceCollection')
+            ->method('getSspServiceCollection')
             ->with($this->isInstanceOf(SspServiceCriteriaTransfer::class))
             ->willReturn($sspServiceCollectionTransfer);
 

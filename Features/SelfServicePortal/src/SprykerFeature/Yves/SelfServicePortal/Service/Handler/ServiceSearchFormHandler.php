@@ -11,10 +11,10 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\SortTransfer;
 use Generated\Shared\Transfer\SspServiceConditionsTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
-use Generated\Shared\Transfer\SspServicesSearchConditionGroupTransfer;
+use Generated\Shared\Transfer\SspServicesSearchConditionTransfer;
 use Spryker\Client\Customer\CustomerClientInterface;
 use SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig;
-use SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConstants;
+use SprykerFeature\Yves\SelfServicePortal\Service\Form\DataProvider\ServiceSearchFormDataProvider;
 use SprykerFeature\Yves\SelfServicePortal\Service\Form\ServiceSearchForm;
 use Symfony\Component\Form\FormInterface;
 
@@ -113,26 +113,26 @@ class ServiceSearchFormHandler implements ServiceSearchFormHandlerInterface
             return $sspServiceCriteriaTransfer;
         }
 
-        $sspServicesSearchConditionGroup = new SspServicesSearchConditionGroupTransfer();
+        $sspServicesSearchCondition = new SspServicesSearchConditionTransfer();
         $trimmedSearchText = trim($searchText);
 
         switch ($searchType) {
-            case SelfServicePortalConstants::SEARCH_TYPE_SERVICE_NAME:
-                $sspServicesSearchConditionGroup->setProductName($trimmedSearchText);
+            case ServiceSearchFormDataProvider::SEARCH_TYPE_SERVICE_NAME:
+                $sspServicesSearchCondition->setProductName($trimmedSearchText);
 
                 break;
-            case SelfServicePortalConstants::SEARCH_TYPE_SERVICE_SKU:
-                $sspServicesSearchConditionGroup->setSku($trimmedSearchText);
+            case ServiceSearchFormDataProvider::SEARCH_TYPE_SERVICE_SKU:
+                $sspServicesSearchCondition->setSku($trimmedSearchText);
 
                 break;
-            case SelfServicePortalConstants::SEARCH_TYPE_ORDER_REFERENCE:
-                $sspServicesSearchConditionGroup->setOrderReference($trimmedSearchText);
+            case ServiceSearchFormDataProvider::SEARCH_TYPE_ORDER_REFERENCE:
+                $sspServicesSearchCondition->setOrderReference($trimmedSearchText);
 
                 break;
         }
 
         $sspServiceConditionsTransfer = new SspServiceConditionsTransfer();
-        $sspServiceConditionsTransfer->setServicesSearchConditionGroup($sspServicesSearchConditionGroup);
+        $sspServiceConditionsTransfer->setServicesSearchCondition($sspServicesSearchCondition);
 
         return $sspServiceCriteriaTransfer->setServiceConditions($sspServiceConditionsTransfer);
     }

@@ -29,10 +29,10 @@ class ServiceReader implements ServiceReaderInterface
      *
      * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
      */
-    public function getServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer
+    public function getSspServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer
     {
         $sspServiceCriteriaTransfer = $this->sspServiceCustomerPermissionExpander->expand($sspServiceCriteriaTransfer);
 
-        return $this->selfServicePortalRepository->getServiceCollection($sspServiceCriteriaTransfer);
+        return $this->selfServicePortalRepository->getSspServiceCollection($sspServiceCriteriaTransfer);
     }
 }

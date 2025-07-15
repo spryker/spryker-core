@@ -33,8 +33,8 @@ class FileReferenceGenerator implements FileReferenceGeneratorInterface
     {
         $sequenceNumberSettingsTransfer = new SequenceNumberSettingsTransfer();
         $sequenceNumberSettingsTransfer
-            ->setName($this->config->getFileSequenceNumberName())
-            ->setPrefix($this->config->getFileSequenceNumberPrefix());
+            ->setName($this->config->getCompanyFileSequenceNumberName())
+            ->setPrefix($this->config->getCompanyFileSequenceNumberPrefix());
 
         return $this->sequenceNumberFacade->generate($sequenceNumberSettingsTransfer);
     }

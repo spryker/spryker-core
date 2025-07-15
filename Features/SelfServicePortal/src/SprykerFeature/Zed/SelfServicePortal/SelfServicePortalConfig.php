@@ -13,6 +13,10 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Exception\AssetImageFileUploadStorageNameNotConfiguredException;
+use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Exception\CompanyFileUploadStorageNameNotConfiguredException;
+use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Exception\InquiryFileUploadStorageNameNotConfiguredException;
+use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Exception\InquiryPendingStatusNotConfiguredException;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Exception\DefaultMerchantNotConfiguredException;
 
 /**
@@ -79,36 +83,6 @@ class SelfServicePortalConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Default sort direction for file dashboard.
-     *
-     * @api
-     *
-     * @var bool
-     */
-    public const DEFAULT_FILE_DASHBOARD_SORT_IS_ASCENDING = false;
-
-    /**
-     * Specification:
-     * - Default page number for file dashboard.
-     *
-     * @api
-     *
-     * @var int
-     */
-    public const DEFAULT_FILE_DASHBOARD_PAGE_NUMBER = 1;
-
-    /**
-     * Specification:
-     * - Default maximum items per page for file dashboard.
-     *
-     * @api
-     *
-     * @var int
-     */
-    protected const DEFAULT_FILE_DASHBOARD_MAX_PER_PAGE = 3;
-
-    /**
-     * Specification:
      * - Default page number for inquiry asset expansion pagination.
      *
      * @api
@@ -170,12 +144,12 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     /**
      * @var string
      */
-    protected const DEFAULT_MAX_FILE_SIZE = '100M';
+    protected const DEFAULT_COMPANY_FILE_MAX_FILE_SIZE = '100M';
 
     /**
      * @var array<string>
      */
-    protected const DEFAULT_ALLOWED_MIME_TYPES = [
+    protected const DEFAULT_COMPANY_FILE_ALLOWED_MIME_TYPES = [
         'application/pdf',
         'image/jpeg',
         'image/jpg',
@@ -187,7 +161,7 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     /**
      * @var array<string>
      */
-    protected const DEFAULT_ALLOWED_FILE_EXTENSIONS = [
+    protected const DEFAULT_COMPANY_FILE_ALLOWED_FILE_EXTENSIONS = [
         '.pdf',
         '.jpeg',
         '.jpg',
@@ -389,58 +363,6 @@ class SelfServicePortalConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Returns the default sort direction for file dashboard.
-     *
-     * @api
-     *
-     * @return bool
-     */
-    public function isDefaultFileDashboardSortAscending(): bool
-    {
-        return static::DEFAULT_FILE_DASHBOARD_SORT_IS_ASCENDING;
-    }
-
-    /**
-     * Specification:
-     * - Returns the default page number for file dashboard.
-     *
-     * @api
-     *
-     * @return int
-     */
-    public function getDefaultFileDashboardPageNumber(): int
-    {
-        return static::DEFAULT_FILE_DASHBOARD_PAGE_NUMBER;
-    }
-
-    /**
-     * Specification:
-     * - Returns the default maximum items per page for file dashboard.
-     *
-     * @api
-     *
-     * @return int
-     */
-    public function getDefaultFileDashboardMaxPerPage(): int
-    {
-        return static::DEFAULT_FILE_DASHBOARD_MAX_PER_PAGE;
-    }
-
-    /**
-     * Specification:
-     * - Returns the default page number for inquiry asset expansion pagination.
-     *
-     * @api
-     *
-     * @return int
-     */
-    public function getInquiryAssetExpanderPageNumber(): int
-    {
-        return static::SSP_INQUIRY_ASSET_EXPANDER_PAGE_NUMBER;
-    }
-
-    /**
-     * Specification:
      * - Returns the default max per page for inquiry asset expansion pagination.
      *
      * @api
@@ -454,26 +376,13 @@ class SelfServicePortalConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Returns the default page number for inquiry dashboard.
-     *
-     * @api
-     *
-     * @return int
-     */
-    public function getDefaultInquiryDashboardPageNumber(): int
-    {
-        return static::DEFAULT_INQUIRY_DASHBOARD_PAGE_NUMBER;
-    }
-
-    /**
-     * Specification:
      * - Returns the default maximum items per page for inquiry dashboard.
      *
      * @api
      *
      * @return int
      */
-    public function getDefaultInquiryDashboardMaxPerPage(): int
+    public function getDashboardInquiryMaxPerPage(): int
     {
         return static::DEFAULT_INQUIRY_DASHBOARD_MAX_PER_PAGE;
     }
@@ -509,9 +418,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getMaxFileSize(): string
+    public function getCompanyFileMaxFileSize(): string
     {
-        return static::DEFAULT_MAX_FILE_SIZE;
+        return static::DEFAULT_COMPANY_FILE_MAX_FILE_SIZE;
     }
 
     /**
@@ -519,9 +428,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return list<string>
      */
-    public function getAllowedMimeTypes(): array
+    public function getCompanyFileAllowedMimeTypes(): array
     {
-        return static::DEFAULT_ALLOWED_MIME_TYPES;
+        return static::DEFAULT_COMPANY_FILE_ALLOWED_MIME_TYPES;
     }
 
     /**
@@ -529,12 +438,16 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return list<string>
      */
-    public function getAllowedFileExtensions(): array
+    public function getCompanyFileAllowedFileExtensions(): array
     {
-        return static::DEFAULT_ALLOWED_FILE_EXTENSIONS;
+        return static::DEFAULT_COMPANY_FILE_ALLOWED_FILE_EXTENSIONS;
     }
 
     /**
+     * Specification:
+     * - Returns a list of entity types.
+     * - These entity types are used to build the file attachment entity type filter in the self-service portal.
+     *
      * @api
      *
      * @return list<string>
@@ -549,7 +462,7 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getFileSequenceNumberPrefix(): string
+    public function getCompanyFileSequenceNumberPrefix(): string
     {
         return static::FILE_REFERENCE_PREFIX;
     }
@@ -559,12 +472,16 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getFileSequenceNumberName(): string
+    public function getCompanyFileSequenceNumberName(): string
     {
         return static::FILE_REFERENCE_NAME;
     }
 
     /**
+     * Specification:
+     * - Returns date time zone.
+     * - Used for filtering files by date.
+     *
      * @api
      *
      * @return string
@@ -581,11 +498,45 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @api
      *
+     * @throws \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Exception\CompanyFileUploadStorageNameNotConfiguredException
+     *
      * @return string
      */
-    public function getFileUploadStorageName(): string
+    public function getCompanyFileUploadStorageName(): string
     {
-        return $this->get(SelfServicePortalConstants::STORAGE_NAME);
+        return $this->get(SelfServicePortalConstants::STORAGE_NAME) ?? throw new CompanyFileUploadStorageNameNotConfiguredException();
+    }
+
+    /**
+     * Specification:
+     * - Returns the storage name for inquiry file upload operations.
+     * - Used to identify the storage provider for uploaded files in the file management system.
+     *
+     * @api
+     *
+     * @throws \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Exception\InquiryFileUploadStorageNameNotConfiguredException
+     *
+     * @return string
+     */
+    public function getInquiryFileUploadStorageName(): string
+    {
+        return $this->get(SelfServicePortalConstants::INQUIRY_STORAGE_NAME) ?? throw new InquiryFileUploadStorageNameNotConfiguredException();
+    }
+
+    /**
+     * Specification:
+     * - Returns the storage name for asset image file upload operations.
+     * - Used to identify the storage provider for uploaded files in the file management system.
+     *
+     * @api
+     *
+     * @throws \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Exception\AssetImageFileUploadStorageNameNotConfiguredException
+     *
+     * @return string
+     */
+    public function getAssetImageFileUploadStorageName(): string
+    {
+        return $this->get(SelfServicePortalConstants::ASSET_STORAGE_NAME) ?? throw new AssetImageFileUploadStorageNameNotConfiguredException();
     }
 
     /**
@@ -598,53 +549,22 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getFileAttachmentFormAutocompleteLimit(): int
+    public function getCompanyFileAutocompleteLimit(): int
     {
         return static::DEFAULT_FILE_ATTACHMENT_FORM_AUTOCOMPLETE_LIMIT;
     }
 
     /**
      * Specification:
-     * - Returns the settings for the ssp inquiry sequence number.
+     * - Returns selectable ssp inquiry types that can be selected by the user.
      *
      * @api
      *
-     * @param string $storeName
-     *
-     * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
+     * @return array<string, array<string>>
      */
-    public function getInquirySequenceNumberSettings(string $storeName): SequenceNumberSettingsTransfer
+    public function getSelectableSspInquiryTypes(): array
     {
-        return (new SequenceNumberSettingsTransfer())
-            ->setName(static::NAME_SSP_INQUIRY_REFERENCE)
-            ->setPrefix($this->createPrefix($storeName));
-    }
-
-    /**
-     * Specification:
-     * - Returns all selectable ssp inquiry types that can be selected by the user.
-     *
-     * @api
-     *
-     * @return array<string>
-     */
-    public function getAllSelectableInquiryTypes(): array
-    {
-        return $this->getSharedConfig()->getAllSelectableSspInquiryTypes();
-    }
-
-    /**
-     * @param string $storeName
-     *
-     * @return string
-     */
-    protected function createPrefix(string $storeName): string
-    {
-        $sequenceNumberPrefixParts = [];
-        $sequenceNumberPrefixParts[] = $storeName;
-        $sequenceNumberPrefixParts[] = static::SSP_INQUIRY_REFERENCE_PREFIX;
-
-        return sprintf('%s--', implode('-', $sequenceNumberPrefixParts));
+        return $this->getSharedConfig()->getSelectableInquiryTypesToInquirySourceMap();
     }
 
     /**
@@ -668,22 +588,27 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return array<string, string>
      */
-    public function getInquiryStateMachineProcessInquiryTypeMap(): array
+    public function getSspInquiryStateMachineProcessInquiryTypeMap(): array
     {
-        return $this->getSharedConfig()->getInquiryStateMachineProcessInquiryTypeMap();
+        return $this->getSharedConfig()->getSspInquiryStateMachineProcessInquiryTypeMap();
     }
 
     /**
      * Specification:
      * - Returns the ssp inquiry state machine process => initial state map.
      *
+     * @example
+     * [
+     *     'SspInquiryDefaultStateMachine' => 'created',
+     * ]
+     *
      * @api
      *
      * @return array<string, string>
      */
-    public function getInquiryInitialStateMap(): array
+    public function getInquiryInitialStateMachineMap(): array
     {
-        return $this->getSharedConfig()->getInquiryInitialStateMap();
+        return $this->getSharedConfig()->getInquiryInitialStateMachineMap();
     }
 
     /**
@@ -694,9 +619,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getInquiryCancelStateMachineEventName(): string
+    public function getSspInquiryCancelStateMachineEventName(): string
     {
-        return $this->getSharedConfig()->getInquiryCancelStateMachineEventName();
+        return $this->getSharedConfig()->getSspInquiryCancelStateMachineEventName();
     }
 
      /**
@@ -732,11 +657,13 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string|null
+     * @throws \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Exception\InquiryPendingStatusNotConfiguredException
+     *
+     * @return string
      */
-    public function getInquiryPendingStatus(): ?string
+    public function getInquiryPendingStatus(): string
     {
-        return '';
+        throw new InquiryPendingStatusNotConfiguredException();
     }
 
     /**
@@ -758,28 +685,16 @@ class SelfServicePortalConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Defines the Storage ssp inquiry files storage.
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getInquiryFileStorageName(): string
-    {
-        return $this->getSharedConfig()->getInquiryStorageName();
-    }
-
-    /**
-     * Specification:
      * - Defines the read chunk size in bytes.
+     * - Used for reading inquiry files in chunks during file download in backoffice.
      *
      * @api
      *
      * @return int
      */
-    public function getInquiryFileReadChunkSize(): int
+    public function getSspInquiryFileReadChunkSize(): int
     {
-        return $this->getSharedConfig()->getInquiryFileReadChunkSize();
+        return $this->getSharedConfig()->getSspInquiryFileReadChunkSize();
     }
 
     /**
@@ -790,9 +705,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getSubjectMaxLength(): int
+    public function getSspInquirySubjectMaxLength(): int
     {
-        return $this->getSharedConfig()->getSubjectMaxLength();
+        return $this->getSharedConfig()->getSspInquirySubjectMaxLength();
     }
 
     /**
@@ -803,9 +718,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getDescriptionMaxLength(): int
+    public function getSspInquiryDescriptionMaxLength(): int
     {
-        return $this->getSharedConfig()->getDescriptionMaxLength();
+        return $this->getSharedConfig()->getSspInquiryDescriptionMaxLength();
     }
 
     /**
@@ -816,9 +731,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getFileMaxCount(): int
+    public function getSspInquiryFileMaxCount(): int
     {
-        return $this->getSharedConfig()->getFileMaxCount();
+        return $this->getSharedConfig()->getSspInquiryFileMaxCount();
     }
 
     /**
@@ -830,9 +745,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getFilesMaxSize(): string
+    public function getSspInquiryFilesMaxSize(): string
     {
-        return $this->getSharedConfig()->getDefaultTotalFileMaxSize();
+        return $this->getSharedConfig()->getSspInquiriesFilesMaxSize();
     }
 
     /**
@@ -844,9 +759,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getFileMaxSize(): string
+    public function getSspInquiryFileMaxSize(): string
     {
-        return $this->getSharedConfig()->getDefaultFileMaxSize();
+        return $this->getSharedConfig()->getSspInquiryFileMaxSize();
     }
 
     /**
@@ -857,9 +772,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return array<string>
      */
-    public function getAllowedFileMimeTypes(): array
+    public function getSspInquiryAllowedFileMimeTypes(): array
     {
-        return $this->getSharedConfig()->getAllowedFileMimeTypes();
+        return $this->getSharedConfig()->getSspInquiryAllowedFileMimeTypes();
     }
 
     /**
@@ -920,20 +835,6 @@ class SelfServicePortalConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Defines the Storage for asset image file.
-     * - A `FileSystemConstants::FILESYSTEM_SERVICE` with the same storage name must be defined.
-     *
-     * @api
-     *
-     * @return string|null
-     */
-    public function getAssetStorageName(): ?string
-    {
-        return null;
-    }
-
-    /**
-     * Specification:
      * - Returns the allowed file extensions for file uploads during ssp asset creation/update.
      *
      * @api
@@ -966,9 +867,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getAssetDefaultFileMaxSize(): string
+    public function getSspAssetDefaultFileMaxSize(): string
     {
-        return $this->getSharedConfig()->getDefaultFileMaxSize();
+        return $this->getSharedConfig()->getSspAssetImageFilesMaxSize();
     }
 
     /**

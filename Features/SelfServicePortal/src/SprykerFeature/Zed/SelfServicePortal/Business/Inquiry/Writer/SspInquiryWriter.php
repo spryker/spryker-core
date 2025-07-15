@@ -8,6 +8,7 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Writer;
 
 use ArrayObject;
+use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
@@ -21,6 +22,16 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 class SspInquiryWriter implements SspInquiryWriterInterface
 {
     use TransactionTrait;
+
+    /**
+     * @var string
+     */
+    protected const NAME_SSP_INQUIRY_REFERENCE = 'SspInquiryReference';
+
+    /**
+     * @var string
+     */
+    protected const SSP_INQUIRY_REFERENCE_PREFIX = 'INQR';
 
     /**
      * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface $selfServicePortalEntityManager
@@ -60,7 +71,7 @@ class SspInquiryWriter implements SspInquiryWriterInterface
         }
 
         foreach ($sspInquiryCollectionRequestTransfer->getSspInquiries() as $sspInquiryTransfer) {
-            $sequenceNumberSetting = $this->selfServicePortalConfig->getInquirySequenceNumberSettings(
+            $sequenceNumberSetting = $this->getInquirySequenceNumberSettings(
                 $sspInquiryTransfer->getStoreOrFail()->getNameOrFail(),
             );
              $sspInquiryTransfer->setReference($this->sequenceNumberFacade->generate($sequenceNumberSetting));
@@ -134,5 +145,31 @@ class SspInquiryWriter implements SspInquiryWriterInterface
         }
 
         return $sspInquiryTransfer;
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
+     */
+    protected function getInquirySequenceNumberSettings(string $storeName): SequenceNumberSettingsTransfer
+    {
+        return (new SequenceNumberSettingsTransfer())
+            ->setName(static::NAME_SSP_INQUIRY_REFERENCE)
+            ->setPrefix($this->createPrefix($storeName));
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return string
+     */
+    protected function createPrefix(string $storeName): string
+    {
+        $sequenceNumberPrefixParts = [];
+        $sequenceNumberPrefixParts[] = $storeName;
+        $sequenceNumberPrefixParts[] = static::SSP_INQUIRY_REFERENCE_PREFIX;
+
+        return sprintf('%s--', implode('-', $sequenceNumberPrefixParts));
     }
 }

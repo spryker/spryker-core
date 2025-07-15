@@ -118,7 +118,7 @@ class SspInquiryForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
             ],
-            'attr' => ['maxlength' => $this->getConfig()->getSubjectMaxLength()],
+            'attr' => ['maxlength' => $this->getConfig()->getSspInquirySubjectMaxLength()],
         ]);
 
         return $this;
@@ -134,7 +134,7 @@ class SspInquiryForm extends AbstractType
         $builder->add(static::FIELD_DESCRIPTION, TextareaType::class, [
             'required' => true,
             'label' => 'self_service_portal.inquiry.description.label',
-            'attr' => ['maxlength' => $this->getConfig()->getDescriptionMaxLength()],
+            'attr' => ['maxlength' => $this->getConfig()->getSspInquiryDescriptionMaxLength()],
             'sanitize_xss' => true,
             'constraints' => [
                 new NotBlank(),
@@ -155,7 +155,7 @@ class SspInquiryForm extends AbstractType
         $builder->add(static::FIELD_FILES, DropzoneType::class, [
             'constraints' => [
                 new Count([
-                    'max' => $this->getConfig()->getInquiryFileMaxCount(),
+                    'max' => $this->getConfig()->getSspInquiryFileMaxCount(),
                     'maxMessage' => 'self_service_portal.inquiry.error.file.count.invalid',
                 ]),
                 new Files($this->getFilesConstraintConfiguration($options)),
@@ -168,7 +168,7 @@ class SspInquiryForm extends AbstractType
                 'acceptExtensions' => implode(', ', $this->getConfig()->getSspInquiryAllowedFileExtensions()),
                 'maxSize' => $this->convertToReadableSize($this->normalizeBinaryFormat($this->getConfig()->getSspInquiryFileMaxSize())),
                 'maxTotalSize' => $this->convertToReadableSize($this->normalizeBinaryFormat($this->getConfig()->getSspInquiryFilesMaxSize())),
-                'maxCount' => $this->getConfig()->getInquiryFileMaxCount(),
+                'maxCount' => $this->getConfig()->getSspInquiryFileMaxCount(),
             ],
         ]);
 

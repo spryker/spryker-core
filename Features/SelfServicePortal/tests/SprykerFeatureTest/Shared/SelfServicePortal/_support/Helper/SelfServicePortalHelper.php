@@ -59,7 +59,6 @@ use Ramsey\Uuid\Nonstandard\Uuid;
 use Spryker\Service\UtilDateTime\UtilDateTimeService;
 use Spryker\Zed\CmsBlock\Business\CmsBlockFacadeInterface;
 use Spryker\Zed\FileManager\Business\FileManagerFacade;
-use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspAssetMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspInquiryMapper;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig as ZedSelfServicePortalConfig;
@@ -383,7 +382,7 @@ class SelfServicePortalHelper extends Module
         $fileManagerDataTransfer->setFileInfo(
             (new FileInfoTransfer())
                 ->setStorageFileName($fileName)
-                ->setStorageName((new ZedSelfServicePortalConfig())->getAssetStorageName())
+                ->setStorageName((new ZedSelfServicePortalConfig())->getAssetImageFileUploadStorageName())
                 ->setExtension($imageData['extension'])
                 ->setSize(strlen($imageData['content']))
                 ->setType($imageData['type']),
@@ -509,9 +508,8 @@ class SelfServicePortalHelper extends Module
             $fileManagerDataTransfer = new FileManagerDataTransfer();
             $fileManagerDataTransfer->setFileInfo(
                 (new FileInfoTransfer())
-                    ->setStorageName((new SelfServicePortalConfig())->getInquiryStorageName())
+                    ->setStorageName((new ZedSelfServicePortalConfig())->getInquiryFileUploadStorageName())
                     ->setStorageFileName($fileName)
-                    ->setStorageName((new SelfServicePortalConfig())->getInquiryStorageName())
                     ->setExtension($file['extension'])
                     ->setSize(strlen($file['content']))
                     ->setType($file['type']),

@@ -40,7 +40,7 @@ class SspInquiryStateMachineWriterStep implements DataImportStepInterface
         $this->stateMachineFacade->triggerForNewStateMachineItem(
             (new StateMachineProcessTransfer())
                 ->setStateMachineName($this->selfServicePortalConfig->getInquiryStateMachineName())
-                ->setProcessName($this->selfServicePortalConfig->getInquiryStateMachineProcessInquiryTypeMap()[$dataSet[SspInquiryDataSetInterface::TYPE]]),
+                ->setProcessName($this->selfServicePortalConfig->getSspInquiryStateMachineProcessInquiryTypeMap()[$dataSet[SspInquiryDataSetInterface::TYPE]]),
             $dataSet[SspInquiryDataSetInterface::ID_SSP_INQUIRY],
         );
     }

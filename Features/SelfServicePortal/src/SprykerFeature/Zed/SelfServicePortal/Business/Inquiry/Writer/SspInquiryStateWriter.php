@@ -61,14 +61,14 @@ class SspInquiryStateWriter implements SspInquiryStateWriterInterface
         foreach ($sspInquiryCollectionTransfer->getSspInquiries() as $sspInquiryTransfer) {
             $stateMachineItemTransfers[] = (new StateMachineItemTransfer())
                 ->setStateMachineName($this->selfServicePortalConfig->getInquiryStateMachineName())
-                ->setProcessName($this->selfServicePortalConfig->getInquiryStateMachineProcessInquiryTypeMap()[$sspInquiryTransfer->getType()])
+                ->setProcessName($this->selfServicePortalConfig->getSspInquiryStateMachineProcessInquiryTypeMap()[$sspInquiryTransfer->getType()])
                 ->setIdItemState((int)$sspInquiryTransfer->getStateMachineItemStateOrFail()->getIdStateMachineItemStateOrFail())
                 ->setIdentifier($sspInquiryTransfer->getIdSspInquiry())
-                ->setEventName($this->selfServicePortalConfig->getInquiryCancelStateMachineEventName());
+                ->setEventName($this->selfServicePortalConfig->getSspInquiryCancelStateMachineEventName());
         }
 
         $updatedSspInquiriesCount = $this->stateMachineFacade->triggerEventForItems(
-            $this->selfServicePortalConfig->getInquiryCancelStateMachineEventName(),
+            $this->selfServicePortalConfig->getSspInquiryCancelStateMachineEventName(),
             $stateMachineItemTransfers,
         );
 

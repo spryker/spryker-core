@@ -26,6 +26,7 @@
         "spryker/gui": "^3.45.0",
         "spryker/kernel": "^3.30.0",
         "spryker/locale": "^4.0.0",
+        "spryker/log": "^3.16.0",
         "spryker/mail": "^4.9.0",
         "spryker/mail-extension": "^1.0.0",
         "spryker/merchant": "^3.0.0",
