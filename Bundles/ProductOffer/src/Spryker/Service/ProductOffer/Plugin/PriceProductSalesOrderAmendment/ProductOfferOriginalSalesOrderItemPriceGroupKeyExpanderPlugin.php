@@ -5,22 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\PriceProductOfferSalesOrderAmendmentConnector\Plugin\PriceProductSalesOrderAmendment;
+namespace Spryker\Service\ProductOffer\Plugin\PriceProductSalesOrderAmendment;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Service\Kernel\AbstractPlugin;
 use Spryker\Service\PriceProductSalesOrderAmendmentExtension\Dependency\Plugin\OriginalSalesOrderItemPriceGroupKeyExpanderPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Service\ProductOffer\Plugin\PriceProductSalesOrderAmendment\ProductOfferOriginalSalesOrderItemPriceGroupKeyExpanderPlugin} instead.
+ * @method \Spryker\Service\ProductOffer\ProductOfferServiceFactory getFactory()
  */
 class ProductOfferOriginalSalesOrderItemPriceGroupKeyExpanderPlugin extends AbstractPlugin implements OriginalSalesOrderItemPriceGroupKeyExpanderPluginInterface
 {
-    /**
-     * @var string
-     */
-    protected const GROUP_KEY_DELIMITER = '_';
-
     /**
      * {@inheritDoc}
      * - Expands provided group key with product offer reference if `ItemTransfer.productOfferReference` is set.
@@ -34,10 +29,6 @@ class ProductOfferOriginalSalesOrderItemPriceGroupKeyExpanderPlugin extends Abst
      */
     public function expandGroupKey(string $groupKey, ItemTransfer $itemTransfer): string
     {
-        if ($itemTransfer->getProductOfferReference()) {
-            $groupKey = $groupKey . static::GROUP_KEY_DELIMITER . $itemTransfer->getProductOfferReference();
-        }
-
-        return $groupKey;
+        return $this->getFactory()->createOriginalSalesOrderItemGroupKeyExpander()->expandGroupKey($groupKey, $itemTransfer);
     }
 }

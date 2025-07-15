@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.2",
-        "spryker/cart-reorder": "^0.2.0",
+        "spryker/cart-reorder": "^1.0.0",
         "spryker/cart-reorder-rest-api-extension": "^1.0.0",
         "spryker/carts-rest-api": "^5.18.0",
         "spryker/glossary-storage": "^1.0.0",

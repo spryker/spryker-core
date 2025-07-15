@@ -19,7 +19,7 @@ class OrderAmendmentQuoteRequestQuoteCheckPlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritDoc}
-     * - Returns false if quote is in amendment process, true otherwise.
+     * - Returns `false` if quote is in amendment process, `true` otherwise.
      *
      * @api
      *

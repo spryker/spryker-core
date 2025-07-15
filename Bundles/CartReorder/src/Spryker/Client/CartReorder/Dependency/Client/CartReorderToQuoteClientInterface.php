@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CartReorderToQuoteClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getQuote(): QuoteTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

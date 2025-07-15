@@ -39,9 +39,6 @@
         <property name="orderConditions" type="OrderConditions"/>
     </transfer>
 
-    <transfer name="SalesOrderAmendmentResponse" strict="true">
-    </transfer>
-
     <transfer name="OrderCollection">
         <property name="orders" type="Order[]" singular="order"/>
     </transfer>
@@ -74,10 +71,6 @@
 
     <transfer name="CheckoutError">
         <property name="message" type="string"/>
-    </transfer>
-
-    <transfer name="OrderItemFilter">
-        <property name="orderReferences" type="string[]" singular="orderReference"/>
     </transfer>
 
     <transfer name="OmsOrderItemState" strict="true">

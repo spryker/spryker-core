@@ -11,13 +11,11 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Service\Kernel\AbstractPlugin;
 use Spryker\Service\SalesOrderAmendmentExtension\Dependency\Plugin\OriginalSalesOrderItemGroupKeyExpanderPluginInterface;
 
+/**
+ * @method \Spryker\Service\ProductOffer\ProductOfferServiceFactory getFactory()
+ */
 class ProductOfferOriginalSalesOrderItemGroupKeyExpanderPlugin extends AbstractPlugin implements OriginalSalesOrderItemGroupKeyExpanderPluginInterface
 {
-    /**
-     * @var string
-     */
-    protected const GROUP_KEY_DELIMITER = '_';
-
     /**
      * {@inheritDoc}
      * - Expands provided group key with product offer reference if `ItemTransfer.productOfferReference` is set.
@@ -31,10 +29,6 @@ class ProductOfferOriginalSalesOrderItemGroupKeyExpanderPlugin extends AbstractP
      */
     public function expandGroupKey(string $groupKey, ItemTransfer $itemTransfer): string
     {
-        if ($itemTransfer->getProductOfferReference()) {
-            $groupKey = $groupKey . static::GROUP_KEY_DELIMITER . $itemTransfer->getProductOfferReference();
-        }
-
-        return $groupKey;
+        return $this->getFactory()->createOriginalSalesOrderItemGroupKeyExpander()->expandGroupKey($groupKey, $itemTransfer);
     }
 }

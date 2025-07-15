@@ -23,7 +23,7 @@ class OrderAmendmentDefaultOrderItemInitialStateProviderPlugin extends AbstractP
 {
     /**
      * {@inheritDoc}
-     * - Returns initial oms order item state for order items in order amendment flow.
+     * - Returns initial OMS order item state for order items in order amendment flow.
      *
      * @api
      *

@@ -43,13 +43,6 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CART_REORDER_ORDER_ITEM_FILTER = 'PLUGINS_CART_REORDER_ORDER_ITEM_FILTER';
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @var string
-     */
-    public const PLUGINS_CART_REORDER_ITEM_FILTER = 'PLUGINS_CART_REORDER_ITEM_FILTER';
-
-    /**
      * @var string
      */
     public const PLUGINS_CART_REORDER_VALIDATOR = 'PLUGINS_CART_REORDER_VALIDATOR';
@@ -373,7 +366,7 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface>>
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface>
      */
     protected function getCartReorderItemHydratorPlugins(): array
     {
@@ -405,7 +398,7 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface>|array<string, list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface>>
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface>
      */
     protected function getCartPostReorderPlugins(): array
     {

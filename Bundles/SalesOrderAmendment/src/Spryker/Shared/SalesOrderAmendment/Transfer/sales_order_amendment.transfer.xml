@@ -207,18 +207,6 @@
         <property name="sellableItemResponses" type="SellableItemResponse[]" singular="sellableItemResponse"/>
     </transfer>
 
-    <transfer name="OrderConditions" strict="true">
-        <property name="orderReferences" type="string[]" singular="orderReference"/>
-    </transfer>
-
-    <transfer name="OrderCriteria" strict="true">
-        <property name="orderConditions" type="OrderConditions"/>
-    </transfer>
-
-    <transfer name="OrderCollection">
-        <property name="orders" type="Order[]" singular="order"/>
-    </transfer>
-
     <transfer name="CartReorderResponse" strict="true">
         <property name="errors" type="Error[]" singular="error"/>
     </transfer>
@@ -237,10 +225,6 @@
 
     <transfer name="Currency">
         <property name="code" type="string"/>
-    </transfer>
-
-    <transfer name="OrderList">
-        <property name="orders" type="Order[]" singular="order"/>
     </transfer>
 
     <transfer name="SalesOrderItemCollectionRequest" strict="true">

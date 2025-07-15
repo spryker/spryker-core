@@ -1,5 +1,6 @@
 namespace: ProductOffer
 include:
+    - tests/SprykerTest/Service/ProductOffer
     - tests/SprykerTest/Zed/ProductOffer
 paths:
     tests: tests
