@@ -13,6 +13,9 @@ use Spryker\Zed\OrderAmendmentExample\Dependency\Facade\OrderAmendmentExampleToC
 use Spryker\Zed\OrderAmendmentExample\Dependency\Facade\OrderAmendmentExampleToSalesFacadeBridge;
 use Spryker\Zed\OrderAmendmentExample\Dependency\Facade\OrderAmendmentExampleToSalesOrderAmendmentFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\OrderAmendmentExample\OrderAmendmentExampleConfig getConfig()
+ */
 class OrderAmendmentExampleDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

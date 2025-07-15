@@ -13,6 +13,7 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
+ * @method \Spryker\Zed\OrderAmendmentExample\OrderAmendmentExampleConfig getConfig()
  * @method \Spryker\Zed\OrderAmendmentExample\Business\OrderAmendmentExampleBusinessFactory getBusinessFactory()
  */
 class ApplyOrderAmendmentDraftCommandByOrderPlugin extends AbstractPlugin implements CommandByOrderInterface

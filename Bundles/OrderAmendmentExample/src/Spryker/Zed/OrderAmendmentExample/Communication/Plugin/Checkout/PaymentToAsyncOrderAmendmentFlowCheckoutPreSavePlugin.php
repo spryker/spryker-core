@@ -13,15 +13,11 @@ use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionCont
 use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-class InvoicePaymentToAsyncOrderAmendmentFlowCheckoutPreSavePlugin extends AbstractPlugin implements CheckoutPreSavePluginInterface
+/**
+ * @method \Spryker\Zed\OrderAmendmentExample\OrderAmendmentExampleConfig getConfig()
+ */
+class PaymentToAsyncOrderAmendmentFlowCheckoutPreSavePlugin extends AbstractPlugin implements CheckoutPreSavePluginInterface
 {
-    /**
-     * @uses \Spryker\Shared\DummyPayment\DummyPaymentConfig::PAYMENT_METHOD_INVOICE
-     *
-     * @var string
-     */
-    protected const PAYMENT_METHOD_INVOICE = 'dummyPaymentInvoice';
-
     /**
      * @uses \Spryker\Zed\OrderAmendmentExample\Business\Processor\OrderAmendmentCheckoutProcessor::ORDER_AMENDMENT_ASYNC_ORDER_ITEM_INITIAL_STATE
      *
@@ -32,7 +28,7 @@ class InvoicePaymentToAsyncOrderAmendmentFlowCheckoutPreSavePlugin extends Abstr
     /**
      * {@inheritDoc}
      * - Does nothing if `QuoteTransfer.defaultOmsOrderItemState` is equal to `order amendment draft applied`.
-     * - Does nothing if `QuoteTransfer.payment.paymentSelection` is not equal to `dummyPaymentInvoice`.
+     * - Does nothing if `QuoteTransfer.payment.paymentSelection` is not in predefined list.
      * - Sets `QuoteTransfer.quoteProcessFlow` to a new `QuoteProcessFlowTransfer` with the name 'order-amendment-async'.
      * - Sets `QuoteTransfer.shouldSkipStateMachineRun` to `true`.
      *
@@ -49,7 +45,7 @@ class InvoicePaymentToAsyncOrderAmendmentFlowCheckoutPreSavePlugin extends Abstr
         }
 
         $paymentMethod = $quoteTransfer->getPayment()?->getPaymentSelection();
-        if ($paymentMethod !== static::PAYMENT_METHOD_INVOICE) {
+        if (!in_array($paymentMethod, $this->getConfig()->getAsyncOrderAmendmentPaymentMethodNames())) {
             return $quoteTransfer;
         }
 

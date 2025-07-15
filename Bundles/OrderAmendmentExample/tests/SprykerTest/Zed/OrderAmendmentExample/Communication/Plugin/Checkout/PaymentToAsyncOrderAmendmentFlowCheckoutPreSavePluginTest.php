@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteProcessFlowTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\SalesOrderAmendmentExtension\SalesOrderAmendmentExtensionContextsInterface;
-use Spryker\Zed\OrderAmendmentExample\Communication\Plugin\Checkout\InvoicePaymentToAsyncOrderAmendmentFlowCheckoutPreSavePlugin;
+use Spryker\Zed\OrderAmendmentExample\Communication\Plugin\Checkout\PaymentToAsyncOrderAmendmentFlowCheckoutPreSavePlugin;
 
 /**
  * Auto-generated group annotations
@@ -23,10 +23,10 @@ use Spryker\Zed\OrderAmendmentExample\Communication\Plugin\Checkout\InvoicePayme
  * @group Communication
  * @group Plugin
  * @group Checkout
- * @group InvoicePaymentToAsyncOrderAmendmentFlowCheckoutPreSavePluginTest
+ * @group PaymentToAsyncOrderAmendmentFlowCheckoutPreSavePluginTest
  * Add your own group annotations below this line
  */
-class InvoicePaymentToAsyncOrderAmendmentFlowCheckoutPreSavePluginTest extends Unit
+class PaymentToAsyncOrderAmendmentFlowCheckoutPreSavePluginTest extends Unit
 {
     /**
      * @var string
@@ -56,7 +56,7 @@ class InvoicePaymentToAsyncOrderAmendmentFlowCheckoutPreSavePluginTest extends U
             ->setPayment((new PaymentTransfer())->setPaymentSelection(static::PAYMENT_METHOD_INVOICE));
 
         // Act
-        $quoteTransfer = (new InvoicePaymentToAsyncOrderAmendmentFlowCheckoutPreSavePlugin())->preSave($quoteTransfer);
+        $quoteTransfer = (new PaymentToAsyncOrderAmendmentFlowCheckoutPreSavePlugin())->preSave($quoteTransfer);
 
         // Assert
         $this->assertTrue($quoteTransfer->getShouldSkipStateMachineRun());
@@ -79,7 +79,7 @@ class InvoicePaymentToAsyncOrderAmendmentFlowCheckoutPreSavePluginTest extends U
             )->setPayment((new PaymentTransfer())->setPaymentSelection(static::PAYMENT_METHOD_INVOICE));
 
         // Act
-        $quoteTransfer = (new InvoicePaymentToAsyncOrderAmendmentFlowCheckoutPreSavePlugin())->preSave($quoteTransfer);
+        $quoteTransfer = (new PaymentToAsyncOrderAmendmentFlowCheckoutPreSavePlugin())->preSave($quoteTransfer);
 
         // Assert
         $this->assertSame(static::QUOTE_PROCESS_FLOW_NAME_1, $quoteTransfer->getQuoteProcessFlow()->getName());
@@ -96,7 +96,7 @@ class InvoicePaymentToAsyncOrderAmendmentFlowCheckoutPreSavePluginTest extends U
             ->setPayment(new PaymentTransfer());
 
         // Act
-        $quoteTransfer = (new InvoicePaymentToAsyncOrderAmendmentFlowCheckoutPreSavePlugin())->preSave($quoteTransfer);
+        $quoteTransfer = (new PaymentToAsyncOrderAmendmentFlowCheckoutPreSavePlugin())->preSave($quoteTransfer);
 
         // Assert
         $this->assertSame(static::QUOTE_PROCESS_FLOW_NAME_1, $quoteTransfer->getQuoteProcessFlow()->getName());
@@ -113,7 +113,7 @@ class InvoicePaymentToAsyncOrderAmendmentFlowCheckoutPreSavePluginTest extends U
             ->setPayment((new PaymentTransfer())->setPaymentSelection('unknownPaymentMethod'));
 
         // Act
-        $quoteTransfer = (new InvoicePaymentToAsyncOrderAmendmentFlowCheckoutPreSavePlugin())->preSave($quoteTransfer);
+        $quoteTransfer = (new PaymentToAsyncOrderAmendmentFlowCheckoutPreSavePlugin())->preSave($quoteTransfer);
 
         // Assert
         $this->assertSame(static::QUOTE_PROCESS_FLOW_NAME_1, $quoteTransfer->getQuoteProcessFlow()->getName());

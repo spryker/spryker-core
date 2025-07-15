@@ -17,6 +17,9 @@ use Spryker\Zed\OrderAmendmentExample\Dependency\Facade\OrderAmendmentExampleToS
 use Spryker\Zed\OrderAmendmentExample\Dependency\Facade\OrderAmendmentExampleToSalesOrderAmendmentFacadeInterface;
 use Spryker\Zed\OrderAmendmentExample\OrderAmendmentExampleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\OrderAmendmentExample\OrderAmendmentExampleConfig getConfig()
+ */
 class OrderAmendmentExampleBusinessFactory extends AbstractBusinessFactory
 {
     /**
