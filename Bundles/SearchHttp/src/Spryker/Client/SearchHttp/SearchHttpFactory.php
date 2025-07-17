@@ -249,7 +249,6 @@ class SearchHttpFactory extends AbstractFactory
     {
         return new QueryApplicabilityChecker(
             $this->createConfigReader(),
-            $this->getStoreClient(),
         );
     }
 
