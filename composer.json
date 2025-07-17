@@ -639,7 +639,6 @@
         "spryker/price-product-offer-data-import": "*",
         "spryker/price-product-offer-extension": "*",
         "spryker/price-product-offer-gui": "*",
-        "spryker/price-product-offer-sales-order-amendment-connector": "*",
         "spryker/price-product-offer-storage": "*",
         "spryker/price-product-offer-storage-extension": "*",
         "spryker/price-product-offer-volume": "*",
