@@ -50,6 +50,11 @@ class SingleAddressPerShipmentTypePreSubmitHandler implements SingleAddressPerSh
     public function handlePreSubmit(FormEvent $event): void
     {
         $data = $event->getData();
+
+        if (!is_array($data)) {
+            return;
+        }
+
         $form = $event->getForm();
 
         if (!$this->shouldProcessEvent($data)) {

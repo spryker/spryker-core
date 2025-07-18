@@ -110,6 +110,21 @@ class ProductToProductClassDataImportPluginTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetImportType(): void
+    {
+        // Arrange
+        $productToProductClassDataImportPlugin = new ProductToProductClassDataImportPlugin();
+
+        // Act
+        $importType = $productToProductClassDataImportPlugin->getImportType();
+
+        // Assert
+        $this->assertSame('product-to-product-class', $importType);
+    }
+
+    /**
      * @param \SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\ProductToProductClassDataImportPlugin $productToProductClassDataImportPlugin
      *
      * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\ProductToProductClassDataImportPlugin

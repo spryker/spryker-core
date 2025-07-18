@@ -35,11 +35,12 @@ class AddressFormChecker implements AddressFormCheckerInterface
     public function isApplicableForSingleAddressPerShipmentType(
         ItemTransfer $itemTransfer
     ): bool {
-        if ($itemTransfer->getRelatedBundleItemIdentifier()) {
+        if ($itemTransfer->getRelatedBundleItemIdentifier() || $itemTransfer->getBundleItemIdentifier()) {
             return false;
         }
 
-        $shipmentTypeKey = $itemTransfer->getShipmentType()?->getKey();
+        $shipmentTypeKey = $itemTransfer->getShipmentType()?->getKey() ?? SelfServicePortalConfig::SHIPMENT_TYPE_DELIVERY;
+
         if (!$shipmentTypeKey) {
             return false;
         }

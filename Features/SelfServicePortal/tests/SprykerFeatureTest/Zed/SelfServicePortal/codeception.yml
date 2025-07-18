@@ -9,7 +9,17 @@ paths:
 coverage:
     enabled: true
     remote: false
-    whitelist: { include: ['../../../../src/*'] }
+    whitelist:
+        {
+            include: ['../../../../src/SprykerFeature/Zed/SelfServicePortal/*.php'],
+            exclude:
+                [
+                    '../../../../src/SprykerFeature/Zed/SelfServicePortal/Communication/Controller/*.php',
+                    '../../../../src/SprykerFeature/Zed/SelfServicePortal/Communication/*/Tabs/*.php',
+                    '../../../../src/SprykerFeature/Zed/SelfServicePortal/Communication/*/Form/*.php',
+                    '../../../../src/SprykerFeature/Zed/SelfServicePortal/Communication/*/Table/*.php',
+                ],
+        }
 
 suites:
     Communication:
@@ -69,3 +79,18 @@ suites:
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\Permission\Helper\PermissionHelper
                 - \SprykerTest\Zed\CompanyRole\Helper\CompanyRoleHelper
+
+    Persistence:
+        path: Persistence
+        actor: SelfServicePortalPersistenceTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Zed\Sales\Helper\BusinessHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SelfServicePortalHelper

@@ -56,6 +56,18 @@ class SspInquiryApprovedMailTypeBuilderPluginTest extends Unit
     /**
      * @return void
      */
+    public function testGetName(): void
+    {
+        // Act
+        $result = $this->sspInquiryApprovedMailTypeBuilderPlugin->getName();
+
+        // Assert
+        $this->assertSame('ssp inquiry approved', $result);
+    }
+
+    /**
+     * @return void
+     */
     public function testBuild(): void
     {
         // Arrange
