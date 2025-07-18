@@ -58,6 +58,7 @@ class SchemaRenderer implements SchemaRendererInterface
     {
         $schemaComponentTransfer = new SchemaComponentTransfer();
         $schemaComponentTransfer->setName($schemaDataTransfer->getName());
+
         foreach ($schemaDataTransfer->getProperties() as $property) {
             $this->addSchemaProperty($schemaComponentTransfer, $property);
         }
@@ -65,9 +66,11 @@ class SchemaRenderer implements SchemaRendererInterface
         if ($schemaDataTransfer->getItems()) {
             $this->addRelationshipSchemaItems($schemaComponentTransfer, $schemaDataTransfer->getItems());
         }
+
         if ($schemaDataTransfer->getType()) {
             $schemaComponentTransfer->setType($schemaDataTransfer->getType());
         }
+
         if ($schemaDataTransfer->getRequired()) {
             $schemaComponentTransfer->setRequired($schemaDataTransfer->getRequired());
         }
@@ -90,6 +93,8 @@ class SchemaRenderer implements SchemaRendererInterface
         $schemaPropertyComponentTransfer->setIsNullable($property->getIsNullable());
 
         $schemaPropertyComponentTransfer = $this->addType($schemaPropertyComponentTransfer, $property);
+        $schemaPropertyComponentTransfer = $this->addExample($schemaPropertyComponentTransfer, $property);
+        $schemaPropertyComponentTransfer = $this->addDescription($schemaPropertyComponentTransfer, $property);
         $schemaPropertyComponentTransfer = $this->addReference($schemaPropertyComponentTransfer, $property);
         $schemaPropertyComponentTransfer = $this->addOneOf($schemaPropertyComponentTransfer, $property);
         $schemaPropertyComponentTransfer = $this->addItemsType($schemaPropertyComponentTransfer, $property);
@@ -132,6 +137,40 @@ class SchemaRenderer implements SchemaRendererInterface
     ): SchemaPropertyComponentTransfer {
         if ($property->getType()) {
             $schemaPropertyComponentTransfer->setType($property->getType());
+        }
+
+        return $schemaPropertyComponentTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer
+     * @param \Generated\Shared\Transfer\SchemaPropertyTransfer $property
+     *
+     * @return \Generated\Shared\Transfer\SchemaPropertyComponentTransfer
+     */
+    protected function addExample(
+        SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer,
+        SchemaPropertyTransfer $property
+    ): SchemaPropertyComponentTransfer {
+        if ($property->getExample()) {
+            $schemaPropertyComponentTransfer->setExample($property->getExample());
+        }
+
+        return $schemaPropertyComponentTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer
+     * @param \Generated\Shared\Transfer\SchemaPropertyTransfer $property
+     *
+     * @return \Generated\Shared\Transfer\SchemaPropertyComponentTransfer
+     */
+    protected function addDescription(
+        SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer,
+        SchemaPropertyTransfer $property
+    ): SchemaPropertyComponentTransfer {
+        if ($property->getDescription()) {
+            $schemaPropertyComponentTransfer->setDescription($property->getDescription());
         }
 
         return $schemaPropertyComponentTransfer;

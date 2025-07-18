@@ -5,6 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder;
 
 use Generated\Shared\Transfer\SchemaDataTransfer;
@@ -45,6 +47,21 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
      * @var string
      */
     protected const KEY_REST_REQUEST_PARAMETER = 'rest_request_parameter';
+
+    /**
+     * @var string
+     */
+    protected const KEY_REST_RESPONSE_PARAMETER = 'rest_response_parameter';
+
+    /**
+     * @var string
+     */
+    protected const METADATA_KEY_DESCRIPTION = 'description';
+
+    /**
+     * @var string
+     */
+    protected const METADATA_KEY_EXAMPLE = 'example';
 
     /**
      * @var string
@@ -97,6 +114,16 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     protected const REST_REQUEST_BODY_PARAMETER_NOT_REQUIRED = 'no';
 
     /**
+     * @var string
+     */
+    protected const REST_RESPONSE_BODY_PARAMETER_REQUIRED = 'required';
+
+    /**
+     * @var string
+     */
+    protected const REST_RESPONSE_BODY_PARAMETER_NOT_REQUIRED = 'no';
+
+    /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaComponentBuilderInterface
      */
     protected $schemaComponentBuilder;
@@ -126,13 +153,14 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     /**
      * @param string $schemaName
      * @param string $ref
+     * @param string|null $type
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
-    public function createRequestDataSchema(string $schemaName, string $ref): SchemaDataTransfer
+    public function createRequestDataSchema(string $schemaName, string $ref, ?string $type = null): SchemaDataTransfer
     {
         $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
-        $schemaData->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING));
+        $schemaData->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING, false, ['example' => $type]));
         $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_ATTRIBUTES, $ref));
 
         return $schemaData;
@@ -147,14 +175,17 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     public function createRequestDataAttributesSchema(string $schemaName, array $transferMetadata): SchemaDataTransfer
     {
         $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
-        foreach ($transferMetadata as $key => $value) {
-            if ($value[static::KEY_REST_REQUEST_PARAMETER] === static::REST_REQUEST_BODY_PARAMETER_NOT_REQUIRED) {
+
+        foreach ($transferMetadata as $property => $metadata) {
+            if ($metadata[static::KEY_REST_REQUEST_PARAMETER] === static::REST_REQUEST_BODY_PARAMETER_NOT_REQUIRED) {
                 continue;
             }
-            if ($value[static::KEY_REST_REQUEST_PARAMETER] === static::REST_REQUEST_BODY_PARAMETER_REQUIRED) {
-                $schemaData->addRequired($key);
+
+            if ($metadata[static::KEY_REST_REQUEST_PARAMETER] === static::REST_REQUEST_BODY_PARAMETER_REQUIRED) {
+                $schemaData->addRequired($property);
             }
-            $schemaData->addProperty($this->schemaComponentBuilder->createRequestSchemaPropertyTransfer($key, $value));
+
+            $schemaData->addProperty($this->schemaComponentBuilder->createRequestSchemaPropertyTransfer($property, $metadata));
         }
 
         return $schemaData;
@@ -178,14 +209,15 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     /**
      * @param string $schemaName
      * @param string $ref
+     * @param string|null $type
      * @param bool $isIdNullable
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
-    public function createResponseDataSchema(string $schemaName, string $ref, bool $isIdNullable = false): SchemaDataTransfer
+    public function createResponseDataSchema(string $schemaName, string $ref, ?string $type = null, bool $isIdNullable = false): SchemaDataTransfer
     {
         $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
-        $schemaData->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING));
+        $schemaData->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING, false, ['example' => $type, 'description' => 'The name of the resource.']));
         $schemaData->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_ID, static::VALUE_TYPE_STRING, $isIdNullable));
         $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_ATTRIBUTES, $ref));
         $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_LINKS, static::SCHEMA_NAME_LINKS));
@@ -202,8 +234,17 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     public function createResponseDataAttributesSchema(string $schemaName, array $transferMetadata): SchemaDataTransfer
     {
         $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
+
         foreach ($transferMetadata as $key => $value) {
+            if (isset($value[static::KEY_REST_RESPONSE_PARAMETER]) && ($value[static::KEY_REST_RESPONSE_PARAMETER] === static::REST_RESPONSE_BODY_PARAMETER_NOT_REQUIRED)) {
+                continue;
+            }
+
             $schemaData->addProperty($this->schemaComponentBuilder->createResponseSchemaPropertyTransfer($key, $value));
+
+            if ($value[static::KEY_REST_RESPONSE_PARAMETER] === static::REST_RESPONSE_BODY_PARAMETER_REQUIRED) {
+                $schemaData->addRequired($key);
+            }
         }
 
         return $schemaData;

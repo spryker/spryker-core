@@ -51,6 +51,7 @@ class RestTestSecondNestedResourceRelationshipAttributesTransfer extends Abstrac
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'no',
+            'rest_response_parameter' => 'no',
             'is_nullable' => false,
         ],
         self::ATTRIBUTE6 => [
@@ -59,6 +60,7 @@ class RestTestSecondNestedResourceRelationshipAttributesTransfer extends Abstrac
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'required',
+            'rest_response_parameter' => 'no',
             'is_nullable' => false,
         ],
     ];

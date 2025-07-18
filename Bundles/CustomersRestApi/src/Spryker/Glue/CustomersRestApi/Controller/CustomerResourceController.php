@@ -30,7 +30,8 @@ class CustomerResourceController extends AbstractController
      *              "400": "Customer id is not specified.",
      *              "403": "Unauthorized request.",
      *              "404": "Customer not found."
-     *          }
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestCustomersResponseAttributesTransfer"
      *     },
      *     "getCollection": {
      *          "summary": [

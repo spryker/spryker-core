@@ -5,6 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder;
 
 use Generated\Shared\Transfer\SchemaDataTransfer;
@@ -22,10 +24,11 @@ interface SchemaBuilderInterface
     /**
      * @param string $schemaName
      * @param string $ref
+     * @param string|null $type
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
-    public function createRequestDataSchema(string $schemaName, string $ref): SchemaDataTransfer;
+    public function createRequestDataSchema(string $schemaName, string $ref, ?string $type = null): SchemaDataTransfer;
 
     /**
      * @param string $schemaName
@@ -46,11 +49,12 @@ interface SchemaBuilderInterface
     /**
      * @param string $schemaName
      * @param string $ref
+     * @param string|null $type
      * @param bool $isIdNullable
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
-    public function createResponseDataSchema(string $schemaName, string $ref, bool $isIdNullable = false): SchemaDataTransfer;
+    public function createResponseDataSchema(string $schemaName, string $ref, ?string $type = null, bool $isIdNullable = false): SchemaDataTransfer;
 
     /**
      * @param string $schemaName

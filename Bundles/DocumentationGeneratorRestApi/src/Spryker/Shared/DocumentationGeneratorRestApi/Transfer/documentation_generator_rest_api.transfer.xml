@@ -37,6 +37,7 @@
         <property name="items" type="SchemaItems"/>
         <property name="properties" singular="property" type="SchemaProperty[]"/>
         <property name="required" type="string[]" singular="required"/>
+        <property name="example" type="string" strict="true"/>
     </transfer>
 
     <transfer name="Parameter">
@@ -60,6 +61,8 @@
         <property name="itemsType" type="string"/>
         <property name="isNullable" type="bool"/>
         <property name="oneOf" singular="oneOf" type="string[]"/>
+        <property name="example" type="string" strict="true"/>
+        <property name="description" type="string" strict="true"/>
     </transfer>
 
     <transfer name="SchemaItems">
@@ -132,6 +135,8 @@
     <transfer name="SchemaPropertyComponent">
         <property name="name" type="string"/>
         <property name="type" type="string"/>
+        <property name="example" type="string" strict="true"/>
+        <property name="description" type="string" strict="true"/>
         <property name="schemaReference" type="string"/>
         <property name="itemsSchemaReference" type="string"/>
         <property name="oneOf" singular="oneOf" type="string[]"/>

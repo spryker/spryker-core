@@ -45,6 +45,16 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
     /**
      * @var string
      */
+    protected const KEY_EXAMPLE = 'example';
+
+    /**
+     * @var string
+     */
+    protected const KEY_DESCRIPTION = 'description';
+
+    /**
+     * @var string
+     */
     protected const VALUE_TYPE_ARRAY = 'array';
 
     /**
@@ -88,8 +98,17 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
         if ($this->schemaPropertyComponentTransfer->getType()) {
             $schemaProperty[SchemaPropertyComponentTransfer::TYPE] = $this->schemaPropertyComponentTransfer->getType();
         }
+
         if ($this->schemaPropertyComponentTransfer->getSchemaReference()) {
             $schemaProperty[static::KEY_REF] = $this->schemaPropertyComponentTransfer->getSchemaReference();
+        }
+
+        if ($this->schemaPropertyComponentTransfer->getExample()) {
+            $schemaProperty[static::KEY_EXAMPLE] = $this->schemaPropertyComponentTransfer->getExample();
+        }
+
+        if ($this->schemaPropertyComponentTransfer->getDescription()) {
+            $schemaProperty[static::KEY_DESCRIPTION] = $this->schemaPropertyComponentTransfer->getDescription();
         }
 
         return $schemaProperty;
@@ -106,17 +125,21 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
             $schemaProperty[SchemaPropertyComponentTransfer::TYPE] = static::VALUE_TYPE_ARRAY;
             $schemaProperty[static::KEY_ITEMS][static::KEY_REF] = $this->schemaPropertyComponentTransfer->getItemsSchemaReference();
         }
+
         if ($this->schemaPropertyComponentTransfer->getItemsType()) {
             $schemaProperty[static::KEY_ITEMS][static::KEY_TYPE] = $this->schemaPropertyComponentTransfer->getItemsType();
         }
+
         if ($this->schemaPropertyComponentTransfer->getType() === static::VALUE_TYPE_ARRAY && $this->schemaPropertyComponentTransfer->getOneOf()) {
             foreach ($this->schemaPropertyComponentTransfer->getOneOf() as $oneOfItem) {
                 $schemaProperty[static::KEY_ONEOF][] = [static::KEY_REF => $oneOfItem];
             }
         }
+
         if ($this->schemaPropertyComponentTransfer->getType() === static::VALUE_TYPE_ARRAY && !$this->schemaPropertyComponentTransfer->getItemsType() && !$this->schemaPropertyComponentTransfer->getOneOf()) {
             $schemaProperty[static::KEY_ITEMS] = new stdClass();
         }
+
         if ($this->schemaPropertyComponentTransfer->getIsNullable()) {
             $schemaProperty[static::KEY_NULLABLE] = true;
         }

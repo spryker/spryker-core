@@ -102,6 +102,7 @@
         <property name="type" type="string"/>
         <property name="name" type="string"/>
         <property name="items" type="SchemaItems"/>
+        <property name="example" type="string" strict="true"/>
     </transfer>
 
     <transfer name="SchemaProperty">
@@ -112,6 +113,8 @@
         <property name="itemsReference" type="string"/>
         <property name="itemsType" type="string"/>
         <property name="oneOf" singular="oneOf" type="string[]"/>
+        <property name="example" type="string" strict="true"/>
+        <property name="description" type="string" strict="true"/>
     </transfer>
 
     <transfer name="SchemaItems">

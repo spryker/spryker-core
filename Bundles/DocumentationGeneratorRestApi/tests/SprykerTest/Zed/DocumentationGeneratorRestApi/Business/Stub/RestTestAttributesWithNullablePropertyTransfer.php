@@ -51,6 +51,7 @@ class RestTestAttributesWithNullablePropertyTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'no',
+            'rest_response_parameter' => 'yes',
             'is_nullable' => true,
         ],
         self::ATTRIBUTE2 => [
@@ -59,6 +60,7 @@ class RestTestAttributesWithNullablePropertyTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'required',
+            'rest_response_parameter' => 'yes',
             'is_nullable' => false,
         ],
     ];

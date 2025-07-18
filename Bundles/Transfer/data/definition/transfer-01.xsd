@@ -22,7 +22,10 @@
                                         <xsd:attribute type="xsd:string" name="deprecated" use="optional"/>
                                         <xsd:attribute type="xsd:boolean" name="associative" use="optional"/>
                                         <xsd:attribute type="xsd:boolean" name="strict" use="optional"/>
-                                        <xsd:attribute type="restRequestParameterType" name="restRequestParameter" use="optional"/>
+                                        <xsd:attribute type="restParameterType" name="restRequestParameter" use="optional"/>
+                                        <xsd:attribute type="restParameterType" name="restResponseParameter" use="optional"/>
+                                        <xsd:attribute name="example" use="optional"/>
+                                        <xsd:attribute name="examples" use="optional"/>
                                     </xsd:complexType>
                                 </xsd:element>
                             </xsd:choice>
@@ -38,7 +41,7 @@
         </xsd:complexType>
     </xsd:element>
 
-    <xsd:simpleType name="restRequestParameterType">
+    <xsd:simpleType name="restParameterType">
         <xsd:restriction base="xsd:string">
             <xsd:enumeration value="yes"/>
             <xsd:enumeration value="no"/>

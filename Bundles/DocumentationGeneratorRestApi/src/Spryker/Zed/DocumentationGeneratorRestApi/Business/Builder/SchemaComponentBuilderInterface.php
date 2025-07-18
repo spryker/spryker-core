@@ -26,10 +26,11 @@ interface SchemaComponentBuilderInterface
      * @param string $key
      * @param string $type
      * @param bool $isNullable
+     * @param array $metadata
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createScalarSchemaTypeTransfer(string $key, string $type, bool $isNullable = false): SchemaPropertyTransfer;
+    public function createScalarSchemaTypeTransfer(string $key, string $type, bool $isNullable = false, array $metadata = []): SchemaPropertyTransfer;
 
     /**
      * @param string $name
@@ -42,10 +43,11 @@ interface SchemaComponentBuilderInterface
      * @param string $name
      * @param string $type
      * @param bool $isNullable
+     * @param array $metadata
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createTypePropertyTransfer(string $name, string $type, bool $isNullable = false): SchemaPropertyTransfer;
+    public function createTypePropertyTransfer(string $name, string $type, bool $isNullable = false, array $metadata = []): SchemaPropertyTransfer;
 
     /**
      * @param string $name
@@ -84,19 +86,19 @@ interface SchemaComponentBuilderInterface
 
     /**
      * @param string $metadataKey
-     * @param array $metadataValue
+     * @param array $metadata
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createResponseSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer;
+    public function createResponseSchemaPropertyTransfer(string $metadataKey, array $metadata): SchemaPropertyTransfer;
 
     /**
      * @param string $metadataKey
-     * @param array $metadataValue
+     * @param array $metadata
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createRequestSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer;
+    public function createRequestSchemaPropertyTransfer(string $metadataKey, array $metadata): SchemaPropertyTransfer;
 
     /**
      * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface> $resourceRelationships

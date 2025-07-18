@@ -65,6 +65,7 @@ class ResourcePluginAnalyzerTest extends Unit
         $expectedResult = $this->tester->getRestApiDocumentationFromPluginsExpectedResult();
 
         $this->assertNotEmpty($generatedDocumentationData);
+
         foreach (static::EXPECTED_KEYS as $key) {
             $this->assertArraySubset($expectedResult[$key], $generatedDocumentationData[$key]);
         }

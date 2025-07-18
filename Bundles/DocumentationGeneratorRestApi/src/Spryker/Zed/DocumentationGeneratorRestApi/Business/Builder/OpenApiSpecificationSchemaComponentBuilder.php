@@ -113,19 +113,21 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
      * @param string $key
      * @param string $type
      * @param bool $isNullable
+     * @param array $metadata
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createScalarSchemaTypeTransfer(string $key, string $type, bool $isNullable = false): SchemaPropertyTransfer
+    public function createScalarSchemaTypeTransfer(string $key, string $type, bool $isNullable = false, array $metadata = []): SchemaPropertyTransfer
     {
         if (substr($type, -2) === '[]') {
             return $this->createArrayOfTypesPropertyTransfer($key, $this->mapScalarSchemaType(substr($type, 0, -2)), $isNullable);
         }
+
         if ($type === static::VALUE_TYPE_ARRAY) {
             return $this->createArrayOfMixedTypesPropertyTransfer($key, $isNullable);
         }
 
-        return $this->createTypePropertyTransfer($key, $this->mapScalarSchemaType($type), $isNullable);
+        return $this->createTypePropertyTransfer($key, $this->mapScalarSchemaType($type), $isNullable, $metadata);
     }
 
     /**
@@ -145,15 +147,18 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
      * @param string $name
      * @param string $type
      * @param bool $isNullable
+     * @param array $metadata
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createTypePropertyTransfer(string $name, string $type, bool $isNullable = false): SchemaPropertyTransfer
+    public function createTypePropertyTransfer(string $name, string $type, bool $isNullable = false, array $metadata = []): SchemaPropertyTransfer
     {
         $typeProperty = new SchemaPropertyTransfer();
         $typeProperty->setName($name);
         $typeProperty->setType($type);
         $typeProperty->setIsNullable($isNullable);
+        $typeProperty->setExample($metadata['example'] ?? null);
+        $typeProperty->setDescription($metadata['description'] ?? null);
 
         return $typeProperty;
     }
@@ -228,18 +233,19 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
 
     /**
      * @param string $metadataKey
-     * @param array $metadataValue
+     * @param array $metadata
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createRequestSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer
+    public function createRequestSchemaPropertyTransfer(string $metadataKey, array $metadata): SchemaPropertyTransfer
     {
-        if ($this->isScalarType($metadataValue[static::KEY_TYPE])) {
-            return $this->createScalarSchemaTypeTransfer($metadataKey, $metadataValue[static::KEY_TYPE], $metadataValue[static::KEY_IS_NULLABLE]);
+        if ($this->isScalarType($metadata[static::KEY_TYPE])) {
+            return $this->createScalarSchemaTypeTransfer($metadataKey, $metadata[static::KEY_TYPE], $metadata[static::KEY_IS_NULLABLE], $metadata);
         }
-        $schemaName = $this->resourceTransferAnalyzer->createRequestAttributesSchemaNameFromTransferClassName($metadataValue[static::KEY_TYPE]);
 
-        return $this->createObjectSchemaTypeTransfer($metadataKey, $schemaName, $metadataValue);
+        $schemaName = $this->resourceTransferAnalyzer->createRequestAttributesSchemaNameFromTransferClassName($metadata[static::KEY_TYPE]);
+
+        return $this->createObjectSchemaTypeTransfer($metadataKey, $schemaName, $metadata);
     }
 
     /**
@@ -273,18 +279,18 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
 
     /**
      * @param string $metadataKey
-     * @param array $metadataValue
+     * @param array $metadata
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
-    public function createResponseSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer
+    public function createResponseSchemaPropertyTransfer(string $metadataKey, array $metadata): SchemaPropertyTransfer
     {
-        if ($this->isScalarType($metadataValue[static::KEY_TYPE])) {
-            return $this->createScalarSchemaTypeTransfer($metadataKey, $metadataValue[static::KEY_TYPE], $metadataValue[static::KEY_IS_NULLABLE]);
+        if ($this->isScalarType($metadata[static::KEY_TYPE])) {
+            return $this->createScalarSchemaTypeTransfer($metadataKey, $metadata[static::KEY_TYPE], $metadata[static::KEY_IS_NULLABLE], $metadata);
         }
-        $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($metadataValue[static::KEY_TYPE]);
+        $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($metadata[static::KEY_TYPE]);
 
-        return $this->createObjectSchemaTypeTransfer($metadataKey, $schemaName, $metadataValue);
+        return $this->createObjectSchemaTypeTransfer($metadataKey, $schemaName, $metadata);
     }
 
     /**
