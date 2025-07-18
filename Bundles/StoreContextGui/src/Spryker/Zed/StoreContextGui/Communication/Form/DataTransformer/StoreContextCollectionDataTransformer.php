@@ -27,16 +27,26 @@ class StoreContextCollectionDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\StoreContextCollectionTransfer> $value
+     * @param array<\Generated\Shared\Transfer\StoreContextCollectionTransfer|null> $value
      *
      * @return \ArrayObject<\Generated\Shared\Transfer\StoreContextCollectionTransfer>
      */
     public function reverseTransform(mixed $value): ArrayObject
     {
+        $result = new ArrayObject();
+
         if (!$value) {
-            return new ArrayObject();
+            return $result;
         }
 
-        return new ArrayObject($value);
+        foreach ($value as $storeContextData) {
+            if (!$storeContextData) {
+                continue;
+            }
+
+            $result->append($storeContextData);
+        }
+
+        return $result;
     }
 }
