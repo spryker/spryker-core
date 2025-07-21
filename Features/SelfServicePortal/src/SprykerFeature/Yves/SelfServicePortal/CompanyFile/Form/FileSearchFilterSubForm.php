@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use SprykerFeature\Yves\SelfServicePortal\CompanyFile\Form\DataProvider\FileSearchFilterFormDataProvider;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -119,7 +119,7 @@ class FileSearchFilterSubForm extends AbstractType
      */
     protected function addDateFromField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_DATE_FROM, DateTimeType::class, [
+        $builder->add(static::FIELD_DATE_FROM, DateType::class, [
             'widget' => 'single_text',
             'required' => false,
             'label' => 'self_service_portal.company_file.file_search_filter_form.field.date_from.label',
@@ -138,7 +138,7 @@ class FileSearchFilterSubForm extends AbstractType
      */
     protected function addDateToField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_DATE_TO, DateTimeType::class, [
+        $builder->add(static::FIELD_DATE_TO, DateType::class, [
             'widget' => 'single_text',
             'required' => false,
             'label' => 'self_service_portal.company_file.file_search_filter_form.field.date_to.label',

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -144,7 +144,7 @@ class ViewFileDetailTableFilterForm extends AbstractType
      */
     protected function addDateFromField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_DATE_FROM, DateTimeType::class, [
+        $builder->add(static::FIELD_DATE_FROM, DateType::class, [
             'widget' => 'single_text',
             'required' => false,
             'label' => static::LABEL_DATE_FROM,
@@ -163,7 +163,7 @@ class ViewFileDetailTableFilterForm extends AbstractType
      */
     protected function addDateToField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_DATE_TO, DateTimeType::class, [
+        $builder->add(static::FIELD_DATE_TO, DateType::class, [
             'widget' => 'single_text',
             'required' => false,
             'label' => static::LABEL_DATE_TO,

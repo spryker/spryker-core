@@ -35,6 +35,7 @@
         {
             id: 'status',
             title: 'customer.ssp_service.status' | trans,
+            type: 'status',
         },
         {
             id: 'actions',
@@ -49,7 +50,7 @@
         service: service.productName,
         scheduledAt: service.scheduledAt,
         createdAt: service.createdAt,
-        status: (service.stateDisplayName) | trans,
+        status: { label: service.stateDisplayName, status: service.stateName },
         actions: [{ url: path('customer/order/details',  {'id': service.order.idSalesOrder }), label: 'customer.ssp_service.view_ssp_service' }],
     }) %}
 

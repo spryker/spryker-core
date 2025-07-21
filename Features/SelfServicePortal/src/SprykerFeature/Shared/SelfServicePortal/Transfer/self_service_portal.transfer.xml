@@ -181,6 +181,7 @@
         <property name="scheduledAt" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="stateDisplayName" type="string"/>
+        <property name="stateName" type="string"/>
         <property name="sspAssets" type="SspAsset[]" singular="sspAsset"/>
     </transfer>
 

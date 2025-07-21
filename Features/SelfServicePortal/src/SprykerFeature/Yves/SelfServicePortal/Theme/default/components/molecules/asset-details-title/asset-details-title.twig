@@ -28,7 +28,9 @@
                     <div class="col spacing-right">
                         {% block unassign %}
                             {% if data.canBusinessUnitBeUnassigned and can('UnassignSspAssetPermissionPlugin') %}
-                                <button title="{{ 'self_service_portal.asset.details_page.unassign' | trans }}" class="link {{ confirmationTrigger }}"
+                                <button
+                                    title="{{ 'self_service_portal.asset.details_page.unassign' | trans }}"
+                                    class="link link--alert {{ confirmationTrigger }} spacing-right"
                                     {{ qa('unassign-ssp-asset-link') }}>
                                     {% include atom('icon') with {
                                         data: {
@@ -43,9 +45,10 @@
                         {% block edit %}
                             {% if can('UpdateSspAssetPermissionPlugin') and data.isUpdateAllowed %}
                                 <a
+                                    class="link"
                                     href="{{ url('customer/ssp-asset/update', { reference: data.reference }) }}"
                                     title="{{ 'general.edit.button' | trans }}"
-                                    data-qa="edit-ssp-asset">
+                                    {{ qa('edit-ssp-asset') }}>
                                     {% include atom('icon') with {
                                         data: {
                                             name: 'edit',

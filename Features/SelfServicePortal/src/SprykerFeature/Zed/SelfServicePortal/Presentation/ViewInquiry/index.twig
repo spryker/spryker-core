@@ -1,7 +1,7 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% if widget_title is not defined %}
-    {% set widget_title = 'View Ssp Inquiry: ' ~ sspInquiry.reference | trans %}
+    {% set widget_title = 'View Inquiry: ' ~ sspInquiry.reference | trans %}
 {% endif %}
 
 {% block head_title -%}
@@ -11,7 +11,7 @@
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {{ backActionButton(url('/self-service-portal/list-inquiry'), 'Back to Ssp Inquiries' | trans) }}
+    {{ backActionButton(url('/self-service-portal/list-inquiry'), 'Back to Inquiries' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-xs-6 col-md-3 col-lg-3">
                     <dl>
-                        <dt>{{ 'Ssp Inquiry reference' | trans }}</dt>
+                        <dt>{{ 'Inquiry reference' | trans }}</dt>
                         <dd>{{ sspInquiry.reference }}</dd>
                     </dl>
                     <dl>
@@ -56,7 +56,7 @@
         {% endblock %}
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Ssp Inquiry Details' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Inquiry Details' | trans } %}
         {% block widget_content %}
             <div class="row">
                 <div class="col-xs-12 col-md-3 col-lg-3">

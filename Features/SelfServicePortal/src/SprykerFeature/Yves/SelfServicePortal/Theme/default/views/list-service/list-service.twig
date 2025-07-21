@@ -90,6 +90,7 @@
                         id: 'state',
                         title: 'self_service_portal.service.list.state',
                         sortable: true,
+                        type: 'status',
                     },
                     {
                         id: 'actions',
@@ -102,7 +103,7 @@
                     product_name: row.productName,
                     scheduled_at: row.scheduledAt,
                     created_at: row.createdAt,
-                    state: row.stateDisplayName | trans,
+                    state: { label: row.stateDisplayName, status: row.stateName },
                     actions: [{
                         url: url('customer/order/details', { 'id': row.order.idSalesOrder }),
                         label: 'self_service_portal.service.list.button.view'

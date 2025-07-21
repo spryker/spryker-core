@@ -113,6 +113,7 @@ class SspAssetTable extends AbstractTable
 
         $config->setRawColumns([
             static::COL_IMAGE,
+            SpySspAssetTableMap::COL_STATUS,
             static::COL_ACTIONS,
         ]);
 
@@ -192,7 +193,10 @@ class SspAssetTable extends AbstractTable
             static::COL_IMAGE => $assetImage ? sprintf('<img src="%s" width="100px">', $assetImage) : '',
             SpySspAssetTableMap::COL_NAME => $item[SpySspAssetTableMap::COL_NAME],
             SpySspAssetTableMap::COL_SERIAL_NUMBER => $item[SpySspAssetTableMap::COL_SERIAL_NUMBER],
-            SpySspAssetTableMap::COL_STATUS => $this->selfServicePortalConfig->getAssetStatuses()[$item[SpySspAssetTableMap::COL_STATUS]] ?? 'N/A',
+            SpySspAssetTableMap::COL_STATUS => $this->generateLabel(
+                $item[SpySspAssetTableMap::COL_STATUS],
+                $this->selfServicePortalConfig->getAssetStatusClassMap()[$item[SpySspAssetTableMap::COL_STATUS]] ?? null,
+            ),
             static::COL_ACTIONS => $this->buildLinks($item),
         ];
     }

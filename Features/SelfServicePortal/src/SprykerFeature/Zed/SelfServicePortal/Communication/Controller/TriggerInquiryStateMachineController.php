@@ -63,7 +63,7 @@ class TriggerInquiryStateMachineController extends AbstractController
         }
 
         if (!$isSuccessful) {
-            $this->addErrorMessage('Ssp Inquiry status transition is not possible.');
+            $this->addErrorMessage('Inquiry status transition is not possible.');
         }
 
         return $this->redirectResponse(
@@ -120,7 +120,7 @@ class TriggerInquiryStateMachineController extends AbstractController
         }
 
         if ($isSuccessful) {
-            $this->addSuccessMessage('Ssp Inquiry status changed successfully.');
+            $this->addSuccessMessage('Inquiry status changed successfully.');
         }
 
         return (bool)$isSuccessful;

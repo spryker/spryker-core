@@ -68,7 +68,7 @@ class FileTableFilterForm extends AbstractType
     /**
      * @var string
      */
-    protected const PLACEHOLDER_EXTENSION = 'Select type';
+    protected const PLACEHOLDER_EXTENSION = 'Select Type';
 
     /**
      * @return string

@@ -653,6 +653,20 @@ class SelfServicePortalConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     * - Returns the asset status to СSS class name mapping.
+     * - Used for status indicator styling.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getAssetStatusClassMap(): array
+    {
+        return [];
+    }
+
+    /**
+     * Specification:
      * - Returns the ssp inquiry status that is considered as "Pending".
      *
      * @api

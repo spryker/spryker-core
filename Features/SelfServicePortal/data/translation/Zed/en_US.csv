@@ -93,7 +93,6 @@ Save,Save
 "Are you sure you want to delete this file?","Are you sure you want to delete this file?"
 "Date From","Date From"
 "Date To","Date To"
-"Select type","Select type"
 "Select business entity type","Select business entity type"
 "Select entities","Select entities"
 "Entity Type","Entity Type"
@@ -113,32 +112,30 @@ start_review,"Start Review"
 cancel,Cancel
 approve,Approve
 reject,Reject
-"View Ssp Inquiry: ","View Inquiry: "
-"Back to Ssp Inquiries","Back to Inquiries"
-"Ssp Inquiry reference","Inquiry reference"
+"View Inquiry: ","View Inquiry: "
+"Back to Inquiries","Back to Inquiries"
+"Inquiry reference","Inquiry reference"
 Date,Date
 Store,Store
 "Customer Email","Customer Email"
 "Company / Business Unit","Company / Business Unit"
-"Ssp Inquiry Details","Inquiry Details"
-order,Order
+"Inquiry Details","Inquiry Details"
+order,"Order Claim"
 Subject,Subject
 Files,Files
 "File name","File name"
 Download,Download
-"Ssp Inquiry status transition is not possible.","Inquiry status transition is not possible."
+"Inquiry status transition is not possible.","Inquiry status transition is not possible."
 "Internal Comments","Internal Comments"
 "File was not found","File was not found"
 "No files available.","No files available."
 "Order reference","Order reference"
-"List of Ssp Inquiries","List of Inquiries"
 "Show history","Show history"
 "Select Type","Select Type"
 "Select Status","Select Status"
 Filter,Filter
-"Ssp Inquiries",Inquiries
+Inquiries,Inquiries
 "Create Reclamation","Create Reclamation"
-"Overview of Ssp Inquiries","Overview of Inquiries"
 general,General
 "Product offer not found.","Product offer not found."
 "Offer %s has been updated successfully.","Offer %s has been updated successfully."
@@ -156,3 +153,4 @@ Services,Services
 Submit,Submit
 "Confirm delete","Confirm delete"
 "Add Assets","Add Assets"
+"Customer portal","Customer portal"

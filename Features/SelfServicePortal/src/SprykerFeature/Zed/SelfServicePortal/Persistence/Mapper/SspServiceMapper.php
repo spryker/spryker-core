@@ -61,6 +61,7 @@ class SspServiceMapper
         }
 
         $serviceTransfer->setStateDisplayName($this->omsFacade->getStateDisplayName($salesOrderItemEntity));
+        $serviceTransfer->setStateName($salesOrderItemEntity->getState()->getName());
 
         foreach ($salesOrderItemEntity->getSalesOrderItemSspAssets() as $salesOrderItemSspAssetEntity) {
             $serviceTransfer->addSspAsset((new SspAssetTransfer())->setReference($salesOrderItemSspAssetEntity->getReference()));

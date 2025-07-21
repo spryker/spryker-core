@@ -93,7 +93,6 @@ Save,Speichern
 "Are you sure you want to delete this file?","Möchten Sie diese Datei wirklich löschen?"
 "Date From","Datum von"
 "Date To","Datum bis"
-"Select type","Typ auswählen"
 "Select business entity type","Geschäftsentitätstyp auswählen"
 "Select entities","Entitäten auswählen"
 "Entity Type",Entitätstyp
@@ -113,32 +112,30 @@ start_review,"Überprüfung starten"
 cancel,Stornieren
 approve,Genehmigen
 reject,Ablehnen
-"View Ssp Inquiry: ","Anfrage anzeigen: "
-"Back to Ssp Inquiries","Zurück zu Anfragen"
-"Ssp Inquiry reference",Referenz
+"View Inquiry: ","Anfrage anzeigen: "
+"Back to Inquiries","Zurück zu Anfragen"
+"Inquiry reference",Referenz
 Date,Datum
 Store,Store
 "Customer Email",Kunden-E-Mail
 "Company / Business Unit","Firma / Geschätseinheit"
-"Ssp Inquiry Details",Anfragedetails
-order,Bestellung
+"Inquiry Details",Anfragedetails
+order,Bestellreklamation
 Subject,Betreff
 Files,Dateien
 "File name",Dateiname
 Download,Herunterladen
-"Ssp Inquiry status transition is not possible.","Eine Änderung des Anfragestatus ist nicht möglich."
+"Inquiry status transition is not possible.","Eine Änderung des Anfragestatus ist nicht möglich."
 "Internal Comments","Interne Anmerkungen"
 "File was not found","Datei wurde nicht gefunden"
 "No files available.","Keine Dateien verfügbar."
 "Order reference",Bestellnummer
-"List of Ssp Inquiries","Liste der Anfragen"
 "Show history","Historie anzeigen"
 "Select Type","Typ auswählen"
 "Select Status","Status auswählen"
 Filter,Filter
-"Ssp Inquiries",Anfragen
+Inquiries,Anfragen
 "Create Reclamation",Reklamieren
-"Overview of Ssp Inquiries","Übersicht der Anfragen"
 general,Allgemein
 "Product offer not found.","Produktangebot nicht gefunden."
 "Offer %s has been updated successfully.","Angebot %s wurde erfolgreich aktualisiert."
@@ -156,3 +153,4 @@ Services,Dienstleistungen
 Submit,Absenden
 "Confirm delete","Löschen bestätigen"
 "Add Assets","Assets hinzufügen"
+"Customer portal",Kundenportal
