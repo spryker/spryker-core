@@ -847,4 +847,104 @@ class ClassDefinitionTest extends Unit
 
         return $classDefinition;
     }
+
+    /**
+     * @dataProvider provideTransferSuffixTestCases
+     *
+     * @param string $inputName
+     * @param bool $isStrictMode
+     * @param string $expectedName
+     * @param string $testDescription
+     *
+     * @return void
+     */
+    public function testSetNameWithoutValidationBehaviorWithTransferSuffixCheckStrict(
+        string $inputName,
+        bool $isStrictMode,
+        string $expectedName,
+        string $testDescription
+    ): void {
+        // Arrange
+        $transferConfigMock = $this->getTransferConfigMock();
+        $transferConfigMock->method('isTransferSuffixCheckStrict')->willReturn($isStrictMode);
+
+        $classDefinition = new ClassDefinition($transferConfigMock);
+        $transferDefinition = ['name' => $inputName];
+
+        // Act
+        $classDefinition->setDefinition($transferDefinition);
+        $result = $classDefinition->getName();
+
+        // Assert
+        $this->assertEquals($expectedName, $result, $testDescription);
+    }
+
+    /**
+     * @return array<string, array<string, string|bool>>
+     */
+    public function provideTransferSuffixTestCases(): array
+    {
+        return [
+            'legacy mode: name without Transfer anywhere gets suffix' => [
+                'inputName' => 'User',
+                'isStrictMode' => false,
+                'expectedName' => 'UserTransfer',
+                'testDescription' => 'Legacy mode should add Transfer suffix when name does not contain Transfer',
+            ],
+            'strict mode: name without Transfer anywhere gets suffix' => [
+                'inputName' => 'User',
+                'isStrictMode' => true,
+                'expectedName' => 'UserTransfer',
+                'testDescription' => 'Strict mode should add Transfer suffix when name does not contain Transfer',
+            ],
+            'legacy mode: name ending with Transfer keeps as is' => [
+                'inputName' => 'UserTransfer',
+                'isStrictMode' => false,
+                'expectedName' => 'UserTransfer',
+                'testDescription' => 'Legacy mode should not add suffix when name ends with Transfer',
+            ],
+            'strict mode: name ending with Transfer keeps as is' => [
+                'inputName' => 'UserTransfer',
+                'isStrictMode' => true,
+                'expectedName' => 'UserTransfer',
+                'testDescription' => 'Strict mode should not add suffix when name ends with Transfer',
+            ],
+            'legacy mode: name with Transfer in middle keeps as is (bug case)' => [
+                'inputName' => 'EventTransferResponse',
+                'isStrictMode' => false,
+                'expectedName' => 'EventTransferResponse',
+                'testDescription' => 'Legacy mode should not add suffix when Transfer appears anywhere in name',
+            ],
+            'strict mode: name with Transfer in middle gets suffix (fixed case)' => [
+                'inputName' => 'EventTransferResponse',
+                'isStrictMode' => true,
+                'expectedName' => 'EventTransferResponseTransfer',
+                'testDescription' => 'Strict mode should add suffix when Transfer appears in middle but not at end',
+            ],
+            'legacy mode: name with Transfer at start keeps as is' => [
+                'inputName' => 'TransferManager',
+                'isStrictMode' => false,
+                'expectedName' => 'TransferManager',
+                'testDescription' => 'Legacy mode should not add suffix when Transfer appears at start',
+            ],
+            'strict mode: name with Transfer at start gets suffix' => [
+                'inputName' => 'TransferManager',
+                'isStrictMode' => true,
+                'expectedName' => 'TransferManagerTransfer',
+                'testDescription' => 'Strict mode should add suffix when Transfer appears at start but not at end',
+            ],
+            'legacy mode: multiple Transfer occurrences in name keeps as is' => [
+                'inputName' => 'TransferEventTransferResponse',
+                'isStrictMode' => false,
+                'expectedName' => 'TransferEventTransferResponse',
+                'testDescription' => 'Legacy mode should not add suffix when Transfer appears multiple times',
+            ],
+            'strict mode: multiple Transfer occurrences not ending with Transfer gets suffix' => [
+                'inputName' => 'TransferEventTransferResponse',
+                'isStrictMode' => true,
+                'expectedName' => 'TransferEventTransferResponseTransfer',
+                'testDescription' => 'Strict mode should add suffix when Transfer appears multiple times but not at end',
+            ],
+        ];
+    }
 }

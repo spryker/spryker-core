@@ -185,6 +185,22 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Enables or disables strict suffix checking for transfer names.
+     * - When true, Transfer suffix will only be skipped if the name ends with "Transfer".
+     * - When false, Transfer suffix will be skipped if "Transfer" appears anywhere in the name.
+     * - Defaults to false for BC reasons. Enable on project level to fix cases like "EventTransferResponse" which should become "EventTransferResponseTransfer".
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isTransferSuffixCheckStrict(): bool
+    {
+        return false;
+    }
+
+    /**
      * This will enable strict validation for case sensitive declaration.
      * Mainly for property names, and singular definition.
      *

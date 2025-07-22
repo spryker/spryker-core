@@ -177,7 +177,11 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function setNameWithoutValidation(string $name)
     {
-        if (strpos($name, 'Transfer') === false) {
+        $shouldAddSuffix = $this->transferConfig->isTransferSuffixCheckStrict()
+            ? !str_ends_with($name, 'Transfer')
+            : strpos($name, 'Transfer') === false;
+
+        if ($shouldAddSuffix) {
             $name .= 'Transfer';
         }
 

@@ -40,6 +40,11 @@ class TransferDefinitionMerger implements MergerInterface
     protected $mergedTransferDefinitions = [];
 
     /**
+     * @var string
+     */
+    protected const TRANSFER_SUFFIX = 'Transfer';
+
+    /**
      * @var \Spryker\Zed\Transfer\TransferConfig
      */
     protected $transferConfig;
@@ -48,6 +53,11 @@ class TransferDefinitionMerger implements MergerInterface
      * @var \Psr\Log\LoggerInterface|null
      */
     protected $messenger;
+
+    /**
+     * @var array<string, array<string>>
+     */
+    protected array $originalNames = [];
 
     /**
      * @param \Spryker\Zed\Transfer\TransferConfig $transferConfig
@@ -67,21 +77,68 @@ class TransferDefinitionMerger implements MergerInterface
     {
         $this->messenger = $messenger;
         $this->mergedTransferDefinitions = [];
+        $this->originalNames = [];
 
+        $this->processTransferDefinitions($transferDefinitions);
+
+        return $this->createDefinitionsWithOriginalNames();
+    }
+
+    /**
+     * @param array<array> $transferDefinitions
+     *
+     * @return void
+     */
+    protected function processTransferDefinitions(array $transferDefinitions): void
+    {
         /** @var array<string, string> $transferDefinition */
         foreach ($transferDefinitions as $transferDefinition) {
-            if (array_key_exists($transferDefinition['name'], $this->mergedTransferDefinitions)) {
-                $this->mergedTransferDefinitions[$transferDefinition['name']] = $this->mergeDefinitions(
-                    $this->mergedTransferDefinitions[$transferDefinition['name']],
+            $originalName = $transferDefinition['name'];
+            $normalizedName = $this->getNormalizedTransferName($originalName);
+
+            if (!isset($this->originalNames[$normalizedName])) {
+                $this->originalNames[$normalizedName] = [];
+            }
+
+            if (!in_array($originalName, $this->originalNames[$normalizedName])) {
+                $this->originalNames[$normalizedName][] = $originalName;
+            }
+
+            if (isset($this->mergedTransferDefinitions[$normalizedName])) {
+                $this->mergedTransferDefinitions[$normalizedName] = $this->mergeDefinitions(
+                    $this->mergedTransferDefinitions[$normalizedName],
                     $transferDefinition,
-                    $transferDefinition['name'],
+                    $normalizedName,
                 );
             } else {
-                $this->mergedTransferDefinitions[$transferDefinition['name']] = $transferDefinition;
+                $this->mergedTransferDefinitions[$normalizedName] = $transferDefinition;
+            }
+        }
+    }
+
+    /**
+     * Creates the final result by restoring original transfer names to their merged definitions.
+     *
+     * This method takes the merged definitions (which use normalized names) and creates
+     * separate definition entries for each original name that was normalized to the same value.
+     * For example, if 'UserTransfer' and 'User' both normalize to 'User', this method
+     * will create two separate definition entries with their respective original names
+     * but identical merged content.
+     *
+     * @return array<string, array>
+     */
+    protected function createDefinitionsWithOriginalNames(): array
+    {
+        $result = [];
+        foreach ($this->mergedTransferDefinitions as $normalizedName => $definition) {
+            foreach ($this->originalNames[$normalizedName] as $originalName) {
+                $definitionCopy = $definition;
+                $definitionCopy['name'] = $originalName;
+                $result[$originalName] = $definitionCopy;
             }
         }
 
-        return $this->mergedTransferDefinitions;
+        return $result;
     }
 
     /**
@@ -390,5 +447,33 @@ class TransferDefinitionMerger implements MergerInterface
 
             return;
         }
+    }
+
+    /**
+     * @param string $transferName
+     *
+     * @return string
+     */
+    protected function getNormalizedTransferName(string $transferName): string
+    {
+        if ($this->hasTransferSuffix($transferName)) {
+            return substr($transferName, 0, -strlen(static::TRANSFER_SUFFIX));
+        }
+
+        return $transferName;
+    }
+
+    /**
+     * @param string $transferName
+     *
+     * @return bool
+     */
+    protected function hasTransferSuffix(string $transferName): bool
+    {
+        if ($transferName === static::TRANSFER_SUFFIX) {
+            return false;
+        }
+
+        return str_ends_with($transferName, static::TRANSFER_SUFFIX);
     }
 }

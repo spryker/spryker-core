@@ -87,4 +87,142 @@ class TransferDefinitionMergerHelper
             ],
         ];
     }
+
+    /**
+     * @return array
+     */
+    public function getItemMetadataTransfer(): array
+    {
+        return [
+            'name' => 'ItemMetadataTransfer',
+            'entity-namespace' => null,
+            'property' => [
+                [
+                    'name' => 'propertyA',
+                    'type' => 'string',
+                    'bundles' => [
+                        'Bundle1',
+                    ],
+                ],
+                [
+                    'name' => 'propertyB',
+                    'type' => 'int',
+                    'bundles' => [
+                        'Bundle1',
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getItemMetadata(): array
+    {
+        return [
+            'name' => 'ItemMetadata',
+            'entity-namespace' => null,
+            'property' => [
+                [
+                    'name' => 'propertyC',
+                    'type' => 'string',
+                    'bundles' => [
+                        'Bundle2',
+                    ],
+                ],
+                [
+                    'name' => 'propertyD',
+                    'type' => 'array',
+                    'bundles' => [
+                        'Bundle2',
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getExpectedMergedItemMetadataTransfer(): array
+    {
+        return [
+            'name' => 'ItemMetadataTransfer',
+            'entity-namespace' => null,
+            'deprecated' => null,
+            'property' => [
+                'propertyA' => [
+                    'name' => 'propertyA',
+                    'type' => 'string',
+                    'bundles' => [
+                        'Bundle1',
+                    ],
+                ],
+                'propertyB' => [
+                    'name' => 'propertyB',
+                    'type' => 'int',
+                    'bundles' => [
+                        'Bundle1',
+                    ],
+                ],
+                'propertyC' => [
+                    'name' => 'propertyC',
+                    'type' => 'string',
+                    'bundles' => [
+                        'Bundle2',
+                    ],
+                ],
+                'propertyD' => [
+                    'name' => 'propertyD',
+                    'type' => 'array',
+                    'bundles' => [
+                        'Bundle2',
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getExpectedMergedItemMetadata(): array
+    {
+        return [
+            'name' => 'ItemMetadata',
+            'entity-namespace' => null,
+            'deprecated' => null,
+            'property' => [
+                'propertyA' => [
+                    'name' => 'propertyA',
+                    'type' => 'string',
+                    'bundles' => [
+                        'Bundle1',
+                    ],
+                ],
+                'propertyB' => [
+                    'name' => 'propertyB',
+                    'type' => 'int',
+                    'bundles' => [
+                        'Bundle1',
+                    ],
+                ],
+                'propertyC' => [
+                    'name' => 'propertyC',
+                    'type' => 'string',
+                    'bundles' => [
+                        'Bundle2',
+                    ],
+                ],
+                'propertyD' => [
+                    'name' => 'propertyD',
+                    'type' => 'array',
+                    'bundles' => [
+                        'Bundle2',
+                    ],
+                ],
+            ],
+        ];
+    }
 }
