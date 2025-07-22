@@ -10,7 +10,7 @@
 
         <behavior name="timestampable"/>
 
-        <foreign-key name="spy_product_bundle-fk_bundled_product" foreignTable="spy_product" onDelete="CASCADE" onUpdate="CASCADE">
+        <foreign-key name="spy_product_bundle-fk_bundled_product" foreignTable="spy_product" phpName="BundledProduct" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_bundled_product" foreign="id_product"/>
         </foreign-key>
 

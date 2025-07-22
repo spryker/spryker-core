@@ -19,7 +19,7 @@ use Propel\Runtime\Collection\Collection;
 class ProductBundleMapper
 {
     /**
-     * @param array<\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle> $productBundleEntities
+     * @param array<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $productBundleEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductForBundleTransfer>
      */
@@ -44,7 +44,7 @@ class ProductBundleMapper
     /**
      * @deprecated Will be removed with next major release
      *
-     * @param array<\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle> $productBundleEntities
+     * @param array<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $productBundleEntities
      * @param \Generated\Shared\Transfer\ProductBundleCollectionTransfer $productBundleCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
@@ -106,7 +106,7 @@ class ProductBundleMapper
     /**
      * @deprecated Will be removed with next major release
      *
-     * @param array<\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle> $productBundleEntities
+     * @param array<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $productBundleEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductBundleTransfer>
      */
@@ -148,6 +148,7 @@ class ProductBundleMapper
     {
         $mappedProductForBundleTransfers = [];
 
+        /** @var \Orm\Zed\ProductBundle\Persistence\SpyProductBundle $productBundleEntity */
         foreach ($productBundleEntities as $productBundleEntity) {
             $mappedProductForBundleTransfers[$productBundleEntity->getFkProduct()][] = (new ProductForBundleTransfer())
                 ->fromArray($productBundleEntity->getSpyProductRelatedByFkBundledProduct()->toArray(), true)
