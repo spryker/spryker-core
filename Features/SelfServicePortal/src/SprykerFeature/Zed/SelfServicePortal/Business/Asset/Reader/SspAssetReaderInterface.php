@@ -24,5 +24,5 @@ interface SspAssetReaderInterface
      *
      * @return array<int, \Generated\Shared\Transfer\SspAssetTransfer>
      */
-    public function indexSspAssetsBySalesOrderItemIds(array $salesOrderItemIds): array;
+    public function getSspAssetsIndexedBySalesOrderItemIds(array $salesOrderItemIds): array;
 }

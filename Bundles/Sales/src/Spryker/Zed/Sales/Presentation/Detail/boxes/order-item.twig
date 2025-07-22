@@ -48,7 +48,12 @@
         orderItem: orderItem,
     } %}
 
+    {# @deprecated "@SspAssetManagement/Partials/order-item-asset.twig" is deprecated use "@SelfServicePortal/Partials/order-item-asset.twig" instead. #}
     {% include '@SspAssetManagement/Partials/order-item-asset.twig' ignore missing with {
+        orderItem: orderItem,
+    } %}
+
+    {% include '@SelfServicePortal/Partials/order-item-asset.twig' ignore missing with {
         orderItem: orderItem,
     } %}
 

@@ -7,6 +7,7 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Extractor\SalesOrderItemIdExtractorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInterface;
@@ -36,7 +37,7 @@ class OrderItemSspAssetExpander implements OrderItemSspAssetExpanderInterface
             return $orderTransfer;
         }
 
-        $sspAssetsIndexedByIdSalesOrderItem = $this->sspAssetReader->indexSspAssetsBySalesOrderItemIds($salesOrderItemIds);
+        $sspAssetsIndexedByIdSalesOrderItem = $this->sspAssetReader->getSspAssetsIndexedBySalesOrderItemIds($salesOrderItemIds);
 
         return $this->setAssetsToOrderItems($orderTransfer, $sspAssetsIndexedByIdSalesOrderItem);
     }
@@ -62,5 +63,18 @@ class OrderItemSspAssetExpander implements OrderItemSspAssetExpanderInterface
         }
 
         return $orderTransfer;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
+     */
+    public function expandItemsWithSspAssets(array $itemTransfers): array
+    {
+        $orderTransfer = (new OrderTransfer())->setItems(new ArrayObject($itemTransfers));
+        $orderTransfer = $this->expandOrderItemsWithSspAssets($orderTransfer);
+
+        return $orderTransfer->getItems()->getArrayCopy();
     }
 }

@@ -54,6 +54,52 @@
 					</div>
 				{% endfor %}
 			</div>
+
+            {% block asset_details %}
+                {% if orderItem.sspAsset is not null %}
+                    <div class="well">
+                        <div class="spacing-bottom">
+                            <strong>{{ 'Asset Details' | trans }}</strong>
+                        </div>
+
+                        {% set assetData = [
+                            {
+                                label: 'Reference',
+                                value: orderItem.sspAsset.reference,
+                            },
+                            {
+                                label: 'Asset Name',
+                                value: orderItem.sspAsset.name,
+                            },
+                            {
+                                label: 'Serial Number',
+                                value: orderItem.sspAsset.serialNumber | default('---'),
+                            },
+                            {
+                                label: 'Status',
+                                value: orderItem.sspAsset.status | default('N/A'),
+                            },
+                            {
+                                label: 'Note',
+                                value: orderItem.sspAsset.note | default('---'),
+                            },
+                            {
+                                label: 'Asset created date',
+                                value: orderItem.sspAsset.createdDate | formatDateTime,
+                            },
+                        ] %}
+
+                        {% for item in assetData %}
+                            <div class="row spacing-bottom">
+                                <div class="col-xs-3">
+                                    <strong>{{ item.label | trans }}</strong>
+                                </div>
+                                <div class="col-xs-9">{{ item.value }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endblock %}
 		{% endblock %}
 	{% endembed %}
 {% endblock %}

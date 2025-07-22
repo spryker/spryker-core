@@ -17,4 +17,11 @@ interface OrderItemSspAssetExpanderInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderItemsWithSspAssets(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\ItemTransfer>
+     */
+    public function expandItemsWithSspAssets(array $itemTransfers): array;
 }

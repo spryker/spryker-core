@@ -8,11 +8,12 @@
 namespace SprykerFeatureTest\Zed\SelfServicePortal\Communication\Plugin\Sales;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ItemTransfer;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\OrderItemSspAssetExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Extractor\SalesOrderItemIdExtractor;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalBusinessFactory;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspAssetOrderExpanderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspAssetOrderItemExpanderPlugin;
 use SprykerFeatureTest\Zed\SelfServicePortal\SelfServicePortalCommunicationTester;
 
 /**
@@ -22,9 +23,9 @@ use SprykerFeatureTest\Zed\SelfServicePortal\SelfServicePortalCommunicationTeste
  * @group Communication
  * @group Plugin
  * @group Sales
- * @group SspAssetOrderExpanderPluginTest
+ * @group SspAssetOrderItemExpanderPluginTest
  */
-class SspAssetOrderExpanderPluginTest extends Unit
+class SspAssetOrderItemExpanderPluginTest extends Unit
 {
     /**
      * @var \SprykerFeatureTest\Zed\SelfServicePortal\SelfServicePortalCommunicationTester
@@ -34,10 +35,10 @@ class SspAssetOrderExpanderPluginTest extends Unit
     /**
      * @return void
      */
-    public function testHydrateExpandsOrderItemsWithSspAssets(): void
+    public function testExpandExpandsItemsWithSspAssets(): void
     {
         // Arrange
-        $orderTransfer = $this->tester->createOrderTransferWithItems();
+        $itemTransfers = $this->createItemTransfers();
         $sspAssetTransfersIndexedBySalesOrderItemId = $this->tester->createSspAssetTransfersIndexedBySalesOrderItemId();
 
         $sspAssetReaderMock = $this->createMock(SspAssetReaderInterface::class);
@@ -49,36 +50,49 @@ class SspAssetOrderExpanderPluginTest extends Unit
         $businessFactoryMock->method('createOrderItemSspAssetExpander')
             ->willReturn(new OrderItemSspAssetExpander($sspAssetReaderMock, new SalesOrderItemIdExtractor()));
 
-        $sspAssetOrderExpanderPlugin = new SspAssetOrderExpanderPlugin();
-        $sspAssetOrderExpanderPlugin->setBusinessFactory($businessFactoryMock);
+        $sspAssetOrderItemExpanderPlugin = new SspAssetOrderItemExpanderPlugin();
+        $sspAssetOrderItemExpanderPlugin->setBusinessFactory($businessFactoryMock);
 
         // Act
-        $resultOrderTransfer = $sspAssetOrderExpanderPlugin->hydrate($orderTransfer);
+        $resultItemTransfers = $sspAssetOrderItemExpanderPlugin->expand($itemTransfers);
 
         // Assert
-        $this->assertNotNull($resultOrderTransfer->getItems()[0]->getSspAsset());
+        $this->assertCount(2, $resultItemTransfers);
+        $this->assertNotNull($resultItemTransfers[0]->getSspAsset());
         $this->assertSame(
             SelfServicePortalCommunicationTester::TEST_ASSET_REFERENCE,
-            $resultOrderTransfer->getItems()[0]->getSspAssetOrFail()->getReferenceOrFail(),
+            $resultItemTransfers[0]->getSspAssetOrFail()->getReferenceOrFail(),
         );
         $this->assertSame(
             SelfServicePortalCommunicationTester::TEST_ASSET_NAME,
-            $resultOrderTransfer->getItems()[0]->getSspAssetOrFail()->getNameOrFail(),
+            $resultItemTransfers[0]->getSspAssetOrFail()->getNameOrFail(),
         );
         $this->assertSame(
             SelfServicePortalCommunicationTester::TEST_ASSET_SERIAL_NUMBER,
-            $resultOrderTransfer->getItems()[0]->getSspAssetOrFail()->getSerialNumberOrFail(),
+            $resultItemTransfers[0]->getSspAssetOrFail()->getSerialNumberOrFail(),
         );
-        $this->assertNotNull($resultOrderTransfer->getItems()[1]->getSspAsset());
+        $this->assertNotNull($resultItemTransfers[1]->getSspAsset());
+        $this->assertSame(
+            SelfServicePortalCommunicationTester::TEST_ASSET_REFERENCE_2,
+            $resultItemTransfers[1]->getSspAssetOrFail()->getReferenceOrFail(),
+        );
+        $this->assertSame(
+            SelfServicePortalCommunicationTester::TEST_ASSET_NAME_2,
+            $resultItemTransfers[1]->getSspAssetOrFail()->getNameOrFail(),
+        );
+        $this->assertSame(
+            SelfServicePortalCommunicationTester::TEST_ASSET_SERIAL_NUMBER_2,
+            $resultItemTransfers[1]->getSspAssetOrFail()->getSerialNumberOrFail(),
+        );
     }
 
     /**
      * @return void
      */
-    public function testHydrateDoesNothingWhenNoItemsProvided(): void
+    public function testExpandDoesNothingWhenNoItemsProvided(): void
     {
         // Arrange
-        $orderTransfer = $this->tester->createEmptyOrderTransfer();
+        $itemTransfers = [];
 
         $sspAssetReaderMock = $this->createMock(SspAssetReaderInterface::class);
         $sspAssetReaderMock->expects($this->never())
@@ -88,23 +102,23 @@ class SspAssetOrderExpanderPluginTest extends Unit
         $businessFactoryMock->method('createOrderItemSspAssetExpander')
             ->willReturn(new OrderItemSspAssetExpander($sspAssetReaderMock, new SalesOrderItemIdExtractor()));
 
-        $sspAssetOrderExpanderPlugin = new SspAssetOrderExpanderPlugin();
-        $sspAssetOrderExpanderPlugin->setBusinessFactory($businessFactoryMock);
+        $sspAssetOrderItemExpanderPlugin = new SspAssetOrderItemExpanderPlugin();
+        $sspAssetOrderItemExpanderPlugin->setBusinessFactory($businessFactoryMock);
 
         // Act
-        $resultOrderTransfer = $sspAssetOrderExpanderPlugin->hydrate($orderTransfer);
+        $resultItemTransfers = $sspAssetOrderItemExpanderPlugin->expand($itemTransfers);
 
         // Assert
-        $this->assertCount(0, $resultOrderTransfer->getItems());
+        $this->assertCount(0, $resultItemTransfers);
     }
 
     /**
      * @return void
      */
-    public function testHydrateDoesNothingWhenNoAssetsAssociatedWithItem(): void
+    public function testExpandDoesNothingWhenNoAssetsAssociatedWithItems(): void
     {
         // Arrange
-        $orderTransfer = $this->tester->createOrderTransferWithItems();
+        $itemTransfers = $this->createItemTransfers();
 
         $sspAssetReaderMock = $this->createMock(SspAssetReaderInterface::class);
         $sspAssetReaderMock->method('getSspAssetsIndexedBySalesOrderItemIds')
@@ -114,14 +128,29 @@ class SspAssetOrderExpanderPluginTest extends Unit
         $businessFactoryMock->method('createOrderItemSspAssetExpander')
             ->willReturn(new OrderItemSspAssetExpander($sspAssetReaderMock, new SalesOrderItemIdExtractor()));
 
-        $sspAssetOrderExpanderPlugin = new SspAssetOrderExpanderPlugin();
-        $sspAssetOrderExpanderPlugin->setBusinessFactory($businessFactoryMock);
+        $sspAssetOrderItemExpanderPlugin = new SspAssetOrderItemExpanderPlugin();
+        $sspAssetOrderItemExpanderPlugin->setBusinessFactory($businessFactoryMock);
 
         // Act
-        $resultOrderTransfer = $sspAssetOrderExpanderPlugin->hydrate($orderTransfer);
+        $resultItemTransfers = $sspAssetOrderItemExpanderPlugin->expand($itemTransfers);
 
         // Assert
-        $this->assertNull($resultOrderTransfer->getItems()[0]->getSspAsset());
-        $this->assertNull($resultOrderTransfer->getItems()[1]->getSspAsset());
+        $this->assertCount(2, $resultItemTransfers);
+        $this->assertNull($resultItemTransfers[0]->getSspAsset());
+        $this->assertNull($resultItemTransfers[1]->getSspAsset());
+    }
+
+    /**
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
+     */
+    protected function createItemTransfers(): array
+    {
+        $itemTransfer1 = new ItemTransfer();
+        $itemTransfer1->setIdSalesOrderItem(1);
+
+        $itemTransfer2 = new ItemTransfer();
+        $itemTransfer2->setIdSalesOrderItem(2);
+
+        return [$itemTransfer1, $itemTransfer2];
     }
 }

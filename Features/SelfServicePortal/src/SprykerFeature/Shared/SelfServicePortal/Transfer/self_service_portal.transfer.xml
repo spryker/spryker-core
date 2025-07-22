@@ -757,6 +757,7 @@
 
     <transfer name="SspAsset" strict="true">
         <property name="idSspAsset" type="int"/>
+        <property name="idSalesOrderItem" type="int"/>
         <property name="name" type="string"/>
         <property name="reference" type="string"/>
         <property name="serialNumber" type="string"/>
