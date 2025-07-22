@@ -251,7 +251,7 @@ class SalesOrderWriter implements SalesOrderWriterInterface
             $shippingAddressEntityTransfer = $this->saveSalesOrderAddress($quoteTransfer->getShippingAddress());
             $salesOrderEntityTransfer->setShippingAddress($shippingAddressEntityTransfer);
             $salesOrderEntityTransfer->setFkSalesOrderAddressShipping($shippingAddressEntityTransfer->getIdSalesOrderAddress());
-            $this->mapShippingAddressEntityTransferToItemTransfers($shippingAddressEntityTransfer, $quoteTransfer->getItems());
+            $this->mapShippingAddressEntityTransferToItemTransfers($shippingAddressEntityTransfer, $quoteTransfer);
         }
 
         return $salesOrderEntityTransfer;
@@ -363,14 +363,19 @@ class SalesOrderWriter implements SalesOrderWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\SpySalesOrderAddressEntityTransfer $shippingAddressEntityTransfer
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function mapShippingAddressEntityTransferToItemTransfers(
         SpySalesOrderAddressEntityTransfer $shippingAddressEntityTransfer,
-        ArrayObject $itemTransfers
+        QuoteTransfer $quoteTransfer
     ): ArrayObject {
+        $itemTransfers = $quoteTransfer->getItems();
+        if ($this->isMultiShipmentSelectionEnabled($quoteTransfer)) {
+            return $itemTransfers;
+        }
+
         foreach ($itemTransfers as $itemTransfer) {
             if ($itemTransfer->getShipment() === null || $itemTransfer->getShipmentOrFail()->getShippingAddress() === null) {
                 continue;
@@ -382,5 +387,28 @@ class SalesOrderWriter implements SalesOrderWriterInterface
         }
 
         return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isMultiShipmentSelectionEnabled(QuoteTransfer $quoteTransfer): bool
+    {
+        $itemTransfers = $quoteTransfer->getItems();
+        $quoteShippingAddress = $quoteTransfer->getShippingAddress();
+
+        foreach ($itemTransfers as $itemTransfer) {
+            if (!$itemTransfer->getShipment()) {
+                continue;
+            }
+
+            if ($itemTransfer->getShipmentOrFail()->getShippingAddress() !== $quoteShippingAddress) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
