@@ -80,7 +80,7 @@ class IndexInstallBroker implements IndexInstallBrokerInterface
     protected function getGetIndexDefinitionTransfers(?string $storeName): array
     {
         if ($storeName) {
-            $this->indexDefinitionBuilder->build($storeName);
+            return $this->indexDefinitionBuilder->build($storeName);
         }
 
         /* Required by infrastructure, exists only for BC with DMS OFF mode. */
