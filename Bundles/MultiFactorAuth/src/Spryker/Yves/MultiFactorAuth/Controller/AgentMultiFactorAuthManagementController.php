@@ -151,7 +151,7 @@ class AgentMultiFactorAuthManagementController extends AbstractController
                 static::CSRF_TOKEN_DEACTIVATE => $this->csrfTokenManager->getToken(static::CSRF_TOKEN_ID_DEACTIVATE)->getValue(),
             ],
             [],
-            '@MultiFactorAuth/views/user-set-up-page/set-up-page.twig',
+            '@MultiFactorAuth/views/user-set-up-page/user-set-up-page.twig',
         );
     }
 

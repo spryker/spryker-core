@@ -1,4 +1,3 @@
-{# @deprecated this file is deprecated, please use @MultiFactorAuth/default/views/customer-type-selection-form/customer-type-selection-form.twig' instead. #}
 {% extends template('widget') %}
 
 {% define data = {
@@ -11,7 +10,7 @@
         data: {
             form: data.form ? data.form : null,
             title: data.title,
-            url: '/multi-factor-auth/get-customer-enabled-types',
+            url: path('multiFactorAuth/getCustomerEnabledTypes'),
             modifiers: ['type-selection'],
         },
     } only %}

@@ -169,13 +169,13 @@ abstract class AbstractMultiFactorAuthController extends AbstractController
 
             $this->executePostLoginMultiFactorAuthenticationPlugins($identityTransfer);
 
-            return $this->view(['dataResult' => static::DATA_SUCCESS_PARAMETER], [], '@MultiFactorAuth/views/response/validation-response.twig');
+            return $this->view(['dataResult' => static::DATA_SUCCESS_PARAMETER], [], '@MultiFactorAuth/views/response/response.twig');
         }
 
         if ($multiFactorAuthValidationResponseTransfer->getStatus() === MultiFactorAuthConstants::CODE_BLOCKED) {
             $this->addErrorMessage($multiFactorAuthValidationResponseTransfer->getMessageOrFail());
 
-            return $this->view(['dataResult' => static::DATA_ERROR_PARAMETER], [], '@MultiFactorAuth/views/response/validation-response.twig');
+            return $this->view(['dataResult' => static::DATA_ERROR_PARAMETER], [], '@MultiFactorAuth/views/response/response.twig');
         }
 
         $codeValidationForm->addError(new FormError($multiFactorAuthValidationResponseTransfer->getMessageOrFail()));

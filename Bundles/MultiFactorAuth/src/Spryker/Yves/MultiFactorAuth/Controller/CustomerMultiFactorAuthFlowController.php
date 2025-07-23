@@ -66,7 +66,7 @@ class CustomerMultiFactorAuthFlowController extends AbstractMultiFactorAuthContr
      */
     protected function getTypeSelectionFormTemplate(): string
     {
-        return '@MultiFactorAuth/views/customer-multi-factor-auth/type-selection-form.twig';
+        return '@MultiFactorAuth/views/customer-type-selection-form/customer-type-selection-form.twig';
     }
 
     /**
@@ -74,7 +74,7 @@ class CustomerMultiFactorAuthFlowController extends AbstractMultiFactorAuthContr
      */
     protected function getCodeValidationFormTemplate(): string
     {
-        return '@MultiFactorAuth/views/customer-multi-factor-auth/code-validation-form.twig';
+        return '@MultiFactorAuth/views/customer-code-validation-form/customer-code-validation-form.twig';
     }
 
     /**

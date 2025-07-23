@@ -1,4 +1,3 @@
-{# @deprecated this file is deprecated, please use @MultiFactorAuth/default/views/user-code-validation-form/user-code-validation-form.twig' instead. #}
 {% extends template('widget') %}
 
 {% define data = {
@@ -11,7 +10,7 @@
         data: {
             form: data.form ? data.form : null,
             title: data.title,
-            url: '/multi-factor-auth/send-user-code',
+            url: path('multiFactorAuth/sendCustomerCode'),
             submitText: 'multi_factor_auth.verify_code' | trans,
         },
     } only %}

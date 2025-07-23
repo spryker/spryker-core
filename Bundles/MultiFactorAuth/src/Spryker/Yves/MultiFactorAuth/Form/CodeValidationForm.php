@@ -49,6 +49,11 @@ class CodeValidationForm extends BaseMultiFactorAuthForm
     /**
      * @var string
      */
+    protected const ENTER_CODE_PLACEHOLDER = 'multi_factor_auth.enter_your_code_input';
+
+    /**
+     * @var string
+     */
     protected const PARAM_TYPE = '%type%';
 
     /**
@@ -116,7 +121,7 @@ class CodeValidationForm extends BaseMultiFactorAuthForm
                 static::PARAM_TYPE => $options[static::OPTION_TYPES][0] ?? '',
             ]),
             'attr' => [
-                'placeholder' => 'Enter your code here',
+                'placeholder' => $this->getFactory()->getTranslatorService()->trans(static::ENTER_CODE_PLACEHOLDER),
                 'autocomplete' => 'one-time-code',
                 'inputmode' => 'numeric',
                 'maxlength' => $options[static::OPTION_CODE_LENGTH],

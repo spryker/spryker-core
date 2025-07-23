@@ -72,7 +72,7 @@ class MultiFactorAuthHandlerExtension extends BasicMultiFactorAuthTypeExtension
     {
         return $this->twig->render('@MultiFactorAuth/views/multi-factor-auth-handler/multi-factor-auth-handler.twig', [
             'id' => $formName,
-            'url' => MultiFactorAuthCustomerRouteProviderPlugin::MULTI_FACTOR_AUTH_ROUTE_GET_CUSTOMER_ENABLED_TYPES,
+            'url' => MultiFactorAuthCustomerRouteProviderPlugin::MULTI_FACTOR_AUTH_NAME_GET_CUSTOMER_ENABLED_TYPES,
             'isLoginFlow' => false,
             'formSelector' => sprintf(static::FORM_SELECTOR_PLACEHOLDER, $formName),
             'configurations' => $this->config->getEnabledRoutesAndForms(),

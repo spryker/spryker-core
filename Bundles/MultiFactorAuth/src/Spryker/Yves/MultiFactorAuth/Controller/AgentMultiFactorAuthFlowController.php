@@ -66,7 +66,7 @@ class AgentMultiFactorAuthFlowController extends AbstractMultiFactorAuthControll
      */
     protected function getTypeSelectionFormTemplate(): string
     {
-        return '@MultiFactorAuth/views/user-multi-factor-auth/type-selection-form.twig';
+        return '@MultiFactorAuth/views/user-type-selection-form/user-type-selection-form.twig';
     }
 
     /**
@@ -74,7 +74,7 @@ class AgentMultiFactorAuthFlowController extends AbstractMultiFactorAuthControll
      */
     protected function getCodeValidationFormTemplate(): string
     {
-        return '@MultiFactorAuth/views/user-multi-factor-auth/code-validation-form.twig';
+        return '@MultiFactorAuth/views/user-code-validation-form/user-code-validation-form.twig';
     }
 
     /**

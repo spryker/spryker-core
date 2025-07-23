@@ -10,6 +10,7 @@
     url: required,
     isLoginFlow: false,
     isJsEnabledHandler: false,
+    isRoute: false,
 } %}
 
 {% define attributes = {
@@ -44,11 +45,13 @@
         {% set ajaxProviderClass = "#{config.jsName}__ajax-provider" %}
         {% set ajaxProviderId = "#{ajaxProviderClass}-#{data.id}" %}
 
+        {% set resolvedUrl = data.isRoute ? data.url : path(data.url) %}
+
         {% include molecule('ajax-provider') with {
             class: "#{ajaxProviderClass} #{ajaxProviderId}",
             attributes: {
                 method: 'POST',
-                url: data.url,
+                url: resolvedUrl,
             },
         } only %}
 

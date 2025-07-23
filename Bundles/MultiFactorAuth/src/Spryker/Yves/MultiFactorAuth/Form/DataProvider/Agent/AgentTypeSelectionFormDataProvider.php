@@ -21,11 +21,6 @@ class AgentTypeSelectionFormDataProvider
     /**
      * @var string
      */
-    protected const OPTION_EMAIL = 'email';
-
-    /**
-     * @var string
-     */
     protected const FIELD_IS_ACTIVATION = 'is_activation';
 
     /**
@@ -57,7 +52,6 @@ class AgentTypeSelectionFormDataProvider
     {
         return [
             static::OPTIONS_TYPES => $this->getEnabledTypes($userTransfer),
-            static::OPTION_EMAIL => $userTransfer->getUsernameOrFail(),
             static::FIELD_IS_ACTIVATION => false,
             static::FIELD_IS_DEACTIVATION => false,
             static::FIELD_TYPE_TO_SET_UP => null,

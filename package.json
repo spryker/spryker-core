@@ -75,5 +75,8 @@
     },
     "dependencies": {
         "formatter": "^0.4.2"
+    },
+    "overrides": {
+        "stylus": "0.0.1-security"
     }
 }
