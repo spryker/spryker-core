@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Positive;
+use Symfony\Component\Validator\Constraints\PositiveOrZero;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -407,7 +407,7 @@ class CreateOfferForm extends AbstractType
             'multiple' => true,
             'required' => false,
             'constraints' => [
-                new NotBlank(),
+                $this->createServicePointServicesValidationConstraint(),
             ],
             'attr' => [
                 'data-dependent-preload-url' => '/self-service-portal/create-offer/service-choices?',
@@ -441,7 +441,7 @@ class CreateOfferForm extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank(),
-                    new Positive(),
+                    new PositiveOrZero(),
                 ],
             ],
         );
@@ -483,5 +483,24 @@ class CreateOfferForm extends AbstractType
         }
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Callback
+     */
+    protected function createServicePointServicesValidationConstraint(): Callback
+    {
+        return new Callback([
+            'callback' => function ($value, ExecutionContextInterface $context): void {
+                $servicePointField = $context->getRoot()->get(static::FIELD_SERVICE_POINT);
+                $servicePointValue = $servicePointField->getData();
+
+                if ($servicePointValue !== null && $servicePointValue !== '') {
+                    if (count($value) === 0) {
+                        $context->addViolation('Services are required when a service point is selected.');
+                    }
+                }
+            },
+        ]);
     }
 }

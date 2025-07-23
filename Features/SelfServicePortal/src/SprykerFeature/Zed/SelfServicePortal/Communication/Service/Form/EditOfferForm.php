@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface getRepository()
@@ -55,7 +54,7 @@ class EditOfferForm extends CreateOfferForm
             'multiple' => true,
             'required' => false,
             'constraints' => [
-                new NotBlank(),
+                $this->createServicePointServicesValidationConstraint(),
             ],
             'attr' => [
                 'data-dependent-preload-url' => '/self-service-portal/create-offer/service-choices?',

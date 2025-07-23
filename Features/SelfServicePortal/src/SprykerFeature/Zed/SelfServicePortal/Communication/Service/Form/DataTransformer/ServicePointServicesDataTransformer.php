@@ -26,14 +26,14 @@ class ServicePointServicesDataTransformer implements DataTransformerInterface
             return [];
         }
 
-        $serviceIds = [];
+        $serviceUuids = [];
         foreach ($serviceTransfers->getArrayCopy() as $serviceTransfer) {
-            if ($serviceTransfer->getIdService() !== null) {
-                $serviceIds[] = (string)$serviceTransfer->getIdService();
+            if ($serviceTransfer->getUuid() !== null) {
+                $serviceUuids[] = (string)$serviceTransfer->getUuid();
             }
         }
 
-        return $serviceIds;
+        return $serviceUuids;
     }
 
     /**

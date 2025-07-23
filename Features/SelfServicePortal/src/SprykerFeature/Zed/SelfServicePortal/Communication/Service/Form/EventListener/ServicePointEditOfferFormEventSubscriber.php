@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\EventL
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\ServiceTransfer;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\CreateOfferForm;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -24,6 +25,7 @@ class ServicePointEditOfferFormEventSubscriber implements EventSubscriberInterfa
     {
         return [
             FormEvents::POST_SET_DATA => 'expandFormWithServices',
+            FormEvents::PRE_SUBMIT => 'expandProductOfferWithServicesOnPreSubmitEvent',
             FormEvents::SUBMIT => 'expandProductOfferWithServices',
         ];
     }
@@ -83,7 +85,11 @@ class ServicePointEditOfferFormEventSubscriber implements EventSubscriberInterfa
         }
 
         $form = $event->getForm();
+
         $servicePointServices = $form->get(CreateOfferForm::FIELD_SERVICE_POINT_SERVICES)->getData();
+        if ($productOfferTransfer->getServices()->count() > 0 && $servicePointServices === []) {
+            $form->remove(CreateOfferForm::FIELD_SERVICE_POINT_SERVICES);
+        }
 
         if (!$servicePointServices || !is_array($servicePointServices)) {
             return;
@@ -99,5 +105,44 @@ class ServicePointEditOfferFormEventSubscriber implements EventSubscriberInterfa
         }
 
         $productOfferTransfer->setServices($services);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     *
+     * @return void
+     */
+    public function expandProductOfferWithServicesOnPreSubmitEvent(FormEvent $event): void
+    {
+        $formData = $event->getData();
+        if (!is_array($formData)) {
+            return;
+        }
+
+        $productOfferTransfer = $event->getForm()->getData();
+        if (!($productOfferTransfer instanceof ProductOfferTransfer)) {
+            return;
+        }
+
+        if (!isset($formData[CreateOfferForm::FIELD_SERVICE_POINT_SERVICES], $formData[CreateOfferForm::FIELD_SERVICE_POINT])) {
+            $productOfferTransfer->setServices(new ArrayObject());
+
+            return;
+        }
+
+        $servicePointServices = $formData[CreateOfferForm::FIELD_SERVICE_POINT_SERVICES];
+        $servicePoint = $formData[CreateOfferForm::FIELD_SERVICE_POINT];
+
+        $serviceTransfers = new ArrayObject();
+
+        foreach ($servicePointServices as $serviceUuid) {
+            $serviceTransfer = (new ServiceTransfer())
+                ->setUuid($serviceUuid)
+                ->setServicePoint((new ServicePointTransfer())->setIdServicePoint($servicePoint));
+
+            $serviceTransfers->append($serviceTransfer);
+        }
+
+        $productOfferTransfer->setServices($serviceTransfers);
     }
 }
