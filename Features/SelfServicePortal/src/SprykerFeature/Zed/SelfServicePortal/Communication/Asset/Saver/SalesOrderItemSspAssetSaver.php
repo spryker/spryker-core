@@ -59,13 +59,13 @@ class SalesOrderItemSspAssetSaver implements SalesOrderItemSspAssetSaverInterfac
     /**
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @return array<int>
+     * @return array<int, int>
      */
     protected function getSalesOrderItemIds(SaveOrderTransfer $saveOrderTransfer): array
     {
         $salesOrderItemIds = [];
         foreach ($saveOrderTransfer->getOrderItems() as $itemTransfer) {
-            $salesOrderItemIds[$itemTransfer->getGroupKey()] = $itemTransfer->getIdSalesOrderItemOrFail();
+            $salesOrderItemIds[$itemTransfer->getIdSalesOrderItemOrFail()] = $itemTransfer->getIdSalesOrderItemOrFail();
         }
 
         return $salesOrderItemIds;
@@ -74,7 +74,7 @@ class SalesOrderItemSspAssetSaver implements SalesOrderItemSspAssetSaverInterfac
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array<string, \Generated\Shared\Transfer\SspAssetTransfer|null>
+     * @return array<int, \Generated\Shared\Transfer\SspAssetTransfer>
      */
     protected function extractSspAssetDataFromQuoteItems(QuoteTransfer $quoteTransfer): array
     {
@@ -86,15 +86,15 @@ class SalesOrderItemSspAssetSaver implements SalesOrderItemSspAssetSaverInterfac
                 continue;
             }
 
-            $quoteItemsSspAssetData[$itemTransfer->getGroupKey()] = $sspAssetTransfer;
+            $quoteItemsSspAssetData[(int)$itemTransfer->getIdSalesOrderItem()] = $sspAssetTransfer;
         }
 
         return $quoteItemsSspAssetData;
     }
 
     /**
-     * @param array<int> $salesOrderItemIds
-     * @param array<string, \Generated\Shared\Transfer\SspAssetTransfer|null> $quoteItemsSspAssetData
+     * @param array<int|string> $salesOrderItemIds
+     * @param array<int, \Generated\Shared\Transfer\SspAssetTransfer> $quoteItemsSspAssetData
      *
      * @return void
      */
@@ -115,8 +115,8 @@ class SalesOrderItemSspAssetSaver implements SalesOrderItemSspAssetSaverInterfac
     }
 
     /**
-     * @param array<int> $salesOrderItemIds
-     * @param array<string, \Generated\Shared\Transfer\SspAssetTransfer|null> $quoteItemsSspAssetData
+     * @param array<int|string> $salesOrderItemIds
+     * @param array<int, \Generated\Shared\Transfer\SspAssetTransfer> $quoteItemsSspAssetData
      * @param array<string, \Generated\Shared\Transfer\SspAssetTransfer> $assetsIndexedByReference
      *
      * @return bool
@@ -126,12 +126,11 @@ class SalesOrderItemSspAssetSaver implements SalesOrderItemSspAssetSaverInterfac
         array $quoteItemsSspAssetData,
         array $assetsIndexedByReference
     ): bool {
-        foreach ($quoteItemsSspAssetData as $itemGroupKey => $sspAssetTransfer) {
-            if (!isset($salesOrderItemIds[$itemGroupKey]) || !$sspAssetTransfer) {
+        foreach ($quoteItemsSspAssetData as $idSalesOrderItem => $sspAssetTransfer) {
+            if (!isset($salesOrderItemIds[$idSalesOrderItem])) {
                 continue;
             }
 
-            $idSalesOrderItem = $salesOrderItemIds[$itemGroupKey];
             $reference = $sspAssetTransfer->getReference();
 
             if (!$reference || !isset($assetsIndexedByReference[$reference])) {
@@ -149,7 +148,7 @@ class SalesOrderItemSspAssetSaver implements SalesOrderItemSspAssetSaverInterfac
     }
 
     /**
-     * @param array<string, \Generated\Shared\Transfer\SspAssetTransfer|null> $quoteItemsSspAssetData
+     * @param array<int|string, \Generated\Shared\Transfer\SspAssetTransfer> $quoteItemsSspAssetData
      *
      * @return array<string>
      */
@@ -158,7 +157,7 @@ class SalesOrderItemSspAssetSaver implements SalesOrderItemSspAssetSaverInterfac
         $references = [];
 
         foreach ($quoteItemsSspAssetData as $sspAssetTransfer) {
-            if (!$sspAssetTransfer || !$sspAssetTransfer->getReference()) {
+            if (!$sspAssetTransfer->getReference()) {
                 continue;
             }
 

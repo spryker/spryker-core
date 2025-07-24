@@ -27,6 +27,8 @@ use Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductToProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClass;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClassQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAsset;
+use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAssetQuery;
 use PHPUnit\Framework\MockObject\MockObject;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
 
@@ -352,11 +354,29 @@ class SelfServicePortalCommunicationTester extends Actor
     }
 
     /**
+     * @return void
+     */
+    public function ensureSalesOrderItemSspAssetTableIsEmpty(): void
+    {
+        $this->getSalesOrderItemSspAssetQuery()
+            ->find()
+            ->delete();
+    }
+
+    /**
      * @return int
      */
     public function countSalesOrderItemProductClasses(): int
     {
         return $this->getSalesOrderItemProductClassQuery()->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function countSalesOrderItemSspAssets(): int
+    {
+        return $this->getSalesOrderItemSspAssetQuery()->count();
     }
 
     /**
@@ -417,6 +437,20 @@ class SelfServicePortalCommunicationTester extends Actor
     }
 
     /**
+     * @param int $idSalesOrderItem
+     * @param string $assetReference
+     *
+     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAsset|null
+     */
+    public function findSalesOrderItemSspAsset(int $idSalesOrderItem, string $assetReference): ?SpySalesOrderItemSspAsset
+    {
+        return $this->getSalesOrderItemSspAssetQuery()
+            ->filterByFkSalesOrderItem($idSalesOrderItem)
+            ->filterByReference($assetReference)
+            ->findOne();
+    }
+
+    /**
      * @return void
      */
     public function ensureProductClassTableIsEmpty(): void
@@ -463,5 +497,13 @@ class SelfServicePortalCommunicationTester extends Actor
     protected function getSalesOrderItemProductClassQuery(): SpySalesOrderItemProductClassQuery
     {
         return SpySalesOrderItemProductClassQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAssetQuery
+     */
+    protected function getSalesOrderItemSspAssetQuery(): SpySalesOrderItemSspAssetQuery
+    {
+        return SpySalesOrderItemSspAssetQuery::create();
     }
 }
