@@ -57,7 +57,9 @@ class ProductReader implements ProductReaderInterface
          */
         $productAbstractTransfer = $this->productFacade->findProductAbstractById($productConcreteTransfer->getFkProductAbstractOrFail());
 
-        $productConcreteTransfer->setApprovalStatus($productAbstractTransfer->getApprovalStatusOrFail());
+        if ($productAbstractTransfer->getApprovalStatus()) {
+            $productConcreteTransfer->setApprovalStatus($productAbstractTransfer->getApprovalStatusOrFail());
+        }
 
         return $this->filterLocalizedAttributesByCurrentLocale($productConcreteTransfer);
     }

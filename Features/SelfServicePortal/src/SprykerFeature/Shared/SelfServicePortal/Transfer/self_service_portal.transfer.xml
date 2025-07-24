@@ -12,6 +12,7 @@
 
     <transfer name="ProductAbstract">
         <property name="productClasses" type="ProductClass[]" singular="productClass" strict="true"/>
+        <property name="approvalStatus" type="string"/>
     </transfer>
 
     <transfer name="ProductClass" strict="true">
