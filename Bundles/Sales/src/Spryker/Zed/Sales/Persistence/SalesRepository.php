@@ -24,6 +24,7 @@ use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTotalsTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
@@ -45,6 +46,21 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      * @var string
      */
     protected const ID_SALES_ORDER = 'id_sales_order';
+
+    /**
+     * @var string
+     */
+    protected const COL_MAX_CREATED_AT = 'max_created_at';
+
+    /**
+     * @var string
+     */
+    protected const COL_FK_SALES_ORDER = 'fk_sales_order';
+
+    /**
+     * @var string
+     */
+    protected const ALIAS_LATEST_TOTALS = 'latest_totals';
 
     /**
      * @var array<string, string>
@@ -194,8 +210,15 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      */
     public function getMappedSalesOrderTotalsBySalesOrderIds(array $salesOrderIds): array
     {
+        $salesOrderTotalsSubQuerySql = $this->getLatestSalesOrderTotalsSubQuerySql($salesOrderIds);
         $salesOrderTotalsQuery = $this->getFactory()
             ->getSalesOrderTotalsPropelQuery()
+            ->addAlias(static::ALIAS_LATEST_TOTALS, sprintf('(%s)', $salesOrderTotalsSubQuerySql))
+            ->addJoin(
+                [SpySalesOrderTotalsTableMap::COL_FK_SALES_ORDER, SpySalesOrderTotalsTableMap::COL_CREATED_AT],
+                [sprintf('%s.%s', static::ALIAS_LATEST_TOTALS, static::COL_FK_SALES_ORDER), sprintf('%s.%s', static::ALIAS_LATEST_TOTALS, static::COL_MAX_CREATED_AT)],
+                Criteria::INNER_JOIN,
+            )
             ->filterByFkSalesOrder_In($salesOrderIds)
             ->groupByFkSalesOrder()
             ->orderByCreatedAt();
@@ -203,6 +226,24 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         return $this->getFactory()
             ->createSalesOrderMapper()
             ->mapSalesOrderTotalsEntityCollectionToMappedOrderTotalsByIdSalesOrder($salesOrderTotalsQuery->find());
+    }
+
+    /**
+     * @param array<int> $salesOrderIds
+     *
+     * @return string
+     */
+    protected function getLatestSalesOrderTotalsSubQuerySql(array $salesOrderIds): string
+    {
+        $params = [];
+        $salesOrderTotalsSubQuery = $this->getFactory()
+            ->getSalesOrderTotalsPropelQuery()
+            ->withColumn(sprintf('MAX(%s)', SpySalesOrderTotalsTableMap::COL_CREATED_AT), static::COL_MAX_CREATED_AT)
+            ->select([static::COL_FK_SALES_ORDER, static::COL_MAX_CREATED_AT])
+            ->filterByFkSalesOrder_In($salesOrderIds)
+            ->groupByFkSalesOrder();
+
+        return $salesOrderTotalsSubQuery->createSelectSql($params);
     }
 
     /**

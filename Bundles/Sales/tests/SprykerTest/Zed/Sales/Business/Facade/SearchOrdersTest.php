@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\OrderListFormatTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
@@ -76,6 +77,16 @@ class SearchOrdersTest extends Unit
     protected const DELIMITER_COLLECTION_TYPE_VALUE = ',';
 
     /**
+     * @var string
+     */
+    protected const COL_CREATED_AT = 'created_at';
+
+    /**
+     * @var string
+     */
+    protected const COL_GRAND_TOTAL = 'grand_total';
+
+    /**
      * @var \SprykerTest\Zed\Sales\SalesBusinessTester
      */
     protected SalesBusinessTester $tester;
@@ -113,6 +124,45 @@ class SearchOrdersTest extends Unit
 
         // Assert
         $this->assertCount(1, $storedOrderListTransfer->getOrders());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSearchOrdersCheckLastGrandTotalIsUsed(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        $dateTime = new DateTime('+1 hour');
+        $salesOrderTotalsEntity = $this->tester->createSalesOrderTotals($orderTransfer->getIdSalesOrder(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 600,
+        ]);
+        $dateTime2 = new DateTime('+2 hour');
+        $salesOrderTotalsEntity2 = $this->tester->createSalesOrderTotals($orderTransfer->getIdSalesOrder(), [
+            static::COL_CREATED_AT => $dateTime2,
+            static::COL_GRAND_TOTAL => 900,
+        ]);
+
+        $orderListTransfer = (new OrderListTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setFormat((new OrderListFormatTransfer())->setExpandWithItems(false))
+            ->setPagination((new PaginationTransfer())->setPage(1)->setMaxPerPage(10))
+            ->addFilterField((new FilterFieldTransfer())->setType(static::FILTER_TYPE_ALL)->setValue($orderTransfer->getOrderReference()));
+
+        // Act
+        $storedOrderListTransfer = $this->tester
+            ->getFacade()
+            ->searchOrders($orderListTransfer);
+
+        // Assert
+        $this->assertCount(1, $storedOrderListTransfer->getOrders());
+        /**
+         * @var \Generated\Shared\Transfer\OrderTransfer $resultOrderTransfer
+         */
+        $resultOrderTransfer = $storedOrderListTransfer->getOrders()->offsetGet(0);
+        $this->assertEquals($salesOrderTotalsEntity2->getGrandTotal(), $resultOrderTransfer->getTotals()->getGrandTotal());
     }
 
     /**
