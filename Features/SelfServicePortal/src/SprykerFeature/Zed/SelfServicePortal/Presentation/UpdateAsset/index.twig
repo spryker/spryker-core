@@ -12,7 +12,7 @@
 
 {% block action %}
     {{ backActionButton(url('/self-service-portal/list-asset'), 'Back to Assets' | trans) }}
-    {{ viewActionButton(url('/self-service-portal/detail-asset', {'id-ssp-asset': sspAsset.idSspAsset}), 'View' | trans) }}
+    {{ viewActionButton(url('/self-service-portal/view-asset', {'id-ssp-asset': sspAsset.idSspAsset}), 'View' | trans) }}
 {% endblock %}
 
 {% block content %}
