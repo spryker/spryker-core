@@ -47,6 +47,7 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface;
 use Spryker\Zed\Oms\Business\Reader\ProcessCacheReader;
 use Spryker\Zed\Oms\Business\Reader\ProcessCacheReaderInterface;
 use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
+use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Business\Writer\ProcessCacheWriter;
 use Spryker\Zed\Oms\Business\Writer\ProcessCacheWriterInterface;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface;
@@ -302,8 +303,17 @@ class OmsBusinessTester extends Actor
         $triggerLocker = $this->createTriggerLocker();
 
         $orderStatemachineMock = $this->getOrderStatemachineMockForSuccessfulTriggeredEvents();
+        $omsConfig = new OmsConfig();
+        $activeProcessList = new ReadOnlyArrayObject($omsConfig->getActiveProcesses());
 
-        return new LockedOrderStateMachine($orderStatemachineMock, $triggerLocker);
+        return new LockedOrderStateMachine(
+            $orderStatemachineMock,
+            $triggerLocker,
+            Stub::make(Builder::class),
+            $activeProcessList,
+            new OmsQueryContainer(),
+            $omsConfig,
+        );
     }
 
     /**
@@ -315,7 +325,17 @@ class OmsBusinessTester extends Actor
 
         $orderStateMachineMock = $this->getOrderStatemachineMockForFailedTriggeredEvents();
 
-        return new LockedOrderStateMachine($orderStateMachineMock, $triggerLocker);
+        $omsConfig = new OmsConfig();
+        $activeProcessList = new ReadOnlyArrayObject($omsConfig->getActiveProcesses());
+
+        return new LockedOrderStateMachine(
+            $orderStateMachineMock,
+            $triggerLocker,
+            Stub::make(Builder::class),
+            $activeProcessList,
+            new OmsQueryContainer(),
+            $omsConfig,
+        );
     }
 
     /**

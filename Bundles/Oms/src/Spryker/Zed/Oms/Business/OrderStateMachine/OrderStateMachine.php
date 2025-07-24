@@ -36,10 +36,11 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
-class OrderStateMachine implements OrderStateMachineInterface
+class OrderStateMachine implements OrderStateMachineInterface, CheckConditionForProcessAwareInterface
 {
     use DatabaseTransactionHandlerTrait;
     use ActiveRecordBatchProcessorTrait;
+    use OrderStateOrderItemsFetchTrait;
 
     /**
      * @var string
@@ -367,16 +368,26 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
+     * @param array|null $stateToTransitionsMap
+     * @param array|null $orderItems
      *
      * @return int
      */
-    protected function checkConditionsForProcess(ProcessInterface $process, ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer)
-    {
-        $transitions = $process->getAllTransitionsWithoutEvent();
+    public function checkConditionsForProcess(
+        ProcessInterface $process,
+        ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer,
+        ?array $stateToTransitionsMap = null,
+        ?array $orderItems = null
+    ): int {
+        if ($stateToTransitionsMap === null) {
+            $transitions = $process->getAllTransitionsWithoutEvent();
 
-        $stateToTransitionsMap = $this->createStateToTransitionMap($transitions);
+            $stateToTransitionsMap = $this->createStateToTransitionMap($transitions);
+        }
 
-        $orderItems = $this->getOrderItemsByState(array_keys($stateToTransitionsMap), $process, $omsCheckConditionsQueryCriteriaTransfer);
+        if ($orderItems === null) {
+            $orderItems = $this->getOrderItemsByState(array_keys($stateToTransitionsMap), $process, $omsCheckConditionsQueryCriteriaTransfer);
+        }
 
         $countAffectedItems = count($orderItems);
 
@@ -829,86 +840,6 @@ class OrderStateMachine implements OrderStateMachineInterface
                 $this->triggerEvent($eventId, $orderItems, $data);
             }
         }
-    }
-
-    /**
-     * @param array<\Spryker\Zed\Oms\Business\Process\TransitionInterface> $transitions
-     *
-     * @return array
-     */
-    protected function createStateToTransitionMap(array $transitions)
-    {
-        $stateToTransitionsMap = [];
-        foreach ($transitions as $transition) {
-            $sourceId = $transition->getSource()->getName();
-            if (array_key_exists($sourceId, $stateToTransitionsMap) === false) {
-                $stateToTransitionsMap[$sourceId] = [];
-            }
-            $stateToTransitionsMap[$sourceId][] = $transition;
-        }
-
-        return $stateToTransitionsMap;
-    }
-
-    /**
-     * @param array $states
-     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
-     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
-     *
-     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
-     */
-    protected function getOrderItemsByState(
-        array $states,
-        ProcessInterface $process,
-        ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer
-    ) {
-        $omsCheckConditionsQueryCriteriaTransfer = $this->prepareOmsCheckConditionsQueryCriteriaTransfer($omsCheckConditionsQueryCriteriaTransfer);
-
-        $storeName = $omsCheckConditionsQueryCriteriaTransfer->getStoreName();
-        $limit = $omsCheckConditionsQueryCriteriaTransfer->getLimit();
-
-        if ($storeName === null && $limit === null) {
-            return $this->queryContainer
-                ->querySalesOrderItemsByState($states, $process->getName())
-                ->find()
-                ->getData();
-        }
-
-        $omsProcessEntity = $this->queryContainer->queryProcess($process->getName())->findOne();
-        /** @var \Propel\Runtime\Collection\ObjectCollection $omsOrderItemEntityCollection */
-        $omsOrderItemEntityCollection = $this->queryContainer->querySalesOrderItemStatesByName($states)->find();
-
-        if ($omsProcessEntity === null || $omsOrderItemEntityCollection->count() === 0) {
-            return [];
-        }
-
-        return $this->queryContainer
-            ->querySalesOrderItemsByProcessIdStateIdsAndQueryCriteria(
-                $omsProcessEntity->getIdOmsOrderProcess(),
-                $omsOrderItemEntityCollection->getPrimaryKeys(),
-                $omsCheckConditionsQueryCriteriaTransfer,
-            )
-            ->find()
-            ->getData();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer
-     */
-    protected function prepareOmsCheckConditionsQueryCriteriaTransfer(
-        ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null
-    ): OmsCheckConditionsQueryCriteriaTransfer {
-        if ($omsCheckConditionsQueryCriteriaTransfer === null) {
-            $omsCheckConditionsQueryCriteriaTransfer = new OmsCheckConditionsQueryCriteriaTransfer();
-        }
-
-        if ($omsCheckConditionsQueryCriteriaTransfer->getLimit() === null) {
-            $omsCheckConditionsQueryCriteriaTransfer->setLimit($this->omsConfig->getCheckConditionsQueryLimit());
-        }
-
-        return $omsCheckConditionsQueryCriteriaTransfer;
     }
 
     /**

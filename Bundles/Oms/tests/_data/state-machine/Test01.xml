@@ -19,6 +19,7 @@
             <state name="paid" reserved="true"/>
             <state name="exported" reserved="true"/>
             <state name="shipped" reserved="true" display="in progress"/>
+            <state name="recived"/>
             <state name="delivered"/>
             <state name="closed"/>
         </states>
@@ -61,7 +62,12 @@
             </transition>
 
             <transition happy="true">
-                <source>delivered</source>
+                <source>shipped</source>
+                <target>recived</target>
+            </transition>
+
+            <transition happy="true">
+                <source>recived</source>
                 <target>closed</target>
                 <event>close</event>
             </transition>

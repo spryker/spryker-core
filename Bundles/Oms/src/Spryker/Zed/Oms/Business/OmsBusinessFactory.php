@@ -125,6 +125,10 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new LockedOrderStateMachine(
             $this->createOrderStateMachine($logContext),
             $this->createTriggerLocker(),
+            $this->createOrderStateMachineBuilder(),
+            $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
+            $this->getQueryContainer(),
+            $this->getConfig(),
         );
     }
 

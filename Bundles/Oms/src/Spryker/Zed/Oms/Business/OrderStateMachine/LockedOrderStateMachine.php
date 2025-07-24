@@ -9,27 +9,30 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
 use Spryker\Zed\Oms\Business\Lock\LockerInterface;
+use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use Spryker\Zed\Oms\OmsConfig;
+use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class LockedOrderStateMachine implements OrderStateMachineInterface
 {
-    /**
-     * @var \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
-     */
-    protected $stateMachine;
-
-    /**
-     * @var \Spryker\Zed\Oms\Business\Lock\LockerInterface
-     */
-    protected $triggerLocker;
+    use OrderStateOrderItemsFetchTrait;
 
     /**
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface $stateMachine
      * @param \Spryker\Zed\Oms\Business\Lock\LockerInterface $triggerLocker
+     * @param \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface $builder
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $activeProcesses
+     * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Oms\OmsConfig $omsConfig
      */
-    public function __construct(OrderStateMachineInterface $stateMachine, LockerInterface $triggerLocker)
-    {
-        $this->stateMachine = $stateMachine;
-        $this->triggerLocker = $triggerLocker;
+    public function __construct(
+        protected OrderStateMachineInterface $stateMachine,
+        protected LockerInterface $triggerLocker,
+        protected BuilderInterface $builder,
+        protected ReadOnlyArrayObject $activeProcesses,
+        protected OmsQueryContainerInterface $queryContainer,
+        protected OmsConfig $omsConfig
+    ) {
     }
 
     /**
@@ -81,7 +84,33 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      */
     public function checkConditions(array $logContext = [], ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null)
     {
-        return $this->stateMachine->checkConditions($logContext, $omsCheckConditionsQueryCriteriaTransfer);
+        if (!($this->stateMachine instanceof CheckConditionForProcessAwareInterface)) {
+            return $this->stateMachine->checkConditions($logContext, $omsCheckConditionsQueryCriteriaTransfer);
+        }
+        $affectedOrderItems = 0;
+        foreach ($this->activeProcesses as $processName) {
+            $process = $this->builder->createProcess($processName);
+            $transitions = $process->getAllTransitionsWithoutEvent();
+            $stateToTransitionsMap = $this->createStateToTransitionMap($transitions);
+            $orderItems = $this->getOrderItemsByState(array_keys($stateToTransitionsMap), $process, $omsCheckConditionsQueryCriteriaTransfer);
+            $orderItemIds = $this->collectIdentifiersForOrderItemsLock($orderItems);
+            $this->acquireTriggerLockerByOrderItemIds($orderItemIds);
+
+            try {
+                $orderStateMachine = clone $this->stateMachine;
+                $affectedOrderItems += $orderStateMachine
+                    ->checkConditionsForProcess(
+                        $process,
+                        $omsCheckConditionsQueryCriteriaTransfer,
+                        $stateToTransitionsMap,
+                        $orderItems,
+                    );
+            } finally {
+                $this->triggerLocker->release($orderItemIds);
+            }
+        }
+
+        return $affectedOrderItems;
     }
 
     /**
