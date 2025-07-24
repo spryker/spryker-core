@@ -73,35 +73,31 @@ export class MfaHandler {
     async handleAdditionalAuth(data) {
         try {
             const formData = new FormData(data.form);
-            const url = new URL(data.form.action, window.location.origin).toString();
 
-            const response = await fetch(url, {
-                method: 'POST',
-                body: formData,
-            });
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', data.form.action, false);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.send(formData);
 
             const result = {
                 requiresAdditionalAuth: false,
                 failedLogin: false,
-                refresh: false,
             };
 
-            const contentType = response.headers.get('content-type');
+            const contentType = xhr.getResponseHeader('Content-Type');
 
             if (contentType?.includes('application/json')) {
-                const responseData = await response.json();
-                result.requiresAdditionalAuth = responseData.requires_additional_auth;
+                const data = JSON.parse(xhr.responseText);
+                result.requiresAdditionalAuth = data.requires_additional_auth;
 
                 return result;
             }
 
-            if (response?.url?.includes('/security-gui/login')) {
+            if (xhr.responseURL.includes('/security-gui/login')) {
                 result.failedLogin = true;
 
                 return result;
             }
-
-            result.refresh = true;
 
             return result;
         } catch (error) {

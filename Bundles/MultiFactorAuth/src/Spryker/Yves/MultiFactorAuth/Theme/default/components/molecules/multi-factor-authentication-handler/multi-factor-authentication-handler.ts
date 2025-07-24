@@ -2,14 +2,9 @@ import Component from 'ShopUi/models/component';
 import MainPopup, { EVENT_POPUP_CLOSED, EVENT_CLOSE_POPUP } from 'ShopUi/components/molecules/main-popup/main-popup';
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 
-interface AuthResponse {
-    requires_additional_auth?: boolean;
-}
-
 interface AuthResult {
     requiresAdditionalAuth: boolean;
     failedLogin: boolean;
-    refresh: boolean;
 }
 
 export default class MultiFactorAuthenticationHandler extends Component {
@@ -84,30 +79,29 @@ export default class MultiFactorAuthenticationHandler extends Component {
         const result: AuthResult = {
             requiresAdditionalAuth: false,
             failedLogin: false,
-            refresh: false,
         };
 
         try {
             const formData = new FormData(this.form);
-            const response = await fetch(this.form.action, {
-                method: 'POST',
-                body: formData,
-            });
 
-            const contentType = response.headers.get('content-type');
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', this.form.action, false);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.send(formData);
+
+            const contentType = xhr.getResponseHeader('Content-Type');
 
             if (contentType?.includes('application/json')) {
-                const responseParams: AuthResponse = await response.json();
-                result.requiresAdditionalAuth = responseParams.requires_additional_auth;
+                const data = JSON.parse(xhr.responseText);
+                result.requiresAdditionalAuth = data.requires_additional_auth;
                 return result;
             }
 
-            if (response.url.includes('/login')) {
+            if (xhr.responseURL.includes('/login')) {
                 result.failedLogin = true;
                 return result;
             }
 
-            result.refresh = true;
             return result;
         } catch (error) {
             console.error('Error checking additional auth requirement:', error);

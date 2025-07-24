@@ -63,12 +63,14 @@ class UserAuthenticationSuccessHandler extends AbstractPlugin implements Authent
         if (in_array(static::ACCESS_MODE_PRE_AUTH, $token->getRoleNames())) {
             $this->getFactory()->getSessionClient()->set(static::MULTI_FACTOR_AUTH_LOGIN_USER_EMAIL_SESSION_KEY, $userTransfer->getUsername());
 
-            return new JsonResponse([
-                static::PARAMETER_REQUIRES_ADDITIONAL_AUTH => true,
-            ]);
+            return $this->createAjaxResponse(true);
         }
 
         $this->executeOnAuthenticationSuccess($userTransfer);
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->createAjaxResponse();
+        }
 
         return $this->createRedirectResponse($request);
     }
@@ -83,6 +85,18 @@ class UserAuthenticationSuccessHandler extends AbstractPlugin implements Authent
         $this->getFacade()->authenticateUser($userTransfer);
 
         $this->getFactory()->createAuditLogger()->addSuccessfulLoginAuditLog();
+    }
+
+    /**
+     * @param bool $requiresAdditionalAuth
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function createAjaxResponse(bool $requiresAdditionalAuth = false): JsonResponse
+    {
+        return new JsonResponse([
+            static::PARAMETER_REQUIRES_ADDITIONAL_AUTH => $requiresAdditionalAuth,
+        ]);
     }
 
     /**
