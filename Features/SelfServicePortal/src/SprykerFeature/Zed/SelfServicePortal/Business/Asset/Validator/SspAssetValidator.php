@@ -37,7 +37,6 @@ class SspAssetValidator implements SspAssetValidatorInterface
     {
         $companyUserTransfer = $sspAssetCriteriaTransfer->getCompanyUser();
 
-        // when company user is not provided, assume that the asset is being updated by a system user
         if (!$companyUserTransfer) {
             return true;
         }
@@ -55,7 +54,6 @@ class SspAssetValidator implements SspAssetValidatorInterface
         SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer,
         ?CompanyUserTransfer $companyUserTransfer
     ): SspAssetCollectionResponseTransfer {
-        // when company user is not provided, assume that the asset is being updated by a system user
         if (!$companyUserTransfer) {
             return $sspAssetCollectionResponseTransfer;
         }
@@ -105,7 +103,6 @@ class SspAssetValidator implements SspAssetValidatorInterface
         SspAssetTransfer $sspAssetTransfer,
         ?CompanyUserTransfer $companyUserTransfer
     ): bool {
-//      when company user is not provided, assume that the asset is being updated by a system user
         if (!$companyUserTransfer) {
             return true;
         }
@@ -135,7 +132,6 @@ class SspAssetValidator implements SspAssetValidatorInterface
         SspAssetTransfer $sspAssetTransfer,
         ?CompanyUserTransfer $companyUserTransfer
     ): bool {
-//      when company user is not provided, assume that the asset is being updated by a system user
         if (!$companyUserTransfer) {
             return true;
         }

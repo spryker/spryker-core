@@ -62,7 +62,6 @@ class SspInquiryValidator implements SspInquiryValidatorInterface
         SspInquiryCollectionResponseTransfer $sspInquiryCollectionResponseTransfer,
         ?CompanyUserTransfer $companyUserTransfer
     ): SspInquiryCollectionResponseTransfer {
-        // when company user is not provided, assume that the inquiry is being updated by a system user
         if (!$companyUserTransfer) {
             return $sspInquiryCollectionResponseTransfer;
         }

@@ -85,7 +85,6 @@ class GetSspAssetCollectionTest extends Unit
             ],
         ]);
 
-        // Create criteria with ViewBusinessUnitSspAssetPermissionPlugin
         $sspAssetCriteriaTransfer = (new SspAssetCriteriaTransfer())
             ->setCompanyUser($companyUserTransfer)
             ->setInclude((new SspAssetIncludeTransfer())
