@@ -40,7 +40,7 @@ abstract class AbstractSpyProductBundleQuery extends BaseSpyProductBundleQuery
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery A secondary query class using the current class as primary query
      */
-    public function useSpyProductRelatedByFkBundledProductQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN): SpyProductQuery
+    public function useSpyProductRelatedByFkBundledProductQuery(?string $relationAlias = null, string $joinType = Criteria::INNER_JOIN): SpyProductQuery
     {
         if (method_exists(BaseSpyProductBundleQuery::class, 'useSpyProductRelatedByFkBundledProductQuery')) {
             /** @phpstan-ignore-next-line */
@@ -51,6 +51,10 @@ abstract class AbstractSpyProductBundleQuery extends BaseSpyProductBundleQuery
     }
 
     /**
+     * BC method; PropelRM ObjectBuilder is updated and uses phpName for generating method names. We added phpName="BundledProduct"
+     * to the foreignKey definition and by that this method no longer exists. To prevent projects form breaking up when using this
+     * (no longer generated) method this one is added.
+     *
      * @deprecated Can be removed with the next major.
      *
      * @param string $joinType

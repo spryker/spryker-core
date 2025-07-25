@@ -5,9 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace Spryker\Zed\Product\Persistence\Propel;
 
 use Orm\Zed\Product\Persistence\Base\SpyProductQuery as BaseSpyProductQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_product' table.
@@ -20,4 +23,18 @@ use Orm\Zed\Product\Persistence\Base\SpyProductQuery as BaseSpyProductQuery;
  */
 abstract class AbstractSpyProductQuery extends BaseSpyProductQuery
 {
+    /**
+     * @param string|null $relationAlias
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function leftJoinSpyProductBundleRelatedByFkBundledProduct(?string $relationAlias = null): SpyProductQuery
+    {
+        if (method_exists(BaseSpyProductQuery::class, 'leftJoinSpyProductBundleRelatedByFkBundledProduct')) {
+            /** @phpstan-ignore-next-line */
+            return parent::leftJoinSpyProductBundleRelatedByFkBundledProduct($relationAlias);
+        }
+
+        return $this->leftJoinBundledProduct($relationAlias);
+    }
 }
