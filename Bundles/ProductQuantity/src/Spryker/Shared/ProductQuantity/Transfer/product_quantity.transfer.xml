@@ -17,6 +17,7 @@
         <property name="messages" type="Message[]" singular="message"/>
         <property name="groupKey" type="string"/>
         <property name="idSalesOrderItem" type="int"/>
+        <property name="relatedBundleItemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="CartChange">

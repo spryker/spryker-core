@@ -81,6 +81,28 @@ class ProductQuantityBusinessTester extends Actor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $sku
+     * @param int $quantity
+     * @param string $relatedBundleItemIdentifier
+     *
+     * @return Generated\Shared\Transfer\QuoteTransfer;
+     */
+    public function addItemToQuote(
+        QuoteTransfer $quoteTransfer,
+        string $sku,
+        int $quantity,
+        string $relatedBundleItemIdentifier
+    ): QuoteTransfer {
+        $itemTransfer = (new ItemTransfer())
+            ->setSku($sku)
+            ->setQuantity($quantity)
+            ->setRelatedBundleItemIdentifier($relatedBundleItemIdentifier);
+
+        return $quoteTransfer->addItem($itemTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param string $sku
      * @param int $quantity

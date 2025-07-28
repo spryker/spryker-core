@@ -194,6 +194,16 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isItemInBundle(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getRelatedBundleItemIdentifier() !== null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
@@ -204,6 +214,10 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         ProductQuantityTransfer $productQuantityTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): CheckoutResponseTransfer {
+        if ($this->isItemInBundle($itemTransfer)) {
+            return $checkoutResponseTransfer;
+        }
+
         $itemQuantity = $itemTransfer->getQuantityOrFail();
         $min = $productQuantityTransfer->getQuantityMin();
         $max = $productQuantityTransfer->getQuantityMax();

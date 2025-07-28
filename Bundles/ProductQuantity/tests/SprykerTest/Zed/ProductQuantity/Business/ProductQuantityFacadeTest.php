@@ -7,7 +7,10 @@
 
 namespace SprykerTest\Zed\ProductQuantity\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Auto-generated group annotations
@@ -188,6 +191,44 @@ class ProductQuantityFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider itemPreCheckoutValidationParametersForBundles
+     *
+     * @param int $changeQuantity
+     * @param int $minRestriction
+     * @param int|null $maxRestriction
+     * @param int $intervalRestriction
+     *
+     * @return void
+     */
+    public function testValidateItemQuantitiesOnCheckoutAlwaysReturnsTrueForProductsInBundles(
+        int $changeQuantity,
+        int $minRestriction,
+        ?int $maxRestriction,
+        int $intervalRestriction
+    ): void {
+        // Arrange
+        $productTransfer = $this->tester->createProductWithSpecificProductQuantity($minRestriction, $maxRestriction, $intervalRestriction);
+
+        $quoteTransfer = (new QuoteTransfer())->setItems(new ArrayObject([]));
+
+        $quoteTransfer = $this->tester->addItemToQuote(
+            $quoteTransfer,
+            $productTransfer->getSku(),
+            $changeQuantity,
+            'bundle-item-identifier-' . $productTransfer->getSku(),
+        );
+
+        // Act
+        $isSuccess = $this->productQuantityFacade->isValidItemQuantitiesOnCheckout(
+            $quoteTransfer,
+            new CheckoutResponseTransfer(),
+        );
+
+        // Assert
+        $this->assertTrue($isSuccess);
+    }
+
+    /**
      * @return array
      */
     public function itemAdditionQuantities(): array
@@ -207,6 +248,29 @@ class ProductQuantityFacadeTest extends Unit
             [false, 5, 2, 1, 6, 1], // max below new quantity
             [false, 5, 2, 1, null, 4], // shifted interval does not match new quantity
             [false, 5, 2, 0, null, 2], // interval does not match new quantity
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function itemPreCheckoutValidationParametersForBundles(): array
+    {
+        return [
+            [2, 1, null, 1], // general rule
+            [2, 7, null, 1], // min equals new quantity
+            [2, 7, 7, 1], // max equals new quantity
+            [2, 7, null, 2], // shifted interval matches new quantity
+            [2, 0, null, 7], // interval matches new quantity
+            [2, 7, 7, 7], // min, max, interval matches new quantity
+            [1, 1, null, 1], // empty quote
+
+            [0, 1, null, 1], // general rule 0 qty
+            [-4, 1, null, 1], // general rule negative qty
+            [2, 8, null, 1], // min above new quantity
+            [2, 1, 6, 1], // max below new quantity
+            [2, 1, null, 4], // shifted interval does not match new quantity
+            [2, 0, null, 2], // interval does not match new quantity
         ];
     }
 
