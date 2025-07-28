@@ -3,6 +3,7 @@
         "spryker/transfer": "Provides transfer objects definition with strict types and `::get*OrFail()` functionality.",
         "spryker-shop/customer-page": "Provides the basic template for the customer self-service portal.",
         "spryker/price-product-offer-storage": "Provides the product offer price storage functionality.",
-        "spryker/shipment-type-cart": "Provides shipment type functionality"
+        "spryker/shipment-type-cart": "Provides shipment type functionality",
+        "spryker/product-offer-sales": "Provides product offer sales functionality."
     }
 }
