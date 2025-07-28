@@ -12,6 +12,7 @@ use Codeception\Stub;
 use Generated\Shared\DataBuilder\DiscountConfiguratorBuilder;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountTableCriteriaTransfer;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
@@ -89,5 +90,20 @@ class DiscountCommunicationTester extends Actor
         }
 
         return $codes;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\DiscountTableCriteriaTransfer
+     */
+    public function createDiscountTableCriteriaTransfer(array $seedData = []): DiscountTableCriteriaTransfer
+    {
+        return (new DiscountTableCriteriaTransfer())
+            ->setStatus($seedData[DiscountTableCriteriaTransfer::STATUS] ?? null)
+            ->setTypes($seedData[DiscountTableCriteriaTransfer::TYPES] ?? null)
+            ->setStores($seedData[DiscountTableCriteriaTransfer::STORES] ?? null)
+            ->setValidFrom($seedData[DiscountTableCriteriaTransfer::VALID_FROM] ?? null)
+            ->setValidTo($seedData[DiscountTableCriteriaTransfer::VALID_TO] ?? null);
     }
 }
