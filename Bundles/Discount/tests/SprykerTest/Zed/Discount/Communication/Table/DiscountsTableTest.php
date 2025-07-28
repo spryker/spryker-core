@@ -89,9 +89,9 @@ class DiscountsTableTest extends Unit
         }
         $discountTableCriteriaTransfer = $this->tester->createDiscountTableCriteriaTransfer($discountTableCriteriaTransferData);
         $discountsTable = $this->createProductTableMock();
-        $discountsTable->applyCriteria($discountTableCriteriaTransfer);
 
         // Act
+        $discountsTable->applyCriteria($discountTableCriteriaTransfer);
         $resultData = $discountsTable->fetchData();
 
         // Assert

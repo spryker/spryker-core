@@ -8,8 +8,10 @@
 namespace SprykerTest\Zed\MerchantGui\Communication\Table;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MerchantTableCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
@@ -35,6 +37,31 @@ use Twig\Loader\LoaderInterface;
  */
 class MerchantTableQueryTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_AT = 'AT';
+
+    /**
+     * @var string
+     */
+    protected const STATUS_APPROVED = 'approved';
+
+    /**
+     * @var string
+     */
+    public const STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
+
+    /**
+     * @var array<string, array<int>>
+     */
+    protected array $merchantsDataProviderData = [];
+
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
      *
@@ -66,6 +93,9 @@ class MerchantTableQueryTest extends Unit
     {
         parent::setUp();
 
+        $this->storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $this->storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $this->merchantsDataProviderData = $this->merchantsDataProviderData();
         $this->registerTwigServiceMock();
         $this->registerFormFactoryServiceMock();
         $this->registerRequestStack();
@@ -102,6 +132,112 @@ class MerchantTableQueryTest extends Unit
         $resultMerchantIds = array_column($result, SpyMerchantTableMap::COL_ID_MERCHANT);
         $this->assertContains((string)$merchantTransfer1->getIdMerchant(), $resultMerchantIds);
         $this->assertContains((string)$merchantTransfer2->getIdMerchant(), $resultMerchantIds);
+    }
+
+    /**
+     * @dataProvider merchantsDataProvider
+     *
+     * @param string $dataKey
+     * @param array $merchantTableCriteriaTransferData
+     *
+     * @return void
+     */
+    public function testFetchDataCollectsCorrectMerchantDataByFilters(string $dataKey, array $merchantTableCriteriaTransferData = []): void
+    {
+        // Arrange
+        $expectedDiscountIds = $this->merchantsDataProviderData[$dataKey];
+        $merchantTableMock = new MerchantTableMock(
+            SpyMerchantQuery::create(),
+            $this->getMerchantGuiToMerchantFacadeMock(),
+            [],
+            [],
+            [],
+            [],
+        );
+
+        $merchantTableCriteriaTransfer = $this->tester->createDiscountTableCriteriaTransfer($merchantTableCriteriaTransferData);
+
+        // Act
+        $merchantTableMock->applyCriteria($merchantTableCriteriaTransfer);
+        $result = $merchantTableMock->fetchData();
+
+        // Assert
+        $this->assertNotEmpty($result);
+        $resultMerchantIds = array_column($result, SpyMerchantTableMap::COL_ID_MERCHANT);
+        $diff = array_diff($expectedDiscountIds, $resultMerchantIds);
+        $this->assertEmpty($diff);
+    }
+
+    /**
+     * @return array<string, array>
+     */
+    protected function merchantsDataProvider(): array
+    {
+        return [
+            'Filter by Status' => [
+                'Filter by Status',
+                [
+                    MerchantTableCriteriaTransfer::STATUS => 1,
+                ],
+            ],
+            'Filter by Approval Status' => [
+                'Filter by Approval Status',
+                [
+                    MerchantTableCriteriaTransfer::APPROVAL_STATUSES => [static::STATUS_APPROVED],
+                ],
+            ],
+            'Filter by Stores' => [
+                'Filter by Stores',
+                [
+                    MerchantTableCriteriaTransfer::STORES => ['AT'],
+                ],
+            ],
+            'Filter by Different Fields' => [
+                'Different Fields',
+                [
+                    MerchantTableCriteriaTransfer::STATUS => 0,
+                    MerchantTableCriteriaTransfer::APPROVAL_STATUSES => [static::STATUS_WAITING_FOR_APPROVAL],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array<string, array>
+     */
+    protected function merchantsDataProviderData(): array
+    {
+        $multiStoreRelationTransfer = (new StoreRelationTransfer())
+            ->setIdStores([$this->storeTransferDE->getIdStore(), $this->storeTransferAT->getIdStore()]);
+        $storeRelationTransfer = (new StoreRelationTransfer())
+            ->setIdStores([$this->storeTransferDE->getIdStore()]);
+        $merchantTransfer1 = $this->tester->haveMerchant([
+            MerchantTransfer::STORE_RELATION => $multiStoreRelationTransfer->toArray(),
+            MerchantTransfer::STATUS => static::STATUS_APPROVED,
+            MerchantTransfer::IS_ACTIVE => 1,
+        ]);
+        $merchantTransfer2 = $this->tester->haveMerchant([
+            MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
+            MerchantTransfer::STATUS => static::STATUS_WAITING_FOR_APPROVAL,
+            MerchantTransfer::IS_ACTIVE => 1,
+        ]);
+        $merchantTransfer3 = $this->tester->haveMerchant([
+            MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
+            MerchantTransfer::STATUS => static::STATUS_APPROVED,
+            MerchantTransfer::IS_ACTIVE => 0,
+        ]);
+        $merchantTransfer4 = $this->tester->haveMerchant([
+            MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
+            MerchantTransfer::STATUS => static::STATUS_WAITING_FOR_APPROVAL,
+            MerchantTransfer::IS_ACTIVE => 0,
+        ]);
+
+        return [
+            'Filter by Status' => [$merchantTransfer1->getIdMerchant(), $merchantTransfer2->getIdMerchant()],
+            'Filter by Approval Status' => [$merchantTransfer1->getIdMerchant(), $merchantTransfer3->getIdMerchant()],
+            'Filter by Stores' => [$merchantTransfer1->getIdMerchant()],
+            'Different Fields' => [$merchantTransfer4->getIdMerchant()],
+        ];
     }
 
     /**
