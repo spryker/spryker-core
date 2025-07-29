@@ -155,7 +155,7 @@ class MerchantTableQueryTest extends Unit
             [],
         );
 
-        $merchantTableCriteriaTransfer = $this->tester->createDiscountTableCriteriaTransfer($merchantTableCriteriaTransferData);
+        $merchantTableCriteriaTransfer = $this->tester->createMerchantTableCriteriaTransfer($merchantTableCriteriaTransferData);
 
         // Act
         $merchantTableMock->applyCriteria($merchantTableCriteriaTransfer);

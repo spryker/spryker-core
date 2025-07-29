@@ -51,9 +51,9 @@ class MerchantGuiCommunicationTester extends Actor
     /**
      * @param array $seedData
      *
-     * @return \Generated\Shared\Transfer\DiscountTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\MerchantTableCriteriaTransfer
      */
-    public function createDiscountTableCriteriaTransfer(array $seedData = []): MerchantTableCriteriaTransfer
+    public function createMerchantTableCriteriaTransfer(array $seedData = []): MerchantTableCriteriaTransfer
     {
         return (new MerchantTableCriteriaTransfer())
             ->setApprovalStatuses($seedData[MerchantTableCriteriaTransfer::APPROVAL_STATUSES] ?? null)

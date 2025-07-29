@@ -7,11 +7,16 @@
 
 namespace SprykerTest\Zed\ProductOfferGui\Communication\Table;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Spryker\Shared\ProductOfferGui\ProductOfferApprovalStatusEnum;
+use Spryker\Shared\ProductOfferGui\ProductOfferStatusEnum;
 use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleFacadeBridge;
 use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferFacadeBridge;
@@ -43,6 +48,16 @@ class ProductOfferTableQueryTest extends Unit
      * @var string
      */
     public const SERVICE_TWIG = 'twig';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_AT = 'AT';
 
     /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_FACTORY
@@ -98,6 +113,129 @@ class ProductOfferTableQueryTest extends Unit
         $this->assertNotEmpty($result);
         $this->assertContains((string)$productOffer1->getIdProductOffer(), $resultProductOffersIds);
         $this->assertContains((string)$productOffer2->getIdProductOffer(), $resultProductOffersIds);
+    }
+
+    /**
+     * @return void
+     */
+    public function testApplyCriteriaShouldFilterProductOffersByStatus(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveFullProduct();
+        $productOfferSeedData = [
+            ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
+        ];
+        $productOfferSeedData2 = [
+            ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
+            ProductOfferTransfer::IS_ACTIVE => false,
+        ];
+        $productOffer1 = $this->tester->haveProductOffer($productOfferSeedData);
+        $productOffer2 = $this->tester->haveProductOffer($productOfferSeedData2);
+
+        $productOfferTableMock = $this->createProductOfferTableMock();
+
+        $productOfferTableCriteriaTransfer = $this->tester->createProductOfferTableCriteriaTransfer([
+            ProductOfferTableCriteriaTransfer::STATUS => ProductOfferStatusEnum::ACTIVE->value,
+        ]);
+
+        // Act
+        $productOfferTableMock->applyCriteria($productOfferTableCriteriaTransfer);
+        $result = $productOfferTableMock->fetchData();
+
+        // Assert
+        $resultProductOffersIds = array_column($result, SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER);
+        $this->assertNotEmpty($result);
+        $this->assertContains((string)$productOffer1->getIdProductOffer(), $resultProductOffersIds);
+        $this->assertNotContains((string)$productOffer2->getIdProductOffer(), $resultProductOffersIds);
+    }
+
+    /**
+     * @return void
+     */
+    public function testApplyCriteriaShouldFilterProductOffersByApprovalStatus(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveFullProduct();
+        $productOfferSeedData = [
+            ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
+            ProductOfferTransfer::APPROVAL_STATUS => ProductOfferApprovalStatusEnum::APPROVED->value,
+        ];
+        $productOfferSeedData2 = [
+            ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
+            ProductOfferTransfer::APPROVAL_STATUS => ProductOfferApprovalStatusEnum::DENIED->value,
+        ];
+        $productOffer1 = $this->tester->haveProductOffer($productOfferSeedData);
+        $productOffer2 = $this->tester->haveProductOffer($productOfferSeedData2);
+
+        $productOfferTableMock = $this->createProductOfferTableMock();
+
+        $productOfferTableCriteriaTransfer = $this->tester->createProductOfferTableCriteriaTransfer([
+            ProductOfferTableCriteriaTransfer::APPROVAL_STATUSES => [ProductOfferApprovalStatusEnum::APPROVED->value],
+        ]);
+
+        // Act
+        $productOfferTableMock->applyCriteria($productOfferTableCriteriaTransfer);
+        $result = $productOfferTableMock->fetchData();
+
+        // Assert
+        $resultProductOffersIds = array_column($result, SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER);
+        $this->assertNotEmpty($result);
+        $this->assertContains((string)$productOffer1->getIdProductOffer(), $resultProductOffersIds);
+        $this->assertNotContains((string)$productOffer2->getIdProductOffer(), $resultProductOffersIds);
+    }
+
+    /**
+     * @return void
+     */
+    public function testApplyCriteriaShouldFilterProductOffersByStores(): void
+    {
+        // Arrange
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $productConcreteTransfer = $this->tester->haveFullProduct();
+        $productOfferSeedData = [
+            ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
+            ProductOfferTransfer::STORES => new ArrayObject([$storeTransferDE]),
+        ];
+        $productOfferSeedData2 = [
+            ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
+            ProductOfferTransfer::STORES => new ArrayObject([$storeTransferAT]),
+        ];
+        $productOffer1 = $this->tester->haveProductOffer($productOfferSeedData);
+        $productOffer2 = $this->tester->haveProductOffer($productOfferSeedData2);
+
+        $productOfferTableMock = $this->createProductOfferTableMock();
+
+        $productOfferTableCriteriaTransfer = $this->tester->createProductOfferTableCriteriaTransfer([
+            ProductOfferTableCriteriaTransfer::STORES => [$storeTransferAT->getIdStore()],
+        ]);
+
+        // Act
+        $productOfferTableMock->applyCriteria($productOfferTableCriteriaTransfer);
+        $result = $productOfferTableMock->fetchData();
+
+        // Assert
+        $resultProductOffersIds = array_column($result, SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER);
+        $this->assertNotEmpty($result);
+        $this->assertNotContains((string)$productOffer1->getIdProductOffer(), $resultProductOffersIds);
+        $this->assertContains((string)$productOffer2->getIdProductOffer(), $resultProductOffersIds);
+    }
+
+    /**
+     * @return \SprykerTest\Zed\ProductOfferGui\Communication\Table\ProductOfferTableMock
+     */
+    protected function createProductOfferTableMock(): ProductOfferTableMock
+    {
+        $contentQuery = SpyProductOfferQuery::create();
+        $productOfferGuiRepository = new ProductOfferGuiRepository();
+
+        return new ProductOfferTableMock(
+            $contentQuery,
+            $this->getProductOfferGuiToLocaleFacadeMock(),
+            $this->getProductOfferGuiToProductOfferFacadeMock(),
+            $productOfferGuiRepository,
+            [],
+        );
     }
 
     /**

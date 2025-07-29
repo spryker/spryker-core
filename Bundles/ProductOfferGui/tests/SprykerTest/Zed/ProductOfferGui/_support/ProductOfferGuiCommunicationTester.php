@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductOfferGui;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +27,17 @@ use Codeception\Actor;
 class ProductOfferGuiCommunicationTester extends Actor
 {
     use _generated\ProductOfferGuiCommunicationTesterActions;
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer
+     */
+    public function createProductOfferTableCriteriaTransfer(array $seedData = []): ProductOfferTableCriteriaTransfer
+    {
+        return (new ProductOfferTableCriteriaTransfer())
+            ->setStores($seedData[ProductOfferTableCriteriaTransfer::STORES] ?? null)
+            ->setStatus($seedData[ProductOfferTableCriteriaTransfer::STATUS] ?? null)
+            ->setApprovalStatuses($seedData[ProductOfferTableCriteriaTransfer::APPROVAL_STATUSES] ?? null);
+    }
 }
