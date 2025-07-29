@@ -118,6 +118,8 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Writer\SspInquiryWrite
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Writer\SspInquiryWriterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Canceler\OrderItemCanceler;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Canceler\OrderItemCancelerInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\DashboardDataExpander\ServiceDashboardDataExpander;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\DashboardDataExpander\ServiceDashboardDataExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\DataImport\Step\ProductClassKeyToIdProductClassStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\DataImport\Step\ProductClassWriterStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\DataImport\Step\ProductShipmentTypeWriterStep;
@@ -966,6 +968,14 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     public function createSspAssetDashboardDataExpander(): SspAssetDashboardDataExpanderInterface
     {
         return new SspAssetSspAssetDashboardDataExpander($this->createSspAssetReader());
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\DashboardDataExpander\ServiceDashboardDataExpanderInterface
+     */
+    public function createServiceDashboardDataExpander(): ServiceDashboardDataExpanderInterface
+    {
+        return new ServiceDashboardDataExpander($this->createServiceReader(), $this->getConfig());
     }
 
     /**

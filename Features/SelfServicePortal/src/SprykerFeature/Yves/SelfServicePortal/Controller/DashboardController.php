@@ -60,6 +60,7 @@ class DashboardController extends AbstractController
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $dashboardRequestTransfer = (new DashboardRequestTransfer())
+            ->setCustomer($customerTransfer)
             ->setStore($this->getFactory()->getStoreClient()->getCurrentStore())
             ->setCompanyUser($customerTransfer?->getCompanyUserTransfer())
             ->setPagination(
@@ -67,7 +68,8 @@ class DashboardController extends AbstractController
                     ->setMaxPerPage($this->getFactory()->getConfig()->getDefaultFileDashboardMaxPerPage())
                     ->setPage(static::DEFAULT_FILE_DASHBOARD_PAGE_NUMBER),
             )
-            ->setWithSspAssetCount(10);
+            ->setWithSspAssetCount(10)
+            ->setWithServicesCount(10);
 
         $dashboardResponseTransfer = $this->getClient()
             ->getDashboardData($dashboardRequestTransfer);

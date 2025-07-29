@@ -9,6 +9,7 @@
 
 {% set canAccessInquiries = can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin') %}
 {% set canAccessAssets = can('ViewBusinessUnitSspAssetPermissionPlugin') or can('ViewCompanySspAssetPermissionPlugin') %}
+{% set canAccessServices = can('ViewBusinessUnitSspServicePermissionPlugin') or can('ViewCompanySspServicePermissionPlugin') %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -67,6 +68,10 @@
                                                     title: 'ssp_dashboard.general.inquiries',
                                                     value: canAccessInquiries and data.dashboard.dashboardComponentInquiry is not empty ? data.dashboard.dashboardComponentInquiry.pendingItems : 'ssp_dashboard.overview.not_applicable' | trans,
                                                 },
+                                                {
+                                                    title: 'ssp_dashboard.general.booked_services',
+                                                    value: canAccessServices and data.dashboard.dashboardComponentServices is not empty ? data.dashboard.dashboardComponentServices.pendingItems : 'ssp_dashboard.overview.not_applicable' | trans,
+                                                },
                                             ],
                                         },
                                     } only %}
@@ -106,6 +111,7 @@
 
             {% block tables %}
                 {% set inquiryCollection = data.dashboard.dashboardComponentInquiry is not empty ? data.dashboard.dashboardComponentInquiry.sspInquiryCollection : null %}
+                {% set serviceCollection = data.dashboard.dashboardComponentServices is not empty ? data.dashboard.dashboardComponentServices.sspServiceCollection : null %}
                 {% set fileAttachmentCollection = data.dashboard.dashboardComponentFiles ? data.dashboard.dashboardComponentFiles.fileAttachmentCollection : null %}
 
                 {% block inquiries %}
@@ -115,6 +121,12 @@
                 {% block files %}
                     {% if can('ViewCompanyFilesPermissionPlugin') or can('ViewCompanyUserFilesPermissionPlugin') or can('ViewCompanyBusinessUnitFilesPermissionPlugin') %}
                         {% widget 'SspFileListWidget' args [fileAttachmentCollection] only %}{% endwidget %}
+                    {% endif %}
+                {% endblock %}
+
+                {% block services %}
+                    {% if canAccessServices %}
+                        {% widget 'SspServiceListWidget' args [serviceCollection] only %}{% endwidget %}
                     {% endif %}
                 {% endblock %}
             {% endblock %}
