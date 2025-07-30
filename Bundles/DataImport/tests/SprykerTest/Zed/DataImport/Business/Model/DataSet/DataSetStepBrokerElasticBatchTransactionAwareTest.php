@@ -10,10 +10,12 @@ namespace SprykerTest\Zed\DataImport\Business\Model\DataSet;
 use Codeception\Configuration;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\DataImport\Business\Exception\DataSetBrokerTransactionFailedException;
 use Spryker\Zed\DataImport\Business\Exception\TransactionException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerElasticBatchTransactionAware;
+use Spryker\Zed\DataImport\Business\Model\ElasticBatch\ElasticBatchInterface;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionInterface;
 
@@ -38,8 +40,11 @@ class DataSetStepBrokerElasticBatchTransactionAwareTest extends Unit
     public function testExecuteOpensTransactionOnFirstCall(): void
     {
         //Arrange
-        $propelConnectionMock = $this->getPropelConnectionMock(1, 2, false, true, true);
-        $this->tester->setDependency(DataImportDependencyProvider::PROPEL_CONNECTION, $propelConnectionMock);
+        $propelConnectionMock = $this->getPropelConnectionMock(1, 1, false, true, true);
+        $elasticBatchMock = $this->createElasticBatchMock();
+
+        $this->tester->mockFactoryMethod('createMemoryAllocatedElasticBatch', $elasticBatchMock);
+        $this->tester->mockFactoryMethod('getPropelConnection', $propelConnectionMock);
 
         $dataSet = $this->createDataSet();
         $elasticBatchDataSetStepBrokerTransactionAware = $this->createElasticBatchStepBroker();
@@ -54,8 +59,11 @@ class DataSetStepBrokerElasticBatchTransactionAwareTest extends Unit
     public function testTransactionNotOpenedWhenAlreadyInTransaction(): void
     {
         //Arrange
-        $propelConnectionMock = $this->getPropelConnectionMock(0, 2, true, true, true);
-        $this->tester->setDependency(DataImportDependencyProvider::PROPEL_CONNECTION, $propelConnectionMock);
+        $propelConnectionMock = $this->getPropelConnectionMock(0, 1, true, true, true);
+        $elasticBatchMock = $this->createElasticBatchMock();
+
+        $this->tester->mockFactoryMethod('createMemoryAllocatedElasticBatch', $elasticBatchMock);
+        $this->tester->mockFactoryMethod('getPropelConnection', $propelConnectionMock);
 
         $dataSet = $this->createDataSet();
         $elasticBatchDataSetStepBrokerTransactionAware = $this->createElasticBatchStepBroker();
@@ -116,7 +124,7 @@ class DataSetStepBrokerElasticBatchTransactionAwareTest extends Unit
 
         $propelConnectionMock = $mockBuilder->getMock();
 
-        $propelConnectionMock->method('inTransaction')->will($this->onConsecutiveCalls(...$isInTransaction));
+        $propelConnectionMock->method('inTransaction')->willReturnOnConsecutiveCalls(...$isInTransaction);
         $propelConnectionMock->expects($this->exactly($beginTransactionCalledCount))->method('beginTransaction');
         $propelConnectionMock->expects($this->exactly($endTransactionCalledCount))->method('endTransaction');
 
@@ -204,5 +212,18 @@ class DataSetStepBrokerElasticBatchTransactionAwareTest extends Unit
             ->setLimit($limit);
 
         return $dataImporterReaderConfiguration;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DataImport\Business\Model\ElasticBatch\ElasticBatchInterface
+     */
+    protected function createElasticBatchMock(): MockObject|ElasticBatchInterface
+    {
+        $elasticBatchMock = $this->createMock(ElasticBatchInterface::class);
+
+        $elasticBatchMock->method('isFull')
+            ->willReturn(false);
+
+        return $elasticBatchMock;
     }
 }

@@ -27,6 +27,8 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterCollection;
 use Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAware;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddStoresStep;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\RenameDataSetKeysStep;
 use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReader;
@@ -476,6 +478,14 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     protected function createAddLocalesStep()
     {
         return new AddLocalesStep($this->getDataImportStoreFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    protected function createAddStoresStep(): DataImportStepInterface
+    {
+        return new AddStoresStep($this->getDataImportStoreFacade());
     }
 
     /**

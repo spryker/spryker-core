@@ -22,6 +22,7 @@
         <property name="readerConfiguration" type="DataImporterReaderConfiguration"/>
         <property name="importGroup" type="string"/>
         <property name="importType" type="string"/>
+        <property name="context" type="DataImporterConfigurationContext" strict="true"/>
     </transfer>
 
     <transfer name="DataImporterReaderConfiguration">
@@ -52,6 +53,8 @@
 
     <transfer name="DataImporterReportMessage">
         <property name="message" type="string"/>
+        <property name="dataSetNumber" type="int" strict="true"/>
+        <property name="dataSetIdentifier" type="string" strict="true"/>
     </transfer>
 
     <transfer name="QueueDataImporterConfiguration">
@@ -79,6 +82,7 @@
         <property name="dataEntity" type="string"/>
         <property name="source" type="string"/>
         <property name="fileSystem" type="string" strict="true"/>
+        <property name="context" type="DataImporterConfigurationContext" strict="true"/>
     </transfer>
 
     <transfer name="EventEntity">
@@ -86,6 +90,8 @@
     </transfer>
 
     <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
         <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
     </transfer>
 
@@ -94,6 +100,9 @@
         <property name="directory" type="string"/>
         <property name="importType" type="string"/>
         <property name="moduleName" type="string"/>
+    </transfer>
+
+    <transfer name="DataImporterConfigurationContext" strict="true">
     </transfer>
 
 </transfers>

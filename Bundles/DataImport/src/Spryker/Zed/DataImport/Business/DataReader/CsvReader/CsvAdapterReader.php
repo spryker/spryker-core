@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DataImport\Business\DataReader\CsvReader;
 
 use Countable;
-use Exception;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException;
 use Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemStreamException;
@@ -19,6 +18,7 @@ use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfigur
 use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Dependency\Service\DataImportToFlysystemServiceInterface;
+use ValueError;
 
 class CsvAdapterReader implements DataReaderInterface, ConfigurableDataReaderInterface, Countable
 {
@@ -213,7 +213,7 @@ class CsvAdapterReader implements DataReaderInterface, ConfigurableDataReaderInt
 
             try {
                 $dataSet = array_combine($this->dataSetKeys, $dataSet);
-            } catch (Exception $e) {
+            } catch (ValueError $e) {
                 throw new DataSetWithHeaderCombineFailedException(sprintf(
                     static::ERROR_COMBINE_DATA,
                     implode(', ', $this->dataSetKeys),

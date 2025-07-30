@@ -7,9 +7,83 @@
 
     <transfer name="DataImporterConfiguration">
         <property name="readerConfiguration" type="DataImporterReaderConfiguration"/>
+        <property name="importType" type="string"/>
     </transfer>
 
     <transfer name="DataImporterReport">
+    </transfer>
+
+    <transfer name="DataImporterConfigurationContext" strict="true">
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="idProductAbstract" type="int"/>
+        <property name="idProduct" type="int"/>
+        <property name="idPriceProduct" type="int"/>
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="fkPriceType" type="int"/>
+        <property name="groupKey" type="string"/>
+        <property name="priceTypeName" type="string"/>
+    </transfer>
+
+    <transfer name="ProductAbstractStore">
+        <property name="productAbstractSku" type="string"/>
+        <property name="storeName" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="name" type="string"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="productImages" type="ProductImage[]" singular="productImage"/>
+        <property name="idProduct" type="int"/>
+        <property name="locale" type="Locale"/>
+        <property name="productImageSetKey" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="name" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ProductImage">
+        <property name="sortOrder" type="int"/>
+    </transfer>
+
+    <transfer name="EventEntity">
+        <property name="event" type="string"/>
+        <property name="id" type="int"/>
+        <property name="name" type="string"/>
+        <property name="foreignKeys" type="array" singular="foreignKeys"/>
+        <property name="modifiedColumns" type="array" singular="modifiedColumns"/>
+    </transfer>
+
+    <transfer name="MerchantFile" strict="true">
+        <property name="content" type="string"/>
+        <property name="type" type="string"/>
+        <property name="merchantFileImport" type="MerchantFileImport"/>
+    </transfer>
+
+    <transfer name="MerchantFileResult" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="idEntity" type="int"/>
+        <property name="fkStore" type="int"/>
+        <property name="fkCurrency" type="int"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantFileImport" strict="true">
+        <property name="entityType" type="string"/>
     </transfer>
 
 </transfers>

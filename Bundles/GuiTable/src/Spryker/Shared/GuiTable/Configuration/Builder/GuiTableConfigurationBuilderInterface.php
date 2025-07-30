@@ -91,6 +91,11 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * @var string
      */
+    public const ACTION_TYPE_REDIRECT = 'redirect';
+
+    /**
+     * @var string
+     */
     public const ACTION_DRAWER_COMPONENT_TYPE_AJAX_FORM = 'ajax-form';
 
     /**
@@ -395,6 +400,23 @@ interface GuiTableConfigurationBuilderInterface
         string $title,
         string $url,
         ?string $method = null
+    );
+
+    /**
+     * Adds a new row action with the redirect type.
+     *
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function addRowActionRedirect(
+        string $id,
+        string $title,
+        string $url
     );
 
     /**

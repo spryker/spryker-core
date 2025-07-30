@@ -26,4 +26,19 @@ interface MerchantProductDataImportFacadeInterface
     public function importMerchantProduct(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer;
+
+    /**
+     * Specification:
+     * - Imports abstract and product data including category relation, price and stock data.
+     * - Iterates over the data sets and persists data into the database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importMerchantCombinedProduct(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer;
 }
