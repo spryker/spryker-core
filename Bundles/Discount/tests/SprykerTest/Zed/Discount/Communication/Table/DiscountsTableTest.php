@@ -88,11 +88,11 @@ class DiscountsTableTest extends Unit
             $discountTableCriteriaTransferData[DiscountTableCriteriaTransfer::STORES] = [$this->storeTransferAT->getIdStore()];
         }
         $discountTableCriteriaTransfer = $this->tester->createDiscountTableCriteriaTransfer($discountTableCriteriaTransferData);
-        $discountsTable = $this->createProductTableMock();
+        $discountsTableMock = $this->createProductTableMock();
 
         // Act
-        $discountsTable->applyCriteria($discountTableCriteriaTransfer);
-        $resultData = $discountsTable->fetchData();
+        $discountsTableMock->applyCriteria($discountTableCriteriaTransfer);
+        $resultData = $discountsTableMock->fetchData();
 
         // Assert
         $resultDiscounts = $resultData['data'];
@@ -135,7 +135,7 @@ class DiscountsTableTest extends Unit
             'Filter by Stores' => [
                 'Filter by Stores',
                 [
-                    DiscountTableCriteriaTransfer::STORES => ['AT'],
+                    DiscountTableCriteriaTransfer::STORES => [static::STORE_NAME_AT],
                 ],
             ],
             'Filter by Dates' => [
@@ -175,21 +175,21 @@ class DiscountsTableTest extends Unit
         $cartRuleDiscountGeneralTransfer = $this->tester->haveDiscount([
             DiscountTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_CART_RULE,
             DiscountTransfer::IS_ACTIVE => true,
-            DiscountTransfer::STORE_RELATION => ['DE'],
+            DiscountTransfer::STORE_RELATION => [static::STORE_NAME_DE],
             DiscountTransfer::VALID_FROM => '2023-12-31 23:59:59',
             DiscountTransfer::VALID_TO => '2027-01-01 00:00:00',
         ]);
         $voucherInActiveDiscountGeneralTransfer = $this->tester->haveDiscount([
             DiscountTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_VOUCHER,
             DiscountTransfer::IS_ACTIVE => false,
-            DiscountTransfer::STORE_RELATION => ['DE'],
+            DiscountTransfer::STORE_RELATION => [static::STORE_NAME_DE],
             DiscountTransfer::VALID_FROM => '2023-12-31 23:59:59',
             DiscountTransfer::VALID_TO => '2027-01-01 00:00:00',
         ]);
         $cartRuleInActiveDiscountGeneralTransfer = $this->tester->haveDiscount([
             DiscountTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_CART_RULE,
             DiscountTransfer::IS_ACTIVE => false,
-            DiscountTransfer::STORE_RELATION => ['DE'],
+            DiscountTransfer::STORE_RELATION => [static::STORE_NAME_DE],
             DiscountTransfer::VALID_FROM => '2023-12-31 23:59:59',
             DiscountTransfer::VALID_TO => '2027-01-01 00:00:00',
         ]);

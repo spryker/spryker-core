@@ -249,11 +249,11 @@ class ProductTableTest extends Unit
                 ProductAbstractTransfer::IS_ACTIVE => 1,
             ],
         );
-        $productTable = $this->createProductTableMock($this->localeTransfers[static::LOCALE_NAME_DE]);
+        $productTableMock = $this->createProductTableMock($this->localeTransfers[static::LOCALE_NAME_DE]);
 
         // Act
-        $productTable->applyCriteria((new ProductTableCriteriaTransfer())->setStatus(ProductStatusEnum::ACTIVE->value));
-        $productTableData = $productTable->fetchData();
+        $productTableMock->applyCriteria((new ProductTableCriteriaTransfer())->setStatus(ProductStatusEnum::ACTIVE->value));
+        $productTableData = $productTableMock->fetchData();
 
         // Assert
         $this->assertEquals(static::ID_PRODUCT_ABSTRACT, $productTableData[0][ProductTableMock::COL_ID_PRODUCT_ABSTRACT]);
@@ -285,11 +285,11 @@ class ProductTableTest extends Unit
                 ProductAbstractTransfer::STORE_RELATION => $storeRelationAtTransfer,
             ],
         );
-        $productTable = $this->createProductTableMock($this->localeTransfers[static::LOCALE_NAME_DE]);
+        $productTableMock = $this->createProductTableMock($this->localeTransfers[static::LOCALE_NAME_DE]);
 
         // Act
-        $productTable->applyCriteria((new ProductTableCriteriaTransfer())->setStores([$storeAtTransfer->getIdStore()]));
-        $productTableData = $productTable->fetchData();
+        $productTableMock->applyCriteria((new ProductTableCriteriaTransfer())->setStores([$storeAtTransfer->getIdStore()]));
+        $productTableData = $productTableMock->fetchData();
 
         // Assert
         $this->assertEquals(static::ID_PRODUCT_ABSTRACT, $productTableData[0][ProductTableMock::COL_ID_PRODUCT_ABSTRACT]);

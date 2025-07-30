@@ -140,11 +140,11 @@ class ProductOfferTableQueryTest extends Unit
 
         // Act
         $productOfferTableMock->applyCriteria($productOfferTableCriteriaTransfer);
-        $result = $productOfferTableMock->fetchData();
+        $resultData = $productOfferTableMock->fetchData();
 
         // Assert
-        $resultProductOffersIds = array_column($result, SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER);
-        $this->assertNotEmpty($result);
+        $resultProductOffersIds = array_column($resultData, SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER);
+        $this->assertNotEmpty($resultData);
         $this->assertContains((string)$productOffer1->getIdProductOffer(), $resultProductOffersIds);
         $this->assertNotContains((string)$productOffer2->getIdProductOffer(), $resultProductOffersIds);
     }
@@ -175,11 +175,11 @@ class ProductOfferTableQueryTest extends Unit
 
         // Act
         $productOfferTableMock->applyCriteria($productOfferTableCriteriaTransfer);
-        $result = $productOfferTableMock->fetchData();
+        $resultData = $productOfferTableMock->fetchData();
 
         // Assert
-        $resultProductOffersIds = array_column($result, SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER);
-        $this->assertNotEmpty($result);
+        $resultProductOffersIds = array_column($resultData, SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER);
+        $this->assertNotEmpty($resultData);
         $this->assertContains((string)$productOffer1->getIdProductOffer(), $resultProductOffersIds);
         $this->assertNotContains((string)$productOffer2->getIdProductOffer(), $resultProductOffersIds);
     }
@@ -212,11 +212,11 @@ class ProductOfferTableQueryTest extends Unit
 
         // Act
         $productOfferTableMock->applyCriteria($productOfferTableCriteriaTransfer);
-        $result = $productOfferTableMock->fetchData();
+        $resultData = $productOfferTableMock->fetchData();
 
         // Assert
-        $resultProductOffersIds = array_column($result, SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER);
-        $this->assertNotEmpty($result);
+        $resultProductOffersIds = array_column($resultData, SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER);
+        $this->assertNotEmpty($resultData);
         $this->assertNotContains((string)$productOffer1->getIdProductOffer(), $resultProductOffersIds);
         $this->assertContains((string)$productOffer2->getIdProductOffer(), $resultProductOffersIds);
     }

@@ -145,7 +145,7 @@ class MerchantTableQueryTest extends Unit
     public function testFetchDataCollectsCorrectMerchantDataByFilters(string $dataKey, array $merchantTableCriteriaTransferData = []): void
     {
         // Arrange
-        $expectedDiscountIds = $this->merchantsDataProviderData[$dataKey];
+        $expectedMerchantIds = $this->merchantsDataProviderData[$dataKey];
         $merchantTableMock = new MerchantTableMock(
             SpyMerchantQuery::create(),
             $this->getMerchantGuiToMerchantFacadeMock(),
@@ -159,12 +159,12 @@ class MerchantTableQueryTest extends Unit
 
         // Act
         $merchantTableMock->applyCriteria($merchantTableCriteriaTransfer);
-        $result = $merchantTableMock->fetchData();
+        $resultData = $merchantTableMock->fetchData();
 
         // Assert
-        $this->assertNotEmpty($result);
-        $resultMerchantIds = array_column($result, SpyMerchantTableMap::COL_ID_MERCHANT);
-        $diff = array_diff($expectedDiscountIds, $resultMerchantIds);
+        $this->assertNotEmpty($resultData);
+        $resultMerchantIds = array_column($resultData, SpyMerchantTableMap::COL_ID_MERCHANT);
+        $diff = array_diff($expectedMerchantIds, $resultMerchantIds);
         $this->assertEmpty($diff);
     }
 
@@ -208,8 +208,11 @@ class MerchantTableQueryTest extends Unit
     protected function merchantsDataProviderData(): array
     {
         $multiStoreRelationTransfer = (new StoreRelationTransfer())
+            ->addStores($this->storeTransferDE)
+            ->addStores($this->storeTransferAT)
             ->setIdStores([$this->storeTransferDE->getIdStore(), $this->storeTransferAT->getIdStore()]);
         $storeRelationTransfer = (new StoreRelationTransfer())
+            ->addStores($this->storeTransferDE)
             ->setIdStores([$this->storeTransferDE->getIdStore()]);
         $merchantTransfer1 = $this->tester->haveMerchant([
             MerchantTransfer::STORE_RELATION => $multiStoreRelationTransfer->toArray(),

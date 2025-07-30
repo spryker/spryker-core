@@ -77,9 +77,9 @@ class OrdersTableQueryTest extends Unit
      */
     public function testApplyCriteriaShouldFilterOrdersByStores(): void
     {
+        // Arrange
         $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
         $storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => 'AT']);
-        // Arrange
         $quoteTransfer = $this->tester->buildFakeQuote(
             $customerTransfer ?? $this->tester->haveCustomer(),
             $storeTransferDE,
@@ -98,11 +98,11 @@ class OrdersTableQueryTest extends Unit
 
         // Act
         $ordersTableMock->applyCriteria($orderTableCriteriaTransfer);
-        $result = $ordersTableMock->fetchData();
+        $resultData = $ordersTableMock->fetchData();
 
         // Assert
-        $resultOrderIds = array_column($result, SpySalesOrderTableMap::COL_ID_SALES_ORDER);
-        $this->assertNotEmpty($result);
+        $resultOrderIds = array_column($resultData, SpySalesOrderTableMap::COL_ID_SALES_ORDER);
+        $this->assertNotEmpty($resultData);
         $this->assertContains((string)$saveOrderTransfer1->getIdSalesOrder(), $resultOrderIds);
         $this->assertNotContains((string)$saveOrderTransfer2->getIdSalesOrder(), $resultOrderIds);
     }
@@ -112,6 +112,7 @@ class OrdersTableQueryTest extends Unit
      */
     public function testApplyCriteriaShouldFilterOrdersByDates(): void
     {
+        // Arrange
         $saveOrderTransfer1 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $saveOrderTransfer2 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
 
@@ -129,11 +130,11 @@ class OrdersTableQueryTest extends Unit
 
         // Act
         $ordersTableMock->applyCriteria($orderTableCriteriaTransfer);
-        $result = $ordersTableMock->fetchData();
+        $resultData = $ordersTableMock->fetchData();
 
         // Assert
-        $resultOrderIds = array_column($result, SpySalesOrderTableMap::COL_ID_SALES_ORDER);
-        $this->assertNotEmpty($result);
+        $resultOrderIds = array_column($resultData, SpySalesOrderTableMap::COL_ID_SALES_ORDER);
+        $this->assertNotEmpty($resultData);
         $this->assertContains((string)$saveOrderTransfer1->getIdSalesOrder(), $resultOrderIds);
         $this->assertNotContains((string)$saveOrderTransfer2->getIdSalesOrder(), $resultOrderIds);
     }
@@ -143,6 +144,7 @@ class OrdersTableQueryTest extends Unit
      */
     public function testApplyCriteriaShouldFilterOrdersByStatus(): void
     {
+        // Arrange
         $saveOrderTransfer1 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $saveOrderTransfer2 = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
 
@@ -159,11 +161,11 @@ class OrdersTableQueryTest extends Unit
 
         // Act
         $ordersTableMock->applyCriteria($orderTableCriteriaTransfer);
-        $result = $ordersTableMock->fetchData();
+        $resultData = $ordersTableMock->fetchData();
 
         // Assert
-        $resultOrderIds = array_column($result, SpySalesOrderTableMap::COL_ID_SALES_ORDER);
-        $this->assertNotEmpty($result);
+        $resultOrderIds = array_column($resultData, SpySalesOrderTableMap::COL_ID_SALES_ORDER);
+        $this->assertNotEmpty($resultData);
         $this->assertContains((string)$saveOrderTransfer2->getIdSalesOrder(), $resultOrderIds);
         $this->assertNotContains((string)$saveOrderTransfer1->getIdSalesOrder(), $resultOrderIds);
     }
