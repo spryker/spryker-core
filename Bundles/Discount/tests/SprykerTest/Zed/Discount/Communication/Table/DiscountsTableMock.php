@@ -17,8 +17,6 @@ class DiscountsTableMock extends DiscountsTable
      */
     protected function getRequest(): Request
     {
-        $request = new Request();
-
-        return $request;
+        return new Request();
     }
 }
