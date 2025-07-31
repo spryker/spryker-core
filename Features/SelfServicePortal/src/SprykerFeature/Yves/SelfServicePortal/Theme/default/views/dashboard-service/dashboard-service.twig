@@ -1,0 +1,73 @@
+{% extends template('widget') %}
+
+{% define data = {
+    totalItems: _widget.totalItems,
+    services: _widget.services,
+    moreLink: _widget.moreLink | default(url('customer/ssp-service/list')),
+} %}
+
+{% block body %}
+    {% if can('ViewBusinessUnitSspServicePermissionPlugin') or can('ViewCompanySspServicePermissionPlugin') %}
+        {% set columns = [
+            {
+                id: 'productName',
+                title: 'customer.self_service_portal.service.list.product_name' | trans,
+            },
+            {
+                id: 'orderReference',
+                title: 'customer.self_service_portal.service.list.order_reference' | trans,
+            },
+            {
+                id: 'scheduledAt',
+                title: 'customer.self_service_portal.service.list.scheduled_at' | trans,
+                type: 'date',
+            },
+            {
+                id: 'status',
+                title: 'customer.self_service_portal.service.list.status' | trans,
+                type: 'status',
+            },
+            {
+                id: 'actions',
+                type: 'actions',
+            },
+        ] %}
+
+        {% set rows = (data.services | default([])) | map(service => {
+            productName: service.productName,
+            orderReference: service.order ? service.order.orderReference : '',
+            scheduledAt: service.scheduledAt,
+            status: { label: service.stateDisplayName, status: service.stateName },
+            actions: [{
+                url: url('customer/order/details', { 'id': service.order.idSalesOrder }),
+                label: 'self_service_portal.service.list.button.view'
+            }],
+        }) %}
+
+        {% set tableData = {
+            title: 'customer.account.ssp_booked_services',
+            counter: data.totalItems,
+            columns: columns,
+            rows: rows,
+            emptyText: 'customer.account.no_ssp_booked_services',
+            moreLink: data.moreLink,
+        } %}
+    {% else %}
+        {% set tableData = {
+            title: 'customer.account.ssp_booked_services',
+            columns: [],
+            rows: [],
+            emptyText: 'customer.account.access_denied',
+            moreLink: null,
+        } %}
+    {% endif %}
+
+    {% block table %}
+        <div {{ qa('ssp-booked-services-table') }}>
+            {% include molecule('dashboard-table', 'SelfServicePortal') with {
+                data: tableData,
+                qa: 'ssp-service-table',
+            } only %}
+        </div>
+    {% endblock %}
+{% endblock %}

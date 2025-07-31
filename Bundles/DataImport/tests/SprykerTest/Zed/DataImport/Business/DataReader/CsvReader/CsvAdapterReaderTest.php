@@ -12,6 +12,7 @@ use Codeception\Test\Unit;
 use Countable;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\Exception\DataReaderException;
+use Spryker\Zed\DataImport\Business\Exception\DataSetWithHeaderCombineFailedException;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
 use Spryker\Zed\DataImport\DataImportConfig;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
@@ -75,6 +76,17 @@ class CsvAdapterReaderTest extends Unit
         $configuration = $this->getCsvReaderConfigurationTransfer(Configuration::dataDir() . 'not-existing.csv');
 
         $this->tester->getFactory()->createCsvReaderFromConfig($configuration);
+    }
+
+    /**
+     * @return void
+     */
+    public function testThrowsExceptionWhenHeaderAndDataSetLengthDoesNotMatch(): void
+    {
+        $this->expectException(DataSetWithHeaderCombineFailedException::class);
+        $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-header-dataset-length-missmatch.csv');
+
+        $csvReader->current();
     }
 
     /**

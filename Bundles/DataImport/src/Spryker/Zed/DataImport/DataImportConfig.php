@@ -184,10 +184,11 @@ class DataImportConfig extends AbstractBundleConfig
     /**
      * @param string $file
      * @param string $importType
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationContextTransfer|null $context
      *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
-    protected function buildImporterConfiguration($file, $importType)
+    protected function buildImporterConfiguration($file, $importType, $context = null)
     {
         $dataImportReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImportReaderConfigurationTransfer
@@ -197,7 +198,8 @@ class DataImportConfig extends AbstractBundleConfig
         $dataImporterConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImporterConfigurationTransfer
             ->setImportType($importType)
-            ->setReaderConfiguration($dataImportReaderConfigurationTransfer);
+            ->setReaderConfiguration($dataImportReaderConfigurationTransfer)
+            ->setContext($context);
 
         return $dataImporterConfigurationTransfer;
     }
@@ -220,7 +222,8 @@ class DataImportConfig extends AbstractBundleConfig
         $dataImporterConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImporterConfigurationTransfer
             ->setImportType($dataImportConfigurationActionTransfer->getDataEntity())
-            ->setReaderConfiguration($dataImportReaderConfigurationTransfer);
+            ->setReaderConfiguration($dataImportReaderConfigurationTransfer)
+            ->setContext($dataImportConfigurationActionTransfer->getContext());
 
         return $dataImporterConfigurationTransfer;
     }

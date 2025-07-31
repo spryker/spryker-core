@@ -805,6 +805,8 @@
         <property name="companyUser" type="CompanyUser"/>
         <property name="store" type="Store"/>
         <property name="withSspAssetCount" type="int"/>
+        <property name="withServicesCount" type="int"/>
+        <property name="customer" type="Customer"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 
@@ -812,6 +814,7 @@
         <property name="dashboardComponentFiles" type="DashboardComponentFiles"/>
         <property name="dashboardComponentInquiry" type="DashboardComponentInquiry"/>
         <property name="dashboardComponentAssets" type="DashboardComponentAssets"/>
+        <property name="dashboardComponentServices" type="DashboardComponentServices"/>
     </transfer>
 
     <transfer name="SspAssetCollection" strict="true">
@@ -1049,6 +1052,11 @@
 
     <transfer name="SalesOrderItemCollectionDeleteCriteria" strict="true">
         <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="DashboardComponentServices">
+        <property name="sspServiceCollection" type="SspServiceCollection"/>
+        <property name="pendingItems" type="int"/>
     </transfer>
 
     <transfer name="Address">

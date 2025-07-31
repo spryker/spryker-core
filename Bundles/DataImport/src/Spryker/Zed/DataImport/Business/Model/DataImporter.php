@@ -14,9 +14,11 @@ use Generated\Shared\Transfer\DataImporterReportMessageTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Generator;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
+use Spryker\Zed\DataImport\Business\DataImporter\DataImporterDataSetIdentifierAwareInterface;
 use Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface;
 use Spryker\Zed\DataImport\Business\Exception\DataImporterGeneratorException;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
+use Spryker\Zed\DataImport\Business\Exception\DataSetException;
 use Spryker\Zed\DataImport\Business\Exception\TransactionRolledBackAwareExceptionInterface;
 use Spryker\Zed\DataImport\Business\Model\DataReader\ConfigurableDataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
@@ -31,8 +33,14 @@ class DataImporter implements
     DataImporterInterface,
     DataImporterAfterImportAwareInterface,
     DataSetStepBrokerAwareInterface,
-    DataImporterImportGroupAwareInterface
+    DataImporterImportGroupAwareInterface,
+    DataImporterDataSetIdentifierAwareInterface
 {
+    /**
+     * @var string
+     */
+    public const KEY_CONTEXT = 'CONTEXT';
+
     /**
      * @var string
      */
@@ -67,6 +75,11 @@ class DataImporter implements
      * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerInterface
      */
     protected $gracefulRunnerFacade;
+
+    /**
+     * @var string|null
+     */
+    protected ?string $dataSetIdentifierKey = null;
 
     /**
      * @param string $importType
@@ -124,6 +137,16 @@ class DataImporter implements
         foreach ($this->beforeImportHooks as $beforeImportHook) {
             $beforeImportHook->beforeImport();
         }
+    }
+
+    /**
+     * @param string $dataSetIdentifierKey
+     *
+     * @return void
+     */
+    public function setDataSetIdentifierKey(string $dataSetIdentifierKey): void
+    {
+        $this->dataSetIdentifierKey = $dataSetIdentifierKey;
     }
 
     /**
@@ -187,6 +210,8 @@ class DataImporter implements
             foreach ($dataReader as $dataSet) {
                 yield;
 
+                $dataSet[static::KEY_CONTEXT] = $dataImporterConfigurationTransfer?->getContext();
+
                 try {
                     $this->processDataSet($dataSet, $dataImporterReportTransfer);
                 } catch (Exception $dataImportException) {
@@ -201,8 +226,11 @@ class DataImporter implements
 
                     ErrorLogger::getInstance()->log($dataImportException);
 
-                    $dataImporterReportMessageTransfer = new DataImporterReportMessageTransfer();
-                    $dataImporterReportMessageTransfer->setMessage($exceptionMessage);
+                    $dataImporterReportMessageTransfer = $this->createDataSetExceptionReportMessage(
+                        $dataImportException,
+                        $dataReader,
+                        $dataSet,
+                    );
 
                     $dataImporterReportTransfer
                         ->setIsSuccess(false)
@@ -211,6 +239,14 @@ class DataImporter implements
 
                 unset($dataSet);
             }
+        } catch (DataSetException $exception) {
+            $dataImporterReportMessageTransfer = (new DataImporterReportMessageTransfer())
+                ->setMessage($exception->getMessage())
+                ->setDataSetNumber($dataReader->key());
+
+            $dataImporterReportTransfer
+                ->setIsSuccess(false)
+                ->addMessage($dataImporterReportMessageTransfer);
         } catch (DataImporterGeneratorException $exception) {
         }
 
@@ -369,5 +405,25 @@ class DataImporter implements
         }
 
         return null;
+    }
+
+    /**
+     * @param \Exception $dataImportException
+     * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $dataReader
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportMessageTransfer
+     */
+    protected function createDataSetExceptionReportMessage(
+        Exception $dataImportException,
+        DataReaderInterface $dataReader,
+        DataSetInterface $dataSet
+    ): DataImporterReportMessageTransfer {
+        $dataSetIdentifier = $dataSet[$this->dataSetIdentifierKey] ?? null;
+
+        return (new DataImporterReportMessageTransfer())
+            ->setMessage($dataImportException->getMessage())
+            ->setDataSetNumber($dataReader->key())
+            ->setDataSetIdentifier($dataSetIdentifier);
     }
 }

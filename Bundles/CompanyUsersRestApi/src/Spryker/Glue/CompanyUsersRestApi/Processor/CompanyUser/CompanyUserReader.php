@@ -74,6 +74,12 @@ class CompanyUserReader implements CompanyUserReaderInterface
      */
     public function getCompanyUserByResourceId(RestRequestInterface $restRequest): RestResponseInterface
     {
+        $idResource = $restRequest->getResource()->getId();
+
+        if ($idResource === CompanyUsersRestApiConfig::COLLECTION_IDENTIFIER_CURRENT_USER) {
+            return $this->getCompanyUsersByCustomerReference($restRequest);
+        }
+
         $idCompany = $restRequest->getRestUser()->getIdCompany();
         if (!$idCompany) {
             return $this->companyUserRestResponseBuilder->createCompanyUserNotSelectedErrorResponse();
@@ -81,12 +87,6 @@ class CompanyUserReader implements CompanyUserReaderInterface
 
         if (!$this->can('SeeCompanyUsersPermissionPlugin')) {
             return $this->companyUserRestResponseBuilder->createCompanyUserHasNoPermissionErrorResponse();
-        }
-
-        $idResource = $restRequest->getResource()->getId();
-
-        if ($idResource === CompanyUsersRestApiConfig::COLLECTION_IDENTIFIER_CURRENT_USER) {
-            return $this->getCompanyUsersByCustomerReference($restRequest);
         }
 
         return $this->getCompanyUser($idResource, $restRequest);

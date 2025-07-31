@@ -7,6 +7,6 @@
 
 namespace Spryker\Zed\DataImport\Business\Exception;
 
-class DataSetWithHeaderCombineFailedException extends DataImportException
+class DataSetWithHeaderCombineFailedException extends DataSetException
 {
 }

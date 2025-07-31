@@ -18,6 +18,31 @@ class MerchantProductDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_MERCHANT_PRODUCT = 'merchant-product';
 
     /**
+     * @var string
+     */
+    public const IMPORT_TYPE_MERCHANT_COMBINED_PRODUCT = 'merchant-combined-product';
+
+    /**
+     * @var string
+     */
+    public const COMBINED_MERCHANT_PRODUCT_ROW_IDENTIFIER = 'abstract_sku';
+
+    /**
+     * @var string
+     */
+    public const ASSIGNABLE_PRODUCT_TYPE_ABSTRACT = 'abstract';
+
+    /**
+     * @var string
+     */
+    public const ASSIGNABLE_PRODUCT_TYPE_CONCRETE = 'concrete';
+
+    /**
+     * @var string
+     */
+    public const ASSIGNABLE_PRODUCT_TYPE_BOTH = 'both';
+
+    /**
      * @api
      *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
@@ -30,6 +55,16 @@ class MerchantProductDataImportConfig extends DataImportConfig
             $moduleDataImportDirectory . 'merchant_product.csv',
             static::IMPORT_TYPE_MERCHANT_PRODUCT,
         );
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getCombinedMerchantProductRowIdentifier(): string
+    {
+        return static::COMBINED_MERCHANT_PRODUCT_ROW_IDENTIFIER;
     }
 
     /**

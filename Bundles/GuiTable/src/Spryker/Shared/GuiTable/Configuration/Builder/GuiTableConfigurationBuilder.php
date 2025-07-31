@@ -635,6 +635,30 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function addRowActionRedirect(string $id, string $title, string $url)
+    {
+        $this->addRowAction(
+            $id,
+            $title,
+            static::ACTION_TYPE_REDIRECT,
+            null,
+            [
+                'url' => $url,
+            ],
+        );
+
+        return $this;
+    }
+
+    /**
      * @param string $id
      * @param string $title
      * @param string $type
@@ -669,6 +693,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
                 ->setMethod($options['method']);
 
             return;
+        }
+
+        if ($type === static::ACTION_TYPE_REDIRECT) {
+            $guiTableRowActionTransfer
+                ->setUrl($options['url']);
         }
 
         $guiTableRowActionTransfer
