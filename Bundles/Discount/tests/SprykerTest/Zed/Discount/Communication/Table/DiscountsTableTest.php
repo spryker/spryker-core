@@ -48,31 +48,6 @@ class DiscountsTableTest extends Unit
     protected DiscountCommunicationTester $tester;
 
     /**
-     * @var array<string, array<int>>
-     */
-    protected array $discountsDataProviderData = [];
-
-    /**
-     * @var \Generated\Shared\Transfer\StoreTransfer
-     */
-    protected StoreTransfer $storeTransferDE;
-
-    /**
-     * @var \Generated\Shared\Transfer\StoreTransfer
-     */
-    protected StoreTransfer $storeTransferAT;
-
-    /**
-     * @return void
-     */
-    protected function _before(): void
-    {
-        $this->storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $this->storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
-        $this->discountsDataProviderData = $this->discountsDataProviderData();
-    }
-
-    /**
      * @dataProvider discountsDataProvider
      *
      * @param string $dataKey
@@ -83,9 +58,11 @@ class DiscountsTableTest extends Unit
     public function testApplyCriteria(string $dataKey, array $discountTableCriteriaTransferData = []): void
     {
         // Arrange
-        $expectedDiscountIds = $this->discountsDataProviderData[$dataKey];
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $expectedDiscountIds = $this->discountsDataProviderData($storeTransferDE, $storeTransferAT)[$dataKey];
         if (isset($discountTableCriteriaTransferData[DiscountTableCriteriaTransfer::STORES])) {
-            $discountTableCriteriaTransferData[DiscountTableCriteriaTransfer::STORES] = [$this->storeTransferAT->getIdStore()];
+            $discountTableCriteriaTransferData[DiscountTableCriteriaTransfer::STORES] = [$storeTransferAT->getIdStore()];
         }
         $discountTableCriteriaTransfer = $this->tester->createDiscountTableCriteriaTransfer($discountTableCriteriaTransferData);
         $discountsTableMock = $this->createProductTableMock();
@@ -158,9 +135,12 @@ class DiscountsTableTest extends Unit
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransferDE
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransferAT
+     *
      * @return array<string, array>
      */
-    protected function discountsDataProviderData(): array
+    protected function discountsDataProviderData(StoreTransfer $storeTransferDE, StoreTransfer $storeTransferAT): array
     {
         $voucherDiscountGeneralTransfer = $this->tester->haveDiscount([
             DiscountTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_VOUCHER,
@@ -169,8 +149,8 @@ class DiscountsTableTest extends Unit
             DiscountTransfer::VALID_TO => '2027-01-01 00:00:00',
         ]);
         $voucherDiscountTransfer = (new DiscountTransfer())->fromArray($voucherDiscountGeneralTransfer->toArray(), true);
-        $this->tester->haveDiscountStore($this->storeTransferDE, $voucherDiscountTransfer);
-        $this->tester->haveDiscountStore($this->storeTransferAT, $voucherDiscountTransfer);
+        $this->tester->haveDiscountStore($storeTransferDE, $voucherDiscountTransfer);
+        $this->tester->haveDiscountStore($storeTransferAT, $voucherDiscountTransfer);
 
         $cartRuleDiscountGeneralTransfer = $this->tester->haveDiscount([
             DiscountTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_CART_RULE,

@@ -58,11 +58,6 @@ class MerchantTableQueryTest extends Unit
     public const STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
 
     /**
-     * @var array<string, array<int>>
-     */
-    protected array $merchantsDataProviderData = [];
-
-    /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
      *
      * @var string
@@ -93,7 +88,6 @@ class MerchantTableQueryTest extends Unit
     {
         parent::setUp();
 
-        $this->merchantsDataProviderData = $this->merchantsDataProviderData();
         $this->registerTwigServiceMock();
         $this->registerFormFactoryServiceMock();
         $this->registerRequestStack();
@@ -143,7 +137,7 @@ class MerchantTableQueryTest extends Unit
     public function testFetchDataCollectsCorrectMerchantDataByFilters(string $dataKey, array $merchantTableCriteriaTransferData = []): void
     {
         // Arrange
-        $expectedMerchantIds = $this->merchantsDataProviderData[$dataKey];
+        $expectedMerchantIds = $this->merchantsDataProviderData()[$dataKey];
         $merchantTableMock = new MerchantTableMock(
             SpyMerchantQuery::create(),
             $this->getMerchantGuiToMerchantFacadeMock(),
