@@ -93,8 +93,6 @@ class MerchantTableQueryTest extends Unit
     {
         parent::setUp();
 
-        $this->storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $this->storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
         $this->merchantsDataProviderData = $this->merchantsDataProviderData();
         $this->registerTwigServiceMock();
         $this->registerFormFactoryServiceMock();
@@ -189,7 +187,7 @@ class MerchantTableQueryTest extends Unit
             'Filter by Stores' => [
                 'Filter by Stores',
                 [
-                    MerchantTableCriteriaTransfer::STORES => ['AT'],
+                    MerchantTableCriteriaTransfer::STORES => [static::STORE_NAME_AT],
                 ],
             ],
             'Filter by Different Fields' => [
@@ -207,13 +205,15 @@ class MerchantTableQueryTest extends Unit
      */
     protected function merchantsDataProviderData(): array
     {
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
         $multiStoreRelationTransfer = (new StoreRelationTransfer())
-            ->addStores($this->storeTransferDE)
-            ->addStores($this->storeTransferAT)
-            ->setIdStores([$this->storeTransferDE->getIdStore(), $this->storeTransferAT->getIdStore()]);
+            ->addStores($storeTransferDE)
+            ->addStores($storeTransferAT)
+            ->setIdStores([$storeTransferDE->getIdStore(), $storeTransferAT->getIdStore()]);
         $storeRelationTransfer = (new StoreRelationTransfer())
-            ->addStores($this->storeTransferDE)
-            ->setIdStores([$this->storeTransferDE->getIdStore()]);
+            ->addStores($storeTransferDE)
+            ->setIdStores([$storeTransferDE->getIdStore()]);
         $merchantTransfer1 = $this->tester->haveMerchant([
             MerchantTransfer::STORE_RELATION => $multiStoreRelationTransfer->toArray(),
             MerchantTransfer::STATUS => static::STATUS_APPROVED,

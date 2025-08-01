@@ -100,10 +100,6 @@ class DiscountCommunicationTester extends Actor
     public function createDiscountTableCriteriaTransfer(array $seedData = []): DiscountTableCriteriaTransfer
     {
         return (new DiscountTableCriteriaTransfer())
-            ->setStatus($seedData[DiscountTableCriteriaTransfer::STATUS] ?? null)
-            ->setTypes($seedData[DiscountTableCriteriaTransfer::TYPES] ?? null)
-            ->setStores($seedData[DiscountTableCriteriaTransfer::STORES] ?? null)
-            ->setValidFrom($seedData[DiscountTableCriteriaTransfer::VALID_FROM] ?? null)
-            ->setValidTo($seedData[DiscountTableCriteriaTransfer::VALID_TO] ?? null);
+            ->fromArray($seedData, true);
     }
 }

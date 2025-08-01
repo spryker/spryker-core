@@ -36,8 +36,6 @@ class ProductOfferGuiCommunicationTester extends Actor
     public function createProductOfferTableCriteriaTransfer(array $seedData = []): ProductOfferTableCriteriaTransfer
     {
         return (new ProductOfferTableCriteriaTransfer())
-            ->setStores($seedData[ProductOfferTableCriteriaTransfer::STORES] ?? null)
-            ->setStatus($seedData[ProductOfferTableCriteriaTransfer::STATUS] ?? null)
-            ->setApprovalStatuses($seedData[ProductOfferTableCriteriaTransfer::APPROVAL_STATUSES] ?? null);
+            ->fromArray($seedData, true);
     }
 }
