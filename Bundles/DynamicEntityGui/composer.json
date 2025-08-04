@@ -6,7 +6,7 @@
     "require": {
         "php": ">=8.2",
         "spryker/doctrine-inflector": "^1.0.0",
-        "spryker/dynamic-entity": "^1.14.0",
+        "spryker/dynamic-entity": "^1.15.0",
         "spryker/gui": "^3.38.0",
         "spryker/kernel": "^3.33.0",
         "spryker/propel-orm": "^1.0.0",

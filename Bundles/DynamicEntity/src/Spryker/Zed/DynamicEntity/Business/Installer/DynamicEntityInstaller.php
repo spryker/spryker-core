@@ -10,6 +10,7 @@ namespace Spryker\Zed\DynamicEntity\Business\Installer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
+use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfiguration\DynamicEntityConfigurationColumnDetailProviderInterface;
 use Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityFileNotReadableException;
 use Spryker\Zed\DynamicEntity\Business\Installer\Validator\FieldMappingValidatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface;
@@ -43,49 +44,21 @@ class DynamicEntityInstaller implements DynamicEntityInstallerInterface
     protected const MESSAGE_FILE_CONTAINS_INVALID_JSON = 'File contains invalid JSON: %s';
 
     /**
-     * @var \Spryker\Zed\DynamicEntity\DynamicEntityConfig
-     */
-    protected DynamicEntityConfig $dynamicEntityConfig;
-
-    /**
-     * @var \Spryker\Zed\DynamicEntity\Persistence\DynamicEntityRepositoryInterface
-     */
-    protected DynamicEntityRepositoryInterface $dynamicEntityRepository;
-
-    /**
-     * @var \Spryker\Zed\DynamicEntity\Persistence\DynamicEntityEntityManagerInterface
-     */
-    protected DynamicEntityEntityManagerInterface $entityManager;
-
-    /**
-     * @var \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface
-     */
-    protected DynamicEntityMapperInterface $dynamicEntityMapper;
-
-    /**
-     * @var \Spryker\Zed\DynamicEntity\Business\Installer\Validator\FieldMappingValidatorInterface
-     */
-    protected FieldMappingValidatorInterface $fieldMappingValidator;
-
-    /**
      * @param \Spryker\Zed\DynamicEntity\DynamicEntityConfig $dynamicEntityConfig
      * @param \Spryker\Zed\DynamicEntity\Persistence\DynamicEntityRepositoryInterface $dynamicEntityRepository
      * @param \Spryker\Zed\DynamicEntity\Persistence\DynamicEntityEntityManagerInterface $entityManager
      * @param \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface $dynamicEntityMapper
      * @param \Spryker\Zed\DynamicEntity\Business\Installer\Validator\FieldMappingValidatorInterface $fieldMappingValidator
+     * @param \Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfiguration\DynamicEntityConfigurationColumnDetailProviderInterface $dynamicEntityConfigurationColumnDetailProvider
      */
     public function __construct(
-        DynamicEntityConfig $dynamicEntityConfig,
-        DynamicEntityRepositoryInterface $dynamicEntityRepository,
-        DynamicEntityEntityManagerInterface $entityManager,
-        DynamicEntityMapperInterface $dynamicEntityMapper,
-        FieldMappingValidatorInterface $fieldMappingValidator
+        protected DynamicEntityConfig $dynamicEntityConfig,
+        protected DynamicEntityRepositoryInterface $dynamicEntityRepository,
+        protected DynamicEntityEntityManagerInterface $entityManager,
+        protected DynamicEntityMapperInterface $dynamicEntityMapper,
+        protected FieldMappingValidatorInterface $fieldMappingValidator,
+        protected DynamicEntityConfigurationColumnDetailProviderInterface $dynamicEntityConfigurationColumnDetailProvider
     ) {
-        $this->dynamicEntityConfig = $dynamicEntityConfig;
-        $this->dynamicEntityRepository = $dynamicEntityRepository;
-        $this->entityManager = $entityManager;
-        $this->dynamicEntityMapper = $dynamicEntityMapper;
-        $this->fieldMappingValidator = $fieldMappingValidator;
     }
 
     /**
@@ -113,6 +86,7 @@ class DynamicEntityInstaller implements DynamicEntityInstallerInterface
         }
 
         $installerConfigurationDecodedData = json_decode($installerConfigurationData, true);
+
         if ($installerConfigurationDecodedData === false) {
             throw new DynamicEntityFileNotReadableException(sprintf(static::MESSAGE_FILE_CONTAINS_INVALID_JSON, $installerConfigurationData));
         }
@@ -135,10 +109,14 @@ class DynamicEntityInstaller implements DynamicEntityInstallerInterface
                     new DynamicEntityConfigurationTransfer(),
                 );
                 $dynamicEntityConfigurationCollectionTransfer->addDynamicEntityConfiguration($dynamicEntityConfigurationTransfer);
-
-                $dynamicEntityConfigurationTransfer = $this->entityManager->createDynamicEntityConfiguration($dynamicEntityConfigurationTransfer);
-                $dynamicEntityConfigurationTransfers[$dynamicEntityConfigurationTransfer->getTableAliasOrFail()] = $dynamicEntityConfigurationTransfer;
             }
+        }
+
+        $dynamicEntityConfigurationCollectionTransfer = $this->dynamicEntityConfigurationColumnDetailProvider->provideColumDetails($dynamicEntityConfigurationCollectionTransfer);
+
+        foreach ($dynamicEntityConfigurationCollectionTransfer->getDynamicEntityConfigurations() as $dynamicEntityConfigurationTransfer) {
+            $dynamicEntityConfigurationTransfer = $this->entityManager->createDynamicEntityConfiguration($dynamicEntityConfigurationTransfer);
+            $dynamicEntityConfigurationTransfers[$dynamicEntityConfigurationTransfer->getTableAliasOrFail()] = $dynamicEntityConfigurationTransfer;
         }
 
         $this->createChildRelations($dynamicEntityConfigurationCollectionTransfer, $dynamicEntityConfigurationTransfers);
@@ -151,6 +129,7 @@ class DynamicEntityInstaller implements DynamicEntityInstallerInterface
     {
         $dynamicEntityConfigurationCollectionTransfer = $this->dynamicEntityRepository->getDynamicEntityConfigurationCollection(new DynamicEntityConfigurationCriteriaTransfer());
         $tableAliases = [];
+
         foreach ($dynamicEntityConfigurationCollectionTransfer->getDynamicEntityConfigurations() as $dynamicEntityConfiguration) {
             $tableAliases[$dynamicEntityConfiguration->getTableAliasOrFail()] = $dynamicEntityConfiguration->getTableNameOrFail();
         }

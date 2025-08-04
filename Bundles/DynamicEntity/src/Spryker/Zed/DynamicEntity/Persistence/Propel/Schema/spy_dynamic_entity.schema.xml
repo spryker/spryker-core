@@ -3,11 +3,11 @@
 
     <table name="spy_dynamic_entity_configuration" idMethod="native">
         <column name="id_dynamic_entity_configuration" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="table_alias" required="true" size="255" type="VARCHAR"/>
-        <column name="table_name" required="true" size="255" type="VARCHAR"/>
-        <column name="is_active" required="true" type="BOOLEAN" defaultValue="false"/>
-        <column name="definition" required="true" type="LONGVARCHAR"/>
-        <column name="type" size="255" type="VARCHAR"/>
+        <column name="table_alias" required="true" size="255" type="VARCHAR" description="An alias for a database table."/>
+        <column name="table_name" required="true" size="255" type="VARCHAR" description="The name of a database table."/>
+        <column name="is_active" required="true" type="BOOLEAN" defaultValue="false" description="A boolean flag indicating if an entity is currently active."/>
+        <column name="definition" required="true" type="LONGVARCHAR" description="The definition of a dynamic entity."/>
+        <column name="type" size="255" type="VARCHAR" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
 
         <id-method-parameter value="spy_dynamic_entity_configuration_pk_seq"/>
         <unique name="spy_dynamic_entity_configuration-unique-table_alias-type">
@@ -25,8 +25,8 @@
         <column name="id_dynamic_entity_configuration_relation" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_parent_dynamic_entity_configuration" required="true" type="INTEGER"/>
         <column name="fk_child_dynamic_entity_configuration" required="true" type="INTEGER"/>
-        <column name="name" required="true" size="255" type="VARCHAR"/>
-        <column name="is_editable" required="true" type="BOOLEAN"/>
+        <column name="name" required="true" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="is_editable" required="true" type="BOOLEAN" description="A flag indicating if a field or entity is editable."/>
 
         <id-method-parameter value="spy_dynamic_entity_configuration_relation_pk_seq"/>
         <foreign-key name="parent-spy_dynamic_entity_configuration" foreignTable="spy_dynamic_entity_configuration">
@@ -40,8 +40,8 @@
     <table name="spy_dynamic_entity_configuration_relation_field_mapping" idMethod="native">
         <column name="id_dynamic_entity_configuration_relation_field_mapping" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_dynamic_entity_configuration_relation" required="true" type="INTEGER"/>
-        <column name="child_field_name" required="true" size="255" type="VARCHAR"/>
-        <column name="parent_field_name" required="true" size="255" type="VARCHAR"/>
+        <column name="child_field_name" required="true" size="255" type="VARCHAR" description="The name of a field in a child entity."/>
+        <column name="parent_field_name" required="true" size="255" type="VARCHAR" description="The name of the field in the parent entity used for a dynamic entity relationship."/>
 
         <id-method-parameter value="spy_dynamic_entity_configuration_relation_field_mapping_pk_seq"/>
         <foreign-key name="fk_dynamic_entity_configuration_relation" foreignTable="spy_dynamic_entity_configuration_relation">

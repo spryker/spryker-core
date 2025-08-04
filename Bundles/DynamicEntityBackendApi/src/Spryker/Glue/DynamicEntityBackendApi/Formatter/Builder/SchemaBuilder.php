@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder;
 
+use ArrayObject;
+
 class SchemaBuilder implements SchemaBuilderInterface
 {
     /**
@@ -82,11 +84,6 @@ class SchemaBuilder implements SchemaBuilderInterface
     /**
      * @var string
      */
-    protected const APPLICATION_JSON = 'application/json';
-
-    /**
-     * @var string
-     */
     protected const PROPERTY_NAME = 'data';
 
     /**
@@ -124,12 +121,15 @@ class SchemaBuilder implements SchemaBuilderInterface
 
     /**
      * @param array<string, mixed> $fieldsArray
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer> $dynamicEntityFieldDefinitionTransfers
      *
      * @return array<string, mixed>
      */
-    public function buildRequestRootOneOfItem(array $fieldsArray): array
+    public function buildRequestRootOneOfItem(array $fieldsArray, ArrayObject $dynamicEntityFieldDefinitionTransfers): array
     {
-        return [
+        $requiredProperties = $this->getRequiredProperties($dynamicEntityFieldDefinitionTransfers);
+
+        $schema = [
             static::KEY_TYPE => static::SCHEMA_TYPE_OBJECT,
             static::KEY_SCHEMA_PROPERTIES => [
                 static::PROPERTY_NAME => [
@@ -137,10 +137,13 @@ class SchemaBuilder implements SchemaBuilderInterface
                     static::KEY_SCHEMA_ITEMS => [
                         static::KEY_TYPE => static::SCHEMA_TYPE_OBJECT,
                         static::KEY_SCHEMA_PROPERTIES => $fieldsArray,
+                        'required' => $requiredProperties,
                     ],
                 ],
             ],
         ];
+
+        return $schema;
     }
 
     /**
@@ -219,14 +222,30 @@ class SchemaBuilder implements SchemaBuilderInterface
 
     /**
      * @param array<string, mixed> $fieldsArray
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer> $dynamicEntityDefinitionFieldTransfers
      * @param bool $isCollection
      *
-     * @return array<string, mixed>
+     * @return array<mixed>
      */
-    public function generateSchemaStructure(array $fieldsArray, bool $isCollection): array
+    public function generateSchemaStructure(array $fieldsArray, ArrayObject $dynamicEntityDefinitionFieldTransfers, bool $isCollection): array
     {
         if ($isCollection) {
-            return $this->buildRequestRootOneOfItem($fieldsArray);
+            return $this->buildRequestRootOneOfItem($fieldsArray, $dynamicEntityDefinitionFieldTransfers);
+        }
+
+        $requiredProperties = $this->getRequiredProperties($dynamicEntityDefinitionFieldTransfers);
+
+        if ($requiredProperties) {
+            return [
+                static::KEY_TYPE => static::SCHEMA_TYPE_OBJECT,
+                static::KEY_SCHEMA_PROPERTIES => [
+                    static::PROPERTY_NAME => [
+                        static::KEY_TYPE => static::SCHEMA_TYPE_OBJECT,
+                        static::KEY_SCHEMA_PROPERTIES => $fieldsArray,
+                        'required' => $requiredProperties,
+                    ],
+                ],
+            ];
         }
 
         return [
@@ -241,12 +260,32 @@ class SchemaBuilder implements SchemaBuilderInterface
     }
 
     /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer> $dynamicEntityDefinitionFieldTransfers
+     *
+     * @return array<string>
+     */
+    protected function getRequiredProperties(ArrayObject $dynamicEntityDefinitionFieldTransfers): array
+    {
+        $requiredProperties = [];
+
+        // Add all properties which are marked as required.
+        foreach ($dynamicEntityDefinitionFieldTransfers as $dynamicEntityDefinitionFieldTransfer) {
+            if ($dynamicEntityDefinitionFieldTransfer->getValidationOrFail()->getIsRequired()) {
+                $requiredProperties[] = $dynamicEntityDefinitionFieldTransfer->getFieldVisibleNameOrFail();
+            }
+        }
+
+        return $requiredProperties;
+    }
+
+    /**
      * @param array<string, mixed> $oneOfFieldsArray
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer> $dynamicEntityDefinitionFieldTransfers
      * @param bool $isCollection
      *
      * @return array<string, mixed>
      */
-    public function generateSchemaStructureOneOf(array $oneOfFieldsArray, bool $isCollection): array
+    public function generateSchemaStructureOneOf(array $oneOfFieldsArray, ArrayObject $dynamicEntityDefinitionFieldTransfers, bool $isCollection): array
     {
         $schemaStructure = [
             static::KEY_TYPE => static::SCHEMA_TYPE_OBJECT,

@@ -2,171 +2,181 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="DynamicEntityCollectionRequest" strict="true">
-        <property name="isCreatable" type="bool"/>
-        <property name="resetNotProvidedFieldValues" type="bool"/>
-        <property name="tableAlias" type="string"/>
-        <property name="dynamicEntities" type="DynamicEntity[]" singular="dynamicEntity"/>
-        <property name="isTransactional" type="bool"/>
+        <property name="isCreatable" type="bool" description="A flag indicating if an entity can be created."/>
+        <property name="resetNotProvidedFieldValues" type="bool" description="A flag to reset fields that are not provided in an update request."/>
+        <property name="tableAlias" type="string" description="An alias for a database table."/>
+        <property name="dynamicEntities" type="DynamicEntity[]" singular="dynamicEntity" description="A collection of dynamic entities."/>
+        <property name="isTransactional" type="bool" description="A flag to indicate if a request should be processed within a database transaction."/>
     </transfer>
 
     <transfer name="DynamicEntityConfigurationCollection" strict="true">
-        <property name="dynamicEntityConfigurations" type="DynamicEntityConfiguration[]" singular="dynamicEntityConfiguration"/>
+        <property name="dynamicEntityConfigurations" type="DynamicEntityConfiguration[]" singular="dynamicEntityConfiguration" description="Configurations for dynamic entities."/>
     </transfer>
 
     <transfer name="DynamicEntityConfiguration" strict="true">
         <property name="idDynamicEntityConfiguration" type="int"/>
-        <property name="tableAlias" type="string"/>
-        <property name="tableName" type="string"/>
-        <property name="isActive" type="bool"/>
-        <property name="dynamicEntityDefinition" type="DynamicEntityDefinition"/>
-        <property name="childRelations" type="DynamicEntityConfigurationRelation[]" singular="childRelation"/>
+        <property name="tableAlias" type="string" description="An alias for a database table."/>
+        <property name="tableName" type="string" description="The name of a database table."/>
+        <property name="isActive" type="bool" description="A boolean flag indicating if an entity is currently active."/>
+        <property name="dynamicEntityDefinition" type="DynamicEntityDefinition" description="The definition of a dynamic entity's schema."/>
+        <property name="childRelations" type="DynamicEntityConfigurationRelation[]" singular="childRelation" description="A collection of child relationships for an entity."/>
     </transfer>
 
     <transfer name="DynamicEntityCriteria" strict="true">
-        <property name="pagination" type="Pagination"/>
-        <property name="dynamicEntityConditions" type="DynamicEntityConditions"/>
-        <property name="relationChains" type="array" singular="relationChain"/>
+        <property name="pagination" type="Pagination" description="An object containing all pagination-related data for a list of results."/>
+        <property name="dynamicEntityConditions" type="DynamicEntityConditions" description="Conditions for filtering dynamic entities."/>
+        <property name="relationChains" type="array" singular="relationChain" description="A collection of chained relations."/>
     </transfer>
 
     <transfer name="GlueRequest">
-        <property name="pagination" type="Pagination"/>
-        <property name="path" type="string"/>
-        <property name="resource" type="GlueResource"/>
-        <property name="content" type="string"/>
-        <property name="filters" type="GlueFilter[]" singular="filter"/>
-        <property name="attributes" type="array" singular="attribute"/>
-        <property name="meta" type="array" associative="true" singular="meta"/>
-        <property name="requestedFormat" type="string"/>
-        <property name="queryFields" type="array" associative="true" singular="queryField"/>
+        <property name="pagination" type="Pagination" description="An object containing all pagination-related data for a list of results."/>
+        <property name="path" type="string" description="The path for an API endpoint or a file."/>
+        <property name="resource" type="GlueResource" description="A data entity in a REST API."/>
+        <property name="content" type="string" description="The main body of content for a page, block, or message."/>
+        <property name="filters" type="GlueFilter[]" singular="filter" description="A collection of filters."/>
+        <property name="attributes" type="array" singular="attribute" description="A set of key-value pairs describing a product or entity."/>
+        <property name="meta" type="array" associative="true" singular="meta" description="A collection of metadata."/>
+        <property name="requestedFormat" type="string" description="The format requested for the response."/>
+        <property name="queryFields" type="array" associative="true" singular="queryField" description="A collection of fields to be included in the query response."/>
     </transfer>
 
     <transfer name="DynamicEntity" strict="true">
-        <property name="identifier" type="string"/>
-        <property name="fields" type="array" singular="field"/>
-        <property name="childRelations" type="DynamicEntityRelation[]" singular="childRelation"/>
+        <property name="identifier" type="string" description="A unique identifier for an entity."/>
+        <property name="fields" type="array" singular="field" description="A collection of fields."/>
+        <property name="childRelations" type="DynamicEntityRelation[]" singular="childRelation" description="A collection of child relationships for an entity."/>
     </transfer>
 
     <transfer name="DynamicEntityConditions" strict="true">
-        <property name="tableAlias" type="string"/>
-        <property name="fieldConditions" type="DynamicEntityFieldCondition[]" singular="fieldCondition"/>
+        <property name="tableAlias" type="string" description="An alias for a database table."/>
+        <property name="fieldConditions" type="DynamicEntityFieldCondition[]" singular="fieldCondition" description="A collection of conditions for fields."/>
     </transfer>
 
     <transfer name="DynamicEntityFieldCondition" strict="true">
-        <property name="name" type="string"/>
-        <property name="value" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="value" type="string" description="A generic value for a property, often used in key-value pairs or translations."/>
     </transfer>
 
     <transfer name="DynamicEntityCollection" strict="true">
-        <property name="dynamicEntities" type="DynamicEntity[]" singular="dynamicEntity"/>
-        <property name="pagination" type="Pagination"/>
-        <property name="errors" type="Error[]" singular="error"/>
+        <property name="dynamicEntities" type="DynamicEntity[]" singular="dynamicEntity" description="A collection of dynamic entities."/>
+        <property name="pagination" type="Pagination" description="An object containing all pagination-related data for a list of results."/>
+        <property name="errors" type="Error[]" singular="error" description="A collection of error objects."/>
     </transfer>
 
     <transfer name="GlueResponse">
-        <property name="content" type="string"/>
-        <property name="pagination" type="Pagination"/>
-        <property name="httpStatus" type="int"/>
-        <property name="errors" type="GlueError[]" singular="error"/>
-        <property name="meta" type="array" associative="true" singular="meta"/>
-        <property name="resources" type="GlueResource[]" singular="resource"/>
+        <property name="content" type="string" description="The main body of content for a page, block, or message."/>
+        <property name="pagination" type="Pagination" description="An object containing all pagination-related data for a list of results."/>
+        <property name="httpStatus" type="int" description="The HTTP status code of a response."/>
+        <property name="errors" type="GlueError[]" singular="error" description="A collection of error objects."/>
+        <property name="meta" type="array" associative="true" singular="meta" description="A collection of metadata."/>
+        <property name="resources" type="GlueResource[]" singular="resource" description="A collection of data entities in a REST API."/>
     </transfer>
 
     <transfer name="DynamicEntityCollectionResponse" strict="true">
-        <property name="errors" type="Error[]" singular="error"/>
-        <property name="dynamicEntities" type="DynamicEntity[]" singular="dynamicEntity"/>
+        <property name="errors" type="Error[]" singular="error" description="A collection of error objects."/>
+        <property name="dynamicEntities" type="DynamicEntity[]" singular="dynamicEntity" description="A collection of dynamic entities."/>
     </transfer>
 
     <transfer name="GlueError">
-        <property name="code" type="string"/>
-        <property name="status" type="int"/>
-        <property name="message" type="string"/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
     </transfer>
 
     <transfer name="DynamicEntityConfigurationCriteria" strict="true">
-        <property name="dynamicEntityConfigurationConditions" type="DynamicEntityConfigurationConditions"/>
+        <property name="dynamicEntityConfigurationConditions" type="DynamicEntityConfigurationConditions" description="Conditions for filtering dynamic entity configurations."/>
     </transfer>
 
     <transfer name="CriteriaRangeFilter" strict="true">
-        <property name="from" type="string"/>
-        <property name="to" type="string"/>
+        <property name="from" type="string" description="The starting point of a range."/>
+        <property name="to" type="string" description="The end point of a range or relation."/>
     </transfer>
 
     <transfer name="DynamicEntityConfigurationConditions" strict="true">
-        <property name="isActive" type="bool"/>
-        <property name="filterCreatedAt" type="CriteriaRangeFilter"/>
-        <property name="filterUpdatedAt" type="CriteriaRangeFilter"/>
+        <property name="isActive" type="bool" description="A boolean flag indicating if an entity is currently active."/>
+        <property name="filterCreatedAt" type="CriteriaRangeFilter" description="A filter for the creation timestamp."/>
+        <property name="filterUpdatedAt" type="CriteriaRangeFilter" description="A filter for the update timestamp."/>
     </transfer>
 
     <transfer name="GlueResource">
-        <property name="method" type="string"/>
+        <property name="method" type="string" description="The HTTP method for an endpoint."/>
         <property name="id" type="string"/>
-        <property name="type" type="string"/>
-        <property name="attributes" type="AbstractAttributes"/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <property name="attributes" type="AbstractAttributes" description="A set of key-value pairs describing a product or entity."/>
     </transfer>
 
     <transfer name="GlueFilter">
-        <property name="field" type="string"/>
-        <property name="value" type="string"/>
+        <property name="field" type="string" description="A single field within a larger data structure or rule set."/>
+        <property name="value" type="string" description="A generic value for a property, often used in key-value pairs or translations."/>
     </transfer>
 
     <transfer name="Error">
-        <property name="message" type="string"/>
-        <property name="parameters" type="array" singular="parameter"/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
+        <property name="parameters" type="array" singular="parameter" description="A collection of parameters for a request or operation."/>
     </transfer>
 
     <transfer name="Pagination">
-        <property name="limit" type="int"/>
+        <property name="limit" type="int" description="The maximum number of results to return in a single request, used for pagination."/>
     </transfer>
 
     <transfer name="DynamicEntityFieldDefinition" strict="true">
-        <property name="type" type="string"/>
-        <property name="isCreatable" type="bool"/>
-        <property name="isEditable" type="bool"/>
-        <property name="fieldVisibleName" type="string"/>
-        <property name="fieldName" type="string"/>
-        <property name="validation" type="DynamicEntityFieldValidation"/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <property name="isCreatable" type="bool" description="A flag indicating if an entity can be created."/>
+        <property name="isEditable" type="bool" description="A flag indicating if a field or entity is editable."/>
+        <property name="fieldVisibleName" type="string" description="The visible name of a field in the UI."/>
+        <property name="fieldName" type="string" description="The name of a field."/>
+        <property name="validation" type="DynamicEntityFieldValidation" description="Validation rules for a field or entity."/>
+        <property name="description" type="string" description="Provides a user-friendly description of the field."/>
+        <property name="examples" type="string" description="Provides a comma separated list of examples that can be used for this field."/>
+        <property name="enumValues" type="string" description="Provides a comma separated list of enums which are allowed to be used for this field."/>
     </transfer>
 
     <transfer name="DynamicEntityDefinition" strict="true">
-        <property name="fieldDefinitions" type="DynamicEntityFieldDefinition[]" singular="fieldDefinition"/>
-        <property name="identifier" type="string"/>
-        <property name="isDeletable" type="bool"/>
+        <property name="fieldDefinitions" type="DynamicEntityFieldDefinition[]" singular="fieldDefinition" description="Definitions for the fields of a dynamic entity."/>
+        <property name="identifier" type="string" description="A unique identifier for an entity."/>
+        <property name="isDeletable" type="bool" description="A flag indicating if an entity can be deleted."/>
     </transfer>
 
     <transfer name="ApiApplicationSchemaContext">
-        <property name="dynamicEntityConfigurations" type="DynamicEntityConfiguration[]" singular="dynamicEntityConfiguration"/>
-        <property name="customRoutesContexts" type="CustomRoutesContext[]" singular="customRoutesContext"/>
+        <property name="dynamicEntityConfigurations" type="DynamicEntityConfiguration[]" singular="dynamicEntityConfiguration" description="Configurations for dynamic entities."/>
+        <property name="customRoutesContexts" type="CustomRoutesContext[]" singular="customRoutesContext" description="A collection of contexts for custom routes."/>
     </transfer>
 
     <transfer name="CustomRoutesContext">
-        <property name="defaults" type="array" singular="default"/>
+        <property name="defaults" type="array" singular="default" description="Default configuration settings."/>
     </transfer>
 
     <transfer name="DynamicEntityFieldValidation" strict="true">
-        <property name="min" type="int"/>
-        <property name="max" type="int"/>
-        <property name="minLength" type="int"/>
-        <property name="maxLength" type="int"/>
-        <property name="precision" type="int"/>
+        <property name="min" type="int" description="The minimum value in a range."/>
+        <property name="max" type="int" description="The maximum value in a range."/>
+        <property name="minLength" type="int" description="The minimum length for a string value."/>
+        <property name="maxLength" type="int" description="The maximum length for a string value."/>
+        <property name="precision" type="int" description="The total number of digits in a decimal value."/>
+        <property name="scale" type="int"/>
+        <property name="constraints" type="DynamicEntityFieldValidationConstraint[]" singular="constraint"/>
+        <property name="isRequired" type="bool"/>
     </transfer>
 
     <transfer name="DocumentationInvalidationVoterRequest">
-        <property name="interval" type="string"/>
+        <property name="interval" type="string" description="The interval for a recurring task or check."/>
     </transfer>
 
     <transfer name="DynamicEntityRelation" strict="true">
-        <property name="name" type="string"/>
-        <property name="dynamicEntities" type="DynamicEntity[]" singular="dynamicEntity"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="dynamicEntities" type="DynamicEntity[]" singular="dynamicEntity" description="A collection of dynamic entities."/>
     </transfer>
 
     <transfer name="DynamicEntityConfigurationRelation" strict="true">
-        <property name="name" type="string"/>
-        <property name="childDynamicEntityConfiguration" type="DynamicEntityConfiguration"/>
-        <property name="isEditable" type="bool"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="childDynamicEntityConfiguration" type="DynamicEntityConfiguration" description="Configuration for a child dynamic entity."/>
+        <property name="isEditable" type="bool" description="A flag indicating if a field or entity is editable."/>
     </transfer>
 
     <transfer name="DynamicEntityCollectionDeleteCriteria" strict="true">
-        <property name="dynamicEntityConditions" type="DynamicEntityConditions"/>
+        <property name="dynamicEntityConditions" type="DynamicEntityConditions" description="Conditions for filtering dynamic entities."/>
+    </transfer>
+
+    <transfer name="DynamicEntityFieldValidationConstraint" strict="true">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

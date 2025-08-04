@@ -74,26 +74,6 @@ interface PathMethodBuilderInterface
     /**
      * @var string
      */
-    public const KEY_TYPE_MIN = 'minimum';
-
-    /**
-     * @var string
-     */
-    public const KEY_TYPE_MAX = 'maximum';
-
-    /**
-     * @var string
-     */
-    public const KEY_TYPE_MIN_LENGTH = 'minLength';
-
-    /**
-     * @var string
-     */
-    public const KEY_TYPE_MAX_LENGTH = 'maxLength';
-
-    /**
-     * @var string
-     */
     public const KEY_STYLE = 'style';
 
     /**
@@ -165,11 +145,6 @@ interface PathMethodBuilderInterface
      * @var string
      */
     public const SCHEMA_LIMIT = 'limit';
-
-    /**
-     * @var string
-     */
-    public const SCHEMA_ONE_OF = 'oneOf';
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer

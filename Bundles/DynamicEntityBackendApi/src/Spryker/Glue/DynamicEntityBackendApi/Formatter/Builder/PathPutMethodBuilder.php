@@ -143,6 +143,7 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
                     $filterIsCreated,
                     $filterIsEditable,
                 ),
+                $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
                 false,
                 true,
             );
@@ -150,12 +151,13 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
 
         return $this->buildRequestBody(
             static::REQUEST_DATA_UPSERT_ENTITY_DESCRIPTION,
-            $this->prepareFieldsArrayWithChilds(
+            $this->prepareFieldsArrayWithChildren(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
                 $filterIsEditable,
             ),
+            $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
         );
     }
 
@@ -219,6 +221,7 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
                     $filterIsCreated,
                     $filterIsEditable,
                 ),
+                $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
                 false,
                 true,
             );
@@ -226,12 +229,13 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
 
         return $this->buildRequestBody(
             $requestDescription,
-            $this->prepareFieldsArrayWithChilds(
+            $this->prepareFieldsArrayWithChildren(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
                 $filterIsEditable,
             ),
+            $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
             true,
         );
     }
@@ -258,20 +262,24 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
                     $filterIsCreated,
                     $filterIsEditable,
                 ),
+                $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
                 $httpCodeStatus,
                 false,
                 true,
             );
         }
 
+        $fieldsArray = $this->prepareFieldsArrayWithChildren(
+            $dynamicEntityConfigurationTransfer,
+            $skipIdentifier,
+            $filterIsCreated,
+            $filterIsEditable,
+        );
+
         return $this->buildSuccessResponse(
             $responseDescription,
-            $this->prepareFieldsArrayWithChilds(
-                $dynamicEntityConfigurationTransfer,
-                $skipIdentifier,
-                $filterIsCreated,
-                $filterIsEditable,
-            ),
+            $fieldsArray,
+            $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
             $httpCodeStatus,
         );
     }
@@ -298,6 +306,7 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
                     $filterIsCreated,
                     $filterIsEditable,
                 ),
+                $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
                 $httpCodeStatus,
                 false,
                 true,
@@ -306,12 +315,13 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
 
         return $this->buildSuccessResponse(
             $responseDescription,
-            $this->prepareFieldsArrayWithChilds(
+            $this->prepareFieldsArrayWithChildren(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
                 $filterIsEditable,
             ),
+            $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
             $httpCodeStatus,
             true,
         );

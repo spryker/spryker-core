@@ -102,7 +102,26 @@ class DynamicEntityOpenApiSchemaFormatterPluginTest extends Unit
 
         // Assert
         $this->assertIsArray($formattedData);
-        $this->assertEquals($this->getExpectedPathData(), $formattedData);
+        $expectedPathData = $this->getExpectedPathData();
+
+        foreach ($expectedPathData as $paths) {
+            foreach ($paths as $path => $methods) {
+                foreach ($methods as $method => $data) {
+                    $formatedPathMethodData = $formattedData['paths'][$path][$method];
+
+                    if (isset($data['responses'])) {
+                        $expectedResponses = $data['responses'];
+                        $formattedResponses = $formatedPathMethodData['responses'];
+
+                        foreach ($expectedResponses as $responseName => $expectedResponse) {
+                            $this->assertEquals($expectedResponse, $formattedResponses[$responseName], sprintf('[%s] %s %s responses do not match.', $method, $responseName, $path));
+                        }
+                    }
+
+                    $this->assertEquals($data, $formatedPathMethodData, sprintf('[%s] %s does not match the expected result.', $method, $path));
+                }
+            }
+        }
     }
 
     /**

@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -49,6 +50,21 @@ class ColumnDefinitionsSubForm extends AbstractType
      * @var string
      */
     protected const FIELD_IS_REQUIRED = 'is_required';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_DESCRIPTION = 'description';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_EXAMPLES = 'examples';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_ENUM_VALUES = 'enum_values';
 
     /**
      * @var string
@@ -103,6 +119,9 @@ class ColumnDefinitionsSubForm extends AbstractType
             ->addIsCreatableField($builder)
             ->addIsEditableField($builder)
             ->addIsRequiredField($builder)
+            ->addDescriptionField($builder)
+            ->addExamplesField($builder)
+            ->addEnumValuesField($builder)
             ->addMinField($builder)
             ->addMaxField($builder)
             ->addMinLengthField($builder)
@@ -210,6 +229,52 @@ class ColumnDefinitionsSubForm extends AbstractType
         $builder->add(static::FIELD_IS_REQUIRED, CheckboxType::class, [
             'label' => false,
             'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addDescriptionField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_DESCRIPTION, TextareaType::class, [
+            'label' => false,
+            'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addExamplesField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_EXAMPLES, TextType::class, [
+            'label' => false,
+            'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addEnumValuesField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ENUM_VALUES, TextType::class, [
+            'label' => false,
+            'required' => false,
+            'disabled' => true,
         ]);
 
         return $this;

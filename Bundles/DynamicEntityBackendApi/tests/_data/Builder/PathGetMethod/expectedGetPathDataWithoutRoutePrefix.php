@@ -107,8 +107,12 @@ return [
                           'test' =>
                            [
                             'type' => 'string',
+                            'example' => 'John Doe',
+                            'title' => 'test',
+                            'description' => 'Test',
                           ],
                         ],
+                        'required' => [],
                       ],
                     ],
                   ],
@@ -217,6 +221,9 @@ return [
                         'test' =>
                          [
                           'type' => 'string',
+                          'example' => 'John Doe',
+                          'title' => 'test',
+                          'description' => 'Test',
                         ],
                       ],
                     ],

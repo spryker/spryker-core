@@ -5,7 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder;
+
+use ArrayObject;
 
 interface SchemaBuilderInterface
 {
@@ -24,10 +28,11 @@ interface SchemaBuilderInterface
 
     /**
      * @param array<string, mixed> $fieldsArray
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer> $dynamicEntityFieldDefinitionTransfers
      *
      * @return array<string, mixed>
      */
-    public function buildRequestRootOneOfItem(array $fieldsArray): array;
+    public function buildRequestRootOneOfItem(array $fieldsArray, ArrayObject $dynamicEntityFieldDefinitionTransfers): array;
 
     /**
      * @param string $name
@@ -69,17 +74,19 @@ interface SchemaBuilderInterface
 
     /**
      * @param array<string, mixed> $fieldsArray
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer> $dynamicEntityDefinitionFieldTransfers
      * @param bool $isCollection
      *
      * @return array<string, mixed>
      */
-    public function generateSchemaStructure(array $fieldsArray, bool $isCollection): array;
+    public function generateSchemaStructure(array $fieldsArray, ArrayObject $dynamicEntityDefinitionFieldTransfers, bool $isCollection): array;
 
     /**
      * @param array<string, mixed> $oneOfFieldsArray
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer> $dynamicEntityDefinitionFieldTransfers
      * @param bool $isCollection
      *
      * @return array<string, mixed>
      */
-    public function generateSchemaStructureOneOf(array $oneOfFieldsArray, bool $isCollection): array;
+    public function generateSchemaStructureOneOf(array $oneOfFieldsArray, ArrayObject $dynamicEntityDefinitionFieldTransfers, bool $isCollection): array;
 }

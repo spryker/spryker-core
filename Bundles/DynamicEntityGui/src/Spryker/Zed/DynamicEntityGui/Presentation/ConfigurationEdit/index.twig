@@ -52,6 +52,9 @@
                             <th>{{ 'Creatable' | trans }}</th>
                             <th>{{ 'Editable' | trans }}</th>
                             <th>{{ 'Required' | trans }}</th>
+                            <th>{{ 'Description' | trans }}</th>
+                            <th>{{ 'Examples' | trans }}</th>
+                            <th>{{ 'Enum Values' | trans }}</th>
                             <th>{{ 'Min' | trans }}</th>
                             <th>{{ 'Max' | trans }}</th>
                             <th>{{ 'Min Length' | trans }}</th>
@@ -71,6 +74,9 @@
                             <td>{{ form_row(rowForm.is_creatable) }}</td>
                             <td>{{ form_row(rowForm.is_editable) }}</td>
                             <td>{{ form_row(rowForm.is_required) }}</td>
+                            <td>{{ form_row(rowForm.description) }}</td>
+                            <td>{{ form_row(rowForm.examples) }}</td>
+                            <td>{{ form_row(rowForm.enum_values) }}</td>
                             <td class="de-edit-table-no-padding">{{ form_row(rowForm.min) }}</td>
                             <td class="de-edit-table-no-padding">{{ form_row(rowForm.max) }}</td>
                             <td class="de-edit-table-no-padding">{{ form_row(rowForm.min_length) }}</td>

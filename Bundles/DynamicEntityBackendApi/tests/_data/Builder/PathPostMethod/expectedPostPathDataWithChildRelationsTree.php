@@ -66,8 +66,17 @@ return [
                           'properties' =>
                            [
                             'test' =>
+
                              [
+
                               'type' => 'string',
+
+                              'example' => 'John Doe',
+
+                              'title' => 'test',
+
+                              'description' => 'Test',
+
                             ],
                             'test-first-level-child-relation' =>
                              [
@@ -78,8 +87,17 @@ return [
                                 'properties' =>
                                  [
                                   'test' =>
+
                                    [
+
                                     'type' => 'string',
+
+                                    'example' => 'John Doe',
+
+                                    'title' => 'test',
+
+                                    'description' => 'Test',
+
                                   ],
                                 ],
                               ],
@@ -121,8 +139,17 @@ return [
                             'properties' =>
                              [
                               'test' =>
+
                                [
+
                                 'type' => 'string',
+
+                                'example' => 'John Doe',
+
+                                'title' => 'test',
+
+                                'description' => 'Test',
+
                               ],
                               'test-first-level-child-relation' =>
                                [
@@ -133,8 +160,17 @@ return [
                                   'properties' =>
                                    [
                                     'test' =>
+
                                      [
+
                                       'type' => 'string',
+
+                                      'example' => 'John Doe',
+
+                                      'title' => 'test',
+
+                                      'description' => 'Test',
+
                                     ],
                                   ],
                                 ],

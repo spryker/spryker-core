@@ -129,6 +129,9 @@ return [
                               'test' =>
                                [
                                 'type' => 'string',
+                                'example' => 'John Doe',
+                                'title' => 'test',
+                                'description' => 'Test',
                               ],
                               'test-child-relation' =>
                                [
@@ -141,6 +144,9 @@ return [
                                     'test' =>
                                      [
                                       'type' => 'string',
+                                      'example' => 'John Doe',
+                                      'title' => 'test',
+                                      'description' => 'Test',
                                     ],
                                   ],
                                 ],
@@ -260,6 +266,9 @@ return [
                             'test' =>
                              [
                               'type' => 'string',
+                              'example' => 'John Doe',
+                              'title' => 'test',
+                              'description' => 'Test',
                             ],
                             'test-child-relation' =>
                              [
@@ -272,6 +281,9 @@ return [
                                   'test' =>
                                    [
                                     'type' => 'string',
+                                    'example' => 'John Doe',
+                                    'title' => 'test',
+                                    'description' => 'Test',
                                   ],
                                 ],
                               ],

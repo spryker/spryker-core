@@ -2,148 +2,149 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ApiApplicationSchemaContext">
-        <property name="resourceContexts" type="ResourceContext[]" singular="resourceContext"/>
-        <property name="application" type="string"/>
-        <property name="relationshipPluginsContexts" type="RelationshipPluginsContext[]" singular="relationshipPluginsContext"/>
-        <property name="customRoutesContexts" type="CustomRoutesContext[]" singular="customRoutesContext"/>
-        <property name="host" type="string"/>
+        <property name="resourceContexts" type="ResourceContext[]" singular="resourceContext" description="A collection of contexts for resources."/>
+        <property name="application" type="string" description="The name of an application context."/>
+        <property name="relationshipPluginsContexts" type="RelationshipPluginsContext[]" singular="relationshipPluginsContext" description="A collection of contexts for relationship plugins."/>
+        <property name="customRoutesContexts" type="CustomRoutesContext[]" singular="customRoutesContext" description="A collection of contexts for custom routes."/>
+        <property name="host" type="string" description="The host name of a server or service."/>
     </transfer>
 
     <transfer name="PathAnnotation">
-        <property name="resourceType" type="string"/>
-        <property name="getCollection" type="Annotation"/>
-        <property name="getResourceById" type="Annotation"/>
-        <property name="post" type="Annotation"/>
-        <property name="patch" type="Annotation"/>
-        <property name="delete" type="Annotation"/>
+        <property name="resourceType" type="string" description="The type of a resource."/>
+        <property name="getCollection" type="Annotation" description="An annotation or configuration for the 'get collection' (list) action of a resource."/>
+        <property name="getResourceById" type="Annotation" description="An annotation for the 'get by ID' action of a resource."/>
+        <property name="post" type="Annotation" description="An annotation or configuration for the 'create' (POST) action of a resource."/>
+        <property name="patch" type="Annotation" description="An annotation or configuration for the 'update' (PATCH) action of a resource."/>
+        <property name="delete" type="Annotation" description="An annotation or configuration for the 'delete' (DELETE) action of a resource."/>
     </transfer>
 
     <transfer name="RelationshipPluginAnnotationsContext">
-        <property name="resourceType" type="string"/>
-        <property name="resourceAttributesClassName" type="string"/>
+        <property name="resourceType" type="string" description="The type of a resource."/>
+        <property name="resourceAttributesClassName" type="string" description="The class name for the attributes of a resource."/>
     </transfer>
 
     <transfer name="ResourceContext">
-        <property name="resourceType" type="string"/>
-        <property name="pathAnnotation" type="PathAnnotation"/>
-        <property name="relationships" type="string"/>
-        <property name="declaredMethods" type="GlueResourceMethodCollection"/>
-        <property name="parentResources" type="string[]" singular="parentResource"/>
+        <property name="resourceType" type="string" description="The type of a resource."/>
+        <property name="pathAnnotation" type="PathAnnotation" description="An annotation for a path in an API."/>
+        <property name="relationships" type="string" description="A collection of relationships between resources."/>
+        <property name="declaredMethods" type="GlueResourceMethodCollection" description="A collection of declared methods for a resource."/>
+        <property name="parentResources" type="string[]" singular="parentResource" description="A collection of parent resources."/>
     </transfer>
 
     <transfer name="Annotation">
-        <property name="deprecated" type="bool"/>
-        <property name="responseAttributesClassName" type="string"/>
-        <property name="isIdNullable" type="bool"/>
-        <property name="requestAttributesClassName" type="string"/>
-        <property name="summary" type="string[]" singular="summary"/>
+        <property name="deprecated" type="bool" description="A flag indicating if a feature or property is deprecated."/>
+        <property name="responseAttributesClassName" type="string" description="The class name for the attributes of a response."/>
+        <property name="isIdNullable" type="bool" description="A flag indicating if the ID of a resource can be null."/>
+        <property name="requestAttributesClassName" type="string" description="The class name for the attributes of a request."/>
+        <property name="summary" type="string[]" singular="summary" description="A summary description of an API endpoint or operation."/>
     </transfer>
 
     <transfer name="RelationshipPluginsContext">
-        <property name="relationshipPluginAnnotationsContext" type="RelationshipPluginAnnotationsContext"/>
-        <property name="resourceType" type="string"/>
-        <property name="relationship" type="string"/>
+        <property name="relationshipPluginAnnotationsContext" type="RelationshipPluginAnnotationsContext" description="Context for annotations of a relationship plugin."/>
+        <property name="resourceType" type="string" description="The type of a resource."/>
+        <property name="relationship" type="string" description="A relationship between two resources."/>
     </transfer>
 
     <transfer name="CustomRoutesContext">
-        <property name="pathAnnotation" type="PathAnnotation"/>
-        <property name="defaults" type="array" singular="default"/>
-        <property name="path" type="string"/>
-        <property name="isProtected" type="bool"/>
+        <property name="pathAnnotation" type="PathAnnotation" description="An annotation for a path in an API."/>
+        <property name="defaults" type="array" singular="default" description="Default configuration settings."/>
+        <property name="path" type="string" description="The path for an API endpoint or a file."/>
+        <property name="isProtected" type="bool" description="A flag indicating if a resource or route requires authentication."/>
     </transfer>
 
     <transfer name="Parameter">
-        <property name="refName" type="string"/>
-        <property name="in" type="string"/>
-        <property name="description" type="string"/>
-        <property name="name" type="string"/>
-        <property name="required" type="bool"/>
-        <property name="schema" type="ParameterSchema"/>
+        <property name="refName" type="string" description="The name of a reference in an API specification."/>
+        <property name="in" type="string" description="The location of a parameter (e.g., 'query', 'header')."/>
+        <property name="description" type="string" description="A description of an entity."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="required" type="bool" description="A flag indicating if a parameter or property is required."/>
+        <property name="schema" type="ParameterSchema" description="The schema definition for a data structure."/>
     </transfer>
 
     <transfer name="ParameterSchema">
-        <property name="type" type="string"/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
     </transfer>
 
     <transfer name="SchemaComponent">
-        <property name="items" singular="item" type="array"/>
-        <property name="properties" type="array" singular="property"/>
-        <property name="required" type="string[]" singular="required"/>
-        <property name="type" type="string"/>
-        <property name="name" type="string"/>
+        <property name="items" singular="item" type="array" description="A collection of items, typically in a cart, order, or list."/>
+        <property name="properties" type="array" singular="property" description="A collection of properties in a schema."/>
+        <property name="required" type="string[]" singular="required" description="A flag indicating if a parameter or property is required."/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="SchemaItemsComponent">
-        <property name="oneOf" singular="oneOf" type="string[]"/>
+        <property name="oneOf" singular="oneOf" type="string[]" description="A constraint specifying that a value must be one of the given options."/>
     </transfer>
 
     <transfer name="ParameterComponent">
-        <property name="name" type="string"/>
-        <property name="in" type="string"/>
-        <property name="description" type="string"/>
-        <property name="schema" type="ParameterSchema"/>
-        <property name="required" type="bool"/>
-        <property name="refName" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="in" type="string" description="The location of a parameter (e.g., 'query', 'header')."/>
+        <property name="description" type="string" description="A description of an entity."/>
+        <property name="schema" type="ParameterSchema" description="The schema definition for a data structure."/>
+        <property name="required" type="bool" description="A flag indicating if a parameter or property is required."/>
+        <property name="refName" type="string" description="The name of a reference in an API specification."/>
     </transfer>
 
     <transfer name="SchemaPropertyComponent">
-        <property name="type" type="string"/>
-        <property name="name" type="string"/>
-        <property name="schemaReference" type="string"/>
-        <property name="itemsSchemaReference" type="string"/>
-        <property name="itemsType" type="string"/>
-        <property name="oneOf" singular="oneOf" type="string[]"/>
-        <property name="isNullable" type="bool"/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="schemaReference" type="string" description="A reference to another schema definition."/>
+        <property name="itemsSchemaReference" type="string" description="A reference to the schema for items in an array."/>
+        <property name="itemsType" type="string" description="The type of items in an array."/>
+        <property name="oneOf" singular="oneOf" type="string[]" description="A constraint specifying that a value must be one of the given options."/>
+        <property name="isNullable" type="bool" description="A flag indicating if a property can be null."/>
+        <property name="description" type="string" strict="true" description="An explaining description for the given property that will be shown in the generated OpenAPI schema file."/>
+        <property name="example" type="string" strict="true" description="An example value for the given property that will be shown in the generated OpenAPI schema file."/>
     </transfer>
 
     <transfer name="SchemaData">
-        <property name="properties" singular="property" type="SchemaProperty[]"/>
-        <property name="required" type="string[]" singular="required"/>
-        <property name="type" type="string"/>
-        <property name="name" type="string"/>
-        <property name="items" type="SchemaItems"/>
-        <property name="example" type="string" strict="true"/>
+        <property name="properties" singular="property" type="SchemaProperty[]" description="A collection of properties in a schema."/>
+        <property name="required" type="string[]" singular="required" description="A flag indicating if a parameter or property is required."/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="items" type="SchemaItems" description="A collection of items, typically in a cart, order, or list."/>
     </transfer>
 
     <transfer name="SchemaProperty">
-        <property name="name" type="string"/>
-        <property name="type" type="string"/>
-        <property name="isNullable" type="bool"/>
-        <property name="reference" type="string"/>
-        <property name="itemsReference" type="string"/>
-        <property name="itemsType" type="string"/>
-        <property name="oneOf" singular="oneOf" type="string[]"/>
-        <property name="example" type="string" strict="true"/>
-        <property name="description" type="string" strict="true"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <property name="isNullable" type="bool" description="A flag indicating if a property can be null."/>
+        <property name="reference" type="string" description="A reference to another resource or definition."/>
+        <property name="itemsReference" type="string" description="A reference to the schema for items in an array."/>
+        <property name="itemsType" type="string" description="The type of items in an array."/>
+        <property name="oneOf" singular="oneOf" type="string[]" description="A constraint specifying that a value must be one of the given options."/>
+        <property name="description" type="string" strict="true" description="An explaining description for the given property that will be shown in the generated OpenAPI schema file."/>
+        <property name="example" type="string" strict="true" description="An example value for the given property that will be shown in the generated OpenAPI schema file."/>
     </transfer>
 
     <transfer name="SchemaItems">
-        <property name="oneOf" singular="oneOf" type="string[]"/>
+        <property name="oneOf" singular="oneOf" type="string[]" description="A constraint specifying that a value must be one of the given options."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
     </transfer>
 
     <transfer name="PathMethodComponentData">
-        <property name="resourceType" type="string"/>
-        <property name="annotation" type="Annotation"/>
-        <property name="patternOperationIdResource" type="string"/>
-        <property name="defaultResponseCode" type="int"/>
-        <property name="isGetCollection" type="bool"/>
-        <property name="pathName" type="string"/>
-        <property name="isProtected" type="bool"/>
+        <property name="resourceType" type="string" description="The type of a resource."/>
+        <property name="annotation" type="Annotation" description="Descriptive metadata or notes."/>
+        <property name="patternOperationIdResource" type="string" description="A resource for a pattern-based operation ID."/>
+        <property name="defaultResponseCode" type="int" description="The default HTTP response code."/>
+        <property name="isGetCollection" type="bool" description="A flag indicating if the operation is a 'get collection' action."/>
+        <property name="pathName" type="string" description="The name of a path."/>
+        <property name="isProtected" type="bool" description="A flag indicating if a resource or route requires authentication."/>
     </transfer>
 
     <transfer name="GlueResourceMethodCollection">
-        <property name="delete" type="GlueResourceMethodConfiguration"/>
-        <property name="getCollection" type="GlueResourceMethodConfiguration"/>
-        <property name="get" type="GlueResourceMethodConfiguration"/>
-        <property name="patch" type="GlueResourceMethodConfiguration"/>
-        <property name="post" type="GlueResourceMethodConfiguration"/>
+        <property name="delete" type="GlueResourceMethodConfiguration" description="An annotation or configuration for the 'delete' (DELETE) action of a resource."/>
+        <property name="getCollection" type="GlueResourceMethodConfiguration" description="An annotation or configuration for the 'get collection' (list) action of a resource."/>
+        <property name="get" type="GlueResourceMethodConfiguration" description="An annotation or configuration for the 'get single item' action of a resource."/>
+        <property name="patch" type="GlueResourceMethodConfiguration" description="An annotation or configuration for the 'update' (PATCH) action of a resource."/>
+        <property name="post" type="GlueResourceMethodConfiguration" description="An annotation or configuration for the 'create' (POST) action of a resource."/>
     </transfer>
 
     <transfer name="GlueResourceMethodConfiguration">
-        <property name="isProtected" type="bool"/>
-        <property name="isSnakeCased" type="bool"/>
+        <property name="isProtected" type="bool" description="A flag indicating if a resource or route requires authentication."/>
+        <property name="isSnakeCased" type="bool" description="A flag indicating if property names are in snake_case."/>
     </transfer>
 </transfers>

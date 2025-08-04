@@ -13,6 +13,8 @@ use Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityCollectionRequestBui
 use Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityCollectionRequestBuilderInterface;
 use Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityRelationConfigurationTreeBuilder;
 use Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityRelationConfigurationTreeBuilderInterface;
+use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfiguration\DynamicEntityConfigurationColumnDetailProvider;
+use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfiguration\DynamicEntityConfigurationColumnDetailProviderInterface;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreator;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityCreator;
@@ -361,6 +363,7 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createDynamicEntityMapper(),
             $this->createFieldMappingValidator(),
+            $this->createDynamicEntityConfigurationColumnDetailProvider(),
         );
     }
 
@@ -390,6 +393,17 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
         return new DynamicEntityConfigurationCreator(
             $this->createDynamicEntityConfigurationValidator(),
             $this->getEntityManager(),
+            $this->createDynamicEntityConfigurationColumnDetailProvider(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfiguration\DynamicEntityConfigurationColumnDetailProviderInterface
+     */
+    public function createDynamicEntityConfigurationColumnDetailProvider(): DynamicEntityConfigurationColumnDetailProviderInterface
+    {
+        return new DynamicEntityConfigurationColumnDetailProvider(
+            $this->getConfig(),
         );
     }
 
