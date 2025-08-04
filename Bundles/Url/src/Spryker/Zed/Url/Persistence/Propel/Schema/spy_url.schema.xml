@@ -4,7 +4,7 @@
     <table name="spy_url">
         <column name="id_url" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
-        <column name="url" type="VARCHAR" size="255" required="true"/>
+        <column name="url" type="VARCHAR" size="255" required="true" description="A URL for a resource."/>
 
         <column name="fk_resource_redirect" type="INTEGER"/>
 
@@ -25,8 +25,8 @@
 
     <table name="spy_url_redirect">
         <column name="id_url_redirect" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="to_url" type="VARCHAR" size="255" required="true"/>
-        <column name="status" type="INTEGER" required="true" default="301"/>
+        <column name="to_url" type="VARCHAR" size="255" required="true" description="The URL to redirect to."/>
+        <column name="status" type="INTEGER" required="true" default="301" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
 
         <index name="spy_url_redirect-to_url">
             <index-column name="to_url"/>

@@ -2,84 +2,84 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestWishlistsAttributes">
-        <property name="name" type="string" restRequestParameter="required"/>
-        <property name="numberOfItems" type="int"/>
-        <property name="createdAt" type="string"/>
-        <property name="updatedAt" type="string"/>
+        <property name="name" type="string" restRequestParameter="required" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="numberOfItems" type="int" description="The number of items in a collection."/>
+        <property name="createdAt" type="string" description="The timestamp when an entity was created."/>
+        <property name="updatedAt" type="string" description="The timestamp when an entity was last updated."/>
     </transfer>
 
     <transfer name="RestWishlistItemsAttributes">
-        <property name="sku" type="string" restRequestParameter="required"/>
+        <property name="sku" type="string" restRequestParameter="required" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
         <property name="id" type="string"/>
     </transfer>
 
     <transfer name="Wishlist">
-        <property name="uuid" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
         <property name="idWishlist" type="int"/>
         <property name="fkCustomer" type="int"/>
-        <property name="name" type="string"/>
-        <property name="wishlistItems" type="WishlistItem[]" singular="wishlistItem"/>
-        <property name="numberOfItems" type="int"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="wishlistItems" type="WishlistItem[]" singular="wishlistItem" description="A collection of items in a wishlist."/>
+        <property name="numberOfItems" type="int" description="The number of items in a collection."/>
     </transfer>
 
     <transfer name="WishlistResponse">
-        <property name="wishlist" type="Wishlist"/>
-        <property name="isSuccess" type="bool"/>
-        <property name="errors" type="array" singular="error"/>
-        <property name="errorIdentifier" type="string"/>
+        <property name="wishlist" type="Wishlist" description="A list of desired products saved by a customer."/>
+        <property name="isSuccess" type="bool" description="A boolean flag indicating if an operation was successful."/>
+        <property name="errors" type="array" singular="error" description="A collection of error objects."/>
+        <property name="errorIdentifier" type="string" description="A unique identifier for a specific type of error."/>
     </transfer>
 
     <transfer name="WishlistRequest">
-        <property name="uuid" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
         <property name="idCustomer" type="int"/>
-        <property name="wishlist" type="Wishlist"/>
+        <property name="wishlist" type="Wishlist" description="A list of desired products saved by a customer."/>
     </transfer>
 
     <transfer name="WishlistFilter">
         <property name="idCustomer" type="int"/>
-        <property name="name" type="string"/>
-        <property name="uuid" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="WishlistItemRequest">
         <property name="idCustomer" type="int"/>
-        <property name="uuidWishlist" type="string"/>
-        <property name="sku" type="string"/>
-        <property name="uuid" type="string"/>
+        <property name="uuidWishlist" type="string" description="The UUID of a wishlist."/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="WishlistItemResponse">
-        <property name="isSuccess" type="bool"/>
-        <property name="wishlistItem" type="WishlistItem"/>
-        <property name="errors" type="array" singular="error"/>
-        <property name="errorIdentifier" type="string"/>
+        <property name="isSuccess" type="bool" description="A boolean flag indicating if an operation was successful."/>
+        <property name="wishlistItem" type="WishlistItem" description="An item in a wishlist."/>
+        <property name="errors" type="array" singular="error" description="A collection of error objects."/>
+        <property name="errorIdentifier" type="string" description="A unique identifier for a specific type of error."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int"/>
-        <property name="code" type="string"/>
-        <property name="detail" type="string"/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="Customer">
-        <property name="customerReference" type="string"/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
     </transfer>
 
     <transfer name="WishlistCollection">
-        <property name="wishlists" type="Wishlist[]" singular="wishlist"/>
+        <property name="wishlists" type="Wishlist[]" singular="wishlist" description="A collection of wishlists."/>
     </transfer>
 
     <transfer name="WishlistItem">
         <property name="idWishlistItem" type="int"/>
         <property name="fkWishlist" type="int"/>
-        <property name="sku" type="string"/>
-        <property name="wishlistName" type="string"/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <property name="wishlistName" type="string" description="The name of a wishlist."/>
         <property name="fkCustomer" type="int"/>
     </transfer>
 
     <transfer name="RestUser">
-        <property name="surrogateIdentifier" type="int"/>
-        <property name="naturalIdentifier" type="string"/>
+        <property name="surrogateIdentifier" type="int" description="A system-generated, non-human-readable unique identifier (like an auto-incrementing ID)."/>
+        <property name="naturalIdentifier" type="string" description="A human-readable unique identifier for a resource, such as a user's email."/>
     </transfer>
 
 </transfers>

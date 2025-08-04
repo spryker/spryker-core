@@ -3,10 +3,10 @@
 
     <table name="spy_touch" identifierQuoting="true">
         <column name="id_touch" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="item_type" type="VARCHAR" size="255" required="true"/>
-        <column name="item_event" type="ENUM" valueSet="active, inactive, deleted" required="true"/>
-        <column name="item_id" type="INTEGER" required="true"/>
-        <column name="touched" type="TIMESTAMP" required="true"/>
+        <column name="item_type" type="VARCHAR" size="255" required="true" description="The type of item being touched."/>
+        <column name="item_event" type="ENUM" valueSet="active, inactive, deleted" required="true" description="The event type for an item in the touch table (active, inactive, deleted)."/>
+        <column name="item_id" type="INTEGER" required="true" description="The ID of the item that was &quot;touched&quot; or interacted with."/>
+        <column name="touched" type="TIMESTAMP" required="true" description="The timestamp indicating when an item was last touched or updated."/>
         <unique name="spy_touch-unique-item_id">
             <unique-column name="item_id"/>
             <unique-column name="item_event"/>
@@ -34,7 +34,7 @@
         <column name="fk_locale" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="false"/>
         <column name="fk_touch" type="INTEGER" required="true"/>
-        <column name="key" type="VARCHAR" size="255" required="true"/>
+        <column name="key" type="VARCHAR" size="255" required="true" description="A unique key used to identify an entity or a piece of data."/>
         <unique name="spy_touch_storage-unique-fk_locale">
             <unique-column name="fk_locale"/>
             <unique-column name="key"/>
@@ -62,7 +62,7 @@
         <column name="fk_locale" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="false"/>
         <column name="fk_touch" type="INTEGER" required="true"/>
-        <column name="key" type="VARCHAR" size="255" required="true"/>
+        <column name="key" type="VARCHAR" size="255" required="true" description="A unique key used to identify an entity or a piece of data."/>
         <unique name="spy_touch_search-unique-fk_locale">
             <unique-column name="fk_locale"/>
             <unique-column name="key"/>

@@ -3,10 +3,10 @@
 
     <table name="spy_vault_deposit" idMethod="native" allowPkInsert="true">
         <column name="id_vault_deposit" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="data_type" required="true" type="VARCHAR" size="255"/>
-        <column name="data_key" required="true" type="VARCHAR" size="255"/>
-        <column name="initial_vector" required="true" type="VARCHAR" size="255"/>
-        <column name="cipher_text" required="true" type="LONGVARCHAR"/>
+        <column name="data_type" required="true" type="VARCHAR" size="255" description="The type of data being stored."/>
+        <column name="data_key" required="true" type="VARCHAR" size="255" description="A key used to identify a specific piece of encrypted data in the vault."/>
+        <column name="initial_vector" required="true" type="VARCHAR" size="255" description="The initialization vector used for encryption."/>
+        <column name="cipher_text" required="true" type="LONGVARCHAR" description="The encrypted data."/>
 
         <behavior name="timestampable"/>
 

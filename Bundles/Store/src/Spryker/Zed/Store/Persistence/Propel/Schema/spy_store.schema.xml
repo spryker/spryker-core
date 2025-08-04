@@ -3,7 +3,7 @@
 
     <table name="spy_store">
         <column name="id_store" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" size="255" type="VARCHAR"/>
+        <column name="name" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
         <id-method-parameter value="spy_store_pk_seq"/>
     </table>
 

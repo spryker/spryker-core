@@ -3,9 +3,9 @@
 
     <table name="spy_weekday_schedule">
         <column name="id_weekday_schedule" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="day" required="true" type="ENUM" valueSet="MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY"/>
-        <column name="time_from" type="TIME"/>
-        <column name="time_to" type="TIME"/>
+        <column name="day" required="true" type="ENUM" valueSet="MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY" description="The day of the week."/>
+        <column name="time_from" type="TIME" description="The start time of a schedule."/>
+        <column name="time_to" type="TIME" description="The end time of a schedule."/>
 
         <behavior name="timestampable"/>
 
@@ -14,10 +14,10 @@
 
     <table name="spy_date_schedule">
         <column name="id_date_schedule" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="date" type="DATE" required="true"/>
-        <column name="time_from" type="TIME"/>
-        <column name="time_to" type="TIME"/>
-        <column name="note_glossary_key" type="VARCHAR" size="255"/>
+        <column name="date" type="DATE" required="true" description="A specific date."/>
+        <column name="time_from" type="TIME" description="The start time of a schedule."/>
+        <column name="time_to" type="TIME" description="The end time of a schedule."/>
+        <column name="note_glossary_key" type="VARCHAR" size="255" description="The glossary key for a note."/>
 
         <behavior name="timestampable"/>
     </table>

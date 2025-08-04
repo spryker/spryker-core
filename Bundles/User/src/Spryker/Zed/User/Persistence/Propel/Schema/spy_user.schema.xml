@@ -3,12 +3,12 @@
 
     <table name="spy_user" idMethod="native">
         <column name="id_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="first_name" required="true" size="45" type="VARCHAR"/>
-        <column name="last_name" required="true" size="255" type="VARCHAR"/>
-        <column name="username" required="true" size="45" type="VARCHAR"/>
-        <column name="password" required="true" size="255" type="VARCHAR"/>
-        <column name="last_login" required="false" type="TIMESTAMP"/>
-        <column name="status" required="true" size="10" type="ENUM" valueSet="active,blocked,deleted" defaultValue="active"/>
+        <column name="first_name" required="true" size="45" type="VARCHAR" description="The first name of a person."/>
+        <column name="last_name" required="true" size="255" type="VARCHAR" description="The last name of a user or customer."/>
+        <column name="username" required="true" size="45" type="VARCHAR" description="The login name for a user account, typically an email address."/>
+        <column name="password" required="true" size="255" type="VARCHAR" description="The password for a user account, used for authentication."/>
+        <column name="last_login" required="false" type="TIMESTAMP" description="The timestamp of the user's last login."/>
+        <column name="status" required="true" size="10" type="ENUM" valueSet="active,blocked,deleted" defaultValue="active" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
         <unique name="spy_user-username">
             <unique-column name="username"/>
         </unique>

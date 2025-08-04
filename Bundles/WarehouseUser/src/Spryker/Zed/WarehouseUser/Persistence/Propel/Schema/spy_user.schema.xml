@@ -2,8 +2,8 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\User\Persistence" package="src.Orm.Zed.User.Persistence">
 
     <table name="spy_user">
-        <column name="is_warehouse_user" required="false" type="BOOLEAN"/>
-        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+        <column name="is_warehouse_user" required="false" type="BOOLEAN" description="A flag indicating if a user is a warehouse user."/>
+        <column name="uuid" required="false" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
 
         <unique name="spy_user-unique-uuid">
             <unique-column name="uuid"/>

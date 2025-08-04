@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
     <transfer name="RestTaxAppValidationAttributes" strict="true">
-        <property name="countryCode" type="string"/>
-        <property name="taxId" type="string"/>
+        <property name="countryCode" type="string" description="The code for a country."/>
+        <property name="taxId" type="string" description="A tax identification number provided by a customer or company."/>
     </transfer>
 
     <transfer name="TaxAppValidationRequest" strict="true">
-        <property name="countryCode" type="string"/>
-        <property name="taxId" type="string"/>
+        <property name="countryCode" type="string" description="The code for a country."/>
+        <property name="taxId" type="string" description="A tax identification number provided by a customer or company."/>
     </transfer>
 
     <transfer name="TaxAppValidationResponse" strict="true">
-        <property name="isValid" type="bool"/>
-        <property name="message" type="string"/>
-        <property name="additionalInfo" type="string"/>
-        <property name="messageKey" type="string"/>
+        <property name="isValid" type="bool" description="A boolean flag indicating if a token or request is valid."/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
+        <property name="additionalInfo" type="string" description="JSON string containing additional info to be displayed"/>
+        <property name="messageKey" type="string" description="A key for a message."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int"/>
-        <property name="detail" type="string"/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 </transfers>

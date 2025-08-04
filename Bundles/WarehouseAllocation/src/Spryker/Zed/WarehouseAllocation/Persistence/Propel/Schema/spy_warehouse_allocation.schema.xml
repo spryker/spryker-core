@@ -4,7 +4,7 @@
     <table name="spy_warehouse_allocation" idMethod="native" allowPkInsert="true">
         <column name="id_warehouse_allocation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_warehouse" type="INTEGER" required="true"/>
-        <column name="sales_order_item_uuid" required="true" type="VARCHAR" size="36"/>
+        <column name="sales_order_item_uuid" required="true" type="VARCHAR" size="36" description="The UUID of a sales order item."/>
 
         <foreign-key name="spy_warehouse_allocation-fk_warehouse" foreignTable="spy_stock" phpName="Warehouse" refPhpName="WarehouseAllocation">
             <reference local="fk_warehouse" foreign="id_stock"/>

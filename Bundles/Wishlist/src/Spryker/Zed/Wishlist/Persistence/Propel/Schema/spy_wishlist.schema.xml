@@ -4,7 +4,7 @@
     <table name="spy_wishlist">
         <column name="id_wishlist" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_customer" required="true" type="INTEGER"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
 
         <unique name="spy_wishlist-unique-fk_customer-name">
             <unique-column name="fk_customer"/>
@@ -22,7 +22,7 @@
     <table name="spy_wishlist_item">
         <column name="id_wishlist_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_wishlist" required="true" type="INTEGER"/>
-        <column name="sku" required="true" type="VARCHAR" size="255"/>
+        <column name="sku" required="true" type="VARCHAR" size="255" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
 
         <foreign-key name="spy_wishlist_item-fk_wishlist" foreignTable="spy_wishlist">
             <reference local="fk_wishlist" foreign="id_wishlist"/>

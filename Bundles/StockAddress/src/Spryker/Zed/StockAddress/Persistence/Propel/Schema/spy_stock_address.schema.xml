@@ -6,13 +6,13 @@
         <column name="fk_stock" type="INTEGER" required="true"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
-        <column name="address1" size="255" type="VARCHAR" required="true"/>
-        <column name="address2" size="255" type="VARCHAR"/>
-        <column name="address3" size="255" type="VARCHAR"/>
-        <column name="city" size="255" type="VARCHAR" required="true"/>
-        <column name="zip_code" size="15" type="VARCHAR" required="true"/>
-        <column name="phone" size="255" type="VARCHAR"/>
-        <column name="comment" size="255" type="VARCHAR"/>
+        <column name="address1" size="255" type="VARCHAR" required="true" description="The first line of a street address."/>
+        <column name="address2" size="255" type="VARCHAR" description="The second line of a street address."/>
+        <column name="address3" size="255" type="VARCHAR" description="The third line of a street address."/>
+        <column name="city" size="255" type="VARCHAR" required="true" description="The city part of an address."/>
+        <column name="zip_code" size="15" type="VARCHAR" required="true" description="The postal code for an address."/>
+        <column name="phone" size="255" type="VARCHAR" description="The phone number."/>
+        <column name="comment" size="255" type="VARCHAR" description="A user-submitted comment or note."/>
 
         <index name="index-spy_stock_address-fk_stock">
             <index-column name="fk_stock"/>

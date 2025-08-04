@@ -3,10 +3,10 @@
 
     <table name="spy_warehouse_user_assignment">
         <column name="id_warehouse_user_assignment" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="uuid" required="false" type="VARCHAR" size="255"/>
+        <column name="uuid" required="false" type="VARCHAR" size="255" description="A Universally Unique Identifier for an entity."/>
         <column name="fk_warehouse" type="INTEGER" required="true"/>
-        <column name="user_uuid" required="true" type="VARCHAR" size="255"/>
-        <column name="is_active" required="true" type="BOOLEAN" default="false"/>
+        <column name="user_uuid" required="true" type="VARCHAR" size="255" description="The UUID of a user."/>
+        <column name="is_active" required="true" type="BOOLEAN" default="false" description="A boolean flag indicating if an entity is currently active."/>
 
         <unique name="spy_warehouse_user_assignment-unique-uuid">
             <unique-column name="uuid"/>

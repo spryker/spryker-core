@@ -4,7 +4,7 @@
     <table name="spy_tax_set_storage" identifierQuoting="true">
         <column name="id_tax_set_storage" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_tax_set" type="INTEGER" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
 
         <id-method-parameter value="id_tax_set_storage_pk_seq"/>
 

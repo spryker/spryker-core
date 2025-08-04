@@ -4,8 +4,8 @@
     <table name="spy_tax_product_storage" identifierQuoting="true">
         <column name="id_tax_product_storage" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_abstract" type="INTEGER" required="true"/>
-        <column name="sku" type="VARCHAR" size="255" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
+        <column name="sku" type="VARCHAR" size="255" required="true" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
 
         <id-method-parameter value="id_tax_product_storage_pk_seq"/>
 

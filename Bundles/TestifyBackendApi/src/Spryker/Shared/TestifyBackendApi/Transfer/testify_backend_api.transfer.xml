@@ -2,47 +2,47 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="DynamicFixturesBackendApiAttributes" strict="true">
-        <property name="key" type="string"/>
-        <property name="data" type="array" singular="data"/>
+        <property name="key" type="string" description="A unique key used to identify an entity or a piece of data."/>
+        <property name="data" type="array" singular="data" description="A generic data payload."/>
     </transfer>
 
     <transfer name="DynamicFixturesRequestBackendApiAttributes" strict="true">
-        <property name="synchronize" type="bool"/>
-        <property name="operations" type="DynamicFixtureOperation[]" singular="operation"/>
+        <property name="synchronize" type="bool" description="A flag to trigger synchronization."/>
+        <property name="operations" type="DynamicFixtureOperation[]" singular="operation" description="A collection of operations."/>
     </transfer>
 
     <transfer name="DynamicFixtureOperation" strict="true">
-        <property name="type" type="string"/>
-        <property name="name" type="string"/>
-        <property name="key" type="string"/>
-        <property name="arguments" type="array" singular="argument"/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="key" type="string" description="A unique key used to identify an entity or a piece of data."/>
+        <property name="arguments" type="array" singular="argument" description="A collection of arguments for a command or function."/>
     </transfer>
 
     <transfer name="CliCommandDynamicFixturesBackendApiAttributes" strict="true">
-        <property name="statusCode" type="int"/>
-        <property name="output" type="string"/>
+        <property name="statusCode" type="int" description="A status code for a response or operation."/>
+        <property name="output" type="string" description="The output of a command or process."/>
     </transfer>
 
     <transfer name="GlueResourceMethodCollection">
-        <property name="post" type="GlueResourceMethodConfiguration"/>
+        <property name="post" type="GlueResourceMethodConfiguration" description="An annotation or configuration for the 'create' (POST) action of a resource."/>
     </transfer>
 
     <transfer name="GlueResourceMethodConfiguration">
-        <property name="action" type="string"/>
-        <property name="attributes" type="string"/>
-        <property name="isSingularResponse" type="bool"/>
+        <property name="action" type="string" description="The specific action to be performed, often within a controller."/>
+        <property name="attributes" type="string" description="A set of key-value pairs describing a product or entity."/>
+        <property name="isSingularResponse" type="bool" description="A flag indicating if the response should be a single resource instead of a collection."/>
     </transfer>
 
     <transfer name="AbstractAttributes">
     </transfer>
 
     <transfer name="GlueResponse">
-        <property name="resources" type="GlueResource[]" singular="resource"/>
+        <property name="resources" type="GlueResource[]" singular="resource" description="A collection of data entities in a REST API."/>
     </transfer>
 
     <transfer name="GlueResource">
-        <property name="attributes" type="AbstractAttributes"/>
-        <property name="type" type="string"/>
+        <property name="attributes" type="AbstractAttributes" description="A set of key-value pairs describing a product or entity."/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
     </transfer>
 
     <transfer name="GlueRequest">

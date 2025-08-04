@@ -3,7 +3,7 @@
 
     <table name="spy_tax_set" idMethod="native" allowPkInsert="true">
         <column name="id_tax_set" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
 
         <behavior name="timestampable"/>
 
@@ -12,8 +12,8 @@
 
     <table name="spy_tax_rate" idMethod="native" allowPkInsert="true">
         <column name="id_tax_rate" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="rate" type="DECIMAL" size="8" scale="2" required="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="rate" type="DECIMAL" size="8" scale="2" required="true" description="The tax rate percentage."/>
         <column name="fk_country" type="INTEGER"/>
 
         <foreign-key name="spy_tax_rate-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="SpyTaxRate">

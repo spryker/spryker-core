@@ -5,9 +5,9 @@
         <column name="id_tax_app_config" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <id-method-parameter value="spy_tax_app_config_pk_seq"/>
         <column name="fk_store" required="false" type="INTEGER"/>
-        <column name="application_id" required="true" type="VARCHAR" size="255"/>
-        <column name="is_active" required="true" type="BOOLEAN" default="TRUE"/>
-        <column name="vendor_code" required="true" type="VARCHAR" size="255"/>
+        <column name="application_id" required="true" type="VARCHAR" size="255" description="Identifier for the application making a request."/>
+        <column name="is_active" required="true" type="BOOLEAN" default="TRUE" description="A boolean flag indicating if an entity is currently active."/>
+        <column name="vendor_code" required="true" type="VARCHAR" size="255" description="A code to identify the tax calculation vendor."/>
         <column name="api_urls" description="API URLs JSON-encoded object" required="true" type="LONGVARCHAR"/>
 
         <behavior name="timestampable"/>
@@ -16,10 +16,10 @@
     <table name="spy_tax_id_validation_history" identifierQuoting="true">
         <column name="id_tax_id_validation_history" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <id-method-parameter value="spy_tax_id_validation_history_pk_seq"/>
-        <column name="tax_id" required="true" type="VARCHAR" size="255"/>
-        <column name="is_valid" required="true" type="BOOLEAN" default="TRUE"/>
-        <column name="country_code" type="VARCHAR" size="3" required="false"/>
-        <column name="response_data" required="false" type="LONGVARCHAR"/>
+        <column name="tax_id" required="true" type="VARCHAR" size="255" description="A tax identification number provided by a customer or company."/>
+        <column name="is_valid" required="true" type="BOOLEAN" default="TRUE" description="A boolean flag indicating if a token or request is valid."/>
+        <column name="country_code" type="VARCHAR" size="3" required="false" description="The code for a country."/>
+        <column name="response_data" required="false" type="LONGVARCHAR" description="The raw response data received from a tax ID validation service."/>
 
         <behavior name="timestampable">
             <parameter name="disable_updated_at" value="true"/>

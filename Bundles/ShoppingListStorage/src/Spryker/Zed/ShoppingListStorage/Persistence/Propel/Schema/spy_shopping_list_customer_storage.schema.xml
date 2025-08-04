@@ -3,9 +3,9 @@
 
     <table name="spy_shopping_list_customer_storage" identifierQuoting="true">
         <column name="id_shopping_list_customer_storage" type="integer" autoIncrement="true" primaryKey="true"/>
-        <column name="key" type="VARCHAR" size="255" required="true"/>
-        <column name="customer_reference" type="VARCHAR" size="255" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
+        <column name="key" type="VARCHAR" size="255" required="true" description="A unique key used to identify an entity or a piece of data."/>
+        <column name="customer_reference" type="VARCHAR" size="255" required="true" description="A unique reference for a customer."/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
 
         <id-method-parameter value="spy_shopping_list_customer_storage_pk_seq"/>
 

@@ -4,8 +4,8 @@
     <table name="spy_store_storage" identifierQuoting="true">
         <column name="id_spy_store_storage" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
-        <column name="store_name" type="VARCHAR" size="255" required="true"/>
-        <column name="data" type="CLOB" required="false"/>
+        <column name="store_name" type="VARCHAR" size="255" required="true" description="The name of a store."/>
+        <column name="data" type="CLOB" required="false" description="A generic data payload."/>
         <id-method-parameter value="id_spy_store_storage_pk_seq"/>
         <index name="spy_store_storage-fk_store">
             <index-column name="fk_store"/>
@@ -20,8 +20,8 @@
 
     <table name="spy_store_list_storage" identifierQuoting="true">
         <column name="id_store_list_storage" type="integer" autoIncrement="true" primaryKey="true"/>
-        <column name="key" type="VARCHAR" size="255" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
+        <column name="key" type="VARCHAR" size="255" required="true" description="A unique key used to identify an entity or a piece of data."/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
         <id-method-parameter value="id_store_list_storage_pk_seq"/>
         <behavior name="synchronization">
             <parameter name="resource" value="store_list"/>

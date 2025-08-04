@@ -2,77 +2,77 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="StoresRestAttributes">
-        <property name="timeZone" type="string"/>
-        <property name="defaultCurrency" type="string"/>
-        <property name="currencies" type="StoreCurrencyRestAttributes[]" singular="currency"/>
-        <property name="locales" type="StoreLocaleRestAttributes[]" singular="locale"/>
-        <property name="countries" type="StoreCountryRestAttributes[]" singular="country"/>
+        <property name="timeZone" type="string" description="The timezone."/>
+        <property name="defaultCurrency" type="string" description="The default currency for a store."/>
+        <property name="currencies" type="StoreCurrencyRestAttributes[]" singular="currency" description="A collection of currencies."/>
+        <property name="locales" type="StoreLocaleRestAttributes[]" singular="locale" description="A collection of locales."/>
+        <property name="countries" type="StoreCountryRestAttributes[]" singular="country" description="A collection of countries."/>
     </transfer>
 
     <transfer name="DynamicStoreRestAttributes">
-        <property name="defaultCurrency" type="string"/>
-        <property name="currencies" type="StoreCurrencyRestAttributes[]" singular="currency"/>
-        <property name="locales" type="DynamicStoreLocaleRestAttributes[]" singular="locale"/>
-        <property name="countries" type="StoreCountryRestAttributes[]" singular="country"/>
+        <property name="defaultCurrency" type="string" description="The default currency for a store."/>
+        <property name="currencies" type="StoreCurrencyRestAttributes[]" singular="currency" description="A collection of currencies."/>
+        <property name="locales" type="DynamicStoreLocaleRestAttributes[]" singular="locale" description="A collection of locales."/>
+        <property name="countries" type="StoreCountryRestAttributes[]" singular="country" description="A collection of countries."/>
     </transfer>
 
     <transfer name="StoreCountryRestAttributes">
-        <property name="iso2Code" type="string"/>
-        <property name="iso3Code" type="string"/>
-        <property name="name" type="string"/>
-        <property name="postalCodeMandatory" type="bool"/>
-        <property name="postalCodeRegex" type="string"/>
-        <property name="regions" type="StoreRegionRestAttributes[]" singular="region"/>
+        <property name="iso2Code" type="string" description="The two-letter ISO code for a country."/>
+        <property name="iso3Code" type="string" description="The three-letter ISO code for a country."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="postalCodeMandatory" type="bool" description="A flag indicating if a postal code is mandatory."/>
+        <property name="postalCodeRegex" type="string" description="A regular expression for validating postal codes."/>
+        <property name="regions" type="StoreRegionRestAttributes[]" singular="region" description="A collection of geographical regions."/>
     </transfer>
 
     <transfer name="StoreRegionRestAttributes">
-        <property name="iso2Code" type="string"/>
-        <property name="name" type="string"/>
+        <property name="iso2Code" type="string" description="The two-letter ISO code for a country."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="StoreLocaleRestAttributes">
-        <property name="code" type="string"/>
-        <property name="name" type="string"/>
+        <property name="code" type="string" description="A unique code, often for currency, country, or barcode."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="DynamicStoreLocaleRestAttributes">
-        <property name="name" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="StoreCurrencyRestAttributes">
-        <property name="code" type="string"/>
-        <property name="name" type="string"/>
+        <property name="code" type="string" description="A unique code, often for currency, country, or barcode."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="Country">
-        <property name="iso2Code" type="string"/>
+        <property name="iso2Code" type="string" description="The two-letter ISO code for a country."/>
     </transfer>
 
     <transfer name="Currency">
     </transfer>
 
     <transfer name="Store">
-        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
-        <property name="defaultCurrencyIsoCode" type="string"/>
-        <property name="timezone" type="string"/>
-        <property name="name" type="string"/>
-        <property name="countries" type="array" singular="country"/>
-        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode" description="A list of ISO codes for available locales in a store."/>
+        <property name="defaultCurrencyIsoCode" type="string" description="The ISO code of the default currency for a store."/>
+        <property name="timezone" type="string" description="The timezone setting for a store or user."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="countries" type="array" singular="country" description="A collection of countries."/>
+        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode" description="A list of ISO codes for available currencies in a store."/>
         <property name="idStore" type="int"/>
     </transfer>
 
     <transfer name="CountryCollection">
-        <property name="countries" type="Country[]" singular="countries"/>
+        <property name="countries" type="Country[]" singular="countries" description="A collection of countries."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="code" type="string"/>
-        <property name="status" type="int"/>
-        <property name="detail" type="string"/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="StoreCollection">
-        <property name="stores" type="Store[]" singular="store"/>
+        <property name="stores" type="Store[]" singular="store" description="A collection of store data transfer objects."/>
     </transfer>
 
     <transfer name="StoreCriteria">
