@@ -1,13 +1,13 @@
-{{ form_start(sspAssetForm, {'attr': {'enctype': 'multipart/form-data'}}) }}
+{{ form_start(sspModelForm, {'attr': {'enctype': 'multipart/form-data'}}) }}
     <div class="row">
         <div class="col-xs-12 col-md-4">
-            {% set assetImage = sspAssetForm.children.asset_image %}
-            {% set fileInput = assetImage.children.file.vars %}
-            {% set deleteInput = assetImage.children.delete.vars %}
+            {% set sspModelImage = sspModelForm.children.model_image %}
+            {% set fileInput = sspModelImage.children.file.vars %}
+            {% set deleteInput = sspModelImage.children.delete.vars %}
 
-            {{ form_errors(assetImage) }}
+            {{ form_errors(sspModelImage) }}
 
-            {% for child in assetImage %}
+            {% for child in sspModelImage %}
                 {{ form_errors(child) }}
             {% endfor %}
 
@@ -23,15 +23,15 @@
                 }),
             } only %}
 
-            {% do assetImage.setRendered() %}
+            {% do sspModelImage.setRendered() %}
         </div>
 
         <div class="col-xs-12 col-md-8">
-            {{ form_widget(sspAssetForm) }}
+            {{ form_widget(sspModelForm) }}
 
             <div class="form-group">
                 <button data-qa="submit" class="btn btn-primary">{{ 'Save' | trans }}</button>
             </div>
         </div>
     </div>
-{{ form_end(sspAssetForm) }}
+{{ form_end(sspModelForm) }}

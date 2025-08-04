@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
+use Generated\Shared\Transfer\SspModelTransfer;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAsset;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAsset;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
@@ -25,6 +26,7 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiry;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryFile;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySalesOrder;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySspAsset;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModel;
 use Propel\Runtime\Exception\InvalidArgumentException;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -363,6 +365,24 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         return $this->getFactory()
             ->createAssetMapper()
             ->mapSpySspAssetEntityToSspAssetTransfer($spySspAssetEntity, $sspAssetTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SspModelTransfer $sspModelTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspModelTransfer
+     */
+    public function createSspModel(SspModelTransfer $sspModelTransfer): SspModelTransfer
+    {
+        $spySspModelEntity = $this->getFactory()
+            ->createModelMapper()
+            ->mapSspModelTransferToSpySspModelEntity($sspModelTransfer, new SpySspModel());
+
+        $spySspModelEntity->save();
+
+        return $this->getFactory()
+            ->createModelMapper()
+            ->mapSpySspModelEntityToSspModelTransfer($spySspModelEntity, $sspModelTransfer);
     }
 
     /**

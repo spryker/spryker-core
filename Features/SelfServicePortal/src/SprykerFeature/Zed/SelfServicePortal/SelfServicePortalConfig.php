@@ -18,6 +18,7 @@ use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Exception\CompanyF
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Exception\InquiryFileUploadStorageNameNotConfiguredException;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Exception\InquiryPendingStatusNotConfiguredException;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Exception\DefaultMerchantNotConfiguredException;
+use SprykerFeature\Zed\SelfServicePortal\Business\Service\Exception\SspModelImageFileStorageNameIsNotConfigured;
 
 /**
  * @method \SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig getSharedConfig()
@@ -214,6 +215,31 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      * @var string
      */
     protected const INITIAL_SSP_ASSET_STATUS = 'pending';
+
+    /**
+     * @var string
+     */
+    protected const NAME_SSP_MODEL_REFERENCE = 'SspModelReference';
+
+    /**
+     * @var string
+     */
+    protected const SSP_MODEL_REFERENCE_PREFIX = 'MDL';
+
+    /**
+     * @var int
+     */
+    protected const SSP_MODEL_NAME_MAX_LENGTH = 255;
+
+    /**
+     * @var int
+     */
+    protected const SSP_MODEL_CODE_MAX_LENGTH = 100;
+
+    /**
+     * @var string
+     */
+    protected const SSP_MODEL_DEFAULT_IMAGE_FILE_MAX_SIZE = '10M';
 
     /**
      * Specification:
@@ -849,6 +875,37 @@ class SelfServicePortalConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     * - Returns the settings for the ssp model sequence number.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
+     */
+    public function getModelSequenceNumberSettings(): SequenceNumberSettingsTransfer
+    {
+        return (new SequenceNumberSettingsTransfer())
+            ->setName(static::NAME_SSP_MODEL_REFERENCE)
+            ->setPrefix($this->createModelPrefix());
+    }
+
+    /**
+     * Specification:
+     * - Defines the Storage for model image file.
+     * - A `FileSystemConstants::FILESYSTEM_SERVICE` with the same storage name must be defined.
+     *
+     * @api
+     *
+     * @throw SspModelImageFileStorageNameIsNotConfigured
+     *
+     * @return string
+     */
+    public function getModelStorageName(): string
+    {
+        return $this->get(SelfServicePortalConstants::SSP_MODEL_IMAGE_STORAGE_NAME) ?? throw new SspModelImageFileStorageNameIsNotConfigured();
+    }
+
+    /**
+     * Specification:
      * - Returns the allowed file extensions for file uploads during ssp asset creation/update.
      *
      * @api
@@ -913,5 +970,90 @@ class SelfServicePortalConfig extends AbstractBundleConfig
         $sequenceNumberPrefixParts[] = static::SSP_ASSET_REFERENCE_PREFIX;
 
         return sprintf('%s--', implode('-', $sequenceNumberPrefixParts));
+    }
+
+    /**
+     * Specification:
+     * - Creates a prefix for the model sequence number.
+     *
+     * @api
+     *
+     * @return string
+     */
+    protected function createModelPrefix(): string
+    {
+        $sequenceNumberPrefixParts = [];
+        $sequenceNumberPrefixParts[] = static::SSP_MODEL_REFERENCE_PREFIX;
+
+        return sprintf('%s--', implode('-', $sequenceNumberPrefixParts));
+    }
+
+    /**
+     * Specification:
+     * - Returns the maximum length for the model name.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getSspModelNameMaxLength(): int
+    {
+        return static::SSP_MODEL_NAME_MAX_LENGTH;
+    }
+
+    /**
+     * Specification:
+     * - Returns the maximum length for the model code.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getSspModelCodeMaxLength(): int
+    {
+        return static::SSP_MODEL_CODE_MAX_LENGTH;
+    }
+
+    /**
+     * Specification:
+     * - Returns the allowed file extensions for file uploads during ssp model creation/update.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getSspModelAllowedFileExtensions(): array
+    {
+        return ['jpg', 'jpeg', 'png'];
+    }
+
+    /**
+     * Specification:
+     * - Returns the allowed file mime types for file uploads during ssp model creation/update.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getSspModelAllowedImageFileMimeTypes(): array
+    {
+        return [
+            'image/png',
+            'image/jpeg',
+            'image/jpg',
+        ];
+    }
+
+    /**
+     * Specification:
+     * - Returns the default file max size for file uploads for ssp model.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getSspModelDefaultImageFileMaxSize(): string
+    {
+        return static::SSP_MODEL_DEFAULT_IMAGE_FILE_MAX_SIZE;
     }
 }

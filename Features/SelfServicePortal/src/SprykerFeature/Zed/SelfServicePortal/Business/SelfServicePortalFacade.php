@@ -24,6 +24,8 @@ use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
+use Generated\Shared\Transfer\SspModelCollectionRequestTransfer;
+use Generated\Shared\Transfer\SspModelCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -248,5 +250,19 @@ class SelfServicePortalFacade extends AbstractFacade implements SelfServicePorta
         return $this->getFactory()
             ->createProductClassSaver()
             ->saveProductClassesForProductConcrete($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspModelCollectionResponseTransfer
+     */
+    public function createSspModelCollection(SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): SspModelCollectionResponseTransfer
+    {
+        return $this->getFactory()->createSspModelWriter()->createSspModelCollection($sspModelCollectionRequestTransfer);
     }
 }

@@ -1,0 +1,25 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Add SspModel' | trans %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url('/self-service-portal/list-model'), 'Back to Models' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Add SspModel' | trans } %}
+        {% block widget_content %}
+            {% include '@SelfServicePortal/_partials/model-form.twig' with {
+                sspModelForm: sspModelForm,
+            } only %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

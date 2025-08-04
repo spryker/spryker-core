@@ -183,6 +183,12 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Service\Utility\SkuExtractor;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Utility\SkuExtractorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePointSearchCoordinatesExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePointSearchCoordinatesExpanderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Validator\SspModelValidator;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Validator\SspModelValidatorInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Writer\FileSspModelWriter;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Writer\FileSspModelWriterInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Writer\SspModelWriter;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Writer\SspModelWriterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalDependencyProvider;
 
@@ -1012,6 +1018,40 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
             $this->getSequenceNumberFacade(),
             $this->getConfig(),
             $this->createFileSspAssetWriter(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Writer\SspModelWriterInterface
+     */
+    public function createSspModelWriter(): SspModelWriterInterface
+    {
+        return new SspModelWriter(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createSspModelValidator(),
+            $this->getSequenceNumberFacade(),
+            $this->getConfig(),
+            $this->createFileSspModelWriter(),
+        );
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Validator\SspModelValidatorInterface
+     */
+    public function createSspModelValidator(): SspModelValidatorInterface
+    {
+        return new SspModelValidator($this->getConfig());
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Writer\FileSspModelWriterInterface
+     */
+    public function createFileSspModelWriter(): FileSspModelWriterInterface
+    {
+        return new FileSspModelWriter(
+            $this->getFileManagerFacade(),
+            $this->getConfig(),
         );
     }
 

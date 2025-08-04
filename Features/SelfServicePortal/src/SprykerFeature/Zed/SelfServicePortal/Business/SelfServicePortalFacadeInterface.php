@@ -24,6 +24,8 @@ use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
+use Generated\Shared\Transfer\SspModelCollectionRequestTransfer;
+use Generated\Shared\Transfer\SspModelCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
 
@@ -244,4 +246,19 @@ interface SelfServicePortalFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function saveProductClassesForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * Specification:
+     * - Creates a collection of SSP models.
+     * - Validates model data.
+     * - Persists models to database.
+     * - Returns response with created models and validation messages.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspModelCollectionResponseTransfer
+     */
+    public function createSspModelCollection(SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): SspModelCollectionResponseTransfer;
 }

@@ -25,6 +25,7 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySalesOrderQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySspAssetQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -36,6 +37,7 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspAssetBusinessUnit
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspAssetMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspInquiryMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspInquiryMapperInterface;
+use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspModelMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspServiceMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\QueryBuilder\FileAttachmentQueryBuilder;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\FileAttachmentSaver;
@@ -269,11 +271,29 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspModelMapper
+     */
+    public function createModelMapper(): SspModelMapper
+    {
+        return new SspModelMapper(
+            $this->getUtilDateTimeService(),
+        );
+    }
+
+    /**
      * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery
      */
     public function createSspAssetQuery(): SpySspAssetQuery
     {
         return SpySspAssetQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery
+     */
+    public function createSspModelQuery(): SpySspModelQuery
+    {
+        return SpySspModelQuery::create();
     }
 
     /**

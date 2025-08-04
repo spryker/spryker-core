@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryConditionsTransfer;
+use Generated\Shared\Transfer\SspModelTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
@@ -133,6 +134,9 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Saver\SalesOrderI
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Saver\SalesOrderItemProductClassesSaverInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Table\ProductConcreteTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Table\ServiceTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form\SspModelForm;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Mapper\SspModelFormDataToTransferMapper;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Mapper\SspModelFormDataToTransferMapperInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalDependencyProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -1054,6 +1058,25 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     public function createSspAssetFormDataToTransferMapper(): SspAssetFormDataToTransferMapperInterface
     {
         return new SspAssetFormDataToTransferMapper();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SspModelTransfer|null $sspModelTransfer
+     * @param array<string, mixed> $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createSspModelForm(?SspModelTransfer $sspModelTransfer = null, array $formOptions = []): FormInterface
+    {
+        return $this->getFormFactory()->create(SspModelForm::class, $sspModelTransfer, $formOptions);
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Mapper\SspModelFormDataToTransferMapperInterface
+     */
+    public function createSspModelFormDataToTransferMapper(): SspModelFormDataToTransferMapperInterface
+    {
+        return new SspModelFormDataToTransferMapper();
     }
 
     /**

@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
+use Generated\Shared\Transfer\SspModelTransfer;
 
 interface SelfServicePortalEntityManagerInterface
 {
@@ -123,6 +124,13 @@ interface SelfServicePortalEntityManagerInterface
      * @return \Generated\Shared\Transfer\SspAssetTransfer
      */
     public function updateSspAsset(SspAssetTransfer $sspAssetTransfer): SspAssetTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SspModelTransfer $sspModelTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspModelTransfer
+     */
+    public function createSspModel(SspModelTransfer $sspModelTransfer): SspModelTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer $salesOrderItemSspAssetTransfer

@@ -100,4 +100,14 @@ class SelfServicePortalConstants
      * @var string
      */
     public const GOOGLE_MAPS_API_KEY = 'SELF_SERVICE_PORTAL:GOOGLE_MAPS_API_KEY';
+
+    /**
+     * Specification:
+     * - Defines the storage name for Self Service Portal model images.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const SSP_MODEL_IMAGE_STORAGE_NAME = 'SELF_SERVICE_PORTAL:SSP_MODEL_IMAGE_STORAGE_NAME';
 }
