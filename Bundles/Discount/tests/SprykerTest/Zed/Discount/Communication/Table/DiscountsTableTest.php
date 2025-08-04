@@ -65,7 +65,7 @@ class DiscountsTableTest extends Unit
             $discountTableCriteriaTransferData[DiscountTableCriteriaTransfer::STORES] = [$storeTransferAT->getIdStore()];
         }
         $discountTableCriteriaTransfer = $this->tester->createDiscountTableCriteriaTransfer($discountTableCriteriaTransferData);
-        $discountsTableMock = $this->createProductTableMock();
+        $discountsTableMock = $this->createDiscountsTableMock();
 
         // Act
         $discountsTableMock->applyCriteria($discountTableCriteriaTransfer);
@@ -81,7 +81,7 @@ class DiscountsTableTest extends Unit
     /**
      * @return \SprykerTest\Zed\Discount\Communication\Table\DiscountsTableMock
      */
-    protected function createProductTableMock(): DiscountsTableMock
+    protected function createDiscountsTableMock(): DiscountsTableMock
     {
         return new DiscountsTableMock(
             $this->createDiscountQueryContainer()->queryDiscount(),
