@@ -99,6 +99,7 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductConcreteStorageCollectionExpanderPlugins($container);
         $container = $this->addProductAbstractStorageCollectionFilterPlugins($container);
         $container = $this->addProductConcreteStorageCollectionFilterPlugins($container);
+        $container = $this->addEventBehaviorFacade($container);
 
         return $container;
     }

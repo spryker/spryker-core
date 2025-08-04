@@ -11,8 +11,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductStorage\Business\Attribute\AttributeMap;
 use Spryker\Zed\ProductStorage\Business\Filter\SingleValueSuperAttributeFilter;
 use Spryker\Zed\ProductStorage\Business\Filter\SingleValueSuperAttributeFilterInterface;
+use Spryker\Zed\ProductStorage\Business\Publisher\ProductAbstractStoragePublisher;
+use Spryker\Zed\ProductStorage\Business\Publisher\ProductAbstractStoragePublisherInterface;
 use Spryker\Zed\ProductStorage\Business\Storage\ProductAbstractStorageWriter;
 use Spryker\Zed\ProductStorage\Business\Storage\ProductConcreteStorageWriter;
+use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider;
 
@@ -63,6 +66,18 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductStorage\Business\Publisher\ProductAbstractStoragePublisherInterface
+     */
+    public function createProductAbstractStoragePublisher(): ProductAbstractStoragePublisherInterface
+    {
+        return new ProductAbstractStoragePublisher(
+            $this->getEventBehaviorFacade(),
+            $this->createProductAbstractStorageWriter(),
+            $this->getRepository(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface
      */
     protected function createAttributeMap()
@@ -89,6 +104,14 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): ProductStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToEventBehaviorFacadeInterface
+     */
+    public function getEventBehaviorFacade(): ProductStorageToEventBehaviorFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
 
     /**

@@ -46,4 +46,11 @@ interface ProductStorageRepositoryInterface
      * @return \Generator
      */
     public function getSitemapGeneratorUrls(string $storeName, int $limit): Generator;
+
+    /**
+     * @param list<int> $productIds
+     *
+     * @return list<int>
+     */
+    public function getProductAbstractIdsByProductIds(array $productIds): array;
 }

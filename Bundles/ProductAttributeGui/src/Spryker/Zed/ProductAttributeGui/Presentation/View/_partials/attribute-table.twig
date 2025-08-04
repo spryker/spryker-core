@@ -26,36 +26,38 @@
                     {% set allowInput = metaAttributes[key]['allow_input'] %}
                     {% set isSuper = metaAttributes[key]['is_super'] %}
                     {% set inputType = metaAttributes[key]['input_type'] %}
-
                     {% set isReadOnly = false %}
-                    {% if isSuper or idAttribute is empty %}
-                        {% set isReadOnly = true %}
-                        {% set allowInput = false %}
-                    {% endif %}
-                    <tr {% if isSuper %} {{ 'style="display: none"' }} {% endif %}>
-                        <td style="vertical-align: middle;">
-                            {% if isSuper %}
-                                <strong>{{ key }}</strong>
-                            {% else %}
-                                {{ key }}
-                            {% endif %}
-                        </td>
-                        {% for localeData in locales %}
-                            {% set localeCode = localeData.locale_name %}
-                            {% set name = '[' ~ key ~ ']' %}
-                            {% set id = key %}
+                    {% block productAttributeRow %}
+                        <tr>
+                            <td style="vertical-align: middle;">
+                                {% if isSuper %}
+                                    <strong>{{ key }}</strong>
+                                {% else %}
+                                    {{ key }}
+                                {% endif %}
+                            </td>
+                            {% for localeData in locales %}
+                                {% set localeCode = localeData.locale_name %}
+                                {% set hasLocale = localeCode != '_' %}
+                                {% set name = '[' ~ key ~ ']' %}
+                                {% set id = key %}
 
-                            {% if localeCode != '_' %}
-                                {% set name = name ~ '[' ~ localeCode ~ ']' %}
-                                {% set id = id ~ '_' ~ localeCode %}
-                            {% endif %}
+                                {% if hasLocale %}
+                                    {% set name = name ~ '[' ~ localeCode ~ ']' %}
+                                    {% set id = id ~ '_' ~ localeCode %}
+                                {% endif %}
 
-                            {% set inputName = 'attribute_values_form' ~ name %}
-                            {% set inputId = 'attribute_values_form_' ~ id %}
-                            {% if productAttributes[localeCode][key] is defined %}
-                                {% set attributeValue = productAttributes[localeCode][key] | join(', ') %}
-                                <td>
-                                    <input
+                                {% if isSuper and not hasLocale or idAttribute is empty %}
+                                    {% set isReadOnly = true %}
+                                    {% set allowInput = false %}
+                                {% endif %}
+
+                                {% set inputName = 'attribute_values_form' ~ name %}
+                                {% set inputId = 'attribute_values_form_' ~ id %}
+                                {% if productAttributes[localeCode][key] is defined %}
+                                    {% set attributeValue = productAttributes[localeCode][key] | join(', ') %}
+                                    <td>
+                                        <input
                                             {% if isReadOnly %}
                                                 readonly="readonly"
                                             {% endif %}
@@ -72,11 +74,11 @@
                                             data-id_attribute="{{ idAttribute }}"
                                             data-locale_code="{{ localeData['locale_name'] }}"
                                             data-input_type="{{ inputType }}"
-                                    /><span style="display: none">{{ attributeValue }}</span>
-                                </td>
-                            {% else %}
-                                <td>
-                                    <input
+                                        /><span style="display: none">{{ attributeValue }}</span>
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        <input
                                             {% if isReadOnly %}
                                                 readonly="readonly"
                                             {% endif %}
@@ -93,21 +95,22 @@
                                             data-id_attribute="{{ idAttribute }}"
                                             data-locale_code="{{ localeData['locale_name'] }}"
                                             data-input_type="{{ inputType }}"
-                                    />
-                                    <span style="display: none"></span>
-                                </td>
-                            {% endif %}
-                        {% endfor %}
-                        <td style="vertical-align: middle; text-align: left;">
-                            {% if isSuper == false %}
-                                <a data-key="{{ key }}" href="#"
-                                   class="btn btn-xs btn-outline btn-danger remove-item">{{ 'Remove' | trans }}</a>
-                            {% endif %}
-                            {% if inputType == 'multiselect' %}
-                                <span class="has-error help-block">{{ 'Use comma separator.' | trans }}</span>
-                            {% endif %}
-                        </td>
-                    </tr>
+                                        />
+                                        <span style="display: none"></span>
+                                    </td>
+                                {% endif %}
+                            {% endfor %}
+                            <td style="vertical-align: middle; text-align: left;">
+                                {% if isSuper == false %}
+                                    <a data-key="{{ key }}" href="#"
+                                       class="btn btn-xs btn-outline btn-danger remove-item">{{ 'Remove' | trans }}</a>
+                                {% endif %}
+                                {% if inputType == 'multiselect' %}
+                                    <span class="has-error help-block">{{ 'Use comma separator.' | trans }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endblock %}
                 {% endfor %}
             </tbody>
         </form>

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductStorage\Persistence;
 
 use Generator;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -149,5 +150,23 @@ class ProductStorageRepository extends AbstractRepository implements ProductStor
         } while ($productAbstractStorageEntities->count() === $limit);
 
         yield [];
+    }
+
+    /**
+     * @module Product
+     *
+     * @param list<int> $productIds
+     *
+     * @return list<int>
+     */
+    public function getProductAbstractIdsByProductIds(array $productIds): array
+    {
+        return $this->getFactory()
+            ->getProductPropelQuery()
+            ->filterByIdProduct_In($productIds)
+            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->distinct()
+            ->find()
+            ->getData();
     }
 }

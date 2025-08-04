@@ -9,6 +9,9 @@ namespace SprykerTest\Zed\ProductStorage;
 
 use Codeception\Actor;
 use Codeception\Stub;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage;
+use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery;
 use ReflectionClass;
 use Spryker\Zed\ProductStorage\Business\ProductStorageFacade;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\AbstractProductConcreteStorageListener;
@@ -90,5 +93,55 @@ class ProductStorageCommunicationTester extends Actor
     public function mockProductStorageFacade(): ProductStorageFacade
     {
         return Stub::makeEmpty(ProductStorageFacade::class);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage|null
+     */
+    public function findProductAbstractStorageEntityByIdProductAbstract(int $idProductAbstract): ?SpyProductAbstractStorage
+    {
+        return $this->getProductAbstractStorageQuery()->findOneByFkProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * @return int
+     */
+    public function countProductAbstractStorageEntities(): int
+    {
+        return $this->getProductAbstractStorageQuery()->count();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureProductAbstractStorageTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getProductAbstractStorageQuery());
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureProductAbstractTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getProductAbstractQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery
+     */
+    protected function getProductAbstractStorageQuery(): SpyProductAbstractStorageQuery
+    {
+        return SpyProductAbstractStorageQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    protected function getProductAbstractQuery(): SpyProductAbstractQuery
+    {
+        return SpyProductAbstractQuery::create();
     }
 }

@@ -37,6 +37,8 @@ suites:
                 - \SprykerTest\Client\Testify\Helper\ConfigHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
+                - \SprykerTest\Client\Queue\Helper\QueueHelper
     Business:
         path: Business
         actor: ProductStorageBusinessTester
