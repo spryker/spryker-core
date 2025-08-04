@@ -2,105 +2,105 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="GlueAuthenticationRequest">
-        <property name="oauthRequest" type="OauthRequest"/>
-        <property name="requestContext" type="GlueAuthenticationRequestContext"/>
+        <property name="oauthRequest" type="OauthRequest" description="A data object containing all parameters for an OAuth authentication request."/>
+        <property name="requestContext" type="GlueAuthenticationRequestContext" description="The context of a request."/>
     </transfer>
 
     <transfer name="GlueAuthenticationRequestContext">
-        <property name="requestApplication" type="string"/>
+        <property name="requestApplication" type="string" description="The application making the request."/>
     </transfer>
 
     <transfer name="OauthRequest">
-        <property name="grantType" type="string"/>
+        <property name="grantType" type="string" description="The method by which an application gets an access token (e.g., 'password', 'refresh_token')."/>
     </transfer>
 
     <transfer name="GlueRequest">
-        <property name="requestCustomer" type="GlueRequestCustomer"/>
-        <property name="attributes" type="array" singular="attribute"/>
-        <property name="resource" type="GlueResource"/>
-        <property name="meta" type="array" associative="true" singular="meta"/>
-        <property name="httpRequestAttributes" type="array" associative="true" singular="httpRequestAttribute"/>
+        <property name="requestCustomer" type="GlueRequestCustomer" description="The customer associated with a request."/>
+        <property name="attributes" type="array" singular="attribute" description="A set of key-value pairs describing a product or entity."/>
+        <property name="resource" type="GlueResource" description="A data entity in a REST API."/>
+        <property name="meta" type="array" associative="true" singular="meta" description="A collection of metadata."/>
+        <property name="httpRequestAttributes" type="array" associative="true" singular="httpRequestAttribute" description="Attributes from an HTTP request."/>
     </transfer>
 
     <transfer name="GlueRequestCustomer">
-        <property name="naturalIdentifier" type="string"/>
-        <property name="surrogateIdentifier" type="int"/>
-        <property name="scopes" type="string[]" singular="scope"/>
+        <property name="naturalIdentifier" type="string" description="A human-readable unique identifier for a resource, such as a user's email."/>
+        <property name="surrogateIdentifier" type="int" description="A system-generated, non-human-readable unique identifier (like an auto-incrementing ID)."/>
+        <property name="scopes" type="string[]" singular="scope" description="A collection of permission scopes that define the access rights of a token or user."/>
     </transfer>
 
     <transfer name="OauthAccessTokenData">
-        <property name="oauthScopes" type="array" singular="oauthScopes"/>
-        <property name="oauthUserId" type="string"/>
+        <property name="oauthScopes" type="array" singular="oauthScopes" description="A collection of permission scopes associated with an OAuth token."/>
+        <property name="oauthUserId" type="string" description="The unique identifier for a user within the OAuth system."/>
     </transfer>
 
     <transfer name="GlueError">
-        <property name="status" type="int"/>
-        <property name="code" type="string"/>
-        <property name="message" type="string"/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
     </transfer>
 
     <transfer name="OauthAccessTokenValidationRequest">
-        <property name="accessToken" type="string"/>
-        <property name="type" type="string"/>
+        <property name="accessToken" type="string" description="The token used for authenticating API requests."/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
     </transfer>
 
     <transfer name="OauthAccessTokenValidationResponse">
-        <property name="isValid" type="bool"/>
+        <property name="isValid" type="bool" description="A boolean flag indicating if a token or request is valid."/>
     </transfer>
 
     <transfer name="GlueAuthenticationResponse">
-        <property name="oauthResponse" type="OauthResponse"/>
+        <property name="oauthResponse" type="OauthResponse" description="The response from an OAuth authentication request, containing tokens and status."/>
     </transfer>
 
     <transfer name="GlueResponse">
-        <property name="resources" type="GlueResource[]" singular="resource"/>
-        <property name="httpStatus" type="int"/>
-        <property name="errors" type="GlueError[]" singular="error"/>
+        <property name="resources" type="GlueResource[]" singular="resource" description="A collection of data entities in a REST API."/>
+        <property name="httpStatus" type="int" description="The HTTP status code of a response."/>
+        <property name="errors" type="GlueError[]" singular="error" description="A collection of error objects."/>
     </transfer>
 
     <transfer name="GlueRequestValidation">
-        <property name="isValid" type="bool"/>
-        <property name="status" type="int"/>
-        <property name="errors" type="GlueError[]" singular="error"/>
+        <property name="isValid" type="bool" description="A boolean flag indicating if a token or request is valid."/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="errors" type="GlueError[]" singular="error" description="A collection of error objects."/>
     </transfer>
 
     <transfer name="GlueResourceMethodCollection">
-        <property name="post" type="GlueResourceMethodConfiguration"/>
+        <property name="post" type="GlueResourceMethodConfiguration" description="An annotation or configuration for the 'create' (POST) action of a resource."/>
     </transfer>
 
     <transfer name="GlueResourceMethodConfiguration">
-        <property name="action" type="string"/>
-        <property name="attributes" type="string"/>
-        <property name="isSnakeCased" type="bool"/>
-        <property name="isSingularResponse" type="bool"/>
+        <property name="action" type="string" description="The specific action to be performed, often within a controller."/>
+        <property name="attributes" type="string" description="A set of key-value pairs describing a product or entity."/>
+        <property name="isSnakeCased" type="bool" description="A flag indicating if property names are in snake_case."/>
+        <property name="isSingularResponse" type="bool" description="A flag indicating if the response should be a single resource instead of a collection."/>
     </transfer>
 
     <transfer name="GlueResource">
-        <property name="attributes" type="AbstractAttributes"/>
-        <property name="type" type="string"/>
+        <property name="attributes" type="AbstractAttributes" description="A set of key-value pairs describing a product or entity."/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
     </transfer>
 
     <transfer name="OauthResponse">
-        <property name="isValid" type="bool"/>
-        <property name="error" type="OauthError"/>
+        <property name="isValid" type="bool" description="A boolean flag indicating if a token or request is valid."/>
+        <property name="error" type="OauthError" description="An error message or object describing a problem that occurred."/>
     </transfer>
 
     <transfer name="ApiTokenAttributes">
-        <property name="grantType" type="string" restRequestParameter="required"/>
-        <property name="username" type="string" restRequestParameter="required"/>
-        <property name="password" type="string" restRequestParameter="required"/>
-        <property name="scope" type="string"/>
+        <property name="grantType" type="string" restRequestParameter="required" description="The method by which an application gets an access token (e.g., 'password', 'refresh_token')."/>
+        <property name="username" type="string" restRequestParameter="required" description="The login name for a user account, typically an email address."/>
+        <property name="password" type="string" restRequestParameter="required" description="The password for a user account, used for authentication."/>
+        <property name="scope" type="string" description="A permission scope that defines the access level of an OAuth token."/>
     </transfer>
 
     <transfer name="ApiTokenResponseAttributes">
-        <property name="tokenType" type="string"/>
-        <property name="expiresIn" type="string"/>
-        <property name="accessToken" type="string"/>
-        <property name="refreshToken" type="string"/>
+        <property name="tokenType" type="string" description="The type of token issued, typically &quot;Bearer&quot;."/>
+        <property name="expiresIn" type="string" description="The duration in seconds for which an access token is valid."/>
+        <property name="accessToken" type="string" description="The token used for authenticating API requests."/>
+        <property name="refreshToken" type="string" description="A token used to obtain a new access token when the current one expires."/>
     </transfer>
 
     <transfer name="OauthError">
-        <property name="message" type="string"/>
-        <property name="errorType" type="string"/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
+        <property name="errorType" type="string" description="A string indicating the category or type of an error."/>
     </transfer>
 </transfers>

@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\MerchantRelationship\Persistence" package="src.Orm.Zed.MerchantRelationship.Persistence">
 
     <table name="spy_merchant_relationship">
-        <column name="merchant_relation_request_uuid" required="false" type="VARCHAR" size="36"/>
+        <column name="merchant_relation_request_uuid" required="false" type="VARCHAR" size="36" description="The UUID of the original request that created the merchant relationship."/>
         <index name="spy_merchant_rel-index-merchant_rel_r_uuid">
             <index-column name="merchant_relation_request_uuid"/>
         </index>

@@ -2,19 +2,19 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="WishlistItemRequest">
-        <property name="productOfferReference" type="string"/>
-        <property name="uuid" type="string"/>
+        <property name="productOfferReference" type="string" description="A unique reference identifier for a specific product offer from a merchant."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="RestWishlistItemsAttributes">
-        <property name="productOfferReference" type="string"/>
-        <property name="merchantReference" type="string"/>
+        <property name="productOfferReference" type="string" description="A unique reference identifier for a specific product offer from a merchant."/>
+        <property name="merchantReference" type="string" description="A unique reference identifier for a merchant."/>
         <property name="id" type="string"/>
     </transfer>
 
     <transfer name="WishlistItem">
-        <property name="sku" type="string"/>
-        <property name="productOfferReference" type="string"/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <property name="productOfferReference" type="string" description="A unique reference identifier for a specific product offer from a merchant."/>
     </transfer>
 
 </transfers>

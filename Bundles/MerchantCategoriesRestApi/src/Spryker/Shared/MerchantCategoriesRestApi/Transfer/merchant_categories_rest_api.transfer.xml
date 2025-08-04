@@ -2,31 +2,31 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestMerchantsAttributes">
-        <property name="categories" type="RestMerchantCategoryAttributes[]" singular="category"/>
+        <property name="categories" type="RestMerchantCategoryAttributes[]" singular="category" description="A collection of product categories."/>
     </transfer>
 
     <transfer name="RestMerchantCategoryAttributes">
-        <property name="categoryKey" type="string"/>
-        <property name="name" type="string"/>
+        <property name="categoryKey" type="string" description="A unique key for a category."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="MerchantStorage">
-        <property name="categories" type="MerchantCategoryStorage[]" singular="category"/>
+        <property name="categories" type="MerchantCategoryStorage[]" singular="category" description="A collection of product categories."/>
     </transfer>
 
     <transfer name="MerchantCategoryStorage">
-        <property name="isActive" type="bool"/>
-        <property name="categoryKey" type="string"/>
-        <property name="localizedAttributes" type="MerchantCategoryLocalizedAttributes[]" singular="localizedAttributes"/>
+        <property name="isActive" type="bool" description="A boolean flag indicating if an entity is currently active."/>
+        <property name="categoryKey" type="string" description="A unique key for a category."/>
+        <property name="localizedAttributes" type="MerchantCategoryLocalizedAttributes[]" singular="localizedAttributes" description="A collection of attributes that have different values for different locales."/>
     </transfer>
 
     <transfer name="MerchantCategoryLocalizedAttributes">
-        <property name="locale" type="Locale"/>
-        <property name="name" type="string"/>
+        <property name="locale" type="Locale" description="The locale context for a request or entity, affecting language and regional formats."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="Locale">
-        <property name="localeName" type="string"/>
+        <property name="localeName" type="string" description="The name of a locale, such as &quot;en_US&quot; or &quot;de_DE&quot;."/>
     </transfer>
 
 </transfers>

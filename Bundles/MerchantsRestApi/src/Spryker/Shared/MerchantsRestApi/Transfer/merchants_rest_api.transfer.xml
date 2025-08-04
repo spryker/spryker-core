@@ -2,118 +2,118 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestMerchantsAttributes">
-        <property name="merchantName" type="string"/>
-        <property name="merchantUrl" type="string"/>
-        <property name="contactPersonRole" type="string"/>
-        <property name="contactPersonTitle" type="string"/>
-        <property name="contactPersonFirstName" type="string"/>
-        <property name="contactPersonLastName" type="string"/>
-        <property name="contactPersonPhone" type="string"/>
-        <property name="logoUrl" type="string"/>
-        <property name="publicEmail" type="string"/>
-        <property name="publicPhone" type="string"/>
-        <property name="description" type="string"/>
-        <property name="bannerUrl" type="string"/>
-        <property name="deliveryTime" type="string"/>
-        <property name="faxNumber" type="string"/>
-        <property name="legalInformation" type="RestLegalInformation"/>
+        <property name="merchantName" type="string" description="The name of the merchant."/>
+        <property name="merchantUrl" type="string" description="The URL for a merchant's storefront or page."/>
+        <property name="contactPersonRole" type="string" description="The role of a contact person."/>
+        <property name="contactPersonTitle" type="string" description="The title of a contact person (e.g., Mr, Ms)."/>
+        <property name="contactPersonFirstName" type="string" description="The first name of a contact person."/>
+        <property name="contactPersonLastName" type="string" description="The last name of a contact person."/>
+        <property name="contactPersonPhone" type="string" description="The phone number of a contact person."/>
+        <property name="logoUrl" type="string" description="The URL for the merchant's logo image."/>
+        <property name="publicEmail" type="string" description="The publicly visible email address for a merchant."/>
+        <property name="publicPhone" type="string" description="The publicly visible phone number for a merchant."/>
+        <property name="description" type="string" description="A description of an entity."/>
+        <property name="bannerUrl" type="string" description="The URL for a banner image."/>
+        <property name="deliveryTime" type="string" description="The estimated delivery time for a shipment."/>
+        <property name="faxNumber" type="string" description="The fax number for a merchant profile."/>
+        <property name="legalInformation" type="RestLegalInformation" description="Legal information about a merchant."/>
     </transfer>
 
     <transfer name="RestMerchantAddressesAttributes">
-        <property name="addresses" type="RestMerchantAddress[]" singular="address"/>
+        <property name="addresses" type="RestMerchantAddress[]" singular="address" description="A collection of address objects."/>
     </transfer>
 
     <transfer name="RestMerchantAddress">
-        <property name="countryName" type="string"/>
-        <property name="address1" type="string"/>
-        <property name="address2" type="string"/>
-        <property name="address3" type="string"/>
-        <property name="city" type="string"/>
-        <property name="zipCode" type="string"/>
-        <property name="latitude" type="string"/>
-        <property name="longitude" type="string"/>
+        <property name="countryName" type="string" description="The name of a country."/>
+        <property name="address1" type="string" description="The first line of a street address."/>
+        <property name="address2" type="string" description="The second line of a street address."/>
+        <property name="address3" type="string" description="The third line of a street address."/>
+        <property name="city" type="string" description="The city part of an address."/>
+        <property name="zipCode" type="string" description="The postal code for an address."/>
+        <property name="latitude" type="string" description="The latitude coordinate for a location."/>
+        <property name="longitude" type="string" description="The longitude coordinate for a location."/>
     </transfer>
 
     <transfer name="RestLegalInformation">
-        <property name="terms" type="string"/>
-        <property name="cancellationPolicy" type="string"/>
-        <property name="imprint" type="string"/>
-        <property name="dataPrivacy" type="string"/>
+        <property name="terms" type="string" description="The terms and conditions."/>
+        <property name="cancellationPolicy" type="string" description="The text of the cancellation policy."/>
+        <property name="imprint" type="string" description="Imprint or legal notice text."/>
+        <property name="dataPrivacy" type="string" description="Data privacy information or policy text."/>
     </transfer>
 
     <transfer name="RestOrdersAttributes">
-        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+        <property name="merchantReferences" type="string[]" singular="merchantReference" description="A collection of merchant references."/>
     </transfer>
 
     <transfer name="RestOrderDetailsAttributes">
-        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+        <property name="merchantReferences" type="string[]" singular="merchantReference" description="A collection of merchant references."/>
     </transfer>
 
     <transfer name="RestOrderItemsAttributes">
-        <property name="merchantReference" type="string"/>
+        <property name="merchantReference" type="string" description="A unique reference identifier for a merchant."/>
     </transfer>
 
     <transfer name="MerchantStorage">
         <property name="idMerchant" type="int"/>
-        <property name="name" type="string"/>
-        <property name="merchantReference" type="string"/>
-        <property name="urlCollection" type="Url[]" singular="url"/>
-        <property name="merchantProfile" type="MerchantStorageProfile"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="merchantReference" type="string" description="A unique reference identifier for a merchant."/>
+        <property name="urlCollection" type="Url[]" singular="url" description="A collection of URLs."/>
+        <property name="merchantProfile" type="MerchantStorageProfile" description="The profile information for a merchant."/>
     </transfer>
 
     <transfer name="MerchantStorageProfile">
-        <property name="contactPersonRole" type="string"/>
-        <property name="contactPersonTitle" type="string"/>
-        <property name="contactPersonFirstName" type="string"/>
-        <property name="contactPersonLastName" type="string"/>
-        <property name="contactPersonPhone" type="string"/>
-        <property name="logoUrl" type="string"/>
-        <property name="publicEmail" type="string"/>
-        <property name="publicPhone" type="string"/>
-        <property name="descriptionGlossaryKey" type="string"/>
-        <property name="bannerUrlGlossaryKey" type="string"/>
-        <property name="deliveryTimeGlossaryKey" type="string"/>
-        <property name="termsConditionsGlossaryKey" type="string"/>
-        <property name="cancellationPolicyGlossaryKey" type="string"/>
-        <property name="imprintGlossaryKey" type="string"/>
-        <property name="dataPrivacyGlossaryKey" type="string"/>
-        <property name="description" type="string"/>
-        <property name="bannerUrl" type="string"/>
-        <property name="deliveryTime" type="string"/>
-        <property name="termsConditions" type="string"/>
-        <property name="cancellationPolicy" type="string"/>
-        <property name="imprint" type="string"/>
-        <property name="dataPrivacy" type="string"/>
-        <property name="faxNumber" type="string"/>
-        <property name="addressCollection" type="MerchantStorageProfileAddress[]" singular="address"/>
+        <property name="contactPersonRole" type="string" description="The role of a contact person."/>
+        <property name="contactPersonTitle" type="string" description="The title of a contact person (e.g., Mr, Ms)."/>
+        <property name="contactPersonFirstName" type="string" description="The first name of a contact person."/>
+        <property name="contactPersonLastName" type="string" description="The last name of a contact person."/>
+        <property name="contactPersonPhone" type="string" description="The phone number of a contact person."/>
+        <property name="logoUrl" type="string" description="The URL for the merchant's logo image."/>
+        <property name="publicEmail" type="string" description="The publicly visible email address for a merchant."/>
+        <property name="publicPhone" type="string" description="The publicly visible phone number for a merchant."/>
+        <property name="descriptionGlossaryKey" type="string" description="The glossary key for the description text."/>
+        <property name="bannerUrlGlossaryKey" type="string" description="The glossary key for the banner URL."/>
+        <property name="deliveryTimeGlossaryKey" type="string" description="The glossary key for the delivery time text."/>
+        <property name="termsConditionsGlossaryKey" type="string" description="The glossary key for the terms and conditions."/>
+        <property name="cancellationPolicyGlossaryKey" type="string" description="The glossary key for the cancellation policy text."/>
+        <property name="imprintGlossaryKey" type="string" description="The glossary key for the imprint text."/>
+        <property name="dataPrivacyGlossaryKey" type="string" description="The glossary key for the data privacy policy."/>
+        <property name="description" type="string" description="A description of an entity."/>
+        <property name="bannerUrl" type="string" description="The URL for a banner image."/>
+        <property name="deliveryTime" type="string" description="The estimated delivery time for a shipment."/>
+        <property name="termsConditions" type="string" description="The text of the terms and conditions."/>
+        <property name="cancellationPolicy" type="string" description="The text of the cancellation policy."/>
+        <property name="imprint" type="string" description="Imprint or legal notice text."/>
+        <property name="dataPrivacy" type="string" description="Data privacy information or policy text."/>
+        <property name="faxNumber" type="string" description="The fax number for a merchant profile."/>
+        <property name="addressCollection" type="MerchantStorageProfileAddress[]" singular="address" description="A collection of addresses."/>
     </transfer>
 
     <transfer name="MerchantStorageProfileAddress">
-        <property name="countryName" type="string"/>
-        <property name="address1" type="string"/>
-        <property name="address2" type="string"/>
-        <property name="address3" type="string"/>
-        <property name="city" type="string"/>
-        <property name="zipCode" type="string"/>
-        <property name="email" type="string"/>
-        <property name="latitude" type="string"/>
-        <property name="longitude" type="string"/>
+        <property name="countryName" type="string" description="The name of a country."/>
+        <property name="address1" type="string" description="The first line of a street address."/>
+        <property name="address2" type="string" description="The second line of a street address."/>
+        <property name="address3" type="string" description="The third line of a street address."/>
+        <property name="city" type="string" description="The city part of an address."/>
+        <property name="zipCode" type="string" description="The postal code for an address."/>
+        <property name="email" type="string" description="The email address of a user or contact."/>
+        <property name="latitude" type="string" description="The latitude coordinate for a location."/>
+        <property name="longitude" type="string" description="The longitude coordinate for a location."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int"/>
-        <property name="code" type="string"/>
-        <property name="detail" type="string"/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="Url">
-        <property name="localeName" type="string"/>
-        <property name="url" type="string"/>
+        <property name="localeName" type="string" description="The name of a locale, such as &quot;en_US&quot; or &quot;de_DE&quot;."/>
+        <property name="url" type="string" description="A URL for a resource."/>
     </transfer>
 
     <transfer name="RestUrlResolverAttributes">
-        <property name="entityType" type="string"/>
-        <property name="entityId" type="string"/>
+        <property name="entityType" type="string" description="The type of a data entity (e.g., 'product', 'category')."/>
+        <property name="entityId" type="string" description="The unique identifier of an entity."/>
     </transfer>
 
     <transfer name="UrlStorage">
@@ -121,13 +121,13 @@
     </transfer>
 
     <transfer name="MerchantSearchRequest">
-        <property name="requestParameters" type="array" singular="requestParameter"/>
+        <property name="requestParameters" type="array" singular="requestParameter" description="A collection of request parameters."/>
     </transfer>
 
     <transfer name="MerchantSearchCollection">
-        <property name="nbResults" type="int"/>
-        <property name="ipp" type="int"/>
-        <property name="merchants" type="MerchantSearch[]" singular="merchant"/>
+        <property name="nbResults" type="int" description="The total number of results found for a query."/>
+        <property name="ipp" type="int" description="Items per page for pagination."/>
+        <property name="merchants" type="MerchantSearch[]" singular="merchant" description="A collection of merchant data transfer objects."/>
     </transfer>
 
     <transfer name="MerchantSearch">
@@ -135,8 +135,8 @@
     </transfer>
 
     <transfer name="MerchantStorageCriteria">
-        <property name="merchantIds" type="array" singular="merchantId"/>
-        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+        <property name="merchantIds" type="array" singular="merchantId" description="A collection of unique identifiers for merchants."/>
+        <property name="merchantReferences" type="string[]" singular="merchantReference" description="A collection of merchant references."/>
     </transfer>
 
 </transfers>

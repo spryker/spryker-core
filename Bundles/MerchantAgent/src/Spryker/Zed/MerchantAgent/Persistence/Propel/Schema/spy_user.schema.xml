@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\User\Persistence" package="src.Orm.Zed.User.Persistence">
 
     <table name="spy_user">
-        <column name="is_merchant_agent" required="false" type="BOOLEAN"/>
+        <column name="is_merchant_agent" required="false" type="BOOLEAN" description="A flag indicating if a user is a merchant agent."/>
     </table>
 
 </database>

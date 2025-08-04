@@ -5,7 +5,8 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.2",
-        "spryker/merchant-sales-return": "^1.0.0"
+        "spryker/merchant-sales-return": "^1.0.0",
+        "spryker/transfer": "^3.42.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*"

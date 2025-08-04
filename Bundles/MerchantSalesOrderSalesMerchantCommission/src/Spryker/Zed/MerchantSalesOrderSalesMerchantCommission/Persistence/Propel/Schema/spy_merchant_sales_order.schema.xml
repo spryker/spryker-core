@@ -2,8 +2,8 @@
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\MerchantSalesOrder\Persistence" package="src.Orm.Zed.MerchantSalesOrder.Persistence">
 
     <table name="spy_merchant_sales_order_totals">
-        <column name="merchant_commission_total" type="INTEGER" required="false"/>
-        <column name="merchant_commission_refunded_total" type="INTEGER" required="false"/>
+        <column name="merchant_commission_total" type="INTEGER" required="false" description="The total commission amount for all merchants in a sales order."/>
+        <column name="merchant_commission_refunded_total" type="INTEGER" required="false" description="The total refunded commission amount for all merchants in a sales order."/>
     </table>
 
 </database>

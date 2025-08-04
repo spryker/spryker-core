@@ -3,9 +3,9 @@
 
     <table name="spy_oauth_client_access_token_cache" identifierQuoting="true">
         <column name="id_spy_oauth_client_access_token_cache" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="cache_key" required="true" type="VARCHAR" size="50"/>
-        <column name="access_token" required="true" type="LONGVARCHAR"/>
-        <column name="expires_at" required="true" type="TIMESTAMP"/>
+        <column name="cache_key" required="true" type="VARCHAR" size="50" description="A key used to cache an OAuth access token."/>
+        <column name="access_token" required="true" type="LONGVARCHAR" description="The token used for authenticating API requests."/>
+        <column name="expires_at" required="true" type="TIMESTAMP" description="The timestamp when an OAuth refresh token expires."/>
 
         <unique name="spy_oauth_client_access_token_cache-unique-cache_key">
             <unique-column name="cache_key"/>

@@ -2,17 +2,17 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Customer">
-        <property name="customerProductListCollection" type="CustomerProductListCollection"/>
+        <property name="customerProductListCollection" type="CustomerProductListCollection" description="A collection of product lists for a customer."/>
     </transfer>
 
     <transfer name="RestUser">
-        <property name="customerProductListCollection" type="CustomerProductListCollection" strict="true"/>
+        <property name="customerProductListCollection" type="CustomerProductListCollection" strict="true" description="A collection of product lists for a customer."/>
     </transfer>
 
     <transfer name="CustomerProductListCollection">
     </transfer>
 
     <transfer name="CustomerIdentifier">
-        <property name="customerProductListCollection" type="CustomerProductListCollection" strict="true"/>
+        <property name="customerProductListCollection" type="CustomerProductListCollection" strict="true" description="A collection of product lists for a customer."/>
     </transfer>
 </transfers>

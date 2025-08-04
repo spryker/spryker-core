@@ -1,6 +1,5 @@
 {
     "include": {
-        "spryker/merchant-opening-hours-storage": "Added for future compatibility.",
         "spryker/transfer": "Required to use merging strategy as default for descriptions."
     }
 }

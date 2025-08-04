@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductOffer\Persistence" package="src.Orm.Zed.ProductOffer.Persistence">
     <table name="spy_product_offer">
-        <column name="merchant_reference" type="VARCHAR" size="255"/>
-        <column name="merchant_sku" type="VARCHAR" size="255"/>
+        <column name="merchant_reference" type="VARCHAR" size="255" description="A unique reference identifier for a merchant."/>
+        <column name="merchant_sku" type="VARCHAR" size="255" description="A merchant-specific Stock Keeping Unit (SKU) for a product offer."/>
 
         <index name="spy_product_offer-merchant_sku">
             <index-column name="merchant_sku"/>

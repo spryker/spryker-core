@@ -1,5 +1,6 @@
 {
     "include": {
-        "spryker/merchant-profile": "MerchantProfile provides basic merchant attributes and merchant address attributes."
+        "spryker/merchant-profile": "MerchantProfile provides basic merchant attributes and merchant address attributes.",
+        "spryker/transfer": "Required to use merging strategy as default for descriptions."
     }
 }

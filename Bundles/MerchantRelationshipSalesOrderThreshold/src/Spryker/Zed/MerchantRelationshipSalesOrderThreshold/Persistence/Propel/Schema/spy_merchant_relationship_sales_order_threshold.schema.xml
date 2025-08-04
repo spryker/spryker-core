@@ -14,9 +14,9 @@
         <column name="fk_sales_order_threshold_type" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
         <column name="fk_currency" type="INTEGER" required="true"/>
-        <column name="threshold" type="INTEGER" required="true"/>
-        <column name="fee" type="INTEGER" required="false"/>
-        <column name="message_glossary_key" type="VARCHAR" size="255" required="true"/>
+        <column name="threshold" type="INTEGER" required="true" description="The value for a sales order threshold."/>
+        <column name="fee" type="INTEGER" required="false" description="A fee associated with a sales order threshold."/>
+        <column name="message_glossary_key" type="VARCHAR" size="255" required="true" description="A glossary key for the message displayed when a sales order threshold is met."/>
 
         <behavior name="timestampable"/>
 

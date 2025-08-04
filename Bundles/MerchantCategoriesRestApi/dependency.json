@@ -1,6 +1,7 @@
 {
     "include": {
         "spryker/glue-application": "Added for future compatibility.",
-        "spryker/merchant-category": "Added for future compatibility."
+        "spryker/merchant-category": "Added for future compatibility.",
+        "spryker/transfer": "Required to use merging strategy as default for descriptions."
     }
 }

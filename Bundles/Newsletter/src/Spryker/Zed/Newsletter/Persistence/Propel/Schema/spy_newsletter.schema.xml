@@ -4,9 +4,9 @@
     <table name="spy_newsletter_subscriber" idMethod="native" identifierQuoting="true">
         <column name="id_newsletter_subscriber" primaryKey="true" autoIncrement="true" type="INTEGER"/>
         <column name="fk_customer" type="INTEGER"/>
-        <column name="email" type="VARCHAR" size="255" required="true"/>
-        <column name="subscriber_key" type="VARCHAR" size="150"/>
-        <column name="is_confirmed" type="BOOLEAN" required="true" default="false"/>
+        <column name="email" type="VARCHAR" size="255" required="true" description="The email address of a user or contact."/>
+        <column name="subscriber_key" type="VARCHAR" size="150" description="A unique key for a newsletter subscriber, used for confirmation and unsubscription."/>
+        <column name="is_confirmed" type="BOOLEAN" required="true" default="false" description="A flag indicating if a newsletter subscription is confirmed."/>
 
         <behavior name="timestampable"/>
 
@@ -33,7 +33,7 @@
 
     <table name="spy_newsletter_type" idMethod="native" identifierQuoting="true">
         <column name="id_newsletter_type" primaryKey="true" autoIncrement="true" type="INTEGER"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
 
         <behavior name="timestampable"/>
 

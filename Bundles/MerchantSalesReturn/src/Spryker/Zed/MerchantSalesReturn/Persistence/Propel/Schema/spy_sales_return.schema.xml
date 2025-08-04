@@ -2,7 +2,7 @@
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SalesReturn\Persistence" package="src.Orm.Zed.SalesReturn.Persistence">
 
     <table name="spy_sales_return">
-        <column name="merchant_reference" required="false" type="VARCHAR" size="255"/>
+        <column name="merchant_reference" required="false" type="VARCHAR" size="255" description="A unique reference identifier for a merchant."/>
 
          <index name="spy_sales_return-merchant_reference">
             <index-column name="merchant_reference"/>

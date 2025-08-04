@@ -3,9 +3,9 @@
 
     <table name="spy_merchant_commission_group" identifierQuoting="true">
         <column name="id_merchant_commission_group" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="uuid" type="VARCHAR" required="false" size="36"/>
-        <column name="name" type="VARCHAR" required="true" size="255"/>
-        <column name="key" type="VARCHAR" required="true" size="255"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36" description="A Universally Unique Identifier for an entity."/>
+        <column name="name" type="VARCHAR" required="true" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="key" type="VARCHAR" required="true" size="255" description="A unique key used to identify an entity or a piece of data."/>
 
         <unique name="spy_merchant_commission_group-key">
             <unique-column name="key"/>
@@ -25,18 +25,18 @@
     <table name="spy_merchant_commission" identifierQuoting="true">
         <column name="id_merchant_commission" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_merchant_commission_group" type="INTEGER" required="true"/>
-        <column name="uuid" type="VARCHAR" required="false" size="36"/>
-        <column name="name" type="VARCHAR" required="true" size="255"/>
-        <column name="description" type="VARCHAR" size="1024"/>
-        <column name="key" type="VARCHAR" required="true" size="255"/>
-        <column name="amount" type="INTEGER" required="false"/>
-        <column name="is_active" type="BOOLEAN" required="true"/>
-        <column name="valid_from" type="TIMESTAMP" required="false"/>
-        <column name="valid_to" type="TIMESTAMP" required="false"/>
-        <column name="priority" type="INTEGER" required="true" default="9999"/>
-        <column name="item_condition" type="LONGVARCHAR" required="false"/>
-        <column name="order_condition" type="LONGVARCHAR" required="false"/>
-        <column name="calculator_type_plugin" type="VARCHAR" size="255" required="true"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36" description="A Universally Unique Identifier for an entity."/>
+        <column name="name" type="VARCHAR" required="true" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="description" type="VARCHAR" size="1024" description="A description of an entity."/>
+        <column name="key" type="VARCHAR" required="true" size="255" description="A unique key used to identify an entity or a piece of data."/>
+        <column name="amount" type="INTEGER" required="false" description="A numerical value, often used for price, quantity, or discount."/>
+        <column name="is_active" type="BOOLEAN" required="true" description="A boolean flag indicating if an entity is currently active."/>
+        <column name="valid_from" type="TIMESTAMP" required="false" description="The date and time from which an entity is valid."/>
+        <column name="valid_to" type="TIMESTAMP" required="false" description="The date and time until which an entity is valid."/>
+        <column name="priority" type="INTEGER" required="true" default="9999" description="A numerical value that determines the order of processing or application, with lower numbers often having higher priority."/>
+        <column name="item_condition" type="LONGVARCHAR" required="false" description="A condition that applies to individual items for a merchant commission."/>
+        <column name="order_condition" type="LONGVARCHAR" required="false" description="A query string defining the conditions the entire order must meet for a merchant commission to apply."/>
+        <column name="calculator_type_plugin" type="VARCHAR" size="255" required="true" description="The plugin used for a specific type of calculation."/>
 
         <foreign-key name="spy_merchant_commission-fk_merchant_commission_group" foreignTable="spy_merchant_commission_group" phpName="MerchantCommissionGroup" refPhpName="MerchantCommission">
             <reference local="fk_merchant_commission_group" foreign="id_merchant_commission_group"/>
@@ -69,8 +69,8 @@
         <column name="id_merchant_commission_amount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_currency" type="INTEGER" required="true"/>
         <column name="fk_merchant_commission" type="INTEGER" required="true"/>
-        <column name="gross_amount" type="INTEGER" required="false"/>
-        <column name="net_amount" type="INTEGER" required="false"/>
+        <column name="gross_amount" type="INTEGER" required="false" description="The gross amount (including tax)."/>
+        <column name="net_amount" type="INTEGER" required="false" description="The amount of a price, excluding tax."/>
 
         <unique name="spy_merchant_commission_amount-unique-c-mmc">
             <unique-column name="fk_currency"/>

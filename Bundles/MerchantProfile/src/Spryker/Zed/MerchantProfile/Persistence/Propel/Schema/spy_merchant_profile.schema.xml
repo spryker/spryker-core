@@ -3,23 +3,23 @@
 
     <table name="spy_merchant_profile" identifierQuoting="true">
         <column name="id_merchant_profile" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="contact_person_role" size="255" type="VARCHAR"/>
-        <column name="contact_person_title" type="ENUM" valueSet="Mr, Mrs, Dr, Ms"/>
-        <column name="contact_person_first_name" size="255" type="VARCHAR"/>
-        <column name="contact_person_last_name" size="255" type="VARCHAR"/>
-        <column name="contact_person_phone" size="255" type="VARCHAR"/>
-        <column name="logo_url" size="255" type="VARCHAR"/>
-        <column name="public_email" type="VARCHAR" size="255"/>
-        <column name="public_phone" type="VARCHAR" size="255"/>
-        <column name="fax_number" size="255" type="VARCHAR"/>
+        <column name="contact_person_role" size="255" type="VARCHAR" description="The role of a contact person."/>
+        <column name="contact_person_title" type="ENUM" valueSet="Mr, Mrs, Dr, Ms" description="The title of a contact person (e.g., Mr, Ms)."/>
+        <column name="contact_person_first_name" size="255" type="VARCHAR" description="The first name of a contact person."/>
+        <column name="contact_person_last_name" size="255" type="VARCHAR" description="The last name of a contact person."/>
+        <column name="contact_person_phone" size="255" type="VARCHAR" description="The phone number of a contact person."/>
+        <column name="logo_url" size="255" type="VARCHAR" description="The URL for the merchant's logo image."/>
+        <column name="public_email" type="VARCHAR" size="255" description="The publicly visible email address for a merchant."/>
+        <column name="public_phone" type="VARCHAR" size="255" description="The publicly visible phone number for a merchant."/>
+        <column name="fax_number" size="255" type="VARCHAR" description="The fax number for a merchant profile."/>
 
-        <column name="description_glossary_key" type="VARCHAR" size="255"/>
-        <column name="banner_url_glossary_key" type="VARCHAR" size="255"/>
-        <column name="delivery_time_glossary_key" type="VARCHAR" size="255"/>
-        <column name="terms_conditions_glossary_key" type="VARCHAR" size="255"/>
-        <column name="cancellation_policy_glossary_key" type="VARCHAR" size="255"/>
-        <column name="imprint_glossary_key" type="VARCHAR" size="255"/>
-        <column name="data_privacy_glossary_key" type="VARCHAR" size="255"/>
+        <column name="description_glossary_key" type="VARCHAR" size="255" description="The glossary key for the description text."/>
+        <column name="banner_url_glossary_key" type="VARCHAR" size="255" description="The glossary key for the banner URL."/>
+        <column name="delivery_time_glossary_key" type="VARCHAR" size="255" description="The glossary key for the delivery time text."/>
+        <column name="terms_conditions_glossary_key" type="VARCHAR" size="255" description="The glossary key for the terms and conditions."/>
+        <column name="cancellation_policy_glossary_key" type="VARCHAR" size="255" description="The glossary key for the cancellation policy text."/>
+        <column name="imprint_glossary_key" type="VARCHAR" size="255" description="The glossary key for the imprint text."/>
+        <column name="data_privacy_glossary_key" type="VARCHAR" size="255" description="The glossary key for the data privacy policy."/>
 
         <column name="fk_merchant" required="true" type="INTEGER"/>
 
@@ -35,14 +35,14 @@
     <table name="spy_merchant_profile_address" identifierQuoting="true">
         <column name="id_merchant_profile_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_country" type="INTEGER"/>
-        <column name="address1" size="255" type="VARCHAR"/>
-        <column name="address2" size="255" type="VARCHAR"/>
-        <column name="address3" size="255" type="VARCHAR"/>
-        <column name="city" size="255" type="VARCHAR"/>
-        <column name="zip_code" size="15" type="VARCHAR"/>
+        <column name="address1" size="255" type="VARCHAR" description="The first line of a street address."/>
+        <column name="address2" size="255" type="VARCHAR" description="The second line of a street address."/>
+        <column name="address3" size="255" type="VARCHAR" description="The third line of a street address."/>
+        <column name="city" size="255" type="VARCHAR" description="The city part of an address."/>
+        <column name="zip_code" size="15" type="VARCHAR" description="The postal code for an address."/>
         <column name="fk_merchant_profile" required="true" type="INTEGER"/>
-        <column name="longitude" size="255" type="VARCHAR"/>
-        <column name="latitude" size="255" type="VARCHAR"/>
+        <column name="longitude" size="255" type="VARCHAR" description="The longitude coordinate for a location."/>
+        <column name="latitude" size="255" type="VARCHAR" description="The latitude coordinate for a location."/>
 
         <foreign-key name="spy_merchant_profile_address-fk_country" foreignTable="spy_country">
             <reference local="fk_country" foreign="id_country"/>

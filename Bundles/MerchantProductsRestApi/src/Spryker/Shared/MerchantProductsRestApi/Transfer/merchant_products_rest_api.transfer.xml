@@ -2,15 +2,15 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="AbstractProductsRestAttributes">
-        <property name="merchantReference" type="string"/>
+        <property name="merchantReference" type="string" description="A unique reference identifier for a merchant."/>
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
-        <property name="sku" type="string" restRequestParameter="required"/>
-        <property name="merchantReference" type="string" restRequestParameter="yes"/>
+        <property name="sku" type="string" restRequestParameter="required" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <property name="merchantReference" type="string" restRequestParameter="yes" description="A unique reference identifier for a merchant."/>
     </transfer>
 
     <transfer name="CartItemRequest">
-        <property name="merchantReference" type="string"/>
+        <property name="merchantReference" type="string" description="A unique reference identifier for a merchant."/>
     </transfer>
 </transfers>

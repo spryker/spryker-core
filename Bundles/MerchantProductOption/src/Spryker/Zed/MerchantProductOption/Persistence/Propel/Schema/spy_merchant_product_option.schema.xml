@@ -4,9 +4,9 @@
     <table name="spy_merchant_product_option_group" idMethod="native">
         <column name="id_merchant_product_option_group" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product_option_group" type="integer" required="true"/>
-        <column name="merchant_reference" required="true" size="255" type="VARCHAR"/>
-        <column name="approval_status" type="VARCHAR" size="64" required="true"/>
-        <column name="merchant_sku" type="VARCHAR" size="255"/>
+        <column name="merchant_reference" required="true" size="255" type="VARCHAR" description="A unique reference identifier for a merchant."/>
+        <column name="approval_status" type="VARCHAR" size="64" required="true" description="The current approval status of an entity, e.g., a product or offer."/>
+        <column name="merchant_sku" type="VARCHAR" size="255" description="A merchant-specific Stock Keeping Unit (SKU) for a product offer."/>
 
         <foreign-key name="spy_merchant_product_option_group-fk_product_option_group" foreignTable="spy_product_option_group" onDelete="CASCADE">
             <reference local="fk_product_option_group" foreign="id_product_option_group"/>

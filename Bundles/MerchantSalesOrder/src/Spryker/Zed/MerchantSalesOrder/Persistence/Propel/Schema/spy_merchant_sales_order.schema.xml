@@ -3,8 +3,8 @@
 
     <table name="spy_merchant_sales_order">
         <column name="id_merchant_sales_order" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="merchant_sales_order_reference" required="true" type="VARCHAR" size="255"/>
-        <column name="merchant_reference" type="VARCHAR" required="true" size="255"/>
+        <column name="merchant_sales_order_reference" required="true" type="VARCHAR" size="255" description="A unique reference for a merchant's portion of a sales order."/>
+        <column name="merchant_reference" type="VARCHAR" required="true" size="255" description="A unique reference identifier for a merchant."/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
         <unique name="spy_merchant_sales_order-merchant_sales_order_reference">
@@ -28,7 +28,7 @@
         <column name="id_merchant_sales_order_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="fk_merchant_sales_order" type="INTEGER" required="true"/>
-        <column name="merchant_order_item_reference" type="VARCHAR" size="255" required="true"/>
+        <column name="merchant_order_item_reference" type="VARCHAR" size="255" required="true" description="A unique reference for a specific item within a merchant's sales order."/>
 
         <unique name="spy_merchant_sales_order_item-unique-fk_sales_order_item">
             <unique-column name="fk_sales_order_item"/>
@@ -54,13 +54,13 @@
     <table name="spy_merchant_sales_order_totals">
         <column name="id_merchant_sales_order_totals" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_merchant_sales_order" type="INTEGER" required="true"/>
-        <column name="subtotal" type="INTEGER" required="false" default="0"/>
-        <column name="order_expense_total" type="INTEGER" required="false" default="0"/>
-        <column name="discount_total" type="INTEGER" required="false" default="0"/>
-        <column name="grand_total" type="INTEGER" required="false" default="0"/>
-        <column name="refund_total" type="INTEGER" required="false" default="0"/>
-        <column name="canceled_total" type="INTEGER" required="false" default="0"/>
-        <column name="tax_total" type="INTEGER" required="false" default="0"/>
+        <column name="subtotal" type="INTEGER" required="false" default="0" description="The total price of all items before discounts, taxes, and shipping are applied."/>
+        <column name="order_expense_total" type="INTEGER" required="false" default="0" description="The total cost of all expenses in an order."/>
+        <column name="discount_total" type="INTEGER" required="false" default="0" description="The total amount of discounts applied to an order."/>
+        <column name="grand_total" type="INTEGER" required="false" default="0" description="The final total of an order, including all costs and discounts."/>
+        <column name="refund_total" type="INTEGER" required="false" default="0" description="The total amount to be refunded."/>
+        <column name="canceled_total" type="INTEGER" required="false" default="0" description="The total value of canceled items in an order."/>
+        <column name="tax_total" type="INTEGER" required="false" default="0" description="The total amount of tax calculated for an order or quote."/>
 
         <foreign-key name="spy_merchant_sales_order_totals-fk_merchant_sales_order" foreignTable="spy_merchant_sales_order" phpName="MerchantSalesOrder" refPhpName="MerchantSalesOrderTotal">
             <reference local="fk_merchant_sales_order" foreign="id_merchant_sales_order"/>

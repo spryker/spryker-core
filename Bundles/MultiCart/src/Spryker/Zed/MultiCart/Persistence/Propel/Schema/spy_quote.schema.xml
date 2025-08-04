@@ -2,8 +2,8 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" name="zed" namespace="Orm\Zed\Quote\Persistence" package="src.Orm.Zed.Quote.Persistence">
 
     <table name="spy_quote" idMethod="native" allowPkInsert="true">
-        <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="is_default" type="BOOLEAN" default="false"/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="is_default" type="BOOLEAN" default="false" description="A flag indicating if an entity is the default one."/>
 
         <unique name="spy_quote-unique-name-customer_reference">
             <unique-column name="name"/>

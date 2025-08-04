@@ -4,9 +4,9 @@
     <table name="spy_customer_multi_factor_auth">
         <column name="id_customer_multi_factor_auth" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_customer" type="integer" required="true"/>
-        <column name="type" type="VARCHAR" size="50" required="true"/>
-        <column name="configuration" type="VARCHAR" size="255"/>
-        <column name="status" type="integer" default="0"/>
+        <column name="type" type="VARCHAR" size="50" required="true" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <column name="configuration" type="VARCHAR" size="255" description="A set of configuration parameters."/>
+        <column name="status" type="integer" default="0" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
         <behavior name="timestampable"/>
 
         <foreign-key name="spy_customer_mfa-fk_customer" foreignTable="spy_customer">
@@ -18,9 +18,9 @@
     <table name="spy_customer_multi_factor_auth_codes">
         <column name="id_customer_multi_factor_auth_code" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_customer_multi_factor_auth" type="integer" required="true"/>
-        <column name="code" type="VARCHAR" size="50" required="true"/>
-        <column name="status" type="integer" default="0"/>
-        <column name="expiration_date" type="datetime" required="true"/>
+        <column name="code" type="VARCHAR" size="50" required="true" description="A unique code, often for currency, country, or barcode."/>
+        <column name="status" type="integer" default="0" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
+        <column name="expiration_date" type="datetime" required="true" description="The date and time when a multi-factor authentication code expires."/>
         <behavior name="timestampable"/>
 
         <foreign-key name="spy_customer_mfa-fk_customer_mfa" foreignTable="spy_customer_multi_factor_auth">
@@ -36,7 +36,7 @@
     <table name="spy_customer_multi_factor_auth_codes_attempts">
         <column name="id_customer_multi_factor_auth_code_attempt" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_customer_multi_factor_auth_code" type="integer" required="true"/>
-        <column name="created_at" type="datetime" required="true"/>
+        <column name="created_at" type="datetime" required="true" description="The timestamp when an entity was created."/>
         <behavior name="timestampable"/>
 
         <foreign-key name="spy_customer_mfa-fk_customer_mfa_code" foreignTable="spy_customer_multi_factor_auth_codes">
@@ -48,9 +48,9 @@
     <table name="spy_user_multi_factor_auth">
         <column name="id_user_multi_factor_auth" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_user" type="integer" required="true"/>
-        <column name="type" type="VARCHAR" size="50" required="true"/>
-        <column name="configuration" type="VARCHAR" size="255"/>
-        <column name="status" type="integer" default="0"/>
+        <column name="type" type="VARCHAR" size="50" required="true" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <column name="configuration" type="VARCHAR" size="255" description="A set of configuration parameters."/>
+        <column name="status" type="integer" default="0" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
         <behavior name="timestampable"/>
 
         <foreign-key name="spy_user_mfa-fk_user" foreignTable="spy_user">
@@ -62,9 +62,9 @@
     <table name="spy_user_multi_factor_auth_codes">
         <column name="id_user_multi_factor_auth_code" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_user_multi_factor_auth" type="integer" required="true"/>
-        <column name="code" type="VARCHAR" size="50" required="true"/>
-        <column name="status" type="integer" default="0"/>
-        <column name="expiration_date" type="datetime" required="true"/>
+        <column name="code" type="VARCHAR" size="50" required="true" description="A unique code, often for currency, country, or barcode."/>
+        <column name="status" type="integer" default="0" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
+        <column name="expiration_date" type="datetime" required="true" description="The date and time when a multi-factor authentication code expires."/>
         <behavior name="timestampable"/>
 
         <foreign-key name="spy_user_mfa-fk_user_mfa" foreignTable="spy_user_multi_factor_auth">
@@ -80,7 +80,7 @@
     <table name="spy_user_multi_factor_auth_codes_attempts">
         <column name="id_user_multi_factor_auth_code_attempt" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_user_multi_factor_auth_code" type="integer" required="true"/>
-        <column name="created_at" type="datetime" required="true"/>
+        <column name="created_at" type="datetime" required="true" description="The timestamp when an entity was created."/>
         <behavior name="timestampable"/>
 
         <foreign-key name="spy_user_mfa-fk_user_mfa_code" foreignTable="spy_user_multi_factor_auth_codes">

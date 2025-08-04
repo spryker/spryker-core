@@ -4,7 +4,8 @@
     "description": "MultiCartsRestApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2"
+        "php": ">=8.2",
+        "spryker/transfer": "^3.42.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*"

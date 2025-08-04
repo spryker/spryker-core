@@ -2,88 +2,88 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestProductOffersAttributes">
-        <property name="merchantSku" type="string"/>
-        <property name="merchantReference" type="string"/>
-        <property name="isDefault" type="bool"/>
+        <property name="merchantSku" type="string" description="A merchant-specific Stock Keeping Unit (SKU) for a product offer."/>
+        <property name="merchantReference" type="string" description="A unique reference identifier for a merchant."/>
+        <property name="isDefault" type="bool" description="A flag indicating if an entity is the default one."/>
     </transfer>
 
     <transfer name="RestItemsAttributes">
-        <property name="productOfferReference" type="string"/>
-        <property name="merchantReference" type="string"/>
+        <property name="productOfferReference" type="string" description="A unique reference identifier for a specific product offer from a merchant."/>
+        <property name="merchantReference" type="string" description="A unique reference identifier for a merchant."/>
     </transfer>
 
     <transfer name="CartItemRequest">
-        <property name="productOfferReference" type="string"/>
-        <property name="merchantReference" type="string"/>
-        <property name="sku" type="string"/>
+        <property name="productOfferReference" type="string" description="A unique reference identifier for a specific product offer from a merchant."/>
+        <property name="merchantReference" type="string" description="A unique reference identifier for a merchant."/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
-        <property name="productOfferReference" type="string" restRequestParameter="yes"/>
-        <property name="merchantReference" type="string" restRequestParameter="yes"/>
+        <property name="productOfferReference" type="string" restRequestParameter="yes" description="A unique reference identifier for a specific product offer from a merchant."/>
+        <property name="merchantReference" type="string" restRequestParameter="yes" description="A unique reference identifier for a merchant."/>
     </transfer>
 
     <transfer name="Item">
-        <property name="productOfferReference" type="string"/>
-        <property name="merchantReference" type="string"/>
-        <property name="sku" type="string"/>
-        <property name="groupKey" type="string"/>
+        <property name="productOfferReference" type="string" description="A unique reference identifier for a specific product offer from a merchant."/>
+        <property name="merchantReference" type="string" description="A unique reference identifier for a merchant."/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <property name="groupKey" type="string" description="A key used to group items together, typically in a cart or order."/>
     </transfer>
 
     <transfer name="PersistentCartChange">
-        <property name="items" type="Item[]" singular="item"/>
+        <property name="items" type="Item[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
     </transfer>
 
     <transfer name="ProductOfferStorage">
-        <property name="productConcreteSku" type="string"/>
-        <property name="productOfferReference" type="string"/>
-        <property name="merchantReference" type="string"/>
+        <property name="productConcreteSku" type="string" description="The unique Stock Keeping Unit (SKU) for a concrete, sellable product variant."/>
+        <property name="productOfferReference" type="string" description="A unique reference identifier for a specific product offer from a merchant."/>
+        <property name="merchantReference" type="string" description="A unique reference identifier for a merchant."/>
     </transfer>
 
     <transfer name="ProductOfferStorageCriteria">
-        <property name="productConcreteSkus" type="string[]" singular="productConcreteSku"/>
+        <property name="productConcreteSkus" type="string[]" singular="productConcreteSku" description="A collection of concrete product SKUs."/>
     </transfer>
 
     <transfer name="ProductOfferStorageCollection">
-        <property name="productOffers" type="ProductOfferStorage[]" singular="productOffer"/>
+        <property name="productOffers" type="ProductOfferStorage[]" singular="productOffer" description="A collection of product offers."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="code" type="string"/>
-        <property name="status" type="int"/>
-        <property name="detail" type="string"/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="RestQuoteRequestItem">
-        <property name="productOfferReference" type="string"/>
-        <property name="merchantReference" type="string"/>
-        <property name="groupKey" type="string"/>
+        <property name="productOfferReference" type="string" description="A unique reference identifier for a specific product offer from a merchant."/>
+        <property name="merchantReference" type="string" description="A unique reference identifier for a merchant."/>
+        <property name="groupKey" type="string" description="A key used to group items together, typically in a cart or order."/>
     </transfer>
 
     <transfer name="QuoteRequest">
-        <property name="quoteRequestReference" type="string"/>
-        <property name="latestVersion" type="QuoteRequestVersion"/>
+        <property name="quoteRequestReference" type="string" description="A unique reference for a quote request."/>
+        <property name="latestVersion" type="QuoteRequestVersion" description="The latest version of a quote request."/>
     </transfer>
 
     <transfer name="RestQuoteRequestsAttributes">
-        <property name="shownVersion" type="RestQuoteRequestVersion"/>
-        <property name="quoteRequestReference" type="string"/>
+        <property name="shownVersion" type="RestQuoteRequestVersion" description="The version of a quote request shown to the user."/>
+        <property name="quoteRequestReference" type="string" description="A unique reference for a quote request."/>
     </transfer>
 
     <transfer name="QuoteRequestVersion">
-        <property name="quote" type="Quote"/>
+        <property name="quote" type="Quote" description="A data object representing a shopping cart before it becomes an order."/>
     </transfer>
 
     <transfer name="RestQuoteRequestVersion">
-        <property name="cart" type="RestQuoteRequestsCart"/>
+        <property name="cart" type="RestQuoteRequestsCart" description="A shopping cart or quote object."/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="items" type="Item[]" singular="item"/>
+        <property name="items" type="Item[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
     </transfer>
 
     <transfer name="RestQuoteRequestsCart">
-        <property name="items" type="RestQuoteRequestItem[]" singular="item"/>
+        <property name="items" type="RestQuoteRequestItem[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
     </transfer>
 
 </transfers>

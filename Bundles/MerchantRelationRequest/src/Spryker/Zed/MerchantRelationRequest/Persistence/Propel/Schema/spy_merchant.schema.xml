@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Merchant\Persistence" package="src.Orm.Zed.Merchant.Persistence">
 
     <table name="spy_merchant">
-        <column name="is_open_for_relation_request" required="false" type="BOOLEAN"/>
+        <column name="is_open_for_relation_request" required="false" type="BOOLEAN" description="A flag indicating if a merchant is open to receiving relationship requests."/>
     </table>
 
 </database>

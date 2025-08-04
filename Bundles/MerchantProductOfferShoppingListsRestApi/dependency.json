@@ -4,6 +4,7 @@
         "spryker/merchant-product-offer": "Added for forward compatibility.",
         "spryker/merchant": "Added for forward compatibility.",
         "spryker/product-offer": "Added for forward compatibility.",
-        "spryker/shopping-list": "Added for forward compatibility."
+        "spryker/shopping-list": "Added for forward compatibility.",
+        "spryker/transfer": "Required to use merging strategy as default for descriptions."
     }
 }

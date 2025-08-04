@@ -9,7 +9,7 @@
         "spryker/glue-application": "^1.18.0",
         "spryker/kernel": "^3.30.0",
         "spryker/oauth-customer-connector-extension": "^1.0.0",
-        "spryker/transfer": "^3.27.0"
+        "spryker/transfer": "^3.42.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

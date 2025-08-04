@@ -2,11 +2,11 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\MerchantApp\Persistence" package="src.Orm.Zed.MerchantApp.Persistence">
     <table name="spy_merchant_app_onboarding">
         <column name="id_merchant_app_onboarding" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="onboarding_url" required="true" type="VARCHAR" size="255"/>
-        <column name="onboarding_strategy" required="true" type="ENUM" valueSet="iframe, redirect, api"/>
+        <column name="onboarding_url" required="true" type="VARCHAR" size="255" description="The URL where a merchant can start the onboarding process for an app."/>
+        <column name="onboarding_strategy" required="true" type="ENUM" valueSet="iframe, redirect, api" description="The strategy used for merchant app onboarding (e.g., 'iframe', 'redirect')."/>
         <column name="type" required="true" type="VARCHAR" size="128" description="Type can be e.g. 'payment' or 'legal' which is used to identify if a specific entity can be displayed and what. F.e. if onboarding of Payment Apps should be displayed in the Merchant Portal."/>
-        <column name="app_name" required="true" type="VARCHAR" size="255"/>
-        <column name="app_identifier" required="true" type="VARCHAR" size="36"/>
+        <column name="app_name" required="true" type="VARCHAR" size="255" description="The name of the application for which a merchant is being onboarded."/>
+        <column name="app_identifier" required="true" type="VARCHAR" size="36" description="A unique identifier for an application."/>
         <column name="additional_content" type="LONGVARCHAR" description="Additional content (text, links) to display for merchants."/>
 
         <unique name="spy_merchant_app_onboarding-unique-type-app_identifier">
@@ -26,8 +26,8 @@
     <table name="spy_merchant_app_onboarding_status">
         <column name="id_merchant_app_onboarding_status" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_merchant_app_onboarding" type="INTEGER" required="true"/>
-        <column name="merchant_reference" required="true" size="128" type="VARCHAR"/>
-        <column name="status" required="true" type="VARCHAR" size="36"/>
+        <column name="merchant_reference" required="true" size="128" type="VARCHAR" description="A unique reference identifier for a merchant."/>
+        <column name="status" required="true" type="VARCHAR" size="36" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
         <column name="additional_info" type="LONGVARCHAR" description="JSON string containing additional info to be displayed"/>
 
         <unique name="spy_merchant_app_onboarding_status-unique-merchant_reference-app_identifier">

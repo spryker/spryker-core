@@ -10,8 +10,8 @@
 
     <table name="spy_oms_product_offer_reservation" identifierQuoting="true">
         <column name="id_oms_product_offer_reservation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="product_offer_reference" required="true" type="VARCHAR" size="255"/>
-        <column name="reservation_quantity" type="DECIMAL" size="20" scale="10" required="true" default="0"/>
+        <column name="product_offer_reference" required="true" type="VARCHAR" size="255" description="A unique reference identifier for a specific product offer from a merchant."/>
+        <column name="reservation_quantity" type="DECIMAL" size="20" scale="10" required="true" default="0" description="The quantity of a product offer reserved in the OMS."/>
         <column name="fk_store" required="false" type="INTEGER"/>
 
         <unique name="spy_oms_product_offer_reservation-product_offer_reference">

@@ -3,163 +3,163 @@
 
     <transfer name="MerchantRelationship">
         <property name="idMerchantRelationship" type="int"/>
-        <property name="merchantRelationshipKey" type="string"/>
-        <property name="name" type="string"/>
+        <property name="merchantRelationshipKey" type="string" description="A unique key for a merchant relationship."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
         <property name="fkMerchant" type="int"/>
         <property name="fkCompanyBusinessUnit" type="int" description="ID of Business Unit Owner"/>
-        <property name="merchant" type="Merchant"/>
-        <property name="ownerCompanyBusinessUnit" type="CompanyBusinessUnit"/>
-        <property name="assigneeCompanyBusinessUnits" type="CompanyBusinessUnitCollection"/>
-        <property name="productLists" type="ProductList[]" singular="productList"/>
-        <property name="productListIds" type="int[]" singular="productListId"/>
+        <property name="merchant" type="Merchant" description="A data object representing a merchant entity."/>
+        <property name="ownerCompanyBusinessUnit" type="CompanyBusinessUnit" description="The company business unit that owns the relationship."/>
+        <property name="assigneeCompanyBusinessUnits" type="CompanyBusinessUnitCollection" description="A collection of assigned company business units."/>
+        <property name="productLists" type="ProductList[]" singular="productList" description="A collection of product lists (e.g., whitelists, blacklists) associated with an entity."/>
+        <property name="productListIds" type="int[]" singular="productListId" description="A collection of product list identifiers."/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
-        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
-        <property name="name" type="string"/>
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship" description="A collection of relationships between merchants and companies."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
         <property name="idCompanyBusinessUnit" type="int"/>
-        <property name="company" type="Company"/>
+        <property name="company" type="Company" description="A company entity."/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitCollection">
-        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
+        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit" description="A collection of company business units."/>
     </transfer>
 
     <transfer name="ApiItem">
         <property name="id" type="string"/>
-        <property name="data" type="array" singular="data"/>
-        <property name="statusCode" type="int"/>
-        <property name="validationErrors" type="ApiValidationError[]" singular="validationError"/>
+        <property name="data" type="array" singular="data" description="A generic data payload."/>
+        <property name="statusCode" type="int" description="A status code for a response or operation."/>
+        <property name="validationErrors" type="ApiValidationError[]" singular="validationError" description="A collection of validation errors."/>
     </transfer>
 
     <transfer name="ApiValidationError">
-        <property name="field" type="string"/>
-        <property name="messages" type="array" singular="messages"/>
+        <property name="field" type="string" description="A single field within a larger data structure or rule set."/>
+        <property name="messages" type="array" singular="messages" description="A collection of informational, success, or error messages."/>
     </transfer>
 
     <transfer name="ApiRequest">
-        <property name="filter" type="ApiFilter"/>
-        <property name="apiData" type="ApiData"/>
-        <property name="requestType" type="string"/>
+        <property name="filter" type="ApiFilter" description="A set of criteria for filtering data."/>
+        <property name="apiData" type="ApiData" description="The data payload within an API response."/>
+        <property name="requestType" type="string" description="The type of the API request being made."/>
     </transfer>
 
     <transfer name="MerchantRelationshipFilter">
     </transfer>
 
     <transfer name="Pagination">
-        <property name="page" type="int"/>
-        <property name="maxPerPage" type="int"/>
-        <property name="firstPage" type="int"/>
-        <property name="lastPage" type="int"/>
-        <property name="nextPage" type="int"/>
-        <property name="nbResults" type="int"/>
-        <property name="previousPage" type="int"/>
-        <property name="firstIndex" type="int"/>
+        <property name="page" type="int" description="The current page number in a paginated result set."/>
+        <property name="maxPerPage" type="int" description="The maximum number of items to show on a single page."/>
+        <property name="firstPage" type="int" description="The number of the first page in pagination."/>
+        <property name="lastPage" type="int" description="The page number of the last page in a paginated result set."/>
+        <property name="nextPage" type="int" description="The page number of the next page in a paginated result set."/>
+        <property name="nbResults" type="int" description="The total number of results found for a query."/>
+        <property name="previousPage" type="int" description="The page number of the previous page in a paginated result set."/>
+        <property name="firstIndex" type="int" description="The index of the first item on the current page."/>
     </transfer>
 
     <transfer name="ApiPagination">
-        <property name="page" type="int"/>
-        <property name="pageTotal" type="int"/>
-        <property name="itemsPerPage" type="int"/>
-        <property name="total" type="int"/>
-        <property name="prev" type="string"/>
-        <property name="next" type="string"/>
-        <property name="first" type="string"/>
-        <property name="last" type="string"/>
+        <property name="page" type="int" description="The current page number in a paginated result set."/>
+        <property name="pageTotal" type="int" description="The total number of pages."/>
+        <property name="itemsPerPage" type="int" description="The number of items to display per page."/>
+        <property name="total" type="int" description="The total count of items."/>
+        <property name="prev" type="string" description="The URL for the previous page in a paginated API response."/>
+        <property name="next" type="string" description="The URL for the next page in a paginated API response."/>
+        <property name="first" type="string" description="The URL for the first page of results."/>
+        <property name="last" type="string" description="The URL for the last page in a paginated API response."/>
     </transfer>
 
     <transfer name="ApiCollection">
-        <property name="statusCode" type="int"/>
-        <property name="data" type="array" singular="data"/>
-        <property name="pagination" type="ApiPagination"/>
+        <property name="statusCode" type="int" description="A status code for a response or operation."/>
+        <property name="data" type="array" singular="data" description="A generic data payload."/>
+        <property name="pagination" type="ApiPagination" description="An object containing all pagination-related data for a list of results."/>
     </transfer>
 
     <transfer name="ApiData">
-        <property name="data" type="array" singular="data"/>
+        <property name="data" type="array" singular="data" description="A generic data payload."/>
     </transfer>
 
     <transfer name="ApiFilter">
-        <property name="offset" type="int"/>
-        <property name="limit" type="int"/>
-        <property name="criteriaJson" type="string"/>
-        <property name="sort" type="array" singular="sort"/>
+        <property name="offset" type="int" description="The starting point from which to return a set of results, used for pagination."/>
+        <property name="limit" type="int" description="The maximum number of results to return in a single request, used for pagination."/>
+        <property name="criteriaJson" type="string" description="A JSON string representing the criteria used for a query."/>
+        <property name="sort" type="array" singular="sort" description="An object defining the sorting parameters for a query."/>
     </transfer>
 
     <transfer name="Merchant">
-        <property name="merchantReference" type="string"/>
-        <property name="name" type="string"/>
+        <property name="merchantReference" type="string" description="A unique reference identifier for a merchant."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="MerchantRelationshipCollection">
-        <property name="pagination" type="Pagination"/>
-        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+        <property name="pagination" type="Pagination" description="An object containing all pagination-related data for a list of results."/>
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship" description="A collection of relationships between merchants and companies."/>
     </transfer>
 
     <transfer name="MerchantRelationshipBusinessUnitApi">
         <property name="idCompanyBusinessUnit" type="int"/>
-        <property name="name" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="MerchantRelationshipProductListApi">
         <property name="idProductList" type="int"/>
-        <property name="name" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="MerchantRelationshipApi">
         <property name="idMerchantRelationship" type="int"/>
-        <property name="merchantReference" type="string"/>
-        <property name="merchantName" type="string"/>
+        <property name="merchantReference" type="string" description="A unique reference identifier for a merchant."/>
+        <property name="merchantName" type="string" description="The name of the merchant."/>
         <property name="idCompany" type="int"/>
-        <property name="companyName" type="string"/>
+        <property name="companyName" type="string" description="The name of a company."/>
         <property name="idBusinessUnitOwner" type="int"/>
-        <property name="businessUnitOwnerName" type="string"/>
-        <property name="assignedBusinessUnits" type="MerchantRelationshipBusinessUnitApi[]" singular="assignedBusinessUnit"/>
-        <property name="assignedProductLists" type="MerchantRelationshipProductListApi[]" singular="assignedProductList"/>
+        <property name="businessUnitOwnerName" type="string" description="The name of the business unit that owns a relationship."/>
+        <property name="assignedBusinessUnits" type="MerchantRelationshipBusinessUnitApi[]" singular="assignedBusinessUnit" description="A collection of business units assigned to an entity."/>
+        <property name="assignedProductLists" type="MerchantRelationshipProductListApi[]" singular="assignedProductList" description="A collection of product lists assigned to an entity."/>
     </transfer>
 
     <transfer name="MerchantRelationshipResponse">
-        <property name="isSuccessful" type="bool"/>
-        <property name="errors" type="MerchantRelationshipError[]" singular="error"/>
-        <property name="merchantRelationship" type="MerchantRelationship"/>
+        <property name="isSuccessful" type="bool" description="A boolean flag indicating if an operation completed successfully."/>
+        <property name="errors" type="MerchantRelationshipError[]" singular="error" description="A collection of error objects."/>
+        <property name="merchantRelationship" type="MerchantRelationship" description="A data object representing a relationship between a merchant and a company."/>
     </transfer>
 
     <transfer name="MerchantRelationshipRequest">
-        <property name="merchantRelationship" type="MerchantRelationship"/>
+        <property name="merchantRelationship" type="MerchantRelationship" description="A data object representing a relationship between a merchant and a company."/>
     </transfer>
 
     <transfer name="Company">
         <property name="idCompany" type="int"/>
-        <property name="name" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="MerchantRelationshipError">
-        <property name="field" type="string"/>
-        <property name="message" type="string"/>
+        <property name="field" type="string" description="A single field within a larger data structure or rule set."/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
     </transfer>
 
     <transfer name="MerchantRelationshipCriteria">
-        <property name="merchantRelationshipConditions" type="MerchantRelationshipConditions"/>
-        <property name="pagination" type="Pagination"/>
-        <property name="sortCollection" type="SortCollection"/>
+        <property name="merchantRelationshipConditions" type="MerchantRelationshipConditions" description="Conditions for filtering merchant relationships."/>
+        <property name="pagination" type="Pagination" description="An object containing all pagination-related data for a list of results."/>
+        <property name="sortCollection" type="SortCollection" description="A collection of sorting parameters."/>
     </transfer>
 
     <transfer name="MerchantRelationshipConditions">
-        <property name="merchantRelationshipIds" type="int[]" singular="idMerchantRelationship"/>
-        <property name="companyIds" type="int[]" singular="idCompany"/>
+        <property name="merchantRelationshipIds" type="int[]" singular="idMerchantRelationship" description="A collection of unique identifiers for merchant relationships."/>
+        <property name="companyIds" type="int[]" singular="idCompany" description="A collection of company identifiers."/>
     </transfer>
 
     <transfer name="SortCollection">
-        <property name="sorts" type="Sort[]" singular="sort"/>
+        <property name="sorts" type="Sort[]" singular="sort" description="A collection of sort criteria."/>
     </transfer>
 
     <transfer name="Sort">
-        <property name="field" type="string"/>
-        <property name="isAscending" type="bool"/>
+        <property name="field" type="string" description="A single field within a larger data structure or rule set."/>
+        <property name="isAscending" type="bool" description="A flag indicating if sorting is in ascending order."/>
     </transfer>
 
     <transfer name="ProductList">
         <property name="idProductList" type="int"/>
-        <property name="title" type="string"/>
+        <property name="title" type="string" description="The title of an entity or page."/>
     </transfer>
 
 </transfers>

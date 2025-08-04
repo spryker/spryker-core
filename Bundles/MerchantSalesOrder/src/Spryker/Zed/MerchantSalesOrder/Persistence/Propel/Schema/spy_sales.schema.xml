@@ -2,11 +2,11 @@
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence">
 
     <table name="spy_sales_expense">
-        <column name="merchant_reference" type="VARCHAR" size="255"/>
+        <column name="merchant_reference" type="VARCHAR" size="255" description="A unique reference identifier for a merchant."/>
     </table>
 
     <table name="spy_sales_order_item">
-        <column name="merchant_reference" type="VARCHAR" size="255"/>
+        <column name="merchant_reference" type="VARCHAR" size="255" description="A unique reference identifier for a merchant."/>
     </table>
 
 </database>

@@ -3,11 +3,11 @@
 
     <table name="spy_oauth_code_flow_auth_code" identifierQuoting="true">
         <column name="id_oauth_auth_code" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="identifier" type="VARCHAR" size="3024" required="true"/>
-        <column name="redirect_uri" type="VARCHAR" size="1024" required="false"/>
-        <column name="scopes" type="VARCHAR" size="1024" required="false"/>
-        <column name="expirity_date" type="TIMESTAMP" required="true"/>
-        <column name="user_identifier" type="VARCHAR" size="1024" required="true"/>
+        <column name="identifier" type="VARCHAR" size="3024" required="true" description="A unique identifier for an entity."/>
+        <column name="redirect_uri" type="VARCHAR" size="1024" required="false" description="The URI to which the user is redirected after an OAuth authorization flow."/>
+        <column name="scopes" type="VARCHAR" size="1024" required="false" description="A collection of permission scopes that define the access rights of a token or user."/>
+        <column name="expirity_date" type="TIMESTAMP" required="true" description="The expiration date and time for an OAuth authorization code, after which it cannot be exchanged for an access token."/>
+        <column name="user_identifier" type="VARCHAR" size="1024" required="true" description="A generic identifier for a user, which can be a reference, ID, or username."/>
         <column name="fk_oauth_client" type="VARCHAR" size="1024" required="true"/>
 
         <foreign-key name="spy_oauth_code_flow_auth_code-fk_oauth_client" foreignTable="spy_oauth_client" phpName="OauthClient" refPhpName="OauthAuthCode">

@@ -3,12 +3,12 @@
 
     <table name="spy_merchant_relation_request">
         <column name="id_merchant_relation_request" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+        <column name="uuid" required="false" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
 
-        <column name="status" required="true" type="VARCHAR" size="255"/>
-        <column name="is_split_enabled" required="false" type="BOOLEAN" default="false"/>
-        <column name="request_note" required="false" type="VARCHAR" size="5000"/>
-        <column name="decision_note" required="false" type="VARCHAR" size="5000"/>
+        <column name="status" required="true" type="VARCHAR" size="255" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
+        <column name="is_split_enabled" required="false" type="BOOLEAN" default="false" description="A flag indicating if the merchant relation request allows for split orders."/>
+        <column name="request_note" required="false" type="VARCHAR" size="5000" description="A note or message included with a merchant relation request."/>
+        <column name="decision_note" required="false" type="VARCHAR" size="5000" description="A note explaining a decision, e.g., for a merchant relation request."/>
 
         <column name="fk_company_user" required="true" type="INTEGER"/>
         <column name="fk_merchant" required="true" type="INTEGER"/>

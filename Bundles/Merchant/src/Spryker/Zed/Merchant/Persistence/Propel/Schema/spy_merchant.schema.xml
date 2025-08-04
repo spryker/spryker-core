@@ -3,15 +3,15 @@
 
     <table name="spy_merchant" identifierQuoting="true">
         <column name="id_merchant" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" required="true" size="255" type="VARCHAR"/>
+        <column name="name" required="true" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
 
         <behavior name="timestampable"/>
 
-        <column name="registration_number" type="VARCHAR" size="255"/>
-        <column name="email" required="true" type="VARCHAR" size="255"/>
-        <column name="status" required="true" size="64" type="VARCHAR"/>
-        <column name="merchant_reference" required="true" size="255" type="VARCHAR"/>
-        <column name="is_active" default="false" type="BOOLEAN"/>
+        <column name="registration_number" type="VARCHAR" size="255" description="The official business registration number of a merchant."/>
+        <column name="email" required="true" type="VARCHAR" size="255" description="The email address of a user or contact."/>
+        <column name="status" required="true" size="64" type="VARCHAR" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
+        <column name="merchant_reference" required="true" size="255" type="VARCHAR" description="A unique reference identifier for a merchant."/>
+        <column name="is_active" default="false" type="BOOLEAN" description="A boolean flag indicating if an entity is currently active."/>
 
         <unique name="spy_merchant-unique-email">
             <unique-column name="email"/>

@@ -3,9 +3,9 @@
 
     <table name="spy_navigation" idMethod="native" identifierQuoting="true">
         <column name="id_navigation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="key" type="VARCHAR" size="255" required="true"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="is_active" type="BOOLEAN" default="true" required="true"/>
+        <column name="key" type="VARCHAR" size="255" required="true" description="A unique key used to identify an entity or a piece of data."/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="is_active" type="BOOLEAN" default="true" required="true" description="A boolean flag indicating if an entity is currently active."/>
 
         <unique name="spy_navigation_key-unique-key">
             <unique-column name="key"/>
@@ -28,11 +28,11 @@
         <column name="id_navigation_node" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_navigation" required="true" type="INTEGER"/>
         <column name="fk_parent_navigation_node" required="false" type="INTEGER" default="NULL"/>
-        <column name="node_type" type="VARCHAR" size="255" required="false" default="null"/>
-        <column name="position" type="INTEGER" required="false" default="NULL"/>
-        <column name="is_active" type="BOOLEAN" default="true" required="true"/>
-        <column name="valid_from" type="TIMESTAMP" required="false"/>
-        <column name="valid_to" type="TIMESTAMP" required="false"/>
+        <column name="node_type" type="VARCHAR" size="255" required="false" default="null" description="The type of a node in a navigation tree."/>
+        <column name="position" type="INTEGER" required="false" default="NULL" description="The position or order of an item in a list."/>
+        <column name="is_active" type="BOOLEAN" default="true" required="true" description="A boolean flag indicating if an entity is currently active."/>
+        <column name="valid_from" type="TIMESTAMP" required="false" description="The date and time from which an entity is valid."/>
+        <column name="valid_to" type="TIMESTAMP" required="false" description="The date and time until which an entity is valid."/>
 
         <foreign-key foreignTable="spy_navigation_node" phpName="ParentNavigationNode" refPhpName="ChildrenNavigationNode" onDelete="CASCADE">
             <reference foreign="id_navigation_node" local="fk_parent_navigation_node"/>
@@ -54,10 +54,10 @@
         <column name="fk_navigation_node" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="fk_url" required="false" type="INTEGER" default="NULL"/>
-        <column name="title" type="VARCHAR" size="255" required="true"/>
-        <column name="link" type="VARCHAR" size="255" required="false" default="NULL"/>
-        <column name="external_url" type="VARCHAR" size="255" required="false" default="NULL"/>
-        <column name="css_class" type="VARCHAR" size="255" required="false" default="NULL"/>
+        <column name="title" type="VARCHAR" size="255" required="true" description="The title of an entity or page."/>
+        <column name="link" type="VARCHAR" size="255" required="false" default="NULL" description="The direct URL associated with a navigation node."/>
+        <column name="external_url" type="VARCHAR" size="255" required="false" default="NULL" description="An external URL, often for more details or an external resource."/>
+        <column name="css_class" type="VARCHAR" size="255" required="false" default="NULL" description="A CSS class to be applied to an HTML element."/>
 
         <foreign-key foreignTable="spy_navigation_node" onDelete="CASCADE">
             <reference foreign="id_navigation_node" local="fk_navigation_node"/>
