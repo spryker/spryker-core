@@ -4,8 +4,8 @@
     <table name="spy_product_validity" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_validity" primaryKey="true" type="INTEGER" autoIncrement="true"/>
         <column name="fk_product" required="true" type="INTEGER"/>
-        <column name="valid_from" type="TIMESTAMP" required="false"/>
-        <column name="valid_to" type="TIMESTAMP" required="false"/>
+        <column name="valid_from" type="TIMESTAMP" required="false" description="The date and time from which an entity is valid."/>
+        <column name="valid_to" type="TIMESTAMP" required="false" description="The date and time until which an entity is valid."/>
 
         <unique name="spy_product_validity-fk_product-unique">
             <unique-column name="fk_product"/>

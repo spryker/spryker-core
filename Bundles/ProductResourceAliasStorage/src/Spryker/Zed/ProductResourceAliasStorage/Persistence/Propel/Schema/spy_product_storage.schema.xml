@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductStorage\Persistence" package="src.Orm.Zed.ProductStorage.Persistence">
 
     <table name="spy_product_abstract_storage">
-        <column name="sku" required="false" type="VARCHAR" size="255"/>
+        <column name="sku" required="false" type="VARCHAR" size="255" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
 
         <behavior name="synchronization">
             <parameter name="mapping_resource_key_suffix_column" value="sku"/>
@@ -11,7 +11,7 @@
     </table>
 
     <table name="spy_product_concrete_storage">
-        <column name="sku" required="false" type="VARCHAR" size="255"/>
+        <column name="sku" required="false" type="VARCHAR" size="255" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
 
         <behavior name="synchronization">
             <parameter name="mapping_resource_key_suffix_column" value="sku"/>

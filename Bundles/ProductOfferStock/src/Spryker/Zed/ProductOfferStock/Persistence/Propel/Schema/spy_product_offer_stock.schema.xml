@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
-<database name="zed" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductOfferStock\Persistence" package="src.Orm.Zed.ProductOfferStock.Persistence">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductOfferStock\Persistence" package="src.Orm.Zed.ProductOfferStock.Persistence">
 
     <table name="spy_product_offer_stock">
         <column name="id_product_offer_stock" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_offer" required="true" type="INTEGER"/>
         <column name="fk_stock" type="INTEGER" required="true"/>
-        <column name="quantity" type="DECIMAL" size="20" scale="10" defaultValue="0"/>
-        <column name="is_never_out_of_stock" type="BOOLEAN" defaultValue="false"/>
+        <column name="quantity" type="DECIMAL" size="20" scale="10" defaultValue="0" description="The number of units for an item."/>
+        <column name="is_never_out_of_stock" type="BOOLEAN" defaultValue="false" description="A flag indicating if a product should never be considered out of stock."/>
 
         <foreign-key name="spy_product_offer_stock-fk_product_offer" foreignTable="spy_product_offer" phpName="SpyProductOffer" refPhpName="ProductOfferStock">
             <reference local="fk_product_offer" foreign="id_product_offer"/>

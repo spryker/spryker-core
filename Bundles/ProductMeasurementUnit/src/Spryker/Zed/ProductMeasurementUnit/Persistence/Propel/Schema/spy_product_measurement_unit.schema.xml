@@ -3,9 +3,9 @@
 
     <table name="spy_product_measurement_unit" idMethod="native" allowPkInsert="true">
         <column name="id_product_measurement_unit" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="default_precision" required="true" type="INTEGER"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="code" required="true" type="VARCHAR" size="255"/>
+        <column name="default_precision" required="true" type="INTEGER" description="The default precision for a measurement unit."/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="code" required="true" type="VARCHAR" size="255" description="A unique code, often for currency, country, or barcode."/>
 
         <behavior name="timestampable"/>
 
@@ -36,11 +36,11 @@
 
     <table name="spy_product_measurement_sales_unit" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_measurement_sales_unit" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="conversion" type="FLOAT" required="false"/>
-        <column name="precision" type="INTEGER" required="false"/>
-        <column name="is_displayed" type="BOOLEAN" required="true"/>
-        <column name="is_default" type="BOOLEAN" required="true"/>
-        <column name="key" required="false" type="VARCHAR" size="255"/>
+        <column name="conversion" type="FLOAT" required="false" description="The conversion factor between a sales unit and a base unit."/>
+        <column name="precision" type="INTEGER" required="false" description="The total number of digits in a decimal value."/>
+        <column name="is_displayed" type="BOOLEAN" required="true" description="A flag indicating if a sales unit should be displayed to the customer."/>
+        <column name="is_default" type="BOOLEAN" required="true" description="A flag indicating if an entity is the default one."/>
+        <column name="key" required="false" type="VARCHAR" size="255" description="A unique key used to identify an entity or a piece of data."/>
         <column name="fk_product" type="INTEGER" required="true"/>
         <column name="fk_product_measurement_unit" type="INTEGER" required="true"/>
         <column name="fk_product_measurement_base_unit" type="INTEGER" required="true"/>

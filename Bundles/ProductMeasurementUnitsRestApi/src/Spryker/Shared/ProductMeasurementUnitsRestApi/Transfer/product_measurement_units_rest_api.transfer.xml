@@ -2,128 +2,128 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestProductMeasurementUnitsAttributes">
-        <property name="name" type="string"/>
-        <property name="defaultPrecision" type="int"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="defaultPrecision" type="int" description="The default precision for a measurement unit."/>
     </transfer>
 
     <transfer name="RestQuoteRequestItem">
-        <property name="salesUnit" type="RestQuoteRequestSalesUnit"/>
-        <property name="groupKey" type="string"/>
+        <property name="salesUnit" type="RestQuoteRequestSalesUnit" description="The unit of sale for a product."/>
+        <property name="groupKey" type="string" description="A key used to group items together, typically in a cart or order."/>
     </transfer>
 
     <transfer name="RestSalesUnitsAttributes">
-        <property name="conversion" type="int"/>
-        <property name="precision" type="int"/>
-        <property name="isDisplayed" type="bool"/>
-        <property name="isDefault" type="bool"/>
-        <property name="productMeasurementUnitCode" type="string"/>
+        <property name="conversion" type="int" description="The conversion factor between a sales unit and a base unit."/>
+        <property name="precision" type="int" description="The total number of digits in a decimal value."/>
+        <property name="isDisplayed" type="bool" description="A flag indicating if a sales unit should be displayed to the customer."/>
+        <property name="isDefault" type="bool" description="A flag indicating if an entity is the default one."/>
+        <property name="productMeasurementUnitCode" type="string" description="The code for a product measurement unit."/>
     </transfer>
 
     <transfer name="ProductMeasurementUnit">
-        <property name="code" type="string"/>
-        <property name="name" type="string"/>
+        <property name="code" type="string" description="A unique code, often for currency, country, or barcode."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="ProductMeasurementSalesUnit">
-        <property name="code" type="string"/>
+        <property name="code" type="string" description="A unique code, often for currency, country, or barcode."/>
         <property name="idProductMeasurementSalesUnit" type="int"/>
-        <property name="value" type="int"/>
-        <property name="productMeasurementUnit" type="ProductMeasurementUnit"/>
+        <property name="value" type="int" description="A generic value for a property, often used in key-value pairs or translations."/>
+        <property name="productMeasurementUnit" type="ProductMeasurementUnit" description="A unit of measurement for a product."/>
     </transfer>
 
     <transfer name="CartItemRequest">
-        <property name="sku" type="string"/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
         <property name="idProductMeasurementSalesUnit" type="int"/>
-        <property name="amount" type="decimal"/>
+        <property name="amount" type="decimal" description="A numerical value, often used for price, quantity, or discount."/>
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
-        <property name="salesUnit" type="RestCartItemsSalesUnitAttributes" restRequestParameter="yes"/>
+        <property name="salesUnit" type="RestCartItemsSalesUnitAttributes" restRequestParameter="yes" description="The unit of sale for a product."/>
     </transfer>
 
     <transfer name="RestCartItemsSalesUnitAttributes">
         <property name="id" type="int" restRequestParameter="yes"/>
-        <property name="amount" type="decimal" restRequestParameter="yes"/>
+        <property name="amount" type="decimal" restRequestParameter="yes" description="A numerical value, often used for price, quantity, or discount."/>
     </transfer>
 
     <transfer name="RestOrdersProductMeasurementUnitsAttributes">
-        <property name="name" type="string"/>
-        <property name="code" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="code" type="string" description="A unique code, often for currency, country, or barcode."/>
     </transfer>
 
     <transfer name="RestOrdersSalesUnitAttributes">
-        <property name="conversion" type="int"/>
-        <property name="precision" type="int"/>
-        <property name="productMeasurementUnit" type="RestOrdersProductMeasurementUnitsAttributes"/>
+        <property name="conversion" type="int" description="The conversion factor between a sales unit and a base unit."/>
+        <property name="precision" type="int" description="The total number of digits in a decimal value."/>
+        <property name="productMeasurementUnit" type="RestOrdersProductMeasurementUnitsAttributes" description="A unit of measurement for a product."/>
     </transfer>
 
     <transfer name="PersistentCartChange">
-        <property name="items" type="Item[]" singular="item"/>
+        <property name="items" type="Item[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
     </transfer>
 
     <transfer name="Item">
-        <property name="sku" type="string"/>
-        <property name="groupKey" type="string"/>
-        <property name="quantity" type="int"/>
-        <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
-        <property name="amount" type="decimal"/>
-        <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <property name="groupKey" type="string" description="A key used to group items together, typically in a cart or order."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
+        <property name="amountSalesUnit" type="ProductMeasurementSalesUnit" description="The sales unit associated with a specific amount of a product."/>
+        <property name="amount" type="decimal" description="A numerical value, often used for price, quantity, or discount."/>
+        <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit" description="The sales unit for a product's quantity."/>
     </transfer>
 
     <transfer name="RestItemsAttributes">
-        <property name="salesUnit" type="RestCartItemsSalesUnitAttributes"/>
-        <property name="sku" type="string" restRequestParameter="required"/>
+        <property name="salesUnit" type="RestCartItemsSalesUnitAttributes" description="The unit of sale for a product."/>
+        <property name="sku" type="string" restRequestParameter="required" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
     </transfer>
 
     <transfer name="RestOrderItemsAttributes">
-        <property name="amount" type="decimal"/>
-        <property name="salesUnit" type="RestOrdersSalesUnitAttributes"/>
+        <property name="amount" type="decimal" description="A numerical value, often used for price, quantity, or discount."/>
+        <property name="salesUnit" type="RestOrdersSalesUnitAttributes" description="The unit of sale for a product."/>
     </transfer>
 
     <transfer name="ProductConcreteProductMeasurementSalesUnit">
         <property name="idProductConcrete" type="int"/>
-        <property name="productMeasurementSalesUnits" type="ProductMeasurementSalesUnit[]" singular="productMeasurementSalesUnit"/>
+        <property name="productMeasurementSalesUnits" type="ProductMeasurementSalesUnit[]" singular="productMeasurementSalesUnit" description="A collection of product sales measurement units."/>
     </transfer>
 
     <transfer name="ConcreteProductsRestAttributes">
-        <property name="sku" type="string"/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int"/>
-        <property name="code" type="string"/>
-        <property name="detail" type="string"/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="RestQuoteRequestSalesUnit">
         <property name="id" type="int"/>
-        <property name="amount" type="decimal"/>
+        <property name="amount" type="decimal" description="A numerical value, often used for price, quantity, or discount."/>
     </transfer>
 
     <transfer name="QuoteRequest">
-        <property name="quoteRequestReference" type="string"/>
-        <property name="latestVersion" type="QuoteRequestVersion"/>
+        <property name="quoteRequestReference" type="string" description="A unique reference for a quote request."/>
+        <property name="latestVersion" type="QuoteRequestVersion" description="The latest version of a quote request."/>
     </transfer>
 
     <transfer name="RestQuoteRequestsAttributes">
-        <property name="shownVersion" type="RestQuoteRequestVersion"/>
-        <property name="quoteRequestReference" type="string"/>
+        <property name="shownVersion" type="RestQuoteRequestVersion" description="The version of a quote request shown to the user."/>
+        <property name="quoteRequestReference" type="string" description="A unique reference for a quote request."/>
     </transfer>
 
     <transfer name="QuoteRequestVersion">
-        <property name="quote" type="Quote"/>
+        <property name="quote" type="Quote" description="A data object representing a shopping cart before it becomes an order."/>
     </transfer>
 
     <transfer name="RestQuoteRequestVersion">
-        <property name="cart" type="RestQuoteRequestsCart"/>
+        <property name="cart" type="RestQuoteRequestsCart" description="A shopping cart or quote object."/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="items" type="Item[]" singular="item"/>
+        <property name="items" type="Item[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
     </transfer>
 
     <transfer name="RestQuoteRequestsCart">
-        <property name="items" type="RestQuoteRequestItem[]" singular="item"/>
+        <property name="items" type="RestQuoteRequestItem[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
     </transfer>
 
 </transfers>

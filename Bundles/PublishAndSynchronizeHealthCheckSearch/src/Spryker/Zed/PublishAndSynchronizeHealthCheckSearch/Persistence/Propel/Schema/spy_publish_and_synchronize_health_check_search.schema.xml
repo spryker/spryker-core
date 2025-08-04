@@ -3,7 +3,7 @@
     <table name="spy_publish_and_synchronize_health_check_search" idMethod="native" class="SpyPublishAndSynchronizeHealthCheckSearch" identifierQuoting="true">
         <column name="id_publish_and_synchronize_health_check_search" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_publish_and_synchronize_health_check" type="INTEGER" required="true"/>
-        <column name="health_check_key" required="true" type="VARCHAR" size="255"/>
+        <column name="health_check_key" required="true" type="VARCHAR" size="255" description="A unique key for a health check."/>
 
         <index name="spy_ps_hc_search-fk_publish_and_synchronize_health_check">
             <index-column name="fk_publish_and_synchronize_health_check"/>
@@ -17,7 +17,7 @@
             <parameter name="queue_group" value="sync.search.publish_and_synchronize_health_check"/>
             <parameter name="locale" required="false"/>
             <parameter name="store" required="false"/>
-            <parameter name="params" value='{"type":"page"}'/>
+            <parameter name="params" value="{&quot;type&quot;:&quot;page&quot;}"/>
         </behavior>
 
         <behavior name="timestampable"/>

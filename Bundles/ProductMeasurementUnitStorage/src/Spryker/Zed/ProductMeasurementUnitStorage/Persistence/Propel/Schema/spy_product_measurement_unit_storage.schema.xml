@@ -11,8 +11,8 @@
     <table name="spy_product_measurement_unit_storage" identifierQuoting="true">
         <column name="id_product_measurement_unit_storage" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_measurement_unit" type="integer" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
-        <column name="key" type="VARCHAR" size="1024" required="true"/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
+        <column name="key" type="VARCHAR" size="1024" required="true" description="A unique key used to identify an entity or a piece of data."/>
 
         <id-method-parameter value="id_product_measurement_unit_storage_pk_seq"/>
 
@@ -32,9 +32,9 @@
     <table name="spy_product_concrete_measurement_unit_storage" identifierQuoting="true">
         <column name="id_product_concrete_measurement_unit_storage" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product" type="integer" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
-        <column name="store" type="VARCHAR" size="255" required="true"/>
-        <column name="key" type="VARCHAR" size="1024" required="true"/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
+        <column name="store" type="VARCHAR" size="255" required="true" description="The store context for an operation, determining which store's data is used."/>
+        <column name="key" type="VARCHAR" size="1024" required="true" description="A unique key used to identify an entity or a piece of data."/>
 
         <id-method-parameter value="id_product_concrete_measurement_unit_storage_pk_seq"/>
 

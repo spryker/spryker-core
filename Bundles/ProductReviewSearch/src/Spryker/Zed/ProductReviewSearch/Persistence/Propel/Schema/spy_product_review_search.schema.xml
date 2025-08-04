@@ -5,7 +5,7 @@
         <column name="id_product_review_search" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_review" type="INTEGER" required="true"/>
         <!-- 'structured_data' column contains the result from database query while 'data' column contains mapped data for the search engine -->
-        <column name="structured_data" type="LONGVARCHAR" required="true"/>
+        <column name="structured_data" type="LONGVARCHAR" required="true" description="A JSON-encoded string containing structured data for a service point, used for search indexing."/>
         <index name="spy_product_review_search-fk_product_review">
             <index-column name="fk_product_review"/>
         </index>
@@ -14,7 +14,7 @@
             <parameter name="resource" value="product_review"/>
             <parameter name="key_suffix_column" value="fk_product_review"/>
             <parameter name="queue_group" value="sync.search.product"/>
-            <parameter name="params" value='{"type":"product-review"}'/>
+            <parameter name="params" value="{&quot;type&quot;:&quot;product-review&quot;}"/>
         </behavior>
         <behavior name="timestampable"/>
     </table>

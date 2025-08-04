@@ -3,10 +3,10 @@
 
     <table name="spy_product_offer">
         <column name="id_product_offer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="concrete_sku" required="true" type="VARCHAR" size="255"/>
-        <column name="product_offer_reference" required="true" type="VARCHAR" size="255"/>
-        <column name="is_active" default="true" type="BOOLEAN"/>
-        <column name="approval_status" type="VARCHAR" size="64" required="true"/>
+        <column name="concrete_sku" required="true" type="VARCHAR" size="255" description="The SKU for a concrete product variant."/>
+        <column name="product_offer_reference" required="true" type="VARCHAR" size="255" description="A unique reference identifier for a specific product offer from a merchant."/>
+        <column name="is_active" default="true" type="BOOLEAN" description="A boolean flag indicating if an entity is currently active."/>
+        <column name="approval_status" type="VARCHAR" size="64" required="true" description="The current approval status of an entity, e.g., a product or offer."/>
 
         <index name="spy_product_offer-concrete_sku">
             <index-column name="concrete_sku"/>

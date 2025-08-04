@@ -2,24 +2,24 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestProductOfferAvailabilitiesAttributes">
-        <property name="isNeverOutOfStock" type="bool"/>
-        <property name="quantity" type="decimal"/>
-        <property name="availability" type="bool"/>
+        <property name="isNeverOutOfStock" type="bool" description="A flag indicating if a product should never be considered out of stock."/>
+        <property name="quantity" type="decimal" description="The number of units for an item."/>
+        <property name="availability" type="bool" description="The stock level or availability of a product."/>
     </transfer>
 
     <transfer name="ProductOfferAvailabilityStorage">
-        <property name="availability" type="decimal"/>
-        <property name="isAvailable" type="bool"/>
+        <property name="availability" type="decimal" description="The stock level or availability of a product."/>
+        <property name="isAvailable" type="bool" description="A flag indicating if a product or service is available."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="code" type="string"/>
-        <property name="status" type="int"/>
-        <property name="detail" type="string"/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="Store">
-        <property name="name" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
 </transfers>

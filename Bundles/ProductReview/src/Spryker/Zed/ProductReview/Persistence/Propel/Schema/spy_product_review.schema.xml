@@ -5,12 +5,12 @@
         <column name="id_product_review" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
-        <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
-        <column name="rating" required="true" type="INTEGER" defaultValue="0"/>
-        <column name="summary" required="false" type="LONGVARCHAR" defaultValue="NULL"/>
-        <column name="description" required="false" type="LONGVARCHAR" defaultValue="NULL"/>
-        <column name="nickname" required="false" type="VARCHAR" size="255" defaultValue="NULL"/>
-        <column name="status" required="true" type="ENUM" valueSet="pending, approved, rejected" defaultValue="pending"/>
+        <column name="customer_reference" required="true" type="VARCHAR" size="255" description="A unique reference for a customer."/>
+        <column name="rating" required="true" type="INTEGER" defaultValue="0" description="The rating given to a product in a review."/>
+        <column name="summary" required="false" type="LONGVARCHAR" defaultValue="NULL" description="A summary description of an API endpoint or operation."/>
+        <column name="description" required="false" type="LONGVARCHAR" defaultValue="NULL" description="A description of an entity."/>
+        <column name="nickname" required="false" type="VARCHAR" size="255" defaultValue="NULL" description="The nickname of a user, especially for product reviews."/>
+        <column name="status" required="true" type="ENUM" valueSet="pending, approved, rejected" defaultValue="pending" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
 
         <behavior name="timestampable"/>
 

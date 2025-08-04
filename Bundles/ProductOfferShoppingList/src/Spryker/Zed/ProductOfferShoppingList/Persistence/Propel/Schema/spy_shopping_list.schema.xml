@@ -2,6 +2,6 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ShoppingList\Persistence" package="src.Orm.Zed.ShoppingList.Persistence">
 
     <table name="spy_shopping_list_item">
-        <column name="product_offer_reference" required="false" type="VARCHAR" size="255"/>
+        <column name="product_offer_reference" required="false" type="VARCHAR" size="255" description="A unique reference identifier for a specific product offer from a merchant."/>
     </table>
 </database>

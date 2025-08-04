@@ -2,74 +2,74 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestProductPricesAttributes">
-        <property name="price" type="int"/>
-        <property name="prices" type="RestProductPriceAttributes[]" singular="price"/>
+        <property name="price" type="int" description="The price of a product or service."/>
+        <property name="prices" type="RestProductPriceAttributes[]" singular="price" description="A collection of prices, often for different currencies or price types."/>
     </transfer>
 
     <transfer name="RestProductPriceAttributes">
-        <property name="priceTypeName" type="string"/>
-        <property name="netAmount" type="int"/>
-        <property name="grossAmount" type="int"/>
-        <property name="currency" type="RestCurrency"/>
+        <property name="priceTypeName" type="string" description="The name of a price type (e.g., 'DEFAULT', 'ORIGINAL')."/>
+        <property name="netAmount" type="int" description="The amount of a price, excluding tax."/>
+        <property name="grossAmount" type="int" description="The gross amount (including tax)."/>
+        <property name="currency" type="RestCurrency" description="The currency used for a transaction or price."/>
     </transfer>
 
     <transfer name="RestCurrency">
-        <property name="code" type="string"/>
-        <property name="name" type="string"/>
-        <property name="symbol" type="string"/>
+        <property name="code" type="string" description="A unique code, often for currency, country, or barcode."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="symbol" type="string" description="The symbol for a currency (e.g., '$', '&#x20AC;')."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="code" type="string"/>
-        <property name="detail" type="string"/>
-        <property name="status" type="int"/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
+        <property name="status" type="int" description="A HTTP status code."/>
     </transfer>
 
     <transfer name="Store">
-        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
+        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode" description="A list of ISO codes for available currencies in a store."/>
     </transfer>
 
     <transfer name="RestErrorCollection">
-        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError" description="A collection of error messages formatted for a REST API response."/>
     </transfer>
 
     <transfer name="CurrentProductPrice">
-        <property name="price" type="int"/>
-        <property name="prices" type="array" singular="price"/>
-        <property name="currency" type="Currency"/>
+        <property name="price" type="int" description="The price of a product or service."/>
+        <property name="prices" type="array" singular="price" description="A collection of prices, often for different currencies or price types."/>
+        <property name="currency" type="Currency" description="The currency used for a transaction or price."/>
     </transfer>
 
     <transfer name="RestWishlistItemsAttributes">
-        <property name="prices" type="RestPriceProduct[]" singular="price"/>
+        <property name="prices" type="RestPriceProduct[]" singular="price" description="A collection of prices, often for different currencies or price types."/>
     </transfer>
 
     <transfer name="Currency">
     </transfer>
 
     <transfer name="WishlistItem">
-        <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="prices" type="PriceProduct[]" singular="price" description="A collection of prices, often for different currencies or price types."/>
     </transfer>
 
     <transfer name="RestPriceProduct">
-        <property name="priceTypeName" type="string"/>
+        <property name="priceTypeName" type="string" description="The name of a price type (e.g., 'DEFAULT', 'ORIGINAL')."/>
     </transfer>
 
     <transfer name="PriceProduct">
-        <property name="moneyValue" type="MoneyValue"/>
-        <property name="priceType" type="PriceType"/>
+        <property name="moneyValue" type="MoneyValue" description="A monetary value in a specific currency."/>
+        <property name="priceType" type="PriceType" description="The type of price (e.g., DEFAULT, PROMOTIONAL)."/>
     </transfer>
 
     <transfer name="MoneyValue">
     </transfer>
 
     <transfer name="PriceType">
-        <property name="name" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="PriceProductFilter">
-        <property name="currency" type="Currency"/>
-        <property name="currencyIsoCode" type="string"/>
-        <property name="priceProductResolveConditions" type="PriceProductResolveConditions" strict="true"/>
+        <property name="currency" type="Currency" description="The currency used for a transaction or price."/>
+        <property name="currencyIsoCode" type="string" description="The ISO code for a currency."/>
+        <property name="priceProductResolveConditions" type="PriceProductResolveConditions" strict="true" description="Conditions for resolving a product price."/>
     </transfer>
 
     <transfer name="PriceProductResolveConditions" strict="true">

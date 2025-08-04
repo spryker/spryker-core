@@ -4,12 +4,12 @@
     <table name="spy_sales_order_item_option">
         <column name="id_sales_order_item_option" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
-        <column name="group_name" type="VARCHAR" size="255" required="true"/>
-        <column name="value" type="VARCHAR" size="255" required="true"/>
-        <column name="gross_price" type="INTEGER" required="true" default="0"/>
-        <column name="canceled_amount" type="INTEGER" required="false" default="0"/>
-        <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="true"/>
-        <column name="sku" type="VARCHAR" size="255" required="true"/>
+        <column name="group_name" type="VARCHAR" size="255" required="true" description="The name of a group."/>
+        <column name="value" type="VARCHAR" size="255" required="true" description="A generic value for a property, often used in key-value pairs or translations."/>
+        <column name="gross_price" type="INTEGER" required="true" default="0" description="The gross price (including tax)."/>
+        <column name="canceled_amount" type="INTEGER" required="false" default="0" description="The amount that has been canceled from an order item."/>
+        <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="true" description="The tax rate applied to an item."/>
+        <column name="sku" type="VARCHAR" size="255" required="true" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
 
         <column name="net_price" type="INTEGER" required="false" default="0" description="/Price for one unit not including tax, without shipping, coupons/"/>
         <column name="price" type="INTEGER" required="false" default="0" description="/Price for item, can be gross or net price depending on tax mode/"/>

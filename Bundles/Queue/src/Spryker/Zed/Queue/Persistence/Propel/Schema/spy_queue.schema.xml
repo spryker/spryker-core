@@ -3,10 +3,10 @@
 
     <table name="spy_queue_process">
         <column name="id_queue_process" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="server_id" type="VARCHAR" size="255" required="true"/>
-        <column name="process_pid" type="INTEGER" required="true"/>
-        <column name="worker_pid" type="INTEGER" required="true"/>
-        <column name="queue_name" type="VARCHAR" size="255" required="true"/>
+        <column name="server_id" type="VARCHAR" size="255" required="true" description="The ID of the server currently running a queue worker process."/>
+        <column name="process_pid" type="INTEGER" required="true" description="The process ID (PID) of the queue worker process."/>
+        <column name="worker_pid" type="INTEGER" required="true" description="The process ID (PID) of the individual worker within a queue process."/>
+        <column name="queue_name" type="VARCHAR" size="255" required="true" description="The name of the message queue."/>
         <unique name="spy_queue_process-unique-key">
             <unique-column name="server_id"/>
             <unique-column name="process_pid"/>

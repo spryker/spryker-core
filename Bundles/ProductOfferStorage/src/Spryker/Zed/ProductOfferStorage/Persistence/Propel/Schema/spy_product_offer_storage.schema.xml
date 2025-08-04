@@ -3,7 +3,7 @@
 
     <table name="spy_product_offer_storage" identifierQuoting="true">
         <column name="id_product_offer_storage" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="product_offer_reference" required="true" type="VARCHAR" size="255"/>
+        <column name="product_offer_reference" required="true" type="VARCHAR" size="255" description="A unique reference identifier for a specific product offer from a merchant."/>
 
         <index name="spy_product_offer_storage-product_offer_reference">
             <index-column name="product_offer_reference"/>

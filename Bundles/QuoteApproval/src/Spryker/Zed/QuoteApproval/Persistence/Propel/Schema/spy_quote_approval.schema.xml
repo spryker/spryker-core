@@ -5,8 +5,8 @@
         <column name="id_quote_approval" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_quote" required="true" type="INTEGER"/>
         <column name="fk_company_user" required="true" type="INTEGER"/>
-        <column name="status" required="true" type="VARCHAR" size="255"/>
-        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+        <column name="status" required="true" type="VARCHAR" size="255" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
+        <column name="uuid" required="false" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
 
         <id-method-parameter value="id_quote_approval_pk_seq"/>
 

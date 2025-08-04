@@ -4,8 +4,8 @@
     <table name="spy_product_option_group" idMethod="native" allowPkInsert="true">
         <column name="id_product_option_group" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_tax_set" type="INTEGER" required="false"/>
-        <column name="name" type="VARCHAR" size="255"/>
-        <column name="active" type="BOOLEAN"/>
+        <column name="name" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="active" type="BOOLEAN" description="A boolean flag indicating if an entity is active."/>
 
         <foreign-key name="spy_product_option_group-fk_tax_set" foreignTable="spy_tax_set" onDelete="SETNULL">
             <reference local="fk_tax_set" foreign="id_tax_set"/>
@@ -32,8 +32,8 @@
     <table name="spy_product_option_value" idMethod="native" allowPkInsert="true">
         <column name="id_product_option_value" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="price" type="INTEGER" description="Deprecated"/>
-        <column name="sku" required="true" type="VARCHAR" size="255"/>
-        <column name="value" required="true" type="VARCHAR" size="255"/>
+        <column name="sku" required="true" type="VARCHAR" size="255" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <column name="value" required="true" type="VARCHAR" size="255" description="A generic value for a property, often used in key-value pairs or translations."/>
         <column name="fk_product_option_group" type="integer" required="true"/>
 
         <unique name="spy_product_option_value-sku">
@@ -54,8 +54,8 @@
         <column name="fk_currency" required="true" type="INTEGER"/>
         <column name="fk_store" type="INTEGER"/>
         <column name="fk_product_option_value" required="true" type="INTEGER"/>
-        <column name="gross_price" type="INTEGER"/>
-        <column name="net_price" type="INTEGER"/>
+        <column name="gross_price" type="INTEGER" description="The gross price (including tax)."/>
+        <column name="net_price" type="INTEGER" description="The net price (excluding tax)."/>
 
         <foreign-key name="spy_product_option_value_price-fk_currency" foreignTable="spy_currency" phpName="Currency" refPhpName="ProductOptionValuePrice">
             <reference local="fk_currency" foreign="id_currency"/>

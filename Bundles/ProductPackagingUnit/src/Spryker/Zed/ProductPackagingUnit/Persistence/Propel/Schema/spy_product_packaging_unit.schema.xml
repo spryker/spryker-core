@@ -6,11 +6,11 @@
         <column name="fk_product" type="INTEGER" required="true"/>
         <column name="fk_lead_product" type="INTEGER" required="true"/>
         <column name="fk_product_packaging_unit_type" type="INTEGER" required="true"/>
-        <column name="default_amount" type="DECIMAL" size="20" scale="10" required="true"/>
-        <column name="is_amount_variable" type="BOOLEAN" required="true"/>
-        <column name="amount_min" type="DECIMAL" size="20" scale="10" required="false"/>
-        <column name="amount_max" type="DECIMAL" size="20" scale="10" required="false"/>
-        <column name="amount_interval" type="DECIMAL" size="20" scale="10" required="false"/>
+        <column name="default_amount" type="DECIMAL" size="20" scale="10" required="true" description="The default amount for a product packaging unit."/>
+        <column name="is_amount_variable" type="BOOLEAN" required="true" description="Indicates if the amount for a packaging unit can be varied."/>
+        <column name="amount_min" type="DECIMAL" size="20" scale="10" required="false" description="The minimum allowable amount for a product packaging unit."/>
+        <column name="amount_max" type="DECIMAL" size="20" scale="10" required="false" description="The maximum allowable amount for a product packaging unit."/>
+        <column name="amount_interval" type="DECIMAL" size="20" scale="10" required="false" description="The interval by which the amount of a product can be increased or decreased."/>
 
         <behavior name="timestampable"/>
 
@@ -39,7 +39,7 @@
 
     <table name="spy_product_packaging_unit_type">
         <column name="id_product_packaging_unit_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
 
         <behavior name="timestampable"/>
 

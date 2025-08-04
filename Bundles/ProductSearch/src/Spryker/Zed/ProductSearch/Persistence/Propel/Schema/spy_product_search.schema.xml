@@ -4,7 +4,7 @@
         <column name="id_product_search" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product" type="INTEGER"/>
         <column name="fk_locale" type="INTEGER"/>
-        <column name="is_searchable" type="BOOLEAN" defaultValue="true"/>
+        <column name="is_searchable" type="BOOLEAN" defaultValue="true" description="A flag indicating if a product or page is searchable."/>
 
         <foreign-key name="spy_product_search-fk_product" foreignTable="spy_product">
             <reference local="fk_product" foreign="id_product"/>
@@ -24,8 +24,8 @@
 
     <table name="spy_product_search_attribute_map">
         <column name="fk_product_attribute_key" type="INTEGER" required="true" primaryKey="true"/>
-        <column name="target_field" type="VARCHAR" required="true" size="255" primaryKey="true"/>
-        <column name="synced" type="BOOLEAN" defaultValue="false"/>
+        <column name="target_field" type="VARCHAR" required="true" size="255" primaryKey="true" description="The target field in the search index where an attribute's value will be stored."/>
+        <column name="synced" type="BOOLEAN" defaultValue="false" description="A flag indicating if an attribute map has been synchronized with the search index."/>
 
         <index>
             <index-column name="fk_product_attribute_key"/>
@@ -41,9 +41,9 @@
     <table name="spy_product_search_attribute" idMethod="native" allowPkInsert="true">
         <column name="id_product_search_attribute" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product_attribute_key" type="INTEGER" required="true"/>
-        <column name="filter_type" type="VARCHAR" size="255" required="true"/>
-        <column name="position" type="INTEGER" required="true" defaultValue="0"/>
-        <column name="synced" type="BOOLEAN" defaultValue="false"/>
+        <column name="filter_type" type="VARCHAR" size="255" required="true" description="The type of filter to be used for a product search attribute (e.g., 'select', 'range')."/>
+        <column name="position" type="INTEGER" required="true" defaultValue="0" description="The position or order of an item in a list."/>
+        <column name="synced" type="BOOLEAN" defaultValue="false" description="A flag indicating if an attribute map has been synchronized with the search index."/>
 
         <foreign-key name="spy_product_search_attribute-fk_product_attribute_key" foreignTable="spy_product_attribute_key">
             <reference local="fk_product_attribute_key" foreign="id_product_attribute_key"/>

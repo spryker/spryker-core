@@ -2,11 +2,11 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence">
 
     <table name="spy_sales_order_item">
-        <column name="quantity_base_measurement_unit_name" required="false" type="VARCHAR" size="255"/>
-        <column name="quantity_measurement_unit_name" required="false" type="VARCHAR" size="255"/>
-        <column name="quantity_measurement_unit_code" required="false" type="VARCHAR" size="255"/>
-        <column name="quantity_measurement_unit_precision" required="false" type="INTEGER"/>
-        <column name="quantity_measurement_unit_conversion" required="false" type="FLOAT"/>
+        <column name="quantity_base_measurement_unit_name" required="false" type="VARCHAR" size="255" description="The name of the base measurement unit for the quantity of a sales order item."/>
+        <column name="quantity_measurement_unit_name" required="false" type="VARCHAR" size="255" description="The name of the measurement unit for the quantity of a sales order item."/>
+        <column name="quantity_measurement_unit_code" required="false" type="VARCHAR" size="255" description="The code of the measurement unit for the quantity of a sales order item."/>
+        <column name="quantity_measurement_unit_precision" required="false" type="INTEGER" description="The precision of the measurement unit for the quantity of a sales order item."/>
+        <column name="quantity_measurement_unit_conversion" required="false" type="FLOAT" description="The conversion factor for the measurement unit of a sales order item's quantity."/>
     </table>
 
 </database>

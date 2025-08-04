@@ -15,7 +15,8 @@
         "spryker/product-option-storage": "^1.6.0",
         "spryker/product-storage": "^1.17.0",
         "spryker/quote-requests-rest-api-extension": "^1.0.0",
-        "spryker/synchronization-behavior": "^1.0.0"
+        "spryker/synchronization-behavior": "^1.0.0",
+        "spryker/transfer": "^3.42.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

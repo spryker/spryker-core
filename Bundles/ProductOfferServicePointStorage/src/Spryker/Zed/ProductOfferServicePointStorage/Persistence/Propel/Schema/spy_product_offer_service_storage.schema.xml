@@ -3,10 +3,10 @@
 
     <table name="spy_product_offer_service_storage" identifierQuoting="true">
         <column name="id_product_offer_service_storage" type="integer" autoIncrement="true" primaryKey="true"/>
-        <column name="product_offer_reference" type="VARCHAR" size="255" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
-        <column name="key" type="VARCHAR" size="1024" required="true"/>
-        <column name="store" type="VARCHAR" size="255" required="true"/>
+        <column name="product_offer_reference" type="VARCHAR" size="255" required="true" description="A unique reference identifier for a specific product offer from a merchant."/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
+        <column name="key" type="VARCHAR" size="1024" required="true" description="A unique key used to identify an entity or a piece of data."/>
+        <column name="store" type="VARCHAR" size="255" required="true" description="The store context for an operation, determining which store's data is used."/>
 
         <id-method-parameter value="spy_product_offer_service_storage_pk_seq"/>
 

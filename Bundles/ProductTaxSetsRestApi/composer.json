@@ -11,7 +11,8 @@
         "spryker/symfony": "^3.0.0",
         "spryker/tax-product-storage": "^1.0.0",
         "spryker/tax-storage": "^1.0.0",
-        "spryker/uuid-behavior": "^1.0.0"
+        "spryker/uuid-behavior": "^1.0.0",
+        "spryker/transfer": "^3.42.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*"

@@ -10,8 +10,8 @@
 
     <table name="spy_publish_and_synchronize_health_check" idMethod="native" class="SpyPublishAndSynchronizeHealthCheck">
         <column name="id_publish_and_synchronize_health_check" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="health_check_key" required="true" type="VARCHAR" size="255"/>
-        <column name="health_check_data" required="true" type="VARCHAR" size="255"/>
+        <column name="health_check_key" required="true" type="VARCHAR" size="255" description="A unique key for a health check."/>
+        <column name="health_check_data" required="true" type="VARCHAR" size="255" description="Data related to a health check."/>
         <unique name="spy_publish_and_synchronize_health_check-health_check_key">
             <unique-column name="health_check_key"/>
         </unique>

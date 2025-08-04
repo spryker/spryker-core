@@ -2,13 +2,13 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd">
 
     <table name="spy_sales_order_item">
-        <column name="amount" type="DECIMAL" size="20" scale="10" required="false"/>
-        <column name="amount_sku" type="VARCHAR" size="255" required="false"/>
-        <column name="amount_measurement_unit_name" required="false" type="VARCHAR" size="255"/>
-        <column name="amount_measurement_unit_code" required="false" type="VARCHAR" size="255"/>
-        <column name="amount_measurement_unit_precision" required="false" type="INTEGER"/>
-        <column name="amount_measurement_unit_conversion" required="false" type="FLOAT"/>
-        <column name="amount_base_measurement_unit_name" required="false" type="VARCHAR" size="255"/>
+        <column name="amount" type="DECIMAL" size="20" scale="10" required="false" description="A numerical value, often used for price, quantity, or discount."/>
+        <column name="amount_sku" type="VARCHAR" size="255" required="false" description="The SKU of the product representing the amount for a packaging unit."/>
+        <column name="amount_measurement_unit_name" required="false" type="VARCHAR" size="255" description="The name of the measurement unit for the amount of a sales order item."/>
+        <column name="amount_measurement_unit_code" required="false" type="VARCHAR" size="255" description="The code of the measurement unit for the amount of a sales order item."/>
+        <column name="amount_measurement_unit_precision" required="false" type="INTEGER" description="The precision of the measurement unit for the amount of a sales order item."/>
+        <column name="amount_measurement_unit_conversion" required="false" type="FLOAT" description="The conversion factor for the measurement unit of a sales order item's amount."/>
+        <column name="amount_base_measurement_unit_name" required="false" type="VARCHAR" size="255" description="The name of the base measurement unit for the amount of a sales order item."/>
     </table>
 
 </database>

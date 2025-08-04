@@ -3,10 +3,10 @@
 
     <table name="spy_push_notification" idMethod="native">
         <column name="id_push_notification" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+        <column name="uuid" required="false" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
         <column name="fk_push_notification_group" required="true" type="INTEGER"/>
         <column name="fk_push_notification_provider" required="true" type="INTEGER"/>
-        <column name="payload" type="CLOB"/>
+        <column name="payload" type="CLOB" description="The data payload of a message or request."/>
 
         <id-method-parameter value="id_push_notification_pk_seq"/>
 
@@ -35,13 +35,13 @@
 
     <table name="spy_push_notification_subscription" idMethod="native">
         <column name="id_push_notification_subscription" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+        <column name="uuid" required="false" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
         <column name="fk_push_notification_group" required="true" type="INTEGER"/>
         <column name="fk_push_notification_provider" required="true" type="INTEGER"/>
         <column name="fk_locale" required="false" default="null" type="INTEGER"/>
-        <column name="payload" type="CLOB"/>
-        <column name="payload_checksum" type="VARCHAR" size="255"/>
-        <column name="expired_at" required="true" type="TIMESTAMP"/>
+        <column name="payload" type="CLOB" description="The data payload of a message or request."/>
+        <column name="payload_checksum" type="VARCHAR" size="255" description="A checksum of the push notification payload to detect changes."/>
+        <column name="expired_at" required="true" type="TIMESTAMP" description="The timestamp when a subscription or token expires."/>
 
         <id-method-parameter value="id_push_notification_subscription_pk_seq"/>
 
@@ -105,9 +105,9 @@
 
     <table name="spy_push_notification_group" idMethod="native">
         <column name="id_push_notification_group" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="uuid" required="false" type="VARCHAR" size="36"/>
-        <column name="name" required="true" size="255" type="VARCHAR"/>
-        <column name="identifier" required="false" size="255" type="VARCHAR"/>
+        <column name="uuid" required="false" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
+        <column name="name" required="true" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="identifier" required="false" size="255" type="VARCHAR" description="A unique identifier for an entity."/>
 
         <id-method-parameter value="id_push_notification_group_pk_seq"/>
 
@@ -125,8 +125,8 @@
 
     <table name="spy_push_notification_provider" idMethod="native" identifierQuoting="true">
         <column name="id_push_notification_provider" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="uuid" required="false" type="VARCHAR" size="36"/>
-        <column name="name" required="true" size="255" type="VARCHAR"/>
+        <column name="uuid" required="false" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
+        <column name="name" required="true" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
 
         <unique name="spy_push_notification_provider-name">
             <unique-column name="name"/>

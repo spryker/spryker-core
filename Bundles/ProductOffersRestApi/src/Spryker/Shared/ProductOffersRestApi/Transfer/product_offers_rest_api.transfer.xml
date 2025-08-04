@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
     <transfer name="RestProductOffersAttributes">
-        <property name="isDefault" type="bool"/>
+        <property name="isDefault" type="bool" description="A flag indicating if an entity is the default one."/>
     </transfer>
 
     <transfer name="ProductOfferStorage">
-        <property name="productOfferReference" type="string"/>
+        <property name="productOfferReference" type="string" description="A unique reference identifier for a specific product offer from a merchant."/>
     </transfer>
 
 </transfers>

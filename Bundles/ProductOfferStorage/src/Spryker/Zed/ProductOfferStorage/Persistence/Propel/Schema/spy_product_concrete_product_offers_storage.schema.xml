@@ -4,7 +4,7 @@
 
     <table name="spy_product_concrete_product_offers_storage" identifierQuoting="true">
         <column name="id_product_concrete_product_offers_storage" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="concrete_sku" required="true" type="VARCHAR" size="255"/>
+        <column name="concrete_sku" required="true" type="VARCHAR" size="255" description="The SKU for a concrete product variant."/>
 
         <index name="spy_product_concrete_product_offer_storage-concrete_sku">
             <index-column name="concrete_sku"/>

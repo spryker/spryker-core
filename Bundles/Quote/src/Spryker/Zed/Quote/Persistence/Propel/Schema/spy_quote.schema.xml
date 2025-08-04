@@ -4,8 +4,8 @@
     <table name="spy_quote" idMethod="native" allowPkInsert="true">
         <column name="id_quote" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_store" required="true" type="INTEGER"/>
-        <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
-        <column name="quote_data" required="true" type="CLOB"/>
+        <column name="customer_reference" required="true" type="VARCHAR" size="255" description="A unique reference for a customer."/>
+        <column name="quote_data" required="true" type="CLOB" description="A serialized representation of a quote, stored with a sales order amendment."/>
 
         <behavior name="timestampable"/>
 
