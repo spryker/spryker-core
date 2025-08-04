@@ -12,6 +12,10 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\ProductManagement\ProductStatusEnum;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelper;
@@ -35,6 +39,16 @@ use Twig\Loader\LoaderInterface;
  */
 class ProductTableTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_AT = 'AT';
+
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
      *
@@ -214,6 +228,72 @@ class ProductTableTest extends Unit
         ];
 
         $this->assertEqualsCanonicalizing($expectedProductTableData, $productTableData);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFetchDataShouldReturnProductsFilteredByStatus(): void
+    {
+        // Arrange
+        $abstractSku = 'abstract-test-sku';
+        $concreteSku = 'concrete-test-sku';
+
+        $this->tester->haveProduct(
+            [
+                ProductConcreteTransfer::SKU => $concreteSku,
+            ],
+            [
+                ProductAbstractTransfer::ID_PRODUCT_ABSTRACT => static::ID_PRODUCT_ABSTRACT,
+                ProductAbstractTransfer::SKU => $abstractSku,
+                ProductAbstractTransfer::IS_ACTIVE => 1,
+            ],
+        );
+        $productTableMock = $this->createProductTableMock($this->localeTransfers[static::LOCALE_NAME_DE]);
+
+        // Act
+        $productTableMock->applyCriteria((new ProductTableCriteriaTransfer())->setStatus(ProductStatusEnum::ACTIVE->value));
+        $productTableData = $productTableMock->fetchData();
+
+        // Assert
+        $this->assertEquals(static::ID_PRODUCT_ABSTRACT, $productTableData[0][ProductTableMock::COL_ID_PRODUCT_ABSTRACT]);
+        $this->assertEquals($abstractSku, $productTableData[0][ProductTableMock::COL_SKU]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFetchDataShouldReturnProductsFilteredByStores(): void
+    {
+        // Arrange
+        $abstractSku = 'abstract-test-sku';
+        $concreteSku = 'concrete-test-sku';
+        $storeAtTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_AT,
+        ]);
+        $storeRelationAtTransfer = (new StoreRelationTransfer())
+            ->addStores($storeAtTransfer)
+            ->addIdStores($storeAtTransfer->getIdStore());
+        $this->tester->haveProduct(
+            [
+                ProductConcreteTransfer::SKU => $concreteSku,
+            ],
+            [
+                ProductAbstractTransfer::ID_PRODUCT_ABSTRACT => static::ID_PRODUCT_ABSTRACT,
+                ProductAbstractTransfer::SKU => $abstractSku,
+                ProductAbstractTransfer::IS_ACTIVE => 1,
+                ProductAbstractTransfer::STORE_RELATION => $storeRelationAtTransfer,
+            ],
+        );
+        $productTableMock = $this->createProductTableMock($this->localeTransfers[static::LOCALE_NAME_DE]);
+
+        // Act
+        $productTableMock->applyCriteria((new ProductTableCriteriaTransfer())->setStores([$storeAtTransfer->getIdStore()]));
+        $productTableData = $productTableMock->fetchData();
+
+        // Assert
+        $this->assertEquals(static::ID_PRODUCT_ABSTRACT, $productTableData[0][ProductTableMock::COL_ID_PRODUCT_ABSTRACT]);
+        $this->assertEquals($abstractSku, $productTableData[0][ProductTableMock::COL_SKU]);
     }
 
     /**

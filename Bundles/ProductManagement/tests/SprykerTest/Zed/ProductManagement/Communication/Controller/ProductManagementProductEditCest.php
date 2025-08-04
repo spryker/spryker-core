@@ -35,6 +35,7 @@ class ProductManagementProductEditCest
      */
     public function breadcrumbShouldBeVisibleWhenMoneyFormDoesNotHaveLocaleOption(ProductManagementCommunicationTester $i): void
     {
+        $i->haveFullProduct();
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePluginWithoutLocale();
 

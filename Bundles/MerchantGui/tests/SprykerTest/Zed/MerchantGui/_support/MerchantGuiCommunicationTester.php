@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantGui;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\MerchantTableCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 /**
@@ -45,5 +46,16 @@ class MerchantGuiCommunicationTester extends Actor
         }
 
         return $this->getLocator()->store()->facade()->getCurrentStore();
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\MerchantTableCriteriaTransfer
+     */
+    public function createMerchantTableCriteriaTransfer(array $seedData = []): MerchantTableCriteriaTransfer
+    {
+        return (new MerchantTableCriteriaTransfer())
+            ->fromArray($seedData, true);
     }
 }
