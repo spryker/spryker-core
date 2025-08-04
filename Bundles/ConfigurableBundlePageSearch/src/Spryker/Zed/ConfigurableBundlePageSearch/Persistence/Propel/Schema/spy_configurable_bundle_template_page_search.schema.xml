@@ -12,7 +12,7 @@
         <column name="id_configurable_bundle_template_page_search" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_configurable_bundle_template" type="INTEGER" required="true"/>
         <!-- 'structured_data' column contains the result from database query while 'data' column contains mapped data for the search engine -->
-        <column name="structured_data" type="LONGVARCHAR" required="true"/>
+        <column name="structured_data" type="LONGVARCHAR" required="true" description="A JSON-encoded string containing structured data for a service point, used for search indexing."/>
         <index name="spy_configurable_bundle_template_page_search-fk_configurable_bundle_template">
             <index-column name="fk_configurable_bundle_template"/>
         </index>
@@ -22,7 +22,7 @@
             <parameter name="locale" required="true"/>
             <parameter name="key_suffix_column" value="fk_configurable_bundle_template"/>
             <parameter name="queue_group" value="sync.search.configurable_bundle"/>
-            <parameter name="params" value='{"type":"page"}'/>
+            <parameter name="params" value="{&quot;type&quot;:&quot;page&quot;}"/>
         </behavior>
         <behavior name="timestampable"/>
     </table>

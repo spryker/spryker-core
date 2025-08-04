@@ -4,8 +4,8 @@
     <table name="spy_configurable_bundle_template_storage" identifierQuoting="true">
         <column name="id_configurable_bundle_template_storage" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_configurable_bundle_template" type="integer" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
-        <column name="key" type="VARCHAR" size="1024" required="true"/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
+        <column name="key" type="VARCHAR" size="1024" required="true" description="A unique key used to identify an entity or a piece of data."/>
 
         <id-method-parameter value="id_configurable_bundle_template_storage_pk_seq"/>
 
@@ -26,8 +26,8 @@
     <table name="spy_configurable_bundle_template_image_storage" identifierQuoting="true">
         <column name="id_configurable_bundle_template_image_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_configurable_bundle_template" type="INTEGER" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
-        <column name="key" type="VARCHAR" size="1024" required="true"/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
+        <column name="key" type="VARCHAR" size="1024" required="true" description="A unique key used to identify an entity or a piece of data."/>
 
         <id-method-parameter value="spy_configurable_bundle_template_image_storage_pk_seq"/>
 

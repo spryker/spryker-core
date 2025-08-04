@@ -2,8 +2,8 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Product\Persistence" package="src.Orm.Zed.Product.Persistence">
 
     <table name="spy_product">
-        <column name="discount" required="false" type="INTEGER"/>
-        <column name="warehouses" required="false" type="LONGVARCHAR"/>
+        <column name="discount" required="false" type="INTEGER" description="A discount applied to a product or order."/>
+        <column name="warehouses" required="false" type="LONGVARCHAR" description="The warehouses associated with a product."/>
     </table>
 
 </database>

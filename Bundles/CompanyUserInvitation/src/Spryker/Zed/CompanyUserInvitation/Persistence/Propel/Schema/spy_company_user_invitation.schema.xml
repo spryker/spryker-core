@@ -3,16 +3,16 @@
 
     <table name="spy_company_user_invitation_status">
         <column name="id_company_user_invitation_status" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="status_key" required="true" size="255" type="VARCHAR"/>
+        <column name="status_key" required="true" size="255" type="VARCHAR" description="A key representing the current status of a company user invitation."/>
         <id-method-parameter value="spy_company_user_invitation_status_pk_seq"/>
     </table>
 
     <table name="spy_company_user_invitation">
         <column name="id_company_user_invitation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="first_name" required="true" size="100" type="VARCHAR"/>
-        <column name="last_name" required="true" size="100" type="VARCHAR"/>
-        <column name="email" required="true" type="VARCHAR" size="255" caseInsensitive="true"/>
-        <column name="hash" required="true" size="100" type="VARCHAR"/>
+        <column name="first_name" required="true" size="100" type="VARCHAR" description="The first name of a person."/>
+        <column name="last_name" required="true" size="100" type="VARCHAR" description="The last name of a user or customer."/>
+        <column name="email" required="true" type="VARCHAR" size="255" caseInsensitive="true" description="The email address of a user or contact."/>
+        <column name="hash" required="true" size="100" type="VARCHAR" description="A hash value representing the state of an object, often used to detect changes in a quote's totals."/>
         <column name="fk_company_business_unit" type="INTEGER" required="true"/>
         <column name="fk_company_user_invitation_status" type="INTEGER" required="true"/>
         <column name="fk_company_user" type="INTEGER" required="true"/>

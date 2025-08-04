@@ -3,10 +3,10 @@
 
     <table name="spy_app_config">
         <column name="id_app_config" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="app_identifier" required="true" type="VARCHAR" size="36"/>
-        <column name="status" type="VARCHAR" size="64"/>
-        <column name="is_active" default="true" type="BOOLEAN"/>
-        <column name="config" type="LONGVARCHAR"/>
+        <column name="app_identifier" required="true" type="VARCHAR" size="36" description="A unique identifier for an application."/>
+        <column name="status" type="VARCHAR" size="64" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
+        <column name="is_active" default="true" type="BOOLEAN" description="A boolean flag indicating if an entity is currently active."/>
+        <column name="config" type="LONGVARCHAR" description="Configuration settings for a module or feature."/>
 
         <unique name="spy_app_config-unique-app_identifier">
             <unique-column name="app_identifier"/>

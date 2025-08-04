@@ -3,8 +3,8 @@
 
     <table name="spy_customer_invalidated_storage" identifierQuoting="true">
         <column name="id_customer_invalidated_storage" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
+        <column name="customer_reference" required="true" type="VARCHAR" size="255" description="A unique reference for a customer."/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
 
         <id-method-parameter value="id_customer_invalidated_storage_pk_seq"/>
 

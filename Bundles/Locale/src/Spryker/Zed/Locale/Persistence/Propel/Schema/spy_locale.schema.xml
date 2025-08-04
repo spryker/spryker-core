@@ -3,8 +3,8 @@
 
     <table name="spy_locale" idMethod="native">
         <column name="id_locale" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="locale_name" required="true" size="5" type="VARCHAR"/>
-        <column name="is_active" required="true" type="BOOLEAN" defaultValue="true"/>
+        <column name="locale_name" required="true" size="5" type="VARCHAR" description="The name of a locale, such as &quot;en_US&quot; or &quot;de_DE&quot;."/>
+        <column name="is_active" required="true" type="BOOLEAN" defaultValue="true" description="A boolean flag indicating if an entity is currently active."/>
 
         <index name="spy_locale-index-locale_name">
             <index-column name="locale_name"/>

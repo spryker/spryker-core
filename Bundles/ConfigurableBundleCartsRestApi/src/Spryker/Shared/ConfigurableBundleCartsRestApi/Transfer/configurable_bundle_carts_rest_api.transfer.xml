@@ -2,117 +2,117 @@
 <transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="spryker:transfer-01" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestConfiguredBundlesAttributes">
-        <property name="quantity" type="int" restRequestParameter="required"/>
-        <property name="templateUuid" type="string" restRequestParameter="required"/>
-        <property name="items" type="RestConfiguredBundleItemsAttributes[]" singular="item" restRequestParameter="required"/>
+        <property name="quantity" type="int" restRequestParameter="required" description="The number of units for an item."/>
+        <property name="templateUuid" type="string" restRequestParameter="required" description="The universally unique identifier for a configurable bundle template."/>
+        <property name="items" type="RestConfiguredBundleItemsAttributes[]" singular="item" restRequestParameter="required" description="A collection of items, typically in a cart, order, or list."/>
     </transfer>
 
     <transfer name="RestConfiguredBundleItemsAttributes">
-        <property name="sku" type="string" restRequestParameter="required"/>
-        <property name="quantity" type="int" restRequestParameter="required"/>
-        <property name="slotUuid" type="string" restRequestParameter="required"/>
+        <property name="sku" type="string" restRequestParameter="required" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <property name="quantity" type="int" restRequestParameter="required" description="The number of units for an item."/>
+        <property name="slotUuid" type="string" restRequestParameter="required" description="The universally unique identifier for a configurable bundle template slot."/>
     </transfer>
 
     <transfer name="CreateConfiguredBundleRequest">
-        <property name="items" type="Item[]" singular="item"/>
-        <property name="configuredBundle" type="ConfiguredBundle"/>
-        <property name="localeName" type="string"/>
-        <property name="quote" type="Quote"/>
+        <property name="items" type="Item[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
+        <property name="configuredBundle" type="ConfiguredBundle" description="A product bundle that has been configured by the customer."/>
+        <property name="localeName" type="string" description="The name of a locale, such as &quot;en_US&quot; or &quot;de_DE&quot;."/>
+        <property name="quote" type="Quote" description="A data object representing a shopping cart before it becomes an order."/>
     </transfer>
 
     <transfer name="UpdateConfiguredBundleRequest">
-        <property name="quote" type="Quote"/>
-        <property name="groupKey" type="string"/>
-        <property name="quantity" type="int"/>
+        <property name="quote" type="Quote" description="A data object representing a shopping cart before it becomes an order."/>
+        <property name="groupKey" type="string" description="A key used to group items together, typically in a cart or order."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="items" type="Item[]" singular="item"/>
-        <property name="customer" type="Customer"/>
-        <property name="customerReference" type="string"/>
-        <property name="uuid" type="string"/>
+        <property name="items" type="Item[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
+        <property name="customer" type="Customer" description="A data object representing a customer."/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
         <property name="idQuote" type="int"/>
-        <property name="store" type="Store"/>
-        <property name="currency" type="Currency"/>
+        <property name="store" type="Store" description="The store context for an operation, determining which store's data is used."/>
+        <property name="currency" type="Currency" description="The currency used for a transaction or price."/>
     </transfer>
 
     <transfer name="Customer">
         <property name="idCustomer" type="int"/>
-        <property name="customerReference" type="string"/>
-        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
+        <property name="companyUserTransfer" type="CompanyUser" description="A data transfer object for a company user."/>
     </transfer>
 
     <transfer name="ConfiguredBundle">
-        <property name="template" type="ConfigurableBundleTemplate"/>
-        <property name="quantity" type="int"/>
-        <property name="groupKey" type="string"/>
+        <property name="template" type="ConfigurableBundleTemplate" description="The template used for rendering."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
+        <property name="groupKey" type="string" description="A key used to group items together, typically in a cart or order."/>
     </transfer>
 
     <transfer name="ConfiguredBundleItem">
-        <property name="slot" type="ConfigurableBundleTemplateSlot"/>
-        <property name="quantityPerSlot" type="int"/>
+        <property name="slot" type="ConfigurableBundleTemplateSlot" description="A slot within a configurable bundle template."/>
+        <property name="quantityPerSlot" type="int" description="The quantity of an item required for a specific slot in a bundle."/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplate">
-        <property name="uuid" type="string"/>
-        <property name="name" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlot">
-        <property name="uuid" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="RestItemsAttributes">
-        <property name="configuredBundle" type="RestConfiguredBundle"/>
-        <property name="configuredBundleItem" type="RestConfiguredBundleItem"/>
+        <property name="configuredBundle" type="RestConfiguredBundle" description="A product bundle that has been configured by the customer."/>
+        <property name="configuredBundleItem" type="RestConfiguredBundleItem" description="An item within a configured bundle."/>
     </transfer>
 
     <transfer name="RestConfiguredBundle">
-        <property name="template" type="RestConfigurableBundleTemplate"/>
-        <property name="quantity" type="int"/>
-        <property name="groupKey" type="string"/>
+        <property name="template" type="RestConfigurableBundleTemplate" description="The template used for rendering."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
+        <property name="groupKey" type="string" description="A key used to group items together, typically in a cart or order."/>
     </transfer>
 
     <transfer name="RestConfiguredBundleItem">
-        <property name="slot" type="RestConfigurableBundleTemplateSlot"/>
-        <property name="quantityPerSlot" type="int"/>
+        <property name="slot" type="RestConfigurableBundleTemplateSlot" description="A slot within a configurable bundle template."/>
+        <property name="quantityPerSlot" type="int" description="The quantity of an item required for a specific slot in a bundle."/>
     </transfer>
 
     <transfer name="RestConfigurableBundleTemplate">
-        <property name="uuid" type="string"/>
-        <property name="name" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="RestConfigurableBundleTemplateSlot">
-        <property name="uuid" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="code" type="string"/>
-        <property name="status" type="int"/>
-        <property name="detail" type="string"/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="Item">
-        <property name="configuredBundle" type="ConfiguredBundle"/>
-        <property name="configuredBundleItem" type="ConfiguredBundleItem"/>
-        <property name="quantity" type="int"/>
+        <property name="configuredBundle" type="ConfiguredBundle" description="A product bundle that has been configured by the customer."/>
+        <property name="configuredBundleItem" type="ConfiguredBundleItem" description="An item within a configured bundle."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
     </transfer>
 
     <transfer name="QuoteError">
-        <property name="errorIdentifier" type="string"/>
-        <property name="message" type="string"/>
+        <property name="errorIdentifier" type="string" description="A unique identifier for a specific type of error."/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
     </transfer>
 
     <transfer name="QuoteResponse">
-        <property name="errors" type="QuoteError[]" singular="error"/>
-        <property name="isSuccessful" type="bool"/>
-        <property name="quoteTransfer" type="Quote"/>
+        <property name="errors" type="QuoteError[]" singular="error" description="A collection of error objects."/>
+        <property name="isSuccessful" type="bool" description="A boolean flag indicating if an operation completed successfully."/>
+        <property name="quoteTransfer" type="Quote" description="A data transfer object representing a quote."/>
     </transfer>
 
     <transfer name="RestUser">
-        <property name="surrogateIdentifier" type="int"/>
-        <property name="naturalIdentifier" type="string"/>
+        <property name="surrogateIdentifier" type="int" description="A system-generated, non-human-readable unique identifier (like an auto-incrementing ID)."/>
+        <property name="naturalIdentifier" type="string" description="A human-readable unique identifier for a resource, such as a user's email."/>
         <property name="idCompany" type="int"/>
         <property name="idCompanyUser" type="int"/>
     </transfer>
@@ -121,9 +121,9 @@
     </transfer>
 
     <transfer name="PersistentCartChange">
-        <property name="items" type="Item[]" singular="item"/>
-        <property name="quote" type="Quote"/>
-        <property name="customer" type="Customer"/>
+        <property name="items" type="Item[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
+        <property name="quote" type="Quote" description="A data object representing a shopping cart before it becomes an order."/>
+        <property name="customer" type="Customer" description="A data object representing a customer."/>
         <property name="idQuote" type="int"/>
     </transfer>
 
@@ -133,19 +133,19 @@
     </transfer>
 
     <transfer name="QuoteCriteriaFilter">
-        <property name="customerReference" type="string"/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
     </transfer>
 
     <transfer name="QuoteCollection">
-        <property name="quotes" type="Quote[]" singular="quote"/>
+        <property name="quotes" type="Quote[]" singular="quote" description="A collection of quote data transfer objects."/>
     </transfer>
 
     <transfer name="Currency">
-        <property name="code" type="string"/>
+        <property name="code" type="string" description="A unique code, often for currency, country, or barcode."/>
     </transfer>
 
     <transfer name="Store">
-        <property name="defaultCurrencyIsoCode" type="string"/>
+        <property name="defaultCurrencyIsoCode" type="string" description="The ISO code of the default currency for a store."/>
     </transfer>
 
 </transfers>

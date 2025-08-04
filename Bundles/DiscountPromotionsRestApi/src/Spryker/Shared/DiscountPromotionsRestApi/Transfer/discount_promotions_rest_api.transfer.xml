@@ -3,33 +3,33 @@
 
     <transfer name="PromotionItem">
         <property name="idDiscountPromotion" type="int"/>
-        <property name="abstractSku" type="string"/>
-        <property name="maxQuantity" type="int"/>
-        <property name="uuid" type="string"/>
-        <property name="discount" type="Discount"/>
+        <property name="abstractSku" type="string" description="The Stock Keeping Unit (SKU) for an abstract product."/>
+        <property name="maxQuantity" type="int" description="The maximum quantity allowed for a product."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="discount" type="Discount" description="A discount applied to a product or order."/>
     </transfer>
 
     <transfer name="DiscountPromotion">
         <property name="idDiscountPromotion" type="int"/>
-        <property name="abstractSku" type="string" deprecated="Use `abstractSkus` (plural) instead and provide a comma separated list."/>
-        <property name="quantity" type="int"/>
+        <property name="abstractSku" type="string" deprecated="Use `abstractSkus` (plural) instead and provide a comma separated list." description="The Stock Keeping Unit (SKU) for an abstract product."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
         <property name="fkDiscount" type="int"/>
-        <property name="uuid" type="string"/>
-        <property name="abstractSkus" type="string[]" singular="abstractSku"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="abstractSkus" type="string[]" singular="abstractSku" description="A collection of abstract product Stock Keeping Units (SKUs), typically used to define which products a promotion applies to."/>
     </transfer>
 
     <transfer name="Discount">
-        <property name="discountPromotion" type="DiscountPromotion"/>
+        <property name="discountPromotion" type="DiscountPromotion" description="A promotion that provides a discount."/>
     </transfer>
 
     <transfer name="RestPromotionalItemsAttributes">
-        <property name="sku" type="string" deprecated="Use `skus` (plural) instead and provide a comma separated list."/>
-        <property name="quantity" type="int"/>
-        <property name="skus" type="string[]" singular="sku"/>
+        <property name="sku" type="string" deprecated="Use `skus` (plural) instead and provide a comma separated list." description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
+        <property name="skus" type="string[]" singular="sku" description="A collection of Stock Keeping Units (SKUs)."/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
+        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem" description="A collection of items that are part of a promotion."/>
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
@@ -37,40 +37,40 @@
     </transfer>
 
     <transfer name="CartItemRequest">
-        <property name="discountPromotionUuid" type="string"/>
+        <property name="discountPromotionUuid" type="string" description="The universally unique identifier for a discount promotion."/>
     </transfer>
 
     <transfer name="Item">
         <property name="idDiscountPromotion" type="int"/>
-        <property name="sku" type="string"/>
-        <property name="unitGrossPrice" type="int"/>
-        <property name="sumGrossPrice" type="int"/>
-        <property name="quantity" type="int"/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <property name="unitGrossPrice" type="int" description="The price of a single unit of an item, including tax."/>
+        <property name="sumGrossPrice" type="int" description="The total price for all units of an item, including tax."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
     </transfer>
 
     <transfer name="PersistentCartChange">
-        <property name="items" type="Item[]" singular="item"/>
+        <property name="items" type="Item[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
     </transfer>
 
     <transfer name="RestDiscountsAttributes">
-        <property name="discountPromotionAbstractSku" type="string"/>
-        <property name="discountPromotionQuantity" type="int"/>
+        <property name="discountPromotionAbstractSku" type="string" description="The abstract SKU of a product associated with a promotional discount."/>
+        <property name="discountPromotionQuantity" type="int" description="The quantity of a promotional item required or offered in a discount."/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
-        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
+        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem" description="A collection of items that are part of a promotion."/>
     </transfer>
 
     <transfer name="DiscountPromotionConditions">
-        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="uuids" type="string[]" singular="uuid" description="A collection of Universally Unique Identifiers."/>
     </transfer>
 
     <transfer name="DiscountPromotionCriteria">
-        <property name="discountPromotionConditions" type="DiscountPromotionConditions"/>
+        <property name="discountPromotionConditions" type="DiscountPromotionConditions" description="Conditions for a discount promotion to apply."/>
     </transfer>
 
     <transfer name="DiscountPromotionCollection">
-        <property name="discountPromotions" type="DiscountPromotion[]" singular="discountPromotion"/>
+        <property name="discountPromotions" type="DiscountPromotion[]" singular="discountPromotion" description="A collection of discount promotions."/>
     </transfer>
 
 </transfers>

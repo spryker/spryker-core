@@ -4,10 +4,10 @@
     <table name="spy_discount_promotion">
         <column name="id_discount_promotion" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_discount" type="INTEGER" required="true"/>
-        <column name="abstract_sku" type="VARCHAR" size="255" required="true"/>
-        <column name="quantity" type="INTEGER" required="true"/>
+        <column name="abstract_sku" type="VARCHAR" size="255" required="true" description="The Stock Keeping Unit (SKU) for an abstract product."/>
+        <column name="quantity" type="INTEGER" required="true" description="The number of units for an item."/>
 
-        <column name="abstract_skus" type="LONGVARCHAR" required="false"/>
+        <column name="abstract_skus" type="LONGVARCHAR" required="false" description="A collection of abstract product Stock Keeping Units (SKUs), typically used to define which products a promotion applies to."/>
 
         <foreign-key name="spy_discount_promotion-fk_discount" foreignTable="spy_discount" phpName="Discount" refPhpName="DiscountPromotion">
             <reference local="fk_discount" foreign="id_discount"/>

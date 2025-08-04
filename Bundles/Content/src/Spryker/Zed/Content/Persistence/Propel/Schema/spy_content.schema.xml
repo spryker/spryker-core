@@ -3,10 +3,10 @@
 
     <table name="spy_content" identifierQuoting="true">
         <column name="id_content" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="description" required="false" type="LONGVARCHAR"/>
-        <column name="content_term_key" required="true" type="VARCHAR" size="255"/>
-        <column name="content_type_key" required="true" type="VARCHAR" size="255"/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="description" required="false" type="LONGVARCHAR" description="A description of an entity."/>
+        <column name="content_term_key" required="true" type="VARCHAR" size="255" description="A key that identifies the specific content term or type (e.g., 'banner', 'product-list')."/>
+        <column name="content_type_key" required="true" type="VARCHAR" size="255" description="A key identifying the type of content."/>
         <column name="key" required="true" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>
         <unique name="spy_content-key">
             <unique-column name="key"/>
@@ -19,7 +19,7 @@
         <column name="id_content_localized" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_content" required="true" type="INTEGER"/>
         <column name="fk_locale" required="false" type="INTEGER"/>
-        <column name="parameters" required="true" type="LONGVARCHAR"/>
+        <column name="parameters" required="true" type="LONGVARCHAR" description="A collection of parameters for a request or operation."/>
         <foreign-key name="spy_content_localized-fk_content" foreignTable="spy_content">
             <reference local="fk_content" foreign="id_content"/>
         </foreign-key>

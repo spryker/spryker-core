@@ -3,8 +3,8 @@
 
     <table name="spy_incremental_installer">
         <column name="id_incremental_installer" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="installer" required="true" type="VARCHAR" size="100"/>
-        <column name="batch" required="true" type="INTEGER"/>
+        <column name="installer" required="true" type="VARCHAR" size="100" description="The name of an installer."/>
+        <column name="batch" required="true" type="INTEGER" description="A group of items processed together."/>
         <unique name="spy_incremental_installer-installer">
             <unique-column name="installer"/>
         </unique>

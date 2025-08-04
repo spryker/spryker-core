@@ -4,10 +4,10 @@
     <table name="spy_customer_data_change_request" idMethod="native">
         <column name="id_customer_data_change_request" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_customer" required="true" type="INTEGER"/>
-        <column name="data" size="255" type="VARCHAR" required="true"/>
-        <column name="type" type="VARCHAR" size="255" required="true"/>
-        <column name="status" type="VARCHAR" size="255" required="true"/>
-        <column name="verification_token" required="true" size="150" type="VARCHAR"/>\
+        <column name="data" size="255" type="VARCHAR" required="true" description="A generic data payload."/>
+        <column name="type" type="VARCHAR" size="255" required="true" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <column name="status" type="VARCHAR" size="255" required="true" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
+        <column name="verification_token" required="true" size="150" type="VARCHAR" description="A unique token used to verify a customer's data change request."/>\
 
         <foreign-key name="spy_cus_dat_cha_req-fk_customer" foreignTable="spy_customer" phpName="Customer" refPhpName="CustomerDataChangeRequest" onDelete="CASCADE">
             <reference foreign="id_customer" local="fk_customer"/>

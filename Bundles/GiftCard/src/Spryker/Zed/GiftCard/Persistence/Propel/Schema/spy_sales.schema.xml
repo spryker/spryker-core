@@ -3,10 +3,10 @@
 
     <table name="spy_sales_order_item_gift_card">
         <column name="id_sales_order_item_gift_card" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="pattern" type="VARCHAR" size="40" required="false"/>
-        <column name="value" type="INTEGER" required="false"/>
-        <column name="code" type="VARCHAR" size="40" required="false"/>
-        <column name="attributes" type="LONGVARCHAR" required="false"/>
+        <column name="pattern" type="VARCHAR" size="40" required="false" description="The pattern used to generate gift card codes."/>
+        <column name="value" type="INTEGER" required="false" description="A generic value for a property, often used in key-value pairs or translations."/>
+        <column name="code" type="VARCHAR" size="40" required="false" description="A unique code, often for currency, country, or barcode."/>
+        <column name="attributes" type="LONGVARCHAR" required="false" description="A set of key-value pairs describing a product or entity."/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
 
         <foreign-key name="spy_sales_order_item_gift_card-fk_sales_order_item" foreignTable="spy_sales_order_item" phpName="SpySalesOrderItem" refPhpName="SpySalesOrderItemGiftCard">

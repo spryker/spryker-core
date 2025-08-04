@@ -3,9 +3,9 @@
 
     <table name="spy_currency">
         <column name="id_currency" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" size="255" type="VARCHAR"/>
-        <column name="code" size="5" type="VARCHAR"/>
-        <column name="symbol" size="255" type="VARCHAR"/>
+        <column name="name" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="code" size="5" type="VARCHAR" description="A unique code, often for currency, country, or barcode."/>
+        <column name="symbol" size="255" type="VARCHAR" description="The symbol for a currency (e.g., '$', '&#x20AC;')."/>
 
         <id-method-parameter value="spy_currency_pk_seq"/>
     </table>

@@ -4,23 +4,23 @@
     <table name="spy_customer" idMethod="native">
         <column name="id_customer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_locale" type="INTEGER"/>
-        <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
-        <column name="email" required="true" size="255" type="VARCHAR" caseInsensitive="true"/>
-        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms, n/a"/>
-        <column name="first_name" size="100" type="VARCHAR"/>
-        <column name="last_name" size="100" type="VARCHAR"/>
-        <column name="company" size="100" type="VARCHAR"/>
-        <column name="gender" type="ENUM" valueSet="Male, Female"/>
-        <column name="date_of_birth" type="DATE" default="NULL"/>
-        <column name="password" default="null" size="255" type="VARCHAR"/>
-        <column name="restore_password_key" size="150" type="VARCHAR" default="NULL"/>
-        <column name="restore_password_date" type="TIMESTAMP" default="NULL"/>
-        <column name="registered" type="DATE" default="NULL"/>
-        <column name="registration_key" size="150" type="VARCHAR" default="NULL"/>
-        <column name="default_billing_address" type="INTEGER"/>
-        <column name="default_shipping_address" type="INTEGER"/>
-        <column name="phone" size="255" type="VARCHAR"/>
-        <column name="anonymized_at" required="false" type="TIMESTAMP" default="NULL"/>
+        <column name="customer_reference" required="true" type="VARCHAR" size="255" description="A unique reference for a customer."/>
+        <column name="email" required="true" size="255" type="VARCHAR" caseInsensitive="true" description="The email address of a user or contact."/>
+        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms, n/a" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <column name="first_name" size="100" type="VARCHAR" description="The first name of a person."/>
+        <column name="last_name" size="100" type="VARCHAR" description="The last name of a user or customer."/>
+        <column name="company" size="100" type="VARCHAR" description="A company entity."/>
+        <column name="gender" type="ENUM" valueSet="Male, Female" description="The gender of a person."/>
+        <column name="date_of_birth" type="DATE" default="NULL" description="The customer's date of birth."/>
+        <column name="password" default="null" size="255" type="VARCHAR" description="The password for a user account, used for authentication."/>
+        <column name="restore_password_key" size="150" type="VARCHAR" default="NULL" description="A key used to verify a password restore request."/>
+        <column name="restore_password_date" type="TIMESTAMP" default="NULL" description="The date when a password restore was requested."/>
+        <column name="registered" type="DATE" default="NULL" description="The date when a user registered."/>
+        <column name="registration_key" size="150" type="VARCHAR" default="NULL" description="A key used to confirm a new user registration."/>
+        <column name="default_billing_address" type="INTEGER" description="The identifier for the default billing address."/>
+        <column name="default_shipping_address" type="INTEGER" description="The identifier for the default shipping address."/>
+        <column name="phone" size="255" type="VARCHAR" description="The phone number."/>
+        <column name="anonymized_at" required="false" type="TIMESTAMP" default="NULL" description="The timestamp when customer data was anonymized."/>
         <behavior name="timestampable"/>
         <unique name="spy_customer-email">
             <unique-column name="email"/>
@@ -55,19 +55,19 @@
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
 
-        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms, n/a"/>
-        <column name="first_name" required="true" size="100" type="VARCHAR"/>
-        <column name="last_name" required="true" size="100" type="VARCHAR"/>
-        <column name="address1" size="255" type="VARCHAR"/>
-        <column name="address2" size="255" type="VARCHAR"/>
-        <column name="address3" size="255" type="VARCHAR"/>
-        <column name="company" size="255" type="VARCHAR"/>
-        <column name="city" size="255" type="VARCHAR"/>
-        <column name="zip_code" size="15" type="VARCHAR"/>
-        <column name="phone" size="255" type="VARCHAR"/>
-        <column name="comment" size="255" type="VARCHAR"/>
-        <column name="deleted_at" required="false" type="TIMESTAMP"/>
-        <column name="anonymized_at" required="false" type="TIMESTAMP" default="NULL"/>
+        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms, n/a" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <column name="first_name" required="true" size="100" type="VARCHAR" description="The first name of a person."/>
+        <column name="last_name" required="true" size="100" type="VARCHAR" description="The last name of a user or customer."/>
+        <column name="address1" size="255" type="VARCHAR" description="The first line of a street address."/>
+        <column name="address2" size="255" type="VARCHAR" description="The second line of a street address."/>
+        <column name="address3" size="255" type="VARCHAR" description="The third line of a street address."/>
+        <column name="company" size="255" type="VARCHAR" description="A company entity."/>
+        <column name="city" size="255" type="VARCHAR" description="The city part of an address."/>
+        <column name="zip_code" size="15" type="VARCHAR" description="The postal code for an address."/>
+        <column name="phone" size="255" type="VARCHAR" description="The phone number."/>
+        <column name="comment" size="255" type="VARCHAR" description="A user-submitted comment or note."/>
+        <column name="deleted_at" required="false" type="TIMESTAMP" description="The timestamp when a customer account was marked as deleted."/>
+        <column name="anonymized_at" required="false" type="TIMESTAMP" default="NULL" description="The timestamp when customer data was anonymized."/>
 
         <foreign-key name="spy_customer_address-fk_customer" foreignTable="spy_customer" phpName="Customer" refPhpName="Address" onDelete="CASCADE">
             <reference foreign="id_customer" local="fk_customer"/>

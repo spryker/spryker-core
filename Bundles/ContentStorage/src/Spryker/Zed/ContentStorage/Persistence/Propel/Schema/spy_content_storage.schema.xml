@@ -4,7 +4,7 @@
     <table name="spy_content_storage" identifierQuoting="true">
         <column name="id_content_storage" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_content" type="INTEGER" required="true"/>
-        <column name="content_key" type="VARCHAR" size="255" required="true"/>
+        <column name="content_key" type="VARCHAR" size="255" required="true" description="A key to identify a piece of content."/>
         <index name="spy_content_storage-content_key">
             <index-column name="content_key"/>
         </index>

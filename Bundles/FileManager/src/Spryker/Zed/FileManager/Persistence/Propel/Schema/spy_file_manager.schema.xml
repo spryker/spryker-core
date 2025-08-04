@@ -4,7 +4,7 @@
     <table name="spy_file">
         <column name="id_file" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_file_directory" type="INTEGER" required="false"/>
-        <column name="file_name" type="VARCHAR" size="500" required="true"/>
+        <column name="file_name" type="VARCHAR" size="500" required="true" description="The name of a file."/>
         <foreign-key name="spy_file-fk_file_directory" foreignTable="spy_file_directory" phpName="FileDirectory">
             <reference foreign="id_file_directory" local="fk_file_directory"/>
         </foreign-key>
@@ -14,13 +14,13 @@
     <table name="spy_file_info">
         <column name="id_file_info" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_file" type="INTEGER" required="true"/>
-        <column name="type" type="VARCHAR" size="255" required="true"/>
-        <column name="size" type="INTEGER" required="true"/>
-        <column name="version" type="INTEGER" required="true"/>
-        <column name="version_name" type="VARCHAR" size="255" required="true"/>
-        <column name="storage_name" type="VARCHAR" size="255"/>
-        <column name="storage_file_name" type="VARCHAR" size="255"/>
-        <column name="extension" type="VARCHAR" size="255" required="true"/>
+        <column name="type" type="VARCHAR" size="255" required="true" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <column name="size" type="INTEGER" required="true" description="The size of a file in bytes."/>
+        <column name="version" type="INTEGER" required="true" description="The version number of an entity."/>
+        <column name="version_name" type="VARCHAR" size="255" required="true" description="A human-readable name for a specific version of a file."/>
+        <column name="storage_name" type="VARCHAR" size="255" description="The name of the file system storage where a file is located."/>
+        <column name="storage_file_name" type="VARCHAR" size="255" description="The name of the file as it is stored in the file system storage."/>
+        <column name="extension" type="VARCHAR" size="255" required="true" description="The file extension of a file."/>
 
         <foreign-key name="spy_file_info-fk_file" foreignTable="spy_file" phpName="File" onDelete="CASCADE">
             <reference foreign="id_file" local="fk_file"/>
@@ -35,8 +35,8 @@
         <column name="id_file_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_file" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
-        <column name="title" required="false" type="VARCHAR" default="NULL" size="255"/>
-        <column name="alt" required="false" type="LONGVARCHAR" default="NULL"/>
+        <column name="title" required="false" type="VARCHAR" default="NULL" size="255" description="The title of an entity or page."/>
+        <column name="alt" required="false" type="LONGVARCHAR" default="NULL" description="Alternative text for an image or file."/>
 
         <foreign-key name="spy_file_localized_attributes-fk_file" foreignTable="spy_file" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_file" foreign="id_file"/>
@@ -57,9 +57,9 @@
     <table name="spy_file_directory" idMethod="native">
         <column name="id_file_directory" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_parent_file_directory" required="false" type="INTEGER" default="NULL"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="position" type="INTEGER" required="false" default="NULL"/>
-        <column name="is_active" type="BOOLEAN" default="true" required="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="position" type="INTEGER" required="false" default="NULL" description="The position or order of an item in a list."/>
+        <column name="is_active" type="BOOLEAN" default="true" required="true" description="A boolean flag indicating if an entity is currently active."/>
 
         <foreign-key foreignTable="spy_file_directory" phpName="ParentFileDirectory" refPhpName="ChildrenFileDirectory" onDelete="CASCADE">
             <reference foreign="id_file_directory" local="fk_parent_file_directory"/>
@@ -76,7 +76,7 @@
         <column name="id_file_directory_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_file_directory" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
-        <column name="title" type="VARCHAR" size="255" required="true"/>
+        <column name="title" type="VARCHAR" size="255" required="true" description="The title of an entity or page."/>
 
         <foreign-key foreignTable="spy_file_directory" onDelete="CASCADE">
             <reference foreign="id_file_directory" local="fk_file_directory"/>
@@ -98,10 +98,10 @@
 
     <table name="spy_mime_type">
         <column name="id_mime_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="comment" type="VARCHAR" size="255" required="false"/>
-        <column name="extensions" type="LONGVARCHAR" required="false"/>
-        <column name="is_allowed" type="BOOLEAN" required="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="comment" type="VARCHAR" size="255" required="false" description="A user-submitted comment or note."/>
+        <column name="extensions" type="LONGVARCHAR" required="false" description="A list of file extensions for a MIME type."/>
+        <column name="is_allowed" type="BOOLEAN" required="true" description="A boolean flag indicating if a MIME type is allowed for file uploads."/>
 
         <unique name="spy_mime_type-name">
             <unique-column name="name"/>

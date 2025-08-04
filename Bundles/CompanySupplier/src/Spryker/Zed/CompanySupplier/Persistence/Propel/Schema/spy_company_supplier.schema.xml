@@ -20,7 +20,7 @@
 
     <table name="spy_company_type" idMethod="native" allowPkInsert="true">
         <column name="id_company_type" type="INTEGER" autoIncrement="true" required="true" primaryKey="true"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
         <id-method-parameter value="spy_company_type_pk_seq"/>
     </table>
 

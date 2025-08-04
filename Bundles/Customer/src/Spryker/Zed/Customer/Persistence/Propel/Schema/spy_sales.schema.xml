@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence">
     <table name="spy_sales_order">
 
-        <column name="customer_reference" type="VARCHAR" size="255" required="false"/>
+        <column name="customer_reference" type="VARCHAR" size="255" required="false" description="A unique reference for a customer."/>
 
         <index name="spy_sales_order-customer_reference">
             <index-column name="customer_reference"/>

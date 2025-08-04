@@ -6,19 +6,19 @@
         <column name="fk_discount_voucher_pool" type="INTEGER" required="false"/>
         <column name="fk_store" type="INTEGER" required="false"/>
 
-        <column name="display_name" type="VARCHAR" size="255" required="true"/>
-        <column name="description" type="VARCHAR" size="1024"/>
-        <column name="amount" type="INTEGER" required="true"/>
-        <column name="is_exclusive" type="BOOLEAN" default="false"/>
-        <column name="is_active" type="BOOLEAN" default="false"/>
-        <column name="valid_from" type="TIMESTAMP" required="false"/>
-        <column name="valid_to" type="TIMESTAMP" required="false"/>
-        <column name="calculator_plugin" type="VARCHAR" size="255"/>
-        <column name="discount_type" type="VARCHAR" size="255"/>
-        <column name="decision_rule_query_string" type="LONGVARCHAR" required="false"/>
-        <column name="collector_query_string" type="LONGVARCHAR" required="false"/>
-        <column name="minimum_item_amount" type="INTEGER" required="true" default="1"/>
-        <column name="priority" type="INTEGER" required="false" default="9999"/>
+        <column name="display_name" type="VARCHAR" size="255" required="true" description="A display name for an entity."/>
+        <column name="description" type="VARCHAR" size="1024" description="A description of an entity."/>
+        <column name="amount" type="INTEGER" required="true" description="A numerical value, often used for price, quantity, or discount."/>
+        <column name="is_exclusive" type="BOOLEAN" default="false" description="A flag indicating if a discount is exclusive."/>
+        <column name="is_active" type="BOOLEAN" default="false" description="A boolean flag indicating if an entity is currently active."/>
+        <column name="valid_from" type="TIMESTAMP" required="false" description="The date and time from which an entity is valid."/>
+        <column name="valid_to" type="TIMESTAMP" required="false" description="The date and time until which an entity is valid."/>
+        <column name="calculator_plugin" type="VARCHAR" size="255" description="The plugin used to calculate a value, such as a discount or price."/>
+        <column name="discount_type" type="VARCHAR" size="255" description="The type of discount (e.g., cart rule, voucher)."/>
+        <column name="decision_rule_query_string" type="LONGVARCHAR" required="false" description="A query string representing the decision rules for a discount."/>
+        <column name="collector_query_string" type="LONGVARCHAR" required="false" description="A query string used by a collector to gather applicable items for a discount."/>
+        <column name="minimum_item_amount" type="INTEGER" required="true" default="1" description="The minimum number of items a discount can be applied to."/>
+        <column name="priority" type="INTEGER" required="false" default="9999" description="A numerical value that determines the order of processing or application, with lower numbers often having higher priority."/>
 
         <behavior name="timestampable"/>
 
@@ -68,8 +68,8 @@
 
     <table name="spy_discount_voucher_pool">
         <column name="id_discount_voucher_pool" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="is_active" type="BOOLEAN" default="false"/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="is_active" type="BOOLEAN" default="false" description="A boolean flag indicating if an entity is currently active."/>
 
         <behavior name="timestampable"/>
 
@@ -79,11 +79,11 @@
     <table name="spy_discount_voucher">
         <column name="id_discount_voucher" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_discount_voucher_pool" type="INTEGER" required="false"/>
-        <column name="code" type="VARCHAR" size="255" required="true"/>
-        <column name="number_of_uses" type="INTEGER" required="false"/>
-        <column name="max_number_of_uses" type="INTEGER" required="false"/>
-        <column name="is_active" type="BOOLEAN" default="false"/>
-        <column name="voucher_batch" type="INTEGER" default="0"/>
+        <column name="code" type="VARCHAR" size="255" required="true" description="A unique code, often for currency, country, or barcode."/>
+        <column name="number_of_uses" type="INTEGER" required="false" description="The current number of times a discount voucher has been used."/>
+        <column name="max_number_of_uses" type="INTEGER" required="false" description="The maximum number of times a discount voucher can be used in total."/>
+        <column name="is_active" type="BOOLEAN" default="false" description="A boolean flag indicating if an entity is currently active."/>
+        <column name="voucher_batch" type="INTEGER" default="0" description="An identifier to group a batch of generated discount vouchers."/>
 
         <behavior name="timestampable"/>
 
@@ -101,8 +101,8 @@
         <column name="id_discount_amount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_currency" type="INTEGER" required="true"/>
         <column name="fk_discount" type="INTEGER" required="true"/>
-        <column name="gross_amount" type="INTEGER" required="false"/>
-        <column name="net_amount" type="INTEGER" required="false"/>
+        <column name="gross_amount" type="INTEGER" required="false" description="The gross amount (including tax)."/>
+        <column name="net_amount" type="INTEGER" required="false" description="The amount of a price, excluding tax."/>
 
         <unique name="spy_discount_amount-unique-currency-discount">
             <unique-column name="fk_currency"/>

@@ -3,8 +3,8 @@
 
     <table name="spy_customer_group" idMethod="native">
         <column name="id_customer_group" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" required="true" type="VARCHAR" size="70"/>
-        <column name="description" required="false" type="VARCHAR" size="255"/>
+        <column name="name" required="true" type="VARCHAR" size="70" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="description" required="false" type="VARCHAR" size="255" description="A description of an entity."/>
 
         <behavior name="timestampable"/>
 

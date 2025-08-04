@@ -3,37 +3,37 @@
 
     <transfer name="CustomerApi">
         <property name="idCustomer" type="int"/>
-        <property name="email" type="string"/>
-        <property name="firstName" type="string"/>
-        <property name="lastName" type="string"/>
-        <property name="customerReference" type="string"/>
-        <property name="company" type="string"/>
-        <property name="gender" type="string"/>
-        <property name="dateOfBirth" type="string"/>
-        <property name="salutation" type="string"/>
-        <property name="defaultBillingAddress" type="int"/>
-        <property name="defaultShippingAddress" type="int"/>
-        <property name="createdAt" type="string"/>
-        <property name="updatedAt" type="string"/>
-        <property name="restorePasswordKey" type="string"/>
-        <property name="restorePasswordDate" type="string"/>
-        <property name="registrationKey" type="string"/>
-        <property name="confirmationLink" type="string"/>
-        <property name="registered" type="string"/>
+        <property name="email" type="string" description="The email address of a user or contact."/>
+        <property name="firstName" type="string" description="The first name of a person."/>
+        <property name="lastName" type="string" description="The last name of a user or customer."/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
+        <property name="company" type="string" description="A company entity."/>
+        <property name="gender" type="string" description="The gender of a person."/>
+        <property name="dateOfBirth" type="string" description="The customer's date of birth."/>
+        <property name="salutation" type="string" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <property name="defaultBillingAddress" type="int" description="The identifier for the default billing address."/>
+        <property name="defaultShippingAddress" type="int" description="The identifier for the default shipping address."/>
+        <property name="createdAt" type="string" description="The timestamp when an entity was created."/>
+        <property name="updatedAt" type="string" description="The timestamp when an entity was last updated."/>
+        <property name="restorePasswordKey" type="string" description="A key used to verify a password restore request."/>
+        <property name="restorePasswordDate" type="string" description="The date when a password restore was requested."/>
+        <property name="registrationKey" type="string" description="A key used to confirm a new user registration."/>
+        <property name="confirmationLink" type="string" description="A link used for confirming an action, such as registration."/>
+        <property name="registered" type="string" description="The date when a user registered."/>
         <property name="fkLocale" type="int"/>
     </transfer>
 
     <transfer name="PropelQueryBuilderColumn">
-        <property name="name" type="string"/>
-        <property name="alias" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="alias" type="string" description="An alternative name for a resource or column."/>
     </transfer>
 
     <transfer name="PropelQueryBuilderColumnSelection">
-        <property name="tableColumns" type="PropelQueryBuilderColumn[]" singular="tableColumn"/>
+        <property name="tableColumns" type="PropelQueryBuilderColumn[]" singular="tableColumn" description="A collection of columns for a table."/>
     </transfer>
 
     <transfer name="ApiData">
-        <property name="data" type="array" singular="data"/>
+        <property name="data" type="array" singular="data" description="A generic data payload."/>
     </transfer>
 
     <transfer name="Customer">
@@ -41,50 +41,50 @@
     </transfer>
 
     <transfer name="ApiItem">
-        <property name="data" type="array" singular="data"/>
-        <property name="validationErrors" type="ApiValidationError[]" singular="validationError"/>
-        <property name="statusCode" type="int"/>
+        <property name="data" type="array" singular="data" description="A generic data payload."/>
+        <property name="validationErrors" type="ApiValidationError[]" singular="validationError" description="A collection of validation errors."/>
+        <property name="statusCode" type="int" description="A status code for a response or operation."/>
     </transfer>
 
     <transfer name="ApiRequest">
-        <property name="filter" type="ApiFilter"/>
-        <property name="apiData" type="ApiData"/>
+        <property name="filter" type="ApiFilter" description="A set of criteria for filtering data."/>
+        <property name="apiData" type="ApiData" description="The data payload within an API response."/>
     </transfer>
 
     <transfer name="ApiPagination">
-        <property name="itemsPerPage" type="int"/>
-        <property name="page" type="int"/>
-        <property name="total" type="int"/>
-        <property name="pageTotal" type="int"/>
+        <property name="itemsPerPage" type="int" description="The number of items to display per page."/>
+        <property name="page" type="int" description="The current page number in a paginated result set."/>
+        <property name="total" type="int" description="The total count of items."/>
+        <property name="pageTotal" type="int" description="The total number of pages."/>
     </transfer>
 
     <transfer name="ApiCollection">
-        <property name="pagination" type="ApiPagination"/>
+        <property name="pagination" type="ApiPagination" description="An object containing all pagination-related data for a list of results."/>
     </transfer>
 
     <transfer name="ApiQueryBuilderQuery">
-        <property name="apiRequest" type="ApiRequest"/>
-        <property name="columnSelection" type="PropelQueryBuilderColumnSelection"/>
+        <property name="apiRequest" type="ApiRequest" description="An object representing a request to an API."/>
+        <property name="columnSelection" type="PropelQueryBuilderColumnSelection" description="A selection of columns to be retrieved from a query."/>
     </transfer>
 
     <transfer name="CustomerResponse">
-        <property name="customerTransfer" type="Customer"/>
-        <property name="isSuccess" type="bool"/>
-        <property name="errors" type="CustomerError[]" singular="error"/>
+        <property name="customerTransfer" type="Customer" description="A data transfer object containing customer information."/>
+        <property name="isSuccess" type="bool" description="A boolean flag indicating if an operation was successful."/>
+        <property name="errors" type="CustomerError[]" singular="error" description="A collection of error objects."/>
     </transfer>
 
     <transfer name="ApiFilter">
-        <property name="limit" type="int"/>
-        <property name="offset" type="int"/>
+        <property name="limit" type="int" description="The maximum number of results to return in a single request, used for pagination."/>
+        <property name="offset" type="int" description="The starting point from which to return a set of results, used for pagination."/>
     </transfer>
 
     <transfer name="CustomerError">
-        <property name="message" type="string"/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
     </transfer>
 
     <transfer name="ApiValidationError">
-        <property name="field" type="string"/>
-        <property name="messages" type="array" singular="messages"/>
+        <property name="field" type="string" description="A single field within a larger data structure or rule set."/>
+        <property name="messages" type="array" singular="messages" description="A collection of informational, success, or error messages."/>
     </transfer>
 
 </transfers>

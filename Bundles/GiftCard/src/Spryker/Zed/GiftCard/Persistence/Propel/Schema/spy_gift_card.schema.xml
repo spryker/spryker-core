@@ -3,13 +3,13 @@
 
     <table name="spy_gift_card">
         <column name="id_gift_card" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" type="VARCHAR" size="40" required="true"/>
-        <column name="replacement_pattern" type="VARCHAR" size="40" required="false"/>
-        <column name="code" type="VARCHAR" size="40" required="true"/>
-        <column name="value" type="INTEGER" required="true"/>
-        <column name="currency_iso_code" type="VARCHAR" size="5" required="false"/>
-        <column name="is_active" type="BOOLEAN" required="true" default="true"/>
-        <column name="attributes" type="LONGVARCHAR" required="false"/>
+        <column name="name" type="VARCHAR" size="40" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="replacement_pattern" type="VARCHAR" size="40" required="false" description="A pattern used to replace parts of a gift card code, often for display purposes."/>
+        <column name="code" type="VARCHAR" size="40" required="true" description="A unique code, often for currency, country, or barcode."/>
+        <column name="value" type="INTEGER" required="true" description="A generic value for a property, often used in key-value pairs or translations."/>
+        <column name="currency_iso_code" type="VARCHAR" size="5" required="false" description="The ISO code for a currency."/>
+        <column name="is_active" type="BOOLEAN" required="true" default="true" description="A boolean flag indicating if an entity is currently active."/>
+        <column name="attributes" type="LONGVARCHAR" required="false" description="A set of key-value pairs describing a product or entity."/>
 
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_gift_card_pk_seq"/>
@@ -17,7 +17,7 @@
 
     <table name="spy_gift_card_product_abstract_configuration">
         <column name="id_gift_card_product_abstract_configuration" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="code_pattern" type="VARCHAR" size="40" required="true"/>
+        <column name="code_pattern" type="VARCHAR" size="40" required="true" description="A pattern used for generating gift card codes."/>
         <behavior name="timestampable"/>
 
         <id-method-parameter value="spy_gift_card_product_abstract_configuration_pk_seq"/>
@@ -37,7 +37,7 @@
 
     <table name="spy_gift_card_product_configuration">
         <column name="id_gift_card_product_configuration" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="value" type="INTEGER" required="true"/>
+        <column name="value" type="INTEGER" required="true" description="A generic value for a property, often used in key-value pairs or translations."/>
         <behavior name="timestampable"/>
 
         <id-method-parameter value="spy_gift_card_product_configuration_pk_seq"/>
@@ -58,7 +58,7 @@
 
     <table name="spy_payment_gift_card">
         <column name="id_payment_gift_card" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="code" type="VARCHAR" size="255" required="true"/>
+        <column name="code" type="VARCHAR" size="255" required="true" description="A unique code, often for currency, country, or barcode."/>
         <column name="fk_sales_payment" type="INTEGER" required="true"/>
 
         <foreign-key name="spy_payment_gift_card-fk_payment" foreignTable="spy_sales_payment" phpName="SpySalesPayment" refPhpName="SpyGiftCardPayment">

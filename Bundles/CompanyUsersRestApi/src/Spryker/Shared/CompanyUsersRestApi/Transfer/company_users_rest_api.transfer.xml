@@ -2,17 +2,17 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Customer">
-        <property name="customerReference" type="string"/>
-        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
+        <property name="companyUserTransfer" type="CompanyUser" description="A data transfer object for a company user."/>
     </transfer>
 
     <transfer name="CompanyUser">
-        <property name="isActive" type="bool"/>
-        <property name="uuid" type="string"/>
+        <property name="isActive" type="bool" description="A boolean flag indicating if an entity is currently active."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
         <property name="idCompanyUser" type="int"/>
-        <property name="company" type="Company"/>
+        <property name="company" type="Company" description="A company entity."/>
         <property name="fkCompany" type="int"/>
-        <property name="companyRoleCollection" type="CompanyRoleCollection"/>
+        <property name="companyRoleCollection" type="CompanyRoleCollection" description="A collection of company roles."/>
     </transfer>
 
     <transfer name="OauthResponse">
@@ -28,43 +28,43 @@
     </transfer>
 
     <transfer name="RestCompanyUserAttributes">
-        <property name="isActive" type="bool"/>
-        <property name="isDefault" type="bool"/>
+        <property name="isActive" type="bool" description="A boolean flag indicating if an entity is currently active."/>
+        <property name="isDefault" type="bool" description="A flag indicating if an entity is the default one."/>
     </transfer>
 
     <transfer name="RestUser">
         <property name="idCompanyUser" type="int"/>
         <property name="idCompanyBusinessUnit" type="int"/>
         <property name="idCompany" type="int"/>
-        <property name="naturalIdentifier" type="string"/>
+        <property name="naturalIdentifier" type="string" description="A human-readable unique identifier for a resource, such as a user's email."/>
     </transfer>
 
     <transfer name="CompanyUserCriteriaFilter">
         <property name="idCompany" type="int"/>
-        <property name="filter" type="Filter"/>
-        <property name="companyUserIds" type="array" singular="companyUserIds"/>
-        <property name="companyBusinessUnitUuids" type="string[]" singular="companyBusinessUnitUuids"/>
-        <property name="companyRolesUuids" type="string[]" singular="companyRolesUuids"/>
-        <property name="isActive" type="bool"/>
+        <property name="filter" type="Filter" description="A set of criteria for filtering data."/>
+        <property name="companyUserIds" type="array" singular="companyUserIds" description="A collection of company user identifiers."/>
+        <property name="companyBusinessUnitUuids" type="string[]" singular="companyBusinessUnitUuids" description="A collection of UUIDs for company business units."/>
+        <property name="companyRolesUuids" type="string[]" singular="companyRolesUuids" description="A collection of UUIDs for company roles."/>
+        <property name="isActive" type="bool" description="A boolean flag indicating if an entity is currently active."/>
     </transfer>
 
     <transfer name="CompanyUserCollection">
-        <property name="filter" type="Filter"/>
-        <property name="total" type="int"/>
-        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
+        <property name="filter" type="Filter" description="A set of criteria for filtering data."/>
+        <property name="total" type="int" description="The total count of items."/>
+        <property name="companyUsers" type="CompanyUser[]" singular="companyUser" description="A collection of company users."/>
     </transfer>
 
     <transfer name="CustomerCollection">
-        <property name="customer" type="Customer"/>
+        <property name="customer" type="Customer" description="A data object representing a customer."/>
     </transfer>
 
     <transfer name="Filter">
-        <property name="limit" type="int"/>
-        <property name="offset" type="int"/>
+        <property name="limit" type="int" description="The maximum number of results to return in a single request, used for pagination."/>
+        <property name="offset" type="int" description="The starting point from which to return a set of results, used for pagination."/>
     </transfer>
 
     <transfer name="ShareDetail">
-        <property name="companyUser" type="CompanyUser"/>
+        <property name="companyUser" type="CompanyUser" description="A user associated with a company."/>
     </transfer>
 
     <transfer name="CompanyUserStorage">
@@ -72,13 +72,13 @@
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int"/>
-        <property name="code" type="string"/>
-        <property name="detail" type="string"/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="CompanyRoleCollection">
-        <property name="roles" type="CompanyRole[]" singular="role"/>
+        <property name="roles" type="CompanyRole[]" singular="role" description="A collection of roles."/>
     </transfer>
 
     <transfer name="CompanyRole">
@@ -89,27 +89,27 @@
     </transfer>
 
     <transfer name="RestErrorCollection">
-        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError" description="A collection of error messages formatted for a REST API response."/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="customer" type="Customer"/>
-        <property name="companyUserId" type="int"/>
+        <property name="customer" type="Customer" description="A data object representing a customer."/>
+        <property name="companyUserId" type="int" description="The unique identifier for a company user."/>
     </transfer>
 
     <transfer name="RestCustomer">
         <property name="idCompanyUser" type="int" restRequestParameter="no"/>
         <property name="idCompany" type="int" restRequestParameter="no"/>
         <property name="idCompanyBusinessUnit" type="int" restRequestParameter="no"/>
-        <property name="companyUserTransfer" type="CompanyUser" restRequestParameter="no"/>
+        <property name="companyUserTransfer" type="CompanyUser" restRequestParameter="no" description="A data transfer object for a company user."/>
     </transfer>
 
     <transfer name="RestCheckoutRequestAttributes">
-        <property name="customer" type="RestCustomer" restRequestParameter="yes"/>
+        <property name="customer" type="RestCustomer" restRequestParameter="yes" description="A data object representing a customer."/>
     </transfer>
 
     <transfer name="QuoteRequest">
-        <property name="companyUser" type="CompanyUser"/>
+        <property name="companyUser" type="CompanyUser" description="A user associated with a company."/>
     </transfer>
 
 </transfers>

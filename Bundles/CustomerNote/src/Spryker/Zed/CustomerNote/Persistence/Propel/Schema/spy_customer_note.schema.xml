@@ -5,10 +5,10 @@
         <column name="id_customer_note" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_customer" type="INTEGER" required="true"/>
         <column name="fk_user" type="INTEGER" required="true"/>
-        <column name="username" type="VARCHAR" size="255" required="false" default="NULL"/>
-        <column name="message" type="LONGVARCHAR" required="true"/>
-        <column name="created_at" type="TIMESTAMP"/>
-        <column name="updated_at" type="TIMESTAMP"/>
+        <column name="username" type="VARCHAR" size="255" required="false" default="NULL" description="The login name for a user account, typically an email address."/>
+        <column name="message" type="LONGVARCHAR" required="true" description="A message providing information, success, or error details."/>
+        <column name="created_at" type="TIMESTAMP" description="The timestamp when an entity was created."/>
+        <column name="updated_at" type="TIMESTAMP" description="The timestamp when an entity was last updated."/>
         <behavior name="timestampable"/>
         <foreign-key name="spy_customer_note-fk_customer" foreignTable="spy_customer" phpName="Customer" refPhpName="CustomerNote">
             <reference local="fk_customer" foreign="id_customer"/>

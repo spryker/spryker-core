@@ -3,8 +3,8 @@
 
     <table name="spy_unauthenticated_customer_access" idMethod="native" identifierQuoting="true">
         <column name="id_unauthenticated_customer_access" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="content_type" required="true" size="100" type="VARCHAR"/>
-        <column name="is_restricted" required="true" type="BOOLEAN"/>
+        <column name="content_type" required="true" size="100" type="VARCHAR" description="The type of content being accessed or stored."/>
+        <column name="is_restricted" required="true" type="BOOLEAN" description="A flag indicating if access to a content type is restricted."/>
 
         <unique>
             <unique-column name="content_type"/>

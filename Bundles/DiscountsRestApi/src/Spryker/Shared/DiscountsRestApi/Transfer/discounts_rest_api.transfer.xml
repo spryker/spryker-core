@@ -2,37 +2,37 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="QuoteRequest">
-        <property name="latestVersion" type="QuoteRequestVersion"/>
-        <property name="quoteRequestReference" type="string"/>
+        <property name="latestVersion" type="QuoteRequestVersion" description="The latest version of a quote request."/>
+        <property name="quoteRequestReference" type="string" description="A unique reference for a quote request."/>
     </transfer>
 
     <transfer name="RestQuoteRequestsAttributes">
-        <property name="shownVersion" type="RestQuoteRequestVersion"/>
-        <property name="quoteRequestReference" type="string"/>
+        <property name="shownVersion" type="RestQuoteRequestVersion" description="The version of a quote request shown to the user."/>
+        <property name="quoteRequestReference" type="string" description="A unique reference for a quote request."/>
     </transfer>
 
     <transfer name="Discount">
-        <property name="voucherCode" type="string"/>
+        <property name="voucherCode" type="string" description="The code for a voucher used to apply a discount."/>
     </transfer>
 
     <transfer name="RestQuoteRequestsDiscounts">
-        <property name="code" type="string"/>
+        <property name="code" type="string" description="A unique code, often for currency, country, or barcode."/>
     </transfer>
 
     <transfer name="RestQuoteRequestsCart">
-        <property name="discounts" type="RestQuoteRequestsDiscounts[]" singular="discount"/>
+        <property name="discounts" type="RestQuoteRequestsDiscounts[]" singular="discount" description="A collection of discounts."/>
     </transfer>
 
     <transfer name="QuoteRequestVersion">
-        <property name="quote" type="Quote"/>
+        <property name="quote" type="Quote" description="A data object representing a shopping cart before it becomes an order."/>
     </transfer>
 
     <transfer name="RestQuoteRequestVersion">
-        <property name="cart" type="RestQuoteRequestsCart"/>
+        <property name="cart" type="RestQuoteRequestsCart" description="A shopping cart or quote object."/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
-        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount" description="A collection of discounts applied from voucher codes."/>
+        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount" description="A collection of discounts applied based on cart-level rules."/>
     </transfer>
 </transfers>

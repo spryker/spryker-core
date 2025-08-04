@@ -3,7 +3,7 @@
 
     <table name="spy_company_unit_address_label" idMethod="native" allowPkInsert="true">
         <column name="id_company_unit_address_label" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" size="255" type="VARCHAR"/>
+        <column name="name" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
 
         <unique name="spy_company_unit_address_label-unique-name">
             <unique-column name="name"/>

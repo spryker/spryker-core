@@ -6,13 +6,13 @@
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
         <column name="fk_company" type="INTEGER"/>
-        <column name="address1" size="255" type="VARCHAR"/>
-        <column name="address2" size="255" type="VARCHAR"/>
-        <column name="address3" size="255" type="VARCHAR"/>
-        <column name="city" size="255" type="VARCHAR"/>
-        <column name="zip_code" size="15" type="VARCHAR"/>
-        <column name="phone" size="255" type="VARCHAR"/>
-        <column name="comment" size="255" type="VARCHAR"/>
+        <column name="address1" size="255" type="VARCHAR" description="The first line of a street address."/>
+        <column name="address2" size="255" type="VARCHAR" description="The second line of a street address."/>
+        <column name="address3" size="255" type="VARCHAR" description="The third line of a street address."/>
+        <column name="city" size="255" type="VARCHAR" description="The city part of an address."/>
+        <column name="zip_code" size="15" type="VARCHAR" description="The postal code for an address."/>
+        <column name="phone" size="255" type="VARCHAR" description="The phone number."/>
+        <column name="comment" size="255" type="VARCHAR" description="A user-submitted comment or note."/>
 
         <foreign-key name="spy_company_unit_address-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="CompanyUnitAddress">
             <reference local="fk_country" foreign="id_country"/>

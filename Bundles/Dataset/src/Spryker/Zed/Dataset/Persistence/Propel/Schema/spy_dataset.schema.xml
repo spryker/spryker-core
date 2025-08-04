@@ -3,8 +3,8 @@
 
     <table name="spy_dataset" identifierQuoting="true">
         <column name="id_dataset" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="is_active" type="BOOLEAN" required="true" default="false"/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="is_active" type="BOOLEAN" required="true" default="false" description="A boolean flag indicating if an entity is currently active."/>
 
         <unique name="spy_dataset_name-unique-key">
             <unique-column name="name"/>
@@ -17,7 +17,7 @@
 
     <table name="spy_dataset_column" identifierQuoting="true">
         <column name="id_dataset_column" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="title" required="true" type="VARCHAR" size="255"/>
+        <column name="title" required="true" type="VARCHAR" size="255" description="The title of an entity or page."/>
 
         <unique name="spy_dataset_column_title-unique-key">
             <unique-column name="title"/>
@@ -28,7 +28,7 @@
 
     <table name="spy_dataset_row" identifierQuoting="true">
         <column name="id_dataset_row" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="title" required="true" type="VARCHAR" size="255"/>
+        <column name="title" required="true" type="VARCHAR" size="255" description="The title of an entity or page."/>
 
         <unique name="spy_dataset_row_title-unique-key">
             <unique-column name="title"/>
@@ -42,7 +42,7 @@
         <column name="fk_dataset" required="true" type="INTEGER"/>
         <column name="fk_dataset_row" required="true" type="INTEGER"/>
         <column name="fk_dataset_column" required="true" type="INTEGER"/>
-        <column name="value" required="false" type="VARCHAR" default="NULL" size="255"/>
+        <column name="value" required="false" type="VARCHAR" default="NULL" size="255" description="A generic value for a property, often used in key-value pairs or translations."/>
 
         <foreign-key name="spy_dataset_row_column_value-fk_dataset" foreignTable="spy_dataset" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_dataset" foreign="id_dataset"/>
@@ -61,7 +61,7 @@
         <column name="id_dataset_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_dataset" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
-        <column name="title" required="false" type="VARCHAR" default="NULL" size="255"/>
+        <column name="title" required="false" type="VARCHAR" default="NULL" size="255" description="The title of an entity or page."/>
 
         <foreign-key name="spy_dataset_localized_attributes-fk_dataset" foreignTable="spy_dataset" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_dataset" foreign="id_dataset"/>

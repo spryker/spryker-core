@@ -8,10 +8,10 @@
         <column name="fk_sales_expense" type="INTEGER" required="false"/>
         <column name="fk_sales_order_item_option" type="INTEGER" required="false"/>
 
-        <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="description" type="VARCHAR" size="1024" default="NULL"/>
-        <column name="display_name" type="VARCHAR" size="255" required="true"/>
-        <column name="amount" type="INTEGER" required="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="description" type="VARCHAR" size="1024" default="NULL" description="A description of an entity."/>
+        <column name="display_name" type="VARCHAR" size="255" required="true" description="A display name for an entity."/>
+        <column name="amount" type="INTEGER" required="true" description="A numerical value, often used for price, quantity, or discount."/>
 
         <behavior name="timestampable"/>
 
@@ -37,11 +37,11 @@
         <column name="id_sales_discount_code" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_discount" type="INTEGER" required="true"/>
 
-        <column name="code" type="VARCHAR" size="255" required="true"/>
-        <column name="codepool_name" type="VARCHAR" size="255" required="true"/>
-        <column name="is_reusable" type="BOOLEAN" default="false"/>
-        <column name="is_once_per_customer" type="BOOLEAN" default="true"/>
-        <column name="is_refundable" type="BOOLEAN" default="false"/>
+        <column name="code" type="VARCHAR" size="255" required="true" description="A unique code, often for currency, country, or barcode."/>
+        <column name="codepool_name" type="VARCHAR" size="255" required="true" description="The name of the codepool for a discount voucher."/>
+        <column name="is_reusable" type="BOOLEAN" default="false" description="A flag indicating if a discount voucher can be reused."/>
+        <column name="is_once_per_customer" type="BOOLEAN" default="true" description="A flag indicating if a voucher can be used only once per customer."/>
+        <column name="is_refundable" type="BOOLEAN" default="false" description="A flag indicating if a discount voucher is refundable."/>
 
         <behavior name="timestampable"/>
 

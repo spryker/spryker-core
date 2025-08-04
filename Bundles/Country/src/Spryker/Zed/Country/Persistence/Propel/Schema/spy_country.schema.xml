@@ -4,11 +4,11 @@
     <table name="spy_country">
         <column name="id_country" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
 
-        <column name="iso2_code" type="VARCHAR" size="2" required="true"/>
-        <column name="iso3_code" type="VARCHAR" size="3" required="false"/>
-        <column name="name" type="VARCHAR" size="255" required="false"/>
-        <column name="postal_code_mandatory" type="BOOLEAN" default="false"/>
-        <column name="postal_code_regex" type="VARCHAR" size="500"/>
+        <column name="iso2_code" type="VARCHAR" size="2" required="true" description="The two-letter ISO code for a country."/>
+        <column name="iso3_code" type="VARCHAR" size="3" required="false" description="The three-letter ISO code for a country."/>
+        <column name="name" type="VARCHAR" size="255" required="false" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="postal_code_mandatory" type="BOOLEAN" default="false" description="A flag indicating if a postal code is mandatory."/>
+        <column name="postal_code_regex" type="VARCHAR" size="500" description="A regular expression for validating postal codes."/>
         <unique name="spy_country-iso2_code">
             <unique-column name="iso2_code"/>
         </unique>
@@ -22,8 +22,8 @@
         <column name="id_region" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_country" type="INTEGER"/>
 
-        <column name="name" type="VARCHAR" size="100" required="true"/>
-        <column name="iso2_code" type="VARCHAR" size="6" required="true"/>
+        <column name="name" type="VARCHAR" size="100" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="iso2_code" type="VARCHAR" size="6" required="true" description="The two-letter ISO code for a country."/>
 
         <unique name="spy_region-iso2_code">
             <unique-column name="iso2_code"/>

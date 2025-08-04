@@ -2,9 +2,9 @@
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ConfigurableBundle\Persistence" package="src.Orm.Zed.ConfigurableBundle.Persistence">
     <table name="spy_configurable_bundle_template">
         <column name="id_configurable_bundle_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="uuid" required="false" type="VARCHAR" size="255"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="is_active" required="true" default="false" type="BOOLEAN"/>
+        <column name="uuid" required="false" type="VARCHAR" size="255" description="A Universally Unique Identifier for an entity."/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="is_active" required="true" default="false" type="BOOLEAN" description="A boolean flag indicating if an entity is currently active."/>
 
         <unique name="spy_configurable_bundle_template-uuid">
             <unique-column name="uuid"/>
@@ -25,8 +25,8 @@
 
     <table name="spy_configurable_bundle_template_slot">
         <column name="id_configurable_bundle_template_slot" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="uuid" required="false" type="VARCHAR" size="255"/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="uuid" required="false" type="VARCHAR" size="255" description="A Universally Unique Identifier for an entity."/>
         <column name="fk_configurable_bundle_template" type="INTEGER" required="true"/>
         <column name="fk_product_list" type="INTEGER"/>
 

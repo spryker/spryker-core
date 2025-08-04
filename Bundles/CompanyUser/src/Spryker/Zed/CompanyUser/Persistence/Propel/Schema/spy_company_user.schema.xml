@@ -3,7 +3,7 @@
 
     <table name="spy_company_user">
         <column name="id_company_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="is_active" required="true" type="BOOLEAN" default="true"/>
+        <column name="is_active" required="true" type="BOOLEAN" default="true" description="A boolean flag indicating if an entity is currently active."/>
 
         <column name="fk_company" type="INTEGER" required="true"/>
         <column name="fk_customer" type="INTEGER" required="true"/>
