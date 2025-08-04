@@ -37,11 +37,11 @@ class AuthenticationSuccessHandler extends AbstractPlugin implements Authenticat
     protected const MULTI_FACTOR_AUTH_LOGIN_USER_EMAIL_SESSION_KEY = '_multi_factor_auth_login_user_email';
 
     /**
-     * @uses {@link \Spryker\Zed\MultiFactorAuth\Communication\Controller\AgentMerchantUserController::getEnabledTypesAction()}
+     * @uses {@link \Spryker\Zed\MultiFactorAuthMerchantPortal\Communication\Controller\AgentMerchantUserController::getEnabledTypesAction()}
      *
      * @var string
      */
-    protected const MULTI_FACTOR_AUTH_ROUTE_NAME = 'multi-factor-auth:agent-merchant-user:get-enabled-types';
+    protected const MULTI_FACTOR_AUTH_ROUTE_NAME = 'multi-factor-auth-merchant-portal:agent-merchant-user:get-enabled-types';
 
     /**
      * Handles Agent Merchant Portal authentication success with Multi-Factor Authentication support.

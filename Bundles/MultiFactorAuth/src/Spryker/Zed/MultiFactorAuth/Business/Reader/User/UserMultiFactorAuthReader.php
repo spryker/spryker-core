@@ -18,30 +18,53 @@ class UserMultiFactorAuthReader implements UserMultiFactorAuthReaderInterface
 {
     /**
      * @param \Spryker\Zed\MultiFactorAuth\Persistence\MultiFactorAuthRepositoryInterface $repository
+     * @param array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface> $multiFactorAuthPlugins
      */
-    public function __construct(protected MultiFactorAuthRepositoryInterface $repository)
-    {
+    public function __construct(
+        protected MultiFactorAuthRepositoryInterface $repository,
+        protected array $multiFactorAuthPlugins
+    ) {
     }
 
     /**
      * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
-     * @param array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface> $userMultiFactorAuthPlugins
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
     public function getAvailableUserMultiFactorAuthTypes(
-        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer,
-        array $userMultiFactorAuthPlugins
+        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
     ): MultiFactorAuthTypesCollectionTransfer {
         $multiFactorAuthTypes = $this->getActiveConfiguredMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
 
         $multiFactorAuthTypes = $this->enrichWithWiredMultiFactorAuthTypes(
             $multiFactorAuthTypes,
             $multiFactorAuthCriteriaTransfer->getUserOrFail(),
-            $userMultiFactorAuthPlugins,
         );
 
         return $this->mapToMultiFactorAuthTypesCollectionTransfer($multiFactorAuthTypes);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getEnabledUserMultiFactorAuthTypes(
+        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
+    ): MultiFactorAuthTypesCollectionTransfer {
+        $multiFactorAuthTypesCollectionTransfer = $this->repository->getUserMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
+        $multiFactorAuthTypePluginsIndexedByName = $this->indexMultiFactorAuthPluginsByName();
+        $enabledTypes = [];
+
+        foreach ($multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes() as $multiFactorAuthTypeTransfer) {
+            if (!isset($multiFactorAuthTypePluginsIndexedByName[$multiFactorAuthTypeTransfer->getType()])) {
+                continue;
+            }
+
+            $enabledTypes[$multiFactorAuthTypeTransfer->getType()] = $multiFactorAuthTypeTransfer;
+        }
+
+        return $this->mapToMultiFactorAuthTypesCollectionTransfer($enabledTypes);
     }
 
     /**
@@ -66,18 +89,16 @@ class UserMultiFactorAuthReader implements UserMultiFactorAuthReaderInterface
     /**
      * @param array<string, \Generated\Shared\Transfer\MultiFactorAuthTransfer> $multiFactorAuthTypes
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface> $userMultiFactorAuthPlugins
      *
      * @return array<string, \Generated\Shared\Transfer\MultiFactorAuthTransfer>
      */
     protected function enrichWithWiredMultiFactorAuthTypes(
         array $multiFactorAuthTypes,
-        UserTransfer $userTransfer,
-        array $userMultiFactorAuthPlugins
+        UserTransfer $userTransfer
     ): array {
         $wiredPlugins = [];
 
-        foreach ($userMultiFactorAuthPlugins as $userMultiFactorAuthPlugin) {
+        foreach ($this->multiFactorAuthPlugins as $userMultiFactorAuthPlugin) {
             $wiredPlugins[$userMultiFactorAuthPlugin->getName()] = $userMultiFactorAuthPlugin;
 
             if (isset($multiFactorAuthTypes[$userMultiFactorAuthPlugin->getName()])) {
@@ -108,5 +129,18 @@ class UserMultiFactorAuthReader implements UserMultiFactorAuthReaderInterface
         }
 
         return $collectionTransfer;
+    }
+
+    /**
+     * @return array<string, \Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface>
+     */
+    protected function indexMultiFactorAuthPluginsByName(): array
+    {
+        $indexedPlugins = [];
+        foreach ($this->multiFactorAuthPlugins as $plugin) {
+            $indexedPlugins[$plugin->getName()] = $plugin;
+        }
+
+        return $indexedPlugins;
     }
 }

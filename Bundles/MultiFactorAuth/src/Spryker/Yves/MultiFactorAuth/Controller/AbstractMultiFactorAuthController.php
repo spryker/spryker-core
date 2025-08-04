@@ -33,11 +33,24 @@ abstract class AbstractMultiFactorAuthController extends AbstractController
     public const IS_DEACTIVATION = 'is_deactivation';
 
     /**
-     * @uses \Spryker\Yves\MultiFactorAuth\Form\DataProvider\Customer\CustomerTypeSelectionFormDataProvider::OPTIONS_TYPES
-     *
      * @var string
      */
-    protected const OPTION_TYPES = 'types';
+    public const TYPE_TO_SET_UP = 'type_to_set_up';
+
+    /**
+     * @var string
+     */
+    public const TYPES = 'types';
+
+    /**
+     * @var string
+     */
+    public const CODE_LENGTH = 'code_length';
+
+    /**
+     * @var string
+     */
+    public const AUTHENTICATION_CODE = 'authentication_code';
 
     /**
      * @var string
@@ -60,16 +73,6 @@ abstract class AbstractMultiFactorAuthController extends AbstractController
     protected const DATA_SUCCESS_PARAMETER = 'data-success';
 
     /**
-     * @var string
-     */
-    protected const TYPE_TO_SET_UP = 'type_to_set_up';
-
-    /**
-     * @var string
-     */
-    protected const AUTHENTICATION_CODE = 'authentication_code';
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View
@@ -83,7 +86,7 @@ abstract class AbstractMultiFactorAuthController extends AbstractController
         }
 
         if ($this->assertOneTypeEnabled($options)) {
-            return $this->sendCodeAction($request, $options[static::OPTION_TYPES][0]);
+            return $this->sendCodeAction($request, $options[static::TYPES][0]);
         }
 
         $typeSelectionFormName = $this->getFactory()->getTypeSelectionForm([])->getName();
@@ -127,8 +130,8 @@ abstract class AbstractMultiFactorAuthController extends AbstractController
         $multiFactorAuthType = $multiFactorAuthType ?? $this->getParameterFromRequest($request, MultiFactorAuthTransfer::TYPE, $formName);
         $identityTransfer = $this->getIdentity();
         $options = array_merge([
-            static::OPTION_TYPES => [$multiFactorAuthType],
-            'code_length' => $this->resolveCodeLength(),
+            static::TYPES => [$multiFactorAuthType],
+            static::CODE_LENGTH => $this->resolveCodeLength(),
         ], $this->extractSetupParameters($request, $formName));
 
         $codeValidationForm = $this->getFactory()
@@ -264,7 +267,7 @@ abstract class AbstractMultiFactorAuthController extends AbstractController
      */
     protected function assertNoTypesEnabled(array $options): bool
     {
-        return $options[static::OPTION_TYPES] === [];
+        return $options[static::TYPES] === [];
     }
 
     /**
@@ -274,7 +277,7 @@ abstract class AbstractMultiFactorAuthController extends AbstractController
      */
     protected function assertOneTypeEnabled(array $options): bool
     {
-        return count($options[static::OPTION_TYPES]) === 1;
+        return count($options[static::TYPES]) === 1;
     }
 
     /**

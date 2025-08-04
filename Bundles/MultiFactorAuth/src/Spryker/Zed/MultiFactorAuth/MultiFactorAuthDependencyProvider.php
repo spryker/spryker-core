@@ -56,6 +56,11 @@ class MultiFactorAuthDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_USER_SEND_STRATEGY = 'PLUGINS_USER_SEND_STRATEGY';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_MULTI_FACTOR_AUTH_PLUGIN_EXPANDER = 'PLUGINS_MULTI_FACTOR_AUTH_PLUGIN_EXPANDER';
+
+    /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
      *
      * @var string
@@ -97,13 +102,6 @@ class MultiFactorAuthDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_SESSION = 'CLIENT_SESSION';
 
     /**
-     * @uses \Spryker\Zed\ZedUi\Communication\Plugin\Application\ZedUiApplicationPlugin::SERVICE_ZED_UI_FACTORY
-     *
-     * @var string
-     */
-    public const SERVICE_ZED_UI_FACTORY = 'SERVICE_ZED_UI_FACTORY';
-
-    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -115,6 +113,8 @@ class MultiFactorAuthDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addGlossaryFacade($container);
         $container = $this->addCustomerSendStrategyPlugins($container);
         $container = $this->addUserSendStrategyPlugins($container);
+        $container = $this->addUserMultiFactorAuthPlugins($container);
+        $container = $this->addMultiFactorAuthPluginExpanderPlugins($container);
 
         return $container;
     }
@@ -138,7 +138,6 @@ class MultiFactorAuthDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRequestStackService($container);
         $container = $this->addTwigService($container);
         $container = $this->addSessionClient($container);
-        $container = $this->addZedUiFactory($container);
 
         return $container;
     }
@@ -370,12 +369,20 @@ class MultiFactorAuthDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addZedUiFactory(Container $container): Container
+    protected function addMultiFactorAuthPluginExpanderPlugins(Container $container): Container
     {
-        $container->set(static::SERVICE_ZED_UI_FACTORY, function (Container $container) {
-            return $container->getApplicationService(static::SERVICE_ZED_UI_FACTORY);
+        $container->set(static::PLUGINS_MULTI_FACTOR_AUTH_PLUGIN_EXPANDER, function () {
+            return $this->getMultiFactorAuthPluginExpanderPlugins();
         });
 
         return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginExpanderPluginInterface>
+     */
+    protected function getMultiFactorAuthPluginExpanderPlugins(): array
+    {
+        return [];
     }
 }

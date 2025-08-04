@@ -188,15 +188,28 @@ class MultiFactorAuthFacade extends AbstractFacade implements MultiFactorAuthFac
      * @api
      *
      * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
-     * @param array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface> $userMultiFactorAuthPlugins
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
     public function getAvailableUserMultiFactorAuthTypes(
-        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer,
-        array $userMultiFactorAuthPlugins
+        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
     ): MultiFactorAuthTypesCollectionTransfer {
-        return $this->getFactory()->createUserMultiFactorAuthReader()->getAvailableUserMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer, $userMultiFactorAuthPlugins);
+        return $this->getFactory()->createUserMultiFactorAuthReader()->getAvailableUserMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getEnabledUserMultiFactorAuthTypes(
+        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
+    ): MultiFactorAuthTypesCollectionTransfer {
+        return $this->getFactory()->createUserMultiFactorAuthReader()->getEnabledUserMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
     }
 
     /**

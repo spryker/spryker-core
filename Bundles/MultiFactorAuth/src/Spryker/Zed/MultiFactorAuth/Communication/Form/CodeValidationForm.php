@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MultiFactorAuth\Communication\Form;
 
+use Generated\Shared\Transfer\MultiFactorAuthTransfer;
+use Spryker\Zed\MultiFactorAuth\Communication\Controller\UserController;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,23 +23,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CodeValidationForm extends BaseMultiFactorAuthForm
 {
-    /**
-     * @uses \Spryker\Zed\MultiFactorAuth\Communication\Form\DataProvider\TypeSelectionDataProvider::OPTION_TYPES
-     *
-     * @var string
-     */
-    protected const OPTION_TYPES = 'types';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_TYPE = 'type';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_AUTHENTICATION_CODE = 'authentication_code';
-
     /**
      * @var string
      */
@@ -66,7 +51,7 @@ class CodeValidationForm extends BaseMultiFactorAuthForm
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            static::OPTION_TYPES => [],
+            UserController::TYPES => [],
         ]);
     }
 
@@ -92,8 +77,8 @@ class CodeValidationForm extends BaseMultiFactorAuthForm
      */
     protected function addTypeHiddenField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_TYPE, HiddenType::class, [
-            'data' => $options[static::OPTION_TYPES][0] ?? '',
+        $builder->add(MultiFactorAuthTransfer::TYPE, HiddenType::class, [
+            'data' => $options[UserController::TYPES][0] ?? '',
         ]);
 
         return $this;
@@ -107,9 +92,9 @@ class CodeValidationForm extends BaseMultiFactorAuthForm
      */
     protected function addAuthenticationCodeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_AUTHENTICATION_CODE, NumberType::class, [
+        $builder->add(UserController::AUTHENTICATION_CODE, NumberType::class, [
             'label' => $this->getFactory()->getTranslatorService()->trans(static::ENTER_CODE_LABEL_PLACEHOLDER, [
-                static::PARAM_TYPE => $options[static::OPTION_TYPES][0] ?? '',
+                static::PARAM_TYPE => $options[UserController::TYPES][0] ?? '',
             ]),
             'attr' => [
                 'placeholder' => 'Enter code',

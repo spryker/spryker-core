@@ -1,0 +1,13 @@
+{% extends 'MultiFactorAuthMerchantPortal/UserManagement/set-up-merchant-portal.twig' %}
+
+{% block tableRow %}
+    {% set actionPath = url("/multi-factor-auth-merchant-portal/agent-user-management/#{method.status ? 'deactivate' : 'activate'}", {'type': method.type}) %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block form %}
+    {% set url = "/multi-factor-auth-merchant-portal/agent-merchant-user/get-enabled-types?#{flowType}=true&type_to_set_up=#{method.type}" %}
+
+    {{ parent() }}
+{% endblock %}

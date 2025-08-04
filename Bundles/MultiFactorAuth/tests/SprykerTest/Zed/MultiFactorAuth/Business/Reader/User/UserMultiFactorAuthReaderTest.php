@@ -101,7 +101,7 @@ class UserMultiFactorAuthReaderTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->userMultiFactorAuthReader = new UserMultiFactorAuthReader($this->multiFactorAuthRepositoryMock);
+        $this->userMultiFactorAuthReader = new UserMultiFactorAuthReader($this->multiFactorAuthRepositoryMock, $this->userMultiFactorAuthPlugins);
     }
 
     /**
@@ -119,10 +119,7 @@ class UserMultiFactorAuthReaderTest extends Unit
             ->willReturn($this->multiFactorAuthTypesCollection);
 
         // Act
-        $multiFactorAuthTypesCollectionTransfer = $this->userMultiFactorAuthReader->getAvailableUserMultiFactorAuthTypes(
-            $multiFactorAuthCriteriaTransfer,
-            $this->userMultiFactorAuthPlugins,
-        );
+        $multiFactorAuthTypesCollectionTransfer = $this->userMultiFactorAuthReader->getAvailableUserMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
 
         // Assert
         $this->assertInstanceOf(MultiFactorAuthTypesCollectionTransfer::class, $multiFactorAuthTypesCollectionTransfer);

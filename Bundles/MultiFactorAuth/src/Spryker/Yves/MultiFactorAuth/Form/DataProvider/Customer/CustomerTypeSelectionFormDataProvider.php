@@ -10,29 +10,10 @@ namespace Spryker\Yves\MultiFactorAuth\Form\DataProvider\Customer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Spryker\Client\MultiFactorAuth\MultiFactorAuthClientInterface;
+use Spryker\Yves\MultiFactorAuth\Controller\CustomerMultiFactorAuthFlowController;
 
 class CustomerTypeSelectionFormDataProvider
 {
-    /**
-     * @var string
-     */
-    protected const OPTIONS_TYPES = 'types';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_IS_ACTIVATION = 'is_activation';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_IS_DEACTIVATION = 'is_deactivation';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_TYPE_TO_SET_UP = 'type_to_set_up';
-
     /**
      * @param \Spryker\Client\MultiFactorAuth\MultiFactorAuthClientInterface $multiFactorAuthClient
      * @param array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface> $customerMultiFactorAuthPlugins
@@ -51,10 +32,10 @@ class CustomerTypeSelectionFormDataProvider
     public function getOptions(CustomerTransfer $customerTransfer): array
     {
         return [
-            static::OPTIONS_TYPES => $this->getEnabledTypes($customerTransfer),
-            static::FIELD_IS_ACTIVATION => false,
-            static::FIELD_IS_DEACTIVATION => false,
-            static::FIELD_TYPE_TO_SET_UP => null,
+            CustomerMultiFactorAuthFlowController::TYPES => $this->getEnabledTypes($customerTransfer),
+            CustomerMultiFactorAuthFlowController::IS_ACTIVATION => false,
+            CustomerMultiFactorAuthFlowController::IS_DEACTIVATION => false,
+            CustomerMultiFactorAuthFlowController::TYPE_TO_SET_UP => null,
         ];
     }
 

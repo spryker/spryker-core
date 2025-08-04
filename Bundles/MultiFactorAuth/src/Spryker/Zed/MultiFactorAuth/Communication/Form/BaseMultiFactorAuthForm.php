@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MultiFactorAuth\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\MultiFactorAuth\Communication\Controller\UserController;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,26 +22,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class BaseMultiFactorAuthForm extends AbstractType
 {
     /**
-     * @var string
-     */
-    protected const FIELD_USERNAME = 'username';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_IS_ACTIVATION = 'is_activation';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_IS_DEACTIVATION = 'is_deactivation';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_TYPE_TO_SET_UP = 'type_to_set_up';
-
-    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
@@ -48,10 +29,9 @@ class BaseMultiFactorAuthForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            static::FIELD_USERNAME => null,
-            static::FIELD_IS_ACTIVATION => null,
-            static::FIELD_IS_DEACTIVATION => null,
-            static::FIELD_TYPE_TO_SET_UP => null,
+            UserController::IS_ACTIVATION => null,
+            UserController::IS_DEACTIVATION => null,
+            UserController::TYPE_TO_SET_UP => null,
         ]);
     }
 
@@ -63,7 +43,6 @@ class BaseMultiFactorAuthForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addUsernameHiddenField($builder, $options);
         $this->addIsActivationHiddenField($builder, $options);
         $this->addIsDeactivationHiddenField($builder, $options);
         $this->addTypeToSetUpHiddenField($builder, $options);
@@ -75,26 +54,10 @@ class BaseMultiFactorAuthForm extends AbstractType
      *
      * @return $this
      */
-    protected function addUsernameHiddenField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(static::FIELD_USERNAME, HiddenType::class, [
-            'mapped' => false,
-            'data' => $options[static::FIELD_USERNAME],
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array<string, mixed> $options
-     *
-     * @return $this
-     */
     protected function addIsActivationHiddenField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_IS_ACTIVATION, HiddenType::class, [
-            'data' => $options[static::FIELD_IS_ACTIVATION],
+        $builder->add(UserController::IS_ACTIVATION, HiddenType::class, [
+            'data' => $options[UserController::IS_ACTIVATION],
         ]);
 
         return $this;
@@ -108,8 +71,8 @@ class BaseMultiFactorAuthForm extends AbstractType
      */
     protected function addIsDeactivationHiddenField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_IS_DEACTIVATION, HiddenType::class, [
-            'data' => $options[static::FIELD_IS_DEACTIVATION],
+        $builder->add(UserController::IS_DEACTIVATION, HiddenType::class, [
+            'data' => $options[UserController::IS_DEACTIVATION],
         ]);
 
         return $this;
@@ -123,8 +86,8 @@ class BaseMultiFactorAuthForm extends AbstractType
      */
     protected function addTypeToSetUpHiddenField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_TYPE_TO_SET_UP, HiddenType::class, [
-            'data' => $options[static::FIELD_TYPE_TO_SET_UP],
+        $builder->add(UserController::TYPE_TO_SET_UP, HiddenType::class, [
+            'data' => $options[UserController::TYPE_TO_SET_UP],
         ]);
 
         return $this;

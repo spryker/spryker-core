@@ -10,9 +10,6 @@ namespace Spryker\Zed\MultiFactorAuth\Communication\Controller;
 use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthTransfer;
 use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
-use Generated\Shared\Transfer\UserConditionsTransfer;
-use Generated\Shared\Transfer\UserCriteriaTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -28,11 +25,6 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  */
 class UserManagementController extends AbstractController
 {
-    /**
-     * @var string
-     */
-    protected const TYPE_TO_SET_UP = 'type_to_set_up';
-
     /**
      * @var string
      */
@@ -140,12 +132,10 @@ class UserManagementController extends AbstractController
             return $this->redirectResponse(static::LOGIN_PATH);
         }
 
-        $userMultiFactorAuthPlugins = $this->getFactory()->getUserMultiFactorAuthPlugins();
         $multiFactorAuthCriteriaTransfer = (new MultiFactorAuthCriteriaTransfer())
-            ->setUser($this->getUser());
+            ->setUser($this->getFactory()->createUserReader()->getUser());
 
-        $userMultiFactorAuthTypesCollection = $this->getFacade()
-            ->getAvailableUserMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer, $userMultiFactorAuthPlugins);
+        $userMultiFactorAuthTypesCollection = $this->getFacade()->getAvailableUserMultiFactorAuthTypes($multiFactorAuthCriteriaTransfer);
 
         return $this->renderView($this->getSetUpTemplatePath(), [
             static::MULTI_FACTOR_AUTH_COLLECTION => $userMultiFactorAuthTypesCollection,
@@ -161,10 +151,13 @@ class UserManagementController extends AbstractController
      */
     public function activateAction(Request $request): RedirectResponse
     {
-        $userTransfer = $this->getUser();
+        $userTransfer = $this->getFactory()->createUserReader()->getUser();
         $multiFactorAuthType = $this->getParameterFromRequest($request, MultiFactorAuthTransfer::TYPE);
+        $multiFactorValidationRequestTransfer = (new MultiFactorAuthValidationRequestTransfer())
+            ->setType($multiFactorAuthType)
+            ->setUser($userTransfer);
 
-        if ($this->isRequestInvalid($request, $userTransfer, $multiFactorAuthType, static::CSRF_TOKEN_ID_ACTIVATE, static::ACTIVATE_FORM_NAME)) {
+        if ($this->isRequestInvalid($request, $multiFactorValidationRequestTransfer, static::CSRF_TOKEN_ID_ACTIVATE, static::ACTIVATE_FORM_NAME)) {
             $this->addErrorMessage(static::ACTIVATION_ERROR_MESSAGE);
 
             return $this->redirectResponse(static::URL_REDIRECT_SET_UP_PAGE);
@@ -189,10 +182,14 @@ class UserManagementController extends AbstractController
      */
     public function deactivateAction(Request $request): RedirectResponse
     {
-        $userTransfer = $this->getUser();
+        $userTransfer = $this->getFactory()->createUserReader()->getUser();
         $multiFactorAuthType = $this->getParameterFromRequest($request, MultiFactorAuthTransfer::TYPE);
+        $multiFactorValidationRequestTransfer = (new MultiFactorAuthValidationRequestTransfer())
+            ->setIsDeactivation(true)
+            ->setType($multiFactorAuthType)
+            ->setUser($userTransfer);
 
-        if ($this->isRequestInvalid($request, $userTransfer, $multiFactorAuthType, static::CSRF_TOKEN_ID_DEACTIVATE, static::DEACTIVATE_FORM_NAME)) {
+        if ($this->isRequestInvalid($request, $multiFactorValidationRequestTransfer, static::CSRF_TOKEN_ID_DEACTIVATE, static::DEACTIVATE_FORM_NAME)) {
             $this->addErrorMessage(static::DEACTIVATION_ERROR_MESSAGE);
 
             return $this->redirectResponse(static::URL_REDIRECT_SET_UP_PAGE);
@@ -211,17 +208,12 @@ class UserManagementController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param string|null $multiFactorAuthType
+     * @param \Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer $multiFactorValidationRequestTransfer
      *
      * @return bool
      */
-    protected function isCodeBlocked(UserTransfer $userTransfer, ?string $multiFactorAuthType): bool
+    protected function isCodeBlocked(MultiFactorAuthValidationRequestTransfer $multiFactorValidationRequestTransfer): bool
     {
-        $multiFactorValidationRequestTransfer = (new MultiFactorAuthValidationRequestTransfer())
-            ->setType($multiFactorAuthType)
-            ->setUser($userTransfer);
-
         $multiFactorValidationResponseTransfer = $this->getFacade()
             ->validateUserMultiFactorAuthStatus(
                 $multiFactorValidationRequestTransfer,
@@ -268,28 +260,6 @@ class UserManagementController extends AbstractController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    protected function getUser(): UserTransfer
-    {
-        if ($this->getFactory()->getUserFacade()->hasCurrentUser() === true) {
-            return $this->getFactory()->getUserFacade()->getCurrentUser();
-        }
-
-        $username = $this->getFactory()->getSessionClient()->get(static::MULTI_FACTOR_AUTH_LOGIN_USER_EMAIL_SESSION_KEY);
-
-        if ($username === null) {
-            return new UserTransfer();
-        }
-
-        $userCriteriaTransfer = (new UserCriteriaTransfer())
-            ->setUserConditions((new UserConditionsTransfer())
-                ->addUsername($username));
-
-        return $this->getFactory()->getUserFacade()->getUserCollection($userCriteriaTransfer)->getUsers()->offsetGet(0);
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $parameter
      * @param string|null $formName
@@ -303,8 +273,7 @@ class UserManagementController extends AbstractController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param string $multiFactorAuthType
+     * @param \Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer $multiFactorValidationRequestTransfer
      * @param string $csrfTokenId
      * @param string $formName
      *
@@ -312,13 +281,12 @@ class UserManagementController extends AbstractController
      */
     protected function isRequestInvalid(
         Request $request,
-        UserTransfer $userTransfer,
-        string $multiFactorAuthType,
+        MultiFactorAuthValidationRequestTransfer $multiFactorValidationRequestTransfer,
         string $csrfTokenId,
         string $formName
     ): bool {
         return !$this->isCsrfTokenValid($this->getParameterFromRequest($request, static::PARAM_REQUEST_TOKEN), $csrfTokenId)
             || $this->isRequestCorrupted($request, $formName)
-            || $this->isCodeBlocked($userTransfer, $multiFactorAuthType);
+            || $this->isCodeBlocked($multiFactorValidationRequestTransfer);
     }
 }

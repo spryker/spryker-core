@@ -10,29 +10,10 @@ namespace Spryker\Yves\MultiFactorAuth\Form\DataProvider\Agent;
 use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\MultiFactorAuth\MultiFactorAuthClientInterface;
+use Spryker\Yves\MultiFactorAuth\Controller\AgentMultiFactorAuthFlowController;
 
 class AgentTypeSelectionFormDataProvider
 {
-    /**
-     * @var string
-     */
-    protected const OPTIONS_TYPES = 'types';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_IS_ACTIVATION = 'is_activation';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_IS_DEACTIVATION = 'is_deactivation';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_TYPE_TO_SET_UP = 'type_to_set_up';
-
     /**
      * @param \Spryker\Client\MultiFactorAuth\MultiFactorAuthClientInterface $multiFactorAuthClient
      * @param array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface> $userMultiFactorAuthPlugins
@@ -51,10 +32,10 @@ class AgentTypeSelectionFormDataProvider
     public function getOptions(UserTransfer $userTransfer): array
     {
         return [
-            static::OPTIONS_TYPES => $this->getEnabledTypes($userTransfer),
-            static::FIELD_IS_ACTIVATION => false,
-            static::FIELD_IS_DEACTIVATION => false,
-            static::FIELD_TYPE_TO_SET_UP => null,
+            AgentMultiFactorAuthFlowController::TYPES => $this->getEnabledTypes($userTransfer),
+            AgentMultiFactorAuthFlowController::IS_ACTIVATION => false,
+            AgentMultiFactorAuthFlowController::IS_DEACTIVATION => false,
+            AgentMultiFactorAuthFlowController::TYPE_TO_SET_UP => null,
         ];
     }
 

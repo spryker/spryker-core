@@ -8,6 +8,7 @@
 namespace Spryker\Yves\MultiFactorAuth\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
+use Spryker\Yves\MultiFactorAuth\Controller\CustomerMultiFactorAuthFlowController;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,21 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class BaseMultiFactorAuthForm extends AbstractType
 {
     /**
-     * @var string
-     */
-    protected const FIELD_IS_ACTIVATION = 'is_activation';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_IS_DEACTIVATION = 'is_deactivation';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_TYPE_TO_SET_UP = 'type_to_set_up';
-
-    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
@@ -40,9 +26,9 @@ class BaseMultiFactorAuthForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            static::FIELD_IS_ACTIVATION => null,
-            static::FIELD_IS_DEACTIVATION => null,
-            static::FIELD_TYPE_TO_SET_UP => null,
+            CustomerMultiFactorAuthFlowController::IS_ACTIVATION => null,
+            CustomerMultiFactorAuthFlowController::IS_DEACTIVATION => null,
+            CustomerMultiFactorAuthFlowController::TYPE_TO_SET_UP => null,
         ]);
     }
 
@@ -67,8 +53,8 @@ class BaseMultiFactorAuthForm extends AbstractType
      */
     protected function addIsActivationHiddenField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_IS_ACTIVATION, HiddenType::class, [
-            'data' => $options[static::FIELD_IS_ACTIVATION],
+        $builder->add(CustomerMultiFactorAuthFlowController::IS_ACTIVATION, HiddenType::class, [
+            'data' => $options[CustomerMultiFactorAuthFlowController::IS_ACTIVATION],
         ]);
 
         return $this;
@@ -82,8 +68,8 @@ class BaseMultiFactorAuthForm extends AbstractType
      */
     protected function addIsDeactivationHiddenField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_IS_DEACTIVATION, HiddenType::class, [
-            'data' => $options[static::FIELD_IS_DEACTIVATION],
+        $builder->add(CustomerMultiFactorAuthFlowController::IS_DEACTIVATION, HiddenType::class, [
+            'data' => $options[CustomerMultiFactorAuthFlowController::IS_DEACTIVATION],
         ]);
 
         return $this;
@@ -97,8 +83,8 @@ class BaseMultiFactorAuthForm extends AbstractType
      */
     protected function addTypeToSetUpHiddenField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_TYPE_TO_SET_UP, HiddenType::class, [
-            'data' => $options[static::FIELD_TYPE_TO_SET_UP],
+        $builder->add(CustomerMultiFactorAuthFlowController::TYPE_TO_SET_UP, HiddenType::class, [
+            'data' => $options[CustomerMultiFactorAuthFlowController::TYPE_TO_SET_UP],
         ]);
 
         return $this;

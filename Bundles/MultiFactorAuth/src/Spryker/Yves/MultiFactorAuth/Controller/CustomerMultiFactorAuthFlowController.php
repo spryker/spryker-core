@@ -179,7 +179,7 @@ class CustomerMultiFactorAuthFlowController extends AbstractMultiFactorAuthContr
         $multiFactorAuthValidationRequestTransfer = (new MultiFactorAuthValidationRequestTransfer())->setCustomer($customerTransfer);
 
         if ($this->assertIsActivation($request) && $this->getClient()->validateCustomerMultiFactorAuthStatus($multiFactorAuthValidationRequestTransfer)->getIsRequired() === false) {
-            $options[static::OPTION_TYPES] = [$this->getParameterFromRequest($request, static::TYPE_TO_SET_UP)];
+            $options[static::TYPES] = [$this->getParameterFromRequest($request, static::TYPE_TO_SET_UP)];
         }
 
         return $options;

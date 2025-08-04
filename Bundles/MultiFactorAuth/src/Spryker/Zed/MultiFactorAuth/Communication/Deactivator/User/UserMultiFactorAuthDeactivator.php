@@ -18,16 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 class UserMultiFactorAuthDeactivator implements UserMultiFactorAuthDeactivatorInterface
 {
     /**
-     * @var string
-     */
-    protected const TYPE_TO_SET_UP = 'type_to_set_up';
-
-    /**
-     * @var string
-     */
-    protected const TYPE = 'type';
-
-    /**
      * @param \Spryker\Zed\MultiFactorAuth\Business\MultiFactorAuthFacadeInterface $facade
      * @param \Spryker\Zed\MultiFactorAuth\Communication\Reader\Request\RequestReaderInterface $requestReader
      */
@@ -47,7 +37,7 @@ class UserMultiFactorAuthDeactivator implements UserMultiFactorAuthDeactivatorIn
     {
         $isDeactivation = $this->requestReader->get($request, UserController::IS_DEACTIVATION);
 
-        $type = $isDeactivation ? $this->requestReader->get($request, static::TYPE_TO_SET_UP) : $request->query->get(static::TYPE);
+        $type = $isDeactivation ? $this->requestReader->get($request, UserController::TYPE_TO_SET_UP) : $request->query->get(MultiFactorAuthTransfer::TYPE);
 
         $multiFactorAuthTransfer = (new MultiFactorAuthTransfer())
             ->setUser($userTransfer)

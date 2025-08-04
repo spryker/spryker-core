@@ -33,7 +33,7 @@ abstract class AbstractMultiFactorAuthStatusValidator implements MultiFactorAuth
         $entityTransfer = $this->extractEntity($multiFactorAuthValidationRequestTransfer);
         $multiFactorAuthTypesCollectionTransfer = $this->getMultiFactorAuthTypesCollectionTransfer($entityTransfer, $statuses);
 
-        if ($multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes()->count() === 0) {
+        if ($multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes()->count() === 0 && $multiFactorAuthValidationRequestTransfer->getIsActivation() !== true) {
             return $this->createMultiFactorAuthValidationResponseTransfer();
         }
 
@@ -50,7 +50,7 @@ abstract class AbstractMultiFactorAuthStatusValidator implements MultiFactorAuth
             return $this->createMultiFactorAuthValidationResponseTransfer(true, $multiFactorAuthCodeTransfer->getStatus());
         }
 
-        if ($multiFactorAuthValidationRequestTransfer->getType() !== null && $multiFactorAuthValidationRequestTransfer->getType() !== $multiFactorAuthCodeTransfer->getType()) {
+        if ($multiFactorAuthValidationRequestTransfer->getType() !== null && $multiFactorAuthValidationRequestTransfer->getType() !== $multiFactorAuthCodeTransfer->getType() && $multiFactorAuthValidationRequestTransfer->getIsDeactivation() !== true) {
             return $this->createMultiFactorAuthValidationResponseTransfer(true, MultiFactorAuthConstants::CODE_BLOCKED);
         }
 

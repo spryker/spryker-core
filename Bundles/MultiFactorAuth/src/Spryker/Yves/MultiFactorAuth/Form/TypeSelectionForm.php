@@ -7,6 +7,8 @@
 
 namespace Spryker\Yves\MultiFactorAuth\Form;
 
+use Generated\Shared\Transfer\MultiFactorAuthTransfer;
+use Spryker\Yves\MultiFactorAuth\Controller\CustomerMultiFactorAuthFlowController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,18 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TypeSelectionForm extends BaseMultiFactorAuthForm
 {
-    /**
-     * @var string
-     */
-    protected const FIELD_TYPE = 'type';
-
-    /**
-     * @uses \Spryker\Yves\MultiFactorAuth\Form\DataProvider\TypeSelectionDataProvider::OPTION_TYPES
-     *
-     * @var string
-     */
-    protected const OPTION_TYPES = 'types';
-
     /**
      * @var string
      */
@@ -51,7 +41,7 @@ class TypeSelectionForm extends BaseMultiFactorAuthForm
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            static::OPTION_TYPES => [],
+            CustomerMultiFactorAuthFlowController::TYPES => [],
         ]);
     }
 
@@ -77,11 +67,11 @@ class TypeSelectionForm extends BaseMultiFactorAuthForm
     protected function addSelectedMethodField(FormBuilderInterface $builder, array $options)
     {
         $mappedOptions = array_combine(
-            array_map('ucfirst', $options[static::OPTION_TYPES]),
-            $options[static::OPTION_TYPES],
+            array_map('ucfirst', $options[CustomerMultiFactorAuthFlowController::TYPES]),
+            $options[CustomerMultiFactorAuthFlowController::TYPES],
         );
 
-        $builder->add(static::FIELD_TYPE, ChoiceType::class, [
+        $builder->add(MultiFactorAuthTransfer::TYPE, ChoiceType::class, [
             'choices' => $mappedOptions,
             'expanded' => true,
             'multiple' => false,

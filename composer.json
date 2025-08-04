@@ -551,6 +551,7 @@
         "spryker/multi-carts-rest-api": "*",
         "spryker/multi-factor-auth": "*",
         "spryker/multi-factor-auth-extension": "*",
+        "spryker/multi-factor-auth-merchant-portal": "*",
         "spryker/navigation": "*",
         "spryker/navigation-collector": "*",
         "spryker/navigation-gui": "*",

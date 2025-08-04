@@ -7,6 +7,8 @@
 
 namespace Spryker\Yves\MultiFactorAuth\Form;
 
+use Generated\Shared\Transfer\MultiFactorAuthTransfer;
+use Spryker\Yves\MultiFactorAuth\Controller\CustomerMultiFactorAuthFlowController;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,28 +21,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CodeValidationForm extends BaseMultiFactorAuthForm
 {
-    /**
-     * @uses {@link \Spryker\Yves\MultiFactorAuth\Form\DataProvider\Customer\CustomerTypeSelectionFormDataProvider::OPTIONS_TYPES}
-     *
-     * @var string
-     */
-    protected const OPTION_TYPES = 'types';
-
-    /**
-     * @var string
-     */
-    protected const OPTION_CODE_LENGTH = 'code_length';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_TYPE = 'type';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_AUTHENTICATION_CODE = 'authentication_code';
-
     /**
      * @var string
      */
@@ -74,8 +54,8 @@ class CodeValidationForm extends BaseMultiFactorAuthForm
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            static::OPTION_TYPES => [],
-            static::OPTION_CODE_LENGTH => null,
+            CustomerMultiFactorAuthFlowController::TYPES => [],
+            CustomerMultiFactorAuthFlowController::CODE_LENGTH => null,
         ]);
     }
 
@@ -101,8 +81,8 @@ class CodeValidationForm extends BaseMultiFactorAuthForm
      */
     protected function addTypeHiddenField(FormBuilderInterface $builder, array $options = [])
     {
-        $builder->add(static::FIELD_TYPE, HiddenType::class, [
-            'data' => $options[static::OPTION_TYPES][0] ?? '',
+        $builder->add(MultiFactorAuthTransfer::TYPE, HiddenType::class, [
+            'data' => $options[CustomerMultiFactorAuthFlowController::TYPES][0] ?? '',
         ]);
 
         return $this;
@@ -116,16 +96,16 @@ class CodeValidationForm extends BaseMultiFactorAuthForm
      */
     protected function addAuthenticationCodeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_AUTHENTICATION_CODE, NumberType::class, [
+        $builder->add(CustomerMultiFactorAuthFlowController::AUTHENTICATION_CODE, NumberType::class, [
             'label' => $this->getFactory()->getTranslatorService()->trans(static::ENTER_CODE_LABEL_PLACEHOLDER, [
-                static::PARAM_TYPE => $options[static::OPTION_TYPES][0] ?? '',
+                static::PARAM_TYPE => $options[CustomerMultiFactorAuthFlowController::TYPES][0] ?? '',
             ]),
             'attr' => [
                 'placeholder' => $this->getFactory()->getTranslatorService()->trans(static::ENTER_CODE_PLACEHOLDER),
                 'autocomplete' => 'one-time-code',
                 'inputmode' => 'numeric',
-                'maxlength' => $options[static::OPTION_CODE_LENGTH],
-                'oninput' => sprintf('this.value = this.value.replace(/\\D/g, \'\').slice(0, %d);', $options[static::OPTION_CODE_LENGTH]),
+                'maxlength' => $options[CustomerMultiFactorAuthFlowController::CODE_LENGTH],
+                'oninput' => sprintf('this.value = this.value.replace(/\\D/g, \'\').slice(0, %d);', $options[CustomerMultiFactorAuthFlowController::CODE_LENGTH]),
             ],
             'constraints' => [
                 new NotBlank(),

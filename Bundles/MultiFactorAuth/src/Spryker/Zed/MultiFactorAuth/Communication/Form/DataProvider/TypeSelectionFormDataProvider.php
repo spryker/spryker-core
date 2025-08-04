@@ -8,75 +8,61 @@
 namespace Spryker\Zed\MultiFactorAuth\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer;
+use Generated\Shared\Transfer\MultiFactorAuthValidationRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\MultiFactorAuth\Persistence\MultiFactorAuthRepositoryInterface;
+use Spryker\Zed\MultiFactorAuth\Business\MultiFactorAuthFacadeInterface;
+use Spryker\Zed\MultiFactorAuth\Communication\Controller\UserController;
+use Spryker\Zed\MultiFactorAuth\Communication\Reader\Request\RequestReaderInterface;
+use Spryker\Zed\MultiFactorAuth\Communication\Reader\User\UserReaderInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class TypeSelectionFormDataProvider
 {
     /**
-     * @var string
-     */
-    protected const OPTION_TYPES = 'types';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_IS_ACTIVATION = 'is_activation';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_IS_DEACTIVATION = 'is_deactivation';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_TYPE_TO_SET_UP = 'type_to_set_up';
-
-    /**
-     * @param \Spryker\Zed\MultiFactorAuth\Persistence\MultiFactorAuthRepositoryInterface $repository
-     * @param array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface> $userMultiFactorAuthPlugins
+     * @param \Spryker\Zed\MultiFactorAuth\Business\MultiFactorAuthFacadeInterface $multiFactorAuthFacade
+     * @param \Spryker\Zed\MultiFactorAuth\Communication\Reader\User\UserReaderInterface $userReader
+     * @param \Spryker\Zed\MultiFactorAuth\Communication\Reader\Request\RequestReaderInterface $requestReader
      */
     public function __construct(
-        protected MultiFactorAuthRepositoryInterface $repository,
-        protected array $userMultiFactorAuthPlugins = []
+        protected MultiFactorAuthFacadeInterface $multiFactorAuthFacade,
+        protected UserReaderInterface $userReader,
+        protected RequestReaderInterface $requestReader
     ) {
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array<string, mixed>
      */
-    public function getOptions(UserTransfer $userTransfer): array
+    public function getOptions(Request $request): array
     {
         return [
-            static::OPTION_TYPES => $this->getEnabledTypes($userTransfer),
-            static::FIELD_IS_ACTIVATION => false,
-            static::FIELD_IS_DEACTIVATION => false,
-            static::FIELD_TYPE_TO_SET_UP => null,
+            UserController::TYPES => $this->getTypes($request),
+            UserController::IS_ACTIVATION => false,
+            UserController::IS_DEACTIVATION => false,
+            UserController::TYPE_TO_SET_UP => null,
         ];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array<int, string>
      */
-    protected function getEnabledTypes(UserTransfer $userTransfer): array
+    protected function getTypes(Request $request): array
     {
-        $multiFactorAuthCriteraTransfer = (new MultiFactorAuthCriteriaTransfer())
-            ->setUser($userTransfer);
+        $userTransfer = $this->userReader->getUser();
 
-        $multiFactorAuthTypesCollectionTransfer = $this->repository->getUserMultiFactorAuthTypes($multiFactorAuthCriteraTransfer);
-        $multiFactorAuthTypePluginsIndexedByName = $this->indexMultiFactorAuthPluginsByName();
+        if ($this->isActivationFlow($request, $userTransfer)) {
+            return [$this->requestReader->get($request, UserController::TYPE_TO_SET_UP)];
+        }
+
+        $multiFactorAuthCriteraTransfer = (new MultiFactorAuthCriteriaTransfer())->setUser($userTransfer);
+        $multiFactorAuthTypesCollectionTransfer = $this->multiFactorAuthFacade->getEnabledUserMultiFactorAuthTypes($multiFactorAuthCriteraTransfer);
         $enabledTypes = [];
 
         foreach ($multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes() as $multiFactorAuthTypeTransfer) {
-            if (!isset($multiFactorAuthTypePluginsIndexedByName[$multiFactorAuthTypeTransfer->getType()])) {
-                continue;
-            }
-
             $enabledTypes[] = $multiFactorAuthTypeTransfer->getTypeOrFail();
         }
 
@@ -84,15 +70,18 @@ class TypeSelectionFormDataProvider
     }
 
     /**
-     * @return array<string, \Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface>
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return bool
      */
-    protected function indexMultiFactorAuthPluginsByName(): array
-    {
-        $indexedPlugins = [];
-        foreach ($this->userMultiFactorAuthPlugins as $plugin) {
-            $indexedPlugins[$plugin->getName()] = $plugin;
-        }
+    protected function isActivationFlow(
+        Request $request,
+        UserTransfer $userTransfer
+    ): bool {
+        $multiFactorAuthValidationRequestTransfer = (new MultiFactorAuthValidationRequestTransfer())->setUser($userTransfer);
 
-        return $indexedPlugins;
+        return $this->requestReader->get($request, UserController::IS_ACTIVATION) &&
+            $this->multiFactorAuthFacade->validateUserMultiFactorAuthStatus($multiFactorAuthValidationRequestTransfer)->getIsRequired() === false;
     }
 }

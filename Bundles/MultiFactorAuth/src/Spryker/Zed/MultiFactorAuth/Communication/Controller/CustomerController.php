@@ -84,16 +84,6 @@ class CustomerController extends AbstractController
     /**
      * @var string
      */
-    protected const KEY_ID_CUSTOMER = 'idCustomer';
-
-    /**
-     * @var string
-     */
-    protected const KEY_TYPE = 'type';
-
-    /**
-     * @var string
-     */
     protected const ERROR_MULTI_FACTOR_AUTH_TYPE_NOT_FOUND = 'Multi-Factor Authentication type "%s" not found for this customer.';
 
     /**
@@ -118,7 +108,7 @@ class CustomerController extends AbstractController
     public function removeMultiFactorAuthAction(Request $request): Response|array
     {
         $idCustomer = $this->castId($this->getParameterFromRequest($request, static::PARAM_ID_CUSTOMER));
-        $type = $this->getParameterFromRequest($request, static::KEY_TYPE);
+        $type = $this->getParameterFromRequest($request, MultiFactorAuthTransfer::TYPE);
 
         $multiFactorAuthTypesCollectionTransfer = $this->getCustomerMultiFactorAuthCollection($idCustomer);
         $multiFactorAuthTypesCount = $multiFactorAuthTypesCollectionTransfer->getMultiFactorAuthTypes()->count();
@@ -179,7 +169,7 @@ class CustomerController extends AbstractController
         return $this->viewResponse([
             static::MULTI_FACTOR_AUTH_COLLECTION => $multiFactorAuthTypesCollectionTransfer,
             static::CSRF_TOKEN_DEACTIVATE => $this->csrfTokenManager->getToken(static::CSRF_TOKEN_ID_DEACTIVATE)->getValue(),
-            static::KEY_ID_CUSTOMER => $idCustomer,
+            CustomerTransfer::ID_CUSTOMER => $idCustomer,
         ]);
     }
 
@@ -191,7 +181,7 @@ class CustomerController extends AbstractController
     public function confirmRemoveMultiFactorAuthAction(Request $request): Response
     {
         $idCustomer = $this->castId($this->getParameterFromRequest($request, static::PARAM_ID_CUSTOMER));
-        $type = $this->getParameterFromRequest($request, static::KEY_TYPE);
+        $type = $this->getParameterFromRequest($request, MultiFactorAuthTransfer::TYPE);
 
         if (!$this->validateCsrfToken($request)) {
             return $this->redirectResponse(static::URL_REDIRECT_CUSTOMER_LIST);
@@ -282,8 +272,8 @@ class CustomerController extends AbstractController
     {
         return $this->viewResponse([
             static::CSRF_TOKEN_DEACTIVATE => $this->csrfTokenManager->getToken(static::CSRF_TOKEN_ID_DEACTIVATE)->getValue(),
-            static::KEY_ID_CUSTOMER => $idCustomer,
-            static::KEY_TYPE => $type,
+            CustomerTransfer::ID_CUSTOMER => $idCustomer,
+            MultiFactorAuthTransfer::TYPE => $type,
         ]);
     }
 

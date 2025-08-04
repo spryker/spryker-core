@@ -168,13 +168,25 @@ interface MultiFactorAuthFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
-     * @param array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface> $userMultiFactorAuthPlugins
      *
      * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
      */
     public function getAvailableUserMultiFactorAuthTypes(
-        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer,
-        array $userMultiFactorAuthPlugins
+        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
+    ): MultiFactorAuthTypesCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns enabled multi-factor authentication types for the provided user.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MultiFactorAuthTypesCollectionTransfer
+     */
+    public function getEnabledUserMultiFactorAuthTypes(
+        MultiFactorAuthCriteriaTransfer $multiFactorAuthCriteriaTransfer
     ): MultiFactorAuthTypesCollectionTransfer;
 
     /**

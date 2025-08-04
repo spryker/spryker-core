@@ -50,7 +50,7 @@
                     {% endfor %}
 
                     {% set navigationConfig = navigationConfig | merge([{
-                        url: '/security-merchant-portal-gui/logout',
+                        url: is_granted('ROLE_MERCHANT_AGENT') ? '/agent-security-merchant-portal-gui/logout' : '/security-merchant-portal-gui/logout',
                         type: 'danger',
                         title: 'Logout' | trans
                     }]) %}

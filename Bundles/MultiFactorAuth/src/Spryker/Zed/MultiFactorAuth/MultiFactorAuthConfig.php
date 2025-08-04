@@ -196,6 +196,7 @@ class MultiFactorAuthConfig extends AbstractBundleConfig
             static::API_KEY_EDIT_ROUTE => [static::API_KEY_FORM_NAME],
             static::API_KEY_DELETE_ROUTE => [static::API_KEY_DELETE_FORM_NAME],
             static::API_KEY_CREATE_ROUTE => [static::API_KEY_FORM_NAME],
+
             static::MERCHANT_POSTAL_CHANGE_PASSWORD_ROUTE => [static::MERCHANT_POSTAL_CHANGE_PASSWORD_FORM_NAME],
         ];
     }

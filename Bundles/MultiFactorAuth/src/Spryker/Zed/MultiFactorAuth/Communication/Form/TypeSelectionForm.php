@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MultiFactorAuth\Communication\Form;
 
+use Generated\Shared\Transfer\MultiFactorAuthTransfer;
+use Spryker\Zed\MultiFactorAuth\Communication\Controller\UserController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,18 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TypeSelectionForm extends BaseMultiFactorAuthForm
 {
-    /**
-     * @var string
-     */
-    protected const FIELD_TYPE = 'type';
-
-    /**
-     * @uses \Spryker\Zed\MultiFactorAuth\Communication\Form\DataProvider\TypeSelectionFormDataProvider::OPTION_TYPES
-     *
-     * @var string
-     */
-    protected const OPTION_TYPES = 'types';
-
     /**
      * @return string
      */
@@ -49,7 +39,7 @@ class TypeSelectionForm extends BaseMultiFactorAuthForm
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            static::OPTION_TYPES => [],
+            UserController::TYPES => [],
         ]);
     }
 
@@ -75,11 +65,11 @@ class TypeSelectionForm extends BaseMultiFactorAuthForm
     protected function addSelectedMethodField(FormBuilderInterface $builder, array $options)
     {
         $mappedOptions = array_combine(
-            array_map('ucfirst', $options[static::OPTION_TYPES]),
-            $options[static::OPTION_TYPES],
+            array_map('ucfirst', $options[UserController::TYPES]),
+            $options[UserController::TYPES],
         );
 
-        $builder->add(static::FIELD_TYPE, ChoiceType::class, [
+        $builder->add(MultiFactorAuthTransfer::TYPE, ChoiceType::class, [
             'choices' => $mappedOptions,
             'expanded' => true,
             'multiple' => false,

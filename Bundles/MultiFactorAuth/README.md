@@ -12,4 +12,4 @@ composer require spryker/multi-factor-auth
 
 ## Documentation
 
-[Spryker Documentation](https://docs.spryker.com)
+[Spryker Documentation](https://docs.spryker.com/docs/pbc/all/multi-factor-authentication/latest/multi-factor-authentication)

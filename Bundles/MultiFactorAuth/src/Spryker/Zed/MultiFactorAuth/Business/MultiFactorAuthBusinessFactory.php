@@ -175,6 +175,29 @@ class MultiFactorAuthBusinessFactory extends AbstractBusinessFactory
     {
         return new UserMultiFactorAuthReader(
             $this->getRepository(),
+            $this->getUserMultiFactorAuthPlugins(),
         );
+    }
+
+    /**
+     * @return array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface>
+     */
+    public function getUserMultiFactorAuthPlugins(): array
+    {
+        $plugins = $this->getProvidedDependency(MultiFactorAuthDependencyProvider::PLUGINS_USER_MULTI_FACTOR_AUTH);
+
+        foreach ($this->getMultiFactorAuthPluginExpanderPlugins() as $expanderPlugin) {
+            $plugins = $expanderPlugin->expand($plugins);
+        }
+
+        return $plugins;
+    }
+
+    /**
+     * @return array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginExpanderPluginInterface>
+     */
+    protected function getMultiFactorAuthPluginExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MultiFactorAuthDependencyProvider::PLUGINS_MULTI_FACTOR_AUTH_PLUGIN_EXPANDER);
     }
 }

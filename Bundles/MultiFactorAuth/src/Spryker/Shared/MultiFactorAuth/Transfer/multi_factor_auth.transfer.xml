@@ -40,6 +40,8 @@
         <property name="customer" type="Customer"/>
         <property name="user" type="User"/>
         <property name="type" type="string"/>
+        <property name="isDeactivation" type="bool"/>
+        <property name="isActivation" type="bool"/>
         <property name="additionalStatuses" type="array" singular="additionalStatus"/>
     </transfer>
 
@@ -72,7 +74,6 @@
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
         <property name="idUser" type="int"/>
-        <property name="isMerchantAgent" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="MailRecipient">
@@ -136,28 +137,6 @@
         <property name="surrogateIdentifier" type="int"/>
     </transfer>
 
-    <transfer name="AclEntityMetadata">
-        <property name="entityName" type="string"/>
-        <property name="defaultGlobalOperationMask" type="int"/>
-        <property name="parent" type="AclEntityParentMetadata"/>
-    </transfer>
-
-    <transfer name="AclEntityParentMetadata">
-        <property name="entityName" type="string"/>
-    </transfer>
-
-    <transfer name="NavigationItemCollection">
-        <property name="navigationItems" type="NavigationItem[]" associative="true" singular="navigationItem"/>
-    </transfer>
-
-    <transfer name="AclEntityMetadataConfig">
-        <property name="aclEntityAllowList" type="string[]" singular="aclEntityAllowListItem"/>
-        <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
-    </transfer>
-
-    <transfer name="NavigationItem">
-    </transfer>
-
     <transfer name="GlueRequest">
         <property name="requestUser" type="GlueRequestUser"/>
         <property name="meta" type="array" associative="true" singular="meta"/>
@@ -207,22 +186,4 @@
     <transfer name="GlueRequestCustomer">
         <property name="surrogateIdentifier" type="int"/>
     </transfer>
-
-    <transfer name="AclEntityMetadataCollection">
-        <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
-    </transfer>
-
-    <transfer name="ZedUiFormRequestAction" strict="true">
-        <property name="form" type="string"/>
-        <property name="notifications" type="array" singular="notification"/>
-        <property name="result" type="string"/>
-        <property name="formSelector" type="string"/>
-        <property name="isLogin" type="bool"/>
-        <property name="ajaxFormSelector" type="string"/>
-        <property name="url" type="string"/>
-    </transfer>
-
-    <transfer name="ZedUiFormResponse" strict="true">
-    </transfer>
-
 </transfers>

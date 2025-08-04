@@ -32,7 +32,7 @@
             {{ form_end(form) }}
         {% endblock %}
 
-        {% include '@MultiFactorAuth/Partials/mp-mfa-handler.twig' ignore missing with {
+        {% include '@MultiFactorAuthMerchantPortal/Partials/mp-mfa-handler.twig' ignore missing with {
             formSelector: "form[name=#{form.vars.name}]",
             url: form.vars.action,
         } %}

@@ -18,16 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 class CustomerMultiFactorAuthActivator implements CustomerMultiFactorAuthActivatorInterface
 {
     /**
-     * @var string
-     */
-    protected const TYPE_TO_SET_UP = 'type_to_set_up';
-
-    /**
-     * @var string
-     */
-    protected const TYPE = 'type';
-
-    /**
      * @param \Spryker\Client\MultiFactorAuth\MultiFactorAuthClientInterface $client
      * @param \Spryker\Yves\MultiFactorAuth\Reader\Request\RequestReaderInterface $requestReader
      */
@@ -48,7 +38,7 @@ class CustomerMultiFactorAuthActivator implements CustomerMultiFactorAuthActivat
         $isActivation = $this->requestReader->get($request, CustomerMultiFactorAuthFlowController::IS_ACTIVATION);
 
         $status = $isActivation ? MultiFactorAuthConstants::STATUS_PENDING_ACTIVATION : MultiFactorAuthConstants::STATUS_ACTIVE;
-        $type = $isActivation ? $this->requestReader->get($request, static::TYPE_TO_SET_UP) : $request->query->get(static::TYPE);
+        $type = $isActivation ? $this->requestReader->get($request, CustomerMultiFactorAuthFlowController::TYPE_TO_SET_UP) : $request->query->get(MultiFactorAuthTransfer::TYPE);
 
         $multiFactorAuthTransfer = (new MultiFactorAuthTransfer())
             ->setCustomer($customerTransfer)
