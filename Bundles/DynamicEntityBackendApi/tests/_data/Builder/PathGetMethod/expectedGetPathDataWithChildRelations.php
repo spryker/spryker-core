@@ -129,8 +129,17 @@ return [
                             'properties' =>
                              [
                               'test' =>
+
                                [
+
                                 'type' => 'string',
+
+                                'example' => 'John Doe',
+
+                                'title' => 'test',
+
+                                'description' => 'Test',
+
                               ],
                               'test-child-relation-0' =>
                                [
@@ -141,8 +150,17 @@ return [
                                   'properties' =>
                                    [
                                     'test' =>
+
                                      [
+
                                       'type' => 'string',
+
+                                      'example' => 'John Doe',
+
+                                      'title' => 'test',
+
+                                      'description' => 'Test',
+
                                     ],
                                   ],
                                 ],
@@ -156,8 +174,17 @@ return [
                                   'properties' =>
                                    [
                                     'test' =>
+
                                      [
+
                                       'type' => 'string',
+
+                                      'example' => 'John Doe',
+
+                                      'title' => 'test',
+
+                                      'description' => 'Test',
+
                                     ],
                                   ],
                                 ],
@@ -171,8 +198,17 @@ return [
                                   'properties' =>
                                    [
                                     'test' =>
+
                                      [
+
                                       'type' => 'string',
+
+                                      'example' => 'John Doe',
+
+                                      'title' => 'test',
+
+                                      'description' => 'Test',
+
                                     ],
                                   ],
                                 ],
@@ -290,8 +326,17 @@ return [
                           'properties' =>
                            [
                             'test' =>
+
                              [
+
                               'type' => 'string',
+
+                              'example' => 'John Doe',
+
+                              'title' => 'test',
+
+                              'description' => 'Test',
+
                             ],
                             'test-child-relation-0' =>
                              [
@@ -302,8 +347,17 @@ return [
                                 'properties' =>
                                  [
                                   'test' =>
+
                                    [
+
                                     'type' => 'string',
+
+                                    'example' => 'John Doe',
+
+                                    'title' => 'test',
+
+                                    'description' => 'Test',
+
                                   ],
                                 ],
                               ],
@@ -317,8 +371,17 @@ return [
                                 'properties' =>
                                  [
                                   'test' =>
+
                                    [
+
                                     'type' => 'string',
+
+                                    'example' => 'John Doe',
+
+                                    'title' => 'test',
+
+                                    'description' => 'Test',
+
                                   ],
                                 ],
                               ],
@@ -332,8 +395,17 @@ return [
                                 'properties' =>
                                  [
                                   'test' =>
+
                                    [
+
                                     'type' => 'string',
+
+                                    'example' => 'John Doe',
+
+                                    'title' => 'test',
+
+                                    'description' => 'Test',
+
                                   ],
                                 ],
                               ],

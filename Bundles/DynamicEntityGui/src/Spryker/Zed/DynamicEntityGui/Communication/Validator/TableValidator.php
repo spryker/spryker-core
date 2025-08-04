@@ -24,6 +24,11 @@ class TableValidator implements TableValidatorInterface
     protected DatabaseMap $databaseMap;
 
     /**
+     * @var array<string>
+     */
+    protected array $disallowedTables = [];
+
+    /**
      * @param \Spryker\Zed\DynamicEntityGui\Dependency\Facade\DynamicEntityGuiToDynamicEntityFacadeInterface $dynamicEntityFacade
      * @param \Propel\Runtime\Map\DatabaseMap $databaseMap
      */
@@ -42,7 +47,19 @@ class TableValidator implements TableValidatorInterface
      */
     public function validateIsTableDisallowed(string $table): bool
     {
-        return in_array($table, $this->dynamicEntityFacade->getDisallowedTables()) === true;
+        return in_array($table, $this->getDisallowedTables()) === true;
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function getDisallowedTables(): array
+    {
+        if (!$this->disallowedTables) {
+            $this->disallowedTables = $this->dynamicEntityFacade->getDisallowedTables();
+        }
+
+        return $this->disallowedTables;
     }
 
     /**

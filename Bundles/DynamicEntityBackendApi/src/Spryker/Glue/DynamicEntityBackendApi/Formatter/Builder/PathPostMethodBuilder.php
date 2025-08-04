@@ -128,6 +128,7 @@ class PathPostMethodBuilder extends AbstractPathMethodBuilder implements PathMet
                     $skipIdentifier,
                     $filterIsCreated,
                 ),
+                $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
                 true,
                 true,
             );
@@ -135,11 +136,12 @@ class PathPostMethodBuilder extends AbstractPathMethodBuilder implements PathMet
 
         return $this->buildRequestBody(
             $requestDescription,
-            $this->prepareFieldsArrayWithChilds(
+            $this->prepareFieldsArrayWithChildren(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
             ),
+            $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
             true,
         );
     }
@@ -165,6 +167,7 @@ class PathPostMethodBuilder extends AbstractPathMethodBuilder implements PathMet
                     $skipIdentifier,
                     $filterIsCreated,
                 ),
+                $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
                 $httpCodeStatus,
                 $isCollection,
                 true,
@@ -173,11 +176,12 @@ class PathPostMethodBuilder extends AbstractPathMethodBuilder implements PathMet
 
         return $this->buildSuccessResponse(
             $responseSchemaDescription,
-            $this->prepareFieldsArrayWithChilds(
+            $this->prepareFieldsArrayWithChildren(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
             ),
+            $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
             (string)Response::HTTP_CREATED,
             $isCollection,
         );

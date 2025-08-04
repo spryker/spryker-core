@@ -193,6 +193,7 @@ class PathPatchMethodBuilder extends AbstractPathMethodBuilder implements PathMe
                     $filterIsCreated,
                     $filterIsEditable,
                 ),
+                $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
                 false,
                 true,
             );
@@ -200,12 +201,13 @@ class PathPatchMethodBuilder extends AbstractPathMethodBuilder implements PathMe
 
         return $this->buildRequestBody(
             $requestDescription,
-            $this->prepareFieldsArrayWithChilds(
+            $this->prepareFieldsArrayWithChildren(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
                 $filterIsEditable,
             ),
+            $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
         );
     }
 
@@ -230,6 +232,7 @@ class PathPatchMethodBuilder extends AbstractPathMethodBuilder implements PathMe
                     $filterIsCreated,
                     $filterIsEditable,
                 ),
+                $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
                 false,
                 true,
             );
@@ -237,12 +240,13 @@ class PathPatchMethodBuilder extends AbstractPathMethodBuilder implements PathMe
 
         return $this->buildRequestBody(
             $requestDescription,
-            $this->prepareFieldsArrayWithChilds(
+            $this->prepareFieldsArrayWithChildren(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
                 $filterIsEditable,
             ),
+            $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
             true,
         );
     }
@@ -269,6 +273,7 @@ class PathPatchMethodBuilder extends AbstractPathMethodBuilder implements PathMe
                     $filterIsCreated,
                     $filterIsEditable,
                 ),
+                $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
                 $httpCodeStatus,
                 false,
                 true,
@@ -277,12 +282,13 @@ class PathPatchMethodBuilder extends AbstractPathMethodBuilder implements PathMe
 
         return $this->buildSuccessResponse(
             $responseDescription,
-            $this->prepareFieldsArrayWithChilds(
+            $this->prepareFieldsArrayWithChildren(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
                 $filterIsEditable,
             ),
+            $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
             $httpCodeStatus,
         );
     }
@@ -309,6 +315,7 @@ class PathPatchMethodBuilder extends AbstractPathMethodBuilder implements PathMe
                     $filterIsCreated,
                     $filterIsEditable,
                 ),
+                $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
                 $httpCodeStatus,
                 false,
                 true,
@@ -317,12 +324,13 @@ class PathPatchMethodBuilder extends AbstractPathMethodBuilder implements PathMe
 
         return $this->buildSuccessResponse(
             $responseDescription,
-            $this->prepareFieldsArrayWithChilds(
+            $this->prepareFieldsArrayWithChildren(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
                 $filterIsEditable,
             ),
+            $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
             $httpCodeStatus,
             true,
         );

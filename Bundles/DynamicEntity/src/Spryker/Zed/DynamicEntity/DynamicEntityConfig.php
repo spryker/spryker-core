@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DynamicEntity;
 
+use Spryker\Shared\DynamicEntity\DynamicEntityConstants;
 use Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityFilePathNotDefinedException;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -93,5 +94,19 @@ class DynamicEntityConfig extends AbstractBundleConfig
     public function getDisallowedTables(): array
     {
         return [];
+    }
+
+    /**
+     * Specification:
+     * - The path to where schema files are merged into. The merged schema will be used to determine column details
+     *   for the dynamic entity configuration to have descriptions and examples where possible.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getPropelOrmPathToMergedSchemaFiles(): string
+    {
+        return $this->get(DynamicEntityConstants::PROPEL)['paths']['schemaDir'];
     }
 }

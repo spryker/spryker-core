@@ -62,10 +62,20 @@ return [
                       'properties' =>
                        [
                         'test' =>
+
                          [
+
                           'type' => 'string',
+
+                          'example' => 'John Doe',
+
+                          'title' => 'test',
+
+                          'description' => 'Test',
+
                         ],
                       ],
+                      'required' => [],
                     ],
                   ],
                 ],
@@ -96,10 +106,20 @@ return [
                         'properties' =>
                          [
                           'test' =>
+
                            [
+
                             'type' => 'string',
+
+                            'example' => 'John Doe',
+
+                            'title' => 'test',
+
+                            'description' => 'Test',
+
                           ],
                         ],
+                        'required' => [],
                       ],
                     ],
                   ],

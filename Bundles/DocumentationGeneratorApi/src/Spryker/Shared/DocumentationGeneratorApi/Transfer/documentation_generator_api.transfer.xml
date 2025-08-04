@@ -2,13 +2,13 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ApiApplicationSchemaContext">
-        <property name="fileName" type="string"/>
-        <property name="application" type="string"/>
-        <property name="host" type="string"/>
+        <property name="fileName" type="string" description="The name of a file."/>
+        <property name="application" type="string" description="The name of an application context."/>
+        <property name="host" type="string" description="The host name of a server or service."/>
     </transfer>
 
     <transfer name="DocumentationInvalidationVoterRequest">
-        <property name="interval" type="string"/>
+        <property name="interval" type="string" description="The interval for a recurring task or check."/>
     </transfer>
 
 </transfers>

@@ -107,11 +107,17 @@ class DynamicEntityMapper implements DynamicEntityMapperInterface
         }
 
         $dynamicEntityDefinitionTransfer->setIdentifier($definition[static::IDENTIFIER]);
+
         if (array_key_exists(static::IS_DELETABLE, $definition)) {
             $dynamicEntityDefinitionTransfer->setIsDeletable($definition[static::IS_DELETABLE]);
         }
 
         foreach ($definition[static::FIELDS] as $field) {
+            // Automatic fix for examples added as array in the configuration.json file.
+            if (isset($field['examples']) && is_array($field['examples'])) {
+                $field['examples'] = implode(', ', $field['examples']);
+            }
+
             $dynamicEntityFieldDefinitionTransfer = (new DynamicEntityFieldDefinitionTransfer())->fromArray($field, true);
 
             $dynamicEntityDefinitionTransfer->addFieldDefinition(

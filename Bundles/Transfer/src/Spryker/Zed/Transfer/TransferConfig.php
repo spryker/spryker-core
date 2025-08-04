@@ -332,7 +332,10 @@ class TransferConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - Returns strategy for merging property descriptions.
-     * - Possible values are: TransferConstants::PROPERTY_DESCRIPTION_MERGE_STRATEGY_DEFAULT, TransferConstants::PROPERTY_DESCRIPTION_MERGE_STRATEGY_GET_FIRST, TransferConstants::PROPERTY_DESCRIPTION_MERGE_STRATEGY_MERGE.
+     * - Possible values are:
+     *      - TransferConstants::PROPERTY_DESCRIPTION_MERGE_STRATEGY_DEFAULT; The merger will throw an exception in case of different descriptions for the same field.
+     *      - TransferConstants::PROPERTY_DESCRIPTION_MERGE_STRATEGY_GET_FIRST; The merger will use the first description of two compared fields.
+     *      - TransferConstants::PROPERTY_DESCRIPTION_MERGE_STRATEGY_CONCAT; The merger will concatenate the descriptions of two compared fields.
      *
      * @api
      *
@@ -340,12 +343,12 @@ class TransferConfig extends AbstractBundleConfig
      */
     public function getPropertyDescriptionMergeStrategy(): string
     {
-        return TransferConstants::PROPERTY_DESCRIPTION_MERGE_STRATEGY_DEFAULT;
+        return TransferConstants::PROPERTY_DESCRIPTION_MERGE_STRATEGY_GET_FIRST;
     }
 
     /**
      * Specification:
-     * - Disable validation and overwrite project transfer properies attributes for transfers.
+     * - Disable validation and overwrite project transfer properties attributes for transfers.
      * - Uses TransferConfig::getTransferPropertyAttributesAvailableForProjectOverride() setting.
      *
      * @api

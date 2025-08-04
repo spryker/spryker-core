@@ -69,8 +69,12 @@
         <property name="fieldVisibleName" type="string"/>
         <property name="isEditable" type="bool"/>
         <property name="isCreatable" type="bool"/>
+        <property name="isEnabled" type="bool" description="When created it's set to true as it will be created by the table definition. When field is imported from the configuration.json it will be set to false."/>
         <property name="type" type="string"/>
         <property name="validation" type="DynamicEntityFieldValidation"/>
+        <property name="description" type="string" description="Provides a user-friendly description of the field."/>
+        <property name="examples" type="string" description="Provides a comma separated list of examples that can be used for this field."/>
+        <property name="enumValues" type="string" description="Provides a comma separated list of enums which are allowed to be used for this field."/>
     </transfer>
 
     <transfer name="DynamicEntityFieldValidation" strict="true">

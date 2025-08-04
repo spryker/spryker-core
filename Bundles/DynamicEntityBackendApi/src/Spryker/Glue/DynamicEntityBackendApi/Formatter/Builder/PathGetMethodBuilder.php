@@ -60,6 +60,11 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
     /**
      * @var string
      */
+    protected const QUERY = 'query';
+
+    /**
+     * @var string
+     */
     protected const INCLUDE = 'include';
 
     /**
@@ -268,22 +273,6 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
     }
 
     /**
-     * @param array<string> $pathExamples
-     * @param array<string> $subPaths
-     * @param string $rootPath
-     *
-     * @return array<string>
-     */
-    protected function populatePathExamples(array $pathExamples, array $subPaths, string $rootPath): array
-    {
-        foreach ($subPaths as $subPath) {
-            $pathExamples[] = $rootPath . '.' . $subPath;
-        }
-
-        return array_unique($pathExamples);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      *
      * @return array<string, mixed>
@@ -326,6 +315,7 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
                 $this->buildOneOfCombinationArrayRecursively(
                     $dynamicEntityConfigurationTransfer,
                 ),
+                $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
                 $httpCodeStatus,
                 $isCollection,
                 true,
@@ -334,9 +324,10 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
 
         return $this->buildSuccessResponse(
             $responseDescription,
-            $this->prepareFieldsArrayWithChilds(
+            $this->prepareFieldsArrayWithChildren(
                 $dynamicEntityConfigurationTransfer,
             ),
+            $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions(),
             $httpCodeStatus,
             $isCollection,
         );

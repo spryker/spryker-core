@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 return [
   'paths' =>
    [
@@ -136,23 +138,39 @@ return [
                             'type' => 'integer',
                             'minimum' => 1,
                             'maximum' => 100,
+                            'example' => '123',
+                            'title' => 'id',
+                            'description' => 'Id',
                           ],
                           'field_string' =>
                            [
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 5,
+                            'title' => 'field_string',
+                            'description' => 'Field_string',
                           ],
                           'field_decimal' =>
                            [
                             'type' => 'string',
                             'minLength' => 1,
                             'maxLength' => 5,
+                            'title' => 'field_decimal',
+                            'description' => 'Field_decimal',
                           ],
                           'field_boolean' =>
                            [
                             'type' => 'boolean',
+                            'example' => 'true',
+                            'title' => 'field_boolean',
+                            'description' => 'Field_boolean',
                           ],
+                        ],
+                        'required' => [
+                           'id',
+                           'field_string',
+                           'field_decimal',
+                           'field_boolean',
                         ],
                       ],
                     ],
@@ -252,24 +270,40 @@ return [
                           'type' => 'integer',
                           'minimum' => 1,
                           'maximum' => 100,
+                          'example' => '123',
+                          'title' => 'id',
+                          'description' => 'Id',
                         ],
                         'field_string' =>
-                         [
-                          'type' => 'string',
-                          'minLength' => 1,
-                          'maxLength' => 5,
+                        [
+                           'type' => 'string',
+                           'minLength' => 1,
+                           'maxLength' => 5,
+                           'title' => 'field_string',
+                           'description' => 'Field_string',
                         ],
                         'field_decimal' =>
-                         [
-                          'type' => 'string',
-                          'minLength' => 1,
-                          'maxLength' => 5,
+                        [
+                           'type' => 'string',
+                           'minLength' => 1,
+                           'maxLength' => 5,
+                           'title' => 'field_decimal',
+                           'description' => 'Field_decimal',
                         ],
                         'field_boolean' =>
-                         [
-                          'type' => 'boolean',
+                        [
+                           'type' => 'boolean',
+                           'example' => 'true',
+                           'title' => 'field_boolean',
+                           'description' => 'Field_boolean',
                         ],
                       ],
+                         'required' => [
+                             'id',
+                             'field_string',
+                             'field_decimal',
+                             'field_boolean',
+                         ],
                     ],
                   ],
                 ],
@@ -304,24 +338,40 @@ return [
                             'type' => 'integer',
                             'minimum' => 1,
                             'maximum' => 100,
+                            'example' => '123',
+                            'title' => 'id',
+                            'description' => 'Id',
                           ],
-                          'field_string' =>
-                           [
-                            'type' => 'string',
-                            'minLength' => 1,
-                            'maxLength' => 5,
-                          ],
-                          'field_decimal' =>
-                           [
-                            'type' => 'string',
-                            'minLength' => 1,
-                            'maxLength' => 5,
-                          ],
-                          'field_boolean' =>
-                           [
-                            'type' => 'boolean',
-                          ],
+                             'field_string' =>
+                                 [
+                                     'type' => 'string',
+                                     'minLength' => 1,
+                                     'maxLength' => 5,
+                                     'title' => 'field_string',
+                                     'description' => 'Field_string',
+                                 ],
+                             'field_decimal' =>
+                                 [
+                                     'type' => 'string',
+                                     'minLength' => 1,
+                                     'maxLength' => 5,
+                                     'title' => 'field_decimal',
+                                     'description' => 'Field_decimal',
+                                 ],
+                             'field_boolean' =>
+                                 [
+                                     'type' => 'boolean',
+                                     'example' => 'true',
+                                     'title' => 'field_boolean',
+                                     'description' => 'Field_boolean',
+                                 ],
                         ],
+                           'required' => [
+                               'id',
+                               'field_string',
+                               'field_decimal',
+                               'field_boolean',
+                           ],
                       ],
                     ],
                   ],
@@ -420,24 +470,40 @@ return [
                           'type' => 'integer',
                           'minimum' => 1,
                           'maximum' => 100,
+                          'example' => '123',
+                          'title' => 'id',
+                          'description' => 'Id',
                         ],
-                        'field_string' =>
-                         [
-                          'type' => 'string',
-                          'minLength' => 1,
-                          'maxLength' => 5,
-                        ],
-                        'field_decimal' =>
-                         [
-                          'type' => 'string',
-                          'minLength' => 1,
-                          'maxLength' => 5,
-                        ],
-                        'field_boolean' =>
-                         [
-                          'type' => 'boolean',
-                        ],
+                           'field_string' =>
+                               [
+                                   'type' => 'string',
+                                   'minLength' => 1,
+                                   'maxLength' => 5,
+                                   'title' => 'field_string',
+                                   'description' => 'Field_string',
+                               ],
+                           'field_decimal' =>
+                               [
+                                   'type' => 'string',
+                                   'minLength' => 1,
+                                   'maxLength' => 5,
+                                   'title' => 'field_decimal',
+                                   'description' => 'Field_decimal',
+                               ],
+                           'field_boolean' =>
+                               [
+                                   'type' => 'boolean',
+                                   'example' => 'true',
+                                   'title' => 'field_boolean',
+                                   'description' => 'Field_boolean',
+                               ],
                       ],
+                         'required' => [
+                             'id',
+                             'field_string',
+                             'field_decimal',
+                             'field_boolean',
+                         ],
                     ],
                   ],
                 ],
@@ -472,29 +538,45 @@ return [
                             'type' => 'integer',
                             'minimum' => 1,
                             'maximum' => 100,
+                            'example' => '123',
+                            'title' => 'id',
+                            'description' => 'Id',
                           ],
-                          'field_string' =>
-                           [
-                            'type' => 'string',
-                            'minLength' => 1,
-                            'maxLength' => 5,
-                          ],
-                          'field_decimal' =>
-                           [
-                            'type' => 'string',
-                            'minLength' => 1,
-                            'maxLength' => 5,
-                          ],
-                          'field_boolean' =>
-                           [
-                            'type' => 'boolean',
-                          ],
-                        ],
-                      ],
-                    ],
-                  ],
-                ],
-              ],
+                             'field_string' =>
+                                 [
+                                     'type' => 'string',
+                                     'minLength' => 1,
+                                     'maxLength' => 5,
+                                     'title' => 'field_string',
+                                     'description' => 'Field_string',
+                                 ],
+                             'field_decimal' =>
+                                 [
+                                     'type' => 'string',
+                                     'minLength' => 1,
+                                     'maxLength' => 5,
+                                     'title' => 'field_decimal',
+                                     'description' => 'Field_decimal',
+                                 ],
+                             'field_boolean' =>
+                                 [
+                                     'type' => 'boolean',
+                                     'example' => 'true',
+                                     'title' => 'field_boolean',
+                                     'description' => 'Field_boolean',
+                                 ],
+                         ],
+                           'required' => [
+                               'id',
+                               'field_string',
+                               'field_decimal',
+                               'field_boolean',
+                           ],
+                       ],
+                     ],
+                   ],
+                 ],
+               ],
             ],
           ],
           403 =>
@@ -588,24 +670,40 @@ return [
                           'type' => 'integer',
                           'minimum' => 1,
                           'maximum' => 100,
+                          'example' => '123',
+                          'title' => 'id',
+                          'description' => 'Id',
                         ],
-                        'field_string' =>
-                         [
-                          'type' => 'string',
-                          'minLength' => 1,
-                          'maxLength' => 5,
-                        ],
-                        'field_decimal' =>
-                         [
-                          'type' => 'string',
-                          'minLength' => 1,
-                          'maxLength' => 5,
-                        ],
-                        'field_boolean' =>
-                         [
-                          'type' => 'boolean',
-                        ],
+                           'field_string' =>
+                               [
+                                   'type' => 'string',
+                                   'minLength' => 1,
+                                   'maxLength' => 5,
+                                   'title' => 'field_string',
+                                   'description' => 'Field_string',
+                               ],
+                           'field_decimal' =>
+                               [
+                                   'type' => 'string',
+                                   'minLength' => 1,
+                                   'maxLength' => 5,
+                                   'title' => 'field_decimal',
+                                   'description' => 'Field_decimal',
+                               ],
+                           'field_boolean' =>
+                               [
+                                   'type' => 'boolean',
+                                   'example' => 'true',
+                                   'title' => 'field_boolean',
+                                   'description' => 'Field_boolean',
+                               ],
                       ],
+                         'required' => [
+                             'id',
+                             'field_string',
+                             'field_decimal',
+                             'field_boolean',
+                         ],
                     ],
                   ],
                 ],
@@ -640,24 +738,40 @@ return [
                             'type' => 'integer',
                             'minimum' => 1,
                             'maximum' => 100,
+                            'example' => '123',
+                            'title' => 'id',
+                            'description' => 'Id',
                           ],
-                          'field_string' =>
-                           [
-                            'type' => 'string',
-                            'minLength' => 1,
-                            'maxLength' => 5,
-                          ],
-                          'field_decimal' =>
-                           [
-                            'type' => 'string',
-                            'minLength' => 1,
-                            'maxLength' => 5,
-                          ],
-                          'field_boolean' =>
-                           [
-                            'type' => 'boolean',
-                          ],
+                             'field_string' =>
+                                 [
+                                     'type' => 'string',
+                                     'minLength' => 1,
+                                     'maxLength' => 5,
+                                     'title' => 'field_string',
+                                     'description' => 'Field_string',
+                                 ],
+                             'field_decimal' =>
+                                 [
+                                     'type' => 'string',
+                                     'minLength' => 1,
+                                     'maxLength' => 5,
+                                     'title' => 'field_decimal',
+                                     'description' => 'Field_decimal',
+                                 ],
+                             'field_boolean' =>
+                                 [
+                                     'type' => 'boolean',
+                                     'example' => 'true',
+                                     'title' => 'field_boolean',
+                                     'description' => 'Field_boolean',
+                                 ],
                         ],
+                           'required' => [
+                               'id',
+                               'field_string',
+                               'field_decimal',
+                               'field_boolean',
+                           ],
                       ],
                     ],
                   ],
@@ -768,23 +882,39 @@ return [
                           'type' => 'integer',
                           'minimum' => 1,
                           'maximum' => 100,
+                          'example' => '123',
+                          'title' => 'id',
+                          'description' => 'Id',
                         ],
-                        'field_string' =>
-                         [
-                          'type' => 'string',
-                          'minLength' => 1,
-                          'maxLength' => 5,
-                        ],
-                        'field_decimal' =>
-                         [
-                          'type' => 'string',
-                          'minLength' => 1,
-                          'maxLength' => 5,
-                        ],
-                        'field_boolean' =>
-                         [
-                          'type' => 'boolean',
-                        ],
+                           'field_string' =>
+                               [
+                                   'type' => 'string',
+                                   'minLength' => 1,
+                                   'maxLength' => 5,
+                                   'title' => 'field_string',
+                                   'description' => 'Field_string',
+                               ],
+                           'field_decimal' =>
+                               [
+                                   'type' => 'string',
+                                   'minLength' => 1,
+                                   'maxLength' => 5,
+                                   'title' => 'field_decimal',
+                                   'description' => 'Field_decimal',
+                               ],
+                           'field_boolean' =>
+                               [
+                                   'type' => 'boolean',
+                                   'example' => 'true',
+                                   'title' => 'field_boolean',
+                                   'description' => 'Field_boolean',
+                               ],
+                      ],
+                      'required' => [
+                         'id',
+                         'field_string',
+                         'field_decimal',
+                         'field_boolean',
                       ],
                     ],
                   ],
@@ -905,24 +1035,40 @@ return [
                         'type' => 'integer',
                         'minimum' => 1,
                         'maximum' => 100,
+                        'example' => '123',
+                        'title' => 'id',
+                        'description' => 'Id',
                       ],
-                      'field_string' =>
-                       [
-                        'type' => 'string',
-                        'minLength' => 1,
-                        'maxLength' => 5,
-                      ],
-                      'field_decimal' =>
-                       [
-                        'type' => 'string',
-                        'minLength' => 1,
-                        'maxLength' => 5,
-                      ],
-                      'field_boolean' =>
-                       [
-                        'type' => 'boolean',
-                      ],
+                         'field_string' =>
+                             [
+                                 'type' => 'string',
+                                 'minLength' => 1,
+                                 'maxLength' => 5,
+                                 'title' => 'field_string',
+                                 'description' => 'Field_string',
+                             ],
+                         'field_decimal' =>
+                             [
+                                 'type' => 'string',
+                                 'minLength' => 1,
+                                 'maxLength' => 5,
+                                 'title' => 'field_decimal',
+                                 'description' => 'Field_decimal',
+                             ],
+                         'field_boolean' =>
+                             [
+                                 'type' => 'boolean',
+                                 'example' => 'true',
+                                 'title' => 'field_boolean',
+                                 'description' => 'Field_boolean',
+                             ],
                     ],
+                       'required' => [
+                           'id',
+                           'field_string',
+                           'field_decimal',
+                           'field_boolean',
+                       ],
                   ],
                 ],
               ],
@@ -953,24 +1099,40 @@ return [
                           'type' => 'integer',
                           'minimum' => 1,
                           'maximum' => 100,
+                          'example' => '123',
+                          'title' => 'id',
+                          'description' => 'Id',
                         ],
-                        'field_string' =>
-                         [
-                          'type' => 'string',
-                          'minLength' => 1,
-                          'maxLength' => 5,
-                        ],
-                        'field_decimal' =>
-                         [
-                          'type' => 'string',
-                          'minLength' => 1,
-                          'maxLength' => 5,
-                        ],
-                        'field_boolean' =>
-                         [
-                          'type' => 'boolean',
-                        ],
+                           'field_string' =>
+                               [
+                                   'type' => 'string',
+                                   'minLength' => 1,
+                                   'maxLength' => 5,
+                                   'title' => 'field_string',
+                                   'description' => 'Field_string',
+                               ],
+                           'field_decimal' =>
+                               [
+                                   'type' => 'string',
+                                   'minLength' => 1,
+                                   'maxLength' => 5,
+                                   'title' => 'field_decimal',
+                                   'description' => 'Field_decimal',
+                               ],
+                           'field_boolean' =>
+                               [
+                                   'type' => 'boolean',
+                                   'example' => 'true',
+                                   'title' => 'field_boolean',
+                                   'description' => 'Field_boolean',
+                               ],
                       ],
+                         'required' => [
+                             'id',
+                             'field_string',
+                             'field_decimal',
+                             'field_boolean',
+                         ],
                     ],
                   ],
                 ],
@@ -1090,24 +1252,40 @@ return [
                         'type' => 'integer',
                         'minimum' => 1,
                         'maximum' => 100,
+                        'example' => '123',
+                        'title' => 'id',
+                        'description' => 'Id',
                       ],
-                      'field_string' =>
-                       [
-                        'type' => 'string',
-                        'minLength' => 1,
-                        'maxLength' => 5,
-                      ],
-                      'field_decimal' =>
-                       [
-                        'type' => 'string',
-                        'minLength' => 1,
-                        'maxLength' => 5,
-                      ],
-                      'field_boolean' =>
-                       [
-                        'type' => 'boolean',
-                      ],
+                         'field_string' =>
+                             [
+                                 'type' => 'string',
+                                 'minLength' => 1,
+                                 'maxLength' => 5,
+                                 'title' => 'field_string',
+                                 'description' => 'Field_string',
+                             ],
+                         'field_decimal' =>
+                             [
+                                 'type' => 'string',
+                                 'minLength' => 1,
+                                 'maxLength' => 5,
+                                 'title' => 'field_decimal',
+                                 'description' => 'Field_decimal',
+                             ],
+                         'field_boolean' =>
+                             [
+                                 'type' => 'boolean',
+                                 'example' => 'true',
+                                 'title' => 'field_boolean',
+                                 'description' => 'Field_boolean',
+                             ],
                     ],
+                       'required' => [
+                           'id',
+                           'field_string',
+                           'field_decimal',
+                           'field_boolean',
+                       ],
                   ],
                 ],
               ],
@@ -1138,24 +1316,40 @@ return [
                           'type' => 'integer',
                           'minimum' => 1,
                           'maximum' => 100,
+                          'example' => '123',
+                          'title' => 'id',
+                          'description' => 'Id',
                         ],
-                        'field_string' =>
-                         [
-                          'type' => 'string',
-                          'minLength' => 1,
-                          'maxLength' => 5,
-                        ],
-                        'field_decimal' =>
-                         [
-                          'type' => 'string',
-                          'minLength' => 1,
-                          'maxLength' => 5,
-                        ],
-                        'field_boolean' =>
-                         [
-                          'type' => 'boolean',
-                        ],
+                           'field_string' =>
+                               [
+                                   'type' => 'string',
+                                   'minLength' => 1,
+                                   'maxLength' => 5,
+                                   'title' => 'field_string',
+                                   'description' => 'Field_string',
+                               ],
+                           'field_decimal' =>
+                               [
+                                   'type' => 'string',
+                                   'minLength' => 1,
+                                   'maxLength' => 5,
+                                   'title' => 'field_decimal',
+                                   'description' => 'Field_decimal',
+                               ],
+                           'field_boolean' =>
+                               [
+                                   'type' => 'boolean',
+                                   'example' => 'true',
+                                   'title' => 'field_boolean',
+                                   'description' => 'Field_boolean',
+                               ],
                       ],
+                         'required' => [
+                             'id',
+                             'field_string',
+                             'field_decimal',
+                             'field_boolean',
+                         ],
                     ],
                   ],
                 ],

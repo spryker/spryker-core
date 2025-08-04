@@ -10,6 +10,8 @@ namespace Spryker\Zed\DynamicEntity\Business\Creator;
 use ArrayObject;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionResponseTransfer;
+use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
+use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfiguration\DynamicEntityConfigurationColumnDetailProviderInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationValidatorInterface;
 use Spryker\Zed\DynamicEntity\Persistence\DynamicEntityEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -19,25 +21,15 @@ class DynamicEntityConfigurationCreator implements DynamicEntityConfigurationCre
     use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationValidatorInterface
-     */
-    protected DynamicEntityConfigurationValidatorInterface $dynamicEntityConfigurationValidator;
-
-    /**
-     * @var \Spryker\Zed\DynamicEntity\Persistence\DynamicEntityEntityManagerInterface
-     */
-    protected DynamicEntityEntityManagerInterface $dynamicEntityManager;
-
-    /**
      * @param \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationValidatorInterface $dynamicEntityConfigurationValidator
      * @param \Spryker\Zed\DynamicEntity\Persistence\DynamicEntityEntityManagerInterface $dynamicEntityManager
+     * @param \Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfiguration\DynamicEntityConfigurationColumnDetailProviderInterface $dynamicEntityConfigurationColumnDetailProvider
      */
     public function __construct(
-        DynamicEntityConfigurationValidatorInterface $dynamicEntityConfigurationValidator,
-        DynamicEntityEntityManagerInterface $dynamicEntityManager
+        protected DynamicEntityConfigurationValidatorInterface $dynamicEntityConfigurationValidator,
+        protected DynamicEntityEntityManagerInterface $dynamicEntityManager,
+        protected DynamicEntityConfigurationColumnDetailProviderInterface $dynamicEntityConfigurationColumnDetailProvider
     ) {
-        $this->dynamicEntityConfigurationValidator = $dynamicEntityConfigurationValidator;
-        $this->dynamicEntityManager = $dynamicEntityManager;
     }
 
     /**
@@ -50,9 +42,19 @@ class DynamicEntityConfigurationCreator implements DynamicEntityConfigurationCre
     ): DynamicEntityConfigurationCollectionResponseTransfer {
         $this->assertRequiredFields($dynamicEntityConfigurationCollectionRequestTransfer);
 
+        $dynamicEntityConfigurationCollectionTransfer = new DynamicEntityConfigurationCollectionTransfer();
+        $dynamicEntityConfigurationCollectionTransfer->setDynamicEntityConfigurations(
+            $dynamicEntityConfigurationCollectionRequestTransfer->getDynamicEntityConfigurations(),
+        );
+
+        // Add column details to the DynamicEntityConfigurations e.g. description and examples
+        $dynamicEntityConfigurationCollectionTransfer = $this->dynamicEntityConfigurationColumnDetailProvider->provideColumDetails(
+            $dynamicEntityConfigurationCollectionTransfer,
+        );
+
         $dynamicEntityConfigurationCollectionResponseTransfer = new DynamicEntityConfigurationCollectionResponseTransfer();
         $dynamicEntityConfigurationCollectionResponseTransfer->setDynamicEntityConfigurations(
-            $dynamicEntityConfigurationCollectionRequestTransfer->getDynamicEntityConfigurations(),
+            $dynamicEntityConfigurationCollectionTransfer->getDynamicEntityConfigurations(),
         );
 
         $dynamicEntityConfigurationCollectionResponseTransfer = $this->dynamicEntityConfigurationValidator->validate(

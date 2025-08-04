@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\DynamicEntityRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelationQuery;
+use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfiguration\DynamicEntityConfigurationColumnDetailProvider;
 use Spryker\Zed\DynamicEntity\Business\Installer\Validator\FieldMappingValidatorInterface;
 use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 use Spryker\Zed\DynamicEntity\DynamicEntityDependencyProvider;
@@ -1111,10 +1112,12 @@ class DynamicEntityFacadeTest extends Unit
      */
     protected function createBusinessFactoryMock(string $configurationFilename): void
     {
-        $factoryMock = $this->tester->mockFactoryMethod('getConfig', $this->createConfigMock($configurationFilename));
-        $factoryMock = $this->tester->mockFactoryMethod('getRepository', new DynamicEntityRepository());
-        $factoryMock = $this->tester->mockFactoryMethod('getEntityManager', new DynamicEntityEntityManager());
-        $factoryMock = $this->tester->mockFactoryMethod('createFieldMappingValidator', $this->createFieldMappingValidatorMock());
+        $this->tester->mockFactoryMethod('getConfig', $this->createConfigMock($configurationFilename));
+        $this->tester->mockFactoryMethod('getRepository', new DynamicEntityRepository());
+        $this->tester->mockFactoryMethod('getEntityManager', new DynamicEntityEntityManager());
+        $this->tester->mockFactoryMethod('createFieldMappingValidator', $this->createFieldMappingValidatorMock());
+
+        $factoryMock = $this->tester->mockFactoryMethod('createDynamicEntityConfigurationColumnDetailProvider', $this->createDynamicEntityConfigurationColumnDetailProviderMock());
 
         $this->dynamicEntityFacade->setFactory($factoryMock);
     }
@@ -1151,5 +1154,24 @@ class DynamicEntityFacadeTest extends Unit
             ->willReturn(sprintf('%s%s', codecept_data_dir(), $configurationFilename));
 
         return $configMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfiguration\DynamicEntityConfigurationColumnDetailProvider
+     */
+    protected function createDynamicEntityConfigurationColumnDetailProviderMock(): DynamicEntityConfigurationColumnDetailProvider
+    {
+        $columnDetailProviderMock = $this->getMockBuilder(DynamicEntityConfigurationColumnDetailProvider::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $columnDetailProviderMock
+            ->method('provideColumDetails')
+            ->willReturnCallback(function ($configurationCollectionTransfer) {
+                // Simply return the configuration collection without any file system operations
+                return $configurationCollectionTransfer;
+            });
+
+        return $columnDetailProviderMock;
     }
 }

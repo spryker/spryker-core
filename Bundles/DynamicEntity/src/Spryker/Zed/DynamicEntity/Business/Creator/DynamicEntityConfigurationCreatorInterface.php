@@ -13,11 +13,11 @@ use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionResponseTransf
 interface DynamicEntityConfigurationCreatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionRequestTransfer $dynamicEntityConfigurationCollectionTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionRequestTransfer $dynamicEntityConfigurationCollectionRequestTransfer
      *
      * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionResponseTransfer
      */
     public function createDynamicEntityConfigurationCollection(
-        DynamicEntityConfigurationCollectionRequestTransfer $dynamicEntityConfigurationCollectionTransfer
+        DynamicEntityConfigurationCollectionRequestTransfer $dynamicEntityConfigurationCollectionRequestTransfer
     ): DynamicEntityConfigurationCollectionResponseTransfer;
 }
