@@ -117,6 +117,10 @@ class ProductClassExpander implements ProductClassExpanderInterface
         $productAbstractIds = [];
 
         foreach ($productPageLoadTransfer->getPayloadTransfers() as $payloadTransfer) {
+            if (!$payloadTransfer->getIdProductAbstract()) {
+                continue;
+            }
+
             $productAbstractIds[] = $payloadTransfer->getIdProductAbstract();
         }
 
