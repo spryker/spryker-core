@@ -2,44 +2,44 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCompanyBusinessUnitAddressesAttributes">
-        <property name="address1" type="string"/>
-        <property name="address2" type="string"/>
-        <property name="address3" type="string"/>
-        <property name="zipCode" type="string"/>
-        <property name="city" type="string"/>
-        <property name="phone" type="string"/>
-        <property name="iso2Code" type="string"/>
-        <property name="comment" type="string"/>
+        <property name="address1" type="string" description="The first line of a street address."/>
+        <property name="address2" type="string" description="The second line of a street address."/>
+        <property name="address3" type="string" description="The third line of a street address."/>
+        <property name="zipCode" type="string" description="The postal code for an address."/>
+        <property name="city" type="string" description="The city part of an address."/>
+        <property name="phone" type="string" description="The phone number."/>
+        <property name="iso2Code" type="string" description="The two-letter ISO code for a country."/>
+        <property name="comment" type="string" description="A user-submitted comment or note."/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
-        <property name="addressCollection" type="CompanyUnitAddressCollection"/>
-        <property name="defaultBillingAddress" type="int"/>
+        <property name="addressCollection" type="CompanyUnitAddressCollection" description="A collection of addresses."/>
+        <property name="defaultBillingAddress" type="int" description="The identifier for the default billing address."/>
     </transfer>
 
     <transfer name="CompanyUnitAddressCollection">
-        <property name="companyUnitAddresses" type="CompanyUnitAddress[]" singular="companyUnitAddress"/>
+        <property name="companyUnitAddresses" type="CompanyUnitAddress[]" singular="companyUnitAddress" description="A collection of addresses for a company unit."/>
     </transfer>
 
     <transfer name="CompanyUnitAddress">
         <property name="fkCompany" type="int"/>
         <property name="idCompanyUnitAddress" type="int"/>
-        <property name="company" type="Company"/>
-        <property name="uuid" type="string"/>
-        <property name="address1" type="string"/>
-        <property name="address2" type="string"/>
-        <property name="address3" type="string"/>
-        <property name="city" type="string"/>
-        <property name="zipCode" type="string"/>
-        <property name="phone" type="string"/>
-        <property name="comment" type="string"/>
-        <property name="iso2Code" type="string"/>
-        <property name="isDefaultBilling" type="bool"/>
+        <property name="company" type="Company" description="A company entity."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="address1" type="string" description="The first line of a street address."/>
+        <property name="address2" type="string" description="The second line of a street address."/>
+        <property name="address3" type="string" description="The third line of a street address."/>
+        <property name="city" type="string" description="The city part of an address."/>
+        <property name="zipCode" type="string" description="The postal code for an address."/>
+        <property name="phone" type="string" description="The phone number."/>
+        <property name="comment" type="string" description="A user-submitted comment or note."/>
+        <property name="iso2Code" type="string" description="The two-letter ISO code for a country."/>
+        <property name="isDefaultBilling" type="bool" description="A flag indicating if an address is the default for billing."/>
     </transfer>
 
     <transfer name="CompanyUnitAddressResponse">
-        <property name="companyUnitAddressTransfer" type="CompanyUnitAddress"/>
-        <property name="isSuccessful" type="bool"/>
+        <property name="companyUnitAddressTransfer" type="CompanyUnitAddress" description="A data transfer object for a company unit address."/>
+        <property name="isSuccessful" type="bool" description="A boolean flag indicating if an operation completed successfully."/>
     </transfer>
 
     <transfer name="RestUser">
@@ -47,13 +47,13 @@
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int"/>
-        <property name="code" type="string"/>
-        <property name="detail" type="string"/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="RestCompanyBusinessUnitAttributes">
-        <property name="defaultBillingAddress" type="string"/>
+        <property name="defaultBillingAddress" type="string" description="The identifier for the default billing address."/>
     </transfer>
 
     <transfer name="CompanyUnitAddressCriteriaFilter">
@@ -62,13 +62,13 @@
     </transfer>
 
     <transfer name="RestCheckoutData">
-        <property name="companyBusinessUnitAddresses" type="CompanyUnitAddressCollection"/>
+        <property name="companyBusinessUnitAddresses" type="CompanyUnitAddressCollection" description="A collection of addresses for a company business unit."/>
     </transfer>
 
     <transfer name="RestCheckoutRequestAttributes">
-        <property name="customer" type="RestCustomer"/>
-        <property name="billingAddress" type="RestAddress"/>
-        <property name="shippingAddress" type="RestAddress"/>
+        <property name="customer" type="RestCustomer" description="A data object representing a customer."/>
+        <property name="billingAddress" type="RestAddress" description="The address used for billing purposes."/>
+        <property name="shippingAddress" type="RestAddress" description="The address where an order should be shipped."/>
     </transfer>
 
     <transfer name="RestCustomer">
@@ -77,79 +77,79 @@
 
     <transfer name="RestAddress">
         <property name="idCompanyBusinessUnitAddress" type="string"/>
-        <property name="salutation" type="string"/>
-        <property name="firstName" type="string"/>
-        <property name="lastName" type="string"/>
-        <property name="address1" type="string"/>
-        <property name="address2" type="string"/>
-        <property name="address3" type="string"/>
-        <property name="zipCode" type="string"/>
-        <property name="city" type="string"/>
-        <property name="iso2Code" type="string"/>
-        <property name="company" type="string"/>
+        <property name="salutation" type="string" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <property name="firstName" type="string" description="The first name of a person."/>
+        <property name="lastName" type="string" description="The last name of a user or customer."/>
+        <property name="address1" type="string" description="The first line of a street address."/>
+        <property name="address2" type="string" description="The second line of a street address."/>
+        <property name="address3" type="string" description="The third line of a street address."/>
+        <property name="zipCode" type="string" description="The postal code for an address."/>
+        <property name="city" type="string" description="The city part of an address."/>
+        <property name="iso2Code" type="string" description="The two-letter ISO code for a country."/>
+        <property name="company" type="string" description="A company entity."/>
     </transfer>
 
     <transfer name="Company">
         <property name="idCompany" type="int"/>
-        <property name="name" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="billingAddress" type="Address"/>
-        <property name="shippingAddress" type="Address"/>
-        <property name="customer" type="Customer"/>
-        <property name="items" type="Item[]" singular="item"/>
+        <property name="billingAddress" type="Address" description="The address used for billing purposes."/>
+        <property name="shippingAddress" type="Address" description="The address where an order should be shipped."/>
+        <property name="customer" type="Customer" description="A data object representing a customer."/>
+        <property name="items" type="Item[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
     </transfer>
 
     <transfer name="Address">
-        <property name="uuid" type="string"/>
-        <property name="isAddressSavingSkipped" type="bool"/>
-        <property name="email" type="string"/>
-        <property name="firstName" type="string"/>
-        <property name="lastName" type="string"/>
-        <property name="salutation" type="string"/>
-        <property name="company" type="string"/>
-        <property name="companyBusinessUnitAddressUuid" type="string" strict="true"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="isAddressSavingSkipped" type="bool" description="A flag to indicate that the address should not be saved to the customer's profile."/>
+        <property name="email" type="string" description="The email address of a user or contact."/>
+        <property name="firstName" type="string" description="The first name of a person."/>
+        <property name="lastName" type="string" description="The last name of a user or customer."/>
+        <property name="salutation" type="string" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <property name="company" type="string" description="A company entity."/>
+        <property name="companyBusinessUnitAddressUuid" type="string" strict="true" description="The universally unique identifier for a company business unit address."/>
     </transfer>
 
     <transfer name="Item">
-        <property name="shipment" type="Shipment"/>
+        <property name="shipment" type="Shipment" description="The shipment details for an order."/>
     </transfer>
 
     <transfer name="Shipment">
-        <property name="shippingAddress" type="Address"/>
+        <property name="shippingAddress" type="Address" description="The address where an order should be shipped."/>
     </transfer>
 
     <transfer name="Customer">
-        <property name="email" type="string"/>
-        <property name="firstName" type="string"/>
-        <property name="lastName" type="string"/>
-        <property name="salutation" type="string"/>
-        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="email" type="string" description="The email address of a user or contact."/>
+        <property name="firstName" type="string" description="The first name of a person."/>
+        <property name="lastName" type="string" description="The last name of a user or customer."/>
+        <property name="salutation" type="string" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <property name="companyUserTransfer" type="CompanyUser" description="A data transfer object for a company user."/>
     </transfer>
 
     <transfer name="CompanyUser">
-        <property name="company" type="Company"/>
+        <property name="company" type="Company" description="A company entity."/>
         <property name="fkCompany" type="int"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
-        <property name="isSuccess" type="bool"/>
-        <property name="errors" type="CheckoutError[]" singular="error"/>
+        <property name="isSuccess" type="bool" description="A boolean flag indicating if an operation was successful."/>
+        <property name="errors" type="CheckoutError[]" singular="error" description="A collection of error objects."/>
     </transfer>
 
     <transfer name="CheckoutData">
-        <property name="quote" type="Quote"/>
-        <property name="shipments" type="RestShipments[]" singular="shipment"/>
+        <property name="quote" type="Quote" description="A data object representing a shopping cart before it becomes an order."/>
+        <property name="shipments" type="RestShipments[]" singular="shipment" description="A collection of shipment details for an order."/>
     </transfer>
 
     <transfer name="CheckoutError">
-        <property name="message" type="string"/>
-        <property name="parameters" type="array" singular="parameters"/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
+        <property name="parameters" type="array" singular="parameters" description="A collection of parameters for a request or operation."/>
     </transfer>
 
     <transfer name="RestShipments">
-        <property name="shippingAddress" type="RestAddress" restRequestParameter="yes"/>
+        <property name="shippingAddress" type="RestAddress" restRequestParameter="yes" description="The address where an order should be shipped."/>
     </transfer>
 
 </transfers>

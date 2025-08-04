@@ -3,9 +3,9 @@
 
     <table name="spy_comment_thread" idMethod="native" allowPkInsert="true">
         <column name="id_comment_thread" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="uuid" required="false" type="VARCHAR" size="36"/>
-        <column name="owner_type" required="true" type="VARCHAR" size="64"/>
-        <column name="owner_id" required="true" type="INTEGER"/>
+        <column name="uuid" required="false" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
+        <column name="owner_type" required="true" type="VARCHAR" size="64" description="The type of entity that owns a comment thread (e.g., 'quote', 'order')."/>
+        <column name="owner_id" required="true" type="INTEGER" description="The unique identifier of the entity that owns a comment thread."/>
 
         <behavior name="timestampable"/>
 
@@ -29,11 +29,11 @@
     <table name="spy_comment" idMethod="native" allowPkInsert="true">
         <column name="id_comment" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_comment_thread" required="true" type="INTEGER"/>
-        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+        <column name="uuid" required="false" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
         <column name="fk_customer" required="false" type="INTEGER"/>
-        <column name="message" required="true" type="VARCHAR" size="5000"/>
-        <column name="is_deleted" defaultValue="false" type="BOOLEAN"/>
-        <column name="is_updated" defaultValue="false" type="BOOLEAN"/>
+        <column name="message" required="true" type="VARCHAR" size="5000" description="A message providing information, success, or error details."/>
+        <column name="is_deleted" defaultValue="false" type="BOOLEAN" description="A flag indicating if an entity has been marked as deleted."/>
+        <column name="is_updated" defaultValue="false" type="BOOLEAN" description="A flag indicating if a comment has been updated."/>
 
         <behavior name="uuid">
             <parameter name="key_columns" value="id_comment"/>
@@ -67,8 +67,8 @@
 
     <table name="spy_comment_tag" idMethod="native" allowPkInsert="true">
         <column name="id_comment_tag" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="uuid" required="false" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
 
         <behavior name="timestampable"/>
 

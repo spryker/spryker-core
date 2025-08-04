@@ -4,9 +4,9 @@
     <table name="spy_category_image_storage" identifierQuoting="true">
         <column name="id_category_image_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_category" type="INTEGER" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
-        <column name="key" type="VARCHAR" size="1024" required="true"/>
-        <column name="locale" type="VARCHAR" size="5" required="true"/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
+        <column name="key" type="VARCHAR" size="1024" required="true" description="A unique key used to identify an entity or a piece of data."/>
+        <column name="locale" type="VARCHAR" size="5" required="true" description="The locale context for a request or entity, affecting language and regional formats."/>
 
         <index name="spy_category_image_storage-fk_category">
             <index-column name="fk_category"/>

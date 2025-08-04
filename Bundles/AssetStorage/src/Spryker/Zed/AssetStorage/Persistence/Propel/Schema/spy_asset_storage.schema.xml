@@ -2,9 +2,9 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\AssetStorage\Persistence" package="src.Orm.Zed.AssetStorage.Persistence">
     <table name="spy_asset_slot_storage" identifierQuoting="true" idMethod="native" allowPkInsert="true">
         <column name="id_asset_slot_storage" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="asset_slot" type="VARCHAR" size="255" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
-        <column name="store" type="VARCHAR" size="255" required="true"/>
+        <column name="asset_slot" type="VARCHAR" size="255" required="true" description="A designated placeholder for an asset."/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
+        <column name="store" type="VARCHAR" size="255" required="true" description="The store context for an operation, determining which store's data is used."/>
 
         <index name="spy_asset_slot_storage-asset_slot">
             <index-column name="asset_slot"/>

@@ -3,12 +3,12 @@
 
     <table name="spy_asset" identifierQuoting="true">
         <column name="id_asset" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="asset_slot" required="true" type="VARCHAR" size="255"/>
-        <column name="asset_uuid" required="true" type="VARCHAR" size="36"/>
-        <column name="asset_name" required="true" type="VARCHAR" size="255"/>
-        <column name="asset_content" required="true" type="LONGVARCHAR"/>
-        <column name="is_active" required="false" type="BOOLEAN" default="true"/>
-        <column name="last_message_timestamp" required="false" type="TIMESTAMP" size="6"/>
+        <column name="asset_slot" required="true" type="VARCHAR" size="255" description="A designated placeholder for an asset."/>
+        <column name="asset_uuid" required="true" type="VARCHAR" size="36" description="A universally unique identifier for an asset."/>
+        <column name="asset_name" required="true" type="VARCHAR" size="255" description="The name of an asset."/>
+        <column name="asset_content" required="true" type="LONGVARCHAR" description="The content of an asset."/>
+        <column name="is_active" required="false" type="BOOLEAN" default="true" description="A boolean flag indicating if an entity is currently active."/>
+        <column name="last_message_timestamp" required="false" type="TIMESTAMP" description="The timestamp of the last message received for an asset, used for synchronization."/>
 
         <unique name="spy_asset-unique-asset_uuid">
             <unique-column name="asset_uuid"/>

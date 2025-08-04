@@ -5,7 +5,7 @@
         <column name="id_category_node_page_search" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_category_node" type="INTEGER" required="true"/>
         <!-- 'structured_data' column contains the result from database query while 'data' column contains mapped data for the search engine -->
-        <column name="structured_data" type="LONGVARCHAR" required="true"/>
+        <column name="structured_data" type="LONGVARCHAR" required="true" description="A JSON-encoded string containing structured data for a service point, used for search indexing."/>
         <index name="spy_category_node_page_search-fk_category_node">
             <index-column name="fk_category_node"/>
         </index>
@@ -16,7 +16,7 @@
             <parameter name="store" required="true"/>
             <parameter name="key_suffix_column" value="fk_category_node"/>
             <parameter name="queue_group" value="sync.search.category"/>
-            <parameter name="params" value='{"type":"page"}'/>
+            <parameter name="params" value="{&quot;type&quot;:&quot;page&quot;}"/>
         </behavior>
         <behavior name="timestampable"/>
     </table>

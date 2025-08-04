@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Cms\Persistence" package="src.Orm.Zed.Cms.Persistence">
 
     <table name="spy_cms_page">
-        <column name="page_key" type="VARCHAR" size="32" required="false"/>
+        <column name="page_key" type="VARCHAR" size="32" required="false" description="A unique key for a CMS page."/>
     </table>
 
 </database>

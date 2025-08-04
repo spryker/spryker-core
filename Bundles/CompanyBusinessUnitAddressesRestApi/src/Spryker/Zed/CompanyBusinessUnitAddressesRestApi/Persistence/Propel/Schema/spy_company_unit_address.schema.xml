@@ -2,7 +2,7 @@
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" name="zed" namespace="Orm\Zed\CompanyUnitAddress\Persistence" package="src.Orm.Zed.CompanyUnitAddress.Persistence">
 
     <table name="spy_company_unit_address">
-        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+        <column name="uuid" required="false" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
         <unique name="spy_company_unit_address-unique-uuid">
             <unique-column name="uuid"/>
         </unique>

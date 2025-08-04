@@ -3,8 +3,8 @@
 
     <table name="spy_cms_template">
         <column name="id_cms_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="template_name" type="VARCHAR" size="255" required="true"/>
-        <column name="template_path" type="VARCHAR" size="255" required="true"/>
+        <column name="template_name" type="VARCHAR" size="255" required="true" description="The name of the template used to render a CMS block."/>
+        <column name="template_path" type="VARCHAR" size="255" required="true" description="The file system path to the template used for rendering a sales invoice."/>
         <unique name="spy_cms_template-unique-template_path">
             <unique-column name="template_path"/>
         </unique>
@@ -17,10 +17,10 @@
     <table name="spy_cms_page">
         <column name="id_cms_page" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_template" type="INTEGER" required="true"/>
-        <column name="valid_from" type="TIMESTAMP" required="false"/>
-        <column name="valid_to" type="TIMESTAMP" required="false"/>
-        <column name="is_active" type="BOOLEAN" required="true" default="false"/>
-        <column name="is_searchable" type="BOOLEAN" required="true" default="false"/>
+        <column name="valid_from" type="TIMESTAMP" required="false" description="The date and time from which an entity is valid."/>
+        <column name="valid_to" type="TIMESTAMP" required="false" description="The date and time until which an entity is valid."/>
+        <column name="is_active" type="BOOLEAN" required="true" default="false" description="A boolean flag indicating if an entity is currently active."/>
+        <column name="is_searchable" type="BOOLEAN" required="true" default="false" description="A flag indicating if a product or page is searchable."/>
         <foreign-key name="spy_cms_page-fk_template" foreignTable="spy_cms_template" phpName="CmsTemplate" onDelete="CASCADE">
             <reference foreign="id_cms_template" local="fk_template"/>
         </foreign-key>
@@ -31,10 +31,10 @@
         <column name="id_cms_page_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_cms_page" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
-        <column name="name" required="true" size="255" type="VARCHAR"/>
-        <column name="meta_title" required="false" type="VARCHAR" default="NULL" size="255"/>
-        <column name="meta_keywords" required="false" type="LONGVARCHAR" default="NULL"/>
-        <column name="meta_description" required="false" type="LONGVARCHAR" default="NULL"/>
+        <column name="name" required="true" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="meta_title" required="false" type="VARCHAR" default="NULL" size="255" description="The meta title of a page for SEO purposes."/>
+        <column name="meta_keywords" required="false" type="LONGVARCHAR" default="NULL" description="The meta keywords of a page for SEO purposes."/>
+        <column name="meta_description" required="false" type="LONGVARCHAR" default="NULL" description="The meta description of a page for SEO purposes."/>
         <foreign-key name="spy_cms_page_localized_attributes-fk_cms_page" foreignTable="spy_cms_page" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_cms_page" foreign="id_cms_page"/>
         </foreign-key>
@@ -53,7 +53,7 @@
         <column name="id_cms_glossary_key_mapping" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_page" type="INTEGER" required="true"/>
         <column name="fk_glossary_key" type="INTEGER" required="true"/>
-        <column name="placeholder" type="VARCHAR" size="255" required="true"/>
+        <column name="placeholder" type="VARCHAR" size="255" required="true" description="A key that identifies a placeholder within a CMS block's template."/>
         <foreign-key name="spy_cms_glossary_key_mapping-fk_page" foreignTable="spy_cms_page" phpName="CmsPage" onDelete="CASCADE">
             <reference foreign="id_cms_page" local="fk_page"/>
         </foreign-key>
@@ -74,9 +74,9 @@
     <table name="spy_cms_version">
         <column name="id_cms_version" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_cms_page" type="INTEGER" required="true"/>
-        <column name="version" type="INTEGER" required="true"/>
-        <column name="version_name" type="VARCHAR" size="255"/>
-        <column name="data" type="LONGVARCHAR"/>
+        <column name="version" type="INTEGER" required="true" description="The version number of an entity."/>
+        <column name="version_name" type="VARCHAR" size="255" description="A human-readable name for a specific version of a file."/>
+        <column name="data" type="LONGVARCHAR" description="A generic data payload."/>
         <foreign-key name="spy_cms_version-fk_cms_page" foreignTable="spy_cms_page" onDelete="CASCADE">
             <reference foreign="id_cms_page" local="fk_cms_page"/>
         </foreign-key>

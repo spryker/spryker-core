@@ -21,7 +21,7 @@
         "spryker/sales-order-amendment-extension": "^1.1.0",
         "spryker/shipment": "^7.0.0 || ^8.0.0",
         "spryker/symfony": "^3.0.0",
-        "spryker/transfer": "^3.27.0",
+        "spryker/transfer": "^3.42.0",
         "spryker/zed-request": "^3.0.0"
     },
     "require-dev": {

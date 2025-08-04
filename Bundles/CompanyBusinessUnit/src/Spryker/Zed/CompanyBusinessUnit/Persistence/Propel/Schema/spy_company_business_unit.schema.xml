@@ -3,12 +3,12 @@
 
     <table name="spy_company_business_unit">
         <column name="id_company_business_unit" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="email" type="VARCHAR" size="255" required="false"/>
-        <column name="phone" type="VARCHAR" size="255" required="false"/>
-        <column name="external_url" type="VARCHAR" size="255" required="false"/>
-        <column name="iban" type="VARCHAR" size="255" required="false"/>
-        <column name="bic" type="VARCHAR" size="255" required="false"/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="email" type="VARCHAR" size="255" required="false" description="The email address of a user or contact."/>
+        <column name="phone" type="VARCHAR" size="255" required="false" description="The phone number."/>
+        <column name="external_url" type="VARCHAR" size="255" required="false" description="An external URL, often for more details or an external resource."/>
+        <column name="iban" type="VARCHAR" size="255" required="false" description="The International Bank Account Number."/>
+        <column name="bic" type="VARCHAR" size="255" required="false" description="The Business Identifier Code for a bank account."/>
 
         <column name="fk_company" type="INTEGER" required="true"/>
 

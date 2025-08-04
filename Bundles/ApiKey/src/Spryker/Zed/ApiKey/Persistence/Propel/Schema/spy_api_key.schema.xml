@@ -3,11 +3,11 @@
 
     <table name="spy_api_key" idMethod="native" identifierQuoting="true">
         <column name="id_api_key" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" required="true" size="255" type="VARCHAR"/>
-        <column name="key_hash" required="true" size="64" type="VARCHAR"/>
-        <column name="scopes" type="VARCHAR" size="1024" required="false"/>
-        <column name="created_by" type="INTEGER" required="true"/>
-        <column name="valid_to" type="TIMESTAMP" default="NULL"/>
+        <column name="name" required="true" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="key_hash" required="true" size="64" type="VARCHAR" description="The securely hashed value of an API key, used for authentication."/>
+        <column name="scopes" type="VARCHAR" size="1024" required="false" description="A collection of permission scopes that define the access rights of a token or user."/>
+        <column name="created_by" type="INTEGER" required="true" description="The user who created the entity."/>
+        <column name="valid_to" type="TIMESTAMP" default="NULL" description="The date and time until which an entity is valid."/>
         <id-method-parameter value="spy_api_key_pk_seq"/>
         <unique name="spy_api_key-name">
             <unique-column name="name"/>

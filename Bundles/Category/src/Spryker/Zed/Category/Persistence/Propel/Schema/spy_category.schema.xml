@@ -2,11 +2,11 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Category\Persistence" package="src.Orm.Zed.Category.Persistence">
     <table name="spy_category" idMethod="native">
         <column name="id_category" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="category_key" required="true" type="VARCHAR" size="255"/>
-        <column name="is_active" default="true" type="BOOLEAN"/>
-        <column name="is_in_menu" default="true" type="BOOLEAN"/>
-        <column name="is_clickable" default="true" type="BOOLEAN"/>
-        <column name="is_searchable" default="true" type="BOOLEAN"/>
+        <column name="category_key" required="true" type="VARCHAR" size="255" description="A unique key for a category."/>
+        <column name="is_active" default="true" type="BOOLEAN" description="A boolean flag indicating if an entity is currently active."/>
+        <column name="is_in_menu" default="true" type="BOOLEAN" description="A flag indicating if a category should appear in the menu."/>
+        <column name="is_clickable" default="true" type="BOOLEAN" description="A flag indicating if a category is clickable in the navigation."/>
+        <column name="is_searchable" default="true" type="BOOLEAN" description="A flag indicating if a product or page is searchable."/>
         <column name="fk_category_template" required="true" type="INTEGER"/>
         <foreign-key foreignTable="spy_category_template" phpName="CategoryTemplate">
             <reference local="fk_category_template" foreign="id_category_template"/>
@@ -20,12 +20,12 @@
     <table name="spy_category_attribute" idMethod="native">
         <column name="id_category_attribute" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_category" required="true" type="INTEGER"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
         <column name="fk_locale" required="true" type="INTEGER"/>
-        <column name="meta_title" required="false" type="LONGVARCHAR"/>
-        <column name="meta_description" required="false" type="LONGVARCHAR"/>
-        <column name="meta_keywords" required="false" type="LONGVARCHAR"/>
-        <column name="category_image_name" required="false" type="VARCHAR" size="255"/>
+        <column name="meta_title" required="false" type="LONGVARCHAR" description="The meta title of a page for SEO purposes."/>
+        <column name="meta_description" required="false" type="LONGVARCHAR" description="The meta description of a page for SEO purposes."/>
+        <column name="meta_keywords" required="false" type="LONGVARCHAR" description="The meta keywords of a page for SEO purposes."/>
+        <column name="category_image_name" required="false" type="VARCHAR" size="255" description="The name of the image file for a category."/>
         <behavior name="timestampable"/>
         <foreign-key foreignTable="spy_locale" phpName="Locale">
             <reference local="fk_locale" foreign="id_locale"/>
@@ -40,9 +40,9 @@
         <column name="id_category_node" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_category" required="true" type="INTEGER"/>
         <column name="fk_parent_category_node" required="false" type="INTEGER" default="NULL"/>
-        <column name="is_root" type="BOOLEAN" default="false"/>
-        <column name="is_main" default="false" type="BOOLEAN"/>
-        <column name="node_order" type="INTEGER" required="false" default="0"/>
+        <column name="is_root" type="BOOLEAN" default="false" description="A flag indicating if a category node is a root node."/>
+        <column name="is_main" default="false" type="BOOLEAN" description="A flag indicating if a category node is a main node."/>
+        <column name="node_order" type="INTEGER" required="false" default="0" description="The numerical order of a node within its parent in a tree structure."/>
         <foreign-key foreignTable="spy_category_node" phpName="ParentCategoryNode" refPhpName="Node">
             <reference foreign="id_category_node" local="fk_parent_category_node"/>
         </foreign-key>
@@ -59,7 +59,7 @@
         <column name="id_category_closure_table" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_category_node" required="true" type="INTEGER"/>
         <column name="fk_category_node_descendant" required="true" type="INTEGER"/>
-        <column name="depth" required="true" type="INTEGER"/>
+        <column name="depth" required="true" type="INTEGER" description="The depth of a node in a closure table."/>
         <foreign-key foreignTable="spy_category_node" phpName="Node" refPhpName="ClosureTable">
             <reference foreign="id_category_node" local="fk_category_node"/>
         </foreign-key>
@@ -71,8 +71,8 @@
 
     <table name="spy_category_template" idMethod="native">
         <column name="id_category_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="template_path" required="true" type="VARCHAR" size="255"/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="template_path" required="true" type="VARCHAR" size="255" description="The file system path to the template used for rendering a sales invoice."/>
 
         <unique name="spy_category_template-template_path">
             <unique-column name="template_path"/>

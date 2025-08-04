@@ -2,31 +2,31 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCompanyAttributes">
-        <property name="isActive" type="bool"/>
-        <property name="name" type="string"/>
-        <property name="status" type="string"/>
+        <property name="isActive" type="bool" description="A boolean flag indicating if an entity is currently active."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="status" type="string" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
     </transfer>
 
     <transfer name="Company">
-        <property name="uuid" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
         <property name="idCompany" type="int"/>
     </transfer>
 
     <transfer name="CompanyUser">
-        <property name="company" type="Company"/>
+        <property name="company" type="Company" description="A company entity."/>
     </transfer>
 
     <transfer name="CompanyRole">
-        <property name="company" type="Company"/>
+        <property name="company" type="Company" description="A company entity."/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
-        <property name="company" type="Company"/>
+        <property name="company" type="Company" description="A company entity."/>
     </transfer>
 
     <transfer name="CompanyResponse">
-        <property name="companyTransfer" type="Company"/>
-        <property name="isSuccessful" type="bool"/>
+        <property name="companyTransfer" type="Company" description="A data transfer object for a company."/>
+        <property name="isSuccessful" type="bool" description="A boolean flag indicating if an operation completed successfully."/>
     </transfer>
 
     <transfer name="RestUser">
@@ -34,12 +34,12 @@
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int"/>
-        <property name="code" type="string"/>
-        <property name="detail" type="string"/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="QuoteRequest">
-        <property name="companyUser" type="CompanyUser"/>
+        <property name="companyUser" type="CompanyUser" description="A user associated with a company."/>
     </transfer>
 </transfers>

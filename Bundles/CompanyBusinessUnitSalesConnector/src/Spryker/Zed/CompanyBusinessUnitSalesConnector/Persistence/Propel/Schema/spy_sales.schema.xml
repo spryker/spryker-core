@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence">
 
     <table name="spy_sales_order">
-        <column name="company_business_unit_uuid" type="VARCHAR" size="36" required="false"/>
+        <column name="company_business_unit_uuid" type="VARCHAR" size="36" required="false" description="A universally unique identifier for a company business unit."/>
 
         <index name="index-spy_sales_order-company_business_unit_uuid">
             <index-column name="company_business_unit_uuid"/>

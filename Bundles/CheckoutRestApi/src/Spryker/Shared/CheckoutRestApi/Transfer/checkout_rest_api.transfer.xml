@@ -2,61 +2,61 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCheckoutData">
-        <property name="addresses" type="Addresses"/>
-        <property name="shipmentMethods" type="ShipmentMethods"/>
-        <property name="paymentProviders" type="PaymentProviderCollection"/>
-        <property name="availablePaymentMethods" type="PaymentMethods"/>
-        <property name="quote" type="Quote"/>
+        <property name="addresses" type="Addresses" description="A collection of address objects."/>
+        <property name="shipmentMethods" type="ShipmentMethods" description="A collection of available shipment methods."/>
+        <property name="paymentProviders" type="PaymentProviderCollection" description="A collection of available payment providers."/>
+        <property name="availablePaymentMethods" type="PaymentMethods" description="A collection of payment methods available for a checkout."/>
+        <property name="quote" type="Quote" description="A data object representing a shopping cart before it becomes an order."/>
     </transfer>
 
     <transfer name="RestCheckoutError">
-        <property name="status" type="int"/>
-        <property name="code" type="string"/>
-        <property name="detail" type="string"/>
-        <property name="parameters" type="array" singular="parameters"/>
-        <property name="errorIdentifier" type="string"/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
+        <property name="parameters" type="array" singular="parameters" description="A collection of parameters for a request or operation."/>
+        <property name="errorIdentifier" type="string" description="A unique identifier for a specific type of error."/>
     </transfer>
 
     <transfer name="RestCheckoutDataResponse">
-        <property name="isSuccess" type="bool"/>
-        <property name="errors" type="RestCheckoutError[]" singular="error"/>
-        <property name="checkoutData" type="RestCheckoutData"/>
+        <property name="isSuccess" type="bool" description="A boolean flag indicating if an operation was successful."/>
+        <property name="errors" type="RestCheckoutError[]" singular="error" description="A collection of error objects."/>
+        <property name="checkoutData" type="RestCheckoutData" description="A data object containing all the necessary information for the checkout process."/>
     </transfer>
 
     <transfer name="RestCheckoutRequestAttributes">
-        <property name="customer" type="RestCustomer" restRequestParameter="yes"/>
+        <property name="customer" type="RestCustomer" restRequestParameter="yes" description="A data object representing a customer."/>
         <property name="idCart" type="string" restRequestParameter="required"/>
-        <property name="billingAddress" type="RestAddress" restRequestParameter="yes"/>
-        <property name="shippingAddress" type="RestAddress" restRequestParameter="yes"/>
-        <property name="payments" type="RestPayment[]" singular="payment" restRequestParameter="yes"/>
-        <property name="shipment" type="RestShipment" restRequestParameter="yes"/>
+        <property name="billingAddress" type="RestAddress" restRequestParameter="yes" description="The address used for billing purposes."/>
+        <property name="shippingAddress" type="RestAddress" restRequestParameter="yes" description="The address where an order should be shipped."/>
+        <property name="payments" type="RestPayment[]" singular="payment" restRequestParameter="yes" description="A collection of payments associated with an order."/>
+        <property name="shipment" type="RestShipment" restRequestParameter="yes" description="The shipment details for an order."/>
     </transfer>
 
     <transfer name="RestCustomer">
-        <property name="email" type="string" restRequestParameter="yes"/>
-        <property name="salutation" type="string" restRequestParameter="yes"/>
-        <property name="firstName" type="string" restRequestParameter="yes"/>
-        <property name="lastName" type="string" restRequestParameter="yes"/>
+        <property name="email" type="string" restRequestParameter="yes" description="The email address of a user or contact."/>
+        <property name="salutation" type="string" restRequestParameter="yes" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <property name="firstName" type="string" restRequestParameter="yes" description="The first name of a person."/>
+        <property name="lastName" type="string" restRequestParameter="yes" description="The last name of a user or customer."/>
         <property name="idCustomer" type="int" restRequestParameter="no"/>
-        <property name="customerReference" type="string" restRequestParameter="no"/>
+        <property name="customerReference" type="string" restRequestParameter="no" description="A unique reference for a customer."/>
     </transfer>
 
     <transfer name="RestAddress">
         <property name="id" type="string" restRequestParameter="yes"/>
-        <property name="salutation" type="string" restRequestParameter="required"/>
-        <property name="firstName" type="string" restRequestParameter="required"/>
-        <property name="lastName" type="string" restRequestParameter="required"/>
-        <property name="address1" type="string" restRequestParameter="required"/>
-        <property name="address2" type="string" restRequestParameter="required"/>
-        <property name="address3" type="string" restRequestParameter="required"/>
-        <property name="zipCode" type="string" restRequestParameter="required"/>
-        <property name="city" type="string" restRequestParameter="required"/>
-        <property name="country" type="string" restRequestParameter="no"/>
-        <property name="iso2Code" type="string" restRequestParameter="required"/>
-        <property name="company" type="string" restRequestParameter="required"/>
-        <property name="phone" type="string" restRequestParameter="required"/>
-        <property name="isDefaultBilling" type="bool" restRequestParameter="yes"/>
-        <property name="isDefaultShipping" type="bool" restRequestParameter="yes"/>
+        <property name="salutation" type="string" restRequestParameter="required" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <property name="firstName" type="string" restRequestParameter="required" description="The first name of a person."/>
+        <property name="lastName" type="string" restRequestParameter="required" description="The last name of a user or customer."/>
+        <property name="address1" type="string" restRequestParameter="required" description="The first line of a street address."/>
+        <property name="address2" type="string" restRequestParameter="required" description="The second line of a street address."/>
+        <property name="address3" type="string" restRequestParameter="required" description="The third line of a street address."/>
+        <property name="zipCode" type="string" restRequestParameter="required" description="The postal code for an address."/>
+        <property name="city" type="string" restRequestParameter="required" description="The city part of an address."/>
+        <property name="country" type="string" restRequestParameter="no" description="The country associated with an address or entity."/>
+        <property name="iso2Code" type="string" restRequestParameter="required" description="The two-letter ISO code for a country."/>
+        <property name="company" type="string" restRequestParameter="required" description="A company entity."/>
+        <property name="phone" type="string" restRequestParameter="required" description="The phone number."/>
+        <property name="isDefaultBilling" type="bool" restRequestParameter="yes" description="A flag indicating if an address is the default for billing."/>
+        <property name="isDefaultShipping" type="bool" restRequestParameter="yes" description="A flag indicating if an address is the default for shipping."/>
     </transfer>
 
     <transfer name="RestShipment">
@@ -64,225 +64,225 @@
     </transfer>
 
     <transfer name="RestPayment">
-        <property name="paymentProviderName" type="string" restRequestParameter="required"/>
-        <property name="paymentMethodName" type="string" restRequestParameter="required"/>
-        <property name="paymentSelection" type="string" restRequestParameter="yes"/>
+        <property name="paymentProviderName" type="string" restRequestParameter="required" description="The name of the payment provider."/>
+        <property name="paymentMethodName" type="string" restRequestParameter="required" description="The name of the payment method."/>
+        <property name="paymentSelection" type="string" restRequestParameter="yes" description="The payment method selected by the user."/>
     </transfer>
 
     <transfer name="RestCheckoutDataResponseAttributes">
-        <property name="addresses" type="RestAddress[]" singular="address" deprecated="Will be removed in next major release. Use relations instead."/>
-        <property name="paymentProviders" type="RestPaymentProvider[]" singular="paymentProvider" deprecated="Will be removed in next major release. Use relations instead."/>
-        <property name="shipmentMethods" type="RestShipmentMethod[]" singular="shipmentMethod" deprecated="Will be removed in next major release. Use relations instead."/>
-        <property name="selectedShipmentMethods" type="RestShipmentMethod[]" singular="selectedShipmentMethod"/>
-        <property name="selectedPaymentMethods" type="RestPaymentMethod[]" singular="selectedPaymentMethod"/>
+        <property name="addresses" type="RestAddress[]" singular="address" deprecated="Will be removed in next major release. Use relations instead." description="A collection of address objects."/>
+        <property name="paymentProviders" type="RestPaymentProvider[]" singular="paymentProvider" deprecated="Will be removed in next major release. Use relations instead." description="A collection of available payment providers."/>
+        <property name="shipmentMethods" type="RestShipmentMethod[]" singular="shipmentMethod" deprecated="Will be removed in next major release. Use relations instead." description="A collection of available shipment methods."/>
+        <property name="selectedShipmentMethods" type="RestShipmentMethod[]" singular="selectedShipmentMethod" description="A collection of shipment methods that have been selected."/>
+        <property name="selectedPaymentMethods" type="RestPaymentMethod[]" singular="selectedPaymentMethod" description="A collection of payment methods that have been selected."/>
     </transfer>
 
     <transfer name="RestPaymentProvider">
-        <property name="paymentProviderName" type="string"/>
-        <property name="paymentMethods" singular="paymentMethod" type="RestPaymentMethod[]"/>
+        <property name="paymentProviderName" type="string" description="The name of the payment provider."/>
+        <property name="paymentMethods" singular="paymentMethod" type="RestPaymentMethod[]" description="A collection of available payment methods."/>
     </transfer>
 
     <transfer name="RestPaymentMethod">
-        <property name="paymentMethodName" type="string"/>
-        <property name="paymentProviderName" type="string"/>
-        <property name="requiredRequestData" type="array" singular="requiredRequestData"/>
-        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration"/>
+        <property name="paymentMethodName" type="string" description="The name of the payment method."/>
+        <property name="paymentProviderName" type="string" description="The name of the payment provider."/>
+        <property name="requiredRequestData" type="array" singular="requiredRequestData" description="A list of data fields required by a specific payment method to process a payment."/>
+        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration" description="Configuration for a payment method provided by an app."/>
     </transfer>
 
     <transfer name="PaymentMethodAppConfiguration" strict="true">
-        <property name="baseUrl" type="string"/>
-        <property name="endpoints" type="Endpoint[]" singular="endpoint"/>
-        <property name="checkoutConfiguration" type="CheckoutConfiguration"/>
+        <property name="baseUrl" type="string" description="The base URL for API endpoints."/>
+        <property name="endpoints" type="Endpoint[]" singular="endpoint" description="A collection of API endpoints for a service."/>
+        <property name="checkoutConfiguration" type="CheckoutConfiguration" description="Configuration settings for the checkout process."/>
     </transfer>
 
     <transfer name="Endpoint" strict="true">
-        <property name="name" type="string"/>
-        <property name="path" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="path" type="string" description="The path for an API endpoint or a file."/>
     </transfer>
 
     <transfer name="CheckoutConfiguration" strict="true">
-        <property name="strategy" type="string"/>
-        <property name="scripts" type="Script[]" singular="script"/>
-        <property name="paymentServiceProviderData" type="array" singular="paymentServiceProviderDatum" associative="true"/>
+        <property name="strategy" type="string" description="The specific strategy or method to be used for an operation."/>
+        <property name="scripts" type="Script[]" singular="script" description="A collection of scripts to be loaded or executed."/>
+        <property name="paymentServiceProviderData" type="array" singular="paymentServiceProviderDatum" associative="true" description="Data provided by a payment service provider."/>
     </transfer>
 
     <transfer name="Script" strict="true">
-        <property name="url" type="string"/>
-        <property name="queryParams" type="array" singular="queryParam" associative="true"/>
+        <property name="url" type="string" description="A URL for a resource."/>
+        <property name="queryParams" type="array" singular="queryParam" associative="true" description="A collection of query parameters for a URL."/>
     </transfer>
 
     <transfer name="RestShipmentMethod">
         <property name="id" type="int"/>
-        <property name="name" type="string"/>
-        <property name="carrierName" type="string"/>
-        <property name="price" type="int"/>
-        <property name="taxRate" type="float" deprecated="Will be removed with next major release."/>
-        <property name="deliveryTime" type="int"/>
-        <property name="currencyIsoCode" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="carrierName" type="string" description="The name of the shipping carrier."/>
+        <property name="price" type="int" description="The price of a product or service."/>
+        <property name="taxRate" type="float" deprecated="Will be removed with next major release." description="The tax rate applied to an item."/>
+        <property name="deliveryTime" type="int" description="The estimated delivery time for a shipment."/>
+        <property name="currencyIsoCode" type="string" description="The ISO code for a currency."/>
     </transfer>
 
     <transfer name="RestCheckoutResponseAttributes">
-        <property name="orderReference" type="string"/>
-        <property name="redirectUrl" type="string"/>
-        <property name="isExternalRedirect" type="bool"/>
+        <property name="orderReference" type="string" description="A unique reference identifier for a sales order."/>
+        <property name="redirectUrl" type="string" description="The URL to which the user should be redirected."/>
+        <property name="isExternalRedirect" type="bool" description="A flag indicating if a redirect points to an external URL."/>
     </transfer>
 
     <transfer name="RestCheckoutResponse">
-        <property name="isSuccess" type="bool"/>
-        <property name="errors" type="RestCheckoutError[]" singular="error"/>
-        <property name="orderReference" type="string"/>
-        <property name="redirectUrl" type="string"/>
-        <property name="isExternalRedirect" type="bool"/>
-        <property name="checkoutResponse" type="CheckoutResponse"/>
-        <property name="checkoutData" type="CheckoutData"/>
+        <property name="isSuccess" type="bool" description="A boolean flag indicating if an operation was successful."/>
+        <property name="errors" type="RestCheckoutError[]" singular="error" description="A collection of error objects."/>
+        <property name="orderReference" type="string" description="A unique reference identifier for a sales order."/>
+        <property name="redirectUrl" type="string" description="The URL to which the user should be redirected."/>
+        <property name="isExternalRedirect" type="bool" description="A flag indicating if a redirect points to an external URL."/>
+        <property name="checkoutResponse" type="CheckoutResponse" description="The response from a checkout attempt."/>
+        <property name="checkoutData" type="CheckoutData" description="A data object containing all the necessary information for the checkout process."/>
     </transfer>
 
     <transfer name="CheckoutResponse">
-        <property name="isSuccess" type="bool"/>
-        <property name="errors" type="CheckoutError[]" singular="error"/>
-        <property name="saveOrder" type="SaveOrder" deprecated="Use SaveOrderTransfer directly/decoupled from the checkout response"/>
-        <property name="redirectUrl" type="string"/>
-        <property name="isExternalRedirect" type="bool"/>
+        <property name="isSuccess" type="bool" description="A boolean flag indicating if an operation was successful."/>
+        <property name="errors" type="CheckoutError[]" singular="error" description="A collection of error objects."/>
+        <property name="saveOrder" type="SaveOrder" deprecated="Use SaveOrderTransfer directly/decoupled from the checkout response" description="A data object containing the order information to be saved."/>
+        <property name="redirectUrl" type="string" description="The URL to which the user should be redirected."/>
+        <property name="isExternalRedirect" type="bool" description="A flag indicating if a redirect points to an external URL."/>
     </transfer>
 
     <transfer name="SaveOrder">
-        <property name="orderReference" type="string"/>
+        <property name="orderReference" type="string" description="A unique reference identifier for a sales order."/>
     </transfer>
 
     <transfer name="CheckoutError">
-        <property name="errorCode" type="int"/>
-        <property name="message" type="string"/>
-        <property name="parameters" type="array" singular="parameters"/>
+        <property name="errorCode" type="int" description="A code representing a specific error."/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
+        <property name="parameters" type="array" singular="parameters" description="A collection of parameters for a request or operation."/>
     </transfer>
 
     <transfer name="Addresses">
-        <property name="addresses" type="Address[]" singular="address"/>
+        <property name="addresses" type="Address[]" singular="address" description="A collection of address objects."/>
     </transfer>
 
     <transfer name="Address">
         <property name="idCustomerAddress" type="int"/>
-        <property name="uuid" type="string"/>
-        <property name="isDefaultBilling" type="bool"/>
-        <property name="isDefaultShipping" type="bool"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="isDefaultBilling" type="bool" description="A flag indicating if an address is the default for billing."/>
+        <property name="isDefaultShipping" type="bool" description="A flag indicating if an address is the default for shipping."/>
     </transfer>
 
     <transfer name="ShipmentMethods">
-        <property name="methods" type="ShipmentMethod[]" singular="method"/>
-        <property name="shipmentHash" type="string"/>
+        <property name="methods" type="ShipmentMethod[]" singular="method" description="A collection of methods."/>
+        <property name="shipmentHash" type="string" description="A hash representing the state of the shipment details."/>
     </transfer>
 
     <transfer name="ShipmentMethod">
         <property name="idShipmentMethod" type="int"/>
-        <property name="storeCurrencyPrice" type="int"/>
-        <property name="prices" type="MoneyValue[]" singular="price"/>
+        <property name="storeCurrencyPrice" type="int" description="The price of a shipment method in the store's default currency."/>
+        <property name="prices" type="MoneyValue[]" singular="price" description="A collection of prices, often for different currencies or price types."/>
     </transfer>
 
     <transfer name="ShipmentMethodsCollection">
-        <property name="shipmentMethods" type="ShipmentMethods[]" singular="shipmentMethods"/>
+        <property name="shipmentMethods" type="ShipmentMethods[]" singular="shipmentMethods" description="A collection of available shipment methods."/>
     </transfer>
 
     <transfer name="PaymentProviderCollection">
-        <property name="paymentProviders" singular="paymentProvider" type="PaymentProvider[]"/>
+        <property name="paymentProviders" singular="paymentProvider" type="PaymentProvider[]" description="A collection of available payment providers."/>
     </transfer>
 
     <transfer name="PaymentProvider">
-        <property name="name" type="string"/>
-        <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]"/>
-        <property name="paymentProviderKey" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]" description="A collection of available payment methods."/>
+        <property name="paymentProviderKey" type="string" description="A unique key identifying a payment provider."/>
     </transfer>
 
     <transfer name="PaymentMethods">
-        <property name="methods" singular="method" type="PaymentMethod[]"/>
+        <property name="methods" singular="method" type="PaymentMethod[]" description="A collection of methods."/>
     </transfer>
 
     <transfer name="PaymentMethod">
-        <property name="methodName" type="string"/>
-        <property name="name" type="string"/>
+        <property name="methodName" type="string" description="The name of a method."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="customer" type="Customer"/>
-        <property name="items" type="Item[]" singular="item"/>
-        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
-        <property name="uuid" type="string"/>
-        <property name="customerReference" type="string"/>
-        <property name="store" type="Store"/>
-        <property name="skipRecalculation" type="bool" strict="true"/>
-        <property name="quoteProcessFlow" type="QuoteProcessFlow" strict="true"/>
+        <property name="customer" type="Customer" description="A data object representing a customer."/>
+        <property name="items" type="Item[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead." description="The shipment details for an order."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
+        <property name="store" type="Store" description="The store context for an operation, determining which store's data is used."/>
+        <property name="skipRecalculation" type="bool" strict="true" description="A flag to skip the recalculation of a quote or order."/>
+        <property name="quoteProcessFlow" type="QuoteProcessFlow" strict="true" description="Defines the current process flow for a quote."/>
     </transfer>
 
     <transfer name="QuoteProcessFlow" strict="true">
-        <property name="name" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="Item">
-        <property name="sku" type="string"/>
-        <property name="shipment" type="Shipment"/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <property name="shipment" type="Shipment" description="The shipment details for an order."/>
     </transfer>
 
     <transfer name="Customer">
-        <property name="isGuest" type="bool"/>
-        <property name="customerReference" type="string"/>
-        <property name="defaultBillingAddress" type="string"/>
-        <property name="defaultShippingAddress" type="string"/>
-        <property name="addresses" type="Addresses"/>
+        <property name="isGuest" type="bool" description="A flag indicating if a customer is a guest user."/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
+        <property name="defaultBillingAddress" type="string" description="The identifier for the default billing address."/>
+        <property name="defaultShippingAddress" type="string" description="The identifier for the default shipping address."/>
+        <property name="addresses" type="Addresses" description="A collection of address objects."/>
     </transfer>
 
     <transfer name="CustomerResponse">
-        <property name="hasCustomer" type="bool"/>
-        <property name="customerTransfer" type="Customer"/>
+        <property name="hasCustomer" type="bool" description="A flag indicating if a customer exists."/>
+        <property name="customerTransfer" type="Customer" description="A data transfer object containing customer information."/>
     </transfer>
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
-        <property name="name" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="MoneyValue">
         <property name="fkStore" type="int"/>
-        <property name="currency" type="Currency"/>
+        <property name="currency" type="Currency" description="The currency used for a transaction or price."/>
     </transfer>
 
     <transfer name="Currency">
-        <property name="code" type="string"/>
+        <property name="code" type="string" description="A unique code, often for currency, country, or barcode."/>
     </transfer>
 
     <transfer name="QuoteResponse">
-        <property name="isSuccessful" type="bool"/>
-        <property name="quote" type="Quote"/>
-        <property name="customer" type="Customer"/>
-        <property name="errors" type="QuoteError[]" singular="error"/>
-        <property name="quoteTransfer" type="Quote"/>
+        <property name="isSuccessful" type="bool" description="A boolean flag indicating if an operation completed successfully."/>
+        <property name="quote" type="Quote" description="A data object representing a shopping cart before it becomes an order."/>
+        <property name="customer" type="Customer" description="A data object representing a customer."/>
+        <property name="errors" type="QuoteError[]" singular="error" description="A collection of error objects."/>
+        <property name="quoteTransfer" type="Quote" description="A data transfer object representing a quote."/>
     </transfer>
 
     <transfer name="QuoteError">
-        <property name="message" type="string"/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int"/>
-        <property name="code" type="string"/>
-        <property name="detail" type="string"/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="Shipment">
         <property name="idSalesShipment" type="int"/>
-        <property name="shippingAddress" type="Address"/>
-        <property name="requestedDeliveryDate" type="string"/>
+        <property name="shippingAddress" type="Address" description="The address where an order should be shipped."/>
+        <property name="requestedDeliveryDate" type="string" description="The delivery date requested by the customer."/>
     </transfer>
 
     <transfer name="RestErrorCollection">
-        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError" description="A collection of error messages formatted for a REST API response."/>
     </transfer>
 
     <transfer name="CheckoutData">
-        <property name="shipment" type="RestShipment"/>
-        <property name="quote" type="Quote"/>
+        <property name="shipment" type="RestShipment" description="The shipment details for an order."/>
+        <property name="quote" type="Quote" description="A data object representing a shopping cart before it becomes an order."/>
     </transfer>
 
     <transfer name="RestUser">
-        <property name="naturalIdentifier" type="string"/>
-        <property name="surrogateIdentifier" type="int"/>
+        <property name="naturalIdentifier" type="string" description="A human-readable unique identifier for a resource, such as a user's email."/>
+        <property name="surrogateIdentifier" type="int" description="A system-generated, non-human-readable unique identifier (like an auto-incrementing ID)."/>
     </transfer>
 
 </transfers>

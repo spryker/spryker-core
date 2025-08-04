@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Cms\Persistence" package="src.Orm.Zed.Cms.Persistence">
     <table name="spy_cms_page" idMethod="native" allowPkInsert="true">
-        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+        <column name="uuid" required="false" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
         <unique name="spy_cms_page-unique-uuid">
             <unique-column name="uuid"/>
         </unique>

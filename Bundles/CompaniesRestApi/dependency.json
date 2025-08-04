@@ -1,6 +1,7 @@
 {
     "include": {
         "spryker/company": "Company provides base functionality.",
+        "spryker/transfer": "Provides transfer objects definition with strict types.",
         "spryker/uuid-behavior": "Used to generate UUIDs for entities."
     }
 }

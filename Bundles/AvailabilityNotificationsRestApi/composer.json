@@ -12,7 +12,7 @@
         "spryker/kernel": "^3.30.0",
         "spryker/store": "^1.14.1",
         "spryker/symfony": "^3.0.0",
-        "spryker/transfer": "^3.25.0"
+        "spryker/transfer": "^3.42.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*"

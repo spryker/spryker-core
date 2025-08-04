@@ -6,8 +6,8 @@
         <column name="fk_cms_slot_template" required="true" type="INTEGER"/>
         <column name="fk_cms_slot" required="true" type="INTEGER"/>
         <column name="fk_cms_block" required="true" type="INTEGER"/>
-        <column name="position" required="true" type="INTEGER"/>
-        <column name="conditions" type="LONGVARCHAR"/>
+        <column name="position" required="true" type="INTEGER" description="The position or order of an item in a list."/>
+        <column name="conditions" type="LONGVARCHAR" description="A set of conditions for filtering or querying."/>
 
         <unique name="spy_cms_slot_block-slot-block">
             <unique-column name="fk_cms_slot_template"/>

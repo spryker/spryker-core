@@ -3,10 +3,10 @@
 
     <table name="spy_availability_notification_subscription" idMethod="native" allowPkInsert="true">
         <column name="id_availability_notification_subscription" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="sku" type="VARCHAR" size="255" required="true"/>
-        <column name="email" type="VARCHAR" size="255" required="true"/>
-        <column name="customer_reference" required="false" type="VARCHAR" size="255"/>
-        <column name="subscription_key" required="true" type="VARCHAR" size="150"/>
+        <column name="sku" type="VARCHAR" size="255" required="true" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <column name="email" type="VARCHAR" size="255" required="true" description="The email address of a user or contact."/>
+        <column name="customer_reference" required="false" type="VARCHAR" size="255" description="A unique reference for a customer."/>
+        <column name="subscription_key" required="true" type="VARCHAR" size="150" description="A unique key identifying a specific availability notification subscription."/>
         <column name="fk_store" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
 

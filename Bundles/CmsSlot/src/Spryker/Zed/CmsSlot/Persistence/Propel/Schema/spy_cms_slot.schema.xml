@@ -4,9 +4,9 @@
     <table name="spy_cms_slot_template" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_cms_slot_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="path" required="true" type="LONGVARCHAR" description="Identifier for existing entities. It should never be changed."/>
-        <column name="path_hash" required="true" type="VARCHAR" size="32"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="description" required="true" type="LONGVARCHAR"/>
+        <column name="path_hash" required="true" type="VARCHAR" size="32" description="A hash of the slot template's file path, used for quick lookups."/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="description" required="true" type="LONGVARCHAR" description="A description of an entity."/>
 
         <id-method-parameter value="spy_cms_slot_template_pk_seq"/>
 
@@ -18,10 +18,10 @@
     <table name="spy_cms_slot" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_cms_slot" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="key" required="true" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>
-        <column name="content_provider_type" required="true" type="VARCHAR" size="64"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="description" required="true" type="LONGVARCHAR"/>
-        <column name="is_active" type="BOOLEAN" required="true" default="false"/>
+        <column name="content_provider_type" required="true" type="VARCHAR" size="64" description="The type of content provider for a CMS slot."/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="description" required="true" type="LONGVARCHAR" description="A description of an entity."/>
+        <column name="is_active" type="BOOLEAN" required="true" default="false" description="A boolean flag indicating if an entity is currently active."/>
 
         <unique name="spy_cms_slot-key">
             <unique-column name="key"/>

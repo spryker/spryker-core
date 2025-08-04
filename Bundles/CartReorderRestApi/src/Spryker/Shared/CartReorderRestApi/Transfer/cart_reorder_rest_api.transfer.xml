@@ -2,36 +2,36 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCartReorderRequestAttributes" strict="true">
-        <property name="orderReference" type="string" restRequestParameter="required"/>
-        <property name="reorderStrategy" type="string" restRequestParameter="required"/>
+        <property name="orderReference" type="string" restRequestParameter="required" description="A unique reference identifier for a sales order."/>
+        <property name="reorderStrategy" type="string" restRequestParameter="required" description="The strategy to use when creating a new order from a previous one."/>
     </transfer>
 
     <transfer name="CartReorderRequest" strict="true">
-        <property name="orderReference" type="string"/>
-        <property name="customerReference" type="string"/>
-        <property name="reorderStrategy" type="string"/>
+        <property name="orderReference" type="string" description="A unique reference identifier for a sales order."/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
+        <property name="reorderStrategy" type="string" description="The strategy to use when creating a new order from a previous one."/>
     </transfer>
 
     <transfer name="Quote">
     </transfer>
 
     <transfer name="CartReorderResponse" strict="true">
-        <property name="errors" type="Error[]" singular="error"/>
-        <property name="quote" type="Quote"/>
+        <property name="errors" type="Error[]" singular="error" description="A collection of error objects."/>
+        <property name="quote" type="Quote" description="A data object representing a shopping cart before it becomes an order."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int"/>
-        <property name="code" type="string"/>
-        <property name="detail" type="string"/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="Error">
-        <property name="message" type="string"/>
-        <property name="parameters" type="array" singular="parameter"/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
+        <property name="parameters" type="array" singular="parameter" description="A collection of parameters for a request or operation."/>
     </transfer>
 
     <transfer name="RestUser">
-        <property name="naturalIdentifier" type="string"/>
+        <property name="naturalIdentifier" type="string" description="A human-readable unique identifier for a resource, such as a user's email."/>
     </transfer>
 </transfers>

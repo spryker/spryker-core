@@ -3,7 +3,7 @@
 
     <table name="spy_acl_role" idMethod="native">
         <column name="id_acl_role" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" required="true" size="255" type="VARCHAR"/>
+        <column name="name" required="true" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
         <unique name="spy_acl_role-name">
             <unique-column name="name"/>
         </unique>
@@ -15,10 +15,10 @@
     <table name="spy_acl_rule" idMethod="native">
         <column name="id_acl_rule" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_acl_role" required="true" type="INTEGER"/>
-        <column name="bundle" required="true" size="60" type="VARCHAR"/>
-        <column name="controller" required="true" size="60" type="VARCHAR"/>
-        <column name="action" required="true" size="45" type="VARCHAR"/>
-        <column name="type" required="true" size="10" type="ENUM" valueSet="allow,deny"/>
+        <column name="bundle" required="true" size="60" type="VARCHAR" description="The name of a software bundle or module."/>
+        <column name="controller" required="true" size="60" type="VARCHAR" description="The name of a controller in an MVC architecture."/>
+        <column name="action" required="true" size="45" type="VARCHAR" description="The specific action to be performed, often within a controller."/>
+        <column name="type" required="true" size="10" type="ENUM" valueSet="allow,deny" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
         <behavior name="timestampable"/>
         <behavior name="archivable"/>
         <foreign-key name="spy_acl_rule-fk_acl_role" foreignTable="spy_acl_role" phpName="AclRole" refPhpName="AclRule" onDelete="CASCADE">
@@ -29,7 +29,7 @@
 
     <table name="spy_acl_group" idMethod="native">
         <column name="id_acl_group" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" required="true" size="255" type="VARCHAR"/>
+        <column name="name" required="true" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
         <unique name="spy_acl_group-name">
             <unique-column name="name"/>
         </unique>

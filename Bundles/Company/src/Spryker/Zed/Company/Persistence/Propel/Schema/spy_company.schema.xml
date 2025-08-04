@@ -3,9 +3,9 @@
 
     <table name="spy_company">
         <column name="id_company" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="is_active" type="BOOLEAN" default="false"/>
-        <column name="status" required="true" size="8" type="ENUM" valueSet="pending,approved,denied" defaultValue="pending"/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="is_active" type="BOOLEAN" default="false" description="A boolean flag indicating if an entity is currently active."/>
+        <column name="status" required="true" size="8" type="ENUM" valueSet="pending,approved,denied" defaultValue="pending" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
 
         <id-method-parameter value="spy_company_pk_seq"/>
     </table>

@@ -2,153 +2,153 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCatalogSearchAttributes">
-        <property name="sort" type="RestCatalogSearchSort"/>
-        <property name="pagination" type="RestCatalogSearchPagination"/>
-        <property name="abstractProducts" type="RestCatalogSearchAbstractProducts[]" singular="abstractProduct"/>
-        <property name="valueFacets" type="RestFacetSearchResult[]" singular="valueFacet"/>
-        <property name="rangeFacets" type="RestRangeSearchResult[]" singular="rangeFacet"/>
-        <property name="categoryTreeFilter" type="RestCategoryNodeSearchResultAttributes[]" singular="categoryTreeFilter"/>
-        <property name="spellingSuggestion" type="string"/>
+        <property name="sort" type="RestCatalogSearchSort" description="An object defining the sorting parameters for a query."/>
+        <property name="pagination" type="RestCatalogSearchPagination" description="An object containing all pagination-related data for a list of results."/>
+        <property name="abstractProducts" type="RestCatalogSearchAbstractProducts[]" singular="abstractProduct" description="A collection of abstract product data transfer objects."/>
+        <property name="valueFacets" type="RestFacetSearchResult[]" singular="valueFacet" description="A collection of search facets based on discrete values."/>
+        <property name="rangeFacets" type="RestRangeSearchResult[]" singular="rangeFacet" description="A collection of search facets based on a range of values."/>
+        <property name="categoryTreeFilter" type="RestCategoryNodeSearchResultAttributes[]" singular="categoryTreeFilter" description="A filter for a category tree structure, often used in search results."/>
+        <property name="spellingSuggestion" type="string" description="A suggested correction for a misspelled search query."/>
     </transfer>
 
     <transfer name="RestCategoryNodeSearchResultAttributes">
-        <property name="nodeId" type="int"/>
-        <property name="name" type="string"/>
-        <property name="docCount" type="int"/>
-        <property name="children" type="RestCategoryNodeSearchResultAttributes[]" singular="children"/>
+        <property name="nodeId" type="int" description="The unique identifier for a node in a tree structure (e.g., a category node)."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="docCount" type="int" description="The number of documents matching a search facet or query."/>
+        <property name="children" type="RestCategoryNodeSearchResultAttributes[]" singular="children" description="A collection of child entities in a hierarchical structure."/>
     </transfer>
 
     <transfer name="RestCatalogSearchSort">
-        <property name="sortParamNames" type="array" singular="sortParamNames"/>
-        <property name="sortParamLocalizedNames" type="array" singular="sortParamLocalizedNames"/>
-        <property name="currentSortParam" type="string"/>
-        <property name="currentSortOrder" type="string"/>
+        <property name="sortParamNames" type="array" singular="sortParamNames" description="A list of available parameter names for sorting."/>
+        <property name="sortParamLocalizedNames" type="array" singular="sortParamLocalizedNames" description="A list of localized names for sorting parameters."/>
+        <property name="currentSortParam" type="string" description="The currently active parameter used for sorting results."/>
+        <property name="currentSortOrder" type="string" description="The current direction of sorting (e.g., 'asc' or 'desc')."/>
     </transfer>
 
     <transfer name="RestCatalogSearchPagination">
-        <property name="numFound" type="int"/>
-        <property name="currentPage" type="int"/>
-        <property name="maxPage" type="int"/>
-        <property name="currentItemsPerPage" type="int"/>
-        <property name="config" type="RestCatalogSearchPaginationConfig"/>
+        <property name="numFound" type="int" description="The total number of results found by a search query."/>
+        <property name="currentPage" type="int" description="The current page number in a paginated result set."/>
+        <property name="maxPage" type="int" description="The total number of pages available for a paginated result set."/>
+        <property name="currentItemsPerPage" type="int" description="The number of items displayed on the current page."/>
+        <property name="config" type="RestCatalogSearchPaginationConfig" description="Configuration settings for a module or feature."/>
     </transfer>
 
     <transfer name="RestCatalogSearchPaginationConfig">
-        <property name="parameterName" type="string"/>
-        <property name="itemsPerPageParameterName" type="string"/>
-        <property name="defaultItemsPerPage" type="int"/>
-        <property name="validItemsPerPageOptions" type="array" singular="validItemsPerPageOptions"/>
+        <property name="parameterName" type="string" description="The name of a request parameter."/>
+        <property name="itemsPerPageParameterName" type="string" description="The name of the request parameter used to specify the number of items per page."/>
+        <property name="defaultItemsPerPage" type="int" description="The default number of items to display per page."/>
+        <property name="validItemsPerPageOptions" type="array" singular="validItemsPerPageOptions" description="A list of valid options for the number of items per page."/>
     </transfer>
 
     <transfer name="RestCatalogSearchAbstractProducts">
-        <property name="images" type="RestCatalogSearchProductImage[]" singular="images"/>
-        <property name="price" type="int"/>
-        <property name="abstractName" type="string"/>
-        <property name="prices" type="array" singular="prices"/>
-        <property name="abstractSku" type="string"/>
+        <property name="images" type="RestCatalogSearchProductImage[]" singular="images" description="A collection of images for a product or entity."/>
+        <property name="price" type="int" description="The price of a product or service."/>
+        <property name="abstractName" type="string" description="The name of an abstract product."/>
+        <property name="prices" type="array" singular="prices" description="A collection of prices, often for different currencies or price types."/>
+        <property name="abstractSku" type="string" description="The Stock Keeping Unit (SKU) for an abstract product."/>
     </transfer>
 
     <transfer name="RestCatalogSearchProductImage">
-        <property name="externalUrlSmall" type="string"/>
-        <property name="externalUrlLarge" type="string"/>
+        <property name="externalUrlSmall" type="string" description="The URL for a small version of an image."/>
+        <property name="externalUrlLarge" type="string" description="The URL for a large version of an image."/>
     </transfer>
 
     <transfer name="RestRangeSearchResult">
-        <property name="name" type="string"/>
-        <property name="localizedName" type="string"/>
-        <property name="min" type="float"/>
-        <property name="max" type="float"/>
-        <property name="activeMin" type="float"/>
-        <property name="activeMax" type="float"/>
-        <property name="docCount" type="int"/>
-        <property name="config" type="RestFacetConfig"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="localizedName" type="string" description="The localized name of an entity."/>
+        <property name="min" type="float" description="The minimum value in a range."/>
+        <property name="max" type="float" description="The maximum value in a range."/>
+        <property name="activeMin" type="float" description="The minimum value for an active range filter."/>
+        <property name="activeMax" type="float" description="The maximum value for an active range filter."/>
+        <property name="docCount" type="int" description="The number of documents matching a search facet or query."/>
+        <property name="config" type="RestFacetConfig" description="Configuration settings for a module or feature."/>
     </transfer>
 
     <transfer name="RestFacetSearchResult">
-        <property name="name" type="string"/>
-        <property name="localizedName" type="string"/>
-        <property name="docCount" type="int"/>
-        <property name="values" type="array" singular="value"/>
-        <property name="activeValue" type="string"/>
-        <property name="config" type="RestFacetConfig"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="localizedName" type="string" description="The localized name of an entity."/>
+        <property name="docCount" type="int" description="The number of documents matching a search facet or query."/>
+        <property name="values" type="array" singular="value" description="A collection of values, often for a multi-select attribute or facet."/>
+        <property name="activeValue" type="string" description="The currently active value for a facet filter."/>
+        <property name="config" type="RestFacetConfig" description="Configuration settings for a module or feature."/>
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionsAttributes">
-        <property name="completion" type="string[]" singular="completion"/>
-        <property name="abstractProducts" type="RestCatalogSearchSuggestionAbstractProducts[]" singular="abstractProduct"/>
-        <property name="categories" type="array" singular="categories" deprecated="Use categoryCollection instead."/>
-        <property name="cmsPages" type="array" singular="cmsPages" deprecated="Use cmsPageCollection instead."/>
-        <property name="categoryCollection" type="RestCatalogSearchSuggestionCategories[]" singular="category"/>
-        <property name="cmsPageCollection" type="RestCatalogSearchSuggestionCmsPages[]" singular="cmsPage"/>
+        <property name="completion" type="string[]" singular="completion" description="A suggested completion for a partial search query."/>
+        <property name="abstractProducts" type="RestCatalogSearchSuggestionAbstractProducts[]" singular="abstractProduct" description="A collection of abstract product data transfer objects."/>
+        <property name="categories" type="array" singular="categories" deprecated="Use categoryCollection instead." description="A collection of product categories."/>
+        <property name="cmsPages" type="array" singular="cmsPages" deprecated="Use cmsPageCollection instead." description="A collection of CMS page data transfer objects."/>
+        <property name="categoryCollection" type="RestCatalogSearchSuggestionCategories[]" singular="category" description="A collection of category objects."/>
+        <property name="cmsPageCollection" type="RestCatalogSearchSuggestionCmsPages[]" singular="cmsPage" description="A collection of CMS page objects."/>
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionCategories">
         <property name="idCategory" type="int"/>
-        <property name="name" type="string"/>
-        <property name="url" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="url" type="string" description="A URL for a resource."/>
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionCmsPages">
-        <property name="name" type="string"/>
-        <property name="url" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="url" type="string" description="A URL for a resource."/>
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionAbstractProducts">
-        <property name="images" type="RestCatalogSearchSuggestionProductImage[]" singular="images"/>
-        <property name="price" type="int"/>
-        <property name="abstractName" type="string"/>
-        <property name="abstractSku" type="string"/>
-        <property name="url" type="string"/>
+        <property name="images" type="RestCatalogSearchSuggestionProductImage[]" singular="images" description="A collection of images for a product or entity."/>
+        <property name="price" type="int" description="The price of a product or service."/>
+        <property name="abstractName" type="string" description="The name of an abstract product."/>
+        <property name="abstractSku" type="string" description="The Stock Keeping Unit (SKU) for an abstract product."/>
+        <property name="url" type="string" description="A URL for a resource."/>
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionProductImage">
-        <property name="externalUrlSmall" type="string"/>
-        <property name="externalUrlLarge" type="string"/>
+        <property name="externalUrlSmall" type="string" description="The URL for a small version of an image."/>
+        <property name="externalUrlLarge" type="string" description="The URL for a large version of an image."/>
     </transfer>
 
     <transfer name="RestPriceProduct">
-        <property name="priceTypeName" type="string"/>
-        <property name="grossAmount" type="int"/>
-        <property name="netAmount" type="int"/>
-        <property name="currency" type="RestCurrency"/>
+        <property name="priceTypeName" type="string" description="The name of a price type (e.g., 'DEFAULT', 'ORIGINAL')."/>
+        <property name="grossAmount" type="int" description="The gross amount (including tax)."/>
+        <property name="netAmount" type="int" description="The amount of a price, excluding tax."/>
+        <property name="currency" type="RestCurrency" description="The currency used for a transaction or price."/>
     </transfer>
 
     <transfer name="PriceModeConfiguration">
-        <property name="currentPriceMode" type="string"/>
-        <property name="grossModeIdentifier" type="string"/>
-        <property name="netModeIdentifier" type="string"/>
+        <property name="currentPriceMode" type="string" description="The currently active price mode (GROSS or NET)."/>
+        <property name="grossModeIdentifier" type="string" description="The identifier for the gross price mode."/>
+        <property name="netModeIdentifier" type="string" description="The identifier for the net price mode."/>
     </transfer>
 
     <transfer name="RestCurrency">
-        <property name="code" type="string"/>
-        <property name="name" type="string"/>
-        <property name="symbol" type="string"/>
+        <property name="code" type="string" description="A unique code, often for currency, country, or barcode."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="symbol" type="string" description="The symbol for a currency (e.g., '$', '&#x20AC;')."/>
     </transfer>
 
     <transfer name="RestFacetConfig">
-        <property name="parameterName" type="string"/>
-        <property name="isMultiValued" type="bool"/>
+        <property name="parameterName" type="string" description="The name of a request parameter."/>
+        <property name="isMultiValued" type="bool" description="A flag indicating if a facet or attribute can have multiple values selected at once."/>
     </transfer>
 
     <transfer name="FacetSearchResult">
-        <property name="config" type="FacetConfig"/>
+        <property name="config" type="FacetConfig" description="Configuration settings for a module or feature."/>
     </transfer>
 
     <transfer name="RangeSearchResult">
-        <property name="config" type="FacetConfig"/>
+        <property name="config" type="FacetConfig" description="Configuration settings for a module or feature."/>
     </transfer>
 
     <transfer name="FacetConfig">
     </transfer>
 
     <transfer name="RestErrorCollection">
-        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError" description="A collection of error messages formatted for a REST API response."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="code" type="string"/>
-        <property name="status" type="int"/>
-        <property name="detail" type="string"/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="Currency">

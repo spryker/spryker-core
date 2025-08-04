@@ -3,8 +3,8 @@
 
     <table name="spy_availability_abstract">
         <column name="id_availability_abstract" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="abstract_sku" type="VARCHAR" size="255" required="true"/>
-        <column name="quantity" type="DECIMAL" size="20" scale="10" required="true" defaultValue="0"/>
+        <column name="abstract_sku" type="VARCHAR" size="255" required="true" description="The Stock Keeping Unit (SKU) for an abstract product."/>
+        <column name="quantity" type="DECIMAL" size="20" scale="10" required="true" defaultValue="0" description="The number of units for an item."/>
         <column name="fk_store" required="false" type="INTEGER"/>
 
         <foreign-key name="spy_availability_abstract-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="AvailabilityAbstract">
@@ -21,9 +21,9 @@
     <table name="spy_availability">
         <column name="id_availability" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_availability_abstract" required="true" type="INTEGER"/>
-        <column name="sku" type="VARCHAR" size="255" required="true"/>
-        <column name="quantity" type="DECIMAL" size="20" scale="10" required="true"/>
-        <column name="is_never_out_of_stock" type="BOOLEAN" defaultValue="false"/>
+        <column name="sku" type="VARCHAR" size="255" required="true" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <column name="quantity" type="DECIMAL" size="20" scale="10" required="true" description="The number of units for an item."/>
+        <column name="is_never_out_of_stock" type="BOOLEAN" defaultValue="false" description="A flag indicating if a product should never be considered out of stock."/>
         <column name="fk_store" required="false" type="INTEGER"/>
 
         <foreign-key name="spy_availability-fk_spy_availability_abstract" foreignTable="spy_availability_abstract">

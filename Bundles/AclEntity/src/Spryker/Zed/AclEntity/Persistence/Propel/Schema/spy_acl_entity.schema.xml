@@ -3,8 +3,8 @@
 
     <table name="spy_acl_entity_segment">
         <column name="id_acl_entity_segment" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" required="true" size="255" type="VARCHAR"/>
-        <column name="reference" required="true" size="255" type="VARCHAR"/>
+        <column name="name" required="true" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="reference" required="true" size="255" type="VARCHAR" description="A reference to another resource or definition."/>
         <id-method-parameter value="spy_acl_entity_segment_pk_seq"/>
         <unique name="spy_acl_entity_segment_reference">
             <unique-column name="reference"/>
@@ -15,9 +15,9 @@
         <column name="id_acl_entity_rule" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_acl_role" type="INTEGER" required="true"/>
         <column name="fk_acl_entity_segment" type="INTEGER"/>
-        <column name="entity" required="true" size="255" type="VARCHAR"/>
-        <column name="scope" required="true" type="ENUM" valueSet="global, segment, inherited"/>
-        <column name="permission_mask" type="INTEGER" required="true"/>
+        <column name="entity" required="true" size="255" type="VARCHAR" description="The type of entity being referenced or processed in an authorization context (e.g., 'user', 'order')."/>
+        <column name="scope" required="true" type="ENUM" valueSet="global, segment, inherited" description="A permission scope that defines the access level of an OAuth token."/>
+        <column name="permission_mask" type="INTEGER" required="true" description="A bitmask representing the permissions (Create, Read, Update, Delete) for an ACL rule."/>
 
         <foreign-key name="spy_acl_entity_rule-fk_acl_role" foreignTable="spy_acl_role" onDelete="CASCADE">
             <reference local="fk_acl_role" foreign="id_acl_role"/>

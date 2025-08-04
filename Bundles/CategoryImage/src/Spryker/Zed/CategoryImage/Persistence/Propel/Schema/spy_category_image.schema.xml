@@ -3,7 +3,7 @@
 
     <table name="spy_category_image_set" idMethod="native" allowPkInsert="true">
         <column name="id_category_image_set" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="name" type="VARCHAR" size="255"/>
+        <column name="name" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
         <column name="fk_locale" type="INTEGER" required="false"/>
         <column name="fk_category" type="INTEGER" required="false"/>
 
@@ -25,8 +25,8 @@
 
     <table name="spy_category_image" idMethod="native" allowPkInsert="true">
         <column name="id_category_image" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="external_url_small" type="VARCHAR" size="2048"/>
-        <column name="external_url_large" type="VARCHAR" size="2048"/>
+        <column name="external_url_small" type="VARCHAR" size="2048" description="The URL for a small version of an image."/>
+        <column name="external_url_large" type="VARCHAR" size="2048" description="The URL for a large version of an image."/>
 
         <behavior name="timestampable"/>
 
@@ -37,7 +37,7 @@
         <column name="id_category_image_set_to_category_image" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_category_image_set" type="INTEGER" required="true"/>
         <column name="fk_category_image" type="INTEGER" required="true"/>
-        <column name="sort_order" type="INTEGER" required="true"/>
+        <column name="sort_order" type="INTEGER" required="true" description="The numerical order for sorting items in a list."/>
 
         <foreign-key name="spy_category_image_set_to_category_image-fk_category_image_set" foreignTable="spy_category_image_set">
             <reference local="fk_category_image_set" foreign="id_category_image_set"/>

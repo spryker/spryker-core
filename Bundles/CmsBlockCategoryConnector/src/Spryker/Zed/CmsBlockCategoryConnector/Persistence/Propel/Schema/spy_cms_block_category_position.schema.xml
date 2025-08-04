@@ -3,7 +3,7 @@
 
     <table name="spy_cms_block_category_position">
         <column name="id_cms_block_category_position" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
 
         <id-method-parameter value="spy_cms_block_category_position_pk_seq"/>
     </table>
