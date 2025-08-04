@@ -5,54 +5,54 @@
     </transfer>
 
     <transfer name="GlueRelationship">
-        <property name="resources" type="GlueResource[]" singular="resource"/>
+        <property name="resources" type="GlueResource[]" singular="resource" description="A collection of data entities in a REST API."/>
     </transfer>
 
     <transfer name="GlueResource">
-        <property name="type" type="string"/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
         <property name="id" type="string"/>
-        <property name="attributes" type="AbstractAttributes"/>
-        <property name="relationships" type="GlueRelationship[]" singular="relationship"/>
+        <property name="attributes" type="AbstractAttributes" description="A set of key-value pairs describing a product or entity."/>
+        <property name="relationships" type="GlueRelationship[]" singular="relationship" description="A collection of relationships between resources."/>
     </transfer>
 
     <transfer name="PickingListConditions" strict="true">
-        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="uuids" type="string[]" singular="uuid" description="A collection of Universally Unique Identifiers."/>
     </transfer>
 
     <transfer name="PickingListCriteria" strict="true">
-        <property name="pickingListConditions" type="PickingListConditions"/>
+        <property name="pickingListConditions" type="PickingListConditions" description="Conditions for filtering picking lists."/>
     </transfer>
 
     <transfer name="PickingListCollection" strict="true">
-        <property name="pickingLists" type="PickingList[]" singular="pickingList"/>
+        <property name="pickingLists" type="PickingList[]" singular="pickingList" description="A collection of picking lists."/>
     </transfer>
 
     <transfer name="PickingList" strict="true">
-        <property name="userUuid" type="string"/>
-        <property name="uuid" type="string"/>
+        <property name="userUuid" type="string" description="The UUID of a user."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="UserCollection" strict="true">
-        <property name="users" type="User[]" singular="user"/>
+        <property name="users" type="User[]" singular="user" description="A collection of users."/>
     </transfer>
 
     <transfer name="UserConditions" strict="true">
-        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="uuids" type="string[]" singular="uuid" description="A collection of Universally Unique Identifiers."/>
     </transfer>
 
     <transfer name="UserCriteria">
-        <property name="userConditions" type="UserConditions" strict="true"/>
+        <property name="userConditions" type="UserConditions" strict="true" description="Conditions for filtering users."/>
     </transfer>
 
     <transfer name="User">
-        <property name="uuid" type="string" strict="true"/>
+        <property name="uuid" type="string" strict="true" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="UsersBackendApiAttributes" strict="true">
     </transfer>
 
     <transfer name="UserResourceCollection" strict="true">
-        <property name="userResources" type="GlueResource[]" singular="userResource"/>
+        <property name="userResources" type="GlueResource[]" singular="userResource" description="A collection of user resources."/>
     </transfer>
 
     <transfer name="PickingListsBackendApiAttributes" strict="true">

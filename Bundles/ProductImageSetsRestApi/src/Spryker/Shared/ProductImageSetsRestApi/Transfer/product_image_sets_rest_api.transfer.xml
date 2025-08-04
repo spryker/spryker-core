@@ -2,17 +2,17 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestProductImageSetsAttributes">
-        <property name="imageSets" type="RestProductImageSet[]" singular="imageSets"/>
+        <property name="imageSets" type="RestProductImageSet[]" singular="imageSets" description="A collection of image sets for a product."/>
     </transfer>
 
     <transfer name="RestProductImageSet">
-        <property name="name" type="string"/>
-        <property name="images" type="RestImagesAttributes[]" singular="images"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="images" type="RestImagesAttributes[]" singular="images" description="A collection of images for a product or entity."/>
     </transfer>
 
     <transfer name="RestImagesAttributes">
-        <property name="externalUrlLarge" type="string"/>
-        <property name="externalUrlSmall" type="string"/>
+        <property name="externalUrlLarge" type="string" description="The URL for a large version of an image."/>
+        <property name="externalUrlSmall" type="string" description="The URL for a small version of an image."/>
     </transfer>
 
     <transfer name="ProductAbstractImageStorage">
@@ -26,9 +26,9 @@
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="code" type="string"/>
-        <property name="status" type="int"/>
-        <property name="detail" type="string"/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="ProductConcreteStorage">

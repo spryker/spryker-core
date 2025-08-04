@@ -3,10 +3,10 @@
 
     <table name="spy_picking_list" idMethod="native" class="SpyPickingList">
         <column name="id_picking_list" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="uuid" type="VARCHAR" size="36"/>
+        <column name="uuid" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
         <column name="fk_warehouse" required="true" type="INTEGER"/>
-        <column name="user_uuid" required="false" type="VARCHAR" size="36"/>
-        <column name="status" required="true" type="VARCHAR" size="255"/>
+        <column name="user_uuid" required="false" type="VARCHAR" size="36" description="The UUID of a user."/>
+        <column name="status" required="true" type="VARCHAR" size="255" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
 
         <unique name="spy_picking_list-unique-uuid">
             <unique-column name="uuid"/>
@@ -38,12 +38,12 @@
 
     <table name="spy_picking_list_item" idMethod="native" class="SpyPickingListItem">
         <column name="id_picking_list_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="uuid" type="VARCHAR" size="36"/>
+        <column name="uuid" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
         <column name="fk_picking_list" type="INTEGER" required="true"/>
-        <column name="sales_order_item_uuid" required="true" type="VARCHAR" size="36"/>
-        <column name="quantity" required="true" type="INTEGER"/>
-        <column name="number_of_picked" required="true" type="INTEGER" default="0"/>
-        <column name="number_of_not_picked" required="true" type="INTEGER" default="0"/>
+        <column name="sales_order_item_uuid" required="true" type="VARCHAR" size="36" description="The UUID of a sales order item."/>
+        <column name="quantity" required="true" type="INTEGER" description="The number of units for an item."/>
+        <column name="number_of_picked" required="true" type="INTEGER" default="0" description="The number of items that have been picked."/>
+        <column name="number_of_not_picked" required="true" type="INTEGER" default="0" description="The number of items that have not been picked."/>
 
         <unique name="spy_picking_list_item-unique-uuid">
             <unique-column name="uuid"/>

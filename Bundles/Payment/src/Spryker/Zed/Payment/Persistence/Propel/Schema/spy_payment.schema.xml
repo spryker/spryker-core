@@ -2,8 +2,8 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\Payment\Persistence" package="src.Orm.Zed.Payment.Persistence" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd">
     <table name="spy_payment_provider" identifierQuoting="true">
         <column name="id_payment_provider" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="payment_provider_key" required="true" size="255" type="VARCHAR"/>
-        <column name="name" required="true" size="255" type="VARCHAR"/>
+        <column name="payment_provider_key" required="true" size="255" type="VARCHAR" description="A unique key identifying a payment provider."/>
+        <column name="name" required="true" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
 
         <unique name="spy_payment_provider-unique-payment_provider_key">
             <unique-column name="payment_provider_key"/>
@@ -15,9 +15,9 @@
     <table name="spy_payment_method" identifierQuoting="true">
         <column name="id_payment_method" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_payment_provider" type="INTEGER" required="true"/>
-        <column name="payment_method_key" required="true" size="255" type="VARCHAR"/>
-        <column name="name" required="true" size="255" type="VARCHAR"/>
-        <column name="is_active" type="BOOLEAN" default="true" required="true"/>
+        <column name="payment_method_key" required="true" size="255" type="VARCHAR" description="The unique key identifying a payment method."/>
+        <column name="name" required="true" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="is_active" type="BOOLEAN" default="true" required="true" description="A boolean flag indicating if an entity is currently active."/>
         <column name="label_name" type="VARCHAR" size="255" required="false" description="Optional field, used only for ACP."/>
         <column name="group_name" type="VARCHAR" size="255" required="false" description="Optional field, used only for ACP."/>
         <column name="is_hidden" type="BOOLEAN" default="false" required="true" description="Optional field, used only for ACP."/>

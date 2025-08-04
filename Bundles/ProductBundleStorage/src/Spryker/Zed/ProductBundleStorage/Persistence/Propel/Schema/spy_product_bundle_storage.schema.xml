@@ -4,8 +4,8 @@
     <table name="spy_product_bundle_storage" identifierQuoting="true">
         <column name="id_product_bundle_storage" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product" type="INTEGER" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
-        <column name="key" type="VARCHAR" size="1024" required="true"/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
+        <column name="key" type="VARCHAR" size="1024" required="true" description="A unique key used to identify an entity or a piece of data."/>
 
         <id-method-parameter value="id_product_bundle_storage_pk_seq"/>
 

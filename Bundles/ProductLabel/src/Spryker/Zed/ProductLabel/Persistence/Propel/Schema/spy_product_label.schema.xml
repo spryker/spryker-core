@@ -2,15 +2,15 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\ProductLabel\Persistence" package="src.Orm.Zed.ProductLabel.Persistence" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd">
   <table name="spy_product_label" idMethod="native" identifierQuoting="true">
     <column name="id_product_label" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
-    <column name="name" type="VARCHAR" size="255" required="true"/>
-    <column name="is_active" type="BOOLEAN" required="true" defaultValue="false"/>
-    <column name="is_exclusive" type="BOOLEAN" required="true" defaultValue="false"/>
-    <column name="is_published" type="BOOLEAN" required="false" defaultValue="false"/>
-    <column name="is_dynamic" type="BOOLEAN" required="true" defaultValue="false"/>
-    <column name="front_end_reference" type="VARCHAR" size="255" required="false"/>
-    <column name="valid_from" type="TIMESTAMP" required="false"/>
-    <column name="valid_to" type="TIMESTAMP" required="false"/>
-    <column name="position" type="INTEGER" required="true"/>
+    <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
+    <column name="is_active" type="BOOLEAN" required="true" defaultValue="false" description="A boolean flag indicating if an entity is currently active."/>
+    <column name="is_exclusive" type="BOOLEAN" required="true" defaultValue="false" description="A flag indicating if a discount is exclusive."/>
+    <column name="is_published" type="BOOLEAN" required="false" defaultValue="false" description="A flag indicating if a product label is published and visible."/>
+    <column name="is_dynamic" type="BOOLEAN" required="true" defaultValue="false" description="A flag indicating if a product label is dynamic."/>
+    <column name="front_end_reference" type="VARCHAR" size="255" required="false" description="A reference used on the front end, often for product labels."/>
+    <column name="valid_from" type="TIMESTAMP" required="false" description="The date and time from which an entity is valid."/>
+    <column name="valid_to" type="TIMESTAMP" required="false" description="The date and time until which an entity is valid."/>
+    <column name="position" type="INTEGER" required="true" description="The position or order of an item in a list."/>
     <behavior name="timestampable"/>
     <id-method-parameter value="spy_product_label_pk_seq"/>
     <unique name="spy_product_label-name">

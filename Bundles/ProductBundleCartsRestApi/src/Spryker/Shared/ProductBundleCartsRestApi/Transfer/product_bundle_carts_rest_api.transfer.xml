@@ -2,76 +2,76 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestItemsAttributes">
-        <property name="sku" type="string" restRequestParameter="required"/>
-        <property name="quantity" type="int" restRequestParameter="required"/>
-        <property name="groupKey" type="string"/>
-        <property name="abstractSku" type="string"/>
-        <property name="amount" type="int"/>
-        <property name="calculations" type="RestCartItemCalculations"/>
+        <property name="sku" type="string" restRequestParameter="required" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <property name="quantity" type="int" restRequestParameter="required" description="The number of units for an item."/>
+        <property name="groupKey" type="string" description="A key used to group items together, typically in a cart or order."/>
+        <property name="abstractSku" type="string" description="The Stock Keeping Unit (SKU) for an abstract product."/>
+        <property name="amount" type="int" description="A numerical value, often used for price, quantity, or discount."/>
+        <property name="calculations" type="RestCartItemCalculations" description="An object containing detailed price calculations for a cart item."/>
     </transfer>
 
     <transfer name="RestCartItemCalculations">
-        <property name="unitPrice" type="int"/>
-        <property name="sumPrice" type="int"/>
+        <property name="unitPrice" type="int" description="The price of a single unit of an item."/>
+        <property name="sumPrice" type="int" description="The total price for all units of an item (unitPrice * quantity)."/>
 
-        <property name="taxRate" type="int"/>
+        <property name="taxRate" type="int" description="The tax rate applied to an item."/>
 
-        <property name="unitNetPrice" type="int"/>
-        <property name="sumNetPrice" type="int"/>
+        <property name="unitNetPrice" type="int" description="The price of a single unit of an item, excluding tax."/>
+        <property name="sumNetPrice" type="int" description="The total price for all units of an item, excluding tax."/>
 
-        <property name="unitGrossPrice" type="int"/>
-        <property name="sumGrossPrice" type="int"/>
+        <property name="unitGrossPrice" type="int" description="The price of a single unit of an item, including tax."/>
+        <property name="sumGrossPrice" type="int" description="The total price for all units of an item, including tax."/>
 
-        <property name="unitTaxAmountFullAggregation" type="int"/>
-        <property name="sumTaxAmountFullAggregation" type="int"/>
+        <property name="unitTaxAmountFullAggregation" type="int" description="The total tax amount for a single unit, including all associated options and expenses."/>
+        <property name="sumTaxAmountFullAggregation" type="int" description="The total tax amount for all units of an item, including all associated options and expenses."/>
 
-        <property name="sumSubtotalAggregation" type="int"/>
-        <property name="unitSubtotalAggregation" type="int"/>
+        <property name="sumSubtotalAggregation" type="int" description="The total subtotal for all units of an item, including options and expenses, before discounts."/>
+        <property name="unitSubtotalAggregation" type="int" description="The subtotal for a single unit, including options and expenses, before discounts."/>
 
-        <property name="unitProductOptionPriceAggregation" type="int"/>
-        <property name="sumProductOptionPriceAggregation" type="int"/>
+        <property name="unitProductOptionPriceAggregation" type="int" description="The total price of all selected options for a single unit of an item."/>
+        <property name="sumProductOptionPriceAggregation" type="int" description="The total price of all selected options for all units of an item."/>
 
-        <property name="unitDiscountAmountAggregation" type="int"/>
-        <property name="sumDiscountAmountAggregation" type="int"/>
+        <property name="unitDiscountAmountAggregation" type="int" description="The total discount amount applied to a single unit of an item."/>
+        <property name="sumDiscountAmountAggregation" type="int" description="The total discount amount applied to all units of an item."/>
 
-        <property name="unitDiscountAmountFullAggregation" type="int"/>
-        <property name="sumDiscountAmountFullAggregation" type="int"/>
+        <property name="unitDiscountAmountFullAggregation" type="int" description="The total discount amount for a single unit, including all associated options and expenses."/>
+        <property name="sumDiscountAmountFullAggregation" type="int" description="The total discount amount for all units of an item, including all associated options and expenses."/>
 
-        <property name="unitPriceToPayAggregation" type="int"/>
-        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="unitPriceToPayAggregation" type="int" description="The final price to pay for a single unit, after all discounts and including all options/expenses."/>
+        <property name="sumPriceToPayAggregation" type="int" description="The final price to pay for all units of an item, after all discounts and including all options/expenses."/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="uuid" type="string"/>
-        <property name="items" type="Item[]" singular="item"/>
-        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="items" type="Item[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem" description="A collection of items in a product bundle."/>
     </transfer>
 
     <transfer name="Item">
-        <property name="groupKey" type="string"/>
-        <property name="bundleItemIdentifier" type="string"/>
-        <property name="shipment" type="Shipment"/>
-        <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="groupKey" type="string" description="A key used to group items together, typically in a cart or order."/>
+        <property name="bundleItemIdentifier" type="string" description="A unique identifier for an item within a bundle."/>
+        <property name="shipment" type="Shipment" description="The shipment details for an order."/>
+        <property name="relatedBundleItemIdentifier" type="string" description="The identifier for a bundle item that this item is related to."/>
     </transfer>
 
     <transfer name="CartItemRequest">
-        <property name="groupKey" type="string"/>
+        <property name="groupKey" type="string" description="A key used to group items together, typically in a cart or order."/>
     </transfer>
 
     <transfer name="Shipment">
-        <property name="shipmentSelection" type="string"/>
-        <property name="requestedDeliveryDate" type="string"/>
+        <property name="shipmentSelection" type="string" description="The shipment method selected by the user."/>
+        <property name="requestedDeliveryDate" type="string" description="The delivery date requested by the customer."/>
     </transfer>
 
     <transfer name="Address">
-        <property name="firstName" type="string"/>
-        <property name="lastName" type="string"/>
-        <property name="address1" type="string"/>
-        <property name="company" type="string"/>
-        <property name="zipCode" type="string"/>
-        <property name="city" type="string"/>
-        <property name="state" type="string"/>
-        <property name="iso2Code" type="string"/>
+        <property name="firstName" type="string" description="The first name of a person."/>
+        <property name="lastName" type="string" description="The last name of a user or customer."/>
+        <property name="address1" type="string" description="The first line of a street address."/>
+        <property name="company" type="string" description="A company entity."/>
+        <property name="zipCode" type="string" description="The postal code for an address."/>
+        <property name="city" type="string" description="The city part of an address."/>
+        <property name="state" type="string" description="The current state of an entity."/>
+        <property name="iso2Code" type="string" description="The two-letter ISO code for a country."/>
     </transfer>
 
 </transfers>

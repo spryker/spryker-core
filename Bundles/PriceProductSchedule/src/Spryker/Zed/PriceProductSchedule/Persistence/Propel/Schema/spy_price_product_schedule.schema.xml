@@ -9,12 +9,12 @@
         <column name="fk_product" type="INTEGER" required="false"/>
         <column name="fk_product_abstract" type="INTEGER" required="false"/>
         <column name="fk_price_product_schedule_list" type="BIGINT" required="true"/>
-        <column name="net_price" type="INTEGER"/>
-        <column name="gross_price" type="INTEGER"/>
-        <column name="price_data" required="false" type="LONGVARCHAR"/>
-        <column name="active_from" type="TIMESTAMP" required="true"/>
-        <column name="active_to" type="TIMESTAMP" required="true"/>
-        <column name="is_current" required="true" default="false" type="BOOLEAN"/>
+        <column name="net_price" type="INTEGER" description="The net price (excluding tax)."/>
+        <column name="gross_price" type="INTEGER" description="The gross price (including tax)."/>
+        <column name="price_data" required="false" type="LONGVARCHAR" description="Encoded price data, often including volume prices."/>
+        <column name="active_from" type="TIMESTAMP" required="true" description="The date and time from which a price schedule is active."/>
+        <column name="active_to" type="TIMESTAMP" required="true" description="The date and time until which a price schedule is active."/>
+        <column name="is_current" required="true" default="false" type="BOOLEAN" description="A flag indicating if a price schedule is the current one."/>
 
         <behavior name="timestampable"/>
 
@@ -66,8 +66,8 @@
 
     <table name="spy_price_product_schedule_list">
         <column name="id_price_product_schedule_list" type="BIGINT" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="name" required="true" size="255" type="VARCHAR"/>
-        <column name="is_active" type="BOOLEAN" required="false" defaultValue="false"/>
+        <column name="name" required="true" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="is_active" type="BOOLEAN" required="false" defaultValue="false" description="A boolean flag indicating if an entity is currently active."/>
         <column name="fk_user" type="INTEGER"/>
 
         <behavior name="timestampable"/>

@@ -3,11 +3,11 @@
     <table name="spy_product_configuration" idMethod="native" class="SpyProductConfiguration">
         <column name="id_product_configuration" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product" type="INTEGER" required="true"/>
-        <column name="default_display_data" type="CLOB" required="false"/>
-        <column name="default_configuration" type="CLOB" required="false"/>
-        <column name="configurator_key" required="true" type="VARCHAR" size="255"/>
-        <column name="is_complete" required="true" default="false" type="BOOLEAN"/>
-        <column name="uuid" type="VARCHAR" size="36"/>
+        <column name="default_display_data" type="CLOB" required="false" description="The default display data for a configurable product."/>
+        <column name="default_configuration" type="CLOB" required="false" description="The default configuration for a product."/>
+        <column name="configurator_key" required="true" type="VARCHAR" size="255" description="A key identifying the product configurator to use."/>
+        <column name="is_complete" required="true" default="false" type="BOOLEAN" description="Indicates if a product configuration is complete."/>
+        <column name="uuid" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
 
         <index name="spy_product_configuration-fk_product">
             <index-column name="fk_product"/>

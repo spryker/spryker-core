@@ -10,7 +10,7 @@
         "spryker/product-configuration-shopping-lists-rest-api-extension": "^1.0.0",
         "spryker/shopping-list": "^4.0.0",
         "spryker/shopping-lists-rest-api-extension": "^1.0.0",
-        "spryker/transfer": "^3.25.0"
+        "spryker/transfer": "^3.42.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

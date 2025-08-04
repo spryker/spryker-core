@@ -4,8 +4,8 @@
     <table name="spy_product_management_attribute" idMethod="native" allowPkInsert="true">
         <column name="id_product_management_attribute" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product_attribute_key" type="INTEGER" required="true"/>
-        <column name="allow_input" type="BOOLEAN" required="true" defaultValue="true"/>
-        <column name="input_type" type="VARCHAR" size="100" required="true"/>
+        <column name="allow_input" type="BOOLEAN" required="true" defaultValue="true" description="Indicates if user input is allowed for an attribute."/>
+        <column name="input_type" type="VARCHAR" size="100" required="true" description="The type of input for an attribute (e.g., text, select)."/>
 
         <foreign-key name="spy_pim_attribute-fk_product_attribute_key" foreignTable="spy_product_attribute_key">
             <reference local="fk_product_attribute_key" foreign="id_product_attribute_key"/>
@@ -21,7 +21,7 @@
     <table name="spy_product_management_attribute_value" idMethod="native" allowPkInsert="true">
         <column name="id_product_management_attribute_value" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product_management_attribute" type="INTEGER" required="true"/>
-        <column name="value" type="LONGVARCHAR" required="true"/>
+        <column name="value" type="LONGVARCHAR" required="true" description="A generic value for a property, often used in key-value pairs or translations."/>
 
         <foreign-key name="spy_pim_attribute_value-fk_pim_attribute" foreignTable="spy_product_management_attribute">
             <reference local="fk_product_management_attribute" foreign="id_product_management_attribute"/>
@@ -34,7 +34,7 @@
         <column name="id_product_management_attribute_value_translation" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_locale" type="INTEGER" required="true"/>
         <column name="fk_product_management_attribute_value" type="INTEGER" required="true"/>
-        <column name="translation" type="LONGVARCHAR" required="true"/>
+        <column name="translation" type="LONGVARCHAR" required="true" description="A translated string."/>
 
         <foreign-key name="spy_pim_attribute_value-fk_locale" foreignTable="spy_locale">
             <reference local="fk_locale" foreign="id_locale"/>

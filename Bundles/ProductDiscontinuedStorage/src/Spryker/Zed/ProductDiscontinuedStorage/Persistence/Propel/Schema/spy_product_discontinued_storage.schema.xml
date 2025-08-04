@@ -11,10 +11,10 @@
     <table name="spy_product_discontinued_storage" identifierQuoting="true">
         <column name="id_product_discontinued_storage" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_discontinued" type="integer" required="true"/>
-        <column name="sku" type="VARCHAR" size="255" required="true"/>
-        <column name="key" type="VARCHAR" size="255" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
-        <column name="locale" type="VARCHAR" size="5" required="true"/>
+        <column name="sku" type="VARCHAR" size="255" required="true" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <column name="key" type="VARCHAR" size="255" required="true" description="A unique key used to identify an entity or a piece of data."/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
+        <column name="locale" type="VARCHAR" size="5" required="true" description="The locale context for a request or entity, affecting language and regional formats."/>
 
         <id-method-parameter value="id_product_discontinued_storage_pk_seq"/>
 

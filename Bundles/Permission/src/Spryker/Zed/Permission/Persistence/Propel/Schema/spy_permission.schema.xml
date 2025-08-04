@@ -3,8 +3,8 @@
 
     <table name="spy_permission" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_permission" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="key" required="true" type="VARCHAR" size="255"/>
-        <column name="configuration_signature" type="LONGVARCHAR"/>
+        <column name="key" required="true" type="VARCHAR" size="255" description="A unique key used to identify an entity or a piece of data."/>
+        <column name="configuration_signature" type="LONGVARCHAR" description="A signature to verify the integrity of a configuration."/>
 
         <unique name="spy_permission-key">
             <unique-column name="key"/>

@@ -11,7 +11,8 @@
         "spryker/product-image-storage": "^1.1.0",
         "spryker/product-storage": "^1.2.0",
         "spryker/products-rest-api": "^2.0.0",
-        "spryker/symfony": "^3.0.0"
+        "spryker/symfony": "^3.0.0",
+        "spryker/transfer": "^3.42.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*"

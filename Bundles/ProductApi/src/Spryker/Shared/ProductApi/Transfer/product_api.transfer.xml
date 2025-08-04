@@ -3,68 +3,68 @@
 
     <transfer name="ProductApi">
         <property name="idProductAbstract" type="int"/>
-        <property name="sku" type="string"/>
-        <property name="attributes" type="array" singular="attribute"/>
-        <property name="localizedAttributes" type="LocalizedAttributesApi[]" singular="localizedAttributes"/>
-        <property name="isActive" type="bool"/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <property name="attributes" type="array" singular="attribute" description="A set of key-value pairs describing a product or entity."/>
+        <property name="localizedAttributes" type="LocalizedAttributesApi[]" singular="localizedAttributes" description="A collection of attributes that have different values for different locales."/>
+        <property name="isActive" type="bool" description="A boolean flag indicating if an entity is currently active."/>
     </transfer>
 
     <transfer name="LocalizedAttributesApi">
-        <property name="locale" type="Locale"/>
-        <property name="name" type="string"/>
-        <property name="description" type="string"/>
-        <property name="metaTitle" type="string"/>
-        <property name="metaDescription" type="string"/>
-        <property name="metaKeywords" type="string"/>
-        <property name="attributes" type="array" singular="attribute"/>
+        <property name="locale" type="Locale" description="The locale context for a request or entity, affecting language and regional formats."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="description" type="string" description="A description of an entity."/>
+        <property name="metaTitle" type="string" description="The meta title of a page for SEO purposes."/>
+        <property name="metaDescription" type="string" description="The meta description of a page for SEO purposes."/>
+        <property name="metaKeywords" type="string" description="The meta keywords of a page for SEO purposes."/>
+        <property name="attributes" type="array" singular="attribute" description="A set of key-value pairs describing a product or entity."/>
     </transfer>
 
     <transfer name="PropelQueryBuilderColumn">
-        <property name="name" type="string"/>
-        <property name="alias" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="alias" type="string" description="An alternative name for a resource or column."/>
     </transfer>
 
     <transfer name="PropelQueryBuilderColumnSelection">
-        <property name="tableColumns" type="PropelQueryBuilderColumn[]" singular="tableColumn"/>
+        <property name="tableColumns" type="PropelQueryBuilderColumn[]" singular="tableColumn" description="A collection of columns for a table."/>
     </transfer>
 
     <transfer name="ApiData">
-        <property name="data" type="array" singular="data"/>
+        <property name="data" type="array" singular="data" description="A generic data payload."/>
     </transfer>
 
     <transfer name="ProductConcrete">
     </transfer>
 
     <transfer name="ApiItem">
-        <property name="data" type="array" singular="data"/>
-        <property name="statusCode" type="int"/>
-        <property name="validationErrors" type="ApiValidationError[]" singular="validationError"/>
+        <property name="data" type="array" singular="data" description="A generic data payload."/>
+        <property name="statusCode" type="int" description="A status code for a response or operation."/>
+        <property name="validationErrors" type="ApiValidationError[]" singular="validationError" description="A collection of validation errors."/>
     </transfer>
 
     <transfer name="ApiRequest">
-        <property name="filter" type="ApiFilter"/>
-        <property name="apiData" type="ApiData"/>
+        <property name="filter" type="ApiFilter" description="A set of criteria for filtering data."/>
+        <property name="apiData" type="ApiData" description="The data payload within an API response."/>
     </transfer>
 
     <transfer name="ApiPagination">
-        <property name="itemsPerPage" type="int"/>
-        <property name="page" type="int"/>
-        <property name="total" type="int"/>
-        <property name="pageTotal" type="int"/>
+        <property name="itemsPerPage" type="int" description="The number of items to display per page."/>
+        <property name="page" type="int" description="The current page number in a paginated result set."/>
+        <property name="total" type="int" description="The total count of items."/>
+        <property name="pageTotal" type="int" description="The total number of pages."/>
     </transfer>
 
     <transfer name="ApiCollection">
-        <property name="pagination" type="ApiPagination"/>
+        <property name="pagination" type="ApiPagination" description="An object containing all pagination-related data for a list of results."/>
     </transfer>
 
     <transfer name="ApiQueryBuilderQuery">
-        <property name="apiRequest" type="ApiRequest"/>
-        <property name="columnSelection" type="PropelQueryBuilderColumnSelection"/>
+        <property name="apiRequest" type="ApiRequest" description="An object representing a request to an API."/>
+        <property name="columnSelection" type="PropelQueryBuilderColumnSelection" description="A selection of columns to be retrieved from a query."/>
     </transfer>
 
     <transfer name="ApiFilter">
-        <property name="limit" type="int"/>
-        <property name="offset" type="int"/>
+        <property name="limit" type="int" description="The maximum number of results to return in a single request, used for pagination."/>
+        <property name="offset" type="int" description="The starting point from which to return a set of results, used for pagination."/>
     </transfer>
 
     <transfer name="ProductAbstract">
@@ -74,8 +74,8 @@
     </transfer>
 
     <transfer name="ApiValidationError">
-        <property name="field" type="string"/>
-        <property name="messages" type="array" singular="messages"/>
+        <property name="field" type="string" description="A single field within a larger data structure or rule set."/>
+        <property name="messages" type="array" singular="messages" description="A collection of informational, success, or error messages."/>
     </transfer>
 
     <transfer name="PropelQueryBuilderCriteria">

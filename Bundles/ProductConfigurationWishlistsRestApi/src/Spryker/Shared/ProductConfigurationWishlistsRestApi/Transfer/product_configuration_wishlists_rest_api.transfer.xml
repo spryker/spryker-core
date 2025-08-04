@@ -2,88 +2,88 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="WishlistItemRequest">
-        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
-        <property name="uuid" type="string"/>
-        <property name="sku" type="string"/>
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance" description="An instance of a configured product."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
     </transfer>
 
     <transfer name="ProductConfigurationInstance">
-        <property name="displayData" type="string"/>
-        <property name="configuration" type="string"/>
-        <property name="prices" type="PriceProduct[]" singular="price"/>
-        <property name="isComplete" type="bool"/>
-        <property name="quantity" type="int"/>
-        <property name="availableQuantity" type="int"/>
+        <property name="displayData" type="string" description="Data used for display purposes, often in JSON format."/>
+        <property name="configuration" type="string" description="A set of configuration parameters."/>
+        <property name="prices" type="PriceProduct[]" singular="price" description="A collection of prices, often for different currencies or price types."/>
+        <property name="isComplete" type="bool" description="Indicates if a product configuration is complete."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
+        <property name="availableQuantity" type="int" description="The quantity of a product that is available for sale."/>
     </transfer>
 
     <transfer name="WishlistItem">
-        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
-        <property name="productConfigurationInstanceData" type="string"/>
-        <property name="sku" type="string"/>
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance" description="An instance of a configured product."/>
+        <property name="productConfigurationInstanceData" type="string" description="The data for a product configuration instance."/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
     </transfer>
 
     <transfer name="WishlistItemResponse">
-        <property name="isSuccess" type="bool"/>
+        <property name="isSuccess" type="bool" description="A boolean flag indicating if an operation was successful."/>
     </transfer>
 
     <transfer name="Item">
-        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance" description="An instance of a configured product."/>
     </transfer>
 
     <transfer name="RestCartItemProductConfigurationInstanceAttributes">
-        <property name="prices" type="RestProductConfigurationPriceAttributes[]" singular="price"/>
-        <property name="volumePrices" type="RestProductPriceVolumesAttributes[]" singular="volumePrice"/>
+        <property name="prices" type="RestProductConfigurationPriceAttributes[]" singular="price" description="A collection of prices, often for different currencies or price types."/>
+        <property name="volumePrices" type="RestProductPriceVolumesAttributes[]" singular="volumePrice" description="A collection of prices based on volume."/>
     </transfer>
 
     <transfer name="RestItemsAttributes">
-        <property name="productConfigurationInstance" type="RestCartItemProductConfigurationInstanceAttributes"/>
+        <property name="productConfigurationInstance" type="RestCartItemProductConfigurationInstanceAttributes" description="An instance of a configured product."/>
     </transfer>
 
     <transfer name="Currency">
     </transfer>
 
     <transfer name="RestProductConfigurationPriceAttributes">
-        <property name="netAmount" type="int"/>
-        <property name="grossAmount" type="int"/>
-        <property name="currency" type="RestCurrency"/>
-        <property name="priceTypeName" type="string"/>
+        <property name="netAmount" type="int" description="The amount of a price, excluding tax."/>
+        <property name="grossAmount" type="int" description="The gross amount (including tax)."/>
+        <property name="currency" type="RestCurrency" description="The currency used for a transaction or price."/>
+        <property name="priceTypeName" type="string" description="The name of a price type (e.g., 'DEFAULT', 'ORIGINAL')."/>
     </transfer>
 
     <transfer name="MoneyValue">
-        <property name="currency" type="Currency"/>
-        <property name="netAmount" type="int"/>
-        <property name="grossAmount" type="int"/>
+        <property name="currency" type="Currency" description="The currency used for a transaction or price."/>
+        <property name="netAmount" type="int" description="The amount of a price, excluding tax."/>
+        <property name="grossAmount" type="int" description="The gross amount (including tax)."/>
     </transfer>
 
     <transfer name="PriceProduct">
-        <property name="moneyValue" type="MoneyValue"/>
+        <property name="moneyValue" type="MoneyValue" description="A monetary value in a specific currency."/>
     </transfer>
 
     <transfer name="RestCurrency">
-        <property name="code" type="string"/>
-        <property name="name" type="string"/>
-        <property name="symbol" type="string"/>
+        <property name="code" type="string" description="A unique code, often for currency, country, or barcode."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="symbol" type="string" description="The symbol for a currency (e.g., '$', '&#x20AC;')."/>
     </transfer>
 
     <transfer name="RestWishlistItemProductConfigurationInstanceAttributes">
-        <property name="displayData" type="string" restRequestParameter="required"/>
-        <property name="configuration" type="string" restRequestParameter="required"/>
-        <property name="configuratorKey" type="string" restRequestParameter="required"/>
-        <property name="isComplete" type="bool" restRequestParameter="required"/>
-        <property name="quantity" type="int"/>
-        <property name="availableQuantity" type="int" restRequestParameter="required"/>
-        <property name="prices" type="RestProductConfigurationPriceAttributes[]" singular="price"/>
+        <property name="displayData" type="string" restRequestParameter="required" description="Data used for display purposes, often in JSON format."/>
+        <property name="configuration" type="string" restRequestParameter="required" description="A set of configuration parameters."/>
+        <property name="configuratorKey" type="string" restRequestParameter="required" description="A key identifying the product configurator to use."/>
+        <property name="isComplete" type="bool" restRequestParameter="required" description="Indicates if a product configuration is complete."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
+        <property name="availableQuantity" type="int" restRequestParameter="required" description="The quantity of a product that is available for sale."/>
+        <property name="prices" type="RestProductConfigurationPriceAttributes[]" singular="price" description="A collection of prices, often for different currencies or price types."/>
     </transfer>
 
     <transfer name="RestProductPriceVolumesAttributes">
-        <property name="netAmount" type="int"/>
-        <property name="grossAmount" type="int"/>
-        <property name="quantity" type="int"/>
+        <property name="netAmount" type="int" description="The amount of a price, excluding tax."/>
+        <property name="grossAmount" type="int" description="The gross amount (including tax)."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
     </transfer>
 
     <transfer name="RestWishlistItemsAttributes">
         <property name="id" type="string"/>
-        <property name="productConfigurationInstance" type="RestWishlistItemProductConfigurationInstanceAttributes" restRequestParameter="yes"/>
+        <property name="productConfigurationInstance" type="RestWishlistItemProductConfigurationInstanceAttributes" restRequestParameter="yes" description="An instance of a configured product."/>
     </transfer>
 
 </transfers>

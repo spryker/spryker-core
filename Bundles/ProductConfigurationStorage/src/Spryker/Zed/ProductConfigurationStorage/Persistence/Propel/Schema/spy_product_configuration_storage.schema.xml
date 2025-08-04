@@ -10,10 +10,10 @@
 
     <table name="spy_product_configuration_storage" identifierQuoting="true">
         <column name="id_product_configuration_storage" type="integer" autoIncrement="true" primaryKey="true"/>
-        <column name="sku" type="VARCHAR" size="255" required="true"/>
+        <column name="sku" type="VARCHAR" size="255" required="true" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
         <column name="fk_product_configuration" type="integer" required="true"/>
-        <column name="key" type="VARCHAR" size="255" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
+        <column name="key" type="VARCHAR" size="255" required="true" description="A unique key used to identify an entity or a piece of data."/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
 
         <id-method-parameter value="id_product_configuration_storage_pk_seq"/>
 

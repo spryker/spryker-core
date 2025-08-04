@@ -3,9 +3,9 @@
 
     <table name="spy_product_list" identifierQuoting="true">
         <column name="id_product_list" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="type" required="true" size="16" type="ENUM" valueSet="blacklist,whitelist"/>
-        <column name="title" type="VARCHAR" size="255"/>
-        <column name="key" type="VARCHAR" size="255"/>
+        <column name="type" required="true" size="16" type="ENUM" valueSet="blacklist,whitelist" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <column name="title" type="VARCHAR" size="255" description="The title of an entity or page."/>
+        <column name="key" type="VARCHAR" size="255" description="A unique key used to identify an entity or a piece of data."/>
 
         <behavior name="timestampable"/>
 

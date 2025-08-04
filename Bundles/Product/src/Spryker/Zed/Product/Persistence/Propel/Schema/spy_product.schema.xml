@@ -3,8 +3,8 @@
 
     <table name="spy_product_abstract" idMethod="native" allowPkInsert="true">
         <column name="id_product_abstract" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="sku" required="true" type="VARCHAR" size="255"/>
-        <column name="attributes" required="true" type="LONGVARCHAR"/>
+        <column name="sku" required="true" type="VARCHAR" size="255" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <column name="attributes" required="true" type="LONGVARCHAR" description="A set of key-value pairs describing a product or entity."/>
         <unique name="spy_product_abstract-sku">
             <unique-column name="sku"/>
         </unique>
@@ -16,12 +16,12 @@
         <column name="id_abstract_attributes" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="description" required="false" type="LONGVARCHAR" default="NULL"/>
-        <column name="meta_title" required="false" type="VARCHAR" default="NULL" size="255"/>
-        <column name="meta_keywords" required="false" type="LONGVARCHAR" default="NULL"/>
-        <column name="meta_description" required="false" type="LONGVARCHAR" default="NULL"/>
-        <column name="attributes" required="true" type="LONGVARCHAR"/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="description" required="false" type="LONGVARCHAR" default="NULL" description="A description of an entity."/>
+        <column name="meta_title" required="false" type="VARCHAR" default="NULL" size="255" description="The meta title of a page for SEO purposes."/>
+        <column name="meta_keywords" required="false" type="LONGVARCHAR" default="NULL" description="The meta keywords of a page for SEO purposes."/>
+        <column name="meta_description" required="false" type="LONGVARCHAR" default="NULL" description="The meta description of a page for SEO purposes."/>
+        <column name="attributes" required="true" type="LONGVARCHAR" description="A set of key-value pairs describing a product or entity."/>
         <foreign-key name="spy_product_abstract_localized_attributes-fk_product_abstract" foreignTable="spy_product_abstract" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
@@ -59,9 +59,9 @@
 
     <table name="spy_product" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="sku" required="true" type="VARCHAR" size="255"/>
-        <column name="is_active" required="true" defaultValue="true" type="BOOLEAN"/>
-        <column name="attributes" required="true" type="LONGVARCHAR"/>
+        <column name="sku" required="true" type="VARCHAR" size="255" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <column name="is_active" required="true" defaultValue="true" type="BOOLEAN" description="A boolean flag indicating if an entity is currently active."/>
+        <column name="attributes" required="true" type="LONGVARCHAR" description="A set of key-value pairs describing a product or entity."/>
         <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <unique name="spy_product-sku">
             <unique-column name="sku"/>
@@ -77,10 +77,10 @@
         <column name="id_product_attributes" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="description" required="false" type="LONGVARCHAR" default="NULL"/>
-        <column name="attributes" required="true" type="LONGVARCHAR"/>
-        <column name="is_complete" required="false" defaultValue="true" type="BOOLEAN"/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="description" required="false" type="LONGVARCHAR" default="NULL" description="A description of an entity."/>
+        <column name="attributes" required="true" type="LONGVARCHAR" description="A set of key-value pairs describing a product or entity."/>
+        <column name="is_complete" required="false" defaultValue="true" type="BOOLEAN" description="Indicates if a product configuration is complete."/>
         <foreign-key name="spy_product_localized_attributes-fk_product" foreignTable="spy_product" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
@@ -97,8 +97,8 @@
 
     <table name="spy_product_attribute_key" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_attribute_key" primaryKey="true" type="INTEGER" autoIncrement="true"/>
-        <column name="key" required="true" type="VARCHAR" size="255"/>
-        <column name="is_super" type="BOOLEAN" required="true" defaultValue="false"/>
+        <column name="key" required="true" type="VARCHAR" size="255" description="A unique key used to identify an entity or a piece of data."/>
+        <column name="is_super" type="BOOLEAN" required="true" defaultValue="false" description="A flag indicating if an attribute is a super attribute used for variant creation."/>
         <unique name="spy_product_attribute_key-unique-key">
             <unique-column name="key"/>
         </unique>

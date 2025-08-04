@@ -2,243 +2,243 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestOrdersAttributes">
-        <property name="createdAt" type="string"/>
-        <property name="totals" type="RestOrderTotalsAttributes"/>
-        <property name="currencyIsoCode" type="string"/>
-        <property name="priceMode" type="string"/>
+        <property name="createdAt" type="string" description="The timestamp when an entity was created."/>
+        <property name="totals" type="RestOrderTotalsAttributes" description="An object containing the calculated totals for an order or quote (e.g., subtotal, grandTotal)."/>
+        <property name="currencyIsoCode" type="string" description="The ISO code for a currency."/>
+        <property name="priceMode" type="string" description="The mode for price calculation, typically &quot;GROSS_MODE&quot; or &quot;NET_MODE&quot;."/>
     </transfer>
 
     <transfer name="OrderListRequest">
-        <property name="customerReference" type="string"/>
-        <property name="filter" type="Filter"/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
+        <property name="filter" type="Filter" description="A set of criteria for filtering data."/>
     </transfer>
 
     <transfer name="RestOrderDetailsAttributes">
-        <property name="createdAt" type="string"/>
-        <property name="totals" type="RestOrderTotalsAttributes"/>
-        <property name="currencyIsoCode" type="string"/>
-        <property name="items" type="RestOrderItemsAttributes[]" singular="item"/>
-        <property name="expenses" type="RestOrderExpensesAttributes[]" singular="expense"/>
-        <property name="billingAddress" type="RestOrderAddress"/>
-        <property name="shippingAddress" type="RestOrderAddress"/>
-        <property name="priceMode" type="string"/>
-        <property name="payments" type="RestOrderPayment[]" singular="payment"/>
-        <property name="shipments" type="RestOrderShipment[]" singular="shipment"/>
-        <property name="calculatedDiscounts" type="RestCalculatedDiscount[]" singular="calculatedDiscount"/>
+        <property name="createdAt" type="string" description="The timestamp when an entity was created."/>
+        <property name="totals" type="RestOrderTotalsAttributes" description="An object containing the calculated totals for an order or quote (e.g., subtotal, grandTotal)."/>
+        <property name="currencyIsoCode" type="string" description="The ISO code for a currency."/>
+        <property name="items" type="RestOrderItemsAttributes[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
+        <property name="expenses" type="RestOrderExpensesAttributes[]" singular="expense" description="A collection of expenses."/>
+        <property name="billingAddress" type="RestOrderAddress" description="The address used for billing purposes."/>
+        <property name="shippingAddress" type="RestOrderAddress" description="The address where an order should be shipped."/>
+        <property name="priceMode" type="string" description="The mode for price calculation, typically &quot;GROSS_MODE&quot; or &quot;NET_MODE&quot;."/>
+        <property name="payments" type="RestOrderPayment[]" singular="payment" description="A collection of payments associated with an order."/>
+        <property name="shipments" type="RestOrderShipment[]" singular="shipment" description="A collection of shipment details for an order."/>
+        <property name="calculatedDiscounts" type="RestCalculatedDiscount[]" singular="calculatedDiscount" description="A list of discounts calculated for an item or order."/>
     </transfer>
 
     <transfer name="RestOrderItemsAttributes">
-        <property name="name" type="string"/>
-        <property name="sku" type="string"/>
-        <property name="sumPrice" type="int"/>
-        <property name="quantity" type="int"/>
-        <property name="metadata" type="RestOrderItemMetadata"/>
-        <property name="calculatedDiscounts" type="RestCalculatedDiscount[]" singular="calculatedDiscount"/>
-        <property name="unitGrossPrice" type="int"/>
-        <property name="sumGrossPrice" type="int"/>
-        <property name="taxRate" type="float"/>
-        <property name="unitNetPrice" type="int"/>
-        <property name="sumNetPrice" type="int"/>
-        <property name="unitPrice" type="int"/>
-        <property name="unitTaxAmountFullAggregation" type="int"/>
-        <property name="sumTaxAmountFullAggregation" type="int"/>
-        <property name="refundableAmount" type="int"/>
-        <property name="canceledAmount" type="int"/>
-        <property name="sumSubtotalAggregation" type="int"/>
-        <property name="unitSubtotalAggregation" type="int"/>
-        <property name="unitProductOptionPriceAggregation" type="int"/>
-        <property name="sumProductOptionPriceAggregation" type="int"/>
-        <property name="unitExpensePriceAggregation" type="int"/>
-        <property name="sumExpensePriceAggregation" type="int"/>
-        <property name="unitDiscountAmountAggregation" type="int"/>
-        <property name="sumDiscountAmountAggregation" type="int"/>
-        <property name="unitDiscountAmountFullAggregation" type="int"/>
-        <property name="sumDiscountAmountFullAggregation" type="int"/>
-        <property name="unitPriceToPayAggregation" type="int"/>
-        <property name="sumPriceToPayAggregation" type="int"/>
-        <property name="taxRateAverageAggregation" type="float"/>
-        <property name="taxAmountAfterCancellation" type="int"/>
-        <property name="orderReference" type="string"/>
-        <property name="uuid" type="string"/>
-        <property name="isReturnable" type="bool"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <property name="sumPrice" type="int" description="The total price for all units of an item (unitPrice * quantity)."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
+        <property name="metadata" type="RestOrderItemMetadata" description="A collection of metadata."/>
+        <property name="calculatedDiscounts" type="RestCalculatedDiscount[]" singular="calculatedDiscount" description="A list of discounts calculated for an item or order."/>
+        <property name="unitGrossPrice" type="int" description="The price of a single unit of an item, including tax."/>
+        <property name="sumGrossPrice" type="int" description="The total price for all units of an item, including tax."/>
+        <property name="taxRate" type="float" description="The tax rate applied to an item."/>
+        <property name="unitNetPrice" type="int" description="The price of a single unit of an item, excluding tax."/>
+        <property name="sumNetPrice" type="int" description="The total price for all units of an item, excluding tax."/>
+        <property name="unitPrice" type="int" description="The price of a single unit of an item."/>
+        <property name="unitTaxAmountFullAggregation" type="int" description="The total tax amount for a single unit, including all associated options and expenses."/>
+        <property name="sumTaxAmountFullAggregation" type="int" description="The total tax amount for all units of an item, including all associated options and expenses."/>
+        <property name="refundableAmount" type="int" description="The amount that can be refunded."/>
+        <property name="canceledAmount" type="int" description="The amount that has been canceled from an order item."/>
+        <property name="sumSubtotalAggregation" type="int" description="The total subtotal for all units of an item, including options and expenses, before discounts."/>
+        <property name="unitSubtotalAggregation" type="int" description="The subtotal for a single unit, including options and expenses, before discounts."/>
+        <property name="unitProductOptionPriceAggregation" type="int" description="The total price of all selected options for a single unit of an item."/>
+        <property name="sumProductOptionPriceAggregation" type="int" description="The total price of all selected options for all units of an item."/>
+        <property name="unitExpensePriceAggregation" type="int" description="The aggregated price of expenses for a single unit."/>
+        <property name="sumExpensePriceAggregation" type="int" description="The aggregated price of expenses for all units."/>
+        <property name="unitDiscountAmountAggregation" type="int" description="The total discount amount applied to a single unit of an item."/>
+        <property name="sumDiscountAmountAggregation" type="int" description="The total discount amount applied to all units of an item."/>
+        <property name="unitDiscountAmountFullAggregation" type="int" description="The total discount amount for a single unit, including all associated options and expenses."/>
+        <property name="sumDiscountAmountFullAggregation" type="int" description="The total discount amount for all units of an item, including all associated options and expenses."/>
+        <property name="unitPriceToPayAggregation" type="int" description="The final price to pay for a single unit, after all discounts and including all options/expenses."/>
+        <property name="sumPriceToPayAggregation" type="int" description="The final price to pay for all units of an item, after all discounts and including all options/expenses."/>
+        <property name="taxRateAverageAggregation" type="float" description="The average tax rate, including options and expenses."/>
+        <property name="taxAmountAfterCancellation" type="int" description="The tax amount after an item has been canceled."/>
+        <property name="orderReference" type="string" description="A unique reference identifier for a sales order."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="isReturnable" type="bool" description="A flag indicating if an order item can be returned."/>
         <property name="idShipment" type="int"/>
     </transfer>
 
     <transfer name="RestOrderTotalsAttributes">
-        <property name="expenseTotal" type="int"/>
-        <property name="discountTotal" type="int"/>
-        <property name="taxTotal" type="int"/>
-        <property name="subtotal" type="int"/>
-        <property name="grandTotal" type="int"/>
-        <property name="canceledTotal" type="int"/>
-        <property name="remunerationTotal" type="int"/>
+        <property name="expenseTotal" type="int" description="The total cost of all expenses in an order."/>
+        <property name="discountTotal" type="int" description="The total amount of discounts applied to an order."/>
+        <property name="taxTotal" type="int" description="The total amount of tax calculated for an order or quote."/>
+        <property name="subtotal" type="int" description="The total price of all items before discounts, taxes, and shipping are applied."/>
+        <property name="grandTotal" type="int" description="The final total of an order, including all costs and discounts."/>
+        <property name="canceledTotal" type="int" description="The total value of canceled items in an order."/>
+        <property name="remunerationTotal" type="int" description="The total amount of remuneration."/>
     </transfer>
 
     <transfer name="RestOrderExpensesAttributes">
-        <property name="type" type="string"/>
-        <property name="name" type="string"/>
-        <property name="sumPrice" type="int"/>
-        <property name="unitGrossPrice" type="int"/>
-        <property name="sumGrossPrice" type="int"/>
-        <property name="taxRate" type="float"/>
-        <property name="unitNetPrice" type="int"/>
-        <property name="sumNetPrice" type="int"/>
-        <property name="canceledAmount" type="int"/>
-        <property name="unitDiscountAmountAggregation" type="int"/>
-        <property name="sumDiscountAmountAggregation" type="int"/>
-        <property name="unitTaxAmount" type="int"/>
-        <property name="sumTaxAmount" type="int"/>
-        <property name="unitPriceToPayAggregation" type="int"/>
-        <property name="sumPriceToPayAggregation" type="int"/>
-        <property name="taxAmountAfterCancellation" type="int"/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="sumPrice" type="int" description="The total price for all units of an item (unitPrice * quantity)."/>
+        <property name="unitGrossPrice" type="int" description="The price of a single unit of an item, including tax."/>
+        <property name="sumGrossPrice" type="int" description="The total price for all units of an item, including tax."/>
+        <property name="taxRate" type="float" description="The tax rate applied to an item."/>
+        <property name="unitNetPrice" type="int" description="The price of a single unit of an item, excluding tax."/>
+        <property name="sumNetPrice" type="int" description="The total price for all units of an item, excluding tax."/>
+        <property name="canceledAmount" type="int" description="The amount that has been canceled from an order item."/>
+        <property name="unitDiscountAmountAggregation" type="int" description="The total discount amount applied to a single unit of an item."/>
+        <property name="sumDiscountAmountAggregation" type="int" description="The total discount amount applied to all units of an item."/>
+        <property name="unitTaxAmount" type="int" description="The tax amount for a single unit."/>
+        <property name="sumTaxAmount" type="int" description="The total tax amount for all units."/>
+        <property name="unitPriceToPayAggregation" type="int" description="The final price to pay for a single unit, after all discounts and including all options/expenses."/>
+        <property name="sumPriceToPayAggregation" type="int" description="The final price to pay for all units of an item, after all discounts and including all options/expenses."/>
+        <property name="taxAmountAfterCancellation" type="int" description="The tax amount after an item has been canceled."/>
         <property name="idShipment" type="int"/>
         <property name="idSalesExpense" type="int"/>
     </transfer>
 
     <transfer name="RestOrderAddress">
-        <property name="salutation" type="string"/>
-        <property name="firstName" type="string"/>
-        <property name="middleName" type="string"/>
-        <property name="lastName" type="string"/>
-        <property name="address1" type="string"/>
-        <property name="address2" type="string"/>
-        <property name="address3" type="string"/>
-        <property name="company" type="string"/>
-        <property name="city" type="string"/>
-        <property name="zipCode" type="string"/>
-        <property name="poBox" type="string"/>
-        <property name="phone" type="string"/>
-        <property name="cellPhone" type="string"/>
-        <property name="description" type="string"/>
-        <property name="comment" type="string"/>
-        <property name="email" type="string"/>
-        <property name="country" type="string"/>
-        <property name="iso2Code" type="string"/>
+        <property name="salutation" type="string" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <property name="firstName" type="string" description="The first name of a person."/>
+        <property name="middleName" type="string" description="The middle name of a person."/>
+        <property name="lastName" type="string" description="The last name of a user or customer."/>
+        <property name="address1" type="string" description="The first line of a street address."/>
+        <property name="address2" type="string" description="The second line of a street address."/>
+        <property name="address3" type="string" description="The third line of a street address."/>
+        <property name="company" type="string" description="A company entity."/>
+        <property name="city" type="string" description="The city part of an address."/>
+        <property name="zipCode" type="string" description="The postal code for an address."/>
+        <property name="poBox" type="string" description="A Post Office box number."/>
+        <property name="phone" type="string" description="The phone number."/>
+        <property name="cellPhone" type="string" description="The cell phone number."/>
+        <property name="description" type="string" description="A description of an entity."/>
+        <property name="comment" type="string" description="A user-submitted comment or note."/>
+        <property name="email" type="string" description="The email address of a user or contact."/>
+        <property name="country" type="string" description="The country associated with an address or entity."/>
+        <property name="iso2Code" type="string" description="The two-letter ISO code for a country."/>
     </transfer>
 
     <transfer name="RestOrderPayment">
-        <property name="amount" type="int"/>
-        <property name="paymentProvider" type="string"/>
-        <property name="paymentMethod" type="string"/>
+        <property name="amount" type="int" description="A numerical value, often used for price, quantity, or discount."/>
+        <property name="paymentProvider" type="string" description="The provider of a payment method."/>
+        <property name="paymentMethod" type="string" description="The method of payment."/>
     </transfer>
 
     <transfer name="RestOrderShipment">
-        <property name="shipmentMethodName" type="string"/>
-        <property name="carrierName" type="string"/>
-        <property name="deliveryTime" type="int"/>
-        <property name="defaultGrossPrice" type="int"/>
-        <property name="defaultNetPrice" type="int"/>
-        <property name="currencyIsoCode" type="string"/>
+        <property name="shipmentMethodName" type="string" description="The name of a shipment method."/>
+        <property name="carrierName" type="string" description="The name of the shipping carrier."/>
+        <property name="deliveryTime" type="int" description="The estimated delivery time for a shipment."/>
+        <property name="defaultGrossPrice" type="int" description="The default gross price."/>
+        <property name="defaultNetPrice" type="int" description="The default net price."/>
+        <property name="currencyIsoCode" type="string" description="The ISO code for a currency."/>
     </transfer>
 
     <transfer name="RestOrderItemMetadata">
-        <property name="superAttributes" type="array" singular="superAttribute"/>
-        <property name="image" type="string"/>
+        <property name="superAttributes" type="array" singular="superAttribute" description="A collection of super attributes for a product."/>
+        <property name="image" type="string" description="An image object or URL."/>
     </transfer>
 
     <transfer name="RestCalculatedDiscount">
-        <property name="unitAmount" type="int"/>
-        <property name="sumAmount" type="int"/>
-        <property name="displayName" type="string"/>
-        <property name="description" type="string"/>
-        <property name="voucherCode" type="string"/>
-        <property name="quantity" type="int"/>
+        <property name="unitAmount" type="int" description="The amount for a single unit."/>
+        <property name="sumAmount" type="int" description="The total amount for all units."/>
+        <property name="displayName" type="string" description="A display name for an entity."/>
+        <property name="description" type="string" description="A description of an entity."/>
+        <property name="voucherCode" type="string" description="The code for a voucher used to apply a discount."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
     </transfer>
 
     <transfer name="Item">
-        <property name="shipment" type="Shipment"/>
-        <property name="uuid" type="string"/>
-        <property name="orderReference" type="string"/>
+        <property name="shipment" type="Shipment" description="The shipment details for an order."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="orderReference" type="string" description="A unique reference identifier for a sales order."/>
     </transfer>
 
     <transfer name="Shipment">
-        <property name="shippingAddress" type="Address"/>
+        <property name="shippingAddress" type="Address" description="The address where an order should be shipped."/>
     </transfer>
 
     <transfer name="Address">
-        <property name="iso2Code" type="string"/>
-        <property name="country" type="Country"/>
+        <property name="iso2Code" type="string" description="The two-letter ISO code for a country."/>
+        <property name="country" type="Country" description="The country associated with an address or entity."/>
     </transfer>
 
     <transfer name="Country">
-        <property name="iso2Code" type="string"/>
-        <property name="name" type="string"/>
+        <property name="iso2Code" type="string" description="The two-letter ISO code for a country."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="Filter">
-        <property name="limit" type="int"/>
-        <property name="offset" type="int"/>
-        <property name="orderDirection" type="string"/>
-        <property name="orderBy" type="string"/>
+        <property name="limit" type="int" description="The maximum number of results to return in a single request, used for pagination."/>
+        <property name="offset" type="int" description="The starting point from which to return a set of results, used for pagination."/>
+        <property name="orderDirection" type="string" description="The direction for sorting (asc/desc)."/>
+        <property name="orderBy" type="string" description="The field to order results by."/>
     </transfer>
 
     <transfer name="Pagination">
-        <property name="nbResults" type="int"/>
+        <property name="nbResults" type="int" description="The total number of results found for a query."/>
     </transfer>
 
     <transfer name="Order">
         <property name="idSalesOrder" type="int"/>
-        <property name="orderReference" type="string"/>
-        <property name="customerReference" type="string"/>
-        <property name="totals" type="Totals"/>
-        <property name="billingAddress" type="Address"/>
-        <property name="shippingAddress" type="Address"/>
-        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod"/>
-        <property name="items" type="Item[]" singular="item"/>
-        <property name="expenses" type="Expense[]" singular="expense"/>
-        <property name="currencyIsoCode" type="string"/>
+        <property name="orderReference" type="string" description="A unique reference identifier for a sales order."/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
+        <property name="totals" type="Totals" description="An object containing the calculated totals for an order or quote (e.g., subtotal, grandTotal)."/>
+        <property name="billingAddress" type="Address" description="The address used for billing purposes."/>
+        <property name="shippingAddress" type="Address" description="The address where an order should be shipped."/>
+        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod" description="A collection of available shipment methods."/>
+        <property name="items" type="Item[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
+        <property name="expenses" type="Expense[]" singular="expense" description="A collection of expenses."/>
+        <property name="currencyIsoCode" type="string" description="The ISO code for a currency."/>
     </transfer>
 
     <transfer name="Totals">
-        <property name="taxTotal" type="TaxTotal"/>
+        <property name="taxTotal" type="TaxTotal" description="The total amount of tax calculated for an order or quote."/>
     </transfer>
 
     <transfer name="TaxTotal">
-        <property name="amount" type="int"/>
+        <property name="amount" type="int" description="A numerical value, often used for price, quantity, or discount."/>
     </transfer>
 
     <transfer name="OrderList">
         <property name="idCustomer" type="int"/>
-        <property name="pagination" type="Pagination"/>
-        <property name="orders" type="Order[]" singular="order"/>
-        <property name="filter" type="Filter"/>
+        <property name="pagination" type="Pagination" description="An object containing all pagination-related data for a list of results."/>
+        <property name="orders" type="Order[]" singular="order" description="A collection of orders."/>
+        <property name="filter" type="Filter" description="A set of criteria for filtering data."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="code" type="string"/>
-        <property name="status" type="int"/>
-        <property name="detail" type="string"/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="ShipmentMethod">
-        <property name="name" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
         <property name="fkSalesExpense" type="int"/>
     </transfer>
 
     <transfer name="Expense">
         <property name="idSalesExpense" type="int"/>
-        <property name="sumNetPrice" type="int"/>
-        <property name="sumGrossPrice" type="int"/>
+        <property name="sumNetPrice" type="int" description="The total price for all units of an item, excluding tax."/>
+        <property name="sumGrossPrice" type="int" description="The total price for all units of an item, including tax."/>
     </transfer>
 
     <transfer name="RestUser">
-        <property name="naturalIdentifier" type="string"/>
+        <property name="naturalIdentifier" type="string" description="A human-readable unique identifier for a resource, such as a user's email."/>
     </transfer>
 
     <transfer name="OrderItemFilter">
-        <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
-        <property name="customerReferences" type="string[]" singular="customerReference"/>
+        <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid" description="A collection of Universally Unique Identifiers (UUIDs) for sales order items."/>
+        <property name="customerReferences" type="string[]" singular="customerReference" description="A collection of unique reference identifiers for customers."/>
     </transfer>
 
     <transfer name="ItemCollection">
-        <property name="items" type="Item[]" singular="item"/>
+        <property name="items" type="Item[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
     </transfer>
 
     <transfer name="RouteAuthorizationConfig">
-        <property name="strategy" type="string" deprecated="Use {@link \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer::$strategies} instead."/>
-        <property name="strategies" type="string[]" singular="strategy"/>
-        <property name="apiCode" type="string"/>
-        <property name="apiMessage" type="string"/>
-        <property name="httpStatusCode" type="int"/>
+        <property name="strategy" type="string" deprecated="Use {@link \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer::$strategies} instead." description="The specific strategy or method to be used for an operation."/>
+        <property name="strategies" type="string[]" singular="strategy" description="A collection of strategies that can be applied."/>
+        <property name="apiCode" type="string" description="An API-specific code representing a status or error."/>
+        <property name="apiMessage" type="string" description="A message from an API."/>
+        <property name="httpStatusCode" type="int" description="The numerical HTTP status code of a response (e.g., 200 for success, 404 for not found)."/>
     </transfer>
 </transfers>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Product\Persistence" package="src.Orm.Zed.Product.Persistence">
     <table name="spy_product_abstract">
-        <column name="approval_status" type="VARCHAR" size="64" required="false"/>
+        <column name="approval_status" type="VARCHAR" size="64" required="false" description="The current approval status of an entity, e.g., a product or offer."/>
     </table>
 </database>

@@ -12,7 +12,7 @@
         "spryker/kernel": "^3.30.0",
         "spryker/product-bundle": "^7.0.0",
         "spryker/shipments-rest-api-extension": "^1.2.0",
-        "spryker/transfer": "^3.25.0"
+        "spryker/transfer": "^3.42.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

@@ -2,54 +2,54 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Currency">
-        <property name="name" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="MoneyValue">
-        <property name="currency" type="Currency"/>
-        <property name="priceData" type="string"/>
-        <property name="grossAmount" type="int"/>
-        <property name="netAmount" type="int"/>
+        <property name="currency" type="Currency" description="The currency used for a transaction or price."/>
+        <property name="priceData" type="string" description="Encoded price data, often including volume prices."/>
+        <property name="grossAmount" type="int" description="The gross amount (including tax)."/>
+        <property name="netAmount" type="int" description="The amount of a price, excluding tax."/>
     </transfer>
 
     <transfer name="PriceProductDimension">
-        <property name="productConfigurationInstanceHash" type="string"/>
+        <property name="productConfigurationInstanceHash" type="string" description="A hash of a product configuration instance."/>
     </transfer>
 
     <transfer name="PriceProduct">
-        <property name="priceTypeName" type="string"/>
-        <property name="groupKey" type="string"/>
-        <property name="moneyValue" type="MoneyValue"/>
-        <property name="volumeQuantity" type="int"/>
-        <property name="priceDimension" type="PriceProductDimension"/>
-        <property name="isMergeable" type="bool"/>
+        <property name="priceTypeName" type="string" description="The name of a price type (e.g., 'DEFAULT', 'ORIGINAL')."/>
+        <property name="groupKey" type="string" description="A key used to group items together, typically in a cart or order."/>
+        <property name="moneyValue" type="MoneyValue" description="A monetary value in a specific currency."/>
+        <property name="volumeQuantity" type="int" description="The quantity for a volume price tier."/>
+        <property name="priceDimension" type="PriceProductDimension" description="The dimension along which a price is defined."/>
+        <property name="isMergeable" type="bool" description="A flag indicating if items can be merged."/>
     </transfer>
 
     <transfer name="ProductConfigurationInstance">
-        <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="prices" type="PriceProduct[]" singular="price" description="A collection of prices, often for different currencies or price types."/>
     </transfer>
 
     <transfer name="RestCartItemProductConfigurationInstanceAttributes">
-        <property name="prices" type="RestProductConfigurationPriceAttributes[]" singular="price"/>
+        <property name="prices" type="RestProductConfigurationPriceAttributes[]" singular="price" description="A collection of prices, often for different currencies or price types."/>
     </transfer>
 
     <transfer name="RestCurrency">
-        <property name="name" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="RestProductConfigurationPriceAttributes">
-        <property name="volumePrices" type="RestProductPriceVolumesAttributes[]" singular="volumePrice"/>
-        <property name="priceTypeName" type="string"/>
-        <property name="grossAmount" type="int"/>
-        <property name="netAmount" type="int"/>
-        <property name="currency" type="RestCurrency"/>
-        <property name="volumeQuantity" type="int"/>
+        <property name="volumePrices" type="RestProductPriceVolumesAttributes[]" singular="volumePrice" description="A collection of prices based on volume."/>
+        <property name="priceTypeName" type="string" description="The name of a price type (e.g., 'DEFAULT', 'ORIGINAL')."/>
+        <property name="grossAmount" type="int" description="The gross amount (including tax)."/>
+        <property name="netAmount" type="int" description="The amount of a price, excluding tax."/>
+        <property name="currency" type="RestCurrency" description="The currency used for a transaction or price."/>
+        <property name="volumeQuantity" type="int" description="The quantity for a volume price tier."/>
     </transfer>
 
     <transfer name="RestProductPriceVolumesAttributes">
-        <property name="netAmount" type="int"/>
-        <property name="grossAmount" type="int"/>
-        <property name="quantity" type="int"/>
+        <property name="netAmount" type="int" description="The amount of a price, excluding tax."/>
+        <property name="grossAmount" type="int" description="The gross amount (including tax)."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
     </transfer>
 
 </transfers>

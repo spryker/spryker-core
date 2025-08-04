@@ -5,7 +5,7 @@
         <column name="id_sales_payment" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
         <column name="fk_sales_payment_method_type" type="INTEGER" required="true"/>
-        <column name="amount" type="INTEGER" required="true"/>
+        <column name="amount" type="INTEGER" required="true" description="A numerical value, often used for price, quantity, or discount."/>
 
         <behavior name="timestampable"/>
 
@@ -22,8 +22,8 @@
 
     <table name="spy_sales_payment_method_type">
         <column name="id_sales_payment_method_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="payment_provider" type="VARCHAR" size="255" required="true"/>
-        <column name="payment_method" type="VARCHAR" size="255" required="true"/>
+        <column name="payment_provider" type="VARCHAR" size="255" required="true" description="The provider of a payment method."/>
+        <column name="payment_method" type="VARCHAR" size="255" required="true" description="The method of payment."/>
 
         <index name="spy_sales_payment_method_type-type">
             <index-column name="payment_provider"/>

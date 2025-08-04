@@ -3,7 +3,7 @@
     <table name="spy_product_category_filter">
         <column name="id_product_category_filter" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_category" type="INTEGER"/>
-        <column name="filter_data" required="true" type="LONGVARCHAR"/>
+        <column name="filter_data" required="true" type="LONGVARCHAR" description="A JSON-encoded string containing filter data for a product category."/>
 
         <foreign-key name="spy_product_category_filter-fk_category" foreignTable="spy_category">
             <reference local="fk_category" foreign="id_category"/>

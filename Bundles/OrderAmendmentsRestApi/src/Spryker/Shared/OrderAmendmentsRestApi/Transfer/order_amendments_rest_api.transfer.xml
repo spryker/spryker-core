@@ -2,34 +2,34 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Quote">
-        <property name="amendmentOrderReference" type="string" strict="true"/>
+        <property name="amendmentOrderReference" type="string" strict="true" description="A reference to an amended sales order."/>
     </transfer>
 
     <transfer name="RestCartsAttributes">
-        <property name="amendmentOrderReference" type="string" strict="true"/>
+        <property name="amendmentOrderReference" type="string" strict="true" description="A reference to an amended sales order."/>
     </transfer>
 
     <transfer name="RestCartReorderRequestAttributes" strict="true">
-        <property name="isAmendment" type="bool" restRequestParameter="yes"/>
+        <property name="isAmendment" type="bool" restRequestParameter="yes" description="A flag indicating if an operation is an amendment."/>
     </transfer>
 
     <transfer name="CartReorderRequest" strict="true">
-        <property name="isAmendment" type="bool"/>
+        <property name="isAmendment" type="bool" description="A flag indicating if an operation is an amendment."/>
     </transfer>
 
     <transfer name="RestOrderAmendmentsAttributes" strict="true">
-        <property name="createdAt" type="string"/>
-        <property name="updatedAt" type="string"/>
+        <property name="createdAt" type="string" description="The timestamp when an entity was created."/>
+        <property name="updatedAt" type="string" description="The timestamp when an entity was last updated."/>
     </transfer>
 
     <transfer name="Order">
-        <property name="salesOrderAmendment" type="SalesOrderAmendment" strict="true"/>
+        <property name="salesOrderAmendment" type="SalesOrderAmendment" strict="true" description="An amendment to a sales order."/>
     </transfer>
 
     <transfer name="SalesOrderAmendment" strict="true">
-        <property name="uuid" type="string"/>
-        <property name="createdAt" type="string"/>
-        <property name="updatedAt" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="createdAt" type="string" description="The timestamp when an entity was created."/>
+        <property name="updatedAt" type="string" description="The timestamp when an entity was last updated."/>
     </transfer>
 
 </transfers>

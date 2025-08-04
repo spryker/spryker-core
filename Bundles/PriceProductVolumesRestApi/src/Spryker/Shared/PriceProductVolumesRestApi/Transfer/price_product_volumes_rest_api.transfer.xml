@@ -2,30 +2,30 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestProductPriceAttributes">
-        <property name="volumePrices" type="RestProductPriceVolumesAttributes[]" singular="volumePrice"/>
-        <property name="priceTypeName" type="string"/>
+        <property name="volumePrices" type="RestProductPriceVolumesAttributes[]" singular="volumePrice" description="A collection of prices based on volume."/>
+        <property name="priceTypeName" type="string" description="The name of a price type (e.g., 'DEFAULT', 'ORIGINAL')."/>
     </transfer>
 
     <transfer name="RestProductPriceVolumesAttributes">
-        <property name="netAmount" type="int"/>
-        <property name="grossAmount" type="int"/>
-        <property name="quantity" type="int"/>
+        <property name="netAmount" type="int" description="The amount of a price, excluding tax."/>
+        <property name="grossAmount" type="int" description="The gross amount (including tax)."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
     </transfer>
 
     <transfer name="CurrentProductPrice">
-        <property name="priceData" type="string"/>
-        <property name="priceDataByPriceType" type="array" singular="priceDataByPriceType"/>
+        <property name="priceData" type="string" description="Encoded price data, often including volume prices."/>
+        <property name="priceDataByPriceType" type="array" singular="priceDataByPriceType" description="Price data categorized by price type."/>
     </transfer>
 
     <transfer name="PriceProduct">
-        <property name="moneyValue" type="MoneyValue"/>
-        <property name="volumeQuantity" type="int"/>
-        <property name="priceTypeName" type="string"/>
+        <property name="moneyValue" type="MoneyValue" description="A monetary value in a specific currency."/>
+        <property name="volumeQuantity" type="int" description="The quantity for a volume price tier."/>
+        <property name="priceTypeName" type="string" description="The name of a price type (e.g., 'DEFAULT', 'ORIGINAL')."/>
     </transfer>
 
     <transfer name="MoneyValue">
-        <property name="priceData" type="string"/>
-        <property name="priceDataByPriceType" type="array" singular="priceDataByPriceType"/>
+        <property name="priceData" type="string" description="Encoded price data, often including volume prices."/>
+        <property name="priceDataByPriceType" type="array" singular="priceDataByPriceType" description="Price data categorized by price type."/>
     </transfer>
 
 </transfers>

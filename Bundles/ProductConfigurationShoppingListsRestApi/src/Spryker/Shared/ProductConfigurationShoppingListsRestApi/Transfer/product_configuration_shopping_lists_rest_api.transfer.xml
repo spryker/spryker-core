@@ -2,58 +2,58 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestShoppingListItemProductConfigurationInstanceAttributes">
-        <property name="displayData" type="string"/>
-        <property name="configuration" type="string"/>
-        <property name="configuratorKey" type="string"/>
-        <property name="isComplete" type="bool"/>
-        <property name="quantity" type="int"/>
-        <property name="availableQuantity" type="int"/>
-        <property name="prices" type="RestProductConfigurationPriceAttributes[]" singular="price"/>
+        <property name="displayData" type="string" description="Data used for display purposes, often in JSON format."/>
+        <property name="configuration" type="string" description="A set of configuration parameters."/>
+        <property name="configuratorKey" type="string" description="A key identifying the product configurator to use."/>
+        <property name="isComplete" type="bool" description="Indicates if a product configuration is complete."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
+        <property name="availableQuantity" type="int" description="The quantity of a product that is available for sale."/>
+        <property name="prices" type="RestProductConfigurationPriceAttributes[]" singular="price" description="A collection of prices, often for different currencies or price types."/>
     </transfer>
 
     <transfer name="RestProductPriceVolumesAttributes">
-        <property name="netAmount" type="int"/>
-        <property name="grossAmount" type="int"/>
-        <property name="quantity" type="int"/>
+        <property name="netAmount" type="int" description="The amount of a price, excluding tax."/>
+        <property name="grossAmount" type="int" description="The gross amount (including tax)."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
     </transfer>
 
     <transfer name="RestShoppingListItemsAttributes">
-        <property name="productConfigurationInstance" type="RestShoppingListItemProductConfigurationInstanceAttributes" restRequestParameter="yes"/>
+        <property name="productConfigurationInstance" type="RestShoppingListItemProductConfigurationInstanceAttributes" restRequestParameter="yes" description="An instance of a configured product."/>
     </transfer>
 
     <transfer name="ShoppingListItem">
-        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance" description="An instance of a configured product."/>
     </transfer>
 
     <transfer name="ShoppingListItemRequest">
-        <property name="shoppingListItem" type="ShoppingListItem"/>
+        <property name="shoppingListItem" type="ShoppingListItem" description="An item in a shopping list."/>
     </transfer>
 
     <transfer name="ProductConfigurationInstance">
-        <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="prices" type="PriceProduct[]" singular="price" description="A collection of prices, often for different currencies or price types."/>
     </transfer>
 
     <transfer name="RestProductConfigurationPriceAttributes">
-        <property name="currency" type="RestCurrency"/>
-        <property name="netAmount" type="int"/>
-        <property name="grossAmount" type="int"/>
-        <property name="priceTypeName" type="string"/>
+        <property name="currency" type="RestCurrency" description="The currency used for a transaction or price."/>
+        <property name="netAmount" type="int" description="The amount of a price, excluding tax."/>
+        <property name="grossAmount" type="int" description="The gross amount (including tax)."/>
+        <property name="priceTypeName" type="string" description="The name of a price type (e.g., 'DEFAULT', 'ORIGINAL')."/>
     </transfer>
 
     <transfer name="MoneyValue">
-        <property name="currency" type="Currency"/>
-        <property name="netAmount" type="int"/>
-        <property name="grossAmount" type="int"/>
+        <property name="currency" type="Currency" description="The currency used for a transaction or price."/>
+        <property name="netAmount" type="int" description="The amount of a price, excluding tax."/>
+        <property name="grossAmount" type="int" description="The gross amount (including tax)."/>
     </transfer>
 
     <transfer name="PriceProduct">
-        <property name="moneyValue" type="MoneyValue"/>
+        <property name="moneyValue" type="MoneyValue" description="A monetary value in a specific currency."/>
     </transfer>
 
     <transfer name="RestCurrency">
-        <property name="code" type="string"/>
-        <property name="name" type="string"/>
-        <property name="symbol" type="string"/>
+        <property name="code" type="string" description="A unique code, often for currency, country, or barcode."/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="symbol" type="string" description="The symbol for a currency (e.g., '$', '&#x20AC;')."/>
     </transfer>
 
     <transfer name="Currency">

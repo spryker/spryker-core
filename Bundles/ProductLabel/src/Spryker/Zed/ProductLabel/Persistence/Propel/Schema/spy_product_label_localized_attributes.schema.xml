@@ -4,7 +4,7 @@
         <column name="id_product_label_localized_attributes" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product_label" type="INTEGER" required="true"/>
         <column name="fk_locale" type="INTEGER" required="true"/>
-        <column name="name" type="VARCHAR" size="255" required="false"/>
+        <column name="name" type="VARCHAR" size="255" required="false" description="The name of an entity (e.g., user, category, product, role)."/>
 
         <id-method-parameter value="spy_product_label_localized_attributes_pk_seq"/>
 

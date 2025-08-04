@@ -2,154 +2,154 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCheckoutRequestAttributes">
-        <property name="payments" type="RestPayment[]" singular="payment" restRequestParameter="yes"/>
-        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum" restRequestParameter="yes"/>
+        <property name="payments" type="RestPayment[]" singular="payment" restRequestParameter="yes" description="A collection of payments associated with an order."/>
+        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum" restRequestParameter="yes" description="Data for a payment made before an order is fulfilled."/>
     </transfer>
 
     <transfer name="RestPreOrderPaymentRequestAttributes">
-        <property name="quote" type="Quote" restRequestParameter="required"/>
-        <property name="payment" type="RestPayment" restRequestParameter="required"/>
-        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum" restRequestParameter="yes"/>
+        <property name="quote" type="Quote" restRequestParameter="required" description="A data object representing a shopping cart before it becomes an order."/>
+        <property name="payment" type="RestPayment" restRequestParameter="required" description="Payment details for an order."/>
+        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum" restRequestParameter="yes" description="Data for a payment made before an order is fulfilled."/>
     </transfer>
 
     <transfer name="RestPreOrderPaymentCancellationRequestAttributes">
-        <property name="payment" type="RestPayment" restRequestParameter="required"/>
-        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum" restRequestParameter="required"/>
+        <property name="payment" type="RestPayment" restRequestParameter="required" description="Payment details for an order."/>
+        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum" restRequestParameter="required" description="After the first call to initialize the payment this data will be set."/>
     </transfer>
 
     <transfer name="PreOrderPaymentRequest">
-        <property name="quote" type="Quote"/>
-        <property name="payment" type="Payment"/>
-        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum"/>
+        <property name="quote" type="Quote" description="A data object representing a shopping cart before it becomes an order."/>
+        <property name="payment" type="Payment" description="Payment details for an order."/>
+        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum" description="After the first call to initialize the payment this data will be set."/>
     </transfer>
 
     <transfer name="PreOrderPaymentResponse">
-        <property name="isSuccessful" type="bool"/>
-        <property name="error" type="string"/>
-        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum"/>
+        <property name="isSuccessful" type="bool" description="A boolean flag indicating if an operation completed successfully."/>
+        <property name="error" type="string" description="An error message or object describing a problem that occurred."/>
+        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum" description="After the first call to initialize the payment this data will be set."/>
     </transfer>
 
     <transfer name="RestPaymentCustomersRequestAttributes" strict="true">
-        <property name="customer" type="RestCustomerResponseAttributes"/>
-        <property name="payment" type="RestPayment" restRequestParameter="required"/>
-        <property name="customerPaymentServiceProviderData" type="array" associative="true" singular="customerPaymentServiceProviderDatum" restRequestParameter="required"/>
+        <property name="customer" type="RestCustomerResponseAttributes" description="A data object representing a customer."/>
+        <property name="payment" type="RestPayment" restRequestParameter="required" description="Payment details for an order."/>
+        <property name="customerPaymentServiceProviderData" type="array" associative="true" singular="customerPaymentServiceProviderDatum" restRequestParameter="required" description="Data from a payment service provider for a specific customer."/>
     </transfer>
 
     <transfer name="RestPaymentCustomersResponseAttributes">
-        <property name="customer" type="RestCustomerResponseAttributes"/>
+        <property name="customer" type="RestCustomerResponseAttributes" description="A data object representing a customer."/>
     </transfer>
 
     <transfer name="PaymentCustomerRequest" strict="true">
-        <property name="customer" type="RestCustomerResponseAttributes"/>
-        <property name="payment" type="Payment"/>
-        <property name="customerPaymentServiceProviderData" type="array" associative="true" singular="customerPaymentServiceProviderDatum"/>
+        <property name="customer" type="RestCustomerResponseAttributes" description="A data object representing a customer."/>
+        <property name="payment" type="Payment" description="Payment details for an order."/>
+        <property name="customerPaymentServiceProviderData" type="array" associative="true" singular="customerPaymentServiceProviderDatum" description="Data from a payment service provider for a specific customer."/>
     </transfer>
 
     <transfer name="PaymentCustomerResponse" strict="true">
-        <property name="isSuccessful" type="bool"/>
-        <property name="customer" type="Customer"/>
-        <property name="error" type="string"/>
+        <property name="isSuccessful" type="bool" description="A boolean flag indicating if an operation completed successfully."/>
+        <property name="customer" type="Customer" description="A data object representing a customer."/>
+        <property name="error" type="string" description="An error message or object describing a problem that occurred."/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="payment" type="Payment" deprecated="Use payments property instead."/>
-        <property name="store" type="Store"/>
-        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum"/>
+        <property name="payment" type="Payment" deprecated="Use payments property instead." description="Payment details for an order."/>
+        <property name="store" type="Store" description="The store context for an operation, determining which store's data is used."/>
+        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum" description="Data for a payment made before an order is fulfilled."/>
     </transfer>
 
     <transfer name="Store"/>
 
     <transfer name="Payment">
-        <property name="paymentProviderName" type="string"/>
-        <property name="paymentMethodName" type="string"/>
-        <property name="paymentMethod" type="string"/>
-        <property name="additionalPaymentData" type="array" singular="additionalPaymentData"/>
-        <property name="amount" type="int"/>
-        <property name="paymentProvider" type="string"/>
+        <property name="paymentProviderName" type="string" description="The name of the payment provider."/>
+        <property name="paymentMethodName" type="string" description="The name of the payment method."/>
+        <property name="paymentMethod" type="string" description="The method of payment."/>
+        <property name="additionalPaymentData" type="array" singular="additionalPaymentData" description="Extra data associated with a payment method."/>
+        <property name="amount" type="int" description="A numerical value, often used for price, quantity, or discount."/>
+        <property name="paymentProvider" type="string" description="The provider of a payment method."/>
     </transfer>
 
     <transfer name="RestPayment">
-        <property name="paymentProviderName" type="string" restRequestParameter="required"/>
-        <property name="paymentMethodName" type="string" restRequestParameter="required"/>
-        <property name="amount" type="int" restRequestParameter="yes"/>
-        <property name="additionalPaymentData" type="array" singular="additionalPaymentData"/>
+        <property name="paymentProviderName" type="string" restRequestParameter="required" description="The name of the payment provider."/>
+        <property name="paymentMethodName" type="string" restRequestParameter="required" description="The name of the payment method."/>
+        <property name="amount" type="int" restRequestParameter="yes" description="A numerical value, often used for price, quantity, or discount."/>
+        <property name="additionalPaymentData" type="array" singular="additionalPaymentData" description="Extra data associated with a payment method."/>
     </transfer>
 
     <transfer name="RestPaymentMethodsAttributes">
-        <property name="paymentMethodName" type="string"/>
-        <property name="paymentProviderName" type="string"/>
-        <property name="priority" type="int"/>
-        <property name="requiredRequestData" type="array" singular="requiredRequestData"/>
-        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration"/>
+        <property name="paymentMethodName" type="string" description="The name of the payment method."/>
+        <property name="paymentProviderName" type="string" description="The name of the payment provider."/>
+        <property name="priority" type="int" description="A numerical value that determines the order of processing or application, with lower numbers often having higher priority."/>
+        <property name="requiredRequestData" type="array" singular="requiredRequestData" description="A list of data fields required by a specific payment method to process a payment."/>
+        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration" description="Configuration for a payment method provided by an app."/>
     </transfer>
 
     <transfer name="RestCheckout">
-        <property name="paymentProviders" type="PaymentProviderCollection"/>
-        <property name="availablePaymentMethods" type="PaymentMethods"/>
+        <property name="paymentProviders" type="PaymentProviderCollection" description="A collection of available payment providers."/>
+        <property name="availablePaymentMethods" type="PaymentMethods" description="A collection of payment methods available for a checkout."/>
     </transfer>
 
     <transfer name="PaymentMethod">
-        <property name="methodName" type="string"/>
-        <property name="paymentProvider" type="PaymentProvider"/>
+        <property name="methodName" type="string" description="The name of a method."/>
+        <property name="paymentProvider" type="PaymentProvider" description="The provider of a payment method."/>
         <property name="idPaymentMethod" type="int"/>
-        <property name="name" type="string"/>
-        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration" description="Configuration for a payment method provided by an app."/>
     </transfer>
 
     <transfer name="PaymentProvider">
-        <property name="name" type="string"/>
-        <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]"/>
-        <property name="paymentProviderKey" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]" description="A collection of available payment methods."/>
+        <property name="paymentProviderKey" type="string" description="A unique key identifying a payment provider."/>
     </transfer>
 
     <transfer name="PaymentMethods">
-        <property name="methods" type="PaymentMethod[]" singular="method"/>
+        <property name="methods" type="PaymentMethod[]" singular="method" description="A collection of methods."/>
     </transfer>
 
     <transfer name="RestCheckoutData">
-        <property name="paymentProviders" type="PaymentProviderCollection"/>
-        <property name="availablePaymentMethods" type="PaymentMethods"/>
+        <property name="paymentProviders" type="PaymentProviderCollection" description="A collection of available payment providers."/>
+        <property name="availablePaymentMethods" type="PaymentMethods" description="A collection of payment methods available for a checkout."/>
     </transfer>
 
     <transfer name="PaymentProviderCollection">
-        <property name="paymentProviders" type="PaymentProvider[]" singular="paymentProvider"/>
+        <property name="paymentProviders" type="PaymentProvider[]" singular="paymentProvider" description="A collection of available payment providers."/>
     </transfer>
 
     <transfer name="RestCheckoutDataResponseAttributes">
-        <property name="selectedPaymentMethods" type="RestPaymentMethod[]" singular="selectedPaymentMethod"/>
+        <property name="selectedPaymentMethods" type="RestPaymentMethod[]" singular="selectedPaymentMethod" description="A collection of payment methods that have been selected."/>
     </transfer>
 
     <transfer name="RestPaymentMethod">
-        <property name="paymentMethodName" type="string"/>
-        <property name="paymentProviderName" type="string"/>
-        <property name="requiredRequestData" type="array" singular="requiredRequestData"/>
+        <property name="paymentMethodName" type="string" description="The name of the payment method."/>
+        <property name="paymentProviderName" type="string" description="The name of the payment provider."/>
+        <property name="requiredRequestData" type="array" singular="requiredRequestData" description="A list of data fields required by a specific payment method to process a payment."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="detail" type="string"/>
-        <property name="status" type="int"/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
+        <property name="status" type="int" description="A HTTP status code."/>
     </transfer>
 
     <transfer name="PaymentMethodAppConfiguration" strict="true">
     </transfer>
 
     <transfer name="Customer">
-        <property name="billingAddress" type="Address[]" singular="billingAddress"/>
-        <property name="shippingAddress" type="Address[]" singular="shippingAddress"/>
+        <property name="billingAddress" type="Address[]" singular="billingAddress" description="The address used for billing purposes."/>
+        <property name="shippingAddress" type="Address[]" singular="shippingAddress" description="The address where an order should be shipped."/>
     </transfer>
 
     <transfer name="Address">
     </transfer>
 
     <transfer name="RestCustomerResponseAttributes">
-        <property name="salutation" type="string"/>
-        <property name="firstName" type="string"/>
-        <property name="lastName" type="string"/>
-        <property name="email" type="string"/>
-        <property name="phone" type="string"/>
-        <property name="company" type="string"/>
-        <property name="billingAddress" type="RestAddressAttributes"/>
-        <property name="shippingAddress" type="RestAddressAttributes"/>
+        <property name="salutation" type="string" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <property name="firstName" type="string" description="The first name of a person."/>
+        <property name="lastName" type="string" description="The last name of a user or customer."/>
+        <property name="email" type="string" description="The email address of a user or contact."/>
+        <property name="phone" type="string" description="The phone number."/>
+        <property name="company" type="string" description="A company entity."/>
+        <property name="billingAddress" type="RestAddressAttributes" description="The address used for billing purposes."/>
+        <property name="shippingAddress" type="RestAddressAttributes" description="The address where an order should be shipped."/>
     </transfer>
 
     <transfer name="RestAddressAttributes">

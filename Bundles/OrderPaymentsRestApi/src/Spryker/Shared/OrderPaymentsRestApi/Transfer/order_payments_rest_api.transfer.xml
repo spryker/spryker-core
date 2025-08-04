@@ -2,23 +2,23 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestOrderPaymentsAttributes">
-        <property name="paymentIdentifier" type="string" restRequestParameter="required"/>
-        <property name="dataPayload" type="array" restRequestParameter="required" singular="dataPayload"/>
+        <property name="paymentIdentifier" type="string" restRequestParameter="required" description="A unique identifier for a payment."/>
+        <property name="dataPayload" type="array" restRequestParameter="required" singular="dataPayload" description="The data payload of a message or request."/>
     </transfer>
 
     <transfer name="UpdateOrderPaymentRequest">
-        <property name="paymentIdentifier" type="string"/>
-        <property name="dataPayload" type="array" singular="dataPayload"/>
+        <property name="paymentIdentifier" type="string" description="A unique identifier for a payment."/>
+        <property name="dataPayload" type="array" singular="dataPayload" description="The data payload of a message or request."/>
     </transfer>
 
     <transfer name="UpdateOrderPaymentResponse">
-        <property name="isSuccessful" type="bool"/>
+        <property name="isSuccessful" type="bool" description="A boolean flag indicating if an operation completed successfully."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="code" type="string"/>
-        <property name="status" type="int"/>
-        <property name="detail" type="string"/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
 </transfers>

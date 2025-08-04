@@ -1,5 +1,6 @@
 {
     "include": {
-        "spryker/oms": "Oms provides basic functionality."
+        "spryker/oms": "Oms provides basic functionality.",
+        "spryker/transfer": "Required to use merging strategy as default for descriptions."
     }
 }

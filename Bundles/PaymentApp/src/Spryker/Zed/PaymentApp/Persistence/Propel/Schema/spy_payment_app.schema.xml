@@ -3,8 +3,8 @@
 
     <table name="spy_payment_app_payment_status" identifierQuoting="true">
         <column name="id_payment_app_payment_status" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="order_reference" required="true" size="64" type="VARCHAR"/>
-        <column name="status" required="true" size="64" type="VARCHAR"/>
+        <column name="order_reference" required="true" size="64" type="VARCHAR" description="A unique reference identifier for a sales order."/>
+        <column name="status" required="true" size="64" type="VARCHAR" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
 
         <unique name="spy_payment_app_payment_status-unique-key">
             <unique-column name="order_reference"/>
@@ -17,8 +17,8 @@
 
     <table name="spy_payment_app_payment_status_history" identifierQuoting="true">
         <column name="id_payment_app_payment_status_history" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="order_reference" required="true" size="64" type="VARCHAR"/>
-        <column name="status" required="true" size="64" type="VARCHAR"/>
+        <column name="order_reference" required="true" size="64" type="VARCHAR" description="A unique reference identifier for a sales order."/>
+        <column name="status" required="true" size="64" type="VARCHAR" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
         <column name="context" type="LONGVARCHAR" description="JSON formatted string containing additional information about the state. Will contain f.e. requestedAmount and paidAmount for PaymentOverpaid and PaymentUnderpaid."/>
 
         <id-method-parameter value="spy_payment_app_payment_status_history_pk_seq"/>

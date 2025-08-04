@@ -1,0 +1,8 @@
+{
+    "include": {
+        "spryker/price-product-offer": "Added for future compatibility.",
+        "spryker/sales-order-amendment": "Added for future compatibility.",
+        "spryker/kernel": "If you want to use ProductOfferOriginalSalesOrderItemPriceGroupKeyExpanderPlugin",
+        "spryker/transfer": "Required to use merging strategy as default for descriptions."
+    }
+}

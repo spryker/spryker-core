@@ -2,31 +2,31 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="CurrentProductPrice">
-        <property name="priceData" type="string"/>
-        <property name="priceDataByPriceType" type="array" singular="priceDataByPriceType"/>
+        <property name="priceData" type="string" description="Encoded price data, often including volume prices."/>
+        <property name="priceDataByPriceType" type="array" singular="priceDataByPriceType" description="Price data categorized by price type."/>
     </transfer>
 
     <transfer name="RestProductOfferPriceAttributes">
-        <property name="volumePrices" singular="volumePrice" type="RestProductPriceVolumesAttributes[]"/>
-        <property name="priceTypeName" type="string"/>
+        <property name="volumePrices" singular="volumePrice" type="RestProductPriceVolumesAttributes[]" description="A collection of prices based on volume."/>
+        <property name="priceTypeName" type="string" description="The name of a price type (e.g., 'DEFAULT', 'ORIGINAL')."/>
     </transfer>
 
     <transfer name="RestProductOfferPricesAttributes">
-        <property name="prices" type="RestProductOfferPriceAttributes[]" singular="price"/>
+        <property name="prices" type="RestProductOfferPriceAttributes[]" singular="price" description="A collection of prices, often for different currencies or price types."/>
     </transfer>
 
     <transfer name="MoneyValue">
-        <property name="priceData" type="string"/>
+        <property name="priceData" type="string" description="Encoded price data, often including volume prices."/>
     </transfer>
 
     <transfer name="PriceProduct">
-        <property name="moneyValue" type="MoneyValue"/>
+        <property name="moneyValue" type="MoneyValue" description="A monetary value in a specific currency."/>
     </transfer>
 
     <transfer name="RestProductPriceVolumesAttributes">
-        <property name="grossAmount" type="int"/>
-        <property name="netAmount" type="int"/>
-        <property name="quantity" type="int"/>
+        <property name="grossAmount" type="int" description="The gross amount (including tax)."/>
+        <property name="netAmount" type="int" description="The amount of a price, excluding tax."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
     </transfer>
 
 </transfers>
