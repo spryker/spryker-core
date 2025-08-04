@@ -1,0 +1,4 @@
+key,name,description,valid_from,valid_to,is_active,amount,calculator_type_plugin,group,priority,item_condition,order_condition,stores,merchants_allow_list,fixed_amount_configuration
+test-mc-1,5% off in electronics with price >= 500 for selected brands,,2024-01-01,2024-06-01,1,5,Percentage,primary,1,item-price >= '500' AND category IS IN 'electronics' AND attribute.brand IS IN 'SONY;SAMSUNG',"price-mode = ""GROSS_MODE""","DE,AT","MER000001,MER000002",
+test-mc-2,10% for all,,2024-01-01,2024-06-01,1,10,Percentage,primary,3,,"price-mode = ""GROSS_MODE""","DE,AT",,,,,,,,,,,,
+test-mc-3,0.5 per item fixed for all,,2024-01-01,2024-06-01,1,,Fixed,secondary,1,,"price-mode = ""GROSS_MODE""","DE,AT"

@@ -26,6 +26,11 @@ class MerchantCommissionCsvValidator implements MerchantCommissionCsvValidatorIn
     protected const ERROR_MESSAGE_EMPTY_COLUMNS = 'The following columns are empty in the uploaded CSV file: %s.';
 
     /**
+     * @var string
+     */
+    protected const ERROR_COLUMN_MISMATCH = 'The uploaded CSV file has incorrect structure. Headers and data rows must have the same number of columns.';
+
+    /**
      * @var list<string>
      */
     protected const REQUIRED_COLUMNS = [
@@ -71,7 +76,7 @@ class MerchantCommissionCsvValidator implements MerchantCommissionCsvValidatorIn
             return $errorTransfers;
         }
 
-        return $this->assertRequiredColumns($importData, $errorTransfers);
+        return $this->assertCorrectFileStructure($importData, $errorTransfers);
     }
 
     /**
@@ -107,13 +112,20 @@ class MerchantCommissionCsvValidator implements MerchantCommissionCsvValidatorIn
      *
      * @return \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer>
      */
-    protected function assertRequiredColumns(array $importData, ArrayObject $errorTransfers): ArrayObject
+    protected function assertCorrectFileStructure(array $importData, ArrayObject $errorTransfers): ArrayObject
     {
         /** @var list<string> $headers */
         $headers = current($importData);
         foreach ($importData as $rowNumber => $rowData) {
-            if ($rowNumber === 0 || count($headers) !== count($rowData)) {
+            if ($rowNumber === 0 || $this->isEmptyRow($rowData)) {
                 continue;
+            }
+            if (count($headers) !== count($rowData)) {
+                $errorTransfers->append(
+                    (new ErrorTransfer())->setMessage(static::ERROR_COLUMN_MISMATCH),
+                );
+
+                return $errorTransfers;
             }
 
             $rowData = array_combine($headers, $rowData);
@@ -127,5 +139,15 @@ class MerchantCommissionCsvValidator implements MerchantCommissionCsvValidatorIn
         }
 
         return $errorTransfers;
+    }
+
+    /**
+     * @param array<mixed> $rowData
+     *
+     * @return bool
+     */
+    protected function isEmptyRow(array $rowData): bool
+    {
+        return array_filter($rowData) === [];
     }
 }

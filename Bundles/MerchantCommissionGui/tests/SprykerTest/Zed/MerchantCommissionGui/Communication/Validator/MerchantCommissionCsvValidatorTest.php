@@ -35,6 +35,13 @@ class MerchantCommissionCsvValidatorTest extends Unit
     protected const ERROR_MESSAGE_HEADERS_MISSING = 'The following headers are missing in the uploaded CSV file: %s.';
 
     /**
+     * @uses \Spryker\Zed\MerchantCommissionGui\Communication\Validator\MerchantCommissionCsvValidator::ERROR_COLUMN_MISMATCH
+     *
+     * @var string
+     */
+    protected const ERROR_COLUMN_MISMATCH = 'The uploaded CSV file has incorrect structure. Headers and data rows must have the same number of columns.';
+
+    /**
      * @var \SprykerTest\Zed\MerchantCommissionGui\MerchantCommissionGuiCommunicationTester
      */
     protected MerchantCommissionGuiCommunicationTester $tester;
@@ -75,6 +82,28 @@ class MerchantCommissionCsvValidatorTest extends Unit
         $this->assertCount(1, $errorTransfers);
         $this->assertSame(
             sprintf(static::ERROR_MESSAGE_HEADERS_MISSING, 'is_active, amount, calculator_type_plugin, group, merchants_allow_list'),
+            $errorTransfers->getIterator()->current()->getMessage(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateMerchantCommissionCsvFileReturnsErrorWhenColumnsAreMismatchedBetweenHeaderAndDataRows(): void
+    {
+        // Arrange
+        $uploadedFile = new UploadedFile(
+            codecept_data_dir() . 'merchant_commission_import_mismatched_columns.csv',
+            'merchant_commission_import_mismatched_columns.csv',
+        );
+
+        // Act
+        $errorTransfers = $this->createMerchantCommissionCsvValidator()->validateMerchantCommissionCsvFile($uploadedFile);
+
+        // Assert
+        $this->assertCount(1, $errorTransfers);
+        $this->assertSame(
+            static::ERROR_COLUMN_MISMATCH,
             $errorTransfers->getIterator()->current()->getMessage(),
         );
     }
