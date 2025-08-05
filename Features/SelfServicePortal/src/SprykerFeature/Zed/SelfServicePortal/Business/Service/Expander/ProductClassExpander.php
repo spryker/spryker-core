@@ -18,11 +18,6 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepository
 
 class ProductClassExpander implements ProductClassExpanderInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Indexer\ProductClassIndexerInterface $productClassIndexer
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Utility\SkuExtractorInterface $skuExtractor
-     */
     public function __construct(
         protected SelfServicePortalRepositoryInterface $selfServicePortalRepository,
         protected ProductClassIndexerInterface $productClassIndexer,
@@ -30,11 +25,6 @@ class ProductClassExpander implements ProductClassExpanderInterface
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         $skus = $this->skuExtractor->extractSkusFromCartChange($cartChangeTransfer);
@@ -60,11 +50,6 @@ class ProductClassExpander implements ProductClassExpanderInterface
         return $cartChangeTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
-     */
     public function expandProductPageDataTransferWithProductClasses(
         ProductPageLoadTransfer $productPageLoadTransfer
     ): ProductPageLoadTransfer {

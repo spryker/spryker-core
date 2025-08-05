@@ -22,11 +22,6 @@ class FileSizeFormatterExtension extends TwigExtension
         ];
     }
 
-    /**
-     * @param int $bytes
-     *
-     * @return string
-     */
     public function formatBytes(int $bytes): string
     {
         if ($bytes >= 1000 * 1000) {

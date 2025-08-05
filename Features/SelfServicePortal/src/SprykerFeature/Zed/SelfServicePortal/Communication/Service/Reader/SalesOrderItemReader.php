@@ -13,18 +13,10 @@ use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 
 class SalesOrderItemReader implements SalesOrderItemReaderInterface
 {
-    /**
-     * @param \Spryker\Zed\Sales\Business\SalesFacadeInterface $salesFacade
-     */
     public function __construct(protected SalesFacadeInterface $salesFacade)
     {
     }
 
-    /**
-     * @param int $idSalesOrderItem
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer|null
-     */
     public function findOrderItemById(int $idSalesOrderItem): ?ItemTransfer
     {
         $orderItemFilterTransfer = (new OrderItemFilterTransfer())

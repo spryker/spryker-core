@@ -13,9 +13,6 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\ShipmentType
 
 class ShipmentTypeProductConcreteFormDataProvider
 {
-    /**
-     * @param \Spryker\Zed\ShipmentType\Business\ShipmentTypeFacadeInterface $shipmentTypeFacade
-     */
     public function __construct(protected ShipmentTypeFacadeInterface $shipmentTypeFacade)
     {
     }

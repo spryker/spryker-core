@@ -111,13 +111,6 @@ class ViewFileDetailTable extends AbstractTable
      */
     protected const SORTABLE_DIRECTION = 'dir';
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
-     * @param int $idFile
-     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
-     * @param \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatter\TimeZoneFormatterInterface $timeZoneFormatter
-     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
-     */
     public function __construct(
         protected SpyFileQuery $fileQuery,
         protected int $idFile,
@@ -127,11 +120,6 @@ class ViewFileDetailTable extends AbstractTable
     ) {
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setUrl(Url::generate(
@@ -239,11 +227,6 @@ class ViewFileDetailTable extends AbstractTable
         return implode(' ', $buttons);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
     protected function prepareCompanyFileQuery(
         FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ): SpyFileQuery {
@@ -287,11 +270,6 @@ class ViewFileDetailTable extends AbstractTable
         return $companyFileQuery;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
     protected function prepareCompanyBusinessUnitFileQuery(
         FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ): SpyFileQuery {
@@ -335,11 +313,6 @@ class ViewFileDetailTable extends AbstractTable
         return $companyBusinessUnitFileQuery;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
     protected function prepareCompanyUserFileQuery(
         FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ): SpyFileQuery {
@@ -390,11 +363,6 @@ class ViewFileDetailTable extends AbstractTable
         return $companyUserFileQuery;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
     protected function prepareAssetFileQuery(
         FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ): SpyFileQuery {
@@ -462,12 +430,6 @@ class ViewFileDetailTable extends AbstractTable
         ];
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
-     *
-     * @return \Propel\Runtime\Connection\StatementWrapper
-     */
     protected function prepareRawQuery(
         TableConfiguration $config,
         FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
@@ -507,11 +469,6 @@ class ViewFileDetailTable extends AbstractTable
         return $preparedStatement;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
-     *
-     * @return \Propel\Runtime\Connection\StatementWrapper
-     */
     protected function prepareRowCountQuery(
         FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ): StatementWrapper {
@@ -543,9 +500,6 @@ class ViewFileDetailTable extends AbstractTable
         return $preparedStatement;
     }
 
-    /**
-     * @return string
-     */
     protected function getSearchString(): string
     {
         $searchTerm = !$this->getSearchTerm() ?: $this->getSearchTerm()['value'];
@@ -553,11 +507,6 @@ class ViewFileDetailTable extends AbstractTable
         return sprintf('%s%%', mb_strtolower($searchTerm));
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return string
-     */
     protected function getOrderBy(TableConfiguration $config): string
     {
         $sortOrderCollection = $this->getOrders($config);
@@ -590,9 +539,6 @@ class ViewFileDetailTable extends AbstractTable
         return $orderClauses ? implode(', ', $orderClauses) : '';
     }
 
-    /**
-     * @return \Propel\Runtime\Adapter\Pdo\PdoAdapter
-     */
     protected function getPropelAdapter(): PdoAdapter
     {
         /** @var \Propel\Runtime\Adapter\Pdo\PdoAdapter $adapter */
@@ -601,17 +547,11 @@ class ViewFileDetailTable extends AbstractTable
         return $adapter;
     }
 
-    /**
-     * @return \Propel\Runtime\Map\DatabaseMap
-     */
     protected function getPropelDatabaseMap(): DatabaseMap
     {
         return Propel::getServiceContainer()->getDatabaseMap(SpyFileTableMap::DATABASE_NAME);
     }
 
-    /**
-     * @return \Propel\Runtime\Connection\ConnectionInterface
-     */
     protected function getReadConnection(): ConnectionInterface
     {
         return Propel::getReadConnection(SpyFileTableMap::DATABASE_NAME);

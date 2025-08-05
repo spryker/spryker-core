@@ -23,9 +23,6 @@ class AddressFormItemsByShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin extend
         return null;
     }
 
-    /**
-     * @return string
-     */
     public function getWidgetClassName(): string
     {
         return SspAddressFormItemsByShipmentTypeWidget::class;

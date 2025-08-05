@@ -11,17 +11,7 @@ use Generated\Shared\Transfer\SspInquiryTransfer;
 
 interface SspInquiryPreCreateHookInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer
-     */
     public function execute(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return bool
-     */
     public function isApplicable(SspInquiryTransfer $sspInquiryTransfer): bool;
 }

@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
 
 interface CompanyFileReaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
-     */
     public function getFileAttachmentCollection(
         FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
     ): FileAttachmentCollectionTransfer;

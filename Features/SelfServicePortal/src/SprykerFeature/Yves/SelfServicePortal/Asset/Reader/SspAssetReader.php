@@ -24,23 +24,12 @@ class SspAssetReader implements SspAssetReaderInterface
      */
     protected const DEFAULT_PAGE = 1;
 
-    /**
-     * @param \SprykerFeature\Client\SelfServicePortal\SelfServicePortalClientInterface $selfServicePortalClient
-     * @param \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(
         protected SelfServicePortalClientInterface $selfServicePortalClient,
         protected SelfServicePortalConfig $selfServicePortalConfig
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
-     */
     public function getSspAssetCollection(
         Request $request,
         SspAssetCriteriaTransfer $sspAssetCriteriaTransfer,
@@ -67,11 +56,6 @@ class SspAssetReader implements SspAssetReaderInterface
         return $this->selfServicePortalClient->getSspAssetCollection($sspAssetCriteriaTransfer);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
-     */
     protected function createPaginationTransfer(Request $request): PaginationTransfer
     {
         $paginationTransfer = new PaginationTransfer();

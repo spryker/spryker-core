@@ -17,9 +17,6 @@ class ViewBusinessUnitSspInquiryPermissionPlugin extends AbstractPlugin implemen
      */
     public const KEY = 'ViewBusinessUnitSspInquiryPermissionPlugin';
 
-    /**
-     * @return string
-     */
     public function getKey(): string
     {
         return static::KEY;

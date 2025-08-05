@@ -29,17 +29,11 @@ class ShipmentTypeProductFormTransferMapperExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $this->tester->ensureProductShipmentTypeTableIsEmpty();
     }
 
-    /**
-     * @return void
-     */
     public function testMapShouldMapFormDataToProductConcreteTransfer(): void
     {
         // Arrange
@@ -61,9 +55,6 @@ class ShipmentTypeProductFormTransferMapperExpanderPluginTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testMapShouldNotMapFormDataWhenShipmentTypesAreNotProvided(): void
     {
         // Arrange
@@ -78,9 +69,6 @@ class ShipmentTypeProductFormTransferMapperExpanderPluginTest extends Unit
         $this->assertCount(0, $productConcreteTransfer->getShipmentTypes());
     }
 
-    /**
-     * @return void
-     */
     public function testMapShouldMapMultipleShipmentTypesToProductConcreteTransfer(): void
     {
         // Arrange
@@ -110,9 +98,6 @@ class ShipmentTypeProductFormTransferMapperExpanderPluginTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testMapShouldOverwriteExistingShipmentTypes(): void
     {
         // Arrange

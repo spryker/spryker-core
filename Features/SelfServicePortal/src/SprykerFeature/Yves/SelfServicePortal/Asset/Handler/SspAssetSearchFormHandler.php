@@ -18,13 +18,6 @@ use Symfony\Component\Form\FormInterface;
 
 class SspAssetSearchFormHandler implements SspAssetSearchFormHandlerInterface
 {
-    /**
-     * @param \Symfony\Component\Form\FormInterface $sspAssetSearchForm
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCriteriaTransfer
-     */
     public function handleSearchForm(
         FormInterface $sspAssetSearchForm,
         SspAssetCriteriaTransfer $sspAssetCriteriaTransfer,

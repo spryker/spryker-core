@@ -23,18 +23,10 @@ class TimeZoneFormatter implements TimeZoneFormatterInterface
      */
     protected const DATE_TIME_ZONE_UTC = 'UTC';
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(protected SelfServicePortalConfig $selfServicePortalConfig)
     {
     }
 
-    /**
-     * @param string $dateTime
-     *
-     * @return string
-     */
     public function formatToUTCFromLocalTimeZone(string $dateTime): string
     {
         $dateTime = new DateTime($dateTime, new DateTimeZone($this->selfServicePortalConfig->getDateTimeZone()));

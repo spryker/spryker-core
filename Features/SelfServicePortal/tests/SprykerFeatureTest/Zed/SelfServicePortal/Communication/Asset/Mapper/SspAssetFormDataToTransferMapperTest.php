@@ -32,9 +32,6 @@ class SspAssetFormDataToTransferMapperTest extends Unit
      */
     protected SspAssetFormDataToTransferMapper $mapper;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -42,9 +39,6 @@ class SspAssetFormDataToTransferMapperTest extends Unit
         $this->mapper = new SspAssetFormDataToTransferMapper();
     }
 
-    /**
-     * @return void
-     */
     public function testMapAssignmentsToSspAssetCollectionRequestTransferWhenAddingAndRemovingAssignments(): void
     {
         // Arrange
@@ -89,9 +83,6 @@ class SspAssetFormDataToTransferMapperTest extends Unit
         $this->assertEquals($removedBusinessUnitId, $assignmentToDelete->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail());
     }
 
-    /**
-     * @return void
-     */
     public function testMapAssignmentsToSspAssetCollectionRequestTransferWhenNoChanges(): void
     {
         // Arrange

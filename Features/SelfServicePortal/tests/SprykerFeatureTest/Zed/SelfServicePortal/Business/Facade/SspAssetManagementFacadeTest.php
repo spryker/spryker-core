@@ -65,9 +65,6 @@ class SspAssetManagementFacadeTest extends Unit
      */
     protected CompanyBusinessUnitTransfer $companyBusinessUnit;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $this->selfServicePortalFacade = new SelfServicePortalFacade();
@@ -308,9 +305,6 @@ class SspAssetManagementFacadeTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testSspAssetDashboardDataExpanderPluginWillAddAssetToCollection(): void
     {
         // Arrange

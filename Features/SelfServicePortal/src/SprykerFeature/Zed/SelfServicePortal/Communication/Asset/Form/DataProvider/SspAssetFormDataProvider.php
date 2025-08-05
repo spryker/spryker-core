@@ -30,12 +30,6 @@ class SspAssetFormDataProvider
      */
     protected const ROUTE_NAME_ASSET_VIEW_IMAGE = 'asset-image';
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacadeInterface $sspAssetManagementFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
-     * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
-     * @param \Spryker\Zed\Company\Business\CompanyFacadeInterface $companyFacade
-     */
     public function __construct(
         protected SelfServicePortalFacadeInterface $sspAssetManagementFacade,
         protected SelfServicePortalConfig $config,
@@ -44,11 +38,6 @@ class SspAssetFormDataProvider
     ) {
     }
 
-    /**
-     * @param int $sspAssetId
-     *
-     * @return \Generated\Shared\Transfer\SspAssetTransfer|null
-     */
     public function getData(int $sspAssetId): ?SspAssetTransfer
     {
         $sspAssetCollectionTransfer = $this->sspAssetManagementFacade->getSspAssetCollection(
@@ -143,11 +132,6 @@ class SspAssetFormDataProvider
         return array_merge($options, $expandedFormOptions);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     *
-     * @return string|null
-     */
     public function getAssetImageUrl(SspAssetTransfer $sspAssetTransfer): ?string
     {
         if (!$sspAssetTransfer->getImage()) {

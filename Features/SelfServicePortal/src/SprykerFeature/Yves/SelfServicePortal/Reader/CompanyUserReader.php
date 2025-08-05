@@ -13,9 +13,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class CompanyUserReader implements CompanyUserReaderInterface
 {
-    /**
-     * @param \Spryker\Client\CompanyUser\CompanyUserClientInterface $companyUserClient
-     */
     public function __construct(protected CompanyUserClientInterface $companyUserClient)
     {
     }

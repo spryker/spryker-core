@@ -27,11 +27,6 @@ class AddressFormChecker implements AddressFormCheckerInterface
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
     public function isApplicableForSingleAddressPerShipmentType(
         ItemTransfer $itemTransfer
     ): bool {
@@ -65,11 +60,6 @@ class AddressFormChecker implements AddressFormCheckerInterface
         return true;
     }
 
-    /**
-     * @param string $shipmentTypeKey
-     *
-     * @return bool
-     */
     public function isApplicableShipmentType(string $shipmentTypeKey): bool
     {
         return in_array(
@@ -79,21 +69,11 @@ class AddressFormChecker implements AddressFormCheckerInterface
         );
     }
 
-    /**
-     * @param string $shipmentTypeKey
-     *
-     * @return bool
-     */
     protected static function hasSingleAddressFieldAlreadyAddedForShipmentType(string $shipmentTypeKey): bool
     {
         return in_array($shipmentTypeKey, static::$processedShipmentTypes, true);
     }
 
-    /**
-     * @param string $shipmentTypeKey
-     *
-     * @return void
-     */
     protected static function addProcessedShipmentType(string $shipmentTypeKey): void
     {
         if (!static::hasSingleAddressFieldAlreadyAddedForShipmentType($shipmentTypeKey)) {

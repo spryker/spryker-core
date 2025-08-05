@@ -79,23 +79,12 @@ class FileMapper
         return $fileCollectionTransfer;
     }
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $fileEntity
-     *
-     * @return \Generated\Shared\Transfer\FileTransfer
-     */
     protected function mapFileEntityToFileTransfer(SpyFile $fileEntity): FileTransfer
     {
         return (new FileTransfer())
             ->fromArray($fileEntity->toArray(), true);
     }
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileTransfer
-     */
     protected function addFileInfoTransfers(SpyFile $file, FileTransfer $fileTransfer): FileTransfer
     {
         foreach ($file->getSpyFileInfos() as $fileInfo) {
@@ -124,11 +113,6 @@ class FileMapper
         return array_unique(explode(',', $relationIdsString));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentTransfer
-     */
     protected function initEmptyCollections(FileAttachmentTransfer $fileAttachmentTransfer): FileAttachmentTransfer
     {
         return $fileAttachmentTransfer

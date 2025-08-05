@@ -17,9 +17,6 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Service\DataImport\DataSet\Pro
 
 class ProductSkuToIdProductStep implements DataImportStepInterface
 {
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery
-     */
     public function __construct(protected SpyProductQuery $productQuery)
     {
     }

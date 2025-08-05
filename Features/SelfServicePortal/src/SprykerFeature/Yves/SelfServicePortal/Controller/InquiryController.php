@@ -183,11 +183,6 @@ class InquiryController extends AbstractController
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer $sspInquiryCollectionResponseTransfer
-     *
-     * @return void
-     */
     protected function addErrors(SspInquiryCollectionResponseTransfer $sspInquiryCollectionResponseTransfer): void
     {
         foreach ($sspInquiryCollectionResponseTransfer->getErrors() as $error) {

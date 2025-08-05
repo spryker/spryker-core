@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Development\Business\ArchitectureSniffer;
 use Codeception\Test\Unit;
 use Exception;
 use Laminas\Config\Reader\ReaderInterface;
+use ReflectionMethod;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSniffer;
 use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
 
@@ -152,5 +153,57 @@ class ArchitectureSnifferTest extends Unit
         // Assert
         $this->assertCount(1, $result);
         $this->assertEquals('Processed violation', $result[0]['description']);
+    }
+
+    /**
+     * @return void
+     */
+    public function testResolveRulesetPathWithCustomRuleset(): void
+    {
+        // Arrange
+        $tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'testDir' . uniqid();
+        mkdir($tempDir, 0777, true);
+
+        $rulesetFile = $tempDir . DIRECTORY_SEPARATOR . 'architectural-ruleset.xml';
+        touch($rulesetFile);
+
+        $xmlReaderMock = $this->createMock(ReaderInterface::class);
+        $configurationBuilderMock = $this->createMock(SnifferConfigurationBuilderInterface::class);
+        $defaultCommand = 'phpmd /path/to/src text /path/to/ruleset.xml';
+        $architectureSniffer = new ArchitectureSniffer($xmlReaderMock, $defaultCommand, $configurationBuilderMock);
+
+        $reflectionMethod = new ReflectionMethod(ArchitectureSniffer::class, 'resolveRulesetPath');
+        $reflectionMethod->setAccessible(true);
+
+        // Act
+        $result = $reflectionMethod->invoke($architectureSniffer, $tempDir . DIRECTORY_SEPARATOR . 'module');
+
+        // Assert
+        $this->assertStringContainsString($rulesetFile, $result);
+        $this->assertNotEquals($defaultCommand, $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testResolveRulesetPathWithoutCustomRuleset(): void
+    {
+        // Arrange
+        $tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'testDir' . uniqid();
+        mkdir($tempDir, 0777, true);
+
+        $xmlReaderMock = $this->createMock(ReaderInterface::class);
+        $configurationBuilderMock = $this->createMock(SnifferConfigurationBuilderInterface::class);
+        $defaultCommand = 'phpmd /path/to/src text /path/to/ruleset.xml';
+        $architectureSniffer = new ArchitectureSniffer($xmlReaderMock, $defaultCommand, $configurationBuilderMock);
+
+        $reflectionMethod = new ReflectionMethod(ArchitectureSniffer::class, 'resolveRulesetPath');
+        $reflectionMethod->setAccessible(true);
+
+        // Act
+        $result = $reflectionMethod->invoke($architectureSniffer, $tempDir . DIRECTORY_SEPARATOR . 'module');
+
+        // Assert
+        $this->assertEquals($defaultCommand, $result);
     }
 }

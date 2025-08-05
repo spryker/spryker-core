@@ -13,19 +13,10 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class PaymentMethodResolver implements PaymentMethodResolverInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
-     */
     public function __construct(protected SelfServicePortalConfig $config)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
-     *
-     * @return string
-     */
     public function resolvePaymentMethod(ItemTransfer $itemTransfer, PaymentTransfer $paymentTransfer): string
     {
         $paymentMethodStateMachineMapping = $this->config->getPaymentMethodStateMachineProcessMapping();
@@ -45,12 +36,6 @@ class PaymentMethodResolver implements PaymentMethodResolverInterface
         return $itemPaymentMethod;
     }
 
-    /**
-     * @param string $orderPaymentMethodName
-     * @param string $paymentMethodName
-     *
-     * @return bool
-     */
     protected function hasSimilarName(string $orderPaymentMethodName, string $paymentMethodName): bool
     {
         $matches = [];

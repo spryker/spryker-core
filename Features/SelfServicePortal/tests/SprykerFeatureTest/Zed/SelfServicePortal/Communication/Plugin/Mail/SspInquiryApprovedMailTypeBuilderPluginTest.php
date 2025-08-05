@@ -40,9 +40,6 @@ class SspInquiryApprovedMailTypeBuilderPluginTest extends Unit
      */
     protected $selfServicePortalConfig;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -53,9 +50,6 @@ class SspInquiryApprovedMailTypeBuilderPluginTest extends Unit
         $this->sspInquiryApprovedMailTypeBuilderPlugin->setConfig($this->selfServicePortalConfig);
     }
 
-    /**
-     * @return void
-     */
     public function testGetName(): void
     {
         // Act
@@ -65,9 +59,6 @@ class SspInquiryApprovedMailTypeBuilderPluginTest extends Unit
         $this->assertSame('ssp inquiry approved', $result);
     }
 
-    /**
-     * @return void
-     */
     public function testBuild(): void
     {
         // Arrange

@@ -46,19 +46,11 @@ class SspAssetForm extends AbstractType
      */
     public const OPTION_ORIGINAL_IMAGE_URL = 'imageUrl';
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return 'assetForm';
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

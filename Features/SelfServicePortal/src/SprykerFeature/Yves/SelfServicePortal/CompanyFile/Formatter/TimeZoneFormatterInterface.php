@@ -9,10 +9,5 @@ namespace SprykerFeature\Yves\SelfServicePortal\CompanyFile\Formatter;
 
 interface TimeZoneFormatterInterface
 {
-    /**
-     * @param string $dateTime
-     *
-     * @return string
-     */
     public function formatToUTCFromLocalTimeZone(string $dateTime): string;
 }

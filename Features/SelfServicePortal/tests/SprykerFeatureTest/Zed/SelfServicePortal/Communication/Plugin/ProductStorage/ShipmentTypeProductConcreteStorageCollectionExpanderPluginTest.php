@@ -28,17 +28,11 @@ class ShipmentTypeProductConcreteStorageCollectionExpanderPluginTest extends Uni
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $this->tester->ensureProductShipmentTypeTableIsEmpty();
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldExpandProductConcreteWithShipmentTypeUuids(): void
     {
         // Arrange
@@ -66,9 +60,6 @@ class ShipmentTypeProductConcreteStorageCollectionExpanderPluginTest extends Uni
         );
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldNotExpandProductConcreteWithoutShipmentTypes(): void
     {
         // Arrange
@@ -86,9 +77,6 @@ class ShipmentTypeProductConcreteStorageCollectionExpanderPluginTest extends Uni
         $this->assertEmpty($expandedProductConcreteStorageTransfers[0]->getShipmentTypeUuids());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldExpandOnlyWithRelatedShipmentTypes(): void
     {
         // Arrange
@@ -119,9 +107,6 @@ class ShipmentTypeProductConcreteStorageCollectionExpanderPluginTest extends Uni
         $this->assertEmpty($expandedProductConcreteStorageTransfers[1]->getShipmentTypeUuids());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldHandleEmptyCollection(): void
     {
         // Act

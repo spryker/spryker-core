@@ -17,17 +17,11 @@ class CreateSspInquiryPermissionPluginTest extends Unit
      */
     protected CreateSspInquiryPermissionPlugin $plugin;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $this->plugin = new CreateSspInquiryPermissionPlugin();
     }
 
-    /**
-     * @return void
-     */
     public function testGetKeyReturnsCorrectKey(): void
     {
         // Arrange

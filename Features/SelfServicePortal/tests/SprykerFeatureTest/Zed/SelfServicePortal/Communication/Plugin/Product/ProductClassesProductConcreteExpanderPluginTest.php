@@ -27,9 +27,6 @@ class ProductClassesProductConcreteExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandProductConcrete(): void
     {
         // Arrange
@@ -56,9 +53,6 @@ class ProductClassesProductConcreteExpanderPluginTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testExpandProductConcreteWithMultipleProductClasses(): void
     {
         // Arrange
@@ -86,9 +80,6 @@ class ProductClassesProductConcreteExpanderPluginTest extends Unit
         $this->assertCount(2, $expandedProductConcreteTransfers[0]->getProductClasses());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandMultipleProductConcretes(): void
     {
         // Arrange

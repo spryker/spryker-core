@@ -31,9 +31,6 @@ class ProductClassFormExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandShouldAddProductClassFieldToForm(): void
     {
         // Arrange
@@ -46,9 +43,6 @@ class ProductClassFormExpanderPluginTest extends Unit
         $this->assertTrue($builder->has(ProductClassForm::FIELD_PRODUCT_CLASSES));
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldConfigureProductClassFieldAsMultipleSelect(): void
     {
         // Arrange
@@ -62,9 +56,6 @@ class ProductClassFormExpanderPluginTest extends Unit
         $this->assertTrue($form->get(ProductClassForm::FIELD_PRODUCT_CLASSES)->getConfig()->getOption('multiple'));
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldSetProductClassFieldAsNotRequired(): void
     {
         // Arrange
@@ -78,9 +69,6 @@ class ProductClassFormExpanderPluginTest extends Unit
         $this->assertFalse($form->get(ProductClassForm::FIELD_PRODUCT_CLASSES)->getConfig()->getOption('required'));
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldPreserveExistingFormFields(): void
     {
         // Arrange
@@ -148,11 +136,6 @@ class ProductClassFormExpanderPluginTest extends Unit
         return $form;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
     protected function expandForm(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builder->add(

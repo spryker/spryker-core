@@ -126,11 +126,6 @@ class SelfServicePortalFactory extends AbstractFactory
      */
     protected const FORM_FACTORY = 'FORM_FACTORY';
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function getSspServiceCancelForm(?ItemTransfer $itemTransfer = null): FormInterface
     {
         $dataProvider = $this->createSspServiceCancelFormDataProvider();
@@ -139,17 +134,11 @@ class SelfServicePortalFactory extends AbstractFactory
         return $this->getFormFactory()->create(SspServiceCancelForm::class, $data);
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Form\DataProvider\SspServiceCancelFormDataProvider
-     */
     public function createSspServiceCancelFormDataProvider(): SspServiceCancelFormDataProvider
     {
         return new SspServiceCancelFormDataProvider();
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function getServiceSearchForm(): FormInterface
     {
         $dataProvider = $this->createServiceSearchFormDataProvider();
@@ -161,9 +150,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Form\DataProvider\ServiceSearchFormDataProvider
-     */
     public function createServiceSearchFormDataProvider(): ServiceSearchFormDataProvider
     {
         return new ServiceSearchFormDataProvider(
@@ -173,9 +159,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Handler\ServiceSearchFormHandlerInterface
-     */
     public function createServiceSearchFormHandler(): ServiceSearchFormHandlerInterface
     {
         return new ServiceSearchFormHandler(
@@ -184,9 +167,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormFactoryInterface
-     */
     protected function getFormFactory(): FormFactoryInterface
     {
         $container = $this->createContainerWithProvidedDependencies();
@@ -194,9 +174,6 @@ class SelfServicePortalFactory extends AbstractFactory
         return $container->get(static::FORM_FACTORY);
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Reader\ShipmentTypeReaderInterface
-     */
     public function createShipmentTypeReader(): ShipmentTypeReaderInterface
     {
         return new ShipmentTypeReader(
@@ -205,9 +182,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Checker\ShipmentTypeCheckerInterface
-     */
     public function createShipmentTypeChecker(): ShipmentTypeCheckerInterface
     {
         return new ShipmentTypeChecker(
@@ -215,9 +189,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Provider\ShipmentTypeOptionsProviderInterface
-     */
     public function createShipmentTypeOptionsProvider(): ShipmentTypeOptionsProviderInterface
     {
         return new ShipmentTypeOptionsProvider(
@@ -226,9 +197,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Expander\ShipmentTypeExpanderInterface
-     */
     public function createShipmentTypeExpander(): ShipmentTypeExpanderInterface
     {
         return new ShipmentTypeExpander(
@@ -237,9 +205,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Expander\ProductOfferExpanderInterface
-     */
     public function createProductOfferExpander(): ProductOfferExpanderInterface
     {
         return new ProductOfferExpander(
@@ -247,9 +212,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Expander\ServicePointExpanderInterface
-     */
     public function createServicePointExpander(): ServicePointExpanderInterface
     {
         return new ServicePointExpander(
@@ -257,33 +219,21 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Expander\ServiceDateTimeExpanderInterface
-     */
     public function createServiceDateTimeExpander(): ServiceDateTimeExpanderInterface
     {
         return new ServiceDateTimeExpander();
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Sorter\ShipmentTypeGroupSorterInterface
-     */
     public function createShipmentTypeGroupSorter(): ShipmentTypeGroupSorterInterface
     {
         return new ShipmentTypeGroupSorter($this->getConfig());
     }
 
-    /**
-     * @return \Spryker\Shared\Twig\TwigExtension
-     */
     public function createFileSizeFormatterExtension(): TwigExtension
     {
         return new FileSizeFormatterExtension();
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Grouper\ItemShipmentTypeGrouperInterface
-     */
     public function createItemShipmentTypeGrouper(): ItemShipmentTypeGrouperInterface
     {
         return new ItemShipmentTypeGrouper(
@@ -292,9 +242,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Grouper\AddressFormItemShipmentTypeGrouperInterface
-     */
     public function createAddressFormItemShipmentTypeGrouper(): AddressFormItemShipmentTypeGrouperInterface
     {
         return new AddressFormItemShipmentTypeGrouper(
@@ -303,11 +250,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createServiceItemSchedulerForm(ItemTransfer $itemTransfer): FormInterface
     {
         return $this->getFormFactory()->create(
@@ -316,9 +258,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Reader\ServicePointReaderInterface
-     */
     public function createServicePointReader(): ServicePointReaderInterface
     {
         return new ServicePointReader(
@@ -327,19 +266,11 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @param string $searchResults
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function createResponse(string $searchResults): Response
     {
         return new Response($searchResults);
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Reader\OrderReaderInterface
-     */
     public function createOrderReader(): OrderReaderInterface
     {
         return new OrderReader(
@@ -350,9 +281,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Resolver\ShopContextResolverInterface
-     */
     public function createShopContextResolver(): ShopContextResolverInterface
     {
         return new ShopContextResolver(
@@ -360,9 +288,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Reader\ProductOfferReaderInterface
-     */
     public function createProductOfferReader(): ProductOfferReaderInterface
     {
         return new ProductOfferReader(
@@ -371,25 +296,16 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Reader\CompanyUserReaderInterface
-     */
     public function createCompanyUserReader(): CompanyUserReaderInterface
     {
         return new CompanyUserReader($this->getCompanyUserClient());
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\CompanyFile\Formatter\TimeZoneFormatterInterface
-     */
     public function createTimeZoneFormatter(): TimeZoneFormatterInterface
     {
         return new TimeZoneFormatter($this->getConfig());
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\CompanyFile\Form\Handler\FileSearchFilterFormHandlerInterface
-     */
     public function createFileSearchFilterHandler(): FileSearchFilterFormHandlerInterface
     {
         return new FileSearchFilterFormHandler(
@@ -400,9 +316,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-        /**
-         * @return \SprykerFeature\Yves\SelfServicePortal\CompanyFile\Form\DataProvider\FileSearchFilterFormDataProvider
-         */
     public function createFileSearchFilterFormDataProvider(): FileSearchFilterFormDataProvider
     {
         return new FileSearchFilterFormDataProvider(
@@ -427,9 +340,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Inquiry\Reader\SspInquiryReaderInterface
-     */
     public function createSspInquiryReader(): SspInquiryReaderInterface
     {
         return new SspInquiryReader(
@@ -439,17 +349,11 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Inquiry\Handler\SspInquirySearchFormHandlerInterface
-     */
     public function createSspInquirySearchFormHandler(): SspInquirySearchFormHandlerInterface
     {
         return new SspInquirySearchFormHandler();
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Inquiry\Mapper\CreateSspInquiryFormDataToTransferMapperInterface
-     */
     public function createCreateSspInquiryFormDataToTransferMapper(): CreateSspInquiryFormDataToTransferMapperInterface
     {
         return new CreateSspInquiryFormDataToTransferMapper(
@@ -459,9 +363,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-     /**
-      * @return \Symfony\Component\Form\FormInterface
-      */
     public function getSspInquiryCancelForm(): FormInterface
     {
         return $this->getFormFactory()->create(SspInquiryCancelForm::class);
@@ -489,17 +390,11 @@ class SelfServicePortalFactory extends AbstractFactory
         ];
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Inquiry\Form\Expander\CreateSspInquiryFormExpanderInterface
-     */
     public function createCreateGeneralSspInquiryFormExpander(): CreateSspInquiryFormExpanderInterface
     {
         return new CreateGeneralSspInquiryFormExpander($this->getRequestStack());
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Inquiry\Form\Expander\CreateSspInquiryFormExpanderInterface
-     */
     public function createCreateOrderSspInquiryFormExpander(): CreateSspInquiryFormExpanderInterface
     {
         return new CreateOrderSspInquiryFormExpander($this->getRequestStack());
@@ -513,9 +408,6 @@ class SelfServicePortalFactory extends AbstractFactory
         return new CreateSspAssetSspInquiryFormExpander($this->getRequestStack());
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Inquiry\Form\DataProvider\SspInquiryFormDataProvider
-     */
     public function getSspInquiryFormDataProvider(): SspInquiryFormDataProvider
     {
         return new SspInquiryFormDataProvider($this->getConfig());
@@ -535,145 +427,91 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Inquiry\Form\DataProvider\SspInquirySearchFormDataProvider
-     */
     public function getSspInquirySearchFormDataProvider(): SspInquirySearchFormDataProvider
     {
         return new SspInquirySearchFormDataProvider($this->getConfig(), $this->getStoreClient()->getCurrentStore()->getTimezone());
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\RequestStack
-     */
     public function getRequestStack(): RequestStack
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_REQUEST_STACK);
     }
 
-    /**
-     * @return \Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageClientInterface
-     */
     public function getShipmentTypeStorageClient(): ShipmentTypeStorageClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_SHIPMENT_TYPE_STORAGE);
     }
 
-    /**
-     * @return \Spryker\Client\ProductOfferStorage\ProductOfferStorageClientInterface
-     */
     public function getProductOfferStorageClient(): ProductOfferStorageClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_PRODUCT_OFFER_STORAGE);
     }
 
-    /**
-     * @return \Spryker\Client\Store\StoreClientInterface
-     */
     public function getStoreClient(): StoreClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_STORE);
     }
 
-    /**
-     * @return \Spryker\Client\ServicePointSearch\ServicePointSearchClientInterface
-     */
     public function getServicePointSearchClient(): ServicePointSearchClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_SERVICE_POINT_SEARCH);
     }
 
-    /**
-     * @return \Twig\Environment
-     */
     public function getTwigEnvironment(): Environment
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::TWIG_ENVIRONMENT);
     }
 
-    /**
-     * @return \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface
-     */
     public function getGlossaryStorageClient(): GlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 
-    /**
-     * @return string
-     */
     public function getLocale(): string
     {
         return $this->getTwigEnvironment()->getGlobals()['app']['locale'];
     }
 
-    /**
-     * @return \Spryker\Client\ProductStorage\ProductStorageClientInterface
-     */
     public function getProductStorageClient(): ProductStorageClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 
-    /**
-     * @return \Spryker\Client\Customer\CustomerClientInterface
-     */
     public function getCustomerClient(): CustomerClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_CUSTOMER);
     }
 
-    /**
-     * @return \Spryker\Client\CompanyBusinessUnit\CompanyBusinessUnitClientInterface
-     */
     public function getCompanyBusinessUnitClient(): CompanyBusinessUnitClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT);
     }
 
-    /**
-     * @return \Spryker\Client\Permission\PermissionClientInterface
-     */
     public function getPermissionClient(): PermissionClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_PERMISSION);
     }
 
-    /**
-     * @return \Spryker\Client\Sales\SalesClientInterface
-     */
     public function getSalesClient(): SalesClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_SALES);
     }
 
-    /**
-     * @return \Spryker\Client\CompanyUser\CompanyUserClientInterface
-     */
     public function getCompanyUserClient(): CompanyUserClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_COMPANY_USER);
     }
 
-     /**
-      * @return \Spryker\Service\FileManager\FileManagerServiceInterface
-      */
     public function getFileManagerService(): FileManagerServiceInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_FILE_MANAGER);
     }
 
-    /**
-     * @return \Spryker\Yves\Router\Router\RouterInterface
-     */
     public function getRouter(): RouterInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_ROUTER);
     }
 
-    /**
-     * @return \SprykerFeature\Service\SelfServicePortal\SelfServicePortalServiceInterface
-     */
     public function getSelfServicePortalService(): SelfServicePortalServiceInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_SELF_SERVICE_PORTAL);
@@ -700,25 +538,16 @@ class SelfServicePortalFactory extends AbstractFactory
         return $this->getFormFactory()->create(SspAssetBusinessUnitRelationsForm::class, $formData);
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Asset\Form\DataProvider\SspAssetFormDataProvider
-     */
     public function createSspAssetFormDataProvider(): SspAssetFormDataProvider
     {
         return new SspAssetFormDataProvider($this->getClient(), $this->getConfig());
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Asset\Mapper\SspAssetFormDataToTransferMapperInterface
-     */
     public function createSspAssetFormDataToTransferMapper(): SspAssetFormDataToTransferMapperInterface
     {
         return new SspAssetFormDataToTransferMapper();
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Asset\Permission\SspAssetCustomerPermissionCheckerInterface
-     */
     public function createSspAssetCustomerPermissionChecker(): SspAssetCustomerPermissionCheckerInterface
     {
         return new SspAssetCustomerPermissionChecker();
@@ -734,25 +563,16 @@ class SelfServicePortalFactory extends AbstractFactory
         return $this->getFormFactory()->create(SspAssetSearchForm::class, [], $options);
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Asset\Form\DataProvider\SspAssetSearchFormDataProvider
-     */
     public function createSspAssetSearchFormDataProvider(): SspAssetSearchFormDataProvider
     {
         return new SspAssetSearchFormDataProvider();
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Asset\Handler\SspAssetSearchFormHandlerInterface
-     */
     public function createSspAssetSearchFormHandler(): SspAssetSearchFormHandlerInterface
     {
         return new SspAssetSearchFormHandler();
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Asset\Reader\SspAssetReaderInterface
-     */
     public function createSspAssetReader(): SspAssetReaderInterface
     {
         return new SspAssetReader(
@@ -761,17 +581,11 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Asset\Expander\SspAssetExpanderInterface
-     */
     public function createSspAssetExpander(): SspAssetExpanderInterface
     {
         return new SspAssetExpander();
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Inquiry\Handler\SspInquiryRestrictionHandlerInterface
-     */
     public function createSspInquiryRestrictionHandler(): SspInquiryRestrictionHandlerInterface
     {
         return new SspInquiryRestrictionHandler(
@@ -780,9 +594,6 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Dashboard\Handler\SspDashboardRestrictionHandlerInterface
-     */
     public function createSspDashboardRestrictionHandler(): SspDashboardRestrictionHandlerInterface
     {
         return new SspDashboardRestrictionHandler(
@@ -791,25 +602,16 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormTypeInterface
-     */
     public function createSingleAddressPerShipmentTypeAddressStepForm(): FormTypeInterface
     {
         return new SingleAddressPerShipmentTypeAddressStepForm();
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Checker\AddressFormCheckerInterface
-     */
     public function createAddressFormChecker(): AddressFormCheckerInterface
     {
         return new AddressFormChecker($this->getConfig());
     }
 
-    /**
-     * @return \SprykerFeature\Yves\SelfServicePortal\Service\Handler\SingleAddressPerShipmentTypePreSubmitHandlerInterface
-     */
     public function createSingleAddressPerShipmentTypePreSubmitHandler(): SingleAddressPerShipmentTypePreSubmitHandlerInterface
     {
         return new SingleAddressPerShipmentTypePreSubmitHandler($this->createAddressFormChecker());

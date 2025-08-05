@@ -15,19 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface SspInquiryReaderInterface
 {
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
-     */
     public function getSspInquiryCollection(Request $request, SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer;
 
-    /**
-     * @param string $reference
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer|null
-     */
     public function getSspInquiry(string $reference, CompanyUserTransfer $companyUserTransfer): ?SspInquiryTransfer;
 }

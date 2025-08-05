@@ -55,11 +55,6 @@ class FilesValidator extends FileValidator
         ])->addViolation();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileUploadTransfer $fileUploadTransfer
-     *
-     * @return \Symfony\Component\HttpFoundation\File\UploadedFile
-     */
     protected function createSymfonyUploadedFileFromTransfer(FileUploadTransfer $fileUploadTransfer): UploadedFile
     {
         return new UploadedFile(
@@ -69,11 +64,6 @@ class FilesValidator extends FileValidator
         );
     }
 
-    /**
-     * @param int $size
-     *
-     * @return string
-     */
     private function convertToReadableSize(int $size): string
     {
         if ($size >= 1000 * 1000 * 1000) {

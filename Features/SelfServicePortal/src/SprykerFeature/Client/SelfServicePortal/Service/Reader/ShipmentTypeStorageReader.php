@@ -15,10 +15,6 @@ use Spryker\Client\Store\StoreClientInterface;
 
 class ShipmentTypeStorageReader implements ShipmentTypeStorageReaderInterface
 {
-    /**
-     * @param \Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageClientInterface $shipmentTypeStorageClient
-     * @param \Spryker\Client\Store\StoreClientInterface $storeClient
-     */
     public function __construct(
         protected ShipmentTypeStorageClientInterface $shipmentTypeStorageClient,
         protected StoreClientInterface $storeClient

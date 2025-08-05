@@ -18,11 +18,6 @@ class CompanyFileReader implements CompanyFileReaderInterface
 {
     use PermissionAwareTrait;
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Permission\FileAttachmentPermissionCheckerInterface $fileAttachmentPermissionChecker
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Permission\FileAttachmentPermissionExpanderInterface $fileAttachmentPermissionExpander
-     */
     public function __construct(
         protected SelfServicePortalRepositoryInterface $selfServicePortalRepository,
         protected FileAttachmentPermissionCheckerInterface $fileAttachmentPermissionChecker,
@@ -30,11 +25,6 @@ class CompanyFileReader implements CompanyFileReaderInterface
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
-     */
     public function getFileAttachmentCollection(
         FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
     ): FileAttachmentCollectionTransfer {

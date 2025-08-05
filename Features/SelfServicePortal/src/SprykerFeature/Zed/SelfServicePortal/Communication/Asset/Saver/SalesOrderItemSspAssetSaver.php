@@ -23,22 +23,12 @@ class SalesOrderItemSspAssetSaver implements SalesOrderItemSspAssetSaverInterfac
 {
     use TransactionTrait;
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface $selfServicePortalEntityManager
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacadeInterface $selfServicePortalFacade
-     */
     public function __construct(
         protected SelfServicePortalEntityManagerInterface $selfServicePortalEntityManager,
         protected SelfServicePortalFacadeInterface $selfServicePortalFacade
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     *
-     * @return void
-     */
     public function saveSalesOrderItemSspAssetsFromQuote(
         QuoteTransfer $quoteTransfer,
         SaveOrderTransfer $saveOrderTransfer
@@ -204,12 +194,6 @@ class SalesOrderItemSspAssetSaver implements SalesOrderItemSspAssetSaverInterfac
         return $indexedAssets;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     * @param int $idSalesOrderItem
-     *
-     * @return \Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer
-     */
     protected function createSalesOrderItemSspAssetTransfer(SspAssetTransfer $sspAssetTransfer, int $idSalesOrderItem): SalesOrderItemSspAssetTransfer
     {
         $salesOrderItemSspAssetTransfer = (new SalesOrderItemSspAssetTransfer())

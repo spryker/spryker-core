@@ -27,11 +27,6 @@ class SspAssetBusinessUnitRelationsForm extends AbstractType
      */
     public const FIELD_ASSET_REFERENCE = 'ssp_asset_reference';
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

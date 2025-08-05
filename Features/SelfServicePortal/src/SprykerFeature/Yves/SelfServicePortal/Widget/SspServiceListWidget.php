@@ -27,10 +27,6 @@ class SspServiceListWidget extends AbstractWidget
      */
     protected const PARAMETER_MORE_LINK = 'moreLink';
 
-    /**
-     * @param \Generated\Shared\Transfer\SspServiceCollectionTransfer|null $sspServiceCollectionTransfer
-     * @param string|null $moreLink
-     */
     public function __construct(?SspServiceCollectionTransfer $sspServiceCollectionTransfer, ?string $moreLink = null)
     {
         $this->addTotalItemsParameter($sspServiceCollectionTransfer);
@@ -38,47 +34,26 @@ class SspServiceListWidget extends AbstractWidget
         $this->addMoreLinkParameter($moreLink);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspServiceCollectionTransfer|null $sspServiceCollectionTransfer
-     *
-     * @return void
-     */
     protected function addTotalItemsParameter(?SspServiceCollectionTransfer $sspServiceCollectionTransfer): void
     {
         $this->addParameter(static::PARAMETER_TOTAL_ITEMS, $sspServiceCollectionTransfer?->getPagination()?->getNbResults());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspServiceCollectionTransfer|null $sspServiceCollectionTransfer
-     *
-     * @return void
-     */
     protected function addServicesParameter(?SspServiceCollectionTransfer $sspServiceCollectionTransfer): void
     {
         $this->addParameter(static::PARAMETER_SERVICES, $sspServiceCollectionTransfer?->getServices());
     }
 
-    /**
-     * @param string|null $moreLink
-     *
-     * @return void
-     */
     protected function addMoreLinkParameter(?string $moreLink): void
     {
         $this->addParameter(static::PARAMETER_MORE_LINK, $moreLink);
     }
 
-    /**
-     * @return string
-     */
     public static function getName(): string
     {
         return 'SspServiceListWidget';
     }
 
-    /**
-     * @return string
-     */
     public static function getTemplate(): string
     {
         return '@SelfServicePortal/views/dashboard-service/dashboard-service.twig';

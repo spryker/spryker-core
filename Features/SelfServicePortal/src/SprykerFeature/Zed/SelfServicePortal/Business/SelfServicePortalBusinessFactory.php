@@ -201,9 +201,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
 {
     use DataImportFactoryTrait;
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Reader\CompanyFileReaderInterface
-     */
     public function createCompanyFileReader(): CompanyFileReaderInterface
     {
         return new CompanyFileReader(
@@ -213,17 +210,11 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Permission\FileAttachmentPermissionCheckerInterface
-     */
     public function createFileAttachmentPermissionChecker(): FileAttachmentPermissionCheckerInterface
     {
         return new FileAttachmentPermissionChecker();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Creator\FileAttachmentCreatorInterface
-     */
     public function createFileAttachmentCreator(): FileAttachmentCreatorInterface
     {
         return new FileAttachmentCreator(
@@ -231,9 +222,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Deleter\FileAttachmentDeleterInterface
-     */
     public function createFileAttachmentDeleter(): FileAttachmentDeleterInterface
     {
         return new FileAttachmentDeleter(
@@ -242,17 +230,11 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\DashboardDataExpander\FileDashboardDataExpanderInterface
-     */
     public function createFileDashboardDataExpander(): FileDashboardDataExpanderInterface
     {
         return new FileDashboardDataExpander($this->createCompanyFileReader(), $this->getConfig());
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\AssetFileExpanderInterface
-     */
     public function createAssetFileExpander(): AssetFileExpanderInterface
     {
         return new AssetFileExpander(
@@ -260,9 +242,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Saver\ProductShipmentTypeSaverInterface
-     */
     public function createProductShipmentTypeSaver(): ProductShipmentTypeSaverInterface
     {
         return new ProductShipmentTypeSaver(
@@ -272,25 +251,16 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductConcreteShipmentTypeExpanderInterface
-     */
     public function createProductConcreteShipmentTypeExpander(): ProductConcreteShipmentTypeExpanderInterface
     {
         return new ProductConcreteShipmentTypeExpander($this->createProductShipmentTypeReader());
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemScheduleExpanderInterface
-     */
     public function createOrderItemScheduleExpander(): OrderItemScheduleExpanderInterface
     {
         return new OrderItemScheduleExpander();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ProductShipmentTypeReaderInterface
-     */
     public function createProductShipmentTypeReader(): ProductShipmentTypeReaderInterface
     {
         return new ProductShipmentTypeReader(
@@ -300,17 +270,11 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Grouper\ShipmentTypeGrouperInterface
-     */
     public function createShipmentTypeGrouper(): ShipmentTypeGrouperInterface
     {
         return new ShipmentTypeGrouper();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ShipmentTypeProductConcreteStorageExpanderInterface
-     */
     public function createShipmentTypeProductConcreteStorageExpander(): ShipmentTypeProductConcreteStorageExpanderInterface
     {
         return new ShipmentTypeProductConcreteStorageExpander(
@@ -319,9 +283,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Resolver\PaymentMethodResolverInterface
-     */
     public function createPaymentMethodResolver(): PaymentMethodResolverInterface
     {
         return new PaymentMethodResolver(
@@ -329,9 +290,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Updater\OrderItemScheduleUpdaterInterface
-     */
     public function createOrderItemScheduleUpdater(): OrderItemScheduleUpdaterInterface
     {
         return new OrderItemScheduleUpdater(
@@ -340,9 +298,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ServiceReaderInterface
-     */
     public function createServiceReader(): ServiceReaderInterface
     {
         return new ServiceReader(
@@ -351,25 +306,16 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Permission\SspServiceCustomerPermissionExpanderInterface
-     */
     public function createSspServiceCustomerPermissionExpander(): SspServiceCustomerPermissionExpanderInterface
     {
         return new SspServiceCustomerPermissionExpander();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Permission\FileAttachmentPermissionExpanderInterface
-     */
     public function createFileAttachmentPermissionExpander(): FileAttachmentPermissionExpanderInterface
     {
         return new FileAttachmentCriteriaPermissionExpander();
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
-     */
     public function getProductShipmentTypeDataImporter(): DataImporterInterface
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
@@ -388,9 +334,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return $dataImporter;
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
     public function createProductSkuToIdProductStep(): DataImportStepInterface
     {
         return new ProductSkuToIdProductStep(
@@ -398,9 +341,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
     public function createProductToProductClassSkuToIdProductStep(): DataImportStepInterface
     {
         return new ProductToProductClassSkuToIdProductStep(
@@ -408,9 +348,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
     public function createShipmentTypeKeyToIdShipmentTypeStep(): DataImportStepInterface
     {
         return new ShipmentTypeKeyToIdShipmentTypeStep(
@@ -418,9 +355,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
     public function createProductShipmentTypeWriterStep(): DataImportStepInterface
     {
         return new ProductShipmentTypeWriterStep(
@@ -428,9 +362,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ShipmentTypeItemExpanderInterface
-     */
     public function createShipmentTypeItemExpander(): ShipmentTypeItemExpanderInterface
     {
         return new ShipmentTypeItemExpander(
@@ -440,9 +371,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ServicePointItemExpanderInterface
-     */
     public function createServicePointItemExpander(): ServicePointItemExpanderInterface
     {
         return new ServicePointItemExpander(
@@ -450,17 +378,11 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePointSearchCoordinatesExpanderInterface
-     */
     public function createServicePointSearchCoordinatesExpander(): ServicePointSearchCoordinatesExpanderInterface
     {
         return new ServicePointSearchCoordinatesExpander();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ShipmentTypeReaderInterface
-     */
     public function createShipmentTypeReader(): ShipmentTypeReaderInterface
     {
         return new ShipmentTypeReader(
@@ -469,9 +391,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ServicePointReaderInterface
-     */
     public function createServicePointReader(): ServicePointReaderInterface
     {
         return new ServicePointReader(
@@ -479,9 +398,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
-     */
     public function getProductClassDataImporter(): DataImporterInterface
     {
         $config = $this->getConfig()->getProductClassDataImporterConfiguration();
@@ -498,9 +414,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return $dataImporter;
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
-     */
     public function getProductToProductClassDataImporter(): DataImporterInterface
     {
         $config = $this->getConfig()->getProductToProductClassDataImporterConfiguration();
@@ -519,9 +432,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return $dataImporter;
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
     public function createProductClassWriterStep(): DataImportStepInterface
     {
         return new ProductClassWriterStep(
@@ -529,9 +439,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
     public function createProductClassKeyToIdProductClassStep(): DataImportStepInterface
     {
         return new ProductClassKeyToIdProductClassStep(
@@ -539,9 +446,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
     public function createProductToProductClassWriterStep(): DataImportStepInterface
     {
         return new ProductToProductClassWriterStep(
@@ -551,9 +455,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Canceler\OrderItemCancelerInterface
-     */
     public function createOrderItemCanceler(): OrderItemCancelerInterface
     {
         return new OrderItemCanceler(
@@ -561,25 +462,16 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery
-     */
     public function getProductClassQuery(): SpyProductClassQuery
     {
         return SpyProductClassQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductToProductClassQuery
-     */
     public function getProductToProductClassQuery(): SpyProductToProductClassQuery
     {
         return SpyProductToProductClassQuery::create();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Filter\QuoteItemFilterInterface
-     */
     public function createQuoteItemFilter(): QuoteItemFilterInterface
     {
         return new QuoteItemFilter(
@@ -588,17 +480,11 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Dashboard\Reader\DashboardReaderInterface
-     */
     public function createDashboardReader(): DashboardReaderInterface
     {
         return new DashboardReader($this->getDashboardDataExpanderPlugins());
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Writer\SspInquiryWriterInterface
-     */
     public function createSspInquiryWriter(): SspInquiryWriterInterface
     {
         return new SspInquiryWriter(
@@ -612,9 +498,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Writer\SspInquiryStateWriterInterface
-     */
     public function createSspInquiryStateWriter(): SspInquiryStateWriterInterface
     {
         return new SspInquiryStateWriter(
@@ -624,9 +507,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Approver\SspInquiryApprovalHandlerInterface
-     */
     public function createSspInquiryApprovalHandler(): SspInquiryApprovalHandlerInterface
     {
         return new SspInquiryApprovalHandler(
@@ -637,9 +517,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Approver\SspInquiryRejectionHandlerInterface
-     */
     public function createSspInquiryRejectionHandler(): SspInquiryRejectionHandlerInterface
     {
         return new SspInquiryRejectionHandler(
@@ -666,9 +543,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         ];
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Expander\SspInquiryExpanderInterface
-     */
     public function createManualEventsSspInquiryExpander(): SspInquiryExpanderInterface
     {
         return new ManualEventsSspInquiryExpander(
@@ -677,9 +551,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Expander\SspInquiryExpanderInterface
-     */
     public function createStatusHistorySspInquiryExpander(): SspInquiryExpanderInterface
     {
         return new StatusHistorySspInquiryExpander(
@@ -688,9 +559,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Expander\SspInquiryExpanderInterface
-     */
     public function createFileSspInquiryExpander(): SspInquiryExpanderInterface
     {
         return new FileSspInquiryExpander(
@@ -699,9 +567,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Expander\SspInquiryExpanderInterface
-     */
     public function createCompanyUserSspInquiryExpander(): SspInquiryExpanderInterface
     {
         return new CompanyUserSspInquiryExpander(
@@ -709,9 +574,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Expander\SspInquiryExpanderInterface
-     */
     public function createSalesOrderSspInquiryExpander(): SspInquiryExpanderInterface
     {
         return new SalesOrderSspInquiryExpander(
@@ -720,9 +582,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Expander\SspInquiryExpanderInterface
-     */
     public function createSsAssetSspInquiryExpander(): SspInquiryExpanderInterface
     {
         return new SspAssetSspInquiryExpander(
@@ -731,9 +590,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Expander\SspInquiryExpanderInterface
-     */
     public function createCommentsSspInquiryExpander(): SspInquiryExpanderInterface
     {
         return new CommentsSspInquiryExpander(
@@ -741,9 +597,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Reader\SspInquiryReaderInterface
-     */
     public function createSspInquiryReader(): SspInquiryReaderInterface
     {
         return new SspInquiryReader(
@@ -753,9 +606,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Writer\SspInquiryFileDeleterInterface
-     */
     public function createSspInquiryFileDeleter(): SspInquiryFileDeleterInterface
     {
         return new SspInquiryFileDeleter(
@@ -763,9 +613,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Validator\SspInquiryValidatorInterface
-     */
     public function createSspInquiryValidator(): SspInquiryValidatorInterface
     {
         return new SspInquiryValidator($this->getConfig());
@@ -797,9 +644,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         ];
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Hooks\PreCreate\SspInquiryPreCreateHookInterface
-     */
     public function createFileSspInquiryPreCreateHook(): SspInquiryPreCreateHookInterface
     {
         return new FileSspInquiryPreCreateHook(
@@ -808,9 +652,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Hooks\PreCreate\SspInquiryPreCreateHookInterface
-     */
     public function createStoreSspInquiryPreCreateHook(): SspInquiryPreCreateHookInterface
     {
         return new StoreSspInquiryPreCreateHook(
@@ -818,9 +659,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Hooks\PreCreate\SspInquiryPreCreateHookInterface
-     */
     public function createOrderSspInquiryPreCreateHook(): SspInquiryPreCreateHookInterface
     {
         return new OrderSspInquiryPreCreateHook(
@@ -828,9 +666,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Hooks\PreCreate\SspInquiryPreCreateHookInterface
-     */
     public function createSspAssetSspInquiryPreCreateHook(): SspInquiryPreCreateHookInterface
     {
         return new SspAssetSspInquiryPreCreateHook(
@@ -838,9 +673,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Hooks\PostCreate\SspInquiryPostCreateHookInterface
-     */
     public function createOrderSspInquiryPostCreateHook(): SspInquiryPostCreateHookInterface
     {
         return new OrderSspInquiryPostCreateHook(
@@ -848,9 +680,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Hooks\PostCreate\SspInquiryPostCreateHookInterface
-     */
     public function createFileSspInquiryPostCreateHook(): SspInquiryPostCreateHookInterface
     {
         return new FileSspInquiryPostCreateHook(
@@ -858,9 +687,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Hooks\PostCreate\SspInquiryPostCreateHookInterface
-     */
     public function createSspAssetSspInquiryPostCreateHook(): SspInquiryPostCreateHookInterface
     {
         return new SspAssetSspInquiryPostCreateHook(
@@ -879,9 +705,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
-     */
     public function getSspInquiryDataImporter(): DataImporterInterface
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
@@ -903,9 +726,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return $dataImporter;
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
     public function createSspInquiryWriterStep(): DataImportStepInterface
     {
         return new SspInquiryWriterStep(
@@ -914,25 +734,16 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
     public function createCompanyUserKeyToIdCompanyUserStep(): DataImportStepInterface
     {
         return new CompanyUserKeyToIdCompanyUserStep($this->getCompanyUserQuery());
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
     public function createStoreCodeToStoreIdStep(): DataImportStepInterface
     {
         return new StoreCodeToStoreIdStep($this->getStoreFacade());
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
     public function createSspInquiryStateMachineWriterStep(): DataImportStepInterface
     {
         return new SspInquiryStateMachineWriterStep(
@@ -941,25 +752,16 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\DashboardDataExpander\InquiryDashboardDataExpanderInterface
-     */
     public function createInquiryDashboardDataExpander(): InquiryDashboardDataExpanderInterface
     {
         return new InquiryDashboardDataExpander($this->createSspInquiryReader(), $this->getConfig());
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Expander\SspInquiryCriteriaExpanderInterface
-     */
     public function createSspInquiryConditionExpander(): SspInquiryCriteriaExpanderInterface
     {
         return new SspInquiryCriteriaExpander();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Expander\SspInquirySspAssetExpanderInterface
-     */
     public function createSspInquirySspAssetExpander(): SspInquirySspAssetExpanderInterface
     {
         return new SspInquirySspAssetExpander(
@@ -968,33 +770,21 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Asset\DashboardDataExpander\SspAssetDashboardDataExpanderInterface
-     */
     public function createSspAssetDashboardDataExpander(): SspAssetDashboardDataExpanderInterface
     {
         return new SspAssetSspAssetDashboardDataExpander($this->createSspAssetReader());
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\DashboardDataExpander\ServiceDashboardDataExpanderInterface
-     */
     public function createServiceDashboardDataExpander(): ServiceDashboardDataExpanderInterface
     {
         return new ServiceDashboardDataExpander($this->createServiceReader(), $this->getConfig());
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Permission\SspAssetCustomerPermissionExpanderInterface
-     */
     public function createSspAssetCustomerPermissionExpander(): SspAssetCustomerPermissionExpanderInterface
     {
         return new SspAssetCustomerPermissionExpander();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInterface
-     */
     public function createSspAssetReader(): SspAssetReaderInterface
     {
         return new SspAssetReader(
@@ -1006,9 +796,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\SspAssetWriterInterface
-     */
     public function createSspAssetWriter(): SspAssetWriterInterface
     {
         return new SspAssetWriter(
@@ -1021,9 +808,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Writer\SspModelWriterInterface
-     */
     public function createSspModelWriter(): SspModelWriterInterface
     {
         return new SspModelWriter(
@@ -1036,17 +820,11 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Validator\SspModelValidatorInterface
-     */
     public function createSspModelValidator(): SspModelValidatorInterface
     {
         return new SspModelValidator($this->getConfig());
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Writer\FileSspModelWriterInterface
-     */
     public function createFileSspModelWriter(): FileSspModelWriterInterface
     {
         return new FileSspModelWriter(
@@ -1055,9 +833,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\FileSspAssetWriterInterface
-     */
     public function createFileSspAssetWriter(): FileSspAssetWriterInterface
     {
         return new FileSspAssetWriter(
@@ -1066,25 +841,16 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\SspAssetExpanderInterface
-     */
     public function createSspAssetExpander(): SspAssetExpanderInterface
     {
         return new SspAssetExpander($this->createServiceReader());
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Validator\SspAssetValidatorInterface
-     */
     public function createSspAssetValidator(): SspAssetValidatorInterface
     {
         return new SspAssetValidator();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\OrderItemSspAssetExpanderInterface
-     */
     public function createOrderItemSspAssetExpander(): OrderItemSspAssetExpanderInterface
     {
         return new OrderItemSspAssetExpander(
@@ -1093,73 +859,46 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Extractor\SalesOrderItemIdExtractorInterface
-     */
     public function createSalesOrderItemIdExtractor(): SalesOrderItemIdExtractorInterface
     {
         return new SalesOrderItemIdExtractor();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface
-     */
     public function getPersistenceEntityManager(): SelfServicePortalEntityManagerInterface
     {
         return $this->getEntityManager();
     }
 
-    /**
-     * @return \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface
-     */
     public function getStateMachineFacade(): StateMachineFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_STATE_MACHINE);
     }
 
-    /**
-     * @return \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface
-     */
     public function getSequenceNumberFacade(): SequenceNumberFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SEQUENCE_NUMBER);
     }
 
-    /**
-     * @return \Spryker\Zed\FileManager\Business\FileManagerFacadeInterface
-     */
     public function getFileManagerFacade(): FileManagerFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_FILE_MANAGER);
     }
 
-    /**
-     * @return \Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface
-     */
     public function getCompanyUserFacade(): CompanyUserFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_COMPANY_USER);
     }
 
-    /**
-     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
-     */
     public function getCompanyUserQuery(): SpyCompanyUserQuery
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_COMPANY_USER);
     }
 
-    /**
-     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
-     */
     public function getStoreFacade(): StoreFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_STORE);
     }
 
-    /**
-     * @return \Spryker\Zed\Comment\Business\CommentFacadeInterface
-     */
     public function getCommentFacade(): CommentFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_COMMENT);
@@ -1173,89 +912,56 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PLUGINS_DASHBOARD_DATA_PROVIDER);
     }
 
-    /**
-     * @return \Spryker\Zed\Event\Business\EventFacadeInterface
-     */
     public function getEventFacade(): EventFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_EVENT);
     }
 
-    /**
-     * @return \Spryker\Zed\ShipmentType\Business\ShipmentTypeFacadeInterface
-     */
     public function getShipmentTypeFacade(): ShipmentTypeFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SHIPMENT_TYPE);
     }
 
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
     public function getProductQuery(): SpyProductQuery
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_PRODUCT);
     }
 
-    /**
-     * @return \Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery
-     */
     public function getShipmentTypeQuery(): SpyShipmentTypeQuery
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_SHIPMENT_TYPE);
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery
-     */
     public function getProductShipmentTypeQuery(): SpyProductShipmentTypeQuery
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_PRODUCT_SHIPMENT_TYPE);
     }
 
-    /**
-     * @return \Spryker\Zed\ProductOfferShipmentType\Business\ProductOfferShipmentTypeFacadeInterface
-     */
     public function getProductOfferShipmentTypeFacade(): ProductOfferShipmentTypeFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_PRODUCT_OFFER_SHIPMENT_TYPE);
     }
 
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
     public function getProductAbstractQuery(): SpyProductAbstractQuery
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);
     }
 
-    /**
-     * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
-     */
     public function getSalesFacade(): SalesFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SALES);
     }
 
-    /**
-     * @return \Spryker\Zed\ServicePoint\Business\ServicePointFacadeInterface
-     */
     public function getServicePointFacade(): ServicePointFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SERVICE_POINT);
     }
 
-    /**
-     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
-     */
     public function getOmsFacade(): OmsFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_OMS);
     }
 
-    /**
-     * @return \Spryker\Zed\Messenger\Business\MessengerFacadeInterface
-     */
     public function getMessengerFacade(): MessengerFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_MESSENGER);
@@ -1269,25 +975,16 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PLUGINS_SSP_ASSET_MANAGEMENT_EXPANDER);
     }
 
-    /**
-     * @return \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface
-     */
     public function getProductPageSearchFacade(): ProductPageSearchFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_PRODUCT_PAGE_SEARCH);
     }
 
-    /**
-     * @return \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface
-     */
     public function getProductStorageFacade(): ProductStorageFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_PRODUCT_STORAGE);
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Saver\ProductClassSaverInterface
-     */
     public function createProductClassSaver(): ProductClassSaverInterface
     {
         return new ProductClassSaver(
@@ -1298,17 +995,11 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Expander\ProductClassProductAbstractMapExpanderInterface
-     */
     public function createProductClassProductAbstractMapExpander(): ProductClassProductAbstractMapExpanderInterface
     {
         return new ProductClassProductAbstractMapExpander();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassProductConcreteStorageExpanderInterface
-     */
     public function createProductClassProductConcreteStorageExpander(): ProductClassProductConcreteStorageExpanderInterface
     {
         return new ProductClassProductConcreteStorageExpander(
@@ -1316,9 +1007,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Deleter\SspAssetManagementFileDeleterInterface
-     */
     public function createSspAssetManagementFileDeleter(): SspAssetManagementFileDeleterInterface
     {
         return new SspAssetManagementFileDeleter(
@@ -1328,9 +1016,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemCancellableExpanderInterface
-     */
     public function createOrderItemCancellableExpander(): OrderItemCancellableExpanderInterface
     {
         return new OrderItemCancellableExpander(
@@ -1338,33 +1023,21 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Mail\Business\MailFacadeInterface
-     */
     public function getMailFacade(): MailFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_MAIL);
     }
 
-    /**
-     * @return \Spryker\Zed\Customer\Business\CustomerFacadeInterface
-     */
     public function getCustomerFacade(): CustomerFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_CUSTOMER);
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Grouper\ProductClassGrouperInterface
-     */
     public function createProductClassGrouper(): ProductClassGrouperInterface
     {
         return new ProductClassGrouper();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemProductClassExpanderInterface
-     */
     public function createOrderItemProductClassExpander(): OrderItemProductClassExpanderInterface
     {
         return new OrderItemProductClassExpander(
@@ -1376,9 +1049,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\SspAssetItemExpanderInterface
-     */
     public function createSspAssetItemExpander(): SspAssetItemExpanderInterface
     {
         return new SspAssetItemExpander(
@@ -1386,17 +1056,11 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Indexer\ProductClassIndexerInterface
-     */
     public function createProductClassIndexer(): ProductClassIndexerInterface
     {
         return new ProductClassIndexer();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassExpanderInterface
-     */
     public function createProductClassExpander(): ProductClassExpanderInterface
     {
         return new ProductClassExpander(
@@ -1406,9 +1070,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductConcreteClassExpanderInterface
-     */
     public function createProductConcreteClassExpander(): ProductConcreteClassExpanderInterface
     {
         return new ProductConcreteClassExpander(
@@ -1416,9 +1077,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductAbstractClassExpanderInterface
-     */
     public function createProductAbstractClassExpander(): ProductAbstractClassExpanderInterface
     {
         return new ProductAbstractClassExpander(
@@ -1426,17 +1084,11 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Utility\SkuExtractorInterface
-     */
     public function createSkuExtractor(): SkuExtractorInterface
     {
         return new SkuExtractor();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ProductClassReaderInterface
-     */
     public function createProductClassReader(): ProductClassReaderInterface
     {
         return new ProductClassReader(

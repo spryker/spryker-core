@@ -15,18 +15,10 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInt
 
 class SspAssetSspInquiryPreCreateHook implements SspInquiryPreCreateHookInterface
 {
- /**
-  * @param \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInterface $sspAssetReader
-  */
     public function __construct(protected SspAssetReaderInterface $sspAssetReader)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer
-     */
     public function execute(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
     {
         $sspInquiryTransfer->requireSspAsset();
@@ -47,11 +39,6 @@ class SspAssetSspInquiryPreCreateHook implements SspInquiryPreCreateHookInterfac
         return $sspInquiryTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return bool
-     */
     public function isApplicable(SspInquiryTransfer $sspInquiryTransfer): bool
     {
         return $sspInquiryTransfer->getType() === SelfServicePortalConfig::SSP_ASSET_SSP_INQUIRY_SOURCE;

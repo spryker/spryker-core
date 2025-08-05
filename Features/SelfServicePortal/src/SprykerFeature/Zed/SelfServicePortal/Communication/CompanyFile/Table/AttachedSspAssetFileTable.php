@@ -78,11 +78,6 @@ class AttachedSspAssetFileTable extends AbstractTable
      */
     protected const COL_ID_FILE_INFO = 'id_file_info';
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
-     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
-     */
     public function __construct(
         protected SspAssetTransfer $sspAssetTransfer,
         protected SpyFileQuery $fileQuery,
@@ -91,11 +86,6 @@ class AttachedSspAssetFileTable extends AbstractTable
         $this->baseUrl = static::BASE_URL_PATH;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setUrl(sprintf('table?%s=%s', ListAttachedAssetFileController::REQUEST_PARAM_ID_SSP_ASSET, $this->sspAssetTransfer->getIdSspAsset()));
@@ -116,11 +106,6 @@ class AttachedSspAssetFileTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $baseData = [
@@ -135,9 +120,6 @@ class AttachedSspAssetFileTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
     protected function prepareQuery(): SpyFileQuery
     {
         $fileQuery = $this->fileQuery

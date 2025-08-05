@@ -62,9 +62,6 @@ class ServicePointPreAddToCartPluginTest extends Unit
      */
     protected SelfServicePortalYvesTester $tester;
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartExpandsItemWithServicePointWhenValidParametersProvided(): void
     {
         // Arrange
@@ -107,9 +104,6 @@ class ServicePointPreAddToCartPluginTest extends Unit
         $this->assertSame(static::TEST_SERVICE_POINT_ID, $resultItemTransfer->getServicePointOrFail()->getIdServicePoint());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenParametersNotProvided(): void
     {
         // Arrange
@@ -132,9 +126,6 @@ class ServicePointPreAddToCartPluginTest extends Unit
         $this->assertNull($resultItemTransfer->getServicePoint());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenServicePointUuidIsEmpty(): void
     {
         // Arrange
@@ -160,9 +151,6 @@ class ServicePointPreAddToCartPluginTest extends Unit
         $this->assertNull($resultItemTransfer->getServicePoint());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenProductOfferReferenceIsEmpty(): void
     {
         // Arrange
@@ -188,9 +176,6 @@ class ServicePointPreAddToCartPluginTest extends Unit
         $this->assertNull($resultItemTransfer->getServicePoint());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenProductOfferNotFound(): void
     {
         // Arrange
@@ -218,9 +203,6 @@ class ServicePointPreAddToCartPluginTest extends Unit
         $this->assertNull($resultItemTransfer->getServicePoint());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenProductOfferHasNoServices(): void
     {
         // Arrange
@@ -252,9 +234,6 @@ class ServicePointPreAddToCartPluginTest extends Unit
         $this->assertNull($resultItemTransfer->getServicePoint());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenServicePointNotFoundInProductOfferServices(): void
     {
         // Arrange
@@ -296,9 +275,6 @@ class ServicePointPreAddToCartPluginTest extends Unit
         $this->assertNull($resultItemTransfer->getServicePoint());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenServicePointIsNullInProductOfferService(): void
     {
         // Arrange

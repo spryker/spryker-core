@@ -11,19 +11,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 interface AddressFormCheckerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
     public function isApplicableForSingleAddressPerShipmentType(
         ItemTransfer $itemTransfer
     ): bool;
 
-    /**
-     * @param string $shipmentTypeKey
-     *
-     * @return bool
-     */
     public function isApplicableShipmentType(string $shipmentTypeKey): bool;
 }

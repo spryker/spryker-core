@@ -34,9 +34,6 @@ class ServiceDateTimePreAddToCartPluginTest extends Unit
      */
     protected SelfServicePortalYvesTester $tester;
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartExpandsItemWithScheduledAtWhenValidDateProvided(): void
     {
         // Arrange
@@ -54,9 +51,6 @@ class ServiceDateTimePreAddToCartPluginTest extends Unit
         $this->assertSame(static::TEST_SCHEDULED_AT, $resultItemTransfer->getMetadataOrFail()->getScheduledAt());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartExpandsItemWithScheduledAtWhenItemAlreadyHasMetadata(): void
     {
         // Arrange
@@ -76,9 +70,6 @@ class ServiceDateTimePreAddToCartPluginTest extends Unit
         $this->assertSame(static::TEST_SCHEDULED_AT, $resultItemTransfer->getMetadataOrFail()->getScheduledAt());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenScheduledAtParamNotProvided(): void
     {
         // Arrange
@@ -93,9 +84,6 @@ class ServiceDateTimePreAddToCartPluginTest extends Unit
         $this->assertNull($resultItemTransfer->getMetadata());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenScheduledAtIsEmpty(): void
     {
         // Arrange
@@ -112,9 +100,6 @@ class ServiceDateTimePreAddToCartPluginTest extends Unit
         $this->assertNull($resultItemTransfer->getMetadata());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenScheduledAtIsNull(): void
     {
         // Arrange
@@ -131,9 +116,6 @@ class ServiceDateTimePreAddToCartPluginTest extends Unit
         $this->assertNull($resultItemTransfer->getMetadata());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartPreservesExistingMetadataWhenScheduledAtNotProvided(): void
     {
         // Arrange

@@ -14,21 +14,12 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class FileReferenceGenerator implements FileReferenceGeneratorInterface
 {
-    /**
-     * @param \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface $sequenceNumberFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
-     */
     public function __construct(
         protected SequenceNumberFacadeInterface $sequenceNumberFacade,
         protected SelfServicePortalConfig $config
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return string
-     */
     public function generateFileReference(FileTransfer $fileTransfer): string
     {
         $sequenceNumberSettingsTransfer = new SequenceNumberSettingsTransfer();

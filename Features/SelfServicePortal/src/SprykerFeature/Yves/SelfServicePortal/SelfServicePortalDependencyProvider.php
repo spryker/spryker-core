@@ -108,11 +108,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
      */
     public const SERVICE_SELF_SERVICE_PORTAL = 'SERVICE_SELF_SERVICE_PORTAL';
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
@@ -136,11 +131,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addCustomerClient(Container $container): Container
     {
         $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
@@ -150,11 +140,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addCompanyBusinessUnitClient(Container $container): Container
     {
         $container->set(static::CLIENT_COMPANY_BUSINESS_UNIT, function (Container $container) {
@@ -164,11 +149,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addPermissionClient(Container $container): Container
     {
         $container->set(static::CLIENT_PERMISSION, function (Container $container) {
@@ -178,11 +158,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addShipmentTypeStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_SHIPMENT_TYPE_STORAGE, function (Container $container) {
@@ -192,11 +167,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addStoreClient(Container $container): Container
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
@@ -206,11 +176,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addProductOfferStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_PRODUCT_OFFER_STORAGE, function (Container $container) {
@@ -220,11 +185,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addServicePointSearchClient(Container $container): Container
     {
         $container->set(static::CLIENT_SERVICE_POINT_SEARCH, function (Container $container) {
@@ -234,11 +194,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-      /**
-       * @param \Spryker\Yves\Kernel\Container $container
-       *
-       * @return \Spryker\Yves\Kernel\Container
-       */
     protected function addTwigService(Container $container): Container
     {
         $container->set(static::TWIG_ENVIRONMENT, function (Container $container) {
@@ -248,11 +203,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addSalesClient(Container $container): Container
     {
         $container->set(static::CLIENT_SALES, function (Container $container) {
@@ -262,11 +212,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addGlossaryStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
@@ -276,11 +221,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addProductStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
@@ -290,11 +230,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-     /**
-      * @param \Spryker\Yves\Kernel\Container $container
-      *
-      * @return \Spryker\Yves\Kernel\Container
-      */
     protected function addCompanyUserClient(Container $container): Container
     {
         $container->set(static::CLIENT_COMPANY_USER, function (Container $container): CompanyUserClientInterface {
@@ -304,11 +239,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addFileManagerService(Container $container): Container
     {
         $container->set(static::SERVICE_FILE_MANAGER, function (Container $container): FileManagerServiceInterface {
@@ -318,11 +248,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addRouterService(Container $container): Container
     {
         $container->set(static::SERVICE_ROUTER, function (Container $container) {
@@ -332,11 +257,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addRequestStackService(Container $container): Container
     {
         $container->set(static::SERVICE_REQUEST_STACK, function (Container $container) {
@@ -346,11 +266,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addSelfServicePortalService(Container $container): Container
     {
         $container->set(static::SERVICE_SELF_SERVICE_PORTAL, function (Container $container) {

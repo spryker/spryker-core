@@ -11,10 +11,5 @@ use Symfony\Component\Form\FormEvent;
 
 interface SingleAddressPerShipmentTypePreSubmitHandlerInterface
 {
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return void
-     */
     public function handlePreSubmit(FormEvent $event): void;
 }

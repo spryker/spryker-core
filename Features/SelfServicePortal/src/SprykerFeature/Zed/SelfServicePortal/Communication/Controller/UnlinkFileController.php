@@ -47,11 +47,6 @@ class UnlinkFileController extends FileAbstractController
      */
     protected const SUCCESS_MESSAGE_FILE_ATTACHMENTS_UNLINKED = 'File attachments successfully unlinked.';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function indexAction(Request $request): RedirectResponse
     {
         $redirectUrl = Url::generate(static::URL_PATH_VIEW_FILE, [static::REQUEST_PARAM_ID_FILE => $request->query->getInt(static::REQUEST_PARAM_ID_FILE)]);
@@ -79,11 +74,6 @@ class UnlinkFileController extends FileAbstractController
         return $this->redirectResponse($redirectUrl);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer $fileAttachmentCollectionResponseTransfer
-     *
-     * @return void
-     */
     protected function addErrorMessagesFromFileAttachmentCollectionResponse(
         FileAttachmentCollectionResponseTransfer $fileAttachmentCollectionResponseTransfer
     ): void {

@@ -12,10 +12,5 @@ use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
 
 interface SspInquiryReaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
-     */
     public function getSspInquiryCollection(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer;
 }

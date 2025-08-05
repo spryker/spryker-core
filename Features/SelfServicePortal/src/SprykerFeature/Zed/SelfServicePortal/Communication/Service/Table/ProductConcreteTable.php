@@ -42,11 +42,6 @@ class ProductConcreteTable extends AbstractTable
      */
     protected const URL_PATH_SELF_SERVICE_PORTAL_CREATE_OFFER_FORM = '/self-service-portal/create-offer/form';
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery $productImageQuery
-     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
-     */
     public function __construct(
         protected SpyProductQuery $productQuery,
         protected SpyProductImageQuery $productImageQuery,
@@ -181,11 +176,6 @@ class ProductConcreteTable extends AbstractTable
         ];
     }
 
-    /**
-     * @param int $idLocale
-     *
-     * @return string
-     */
     protected function createProductImagesSubquery(int $idLocale): string
     {
         /** @var literal-string $where */
@@ -230,11 +220,6 @@ class ProductConcreteTable extends AbstractTable
         return $urls;
     }
 
-    /**
-     * @param bool $status
-     *
-     * @return string
-     */
     protected function getStatusLabel(bool $status): string
     {
         if (!$status) {

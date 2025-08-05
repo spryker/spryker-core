@@ -15,21 +15,12 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class ManualEventsSspInquiryExpander implements SspInquiryExpanderInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     * @param \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface $stateMachineFacade
-     */
     public function __construct(
         protected SelfServicePortalConfig $selfServicePortalConfig,
         protected StateMachineFacadeInterface $stateMachineFacade
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCollectionTransfer $sspInquiryCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
-     */
     public function expand(SspInquiryCollectionTransfer $sspInquiryCollectionTransfer): SspInquiryCollectionTransfer
     {
         $stateMachineItemTransfers = [];
@@ -60,11 +51,6 @@ class ManualEventsSspInquiryExpander implements SspInquiryExpanderInterface
         return $sspInquiryCollectionTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return bool
-     */
     public function isApplicable(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): bool
     {
         return $sspInquiryCriteriaTransfer->getInclude() && $sspInquiryCriteriaTransfer->getInclude()->getWithManualEvents();

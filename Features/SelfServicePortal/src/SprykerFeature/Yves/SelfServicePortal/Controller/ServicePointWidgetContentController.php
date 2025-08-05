@@ -85,11 +85,6 @@ class ServicePointWidgetContentController extends AbstractController
      */
     protected const VIEW_DATA_KEY_QUANTITY = 'quantity';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function indexAction(Request $request): JsonResponse
     {
         $servicePointWidgetContentViewData = $this->getServicePointWidgetContentViewData($request);

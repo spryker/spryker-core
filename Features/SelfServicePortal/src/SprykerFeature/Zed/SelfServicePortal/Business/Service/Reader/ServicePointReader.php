@@ -13,9 +13,6 @@ use Spryker\Zed\ServicePoint\Business\ServicePointFacadeInterface;
 
 class ServicePointReader implements ServicePointReaderInterface
 {
-    /**
-     * @param \Spryker\Zed\ServicePoint\Business\ServicePointFacadeInterface $servicePointFacade
-     */
     public function __construct(protected ServicePointFacadeInterface $servicePointFacade)
     {
     }

@@ -53,11 +53,6 @@ class SspInquiryWriter implements SspInquiryWriterInterface
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer $sspInquiryCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer
-     */
     public function createSspInquiryCollection(SspInquiryCollectionRequestTransfer $sspInquiryCollectionRequestTransfer): SspInquiryCollectionResponseTransfer
     {
         $sspInquiryCollectionResponseTransfer = $this->sspInquiryValidator
@@ -112,11 +107,6 @@ class SspInquiryWriter implements SspInquiryWriterInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer
-     */
     protected function executePreCreateHooks(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
     {
         foreach ($this->preCreateHooks as $preCreateHook) {
@@ -129,11 +119,6 @@ class SspInquiryWriter implements SspInquiryWriterInterface
         return $sspInquiryTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer
-     */
     protected function executePostCreateHooks(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
     {
         foreach ($this->postCreateHooks as $postCreateHook) {
@@ -147,11 +132,6 @@ class SspInquiryWriter implements SspInquiryWriterInterface
         return $sspInquiryTransfer;
     }
 
-    /**
-     * @param string $storeName
-     *
-     * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
-     */
     protected function getInquirySequenceNumberSettings(string $storeName): SequenceNumberSettingsTransfer
     {
         return (new SequenceNumberSettingsTransfer())
@@ -159,11 +139,6 @@ class SspInquiryWriter implements SspInquiryWriterInterface
             ->setPrefix($this->createPrefix($storeName));
     }
 
-    /**
-     * @param string $storeName
-     *
-     * @return string
-     */
     protected function createPrefix(string $storeName): string
     {
         $sequenceNumberPrefixParts = [];

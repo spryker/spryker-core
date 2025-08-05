@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 
 interface SspInquiryApprovalHandlerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     *
-     * @return void
-     */
     public function handleApproval(StateMachineItemTransfer $stateMachineItemTransfer): void;
 }

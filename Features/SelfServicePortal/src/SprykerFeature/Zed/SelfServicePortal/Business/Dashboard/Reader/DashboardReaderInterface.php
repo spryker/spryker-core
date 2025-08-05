@@ -12,10 +12,5 @@ use Generated\Shared\Transfer\DashboardResponseTransfer;
 
 interface DashboardReaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\DashboardRequestTransfer $dashboardRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\DashboardResponseTransfer
-     */
     public function getDashboard(DashboardRequestTransfer $dashboardRequestTransfer): DashboardResponseTransfer;
 }

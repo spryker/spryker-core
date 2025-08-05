@@ -16,10 +16,6 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class SspInquiryStateMachineWriterStep implements DataImportStepInterface
 {
-    /**
-     * @param \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface $stateMachineFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(
         protected StateMachineFacadeInterface $stateMachineFacade,
         protected SelfServicePortalConfig $selfServicePortalConfig

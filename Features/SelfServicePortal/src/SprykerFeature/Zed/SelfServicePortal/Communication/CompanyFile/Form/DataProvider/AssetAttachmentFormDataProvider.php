@@ -16,9 +16,6 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\SspAsset
 
 class AssetAttachmentFormDataProvider
 {
- /**
-  * @param \SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacadeInterface $selfServicePortalFacade
-  */
     public function __construct(
         protected SelfServicePortalFacadeInterface $selfServicePortalFacade
     ) {

@@ -32,11 +32,6 @@ class ListAssetServiceController extends AbstractGatewayController
         return ['sspServiceTable' => $sspServiceTable->render()];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function tableAction(Request $request): JsonResponse
     {
         $assetReference = (string)$request->query->get('ssp_asset_reference');

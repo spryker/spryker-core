@@ -20,35 +20,21 @@ class SspAssetInfoForItemWidget extends AbstractWidget
      */
     protected const PARAMETER_ASSET = 'asset';
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     */
     public function __construct(ItemTransfer $itemTransfer)
     {
         $this->addAssetParameter($itemTransfer);
     }
 
-    /**
-     * @return string
-     */
     public static function getName(): string
     {
         return 'SspAssetInfoForItemWidget';
     }
 
-    /**
-     * @return string
-     */
     public static function getTemplate(): string
     {
         return '@SelfServicePortal/views/asset-info-for-item/asset-info-for-item.twig';
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
     protected function addAssetParameter(ItemTransfer $itemTransfer): void
     {
         $this->addParameter(static::PARAMETER_ASSET, $itemTransfer->getSspAsset());

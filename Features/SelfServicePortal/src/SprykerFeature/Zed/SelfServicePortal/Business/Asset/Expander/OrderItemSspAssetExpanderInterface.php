@@ -11,11 +11,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 interface OrderItemSspAssetExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
     public function expandOrderItemsWithSspAssets(OrderTransfer $orderTransfer): OrderTransfer;
 
     /**

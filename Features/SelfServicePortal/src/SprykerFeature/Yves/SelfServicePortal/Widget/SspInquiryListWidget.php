@@ -12,10 +12,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 class SspInquiryListWidget extends AbstractWidget
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCollectionTransfer $sspInquiryCollectionTransfer
-     * @param string|null $moreLink
-     */
     public function __construct(SspInquiryCollectionTransfer $sspInquiryCollectionTransfer, ?string $moreLink = null)
     {
         $this->addParameter('totalItems', $sspInquiryCollectionTransfer->getPaginationOrFail()->getNbResults());
@@ -23,17 +19,11 @@ class SspInquiryListWidget extends AbstractWidget
         $this->addParameter('moreLink', $moreLink);
     }
 
-    /**
-     * @return string
-     */
     public static function getName(): string
     {
         return 'SspInquiryListWidget';
     }
 
-    /**
-     * @return string
-     */
     public static function getTemplate(): string
     {
         return '@SelfServicePortal/views/dashboard-inquiry/dashboard-inquiry.twig';

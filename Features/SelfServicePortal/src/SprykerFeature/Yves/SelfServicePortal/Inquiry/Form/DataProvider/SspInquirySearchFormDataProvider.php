@@ -12,10 +12,6 @@ use SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig;
 
 class SspInquirySearchFormDataProvider
 {
-    /**
-     * @param \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     * @param string|null $currentTimezone
-     */
     public function __construct(
         protected SelfServicePortalConfig $selfServicePortalConfig,
         protected ?string $currentTimezone

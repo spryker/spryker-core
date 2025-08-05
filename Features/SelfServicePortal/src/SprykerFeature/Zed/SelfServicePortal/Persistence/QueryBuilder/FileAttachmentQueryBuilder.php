@@ -44,12 +44,6 @@ class FileAttachmentQueryBuilder
      */
     public const SSP_ASSET_IDS_COLUMN = 'sspAssetIds';
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
     public function applyCriteria(SpyFileQuery $fileQuery, FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): SpyFileQuery
     {
         $fileQuery = $this->applyFileIdFilter($fileQuery, $fileAttachmentCriteriaTransfer);
@@ -66,12 +60,6 @@ class FileAttachmentQueryBuilder
         return $fileQuery;
     }
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
     protected function addRelationsToAQuery(SpyFileQuery $fileQuery, FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): SpyFileQuery
     {
         if (
@@ -141,12 +129,6 @@ class FileAttachmentQueryBuilder
         return $fileQuery;
     }
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
-     * @param \Generated\Shared\Transfer\FileAttachmentConditionsTransfer $fileAttachmentConditionsTransfer
-     *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null
-     */
     protected function getCompanyFileCriteria(SpyFileQuery $fileQuery, FileAttachmentConditionsTransfer $fileAttachmentConditionsTransfer): ?AbstractCriterion
     {
         $companyFileQuery = $fileQuery
@@ -163,12 +145,6 @@ class FileAttachmentQueryBuilder
         );
     }
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
-     * @param \Generated\Shared\Transfer\FileAttachmentConditionsTransfer $fileAttachmentConditionsTransfer
-     *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null
-     */
     protected function getBusinessUnitFileCriteria(
         SpyFileQuery $fileQuery,
         FileAttachmentConditionsTransfer $fileAttachmentConditionsTransfer
@@ -221,12 +197,6 @@ class FileAttachmentQueryBuilder
         return $criteria;
     }
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
-     * @param \Generated\Shared\Transfer\FileAttachmentConditionsTransfer $fileAttachmentConditionsTransfer
-     *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null
-     */
     protected function getCompanyUserFileCriteria(
         SpyFileQuery $fileQuery,
         FileAttachmentConditionsTransfer $fileAttachmentConditionsTransfer
@@ -282,12 +252,6 @@ class FileAttachmentQueryBuilder
         return $criteria;
     }
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $criteriaTransfer
-     *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null
-     */
     protected function applySspAssetFileCriteria(SpyFileQuery $fileQuery, FileAttachmentCriteriaTransfer $criteriaTransfer): ?AbstractCriterion
     {
         $fileAttachmentCriteriaTransfer = $criteriaTransfer->getFileAttachmentConditionsOrFail();
@@ -345,12 +309,6 @@ class FileAttachmentQueryBuilder
         return $criteria;
     }
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $query
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
     protected function applyFileAttachmentSearch(
         SpyFileQuery $query,
         FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
@@ -369,12 +327,6 @@ class FileAttachmentQueryBuilder
         return $query;
     }
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $query
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
     protected function applyFileAttachmentTypeFilter(
         SpyFileQuery $query,
         FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
@@ -391,12 +343,6 @@ class FileAttachmentQueryBuilder
             ->endUse();
     }
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $query
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
     protected function applyFileAttachmentDateRangeFilter(
         SpyFileQuery $query,
         FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
@@ -421,12 +367,6 @@ class FileAttachmentQueryBuilder
         return $query;
     }
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $query
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
     protected function applyFileAttachmentUuidFilter(
         SpyFileQuery $query,
         FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
@@ -440,12 +380,6 @@ class FileAttachmentQueryBuilder
         return $query;
     }
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $query
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
     protected function applyFileIdFilter(
         SpyFileQuery $query,
         FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
@@ -492,12 +426,6 @@ class FileAttachmentQueryBuilder
         ];
     }
 
-    /**
-     * @param \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null $subCriteria
-     * @param \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null $criteria
-     *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null
-     */
     protected function addSubCriteria(?AbstractCriterion $subCriteria, ?AbstractCriterion $criteria): ?AbstractCriterion
     {
         if (!$subCriteria) {

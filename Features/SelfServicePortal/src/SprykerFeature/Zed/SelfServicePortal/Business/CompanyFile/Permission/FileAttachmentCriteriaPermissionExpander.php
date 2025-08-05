@@ -20,11 +20,6 @@ class FileAttachmentCriteriaPermissionExpander implements FileAttachmentPermissi
 {
     use PermissionAwareTrait;
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer
-     */
     public function expand(FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): FileAttachmentCriteriaTransfer
     {
         if (!$fileAttachmentCriteriaTransfer->getCompanyUser()) {
@@ -42,11 +37,6 @@ class FileAttachmentCriteriaPermissionExpander implements FileAttachmentPermissi
         return $fileAttachmentCriteriaTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer
-     */
     protected function expandWithBusinessAttachmentPermissions(
         FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
     ): FileAttachmentCriteriaTransfer {
@@ -96,11 +86,6 @@ class FileAttachmentCriteriaPermissionExpander implements FileAttachmentPermissi
         return $fileAttachmentCriteriaTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer
-     */
     protected function expandWithSspAssetPermissions(
         FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
     ): FileAttachmentCriteriaTransfer {

@@ -233,6 +233,10 @@ class CodeStylePathResolver implements PathResolverInterface
             return $this->buildPath($pathToInternalNamespace . $module . DIRECTORY_SEPARATOR, $pathSuffix);
         }
 
+        if ($namespace === $this->config->getSprykerFeatureNamespace() && $pathToInternalNamespace && is_dir($pathToInternalNamespace)) {
+            return $this->buildPath($pathToInternalNamespace . DIRECTORY_SEPARATOR, $pathSuffix);
+        }
+
         $moduleVendor = $this->nameNormalizer->dasherize($namespace);
         $module = $this->nameNormalizer->dasherize($module);
         $path = sprintf(

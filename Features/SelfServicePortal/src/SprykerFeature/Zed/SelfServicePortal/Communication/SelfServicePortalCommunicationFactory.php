@@ -151,27 +151,16 @@ use Symfony\Component\Form\FormTypeInterface;
  */
 class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataProvider\ShipmentTypeProductConcreteFormDataProvider
-     */
     public function createShipmentTypeProductConcreteFormDataProvider(): ShipmentTypeProductConcreteFormDataProvider
     {
         return new ShipmentTypeProductConcreteFormDataProvider($this->getShipmentTypeFacade());
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormTypeInterface
-     */
     public function createShipmentTypeProductConcreteForm(): FormTypeInterface
     {
         return new ShipmentTypeProductConcreteForm();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createCreateOfferForm(ProductConcreteTransfer $productConcreteTransfer): FormInterface
     {
         return $this->getFormFactory()->create(
@@ -181,9 +170,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataProvider\CreateOfferFormDataProvider
-     */
     public function createCreateOfferFormDataProvider(): CreateOfferFormDataProvider
     {
         return new CreateOfferFormDataProvider(
@@ -195,9 +181,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Reader\ProductReaderInterface
-     */
     public function createProductReader(): ProductReaderInterface
     {
         return new ProductReader(
@@ -206,25 +189,16 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Mapper\ShipmentTypeProductFormMapperInterface
-     */
     public function createShipmentTypeProductFormMapper(): ShipmentTypeProductFormMapperInterface
     {
         return new ShipmentTypeProductFormMapper();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Reader\ShipmentTypeReaderInterface
-     */
     public function createShipmentTypeReader(): ShipmentTypeReaderInterface
     {
         return new ShipmentTypeReader($this->getShipmentTypeFacade(), $this->getConfig());
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Table\ProductConcreteTable
-     */
     public function createProductConcreteTable(): ProductConcreteTable
     {
         return new ProductConcreteTable(
@@ -234,9 +208,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface
-     */
     public function getRepository(): SelfServicePortalRepositoryInterface
     {
         /**
@@ -259,41 +230,26 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         ];
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataTransformer\StoresDataTransformer
-     */
     public function createStoresDataTransformer(): StoresDataTransformer
     {
         return new StoresDataTransformer();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataTransformer\ShipmentTypesDataTransformer
-     */
     public function createShipmentTypesDataTransformer(): ShipmentTypesDataTransformer
     {
         return new ShipmentTypesDataTransformer();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataTransformer\ServicePointServicesDataTransformer
-     */
     public function createServicePointServicesDataTransformer(): ServicePointServicesDataTransformer
     {
         return new ServicePointServicesDataTransformer();
     }
 
-    /**
-     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
-     */
     public function createStockCreateOfferFormEventSubscriber(): EventSubscriberInterface
     {
         return new StockCreateOfferFormEventSubscriber();
     }
 
-    /**
-     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
-     */
     public function createMerchantCreateOfferFormEventSubscriber(): EventSubscriberInterface
     {
         return new MerchantCreateOfferFormEventSubscriber(
@@ -314,9 +270,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         ];
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Table\ServiceTable
-     */
     public function createServiceTable(): ServiceTable
     {
         return new ServiceTable(
@@ -326,11 +279,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createItemSchedulerForm(ItemTransfer $itemTransfer): FormInterface
     {
         $itemSchedulerFormDataProvider = $this->createItemSchedulerFormDataProvider();
@@ -342,25 +290,16 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataProvider\ItemSchedulerFormDataProvider
-     */
     public function createItemSchedulerFormDataProvider(): ItemSchedulerFormDataProvider
     {
         return new ItemSchedulerFormDataProvider();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Reader\SalesOrderItemReaderInterface
-     */
     public function createSalesOrderItemReader(): SalesOrderItemReaderInterface
     {
         return new SalesOrderItemReader($this->getSalesFacade());
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Saver\SalesOrderItemProductClassesSaverInterface
-     */
     public function createSalesOrderItemProductClassesSaver(): SalesOrderItemProductClassesSaverInterface
     {
         return new SalesOrderItemProductClassesSaver(
@@ -368,9 +307,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\Expander\ShipmentTypeProductConcreteFormExpanderInterface
-     */
     public function createShipmentTypeProductConcreteFormExpander(): ShipmentTypeProductConcreteFormExpanderInterface
     {
         return new ShipmentTypeProductConcreteFormExpander(
@@ -379,27 +315,16 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\FileAttachmentTabs
-     */
     public function createFileAttachmentTabs(): FileAttachmentTabs
     {
         return new FileAttachmentTabs();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\DataProvider\AssetAttachmentFormDataProvider
-     */
     public function createAssetAttachmentFormDataProvider(): AssetAttachmentFormDataProvider
     {
         return new AssetAttachmentFormDataProvider($this->getFacade());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AttachedSspAssetFileTable
-     */
     public function createAttachedSspAssetFileTable(SspAssetTransfer $sspAssetTransfer): AttachedSspAssetFileTable
     {
         return new AttachedSspAssetFileTable(
@@ -409,11 +334,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\FileTable
-     */
     public function createFileTable(
         FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer
     ): FileTable {
@@ -426,12 +346,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @param int $idFile
-     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\ViewFileDetailTable
-     */
     public function createViewFileDetailTable(
         int $idFile,
         FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
@@ -445,25 +359,16 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatter\FileSizeFormatterInterface
-     */
     public function createFileSizeFormatter(): FileSizeFormatterInterface
     {
         return new FileSizeFormatter();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Mapper\FileUploadMapperInterface
-     */
     public function createFileUploadMapper(): FileUploadMapperInterface
     {
         return new FileUploadMapper($this->getConfig());
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Saver\FileSaverInterface
-     */
     public function createFileSaver(): FileSaverInterface
     {
         return new FileSaver(
@@ -473,9 +378,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\ReferenceGenerator\FileReferenceGeneratorInterface
-     */
     public function createFileReferenceGenerator(): FileReferenceGeneratorInterface
     {
         return new FileReferenceGenerator(
@@ -484,43 +386,26 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Reader\FileReaderInterface
-     */
     public function createFileReader(): FileReaderInterface
     {
         return new FileReader($this->getFileManagerFacade());
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createUploadFileForm(): FormInterface
     {
         return $this->getFormFactory()->create(UploadFileForm::class);
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createUnlinkFileForm(): FormInterface
     {
         return $this->getFormFactory()->create(UnlinkFileForm::class);
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createDeleteFileForm(): FormInterface
     {
         return $this->getFormFactory()->create(DeleteFileForm::class);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createFileTableFilterForm(
         FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer
     ): FormInterface {
@@ -533,9 +418,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\DataProvider\FileTableFilterFormDataProvider
-     */
     public function createFileTableFilterFormDataProvider(): FileTableFilterFormDataProvider
     {
         return new FileTableFilterFormDataProvider(
@@ -543,9 +425,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\DataProvider\ViewFileDetailTableFilterFormDataProvider
-     */
     public function createViewFileDetailTableFilterFormDataProvider(): ViewFileDetailTableFilterFormDataProvider
     {
         return new ViewFileDetailTableFilterFormDataProvider(
@@ -554,11 +433,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createViewFileDetailTableFilterForm(
         FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ): FormInterface {
@@ -571,9 +445,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\DataProvider\FileAttachFormDataProvider
-     */
     public function createFileAttachFormDataProvider(): FileAttachFormDataProvider
     {
         return new FileAttachFormDataProvider(
@@ -608,17 +479,11 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
             ->create(SspAssetAttachmentForm::class, $data, $options);
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Mapper\FileAttachmentMapperInterface
-     */
     public function createFileAttachmentMapper(): FileAttachmentMapperInterface
     {
         return new FileAttachmentMapper();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\DataProvider\TriggerEventFormDataProviderInterface
-     */
     public function createTriggerEventFormDataProvider(): TriggerEventFormDataProviderInterface
     {
         return new TriggerEventFormDataProvider(
@@ -639,11 +504,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(TriggerEventForm::class, $data, $options);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryConditionsTransfer $sspInquiryConditionsTransfer
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Table\SspInquiryTable
-     */
     public function createSspInquiryTable(SspInquiryConditionsTransfer $sspInquiryConditionsTransfer): SspInquiryTable
     {
         return new SspInquiryTable(
@@ -654,19 +514,11 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryConditionsTransfer $sspInquiryConditionsTransfer
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function getSspInquiryFilterForm(SspInquiryConditionsTransfer $sspInquiryConditionsTransfer): FormInterface
     {
         return $this->getFormFactory()->create(SspInquiryFilterForm::class, $sspInquiryConditionsTransfer, $this->createSspInquiryFilterFormDataProvider()->getOptions());
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\DataProvider\SspInquiryFilterFormDataProviderInterface
-     */
     public function createSspInquiryFilterFormDataProvider(): SspInquiryFilterFormDataProviderInterface
     {
         return new SspInquiryFilterFormDataProvider(
@@ -674,11 +526,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Table\OrderSspInquiryTable
-     */
     public function createOrderSspInquiryTable(OrderTransfer $orderTransfer): OrderSspInquiryTable
     {
         return new OrderSspInquiryTable(
@@ -688,27 +535,16 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery
-     */
     public function getSspInquiryQuery(): SpySspInquiryQuery
     {
         return SpySspInquiryQuery::create();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatter\TimeZoneFormatterInterface
-     */
     public function createTimeZoneFormatter(): TimeZoneFormatterInterface
     {
         return new TimeZoneFormatter($this->getConfig());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createEditOfferForm(ProductOfferTransfer $productOfferTransfer): FormInterface
     {
         return $this->getFormFactory()->create(
@@ -718,9 +554,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataProvider\EditOfferFormDataProvider
-     */
     public function createEditOfferFormDataProvider(): EditOfferFormDataProvider
     {
         return new EditOfferFormDataProvider(
@@ -745,33 +578,21 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         ];
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataTransformer\ValidFromDataTransformer
-     */
     public function createValidFromDataTransformer(): ValidFromDataTransformer
     {
         return new ValidFromDataTransformer();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataTransformer\ValidToDataTransformer
-     */
     public function createValidToDataTransformer(): ValidToDataTransformer
     {
         return new ValidToDataTransformer();
     }
 
-    /**
-     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
-     */
     public function createStockEditOfferFormEventSubscriber(): EventSubscriberInterface
     {
         return new StockEditOfferFormEventSubscriber();
     }
 
-    /**
-     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
-     */
     public function createServicePointEditOfferFormEventSubscriber(): EventSubscriberInterface
     {
         return new ServicePointEditOfferFormEventSubscriber();
@@ -804,225 +625,141 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PLUGINS_STATE_MACHINE_CONDITION);
     }
 
-    /**
-     * @return \Spryker\Zed\Mail\Business\MailFacadeInterface
-     */
     public function getMailFacade(): MailFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_MAIL);
     }
 
-    /**
-     * @return \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface
-     */
     public function getStateMachineFacade(): StateMachineFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_STATE_MACHINE);
     }
 
-    /**
-     * @return \Spryker\Service\FileManager\FileManagerServiceInterface
-     */
     public function getFileManagerService(): FileManagerServiceInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_FILE_MANAGER);
     }
 
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
     public function getProductQuery(): SpyProductQuery
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_PRODUCT);
     }
 
-    /**
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
-     */
     public function getProductImageQuery(): SpyProductImageQuery
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_PRODUCT_IMAGE);
     }
 
-    /**
-     * @return \Spryker\Zed\Locale\Business\LocaleFacade
-     */
     public function getLocaleFacade(): LocaleFacade
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_LOCALE);
     }
 
-    /**
-     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
-     */
     public function getStoreFacade(): StoreFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_STORE);
     }
 
-    /**
-     * @return \Spryker\Zed\ServicePoint\Business\ServicePointFacadeInterface
-     */
     public function getServicePointFacade(): ServicePointFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SERVICE_POINT);
     }
 
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
     public function getSalesOrderItemPropelQuery(): SpySalesOrderItemQuery
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_SALES_ORDER_ITEM);
     }
 
-    /**
-     * @return \Spryker\Zed\ShipmentType\Business\ShipmentTypeFacadeInterface
-     */
     public function getShipmentTypeFacade(): ShipmentTypeFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SHIPMENT_TYPE);
     }
 
-    /**
-     * @return \Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface
-     */
     public function getProductOfferFacade(): ProductOfferFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_PRODUCT_OFFER);
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
-     */
     public function getProductFacade(): ProductFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_PRODUCT);
     }
 
-    /**
-     * @return \Spryker\Zed\Merchant\Business\MerchantFacadeInterface
-     */
     public function getMerchantFacade(): MerchantFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_MERCHANT);
     }
 
-    /**
-     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
-     */
     public function getOmsFacade(): OmsFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_OMS);
     }
 
-    /**
-     * @return \Spryker\Zed\MerchantStock\Business\MerchantStockFacadeInterface
-     */
     public function getMerchantStockFacade(): MerchantStockFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_MERCHANT_STOCK);
     }
 
-    /**
-     * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
-     */
     public function getSalesFacade(): SalesFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SALES);
     }
 
-    /**
-     * @return \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
-     */
     public function getUtilDateTimeService(): UtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
 
-    /**
-     * @return \Spryker\Zed\FileManager\Business\FileManagerFacadeInterface
-     */
     public function getFileManagerFacade(): FileManagerFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_FILE_MANAGER);
     }
 
-    /**
-     * @return \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface
-     */
     public function getSequenceNumberFacade(): SequenceNumberFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SEQUENCE_NUMBER);
     }
 
-    /**
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
-     */
     public function getFileInfoPropelQuery(): SpyFileInfoQuery
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_FILE_INFO);
     }
 
-    /**
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
     public function getFilePropelQuery(): SpyFileQuery
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_FILE);
     }
 
-    /**
-     * @return \Spryker\Zed\Translator\Business\TranslatorFacadeInterface
-     */
     public function getTranslatorFacade(): TranslatorFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_TRANSLATOR);
     }
 
-    /**
-     * @return \Spryker\Zed\Company\Business\CompanyFacadeInterface
-     */
     public function getCompanyFacade(): CompanyFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_COMPANY);
     }
 
-    /**
-     * @return \Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface
-     */
     public function getCompanyUserFacade(): CompanyUserFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_COMPANY_USER);
     }
 
-    /**
-     * @return \Spryker\Zed\User\Business\UserFacadeInterface
-     */
     public function getUserFacade(): UserFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_USER);
     }
 
-    /**
-     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface
-     */
     public function getCompanyBusinessUnitFacade(): CompanyBusinessUnitFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT);
     }
 
-    /**
-     * @return \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
-     */
     public function getDateTimeService(): UtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
 
-    /**
-     * @return \Spryker\Zed\Customer\Business\CustomerFacadeInterface
-     */
     public function getCustomerFacade(): CustomerFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_CUSTOMER);
@@ -1039,9 +776,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(SspAssetForm::class, $sspAssetTransfer, $formOptions);
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Form\DataProvider\SspAssetFormDataProvider
-     */
     public function createSspAssetFormDataProvider(): SspAssetFormDataProvider
     {
         return new SspAssetFormDataProvider(
@@ -1052,9 +786,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Mapper\SspAssetFormDataToTransferMapperInterface
-     */
     public function createSspAssetFormDataToTransferMapper(): SspAssetFormDataToTransferMapperInterface
     {
         return new SspAssetFormDataToTransferMapper();
@@ -1071,27 +802,16 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(SspModelForm::class, $sspModelTransfer, $formOptions);
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Mapper\SspModelFormDataToTransferMapperInterface
-     */
     public function createSspModelFormDataToTransferMapper(): SspModelFormDataToTransferMapperInterface
     {
         return new SspModelFormDataToTransferMapper();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Tabs\SspAssetTabs
-     */
     public function createSspAssetTabs(): SspAssetTabs
     {
         return new SspAssetTabs();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Table\AssignedBusinessUnitTable
-     */
     public function createAssignedBusinessUnitTable(SspAssetTransfer $sspAssetTransfer): AssignedBusinessUnitTable
     {
         return new AssignedBusinessUnitTable(
@@ -1101,11 +821,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Table\SspInquiryTable
-     */
     public function createAssetSspInquiryTable(SspAssetTransfer $sspAssetTransfer): AssetSspInquiryTable
     {
         return new AssetSspInquiryTable(
@@ -1115,11 +830,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetConditionsTransfer $sspAssetConditionsTransfer
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Table\SspAssetTable
-     */
     public function createSspAssetTable(SspAssetConditionsTransfer $sspAssetConditionsTransfer): SspAssetTable
     {
         return new SspAssetTable(
@@ -1131,43 +841,26 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery
-     */
     public function getSspAssetToCompanyBusinessUnitQuery(): SpySspAssetToCompanyBusinessUnitQuery
     {
         return SpySspAssetToCompanyBusinessUnitQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySspAssetQuery
-     */
     public function getSspInquirySspAssetQuery(): SpySspInquirySspAssetQuery
     {
         return SpySspInquirySspAssetQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery
-     */
     public function getSspAssetQuery(): SpySspAssetQuery
     {
         return SpySspAssetQuery::create();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetConditionsTransfer $sspAssetConditionsTransfer
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function getSspAssetFilterForm(SspAssetConditionsTransfer $sspAssetConditionsTransfer): FormInterface
     {
         return $this->getFormFactory()->create(SspAssetFilterForm::class, $sspAssetConditionsTransfer, $this->createSspAssetFilterFormDataProvider()->getOptions());
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Form\DataProvider\SspAssetFilterFormDataProvider
-     */
     public function createSspAssetFilterFormDataProvider(): SspAssetFilterFormDataProvider
     {
         return new SspAssetFilterFormDataProvider(
@@ -1175,11 +868,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @param string $assetReference
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Table\SspServiceTable
-     */
     public function createAssetSspServiceTable(string $assetReference): SspServiceTable
     {
         return new SspServiceTable(
@@ -1189,17 +877,11 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
     public function getSalesOrderItemQuery(): SpySalesOrderItemQuery
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_SALES_ORDER_ITEM);
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Saver\SalesOrderItemSspAssetSaverInterface
-     */
     public function createSalesOrderItemSspAssetSaver(): SalesOrderItemSspAssetSaverInterface
     {
         return new SalesOrderItemSspAssetSaver(
@@ -1208,25 +890,16 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\ProductClassForm
-     */
     public function createProductClassForm(): ProductClassForm
     {
         return new ProductClassForm();
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductOfferTableActionExpanderInterface
-     */
     public function createProductOfferTableActionExpander(): ProductOfferTableActionExpanderInterface
     {
         return new ProductOfferTableActionExpander();
     }
 
-    /**
-     * @return \SprykerFeature\Service\SelfServicePortal\SelfServicePortalServiceInterface
-     */
     public function getSelfServicePortalService(): SelfServicePortalServiceInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_SELF_SERVICE_PORTAL);

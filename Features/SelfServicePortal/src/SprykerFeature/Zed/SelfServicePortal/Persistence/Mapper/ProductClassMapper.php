@@ -15,12 +15,6 @@ use Orm\Zed\SelfServicePortal\Persistence\SpyProductToProductClass;
 
 class ProductClassMapper
 {
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpyProductClass $productClassEntity
-     * @param \Generated\Shared\Transfer\ProductClassTransfer $productClassTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductClassTransfer
-     */
     public function mapProductClassEntityToProductClassTransfer(
         SpyProductClass $productClassEntity,
         ProductClassTransfer $productClassTransfer
@@ -28,12 +22,6 @@ class ProductClassMapper
         return $productClassTransfer->fromArray($productClassEntity->toArray(), true);
     }
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpyProductToProductClass $productToProductClassEntity
-     * @param \Generated\Shared\Transfer\ProductClassTransfer $productClassTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductClassTransfer
-     */
     public function mapProductToProductClassEntityToProductClassTransfer(
         SpyProductToProductClass $productToProductClassEntity,
         ProductClassTransfer $productClassTransfer

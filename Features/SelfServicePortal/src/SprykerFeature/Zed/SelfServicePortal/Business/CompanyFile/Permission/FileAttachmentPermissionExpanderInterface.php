@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
 
 interface FileAttachmentPermissionExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer
-     */
     public function expand(FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): FileAttachmentCriteriaTransfer;
 }

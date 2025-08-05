@@ -94,11 +94,6 @@ class SspAssetImageForm extends AbstractType
         return $this;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -107,19 +102,11 @@ class SspAssetImageForm extends AbstractType
         ]);
     }
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return 'asset_image';
     }
 
-    /**
-     * @param int $size
-     *
-     * @return string
-     */
     protected function convertToReadableSize(int $size): string
     {
         if ($size >= 1000 * 1000 * 1000) {
@@ -133,11 +120,6 @@ class SspAssetImageForm extends AbstractType
         }
     }
 
-    /**
-     * @param string|int $totalMaxSize
-     *
-     * @return int
-     */
     protected function normalizeBinaryFormat(int|string $totalMaxSize): int
     {
         if (is_string($totalMaxSize)) {

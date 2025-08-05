@@ -11,8 +11,5 @@ use Generated\Shared\Transfer\ShipmentTypeTransfer;
 
 interface ShipmentTypeReaderInterface
 {
-    /**
-     * @return \Generated\Shared\Transfer\ShipmentTypeTransfer|null
-     */
     public function findDefaultShipmentType(): ?ShipmentTypeTransfer;
 }

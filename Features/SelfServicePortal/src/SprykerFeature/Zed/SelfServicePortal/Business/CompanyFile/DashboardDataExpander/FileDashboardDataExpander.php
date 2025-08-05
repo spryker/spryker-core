@@ -23,22 +23,12 @@ class FileDashboardDataExpander implements FileDashboardDataExpanderInterface
      */
     protected const DEFAULT_FILE_DASHBOARD_PAGE_NUMBER = 1;
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Reader\CompanyFileReaderInterface $fileReader
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
-     */
     public function __construct(
         protected CompanyFileReaderInterface $fileReader,
         protected SelfServicePortalConfig $config
     ) {
     }
 
-     /**
-      * @param \Generated\Shared\Transfer\DashboardResponseTransfer $dashboardResponseTransfer
-      * @param \Generated\Shared\Transfer\DashboardRequestTransfer $dashboardRequestTransfer
-      *
-      * @return \Generated\Shared\Transfer\DashboardResponseTransfer
-      */
     public function provideFileAttachmentDashboardData(
         DashboardResponseTransfer $dashboardResponseTransfer,
         DashboardRequestTransfer $dashboardRequestTransfer
@@ -48,16 +38,11 @@ class FileDashboardDataExpander implements FileDashboardDataExpanderInterface
         $fileAttachmentCollectionTransfer = $this->fileReader->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
 
         $dashboardComponentFilesTransfer = (new DashboardComponentFilesTransfer())
-            ->setFileAttachmentCollection($fileAttachmentCollectionTransfer);
+           ->setFileAttachmentCollection($fileAttachmentCollectionTransfer);
 
         return $dashboardResponseTransfer->setDashboardComponentFiles($dashboardComponentFilesTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DashboardRequestTransfer $dashboardRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer
-     */
     protected function createFileAttachmentCriteriaTransfer(
         DashboardRequestTransfer $dashboardRequestTransfer
     ): FileAttachmentCriteriaTransfer {

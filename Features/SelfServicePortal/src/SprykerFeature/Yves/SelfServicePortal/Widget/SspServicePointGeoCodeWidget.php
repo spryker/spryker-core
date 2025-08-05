@@ -23,18 +23,12 @@ class SspServicePointGeoCodeWidget extends AbstractWidget
      */
     protected const PARAMETER_LONGITUDE = 'longitude';
 
-    /**
-     * @param \Generated\Shared\Transfer\ServicePointSearchTransfer $servicePointSearchTransfer
-     */
     public function __construct(ServicePointSearchTransfer $servicePointSearchTransfer)
     {
         $this->addLatitudeParameter($servicePointSearchTransfer);
         $this->addLongitudeParameter($servicePointSearchTransfer);
     }
 
-    /**
-     * @return string
-     */
     public static function getName(): string
     {
         return 'SspServicePointGeoCodeWidget';
@@ -50,11 +44,6 @@ class SspServicePointGeoCodeWidget extends AbstractWidget
         throw new LogicException('This widget should only be used as geo coordinates provider.');
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ServicePointSearchTransfer $servicePointSearchTransfer
-     *
-     * @return void
-     */
     protected function addLatitudeParameter(ServicePointSearchTransfer $servicePointSearchTransfer): void
     {
         $latitude = null;
@@ -66,11 +55,6 @@ class SspServicePointGeoCodeWidget extends AbstractWidget
         $this->addParameter(static::PARAMETER_LATITUDE, $latitude);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ServicePointSearchTransfer $servicePointSearchTransfer
-     *
-     * @return void
-     */
     protected function addLongitudeParameter(ServicePointSearchTransfer $servicePointSearchTransfer): void
     {
         $longitude = null;

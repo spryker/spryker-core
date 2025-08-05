@@ -32,17 +32,11 @@ class GetDashboard extends Unit
   */
     protected SelfServicePortalBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
     }
 
-    /**
-     * @return void
-     */
     public function testGetDashboardWillExecuteProviders(): void
     {
         // Arrange

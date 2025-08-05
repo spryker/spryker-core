@@ -76,19 +76,11 @@ class SspAssetAttachmentForm extends AbstractType
      */
     protected const BLOCK_PREFIX = 'sspAssetFileAttachment';
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return static::BLOCK_PREFIX;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
@@ -116,21 +108,11 @@ class SspAssetAttachmentForm extends AbstractType
         $this->addPreSetDataEventListeners($builder);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
     protected function addPreSetDataEventListeners(FormBuilderInterface $builder): void
     {
         $this->addPreSetDataEventToAssetField($builder);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
     protected function addPreSetDataEventToAssetField(FormBuilderInterface $builder): void
     {
         $builder->get(static::FIELD_ASSET_IDS)->addEventListener(

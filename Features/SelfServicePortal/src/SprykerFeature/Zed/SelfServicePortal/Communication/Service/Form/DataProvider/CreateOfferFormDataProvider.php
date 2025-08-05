@@ -110,11 +110,6 @@ class CreateOfferFormDataProvider
         return $options;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
-     */
     public function getData(ProductConcreteTransfer $productConcreteTransfer): ProductOfferTransfer
     {
         return (new ProductOfferTransfer())

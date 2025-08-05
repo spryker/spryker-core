@@ -27,9 +27,6 @@ class ViewCompanySspAssetPermissionPlugin extends AbstractPlugin implements Exec
      */
     public const KEY = 'ViewCompanySspAssetPermissionPlugin';
 
-    /**
-     * @return string
-     */
     public function getKey(): string
     {
         return static::KEY;

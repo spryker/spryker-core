@@ -30,9 +30,6 @@ class ShipmentTypeProductConcreteFormExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandShouldAddShipmentTypeFieldToForm(): void
     {
         // Arrange
@@ -47,9 +44,6 @@ class ShipmentTypeProductConcreteFormExpanderPluginTest extends Unit
         $this->assertTrue($expandedBuilder->has(ShipmentTypeProductConcreteForm::FIELD_SHIPMENT_TYPES));
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldConfigureShipmentTypeFieldAsMultipleSelect(): void
     {
         // Arrange
@@ -65,9 +59,6 @@ class ShipmentTypeProductConcreteFormExpanderPluginTest extends Unit
         $this->assertTrue($form->get(ShipmentTypeProductConcreteForm::FIELD_SHIPMENT_TYPES)->getConfig()->getOption('multiple'));
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldSetShipmentTypeFieldAsNotRequired(): void
     {
         // Arrange
@@ -83,9 +74,6 @@ class ShipmentTypeProductConcreteFormExpanderPluginTest extends Unit
         $this->assertFalse($form->get(ShipmentTypeProductConcreteForm::FIELD_SHIPMENT_TYPES)->getConfig()->getOption('required'));
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldPreserveExistingFormFields(): void
     {
         // Arrange

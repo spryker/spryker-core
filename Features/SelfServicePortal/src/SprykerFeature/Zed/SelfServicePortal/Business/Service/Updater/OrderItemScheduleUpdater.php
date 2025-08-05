@@ -32,21 +32,12 @@ class OrderItemScheduleUpdater implements OrderItemScheduleUpdaterInterface
      */
     protected const GLOSSARY_KEY_VALIDATION_NO_PAYMENT_METHODS_FOUND = 'self_service_portal.service.validation.no_payment_methods_found';
 
-    /**
-     * @param \Spryker\Zed\Sales\Business\SalesFacadeInterface $salesFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Resolver\PaymentMethodResolverInterface $paymentMethodResolver
-     */
     public function __construct(
         protected SalesFacadeInterface $salesFacade,
         protected PaymentMethodResolverInterface $paymentMethodResolver
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
-     */
     public function updateSalesOrderItemCollection(
         SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
     ): SalesOrderItemCollectionResponseTransfer {

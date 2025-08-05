@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\SspModelTransfer;
 
 interface SspModelValidatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspModelTransfer $sspModelTransfer
-     * @param \Generated\Shared\Transfer\SspModelCollectionResponseTransfer $sspModelCollectionResponseTransfer
-     *
-     * @return bool
-     */
     public function validateModelTransfer(
         SspModelTransfer $sspModelTransfer,
         SspModelCollectionResponseTransfer $sspModelCollectionResponseTransfer

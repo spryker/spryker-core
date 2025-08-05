@@ -17,9 +17,6 @@ class CreateSspAssetPermissionPlugin extends AbstractPlugin implements Permissio
      */
     public const KEY = 'CreateSspAssetPermissionPlugin';
 
-    /**
-     * @return string
-     */
     public function getKey(): string
     {
         return static::KEY;

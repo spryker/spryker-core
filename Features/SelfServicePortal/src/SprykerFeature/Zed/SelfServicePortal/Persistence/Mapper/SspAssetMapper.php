@@ -16,19 +16,10 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 
 class SspAssetMapper
 {
-    /**
-     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
-     */
     public function __construct(protected UtilDateTimeServiceInterface $utilDateTimeService)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspAsset $sspAssetEntity
-     *
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspAsset
-     */
     public function mapSspAssetTransferToSpySspAssetEntity(
         SspAssetTransfer $sspAssetTransfer,
         SpySspAsset $sspAssetEntity
@@ -42,12 +33,6 @@ class SspAssetMapper
         return $sspAssetEntity;
     }
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspAsset $spySspAssetEntity
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetTransfer
-     */
     public function mapSpySspAssetEntityToSspAssetTransfer(
         SpySspAsset $spySspAssetEntity,
         SspAssetTransfer $sspAssetTransfer
@@ -76,13 +61,6 @@ class SspAssetMapper
         return $sspAssetTransfer;
     }
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspAsset $spySspAssetEntity
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     * @param \Generated\Shared\Transfer\SspAssetIncludeTransfer $sspAssetIncludeTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetTransfer
-     */
     public function mapSpySspAssetEntityToSspAssetTransferIncludes(
         SpySspAsset $spySspAssetEntity,
         SspAssetTransfer $sspAssetTransfer,

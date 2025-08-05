@@ -16,11 +16,6 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
  */
 class SspDashboardFilterControllerEventHandlerPlugin extends AbstractPlugin implements FilterControllerEventHandlerPluginInterface
 {
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
-     *
-     * @return void
-     */
     public function handle(ControllerEvent $event): void
     {
         $this->getFactory()->createSspDashboardRestrictionHandler()->handleRestriction($event);

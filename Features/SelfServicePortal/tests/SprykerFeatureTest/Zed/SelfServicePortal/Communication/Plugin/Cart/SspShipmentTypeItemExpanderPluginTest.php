@@ -67,9 +67,6 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandItemsExpandsItemsWithShipmentType(): void
     {
         // Arrange
@@ -114,9 +111,6 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
         $this->assertShipmentTypeItem($resultCartChangeTransfer->getItems()[0], static::DEFAULT_SHIPMENT_TYPE_UUID, 2, 'Default Shipment Type');
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsDoesNothingWhenNoItemsProvided(): void
     {
         // Arrange
@@ -133,9 +127,6 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
         $this->assertSame($cartChangeTransfer, $resultCartChangeTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsExpandsBundleItemsWithShipmentType(): void
     {
         // Arrange
@@ -175,9 +166,6 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
         $this->assertSame(static::TEST_SHIPMENT_TYPE_UUID, $bundleItemTransfer->getShipmentOrFail()->getShipmentTypeUuid());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsDoesNotExpandWhenShipmentTypeReaderReturnsNoResults(): void
     {
         // Arrange
@@ -195,9 +183,6 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
         $this->assertNull($itemTransfer->getShipmentTypeOrFail()->getName());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsExpandsProductItemsWithDefaultShipmentTypeWhenNoShipmentTypeProvided(): void
     {
         // Arrange
@@ -264,9 +249,6 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsExpandsProductOfferItemsWithDefaultShipmentTypeWhenNoShipmentTypeProvided(): void
     {
         // Arrange
@@ -341,11 +323,6 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
         );
     }
 
-    /**
-     * @param string|null $shipmentTypeUuid
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     protected function createCartChangeTransferWithShipmentType(?string $shipmentTypeUuid = null): CartChangeTransfer
     {
         $cartChangeTransfer = new CartChangeTransfer();
@@ -364,9 +341,6 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
         return $cartChangeTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     protected function createCartChangeTransferWithoutShipmentType(): CartChangeTransfer
     {
         $cartChangeTransfer = new CartChangeTransfer();
@@ -447,11 +421,6 @@ class SspShipmentTypeItemExpanderPluginTest extends Unit
         return $businessFactoryMock;
     }
 
-    /**
-     * @param string|null $shipmentTypeUuid
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function createItemTransfer(?string $shipmentTypeUuid = null): ItemTransfer
     {
         $itemTransfer = new ItemTransfer();

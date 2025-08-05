@@ -75,9 +75,6 @@ class ApproveSspInquiryCommandPluginTest extends Unit
      */
     protected $selfServicePortalInquiryBusinessFactoryMock;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         $this->selfServicePortalFacadeMock = $this->createMock(SelfServicePortalFacade::class);
@@ -117,9 +114,6 @@ class ApproveSspInquiryCommandPluginTest extends Unit
         $this->approveSspInquiryCommandPlugin->setConfig($this->selfServicePortalConfigMock);
     }
 
-    /**
-     * @return void
-     */
     public function testRun(): void
     {
         // Arrange

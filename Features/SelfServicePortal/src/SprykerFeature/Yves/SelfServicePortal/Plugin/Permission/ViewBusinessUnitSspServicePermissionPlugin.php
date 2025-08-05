@@ -17,9 +17,6 @@ class ViewBusinessUnitSspServicePermissionPlugin extends AbstractPlugin implemen
      */
     public const KEY = 'ViewBusinessUnitSspServicePermissionPlugin';
 
-    /**
-     * @return string
-     */
     public function getKey(): string
     {
         return static::KEY;

@@ -17,11 +17,6 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class TriggerEventFormDataProvider implements TriggerEventFormDataProviderInterface
 {
- /**
-  * @param \SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacadeInterface $selfServicePortalFacade
-  * @param \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface $stateMachineFacade
-  * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-  */
     public function __construct(
         protected SelfServicePortalFacadeInterface $selfServicePortalFacade,
         protected StateMachineFacadeInterface $stateMachineFacade,

@@ -22,12 +22,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 class SspInquiryMapper implements SspInquiryMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspInquiry $sspInquiryEntity
-     *
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspInquiry
-     */
     public function mapSspInquiryTransferToSspInquiryEntity(SspInquiryTransfer $sspInquiryTransfer, SpySspInquiry $sspInquiryEntity): SpySspInquiry
     {
          $sspInquiryEntity
@@ -38,12 +32,6 @@ class SspInquiryMapper implements SspInquiryMapperInterface
         return $sspInquiryEntity;
     }
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspInquiry $sspInquiryEntity
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer
-     */
     public function mapSspInquiryEntityToSspInquiryTransfer(SpySspInquiry $sspInquiryEntity, SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
     {
         $sspInquiryTransfer->fromArray($sspInquiryEntity->toArray(), true);
@@ -96,12 +84,6 @@ class SspInquiryMapper implements SspInquiryMapperInterface
         return $stateMachineItemTransfers;
     }
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspInquiry $sspInquiryEntity
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer
-     */
     protected function mapSspInquiryEntityToStateMachineItemTransfer(
         SpySspInquiry $sspInquiryEntity,
         StateMachineItemTransfer $stateMachineItemTransfer

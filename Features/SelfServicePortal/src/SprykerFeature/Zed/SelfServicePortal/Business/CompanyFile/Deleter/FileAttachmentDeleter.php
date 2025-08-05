@@ -18,10 +18,6 @@ class FileAttachmentDeleter implements FileAttachmentDeleterInterface
 {
     use TransactionTrait;
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Reader\CompanyFileReaderInterface $companyFileReader
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface $entityManager
-     */
     public function __construct(
         protected CompanyFileReaderInterface $companyFileReader,
         protected SelfServicePortalEntityManagerInterface $entityManager
@@ -44,11 +40,6 @@ class FileAttachmentDeleter implements FileAttachmentDeleterInterface
         return $fileIds;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer
-     */
     public function deleteFileAttachmentCollection(
         FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
     ): FileAttachmentCollectionResponseTransfer {

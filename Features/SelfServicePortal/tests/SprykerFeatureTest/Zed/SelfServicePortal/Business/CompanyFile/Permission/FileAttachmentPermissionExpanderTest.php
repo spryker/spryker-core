@@ -58,9 +58,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
      */
     protected FileAttachmentCriteriaPermissionExpander|MockObject $fileAttachmentPermissionExpanderMock;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -82,9 +79,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testExpandWithoutCompanyUserReturnsUnchangedCriteria(): void
     {
         // Arrange
@@ -98,9 +92,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertNull($result->getCompanyUser());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandWithCompanyFilesPermissionSetsCompanyIdFilter(): void
     {
         // Arrange
@@ -126,9 +117,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertFalse($result->getWithSspAssetRelation());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandWithBusinessUnitFilesPermissionSetsBusinessUnitIdFilter(): void
     {
         // Arrange
@@ -154,9 +142,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertFalse($result->getWithSspAssetRelation());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandWithCompanyUserFilesPermissionSetsCompanyUserIdFilter(): void
     {
         // Arrange
@@ -185,9 +170,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertNull($result->getWithCompanyUserRelation());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandWithCompanySspAssetPermissionSetsCompanyIdFilter(): void
     {
         // Arrange
@@ -216,9 +198,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertFalse($result->getWithCompanyUserRelation());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandWithBusinessUnitSspAssetPermissionSetsBusinessUnitIdFilter(): void
     {
         // Arrange
@@ -243,9 +222,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertNull($result->getWithSspAssetRelation());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandWithoutAnyPermissionsDisablesAllRelations(): void
     {
         // Arrange
@@ -275,9 +251,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertEmpty($result->getFileAttachmentConditions()->getSspAssetCompanyIds());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandWithMultiplePermissionsPrioritizesCompanyLevel(): void
     {
         // Arrange
@@ -305,9 +278,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertEmpty($result->getFileAttachmentConditions()->getCompanyUserIds());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandWithBusinessUnitAndUserPermissionsButNoCompanyPermission(): void
     {
         // Arrange
@@ -337,9 +307,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertFalse($result->getWithSspAssetRelation());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandWithOnlyUserPermissionSetsUserIdFilter(): void
     {
         // Arrange
@@ -370,9 +337,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertFalse($result->getWithSspAssetRelation());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandWithOnlySspAssetPermissionsIgnoresFilePermissions(): void
     {
         // Arrange
@@ -403,9 +367,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertFalse($result->getWithBusinessUnitRelation());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandWithMixedFileAndSspAssetPermissions(): void
     {
         // Arrange
@@ -442,9 +403,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertTrue($result->getWithSspAssetRelation());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandWithCompanyFileAndBusinessUnitSspAssetPermissions(): void
     {
         // Arrange
@@ -490,9 +448,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
             });
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
     protected function createCompanyUserTransfer(): CompanyUserTransfer
     {
         $companyTransfer = (new CompanyTransfer())

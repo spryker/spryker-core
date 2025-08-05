@@ -39,9 +39,6 @@ class SspInquiryRejectedMailTypeBuilderPluginTest extends Unit
      */
     protected $selfServicePortalConfigMock;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -52,9 +49,6 @@ class SspInquiryRejectedMailTypeBuilderPluginTest extends Unit
         $this->sspInquiryRejectedMailTypeBuilderPlugin->setConfig($this->selfServicePortalConfigMock);
     }
 
-    /**
-     * @return void
-     */
     public function testBuild(): void
     {
         // Arrange

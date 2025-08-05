@@ -46,9 +46,6 @@ class ProductToProductClassDataImportPluginTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -56,9 +53,6 @@ class ProductToProductClassDataImportPluginTest extends Unit
         $this->tester->ensureProductClassTableIsEmpty();
     }
 
-    /**
-     * @return void
-     */
     public function testImportImportsProductToProductClassRelations(): void
     {
         // Arrange
@@ -88,9 +82,6 @@ class ProductToProductClassDataImportPluginTest extends Unit
         $this->assertContains($productClass2->getName(), $productClassNames);
     }
 
-    /**
-     * @return void
-     */
     public function testImportWithInvalidDataThrowsException(): void
     {
         // Arrange
@@ -109,9 +100,6 @@ class ProductToProductClassDataImportPluginTest extends Unit
         $productToProductClassDataImportPlugin->import($dataImporterConfigurationTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testGetImportType(): void
     {
         // Arrange
@@ -124,11 +112,6 @@ class ProductToProductClassDataImportPluginTest extends Unit
         $this->assertSame('product-to-product-class', $importType);
     }
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\ProductToProductClassDataImportPlugin $productToProductClassDataImportPlugin
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\ProductToProductClassDataImportPlugin
-     */
     protected function overwriteConfig(ProductToProductClassDataImportPlugin $productToProductClassDataImportPlugin): ProductToProductClassDataImportPlugin
     {
         $moduleNameConstant = '\Pyz\Zed\SelfServicePortal\SelfServicePortalConfig::MODULE_NAME';
@@ -155,9 +138,6 @@ class ProductToProductClassDataImportPluginTest extends Unit
         return $productToProductClassDataImportPlugin;
     }
 
-    /**
-     * @return void
-     */
     protected function _after(): void
     {
         parent::_after();

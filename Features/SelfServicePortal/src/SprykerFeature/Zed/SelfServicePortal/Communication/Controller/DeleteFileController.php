@@ -27,11 +27,6 @@ class DeleteFileController extends FileAbstractController
      */
     protected const ERROR_MESSAGE_FILE_CANNOT_BE_DELETED = 'File cannot be removed.';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function indexAction(Request $request): RedirectResponse
     {
         $idFile = $request->query->getInt(static::REQUEST_PARAM_ID_FILE);

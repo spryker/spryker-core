@@ -17,9 +17,6 @@ use SprykerFeature\Service\SelfServicePortal\Downloader\FileDownloaderInterface;
  */
 class SelfServicePortalServiceFactory extends AbstractServiceFactory
 {
- /**
-  * @return \SprykerFeature\Service\SelfServicePortal\Downloader\FileDownloaderInterface
-  */
     public function createFileDownloader(): FileDownloaderInterface
     {
         return new FileDownloader(
@@ -27,9 +24,6 @@ class SelfServicePortalServiceFactory extends AbstractServiceFactory
         );
     }
 
-    /**
-     * @return \Spryker\Service\FileManager\FileManagerServiceInterface
-     */
     public function getFileManagerService(): FileManagerServiceInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_FILE_MANAGER);

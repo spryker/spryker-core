@@ -13,11 +13,6 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\ReferenceGene
 
 class FileSaver implements FileSaverInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Mapper\FileUploadMapperInterface $fileUploadMapper
-     * @param \Spryker\Zed\FileManager\Business\FileManagerFacadeInterface $fileManagerFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\ReferenceGenerator\FileReferenceGeneratorInterface $fileReferenceGenerator
-     */
     public function __construct(
         protected FileUploadMapperInterface $fileUploadMapper,
         protected FileManagerFacadeInterface $fileManagerFacade,

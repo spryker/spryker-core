@@ -14,9 +14,6 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController as SprykerSho
  */
 class AbstractController extends SprykerShopAbstractController
 {
-    /**
-     * @return void
-     */
     public function initialize(): void
     {
         parent::initialize();

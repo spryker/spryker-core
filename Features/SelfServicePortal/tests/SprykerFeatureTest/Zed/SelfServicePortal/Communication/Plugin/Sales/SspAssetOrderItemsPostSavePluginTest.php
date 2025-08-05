@@ -40,9 +40,6 @@ class SspAssetOrderItemsPostSavePluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -51,9 +48,6 @@ class SspAssetOrderItemsPostSavePluginTest extends Unit
         $this->tester->ensureSalesOrderItemSspAssetTableIsEmpty();
     }
 
-    /**
-     * @return void
-     */
     public function testExecuteDoesNotCreateSspAssetsWhenNoAssetsProvided(): void
     {
         // Arrange
@@ -67,9 +61,6 @@ class SspAssetOrderItemsPostSavePluginTest extends Unit
         $this->assertSame(0, $this->tester->countSalesOrderItemSspAssets());
     }
 
-    /**
-     * @return void
-     */
     public function testExecuteCreatesSspAssetWhenAssetProvided(): void
     {
         // Arrange
@@ -97,9 +88,6 @@ class SspAssetOrderItemsPostSavePluginTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testExecuteCreatesMultipleSspAssetRelations(): void
     {
         // Arrange
@@ -136,9 +124,6 @@ class SspAssetOrderItemsPostSavePluginTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testExecuteHandlesAssetWithoutReferenceGracefully(): void
     {
         // Arrange
@@ -155,9 +140,6 @@ class SspAssetOrderItemsPostSavePluginTest extends Unit
         $this->assertSame(0, $this->tester->countSalesOrderItemSspAssets());
     }
 
-    /**
-     * @return void
-     */
     public function testExecuteHandlesNonExistentAssetReferenceGracefully(): void
     {
         // Arrange
@@ -178,9 +160,6 @@ class SspAssetOrderItemsPostSavePluginTest extends Unit
         $this->assertSame(0, $this->tester->countSalesOrderItemSspAssets());
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function createQuoteTransferWithOrderItems(): QuoteTransfer
     {
         $productTransfer = $this->tester->haveFullProduct([
@@ -210,9 +189,6 @@ class SspAssetOrderItemsPostSavePluginTest extends Unit
         return $quoteTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function createQuoteTransferWithMultipleOrderItems(): QuoteTransfer
     {
         $product1Transfer = $this->tester->haveFullProduct([
@@ -259,20 +235,11 @@ class SspAssetOrderItemsPostSavePluginTest extends Unit
         return $quoteTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\SaveOrderTransfer
-     */
     protected function createSaveOrderTransfer(): SaveOrderTransfer
     {
         return new SaveOrderTransfer();
     }
 
-    /**
-     * @param int $idSalesOrderItem
-     * @param string $assetReference
-     *
-     * @return void
-     */
     protected function assertSalesOrderItemSspAssetExists(int $idSalesOrderItem, string $assetReference): void
     {
         $relation = $this->tester->findSalesOrderItemSspAsset($idSalesOrderItem, $assetReference);

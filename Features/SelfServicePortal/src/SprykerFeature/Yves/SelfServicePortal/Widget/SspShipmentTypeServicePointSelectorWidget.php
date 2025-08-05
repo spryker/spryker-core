@@ -96,10 +96,6 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
      */
     protected const DEFAULT_FORM_FIELD_SERVICE_POINT_UUID = 'service_point_uuid';
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param bool $isDisabled
-     */
     public function __construct(
         ProductViewTransfer $productViewTransfer,
         bool $isDisabled = false
@@ -165,31 +161,16 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
         return '@SelfServicePortal/views/shipment-type-service-point-selector/shipment-type-service-point-selector.twig';
     }
 
-    /**
-     * @param bool $isDisabled
-     *
-     * @return void
-     */
     protected function addIsDisabledParameter(bool $isDisabled): void
     {
         $this->addParameter(static::PARAMETER_IS_DISABLED, $isDisabled);
     }
 
-    /**
-     * @param bool $hasOnlyServiceShipmentType
-     *
-     * @return void
-     */
     protected function addHasOnlyServiceShipmentTypeParameter(bool $hasOnlyServiceShipmentType): void
     {
         $this->addParameter(static::PARAMETER_HAS_ONLY_SERVICE_SHIPMENT_TYPE, $hasOnlyServiceShipmentType);
     }
 
-    /**
-     * @param bool $hasOnlyDeliveryShipmentType
-     *
-     * @return void
-     */
     protected function addHasOnlyDeliveryShipmentTypeParameter(bool $hasOnlyDeliveryShipmentType): void
     {
         $this->addParameter(static::PARAMETER_HAS_ONLY_DELIVERY_SHIPMENT_TYPE, $hasOnlyDeliveryShipmentType);
@@ -208,11 +189,6 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return void
-     */
     protected function isServiceDateTimeFieldVisible(ProductViewTransfer $productViewTransfer): void
     {
         $isVisible = in_array($this->getConfig()->getScheduledProductClassName(), $productViewTransfer->getProductClassNames())
@@ -221,9 +197,6 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
         $this->addParameter(static::PARAMETER_IS_SERVICE_DATE_TIME_FIELD_VISIBLE, $isVisible);
     }
 
-    /**
-     * @return void
-     */
     protected function addFormFieldShipmentTypeUuidParameter(): void
     {
         $this->addParameter(
@@ -232,9 +205,6 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
         );
     }
 
-    /**
-     * @return void
-     */
     protected function addFormFieldServicePointUuidParameter(): void
     {
         $this->addParameter(
@@ -243,9 +213,6 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
         );
     }
 
-    /**
-     * @return void
-     */
     protected function addFormFieldProductOfferReferenceParameter(): void
     {
         $this->addParameter(
@@ -254,9 +221,6 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
         );
     }
 
-    /**
-     * @return void
-     */
     protected function addFormFieldItemMetadataScheduledAtParameter(): void
     {
         $this->addParameter(
@@ -265,21 +229,11 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return void
-     */
     protected function addProductParameter(ProductViewTransfer $productViewTransfer): void
     {
         $this->addParameter(static::PARAMETER_PRODUCT, $productViewTransfer);
     }
 
-    /**
-     * @param bool $hasShipmentTypeWithRequiredLocation
-     *
-     * @return void
-     */
     protected function addHasShipmentTypeWithRequiredLocationParameter(bool $hasShipmentTypeWithRequiredLocation): void
     {
         $this->addParameter(static::PARAMETER_HAS_SHIPMENT_TYPE_WITH_REQUIRED_LOCATION, $hasShipmentTypeWithRequiredLocation);

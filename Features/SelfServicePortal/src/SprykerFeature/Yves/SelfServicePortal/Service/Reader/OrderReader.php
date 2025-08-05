@@ -41,12 +41,6 @@ class OrderReader implements OrderReaderInterface
      */
     protected $locale;
 
-    /**
-     * @param \Spryker\Client\Sales\SalesClientInterface $salesClient
-     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
-     * @param \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface $glossaryStorageClient
-     * @param string $locale
-     */
     public function __construct(
         SalesClientInterface $salesClient,
         CustomerClientInterface $customerClient,

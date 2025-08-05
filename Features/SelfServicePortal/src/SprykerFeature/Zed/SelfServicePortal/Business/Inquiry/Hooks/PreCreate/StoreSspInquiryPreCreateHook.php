@@ -12,18 +12,10 @@ use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 class StoreSspInquiryPreCreateHook implements SspInquiryPreCreateHookInterface
 {
-    /**
-     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
-     */
     public function __construct(protected StoreFacadeInterface $storeFacade)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer
-     */
     public function execute(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
     {
          $sspInquiryTransfer->setStore($this->storeFacade->getCurrentStore());
@@ -31,11 +23,6 @@ class StoreSspInquiryPreCreateHook implements SspInquiryPreCreateHookInterface
         return $sspInquiryTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return bool
-     */
     public function isApplicable(SspInquiryTransfer $sspInquiryTransfer): bool
     {
         return !$sspInquiryTransfer->getStore() || !$sspInquiryTransfer->getStore()->getIdStore();

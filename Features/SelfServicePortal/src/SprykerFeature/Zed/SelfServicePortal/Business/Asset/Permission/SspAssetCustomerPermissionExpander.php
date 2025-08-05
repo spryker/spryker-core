@@ -17,11 +17,6 @@ class SspAssetCustomerPermissionExpander implements SspAssetCustomerPermissionEx
 {
     use PermissionAwareTrait;
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCriteriaTransfer
-     */
     public function expandCriteria(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): SspAssetCriteriaTransfer
     {
         $companyUserTransfer = $sspAssetCriteriaTransfer->getCompanyUser();

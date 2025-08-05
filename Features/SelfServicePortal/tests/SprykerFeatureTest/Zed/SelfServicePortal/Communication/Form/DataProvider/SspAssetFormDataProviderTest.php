@@ -203,9 +203,6 @@ class SspAssetFormDataProviderTest extends Unit
         ];
     }
 
-    /**
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Form\DataProvider\SspAssetFormDataProvider
-     */
     protected function createSspAssetFormDataProvider(): SspAssetFormDataProvider
     {
         return new SspAssetFormDataProvider(

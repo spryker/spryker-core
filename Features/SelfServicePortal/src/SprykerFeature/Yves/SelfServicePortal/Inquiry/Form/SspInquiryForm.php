@@ -62,19 +62,11 @@ class SspInquiryForm extends AbstractType
      */
     protected const ERROR_MIME_TYPE_MESSAGE = 'self_service_portal.inquiry.file.mime_type.error';
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return 'sspInquiryForm';
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -226,11 +218,6 @@ class SspInquiryForm extends AbstractType
         return $fileUploadTransfers;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile
-     *
-     * @return \Generated\Shared\Transfer\FileUploadTransfer
-     */
     protected function createFileUploadTransfer(UploadedFile $uploadedFile): FileUploadTransfer
     {
         $fileUploadTransfer = new FileUploadTransfer();
@@ -243,11 +230,6 @@ class SspInquiryForm extends AbstractType
         return $fileUploadTransfer;
     }
 
-    /**
-     * @param int $size
-     *
-     * @return string
-     */
     protected function convertToReadableSize(int $size): string
     {
         if ($size >= 1000 * 1000 * 1000) {

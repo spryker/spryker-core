@@ -28,11 +28,6 @@ class DownloadAssetImageController extends AbstractController
      */
     protected const REQUEST_PARAM_SSP_ASSET_REFERENCE = 'ssp-asset-reference';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function viewImageAction(Request $request): Response
     {
         $sspAssetReference = $request->get(static::REQUEST_PARAM_SSP_ASSET_REFERENCE);
@@ -55,11 +50,6 @@ class DownloadAssetImageController extends AbstractController
         return $this->createResponse($sspAssetTransfer->getImageOrFail());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     protected function createResponse(FileTransfer $fileTransfer): Response
     {
         $chunkSize = $this->getFactory()->getConfig()->getSspAssetImageDownloadChunkSize();

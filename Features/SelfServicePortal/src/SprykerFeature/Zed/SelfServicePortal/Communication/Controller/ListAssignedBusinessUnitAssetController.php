@@ -33,11 +33,6 @@ class ListAssignedBusinessUnitAssetController extends AbstractGatewayController
         return ['sspAssignedBusinessUnitsTable' => $sspAssignedBusinessUnitTable->render()];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function tableAction(Request $request): JsonResponse
     {
         $assignedBusinessUnitTable = $this

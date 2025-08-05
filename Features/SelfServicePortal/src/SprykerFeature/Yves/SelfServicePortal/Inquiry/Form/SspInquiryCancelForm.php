@@ -19,9 +19,6 @@ class SspInquiryCancelForm extends AbstractType
      */
     protected const FORM_NAME = 'sspInquiryCancelForm';
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return static::FORM_NAME;

@@ -33,11 +33,6 @@ class ListAssetInquiryController extends AbstractGatewayController
         return ['sspInquiryTable' => $sspInquiryTable->render()];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function tableAction(Request $request): JsonResponse
     {
         $sspInquiryTable = $this

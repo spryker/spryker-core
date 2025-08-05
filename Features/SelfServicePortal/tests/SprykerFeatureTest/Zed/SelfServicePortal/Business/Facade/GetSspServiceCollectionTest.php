@@ -53,9 +53,6 @@ class GetSspServiceCollectionTest extends Unit
      */
     protected SelfServicePortalBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -66,9 +63,6 @@ class GetSspServiceCollectionTest extends Unit
         $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspServiceCollectionReturnsEmptyCollectionWhenNoServicesExist(): void
     {
         // Arrange
@@ -84,9 +78,6 @@ class GetSspServiceCollectionTest extends Unit
         $this->assertCount(0, $sspServiceCollectionTransfer->getServices());
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspServiceCollectionReturnsService(): void
     {
         // Arrange
@@ -111,9 +102,6 @@ class GetSspServiceCollectionTest extends Unit
         $this->assertSame($saveOrderTransfer->getOrderReference(), $serviceTransfer->getOrder()->getOrderReference());
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspServiceCollectionReturnsEmptyCollectionWhenFilteredByNonExistingProductClass(): void
     {
         // Arrange
@@ -136,9 +124,6 @@ class GetSspServiceCollectionTest extends Unit
         $this->assertCount(0, $sspServiceCollectionTransfer->getServices());
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspServiceCollectionReturnsFilteredServicesByProductName(): void
     {
         // Arrange
@@ -166,9 +151,6 @@ class GetSspServiceCollectionTest extends Unit
         $this->assertSame('product-to-find', $sspServiceCollectionTransfer->getServices()->getIterator()->current()->getProductName());
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspServiceCollectionReturnsFilteredServicesBySku(): void
     {
         // Arrange
@@ -195,9 +177,6 @@ class GetSspServiceCollectionTest extends Unit
         $this->assertCount(1, $sspServiceCollectionTransfer->getServices());
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspServiceCollectionReturnsFilteredServicesByOrderReference(): void
     {
         // Arrange
@@ -225,9 +204,6 @@ class GetSspServiceCollectionTest extends Unit
         $this->assertSame($saveOrderTransferToFind->getOrderReference(), $sspServiceCollectionTransfer->getServices()->getIterator()->current()->getOrder()->getOrderReference());
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspServiceCollectionReturnsFilteredServicesByCustomerReference(): void
     {
         // Arrange
@@ -254,9 +230,6 @@ class GetSspServiceCollectionTest extends Unit
         $this->assertCount(1, $sspServiceCollectionTransfer->getServices());
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspServiceCollectionReturnsFilteredServicesBySspAssetReference(): void
     {
         // Arrange
@@ -290,9 +263,6 @@ class GetSspServiceCollectionTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspServiceCollectionReturnsServicesForUserWithoutCompanyPermissions(): void
     {
         // Arrange
@@ -317,9 +287,6 @@ class GetSspServiceCollectionTest extends Unit
         $this->assertSame($saveOrderTransfer->getOrderReference(), $orderTransfer->getOrderReference());
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspServiceCollectionReturnsServicesForUserWithBusinessUnitPermissions(): void
     {
         // Arrange
@@ -363,9 +330,6 @@ class GetSspServiceCollectionTest extends Unit
         $this->assertSame($saveOrderTransfer->getOrderReference(), $sspServiceCollectionTransfer->getServices()->getIterator()->current()->getOrder()->getOrderReference());
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspServiceCollectionReturnsServicesForUserWithCompanyPermissions(): void
     {
         // Arrange
@@ -409,9 +373,6 @@ class GetSspServiceCollectionTest extends Unit
         $this->assertSame($saveOrderTransfer->getOrderReference(), $sspServiceCollectionTransfer->getServices()->getIterator()->current()->getOrder()->getOrderReference());
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspServiceCollectionReturnsSortedServices(): void
     {
         // Arrange
@@ -441,9 +402,6 @@ class GetSspServiceCollectionTest extends Unit
         $this->assertSame('A Product', $services[1]->getProductName());
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspServiceCollectionReturnsPaginatedServices(): void
     {
         // Arrange
@@ -481,11 +439,6 @@ class GetSspServiceCollectionTest extends Unit
         $this->assertSame(3, $responsePaginationTransfer->getLastPage());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspServiceCriteriaTransfer
-     */
     protected function createSspServiceCriteriaTransfer(CompanyUserTransfer $companyUserTransfer): SspServiceCriteriaTransfer
     {
         return (new SspServiceCriteriaTransfer())
@@ -493,11 +446,6 @@ class GetSspServiceCollectionTest extends Unit
             ->setServiceConditions(new SspServiceConditionsTransfer());
     }
 
-    /**
-     * @param bool $withPermissions
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
     protected function haveCompanyWithUserWithPermissions(bool $withPermissions = true): CompanyUserTransfer
     {
         $companyTransfer = $this->tester->haveCompany();
@@ -519,11 +467,6 @@ class GetSspServiceCollectionTest extends Unit
         return $companyUserTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\SaveOrderTransfer
-     */
     protected function haveCompanyUserOrder(CompanyUserTransfer $companyUserTransfer): SaveOrderTransfer
     {
         $saveOrderTransfer = $this->tester->haveOrder($companyUserTransfer->toArray(), static::DEFAULT_OMS_PROCESS_NAME);

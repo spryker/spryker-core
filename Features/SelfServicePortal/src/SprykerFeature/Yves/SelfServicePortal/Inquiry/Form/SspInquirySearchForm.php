@@ -64,11 +64,6 @@ class SspInquirySearchForm extends AbstractType
      */
     public const FORM_NAME = 'sspInquirySearchForm';
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -80,9 +75,6 @@ class SspInquirySearchForm extends AbstractType
         ]);
     }
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return static::FORM_NAME;

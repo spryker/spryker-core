@@ -40,9 +40,6 @@ class SspInquiryStateMachineHandlerPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testGetCommandPlugins(): void
     {
         // Arrange
@@ -55,9 +52,6 @@ class SspInquiryStateMachineHandlerPluginTest extends Unit
         $this->assertIsArray($commandPlugins);
     }
 
-    /**
-     * @return void
-     */
     public function testGetConditionPlugins(): void
     {
         // Arrange
@@ -70,9 +64,6 @@ class SspInquiryStateMachineHandlerPluginTest extends Unit
         $this->assertIsArray($conditionPlugins);
     }
 
-    /**
-     * @return void
-     */
     public function testGetStateMachineName(): void
     {
         // Arrange
@@ -88,9 +79,6 @@ class SspInquiryStateMachineHandlerPluginTest extends Unit
         $this->assertSame('ssp-inquiry', $actualStateMachineName);
     }
 
-    /**
-     * @return void
-     */
     public function testGetActiveProcesses(): void
     {
         // Arrange
@@ -114,9 +102,6 @@ class SspInquiryStateMachineHandlerPluginTest extends Unit
         $this->assertContains('Process2', $activeProcesses);
     }
 
-    /**
-     * @return void
-     */
     public function testGetInitialStateForProcess(): void
     {
         // Arrange
@@ -136,9 +121,6 @@ class SspInquiryStateMachineHandlerPluginTest extends Unit
         $this->assertSame(static::TEST_INITIAL_STATE, $initialState);
     }
 
-    /**
-     * @return void
-     */
     public function testGetStateMachineItemsByStateIds(): void
     {
         // Arrange
@@ -164,11 +146,6 @@ class SspInquiryStateMachineHandlerPluginTest extends Unit
         $this->assertEquals($expectedItems, $actualItems);
     }
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $configMock
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\StateMachine\SspInquiryStateMachineHandlerPlugin
-     */
     protected function createPluginWithMockedConfig(SelfServicePortalConfig $configMock): SspInquiryStateMachineHandlerPlugin
     {
         $plugin = $this->getMockBuilder(SspInquiryStateMachineHandlerPlugin::class)
@@ -181,11 +158,6 @@ class SspInquiryStateMachineHandlerPluginTest extends Unit
         return $plugin;
     }
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $repositoryMock
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\StateMachine\SspInquiryStateMachineHandlerPlugin
-     */
     protected function createPluginWithMockedRepository(SelfServicePortalRepositoryInterface $repositoryMock): SspInquiryStateMachineHandlerPlugin
     {
         $plugin = $this->getMockBuilder(SspInquiryStateMachineHandlerPlugin::class)

@@ -12,20 +12,10 @@ use Generated\Shared\Transfer\SspAssetCollectionResponseTransfer;
 
 interface SspAssetWriterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer
-     */
     public function createSspAssetCollection(
         SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
     ): SspAssetCollectionResponseTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer
-     */
     public function updateSspAssetCollection(
         SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
     ): SspAssetCollectionResponseTransfer;

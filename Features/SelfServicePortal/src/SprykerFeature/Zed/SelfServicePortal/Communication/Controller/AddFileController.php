@@ -51,11 +51,6 @@ class AddFileController extends FileAbstractController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     protected function handleValidForm(FormInterface $form): RedirectResponse
     {
         $redirectUrl = Url::generate(static::URL_PATH_LIST_FILE)->build();
@@ -77,11 +72,6 @@ class AddFileController extends FileAbstractController
         return $this->redirectResponse($redirectUrl);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return void
-     */
     protected function addErrors(FormInterface $form): void
     {
         /** @var \Symfony\Component\Form\FormError $error */

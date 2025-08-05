@@ -64,11 +64,6 @@ class DownloadCompanyFileController extends AbstractController
         return $this->createDownloadResponse($fileAttachmentCollectionTransfer->getFileAttachments()->offsetGet(0));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
-     *
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
-     */
     protected function createDownloadResponse(FileAttachmentTransfer $fileAttachmentTransfer): StreamedResponse
     {
         $chunkSize = $this->getFactory()->getConfig()->getCompanyFileDownloadChunkSize();
@@ -81,11 +76,6 @@ class DownloadCompanyFileController extends AbstractController
             );
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer
-     */
     protected function createFileAttachmentCriteriaTransfer(Request $request): FileAttachmentCriteriaTransfer
     {
         $uuidFile = (string)$request->query->get(static::PARAM_ID_FILE);

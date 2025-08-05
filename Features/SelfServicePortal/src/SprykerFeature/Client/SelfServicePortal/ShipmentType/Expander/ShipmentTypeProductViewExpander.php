@@ -17,9 +17,6 @@ class ShipmentTypeProductViewExpander implements ShipmentTypeProductViewExpander
      */
     protected const PRODUCT_DATA_SHIPMENT_TYPE_UUIDS = 'shipment_type_uuids';
 
-    /**
-     * @param \SprykerFeature\Client\SelfServicePortal\Service\Reader\ShipmentTypeStorageReaderInterface $shipmentTypeStorageReader
-     */
     public function __construct(protected ShipmentTypeStorageReaderInterface $shipmentTypeStorageReader)
     {
     }

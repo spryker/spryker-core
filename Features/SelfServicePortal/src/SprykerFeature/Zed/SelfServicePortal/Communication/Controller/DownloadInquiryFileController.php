@@ -64,11 +64,6 @@ class DownloadInquiryFileController extends AbstractController
         return $this->createDownloadResponse($fileTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
-     */
     protected function createDownloadResponse(FileTransfer $fileTransfer): StreamedResponse
     {
         $chunkSize = $this->getFactory()->getConfig()->getSspInquiryFileReadChunkSize();

@@ -19,12 +19,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class SspAssetFormDataToTransferMapper implements SspAssetFormDataToTransferMapperInterface
 {
-    /**
-     * @param \Symfony\Component\Form\FormInterface $sspAssetForm
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetTransfer
-     */
     public function mapFormDataToSspAssetTransfer(FormInterface $sspAssetForm, SspAssetTransfer $sspAssetTransfer): SspAssetTransfer
     {
         $uploadedFile = $sspAssetForm->get(SspAssetForm::FIELD_IMAGE)->get(SspAssetImageForm::FIELD_FILE)->getData();
@@ -44,11 +38,6 @@ class SspAssetFormDataToTransferMapper implements SspAssetFormDataToTransferMapp
         return $sspAssetTransfer;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile
-     *
-     * @return \Generated\Shared\Transfer\FileUploadTransfer
-     */
     protected function createFileUploadTransfer(UploadedFile $uploadedFile): FileUploadTransfer
     {
         return (new FileUploadTransfer())
@@ -84,11 +73,6 @@ class SspAssetFormDataToTransferMapper implements SspAssetFormDataToTransferMapp
         return $fileContent;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $sspAssetForm
-     *
-     * @return bool
-     */
     protected function shouldExistingAssetImageBeDeleted(FormInterface $sspAssetForm): bool
     {
         $imageField = $sspAssetForm->get(SspAssetForm::FIELD_IMAGE);

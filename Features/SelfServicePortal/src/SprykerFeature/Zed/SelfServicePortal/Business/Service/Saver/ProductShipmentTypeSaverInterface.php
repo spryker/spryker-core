@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductShipmentTypeSaverInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function saveProductShipmentTypes(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

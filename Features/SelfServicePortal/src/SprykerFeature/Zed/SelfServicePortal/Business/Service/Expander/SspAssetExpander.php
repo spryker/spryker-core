@@ -25,19 +25,10 @@ class SspAssetExpander implements SspAssetExpanderInterface
      */
     protected const SERVICE_PAGINATION_PAGE = 1;
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ServiceReaderInterface $serviceReader
-     */
     public function __construct(protected ServiceReaderInterface $serviceReader)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionTransfer $sspAssetCollectionTransfer
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
-     */
     public function expandSspAssetWithServices(
         SspAssetCollectionTransfer $sspAssetCollectionTransfer,
         SspAssetCriteriaTransfer $sspAssetCriteriaTransfer

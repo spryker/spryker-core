@@ -98,11 +98,6 @@ class SspServiceTable extends AbstractTable
      */
     protected const FIELD_REQUESTED_DELIVERY_DATE = 'requested_delivery_date';
 
-    /**
-     * @param string $assetReference
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $salesOrderItemQuery
-     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
-     */
     public function __construct(
         protected string $assetReference,
         protected SpySalesOrderItemQuery $salesOrderItemQuery,
@@ -111,11 +106,6 @@ class SspServiceTable extends AbstractTable
         $this->baseUrl = static::BASE_URL;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setUrl(sprintf('table?%s=%s', static::PARAM_SSP_ASSET_REFERENCE, $this->assetReference));
@@ -137,11 +127,6 @@ class SspServiceTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $baseData = [
@@ -160,9 +145,6 @@ class SspServiceTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
     protected function prepareQuery(): SpySalesOrderItemQuery
     {
         $query = $this->salesOrderItemQuery;
@@ -254,11 +236,6 @@ class SspServiceTable extends AbstractTable
         return implode(' ', $buttons);
     }
 
-    /**
-     * @param string $status
-     *
-     * @return string
-     */
     protected function formatStatus(string $status): string
     {
         if (!$status) {
@@ -268,11 +245,6 @@ class SspServiceTable extends AbstractTable
         return sprintf('<span class="label label-default">%s</span>', htmlspecialchars($status));
     }
 
-    /**
-     * @param string|null $requestedDeliveryDate
-     *
-     * @return string
-     */
     protected function formatRequestedDeliveryDate(?string $requestedDeliveryDate): string
     {
         if (!$requestedDeliveryDate) {

@@ -64,7 +64,9 @@ validateModuleCodeSniffer() {
           fi
 
           local RULESET="Bundles/Development/rulesetStrict.xml"
-          if [ $LEVEL == 1 ]; then
+          if [ $module_directory == "Features" ]; then
+              RULESET="Features/phpcs.xml"
+          elif [ $LEVEL == 1 ]; then
               RULESET="Bundles/Development/ruleset.xml"
           fi
 

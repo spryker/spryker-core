@@ -29,9 +29,6 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\ScheduleTime
  */
 class ScheduleTimeOrderItemExpanderPreSavePluginTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testExpandOrderItemSetsStateWhenItemHasScheduledTime(): void
     {
         // Arrange
@@ -60,9 +57,6 @@ class ScheduleTimeOrderItemExpanderPreSavePluginTest extends Unit
         $this->assertSame($stateName, $resultSalesOrderItemEntityTransfer->getState()->getName());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandOrderItemDoesNotChangeStateWhenItemHasNoScheduledTime(): void
     {
         // Arrange
@@ -83,9 +77,6 @@ class ScheduleTimeOrderItemExpanderPreSavePluginTest extends Unit
         $this->assertNull($resultSalesOrderItemEntityTransfer->getState());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandOrderItemHandlesItemWithScheduledTimeButNoState(): void
     {
         // Arrange
@@ -115,9 +106,6 @@ class ScheduleTimeOrderItemExpanderPreSavePluginTest extends Unit
         $this->assertNull($resultSalesOrderItemEntityTransfer->getState());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandOrderItemPreservesExistingOmsStateForUpdateOperations(): void
     {
         // Arrange
@@ -148,13 +136,6 @@ class ScheduleTimeOrderItemExpanderPreSavePluginTest extends Unit
         $this->assertSame($initialStateName, $resultSalesOrderItemEntityTransfer->getState()->getName());
     }
 
-    /**
-     * @param string $scheduledAt
-     * @param int $stateId
-     * @param string $stateName
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function createItemTransferWithScheduledTime(string $scheduledAt, int $stateId, string $stateName): ItemTransfer
     {
         $stateTransfer = (new ItemStateTransfer())
@@ -169,17 +150,11 @@ class ScheduleTimeOrderItemExpanderPreSavePluginTest extends Unit
             ->setState($stateTransfer);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function createItemTransferWithoutScheduledTime(): ItemTransfer
     {
         return (new ItemBuilder())->build();
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function createQuoteTransfer(): QuoteTransfer
     {
         return (new QuoteBuilder())->build();

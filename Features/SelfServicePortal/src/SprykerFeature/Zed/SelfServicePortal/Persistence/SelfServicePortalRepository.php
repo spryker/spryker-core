@@ -140,11 +140,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $productConcreteIdsWithShipmentType;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
-     */
     public function getSspServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer
     {
         $sspServiceCollectionTransfer = new SspServiceCollectionTransfer();
@@ -174,11 +169,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $sspServiceCollectionTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductClassCriteriaTransfer $productClassCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductClassCollectionTransfer
-     */
     public function getProductClassCollection(ProductClassCriteriaTransfer $productClassCriteriaTransfer): ProductClassCollectionTransfer
     {
         $productClassCollectionTransfer = new ProductClassCollectionTransfer();
@@ -235,11 +225,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
             );
     }
 
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
     protected function joinServiceOrderData(SpySalesOrderItemQuery $query): SpySalesOrderItemQuery
     {
         $query
@@ -270,12 +255,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $query;
     }
 
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
     protected function applySspServiceFilters(SpySalesOrderItemQuery $query, SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SpySalesOrderItemQuery
     {
         if (!$sspServiceCriteriaTransfer->getServiceConditions()) {
@@ -339,12 +318,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $query;
     }
 
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
     protected function applySspServiceSorting(SpySalesOrderItemQuery $query, SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SpySalesOrderItemQuery
     {
         if (count($sspServiceCriteriaTransfer->getSortCollection()) === 0) {
@@ -386,11 +359,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
             ->mapSalesOrderItemEntitiesToItemTransfers($salesOrderItemEntities);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
-     */
     public function getFileAttachmentCollection(
         FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
     ): FileAttachmentCollectionTransfer {
@@ -412,11 +380,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
             );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
-     */
     public function getSspInquiryCollection(
         SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
     ): SspInquiryCollectionTransfer {
@@ -440,11 +403,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $sspInquiryCollectionTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
-     */
     public function getSspInquiryFileCollection(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer
     {
         $sspInquiryFileQuery = $this->getFactory()->createSspInquiryFileQuery();
@@ -470,11 +428,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
             );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
-     */
     public function getSspInquiryOrderCollection(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer
     {
          $sspInquiryOrderQuery = $this->getFactory()->createSspInquiryOrderQuery();
@@ -494,11 +447,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $sspInquiryCollectionTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
-     */
     public function getSspInquirySspAssetCollection(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer
     {
         $sspInquirySspAssetQuery = $this->getFactory()->createSspInquirySspAssetQuery();
@@ -543,12 +491,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         );
     }
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery $sspInquiryQuery
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery
-     */
     protected function applyInquiryFilters(SpySspInquiryQuery $sspInquiryQuery, SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SpySspInquiryQuery
     {
          $sspInquiryQuery = $this->applySspInquirySorting($sspInquiryQuery, $sspInquiryCriteriaTransfer->getSortCollection());
@@ -620,12 +562,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $sspInquiryQuery;
     }
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery $sspInquiryQuery
-     * @param \Generated\Shared\Transfer\SspInquiryConditionsTransfer $sspInquiryConditions
-     *
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery
-     */
     public function applySspInquiryOwnerFilter(SpySspInquiryQuery $sspInquiryQuery, SspInquiryConditionsTransfer $sspInquiryConditions): SpySspInquiryQuery
     {
          $sspInquiryOwnerConditionGroup = $sspInquiryConditions->getSspInquiryOwnerConditionGroup();
@@ -681,12 +617,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $sspInquiryQuery;
     }
 
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
-     *
-     * @return \Propel\Runtime\Collection\Collection
-     */
     protected function getPaginatedInquiryCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null): Collection
     {
         if ($paginationTransfer === null) {
@@ -714,12 +644,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $paginationModel->getResults();
     }
 
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
-     *
-     * @return \Propel\Runtime\Collection\Collection
-     */
     protected function getPaginatedFileAttachmentCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null): Collection
     {
         if ($paginationTransfer === null) {
@@ -747,11 +671,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $paginationModel->getResults();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
-     */
     public function getSspAssetCollection(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): SspAssetCollectionTransfer
     {
         $sspAssetCollectionTransfer = new SspAssetCollectionTransfer();
@@ -828,12 +747,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $sspAssetCollectionTransfer;
     }
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery $sspAssetQuery
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     *
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery
-     */
     protected function applyAssetConditions(
         SpySspAssetQuery $sspAssetQuery,
         SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
@@ -892,12 +805,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $sspAssetQuery;
     }
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery $sspAssetQuery
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     *
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery
-     */
     protected function applyAssetSorting(
         SpySspAssetQuery $sspAssetQuery,
         SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
@@ -920,12 +827,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $sspAssetQuery;
     }
 
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
-     *
-     * @return \Propel\Runtime\Collection\Collection
-     */
     protected function getAssetPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null): Collection
     {
         if ($paginationTransfer === null) {

@@ -49,9 +49,6 @@ class SingleAddressPerShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlug
      */
     protected SelfServicePortalYvesTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandShouldReturnSameFormBuilderInstance(): void
     {
         // Arrange
@@ -66,9 +63,6 @@ class SingleAddressPerShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlug
         $this->assertSame($formBuilderMock, $result);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldAddCheckboxFieldForApplicableShipmentTypes(): void
     {
         // Arrange
@@ -97,9 +91,6 @@ class SingleAddressPerShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlug
         $this->executePreSetDataListenerCallback($listenerCallback, $formMock, $itemTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldNotAddCheckboxFieldForNonApplicableShipmentTypes(): void
     {
         // Arrange
@@ -123,9 +114,6 @@ class SingleAddressPerShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlug
         $this->executePreSetDataListenerCallback($listenerCallback, $formMock, $itemTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldNotAddCheckboxFieldForBundleItems(): void
     {
         // Arrange
@@ -150,9 +138,6 @@ class SingleAddressPerShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlug
         $this->executePreSetDataListenerCallback($listenerCallback, $formMock, $itemTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldPopulateExistingCheckboxValueWhenItemHasSingleAddressFlag(): void
     {
         // Arrange
@@ -182,9 +167,6 @@ class SingleAddressPerShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlug
         $this->executePreSetDataListenerCallback($listenerCallback, $formMock, $itemTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldAttachPreSubmitEventListener(): void
     {
         // Arrange
@@ -208,9 +190,6 @@ class SingleAddressPerShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlug
         $plugin->expand($formBuilderMock, []);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandPreSubmitEventShouldCopyAddressFromSiblingFormWhenSingleAddressPerShipmentTypeEnabled(): void
     {
         // Arrange
@@ -295,11 +274,6 @@ class SingleAddressPerShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlug
             });
     }
 
-    /**
-     * @param string $shipmentTypeKey
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function createItemTransferWithShipmentType(string $shipmentTypeKey): ItemTransfer
     {
         $shipmentTypeTransfer = new ShipmentTypeTransfer();

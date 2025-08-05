@@ -39,9 +39,6 @@ class ProductClassOrderItemsPostSavePluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -50,9 +47,6 @@ class ProductClassOrderItemsPostSavePluginTest extends Unit
         $this->tester->ensureSalesOrderItemProductClassTableIsEmpty();
     }
 
-    /**
-     * @return void
-     */
     public function testExecuteDoesNotCreateProductClassesWhenNoProductClassesProvided(): void
     {
         // Arrange
@@ -66,9 +60,6 @@ class ProductClassOrderItemsPostSavePluginTest extends Unit
         $this->assertSame(0, $this->tester->countSalesOrderItemProductClasses());
     }
 
-    /**
-     * @return void
-     */
     public function testExecuteCreatesProductClassesWhenProductClassesProvided(): void
     {
         // Arrange
@@ -87,9 +78,6 @@ class ProductClassOrderItemsPostSavePluginTest extends Unit
         $this->assertSalesOrderItemProductClassesExist($itemTransfer->getIdSalesOrderItem(), $productClassTransfer->getNameOrFail());
     }
 
-    /**
-     * @return void
-     */
     public function testExecuteCreatesMultipleProductClassRelations(): void
     {
         // Arrange
@@ -114,9 +102,6 @@ class ProductClassOrderItemsPostSavePluginTest extends Unit
         $this->assertSalesOrderItemProductClassesExist($itemTransfer->getIdSalesOrderItem(), $productClass2Transfer->getNameOrFail());
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function createQuoteTransferWithOrderItems(): QuoteTransfer
     {
         // Create a product with a name to avoid null value errors
@@ -149,20 +134,11 @@ class ProductClassOrderItemsPostSavePluginTest extends Unit
         return $quoteTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\SaveOrderTransfer
-     */
     protected function createSaveOrderTransfer(): SaveOrderTransfer
     {
         return new SaveOrderTransfer();
     }
 
-    /**
-     * @param int $idSalesOrderItem
-     * @param string $productClassName
-     *
-     * @return void
-     */
     protected function assertSalesOrderItemProductClassesExist(int $idSalesOrderItem, string $productClassName): void
     {
         $relation = $this->tester->findSalesOrderItemProductClass($idSalesOrderItem, $productClassName);

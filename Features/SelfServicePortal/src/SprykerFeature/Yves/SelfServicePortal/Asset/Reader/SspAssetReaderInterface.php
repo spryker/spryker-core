@@ -14,13 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface SspAssetReaderInterface
 {
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
-     */
     public function getSspAssetCollection(
         Request $request,
         SspAssetCriteriaTransfer $sspAssetCriteriaTransfer,

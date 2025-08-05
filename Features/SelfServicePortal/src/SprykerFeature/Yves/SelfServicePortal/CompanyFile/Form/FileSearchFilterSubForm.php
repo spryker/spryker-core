@@ -58,11 +58,6 @@ class FileSearchFilterSubForm extends AbstractType
      */
     protected const DATE_TIME_FORMAT = 'Y-m-d\TH:i';
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -213,17 +208,11 @@ class FileSearchFilterSubForm extends AbstractType
         return $this;
     }
 
-    /**
-     * @return callable
-     */
     protected function formatDateString(): callable
     {
         return fn ($date) => DateTime::createFromFormat(static::DATE_TIME_FORMAT, $date) ?: null;
     }
 
-    /**
-     * @return callable
-     */
     protected function formatDateTime(): callable
     {
         return fn ($date) => $date ? $date->format(static::DATE_TIME_FORMAT) : null;

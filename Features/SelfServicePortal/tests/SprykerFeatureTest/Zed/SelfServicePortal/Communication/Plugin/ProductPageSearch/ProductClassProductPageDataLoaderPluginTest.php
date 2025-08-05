@@ -29,9 +29,6 @@ class ProductClassProductPageDataLoaderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandProductPageDataTransferWithProductClasses(): void
     {
         // Arrange
@@ -70,9 +67,6 @@ class ProductClassProductPageDataLoaderPluginTest extends Unit
         $this->assertContains($productClassTransfer->getName(), $productClassNames);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandProductPageDataTransferWithNoProductClasses(): void
     {
         // Arrange

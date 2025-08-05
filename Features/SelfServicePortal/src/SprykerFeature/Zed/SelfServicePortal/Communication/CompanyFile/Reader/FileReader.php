@@ -14,18 +14,10 @@ use Spryker\Zed\FileManager\Business\FileManagerFacadeInterface;
 
 class FileReader implements FileReaderInterface
 {
-    /**
-     * @param \Spryker\Zed\FileManager\Business\FileManagerFacadeInterface $fileManagerFacade
-     */
     public function __construct(protected FileManagerFacadeInterface $fileManagerFacade)
     {
     }
 
-    /**
-     * @param int $idFile
-     *
-     * @return \Generated\Shared\Transfer\FileTransfer|null
-     */
     public function findFileByIdFile(int $idFile): ?FileTransfer
     {
         $fileConditionsTransfer = (new FileConditionsTransfer())

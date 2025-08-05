@@ -33,9 +33,6 @@ class SspAssetCustomerPermissionExpanderTest extends Unit
      */
     protected SspAssetCustomerPermissionExpander|MockObject $expander;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -43,9 +40,6 @@ class SspAssetCustomerPermissionExpanderTest extends Unit
         $this->expander = $this->createPartialMock(SspAssetCustomerPermissionExpander::class, ['can']);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandCriteriaWhenNoCompanyUser(): void
     {
         // Arrange
@@ -58,9 +52,6 @@ class SspAssetCustomerPermissionExpanderTest extends Unit
         $this->assertSame($sspAssetCriteriaTransfer, $resultTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandCriteriaWhenNoPermissionsGranted(): void
     {
         // Arrange

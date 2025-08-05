@@ -57,11 +57,6 @@ class OrderSspInquiryTable extends AbstractTable
      */
     protected const BUTTON_VIEW = 'View';
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery $sspInquiryQuery
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     */
     public function __construct(
         protected SpySspInquiryQuery $sspInquiryQuery,
         protected SelfServicePortalConfig $selfServicePortalConfig,
@@ -70,11 +65,6 @@ class OrderSspInquiryTable extends AbstractTable
         $this->baseUrl = static::BASE_URL;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setUrl(sprintf('table?%s=%s', static::PARAM_ID_ORDER, $this->orderTransfer->getIdSalesOrder()));
@@ -90,11 +80,6 @@ class OrderSspInquiryTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $baseData = [
@@ -109,9 +94,6 @@ class OrderSspInquiryTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery
-     */
     protected function prepareQuery(): SpySspInquiryQuery
     {
         $this->sspInquiryQuery

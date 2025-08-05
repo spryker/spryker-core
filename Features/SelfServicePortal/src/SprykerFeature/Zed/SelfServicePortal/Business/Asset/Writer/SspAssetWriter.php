@@ -42,14 +42,6 @@ class SspAssetWriter implements SspAssetWriterInterface
      */
     protected const MESSAGE_ASSET_BUSINESS_UNIT_ASSIGNMENT_DENIED = 'self_service_portal.asset.business_unit_assignment.denied';
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface $entityManager
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $repository
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Validator\SspAssetValidatorInterface $sspAssetValidator
-     * @param \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface $sequenceNumberFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\FileSspAssetWriterInterface $fileSspAssetWriter
-     */
     public function __construct(
         protected SelfServicePortalEntityManagerInterface $entityManager,
         protected SelfServicePortalRepositoryInterface $repository,
@@ -60,11 +52,6 @@ class SspAssetWriter implements SspAssetWriterInterface
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer
-     */
     public function createSspAssetCollection(
         SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
     ): SspAssetCollectionResponseTransfer {
@@ -89,11 +76,6 @@ class SspAssetWriter implements SspAssetWriterInterface
         return $sspAssetCollectionResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer
-     */
     public function updateSspAssetCollection(
         SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
     ): SspAssetCollectionResponseTransfer {
@@ -124,11 +106,6 @@ class SspAssetWriter implements SspAssetWriterInterface
         return $sspAssetCollectionResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetTransfer
-     */
     protected function executeAssetCreation(SspAssetTransfer $sspAssetTransfer): SspAssetTransfer
     {
         $sspAssetTransfer
@@ -162,11 +139,6 @@ class SspAssetWriter implements SspAssetWriterInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetTransfer
-     */
     protected function executeAssetUpdate(SspAssetTransfer $sspAssetTransfer): SspAssetTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($sspAssetTransfer) {
@@ -176,12 +148,6 @@ class SspAssetWriter implements SspAssetWriterInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
-     * @param \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer
-     */
     protected function deleteBusinessUnitAssignments(
         SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer,
         SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
@@ -223,12 +189,6 @@ class SspAssetWriter implements SspAssetWriterInterface
         return $sspAssetCollectionResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
-     * @param \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer
-     */
     protected function createBusinessUnitAssignments(
         SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer,
         SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer

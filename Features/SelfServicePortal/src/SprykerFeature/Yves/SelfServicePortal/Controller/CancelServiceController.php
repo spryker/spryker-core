@@ -29,11 +29,6 @@ class CancelServiceController extends AbstractController
      */
     protected const GLOSSARY_KEY_CANCELLATION_SUCCESS = 'self_service_portal.service.cancellation.success';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function cancelServiceAction(Request $request): RedirectResponse
     {
         $sspServiceCancelForm = $this->getFactory()->getSspServiceCancelForm();

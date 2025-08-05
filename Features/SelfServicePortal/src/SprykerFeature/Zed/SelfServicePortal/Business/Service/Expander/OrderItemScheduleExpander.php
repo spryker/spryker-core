@@ -14,13 +14,6 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 class OrderItemScheduleExpander implements OrderItemScheduleExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
-     */
     public function expandOrderItemWithScheduleTime(
         QuoteTransfer $quoteTransfer,
         ItemTransfer $itemTransfer,
@@ -35,22 +28,11 @@ class OrderItemScheduleExpander implements OrderItemScheduleExpanderInterface
         return $salesOrderItemEntityTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
     protected function hasScheduledTime(ItemTransfer $itemTransfer): bool
     {
         return $itemTransfer->getMetadata() && $itemTransfer->getMetadata()->getScheduledAt();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
-     */
     protected function setOrderItemState(
         ItemTransfer $itemTransfer,
         SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer

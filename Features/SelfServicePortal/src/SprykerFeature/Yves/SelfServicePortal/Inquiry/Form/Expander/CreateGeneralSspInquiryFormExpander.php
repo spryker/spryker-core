@@ -27,16 +27,10 @@ class CreateGeneralSspInquiryFormExpander implements CreateSspInquiryFormExpande
      */
     protected const SINGLE_OPTION_COUNT = 1;
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     */
     public function __construct(protected RequestStack $requestStack)
     {
     }
 
-    /**
-     * @return bool
-     */
     public function isApplicable(): bool
     {
         if (!$this->requestStack->getCurrentRequest()) {

@@ -282,11 +282,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
      */
     public const PLUGINS_SSP_ASSET_MANAGEMENT_EXPANDER = 'PLUGINS_SSP_ASSET_MANAGEMENT_EXPANDER';
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
@@ -325,11 +320,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
@@ -362,11 +352,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         parent::providePersistenceLayerDependencies($container);
@@ -383,11 +368,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addShipmentTypeFacade(Container $container): Container
     {
         $container->set(static::FACADE_SHIPMENT_TYPE, static function (Container $container): ShipmentTypeFacadeInterface {
@@ -397,11 +377,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addLocaleFacade(Container $container): Container
     {
         $container->set(static::FACADE_LOCALE, static function (Container $container): LocaleFacadeInterface {
@@ -411,11 +386,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addServicePointFacade(Container $container): Container
     {
         $container->set(static::FACADE_SERVICE_POINT, static function (Container $container): ServicePointFacadeInterface {
@@ -425,11 +395,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addStoreFacade(Container $container): Container
     {
         $container->set(static::FACADE_STORE, static function (Container $container): StoreFacadeInterface {
@@ -439,11 +404,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addEventFacade(Container $container): Container
     {
         $container->set(static::FACADE_EVENT, static function (Container $container): EventFacadeInterface {
@@ -453,11 +413,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductOfferFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_OFFER, static function (Container $container): ProductOfferFacadeInterface {
@@ -467,11 +422,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT, static function (Container $container): ProductFacadeInterface {
@@ -481,11 +431,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addMerchantFacade(Container $container): Container
     {
         $container->set(static::FACADE_MERCHANT, static function (Container $container): MerchantFacadeInterface {
@@ -495,11 +440,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addMerchantStockFacade(Container $container): Container
     {
         $container->set(static::FACADE_MERCHANT_STOCK, static function (Container $container): MerchantStockFacadeInterface {
@@ -509,11 +449,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addOmsFacade(Container $container): Container
     {
         $container->set(static::FACADE_OMS, function (Container $container): OmsFacadeInterface {
@@ -523,11 +458,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addMessengerFacade(Container $container): Container
     {
         $container->set(static::FACADE_MESSENGER, function (Container $container): MessengerFacadeInterface {
@@ -537,11 +467,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductOfferShipmentTypeFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_OFFER_SHIPMENT_TYPE, function (Container $container): ProductOfferShipmentTypeFacadeInterface {
@@ -551,11 +476,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addTranslatorFacade(Container $container): Container
     {
         $container->set(static::FACADE_TRANSLATOR, function (Container $container): TranslatorFacadeInterface {
@@ -565,11 +485,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCompanyFacade(Container $container): Container
     {
         $container->set(static::FACADE_COMPANY, function (Container $container): CompanyFacadeInterface {
@@ -579,11 +494,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCompanyBusinessUnitFacade(Container $container): Container
     {
         $container->set(static::FACADE_COMPANY_BUSINESS_UNIT, function (Container $container): CompanyBusinessUnitFacadeInterface {
@@ -593,11 +503,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addSequenceNumberFacade(Container $container): Container
     {
         $container->set(static::FACADE_SEQUENCE_NUMBER, function (Container $container): SequenceNumberFacadeInterface {
@@ -607,11 +512,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addFileManagerFacade(Container $container): Container
     {
         $container->set(static::FACADE_FILE_MANAGER, function (Container $container): FileManagerFacadeInterface {
@@ -621,11 +521,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addMailFacade(Container $container): Container
     {
         $container->set(static::FACADE_MAIL, function (Container $container): MailFacadeInterface {
@@ -635,11 +530,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addStateMachineFacade(Container $container): Container
     {
         $container->set(static::FACADE_STATE_MACHINE, function (Container $container) {
@@ -649,11 +539,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addUtilDateTimeService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
@@ -663,11 +548,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCommentFacade(Container $container): Container
     {
         $container->set(static::FACADE_COMMENT, function (Container $container): CommentFacadeInterface {
@@ -677,11 +557,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addSalesFacade(Container $container): Container
     {
         $container->set(static::FACADE_SALES, function (Container $container): SalesFacadeInterface {
@@ -691,11 +566,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCompanyUserFacade(Container $container): Container
     {
         $container->set(static::FACADE_COMPANY_USER, function (Container $container): CompanyUserFacadeInterface {
@@ -705,11 +575,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addUserFacade(Container $container): Container
     {
         $container->set(static::FACADE_USER, function (Container $container): UserFacadeInterface {
@@ -719,11 +584,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCustomerFacade(Container $container): Container
     {
         $container->set(static::FACADE_CUSTOMER, static function (Container $container): CustomerFacadeInterface {
@@ -733,11 +593,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addSelfServicePortalService(Container $container): Container
     {
         $container->set(static::SERVICE_SELF_SERVICE_PORTAL, function (Container $container) {
@@ -747,11 +602,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductPropelQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function (): SpyProductQuery {
@@ -761,11 +611,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductImagePropelQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_PRODUCT_IMAGE, $container->factory(function (): SpyProductImageQuery {
@@ -775,11 +620,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addSalesOrderItemPropelQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, $container->factory(function (Container $container): SpySalesOrderItemQuery {
@@ -789,11 +629,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addShipmentTypeQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_SHIPMENT_TYPE, $container->factory(function (Container $container): SpyShipmentTypeQuery {
@@ -803,11 +638,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductShipmentTypeQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_PRODUCT_SHIPMENT_TYPE, $container->factory(function (Container $container): SpyProductShipmentTypeQuery {
@@ -817,11 +647,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductAbstractQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function (Container $container): SpyProductAbstractQuery {
@@ -831,11 +656,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function (Container $container): SpyProductQuery {
@@ -845,11 +665,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addFileQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_FILE, $container->factory(function (): SpyFileQuery {
@@ -859,11 +674,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addFileInfoQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_FILE_INFO, $container->factory(function (): SpyFileInfoQuery {
@@ -873,11 +683,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCompanyUserPropelQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_COMPANY_USER, $container->factory(function (): SpyCompanyUserQuery {
@@ -887,11 +692,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addFileManagerService(Container $container): Container
     {
         $container->set(static::SERVICE_FILE_MANAGER, function (Container $container): FileManagerServiceInterface {
@@ -901,11 +701,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCustomerQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_CUSTOMER, $container->factory(function (): SpyCustomerQuery {
@@ -915,11 +710,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addStateMachineItemStateQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_STATE_MACHINE_ITEM_STATE, $container->factory(function (): SpyStateMachineItemStateQuery {
@@ -929,11 +719,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addDashboardDataExpanderPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_DASHBOARD_DATA_PROVIDER, function () {
@@ -943,11 +728,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addStateMachineConditionPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_STATE_MACHINE_CONDITION, function () {
@@ -957,11 +737,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addStateMachineCommandPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_STATE_MACHINE_COMMAND, function () {
@@ -971,11 +746,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addSspAssetManagementExpanderPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_SSP_ASSET_MANAGEMENT_EXPANDER, function (Container $container) {
@@ -1009,11 +779,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return [];
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductPageSearchFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_PAGE_SEARCH, function (Container $container): ProductPageSearchFacadeInterface {
@@ -1023,11 +788,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductStorageFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_STORAGE, function (Container $container): ProductStorageFacadeInterface {

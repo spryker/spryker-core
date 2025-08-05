@@ -16,21 +16,12 @@ use Twig\Environment;
 
 class ServicePointReader implements ServicePointReaderInterface
 {
-    /**
-     * @param \Spryker\Client\ServicePointSearch\ServicePointSearchClientInterface $servicePointSearchClient
-     * @param \Twig\Environment $twigEnvironment
-     */
     public function __construct(
         protected ServicePointSearchClientInterface $servicePointSearchClient,
         protected Environment $twigEnvironment
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ServicePointSearchRequestTransfer $servicePointSearchRequestTransfer
-     *
-     * @return string
-     */
     public function searchServicePoints(ServicePointSearchRequestTransfer $servicePointSearchRequestTransfer): string
     {
         $searchResults = $this->servicePointSearchClient->searchServicePoints($servicePointSearchRequestTransfer);

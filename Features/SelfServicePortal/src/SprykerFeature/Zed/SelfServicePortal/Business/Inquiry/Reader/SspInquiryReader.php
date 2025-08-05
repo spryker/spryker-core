@@ -26,11 +26,6 @@ class SspInquiryReader implements SspInquiryReaderInterface
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
-     */
     public function getSspInquiryCollection(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer
     {
         $sspInquiryCriteriaTransfer = $this->sspInquiryConditionExpander->expandCriteriaBasedOnCompanyUserPermissions($sspInquiryCriteriaTransfer);

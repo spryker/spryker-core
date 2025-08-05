@@ -23,12 +23,6 @@ use SprykerTest\Shared\Sales\Helper\SalesDataHelper as SprykerSalesDataHelper;
 
 class SalesDataHelper extends SprykerSalesDataHelper
 {
-    /**
-     * @param array $override
-     * @param string|null $stateMachineProcessName
-     *
-     * @return \Generated\Shared\Transfer\SaveOrderTransfer
-     */
     public function haveFullOrder(
         array $override = [],
         ?string $stateMachineProcessName = null
@@ -51,11 +45,6 @@ class SalesDataHelper extends SprykerSalesDataHelper
         return $saveOrderTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     *
-     * @return void
-     */
     protected function updateOrderItems(SaveOrderTransfer $saveOrderTransfer): void
     {
         foreach ($saveOrderTransfer->getOrderItems() as $orderItemTransfer) {
@@ -68,11 +57,6 @@ class SalesDataHelper extends SprykerSalesDataHelper
         }
     }
 
-    /**
-     * @param int $idSalesOrderItem
-     *
-     * @return void
-     */
     protected function saveOrderItemMetadata(int $idSalesOrderItem): void
     {
         $salesOrderItemMetadata = SpySalesOrderItemMetadataQuery::create()->findOneByFkSalesOrderItem($idSalesOrderItem);
@@ -86,11 +70,6 @@ class SalesDataHelper extends SprykerSalesDataHelper
             ->save();
     }
 
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return void
-     */
     protected function saveSalesExpense(int $idSalesOrder): void
     {
         $salesExpenseEntity = SpySalesExpenseQuery::create()->findOneByFkSalesOrder($idSalesOrder);
@@ -112,12 +91,6 @@ class SalesDataHelper extends SprykerSalesDataHelper
             ->save();
     }
 
-    /**
-     * @param int $idSalesOrder
-     * @param string $paymentMethod
-     *
-     * @return void
-     */
     protected function saveSalesPayment(int $idSalesOrder, string $paymentMethod): void
     {
         $paymentMethodEntity = SpyPaymentMethodQuery::create()->findOneByPaymentMethodKey($paymentMethod);

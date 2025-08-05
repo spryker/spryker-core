@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ruleset name="SprykerStrictFeature">
+    <description>
+        Spryker Coding Standard for SprykerFeature.
+
+        Extends main Spryker Coding Standard.
+        All sniffs in ./Sniffs will be auto loaded
+    </description>
+
+    <rule ref="../Bundles/Development/rulesetStrict.xml"/>
+    
+    <!-- Feature related sniffs here -->
+    <rule ref="SlevomatCodingStandard.Commenting.UselessFunctionDocComment"/>
+
+    <rule ref="Spryker.Commenting.DocBlock.DocBlockMissing">
+        <severity>0</severity>
+    </rule>
+
+    <rule ref="Spryker.Commenting.DocBlock.ConstructDesctructMissingDocBlock">
+        <severity>0</severity>
+    </rule>
+
+    <rule ref="Spryker.Commenting.DocBlock.ReturnVoidMissing">
+        <severity>0</severity>
+    </rule>
+
+</ruleset>

@@ -63,16 +63,10 @@ class CreateOrderSspInquiryFormExpander implements CreateSspInquiryFormExpanderI
      */
     protected const PATTERN_GLOSSARY_KEY_INQUIRY_TYPE = 'self_service_portal.inquiry.type.';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     */
     public function __construct(protected RequestStack $requestStack)
     {
     }
 
-    /**
-     * @return bool
-     */
     public function isApplicable(): bool
     {
         $request = $this->requestStack->getCurrentRequest();

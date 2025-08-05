@@ -12,18 +12,10 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityMana
 
 class FileSspInquiryPostCreateHook implements SspInquiryPostCreateHookInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface $selfServicePortalEntityManager
-     */
     public function __construct(protected SelfServicePortalEntityManagerInterface $selfServicePortalEntityManager)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer
-     */
     public function execute(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
     {
         $this->selfServicePortalEntityManager->createSspInquiryFiles($sspInquiryTransfer);
@@ -31,11 +23,6 @@ class FileSspInquiryPostCreateHook implements SspInquiryPostCreateHookInterface
         return $sspInquiryTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return bool
-     */
     public function isApplicable(SspInquiryTransfer $sspInquiryTransfer): bool
     {
         return $sspInquiryTransfer->getFiles()->count() > 0;

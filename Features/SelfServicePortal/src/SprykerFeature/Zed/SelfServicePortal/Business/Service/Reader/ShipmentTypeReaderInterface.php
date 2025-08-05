@@ -11,11 +11,6 @@ use Generated\Shared\Transfer\ShipmentTypeTransfer;
 
 interface ShipmentTypeReaderInterface
 {
-    /**
-     * @param string $storeName
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTypeTransfer|null
-     */
     public function getDefaultShipmentType(string $storeName): ?ShipmentTypeTransfer;
 
     /**

@@ -13,9 +13,6 @@ use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 
 class OrderItemCancellableExpander implements OrderItemCancellableExpanderInterface
 {
-    /**
-     * @param \Spryker\Zed\Oms\Business\OmsFacadeInterface $omsFacade
-     */
     public function __construct(protected OmsFacadeInterface $omsFacade)
     {
     }
@@ -34,11 +31,6 @@ class OrderItemCancellableExpander implements OrderItemCancellableExpanderInterf
         return $itemTransfers;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function expandItemWithCancellableFlag(ItemTransfer $itemTransfer): ItemTransfer
     {
         if (!$itemTransfer->getState()) {

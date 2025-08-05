@@ -76,9 +76,6 @@ class ProvideDashboardDataFacadeTest extends Unit
      */
     protected const DEFAULT_PRODUCT_CLASS_NAME = 'Service';
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $this->tester->setDependency(static::PLUGIN_WRITER, new FileSystemWriterPlugin());
@@ -111,9 +108,6 @@ class ProvideDashboardDataFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testProvideDashboardDataWillSucceed(): void
     {
         // Arrange
@@ -154,9 +148,6 @@ class ProvideDashboardDataFacadeTest extends Unit
         $this->assertCount(1, $actualDashboardResponseTransfer->getDashboardComponentFiles()->getFileAttachmentCollection()->getFileAttachments());
     }
 
-    /**
-     * @return void
-     */
     public function testProvideDashboardDataWillNotReturnFilesOnCompanySharedFileWithoutRelevantPermission(): void
     {
         // Arrange
@@ -204,9 +195,6 @@ class ProvideDashboardDataFacadeTest extends Unit
         $this->assertCount(0, $actualDashboardResponseTransfer->getDashboardComponentFiles()->getFileAttachmentCollection()->getFileAttachments());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDashboardReturnsEmptyServicesWhenNoServicesExist(): void
     {
         // Arrange
@@ -226,9 +214,6 @@ class ProvideDashboardDataFacadeTest extends Unit
         $this->assertEquals(0, $actualDashboardResponseTransfer->getDashboardComponentServices()->getPendingItems());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDashboardReturnsServicesWhenServicesExist(): void
     {
         // Arrange
@@ -272,9 +257,6 @@ class ProvideDashboardDataFacadeTest extends Unit
         $this->assertEquals(2, $actualDashboardResponseTransfer->getDashboardComponentServices()->getPendingItems());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDashboardRespectsWithServicesCountLimit(): void
     {
         // Arrange
@@ -311,9 +293,6 @@ class ProvideDashboardDataFacadeTest extends Unit
         $this->assertEquals(5, $actualDashboardResponseTransfer->getDashboardComponentServices()->getPendingItems()); // Total pending items should still be 5
     }
 
-    /**
-     * @return void
-     */
     public function testGetDashboardWithCompanyServicePermissions(): void
     {
         // Arrange
@@ -353,9 +332,6 @@ class ProvideDashboardDataFacadeTest extends Unit
         $this->assertEquals(1, $actualDashboardResponseTransfer->getDashboardComponentServices()->getPendingItems());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDashboardWithBusinessUnitServicePermissions(): void
     {
         // Arrange
@@ -395,9 +371,6 @@ class ProvideDashboardDataFacadeTest extends Unit
         $this->assertEquals(1, $actualDashboardResponseTransfer->getDashboardComponentServices()->getPendingItems());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDashboardPreservesExistingDashboardResponseData(): void
     {
         // Arrange
@@ -415,11 +388,6 @@ class ProvideDashboardDataFacadeTest extends Unit
         $this->assertNotNull($actualDashboardResponseTransfer->getDashboardComponentFiles());
     }
 
-    /**
-     * @param bool $withPermissions
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
     protected function haveCompanyWithUserWithPermissions(bool $withPermissions = true): CompanyUserTransfer
     {
         $companyTransfer = $this->tester->haveCompany();
@@ -441,11 +409,6 @@ class ProvideDashboardDataFacadeTest extends Unit
         return $companyUserTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\SaveOrderTransfer
-     */
     protected function haveCompanyUserOrder(CompanyUserTransfer $companyUserTransfer): SaveOrderTransfer
     {
         $saveOrderTransfer = $this->tester->haveOrder($companyUserTransfer->toArray(), static::DEFAULT_OMS_PROCESS_NAME);

@@ -15,10 +15,6 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class StateMachineSspInquiryPostCreateHook implements SspInquiryPostCreateHookInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     * @param \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface $stateMachineFacade
-     */
     public function __construct(
         protected SelfServicePortalConfig $selfServicePortalConfig,
         protected StateMachineFacadeInterface $stateMachineFacade
@@ -53,11 +49,6 @@ class StateMachineSspInquiryPostCreateHook implements SspInquiryPostCreateHookIn
         return $sspInquiryTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return bool
-     */
     public function isApplicable(SspInquiryTransfer $sspInquiryTransfer): bool
     {
         return $sspInquiryTransfer->getStatus() === null;

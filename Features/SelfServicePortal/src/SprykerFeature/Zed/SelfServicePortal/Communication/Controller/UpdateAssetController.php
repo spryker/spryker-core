@@ -90,11 +90,6 @@ class UpdateAssetController extends AbstractController
         ];
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $sspAssetForm
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     protected function handleFormSubmission(FormInterface $sspAssetForm): RedirectResponse
     {
         $sspAssetTransfer = $this->getFactory()->createSspAssetFormDataToTransferMapper()->mapFormDataToSspAssetTransfer(

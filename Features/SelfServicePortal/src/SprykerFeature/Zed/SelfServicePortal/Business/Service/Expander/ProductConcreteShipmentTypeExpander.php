@@ -13,9 +13,6 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ProductShipment
 
 class ProductConcreteShipmentTypeExpander implements ProductConcreteShipmentTypeExpanderInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ProductShipmentTypeReaderInterface $productShipmentTypeReader
-     */
     public function __construct(
         protected ProductShipmentTypeReaderInterface $productShipmentTypeReader
     ) {

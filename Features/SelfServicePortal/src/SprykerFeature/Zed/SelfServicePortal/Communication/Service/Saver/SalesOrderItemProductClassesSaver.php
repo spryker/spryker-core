@@ -21,19 +21,11 @@ class SalesOrderItemProductClassesSaver implements SalesOrderItemProductClassesS
      */
     protected $entityManager;
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface $entityManager
-     */
     public function __construct(SelfServicePortalEntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
     public function saveSalesOrderItemProductClassesFromQuote(QuoteTransfer $quoteTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
@@ -41,11 +33,6 @@ class SalesOrderItemProductClassesSaver implements SalesOrderItemProductClassesS
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
     protected function executeSaveSalesOrderItemProductClassesTransaction(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -59,11 +46,6 @@ class SalesOrderItemProductClassesSaver implements SalesOrderItemProductClassesS
         return true;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
     protected function saveProductClassesForSalesOrderItem(ItemTransfer $itemTransfer): void
     {
         if (!$itemTransfer->getIdSalesOrderItem()) {

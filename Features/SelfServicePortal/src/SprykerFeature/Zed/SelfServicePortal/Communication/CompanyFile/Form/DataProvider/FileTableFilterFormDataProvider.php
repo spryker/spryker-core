@@ -12,9 +12,6 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class FileTableFilterFormDataProvider
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
-     */
     public function __construct(protected SelfServicePortalConfig $config)
     {
     }

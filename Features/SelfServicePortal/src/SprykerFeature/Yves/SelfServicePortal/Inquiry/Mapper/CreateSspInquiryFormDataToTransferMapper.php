@@ -22,11 +22,6 @@ use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 class CreateSspInquiryFormDataToTransferMapper implements CreateSspInquiryFormDataToTransferMapperInterface
 {
-    /**
-     * @param \Spryker\Client\CompanyUser\CompanyUserClientInterface $companyUserClient
-     * @param \Spryker\Client\Store\StoreClientInterface $storeClient
-     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
-     */
     public function __construct(
         protected CompanyUserClientInterface $companyUserClient,
         protected StoreClientInterface $storeClient,

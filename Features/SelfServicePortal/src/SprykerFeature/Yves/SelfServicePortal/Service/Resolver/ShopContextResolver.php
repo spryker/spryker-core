@@ -22,17 +22,11 @@ class ShopContextResolver implements ShopContextResolverInterface
      */
     protected $container;
 
-    /**
-     * @param \Spryker\Shared\Kernel\ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\ShopContextTransfer
-     */
     public function resolve(): ShopContextTransfer
     {
         return $this->container->hasApplicationService(static::SERVICE_SHOP_CONTEXT)

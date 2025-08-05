@@ -32,118 +32,63 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  */
 class GatewayController extends AbstractGatewayController
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
-     */
     public function getSspServiceCollectionAction(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer
     {
         return $this->getFacade()->getSspServiceCollection($sspServiceCriteriaTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
-     */
     public function getFileAttachmentCollectionAction(
         FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
     ): FileAttachmentCollectionTransfer {
         return $this->getFacade()->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
-     */
     public function updateSalesOrderItemCollectionAction(
         SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
     ): SalesOrderItemCollectionResponseTransfer {
         return $this->getFacade()->updateSalesOrderItemCollection($salesOrderItemCollectionRequestTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
-     */
     public function cancelSalesOrderItemCollectionAction(
         SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
     ): SalesOrderItemCollectionResponseTransfer {
         return $this->getFacade()->cancelSalesOrderItemCollection($salesOrderItemCollectionRequestTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DashboardRequestTransfer $dashboardRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\DashboardResponseTransfer
-     */
     public function getDashboardAction(DashboardRequestTransfer $dashboardRequestTransfer): DashboardResponseTransfer
     {
         return $this->getFacade()->getDashboard($dashboardRequestTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer $sspInquiryCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer
-     */
     public function createSspInquiryCollectionAction(
         SspInquiryCollectionRequestTransfer $sspInquiryCollectionRequestTransfer
     ): SspInquiryCollectionResponseTransfer {
         return $this->getFacade()->createSspInquiryCollection($sspInquiryCollectionRequestTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
-     */
     public function getSspInquiryCollectionAction(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer
     {
         return $this->getFacade()->getSspInquiryCollection($sspInquiryCriteriaTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer $sspInquiryCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer
-     */
     public function cancelSspInquiryCollectionAction(
         SspInquiryCollectionRequestTransfer $sspInquiryCollectionRequestTransfer
     ): SspInquiryCollectionResponseTransfer {
         return $this->getFacade()->cancelSspInquiryCollection($sspInquiryCollectionRequestTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer
-     */
     public function createSspAssetCollectionAction(
         SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
     ): SspAssetCollectionResponseTransfer {
         return $this->getFacade()->createSspAssetCollection($sspAssetCollectionRequestTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer
-     */
     public function updateSspAssetCollectionAction(
         SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer
     ): SspAssetCollectionResponseTransfer {
         return $this->getFacade()->updateSspAssetCollection($sspAssetCollectionRequestTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
-     */
     public function getSspAssetCollectionAction(
         SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
     ): SspAssetCollectionTransfer {

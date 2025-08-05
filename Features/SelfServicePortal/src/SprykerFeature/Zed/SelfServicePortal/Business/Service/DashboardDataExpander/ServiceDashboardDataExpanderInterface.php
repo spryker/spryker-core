@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\DashboardResponseTransfer;
 
 interface ServiceDashboardDataExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\DashboardResponseTransfer $dashboardResponseTransfer
-     * @param \Generated\Shared\Transfer\DashboardRequestTransfer $dashboardRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\DashboardResponseTransfer
-     */
     public function provideSspServiceDashboardData(
         DashboardResponseTransfer $dashboardResponseTransfer,
         DashboardRequestTransfer $dashboardRequestTransfer

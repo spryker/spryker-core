@@ -13,13 +13,6 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 interface OrderItemScheduleExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
-     */
     public function expandOrderItemWithScheduleTime(
         QuoteTransfer $quoteTransfer,
         ItemTransfer $itemTransfer,

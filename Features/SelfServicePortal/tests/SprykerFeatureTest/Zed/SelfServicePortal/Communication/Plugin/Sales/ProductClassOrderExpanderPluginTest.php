@@ -38,9 +38,6 @@ class ProductClassOrderExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -48,9 +45,6 @@ class ProductClassOrderExpanderPluginTest extends Unit
         $this->tester->configureTestStateMachine([static::OMS_PROCESS_NAME]);
     }
 
-    /**
-     * @return void
-     */
     public function testHydrateExpandsOrderItemsWithProductClasses(): void
     {
         // Arrange
@@ -114,9 +108,6 @@ class ProductClassOrderExpanderPluginTest extends Unit
         $this->assertTrue($found, 'Expected product class not found in results');
     }
 
-    /**
-     * @return void
-     */
     public function testHydrateExpandsOrderItemsWithMultipleProductClasses(): void
     {
         // Arrange
@@ -183,9 +174,6 @@ class ProductClassOrderExpanderPluginTest extends Unit
         $this->assertCount(2, $foundClasses, 'Not all expected product classes were found');
     }
 
-    /**
-     * @return void
-     */
     public function testHydrateHandlesOrderWithNoProductClasses(): void
     {
         // Arrange
@@ -225,9 +213,6 @@ class ProductClassOrderExpanderPluginTest extends Unit
         $this->assertEmpty($resultItemTransfer->getProductClasses());
     }
 
-    /**
-     * @return void
-     */
     public function testHydrateWithEmptyOrderReturnsUnchangedOrder(): void
     {
         // Arrange

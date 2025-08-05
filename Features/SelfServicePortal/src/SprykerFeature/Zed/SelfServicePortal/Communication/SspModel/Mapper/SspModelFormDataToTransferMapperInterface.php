@@ -12,11 +12,5 @@ use Symfony\Component\Form\FormInterface;
 
 interface SspModelFormDataToTransferMapperInterface
 {
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param \Generated\Shared\Transfer\SspModelTransfer $sspModelTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspModelTransfer
-     */
     public function mapFormDataToSspModelTransfer(FormInterface $form, SspModelTransfer $sspModelTransfer): SspModelTransfer;
 }

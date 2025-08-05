@@ -17,9 +17,6 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Service\DataImport\DataSet\Pro
 
 class ShipmentTypeKeyToIdShipmentTypeStep implements DataImportStepInterface
 {
-    /**
-     * @param \Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery $shipmentTypeQuery
-     */
     public function __construct(
         protected SpyShipmentTypeQuery $shipmentTypeQuery
     ) {

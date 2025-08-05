@@ -405,6 +405,7 @@ interface DevelopmentFacadeInterface
     /**
      * Specification:
      * - Run the architecture sniffer against the given module and returns the violations
+     * - In case the module contains a custom ruleset, it will be used instead of the default one.
      *
      * @api
      *

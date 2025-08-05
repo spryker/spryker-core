@@ -42,9 +42,6 @@ class SspServiceShipmentTypePreReloadItemsPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testPreReloadItemsFiltersOutServicesWithoutShipmentTypes(): void
     {
         // Arrange
@@ -76,9 +73,6 @@ class SspServiceShipmentTypePreReloadItemsPluginTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testPreReloadItemsDoesNothingWhenNoServiceItemsNeedFiltering(): void
     {
         // Arrange
@@ -105,9 +99,6 @@ class SspServiceShipmentTypePreReloadItemsPluginTest extends Unit
         $this->assertSame($quoteTransfer->getItems()->count(), $resultQuoteTransfer->getItems()->count());
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function createItemTransferWithShipmentType(): ItemTransfer
     {
         $itemTransfer = new ItemTransfer();
@@ -122,9 +113,6 @@ class SspServiceShipmentTypePreReloadItemsPluginTest extends Unit
         return $itemTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function createItemTransferWithoutShipmentType(): ItemTransfer
     {
         $itemTransfer = new ItemTransfer();
@@ -134,17 +122,11 @@ class SspServiceShipmentTypePreReloadItemsPluginTest extends Unit
         return $itemTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\ProductClassTransfer
-     */
     public function createServiceProductClass(): ProductClassTransfer
     {
         return (new ProductClassTransfer())->setName(static::SERVICE_PRODUCT_CLASS);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function createNonServiceItemTransfer(): ItemTransfer
     {
         $itemTransfer = new ItemTransfer();
@@ -162,11 +144,6 @@ class SspServiceShipmentTypePreReloadItemsPluginTest extends Unit
             ->getMock();
     }
 
-    /**
-     * @param \Spryker\Zed\Messenger\Business\MessengerFacadeInterface $messengerFacadeMock
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Cart\SspServiceShipmentTypePreReloadItemsPlugin
-     */
     protected function createPluginWithRealImplementation(MessengerFacadeInterface $messengerFacadeMock): SspServiceShipmentTypePreReloadItemsPlugin
     {
         $configMock = $this->getMockBuilder(SelfServicePortalConfig::class)

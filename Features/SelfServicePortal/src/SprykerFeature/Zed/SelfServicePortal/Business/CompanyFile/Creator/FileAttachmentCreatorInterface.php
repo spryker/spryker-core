@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer;
 
 interface FileAttachmentCreatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer
-     */
     public function createFileAttachmentCollection(
         FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
     ): FileAttachmentCollectionResponseTransfer;

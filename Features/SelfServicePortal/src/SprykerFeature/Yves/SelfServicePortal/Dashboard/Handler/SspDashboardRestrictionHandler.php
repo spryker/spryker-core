@@ -22,21 +22,12 @@ class SspDashboardRestrictionHandler implements SspDashboardRestrictionHandlerIn
         DashboardController::class,
     ];
 
-    /**
-     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     */
     public function __construct(
         protected CustomerClientInterface $customerClient,
         protected RouterInterface $router
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
-     *
-     * @return void
-     */
     public function handleRestriction(ControllerEvent $event): void
     {
         $eventController = $event->getController();

@@ -80,12 +80,6 @@ class DownloadInquiryFileController extends AbstractController
         return $this->createResponse($fileTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     * @param string $fileUuid
-     *
-     * @return \Generated\Shared\Transfer\FileTransfer|null
-     */
     protected function findFileTransferByUuid(SspInquiryTransfer $sspInquiryTransfer, string $fileUuid): ?FileTransfer
     {
         foreach ($sspInquiryTransfer->getFiles() as $fileTransfer) {
@@ -97,11 +91,6 @@ class DownloadInquiryFileController extends AbstractController
         return null;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     protected function createResponse(FileTransfer $fileTransfer): Response
     {
         $chunkSize = $this->getFactory()->getConfig()->getInquiryFileDownloadChunkSize();

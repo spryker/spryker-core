@@ -40,20 +40,10 @@ class ServiceSearchFormHandler implements ServiceSearchFormHandlerInterface
      */
     protected const DEFAULT_PAGE = 1;
 
-    /**
-     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
-     * @param \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig $sspServiceManagementConfig
-     */
     public function __construct(protected CustomerClientInterface $customerClient, protected SelfServicePortalConfig $sspServiceManagementConfig)
     {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $serviceSearchForm
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspServiceCriteriaTransfer
-     */
     public function handleServiceSearchFormSubmit(
         FormInterface $serviceSearchForm,
         SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
@@ -75,12 +65,6 @@ class ServiceSearchFormHandler implements ServiceSearchFormHandlerInterface
         return $sspServiceCriteriaTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     * @param string $productClass
-     *
-     * @return \Generated\Shared\Transfer\SspServiceCriteriaTransfer
-     */
     protected function addProductClassFilter(
         SspServiceCriteriaTransfer $sspServiceCriteriaTransfer,
         string $productClass
@@ -168,11 +152,6 @@ class ServiceSearchFormHandler implements ServiceSearchFormHandlerInterface
         return $sspServiceCriteriaTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspServiceCriteriaTransfer
-     */
     protected function addCompanyFilter(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCriteriaTransfer
     {
         $customerTransfer = $this->customerClient->getCustomer();
@@ -198,11 +177,6 @@ class ServiceSearchFormHandler implements ServiceSearchFormHandlerInterface
         return $sspServiceCriteriaTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspServiceCriteriaTransfer
-     */
     protected function addCustomerFilter(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCriteriaTransfer
     {
         $customerTransfer = $this->customerClient->getCustomer();
@@ -242,13 +216,6 @@ class ServiceSearchFormHandler implements ServiceSearchFormHandlerInterface
         return $this->addOrderByFilter($sspServiceCriteriaTransfer, $orderBy, $orderDirection);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     * @param string $orderBy
-     * @param string|null $orderDirection
-     *
-     * @return \Generated\Shared\Transfer\SspServiceCriteriaTransfer
-     */
     protected function addOrderByFilter(
         SspServiceCriteriaTransfer $sspServiceCriteriaTransfer,
         string $orderBy,
@@ -265,11 +232,6 @@ class ServiceSearchFormHandler implements ServiceSearchFormHandlerInterface
         return $sspServiceCriteriaTransfer->addSort($sortTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return string|null
-     */
     protected function extractCompanyUuid(CustomerTransfer $customerTransfer): ?string
     {
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();

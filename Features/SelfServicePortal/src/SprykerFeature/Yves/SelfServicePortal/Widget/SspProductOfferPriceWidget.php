@@ -26,36 +26,22 @@ class SspProductOfferPriceWidget extends AbstractWidget
      */
     protected const PARAMETER_PRODUCT = 'product';
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
         $this->addProductOffersParameter($productViewTransfer);
         $this->addProductParameter($productViewTransfer);
     }
 
-    /**
-     * @return string
-     */
     public static function getName(): string
     {
         return 'SspProductOfferPriceWidget';
     }
 
-    /**
-     * @return string
-     */
     public static function getTemplate(): string
     {
         return '@SelfServicePortal/views/product-offer-price-widget/product-offer-price-widget.twig';
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return void
-     */
     protected function addProductOffersParameter(ProductViewTransfer $productViewTransfer): void
     {
         $productOfferTransfers = $this->getFactory()
@@ -68,11 +54,6 @@ class SspProductOfferPriceWidget extends AbstractWidget
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return void
-     */
     protected function addProductParameter(ProductViewTransfer $productViewTransfer): void
     {
         $this->addParameter(static::PARAMETER_PRODUCT, $productViewTransfer);

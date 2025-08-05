@@ -17,21 +17,12 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepository
 
 class SalesOrderSspInquiryExpander implements SspInquiryExpanderInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
-     * @param \Spryker\Zed\Sales\Business\SalesFacadeInterface $salesFacade
-     */
     public function __construct(
         protected SelfServicePortalRepositoryInterface $selfServicePortalRepository,
         protected SalesFacadeInterface $salesFacade
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCollectionTransfer $sspInquiryCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
-     */
     public function expand(SspInquiryCollectionTransfer $sspInquiryCollectionTransfer): SspInquiryCollectionTransfer
     {
          $sspInquiryIds = array_map(fn ($sspInquiryTransfer) => $sspInquiryTransfer->getIdSspInquiry(), $sspInquiryCollectionTransfer->getSspInquiries()->getArrayCopy());
@@ -67,11 +58,6 @@ class SalesOrderSspInquiryExpander implements SspInquiryExpanderInterface
         return $sspInquiryCollectionTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return bool
-     */
     public function isApplicable(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): bool
     {
         return $sspInquiryCriteriaTransfer->getInclude() && $sspInquiryCriteriaTransfer->getInclude()->getWithOrder();

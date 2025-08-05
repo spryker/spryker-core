@@ -48,18 +48,12 @@ class ProductClassDataImportPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
         $this->tester->ensureProductClassTableIsEmpty();
     }
 
-    /**
-     * @return void
-     */
     public function testImportImportsProductClasses(): void
     {
         // Arrange
@@ -92,9 +86,6 @@ class ProductClassDataImportPluginTest extends Unit
         $this->assertContains('Service', $productClassNames, 'Expected "Service" product class in database after import');
     }
 
-    /**
-     * @return void
-     */
     public function testImportWithInvalidDataThrowsException(): void
     {
         // Arrange
@@ -113,9 +104,6 @@ class ProductClassDataImportPluginTest extends Unit
         $productClassDataImportPlugin->import($dataImporterConfigurationTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testGetImportType(): void
     {
         // Arrange
@@ -128,11 +116,6 @@ class ProductClassDataImportPluginTest extends Unit
         $this->assertSame('product-class', $importType);
     }
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\ProductClassDataImportPlugin $productClassDataImportPlugin
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\ProductClassDataImportPlugin
-     */
     protected function overwriteConfig(ProductClassDataImportPlugin $productClassDataImportPlugin): ProductClassDataImportPlugin
     {
         $moduleNameConstant = '\Pyz\Zed\SelfServicePortal\SelfServicePortalConfig::MODULE_NAME';
@@ -159,9 +142,6 @@ class ProductClassDataImportPluginTest extends Unit
         return $productClassDataImportPlugin;
     }
 
-    /**
-     * @return void
-     */
     protected function _after(): void
     {
         parent::_after();

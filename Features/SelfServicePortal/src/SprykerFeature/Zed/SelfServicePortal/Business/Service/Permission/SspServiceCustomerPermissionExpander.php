@@ -15,11 +15,6 @@ class SspServiceCustomerPermissionExpander implements SspServiceCustomerPermissi
 {
     use PermissionAwareTrait;
 
-    /**
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspServiceCriteriaTransfer
-     */
     public function expand(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCriteriaTransfer
     {
         $companyUserTransfer = $sspServiceCriteriaTransfer->getCompanyUserOrFail();

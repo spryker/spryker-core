@@ -188,6 +188,10 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
             $localConfigPath = $this->developmentConfig->getCodeSnifferStrictRuleset();
         }
 
+        if ($this->getLevel() === static::LEVEL_SPRYKER_STRICT && $this->getNamespace() === $this->developmentConfig->getSprykerFeatureNamespace()) {
+            $localConfigPath = $this->developmentConfig->getCodeSnifferFeatureRuleset();
+        }
+
         if (file_exists($localConfigPath)) {
             return $localConfigPath;
         }

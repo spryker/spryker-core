@@ -96,9 +96,6 @@ class CreateOfferController extends AbstractController
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function tableAction(): JsonResponse
     {
         $productTable = $this
@@ -110,11 +107,6 @@ class CreateOfferController extends AbstractController
         );
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function serviceChoicesAction(Request $request): JsonResponse
     {
         $idServicePoint = $this->castId($request->query->get(static::PARAM_ID_SERVICE_POINT));

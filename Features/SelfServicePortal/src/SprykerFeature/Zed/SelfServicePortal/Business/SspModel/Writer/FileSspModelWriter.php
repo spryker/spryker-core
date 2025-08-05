@@ -16,21 +16,12 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class FileSspModelWriter implements FileSspModelWriterInterface
 {
-    /**
-     * @param \Spryker\Zed\FileManager\Business\FileManagerFacadeInterface $fileManagerFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
-     */
     public function __construct(
         protected FileManagerFacadeInterface $fileManagerFacade,
         protected SelfServicePortalConfig $config
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspModelTransfer $sspModelTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspModelTransfer
-     */
     public function createFile(SspModelTransfer $sspModelTransfer): SspModelTransfer
     {
         $fileTransfer = $sspModelTransfer->getImage();
@@ -48,11 +39,6 @@ class FileSspModelWriter implements FileSspModelWriterInterface
         return $sspModelTransfer->setImage($fileManagerDataTransfer->getFileOrFail()->setFileContent(null));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
-     */
     protected function saveImageFile(FileTransfer $fileTransfer): FileManagerDataTransfer
     {
         $fileUploadTransfer = $fileTransfer->getFileUploadOrFail();

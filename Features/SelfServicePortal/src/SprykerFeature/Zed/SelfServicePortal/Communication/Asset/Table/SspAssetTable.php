@@ -67,13 +67,6 @@ class SspAssetTable extends AbstractTable
      */
     protected const COL_IMAGE = 'image';
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery $sspAssetQuery
-     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
-     * @param \Generated\Shared\Transfer\SspAssetConditionsTransfer $sspAssetConditionsTransfer
-     * @param \SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Form\DataProvider\SspAssetFormDataProvider $sspAssetFormDataProvider
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(
         protected SpySspAssetQuery $sspAssetQuery,
         protected UtilDateTimeServiceInterface $utilDateTimeService,
@@ -83,11 +76,6 @@ class SspAssetTable extends AbstractTable
     ) {
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $url = Url::generate(
@@ -122,11 +110,6 @@ class SspAssetTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $baseData = [
@@ -143,9 +126,6 @@ class SspAssetTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery
-     */
     protected function prepareQuery(): SpySspAssetQuery
     {
         if ($this->sspAssetConditionsTransfer->getStatus()) {

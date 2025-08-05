@@ -42,10 +42,6 @@ class ShipmentTypeOptionsProvider implements ShipmentTypeOptionsProviderInterfac
      */
     protected const OPTION_SERVICE_TYPE_UUID = 'serviceTypeUuid';
 
-    /**
-     * @param \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     * @param \SprykerFeature\Yves\SelfServicePortal\Service\Sorter\ShipmentTypeGroupSorterInterface $shipmentTypeGroupSorter
-     */
     public function __construct(
         protected SelfServicePortalConfig $selfServicePortalConfig,
         protected ShipmentTypeGroupSorterInterface $shipmentTypeGroupSorter

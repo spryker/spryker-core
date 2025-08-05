@@ -12,10 +12,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 class SspFileListWidget extends AbstractWidget
 {
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionTransfer|null $fileAttachmentCollectionTransfer
-     * @param string|null $moreLink
-     */
     public function __construct(?FileAttachmentCollectionTransfer $fileAttachmentCollectionTransfer, ?string $moreLink = null)
     {
         $this->addParameter('totalItems', $fileAttachmentCollectionTransfer?->getPagination()?->getNbResults());
@@ -23,17 +19,11 @@ class SspFileListWidget extends AbstractWidget
         $this->addParameter('moreLink', $moreLink);
     }
 
-    /**
-     * @return string
-     */
     public static function getName(): string
     {
         return 'SspFileListWidget';
     }
 
-    /**
-     * @return string
-     */
     public static function getTemplate(): string
     {
         return '@SelfServicePortal/views/dashboard-file/dashboard-file.twig';

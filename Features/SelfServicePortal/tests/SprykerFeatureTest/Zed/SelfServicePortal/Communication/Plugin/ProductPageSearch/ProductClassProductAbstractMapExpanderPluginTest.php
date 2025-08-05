@@ -30,9 +30,6 @@ class ProductClassProductAbstractMapExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandProductMapAddsProductClassDataToPageMap(): void
     {
         // Arrange
@@ -90,9 +87,6 @@ class ProductClassProductAbstractMapExpanderPluginTest extends Unit
         $this->assertNotNull($resultPageMapTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandProductMapHandlesEmptyProductClasses(): void
     {
         // Arrange

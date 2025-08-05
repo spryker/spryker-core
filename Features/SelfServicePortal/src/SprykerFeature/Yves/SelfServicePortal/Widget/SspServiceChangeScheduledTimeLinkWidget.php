@@ -26,9 +26,6 @@ class SspServiceChangeScheduledTimeLinkWidget extends AbstractWidget
      */
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     */
     public function __construct(ItemTransfer $itemTransfer)
     {
         $this->addOrderItemParameter($itemTransfer);
@@ -59,11 +56,6 @@ class SspServiceChangeScheduledTimeLinkWidget extends AbstractWidget
         return '@SelfServicePortal/views/service-change-scheduled-time-link/service-change-scheduled-time-link.twig';
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
     protected function addIsVisibleParameter(ItemTransfer $itemTransfer): void
     {
         $productClasses = $itemTransfer->getProductClasses()->getArrayCopy();
@@ -96,11 +88,6 @@ class SspServiceChangeScheduledTimeLinkWidget extends AbstractWidget
         return false;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
     protected function addOrderItemParameter(ItemTransfer $itemTransfer): void
     {
         $this->addParameter(static::PARAMETER_ORDER_ITEM, $itemTransfer);

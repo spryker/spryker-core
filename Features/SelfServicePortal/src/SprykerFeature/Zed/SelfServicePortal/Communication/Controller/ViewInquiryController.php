@@ -71,11 +71,6 @@ class ViewInquiryController extends AbstractController
         ]);
     }
 
-    /**
-     * @param int $idSspInquiry
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCriteriaTransfer
-     */
     protected function createSspInquiryCriteriaTransfer(int $idSspInquiry): SspInquiryCriteriaTransfer
     {
         $sspInquiryIncludeTransfer = (new SspInquiryIncludeTransfer())

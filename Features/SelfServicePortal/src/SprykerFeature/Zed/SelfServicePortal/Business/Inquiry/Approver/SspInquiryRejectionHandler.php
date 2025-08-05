@@ -27,12 +27,6 @@ class SspInquiryRejectionHandler implements SspInquiryRejectionHandlerInterface
      */
     protected const MAIL_TYPE = 'ssp inquiry rejected';
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Reader\SspInquiryReaderInterface $sspInquiryReader
-     * @param \Spryker\Zed\Mail\Business\MailFacadeInterface $mailFacade
-     * @param \Spryker\Zed\Customer\Business\CustomerFacadeInterface $customerFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
-     */
     public function __construct(
         protected SspInquiryReaderInterface $sspInquiryReader,
         protected MailFacadeInterface $mailFacade,
@@ -41,11 +35,6 @@ class SspInquiryRejectionHandler implements SspInquiryRejectionHandlerInterface
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     *
-     * @return void
-     */
     public function handleRejection(StateMachineItemTransfer $stateMachineItemTransfer): void
     {
         $sspInquiryCriteriaTransfer = (new SspInquiryCriteriaTransfer())

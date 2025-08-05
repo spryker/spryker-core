@@ -25,10 +25,6 @@ class ProductReader implements ProductReaderInterface
      */
     protected LocaleFacadeInterface $localeFacade;
 
-    /**
-     * @param \Spryker\Zed\Product\Business\ProductFacadeInterface $productFacade
-     * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
-     */
     public function __construct(
         ProductFacadeInterface $productFacade,
         LocaleFacadeInterface $localeFacade
@@ -64,11 +60,6 @@ class ProductReader implements ProductReaderInterface
         return $this->filterLocalizedAttributesByCurrentLocale($productConcreteTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     protected function filterLocalizedAttributesByCurrentLocale(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         $currentLocaleTransfer = $this->localeFacade->getCurrentLocale();

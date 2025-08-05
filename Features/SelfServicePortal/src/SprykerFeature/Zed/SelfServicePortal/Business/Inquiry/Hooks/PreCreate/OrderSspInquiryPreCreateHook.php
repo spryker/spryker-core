@@ -12,18 +12,10 @@ use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 
 class OrderSspInquiryPreCreateHook implements SspInquiryPreCreateHookInterface
 {
-    /**
-     * @param \Spryker\Zed\Sales\Business\SalesFacadeInterface $salesFacade
-     */
     public function __construct(protected SalesFacadeInterface $salesFacade)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer
-     */
     public function execute(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
     {
         $sspInquiryTransfer->requireOrder();
@@ -35,11 +27,6 @@ class OrderSspInquiryPreCreateHook implements SspInquiryPreCreateHookInterface
         return $sspInquiryTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return bool
-     */
     public function isApplicable(SspInquiryTransfer $sspInquiryTransfer): bool
     {
         return $sspInquiryTransfer->getType() === 'order';

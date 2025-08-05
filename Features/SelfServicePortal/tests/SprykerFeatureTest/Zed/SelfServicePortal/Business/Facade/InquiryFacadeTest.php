@@ -87,9 +87,6 @@ class InquiryFacadeTest extends Unit
      */
     protected const FACADE_STATE_MACHINE = 'FACADE_STATE_MACHINE';
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $fileSystemServiceMock = $this->getMockBuilder(FileManagerToFileSystemServiceInterface::class)->getMock();

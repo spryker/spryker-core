@@ -44,9 +44,6 @@ class ProductClassItemExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandItemsExpandsItemsWithProductClasses(): void
     {
         // Arrange
@@ -86,9 +83,6 @@ class ProductClassItemExpanderPluginTest extends Unit
         $this->assertEquals(static::TEST_PRODUCT_CLASS_NAMES[1], $itemTransfer->getProductClasses()[1]->getName());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsDoesNothingWhenNoItemsProvided(): void
     {
         // Arrange
@@ -112,9 +106,6 @@ class ProductClassItemExpanderPluginTest extends Unit
         $this->assertCount(0, $resultCartChangeTransfer->getItems());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsDoesNothingWhenRepositoryReturnsNoResults(): void
     {
         // Arrange
@@ -145,9 +136,6 @@ class ProductClassItemExpanderPluginTest extends Unit
         $this->assertCount(0, $productClasses);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsDoesNothingWhenNoSkuProvided(): void
     {
         // Arrange
@@ -181,11 +169,6 @@ class ProductClassItemExpanderPluginTest extends Unit
         $this->assertCount(0, $productClasses);
     }
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassExpanderInterface $productClassExpanderMock
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Cart\ProductClassItemExpanderPlugin
-     */
     protected function createProductClassItemExpanderPluginWithMock(
         ProductClassExpanderInterface $productClassExpanderMock
     ): ProductClassItemExpanderPlugin {
@@ -203,9 +186,6 @@ class ProductClassItemExpanderPluginTest extends Unit
         return $productClassItemExpanderPlugin;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     protected function createCartChangeTransferWithItem(): CartChangeTransfer
     {
         $cartChangeTransfer = new CartChangeTransfer();

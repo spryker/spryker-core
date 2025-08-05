@@ -12,10 +12,5 @@ use Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer;
 
 interface SspInquiryStateWriterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer $sspInquiryCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer
-     */
     public function cancelSspInquiry(SspInquiryCollectionRequestTransfer $sspInquiryCollectionRequestTransfer): SspInquiryCollectionResponseTransfer;
 }

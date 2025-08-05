@@ -14,18 +14,10 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ServicePointRea
 
 class ServicePointItemExpander implements ServicePointItemExpanderInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ServicePointReaderInterface $servicePointReader
-     */
     public function __construct(protected ServicePointReaderInterface $servicePointReader)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     public function expandQuoteItemsWithServicePoint(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         if (!$quoteTransfer->getItems()->count()) {
@@ -51,11 +43,6 @@ class ServicePointItemExpander implements ServicePointItemExpanderInterface
         return $quoteTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function expandCartItemsWithServicePoint(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         if (!$cartChangeTransfer->getItems()->count()) {

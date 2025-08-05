@@ -16,9 +16,6 @@ class Files extends SprykerFile
      */
     public $totalMaxSize = 0;
 
-    /**
-     * @return string
-     */
     public function validatedBy(): string
     {
         return FilesValidator::class;

@@ -15,10 +15,6 @@ use SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig;
 
 class ShipmentTypeReader implements ShipmentTypeReaderInterface
 {
-    /**
-     * @param \Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageClientInterface $shipmentTypeStorageClient
-     * @param \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig $SelfServicePortalConfig
-     */
     public function __construct(
         protected ShipmentTypeStorageClientInterface $shipmentTypeStorageClient,
         protected SelfServicePortalConfig $SelfServicePortalConfig

@@ -23,9 +23,6 @@ class ServicePointExpander implements ServicePointExpanderInterface
      */
     protected const PARAM_SERVICE_POINT_UUID = 'service_point_uuid';
 
-    /**
-     * @param \Spryker\Client\ProductOfferStorage\ProductOfferStorageClientInterface $productOfferStorageClient
-     */
     public function __construct(protected ProductOfferStorageClientInterface $productOfferStorageClient)
     {
     }

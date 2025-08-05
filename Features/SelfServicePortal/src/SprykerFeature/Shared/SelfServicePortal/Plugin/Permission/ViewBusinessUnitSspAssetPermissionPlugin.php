@@ -27,9 +27,6 @@ class ViewBusinessUnitSspAssetPermissionPlugin extends AbstractPlugin implements
      */
     public const KEY = 'ViewBusinessUnitSspAssetPermissionPlugin';
 
-    /**
-     * @return string
-     */
     public function getKey(): string
     {
         return static::KEY;

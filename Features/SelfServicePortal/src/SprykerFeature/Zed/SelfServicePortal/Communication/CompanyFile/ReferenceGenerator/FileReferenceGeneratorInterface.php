@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\FileTransfer;
 
 interface FileReferenceGeneratorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return string
-     */
     public function generateFileReference(FileTransfer $fileTransfer): string;
 }

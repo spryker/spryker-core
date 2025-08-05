@@ -26,36 +26,22 @@ class SingleAddressPerShipmentTypeWidget extends AbstractWidget
      */
     protected const PARAMETER_SINGLE_ADDRESS_PER_SHIPMENT_TYPE_FORM_FIELD = 'singleAddressPerShipmentTypeFormField';
 
-    /**
-     * @param \Symfony\Component\Form\FormView $checkoutAddressForm
-     */
     public function __construct(FormView $checkoutAddressForm)
     {
         $this->addIsVisibleParameter($checkoutAddressForm);
         $this->addFormViewParameter($checkoutAddressForm);
     }
 
-    /**
-     * @return string
-     */
     public static function getName(): string
     {
         return 'SingleAddressPerShipmentTypeWidget';
     }
 
-    /**
-     * @return string
-     */
     public static function getTemplate(): string
     {
         return '@SelfServicePortal/views/single-address-per-shipment-type/single-address-per-shipment-type.twig';
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $checkoutAddressForm
-     *
-     * @return void
-     */
     protected function addIsVisibleParameter(FormView $checkoutAddressForm): void
     {
         $isVisible = isset($checkoutAddressForm->children[SingleAddressPerShipmentTypeAddressStepForm::FIELD_IS_SINGLE_ADDRESS_PER_SHIPMENT_TYPE]);
@@ -63,11 +49,6 @@ class SingleAddressPerShipmentTypeWidget extends AbstractWidget
         $this->addParameter(static::PARAMETER_IS_VISIBLE, $isVisible);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $checkoutAddressForm
-     *
-     * @return void
-     */
     protected function addFormViewParameter(FormView $checkoutAddressForm): void
     {
         $this->addParameter(

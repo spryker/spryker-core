@@ -15,11 +15,6 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepository
 
 class ProductShipmentTypeReader implements ProductShipmentTypeReaderInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
-     * @param \Spryker\Zed\ShipmentType\Business\ShipmentTypeFacadeInterface $shipmentTypeFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Grouper\ShipmentTypeGrouperInterface $shipmentTypeGrouper
-     */
     public function __construct(
         protected SelfServicePortalRepositoryInterface $selfServicePortalRepository,
         protected ShipmentTypeFacadeInterface $shipmentTypeFacade,

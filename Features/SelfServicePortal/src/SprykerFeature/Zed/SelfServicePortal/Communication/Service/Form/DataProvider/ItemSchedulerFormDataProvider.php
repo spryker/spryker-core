@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 class ItemSchedulerFormDataProvider
 {
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     public function getData(ItemTransfer $itemTransfer): ItemTransfer
     {
         if (!$itemTransfer->getMetadata()) {

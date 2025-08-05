@@ -12,11 +12,5 @@ use Generated\Shared\Transfer\PaymentTransfer;
 
 interface PaymentMethodResolverInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
-     *
-     * @return string
-     */
     public function resolvePaymentMethod(ItemTransfer $itemTransfer, PaymentTransfer $paymentTransfer): string;
 }

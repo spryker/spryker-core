@@ -156,11 +156,6 @@ class CreateOfferForm extends AbstractType
         $this->addEventSubscribers($builder, $options[static::OPTION_FORM_EVENT_SUBSCRIBERS]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -319,9 +314,6 @@ class CreateOfferForm extends AbstractType
         return $this;
     }
 
-    /**
-     * @return \Symfony\Component\Validator\Constraints\Callback
-     */
     protected function createValidFromRangeConstraint(): Callback
     {
         return new Callback([
@@ -344,9 +336,6 @@ class CreateOfferForm extends AbstractType
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\Validator\Constraints\Callback
-     */
     protected function createValidToFieldRangeConstraint(): Callback
     {
         return new Callback([
@@ -485,9 +474,6 @@ class CreateOfferForm extends AbstractType
         return $this;
     }
 
-    /**
-     * @return \Symfony\Component\Validator\Constraints\Callback
-     */
     protected function createServicePointServicesValidationConstraint(): Callback
     {
         return new Callback([

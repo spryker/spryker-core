@@ -11,9 +11,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 interface CreateSspInquiryFormExpanderInterface
 {
-    /**
-     * @return bool
-     */
     public function isApplicable(): bool;
 
     /**

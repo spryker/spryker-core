@@ -27,9 +27,6 @@ use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class SelfServicePortalStub implements SelfServicePortalStubInterface
 {
-    /**
-     * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedRequestClient
-     */
     public function __construct(protected ZedRequestClientInterface $zedRequestClient)
     {
     }

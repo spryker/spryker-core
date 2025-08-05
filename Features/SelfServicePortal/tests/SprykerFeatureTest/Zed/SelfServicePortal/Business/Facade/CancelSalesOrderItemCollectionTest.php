@@ -56,9 +56,6 @@ class CancelSalesOrderItemCollectionTest extends Unit
      */
     protected SelfServicePortalBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -66,9 +63,6 @@ class CancelSalesOrderItemCollectionTest extends Unit
         $this->tester->configureTestStateMachine([static::DEFAULT_OMS_PROCESS_NAME]);
     }
 
-    /**
-     * @return void
-     */
     public function testCancelSalesOrderItemCollectionSuccessfullyCancelsOrderItem(): void
     {
         // Arrange
@@ -92,9 +86,6 @@ class CancelSalesOrderItemCollectionTest extends Unit
         $this->assertSame('cancelled', $updatedSalesOrderItemEntity->getState()->getName());
     }
 
-    /**
-     * @return void
-     */
     public function testCancelSalesOrderItemCollectionReturnsErrorWhenNoOrderItemsProvided(): void
     {
         // Arrange
@@ -112,9 +103,6 @@ class CancelSalesOrderItemCollectionTest extends Unit
         $this->assertCount(0, $salesOrderItemCollectionResponseTransfer->getItems());
     }
 
-    /**
-     * @return void
-     */
     public function testCancelSalesOrderItemCollectionReturnsErrorWhenOmsFacadeReturnsNull(): void
     {
         // Arrange

@@ -29,54 +29,32 @@ class SspServiceMenuItemWidget extends AbstractWidget
      */
     protected const PAGE_KEY_SSP_SERVICE_PAGE = 'ssp-service';
 
-    /**
-     * @param string $activePage
-     */
     public function __construct(string $activePage)
     {
         $this->addActivePageParameter($activePage);
         $this->addIsVisibleParameter();
     }
 
-    /**
-     * @param string $activePage
-     *
-     * @return void
-     */
     protected function addActivePageParameter(string $activePage): void
     {
         $this->addParameter(static::PARAMETER_IS_ACTIVE_PAGE, $this->isSspServiceListPageActive($activePage));
     }
 
-    /**
-     * @return void
-     */
     protected function addIsVisibleParameter(): void
     {
         $this->addParameter(static::PARAMETER_IS_VISIBLE, $this->getFactory()->getCustomerClient()->isLoggedIn());
     }
 
-    /**
-     * @return string
-     */
     public static function getName(): string
     {
         return 'SspServiceMenuItemWidget';
     }
 
-    /**
-     * @return string
-     */
     public static function getTemplate(): string
     {
         return '@SelfServicePortal/views/service-menu-item/service-menu-item.twig';
     }
 
-    /**
-     * @param string $activePage
-     *
-     * @return bool
-     */
     protected function isSspServiceListPageActive(string $activePage): bool
     {
         return $activePage === static::PAGE_KEY_SSP_SERVICE_PAGE;

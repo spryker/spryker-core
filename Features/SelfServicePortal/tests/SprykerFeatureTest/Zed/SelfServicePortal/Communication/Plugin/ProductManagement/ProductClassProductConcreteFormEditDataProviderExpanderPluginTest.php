@@ -30,9 +30,6 @@ class ProductClassProductConcreteFormEditDataProviderExpanderPluginTest extends 
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandShouldMapProductClassesToFormData(): void
     {
         // Arrange
@@ -59,9 +56,6 @@ class ProductClassProductConcreteFormEditDataProviderExpanderPluginTest extends 
         );
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldNotMapProductClassesWhenProductHasNoId(): void
     {
         // Arrange
@@ -78,9 +72,6 @@ class ProductClassProductConcreteFormEditDataProviderExpanderPluginTest extends 
         $this->assertEmpty($formData);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldPreserveExistingFormData(): void
     {
         // Arrange
@@ -104,9 +95,6 @@ class ProductClassProductConcreteFormEditDataProviderExpanderPluginTest extends 
         $this->assertArrayHasKey(ProductClassForm::FIELD_PRODUCT_CLASSES, $formData);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldMapMultipleProductClassesToFormData(): void
     {
         // Arrange

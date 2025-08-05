@@ -101,9 +101,6 @@ class SelfServicePortalCommunicationTester extends Actor
      */
     public const TEST_ASSET_SERIAL_NUMBER_2 = 'SN987654321';
 
-    /**
-     * @return void
-     */
     public function ensureProductShipmentTypeTableIsEmpty(): void
     {
         $this->getProductShipmentTypeQuery()
@@ -111,12 +108,6 @@ class SelfServicePortalCommunicationTester extends Actor
             ->delete();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $item
-     * @param string $productClassName
-     *
-     * @return bool
-     */
     public function hasProductClass(ItemTransfer $item, string $productClassName): bool
     {
         foreach ($item->getProductClasses() as $productClass) {
@@ -128,11 +119,6 @@ class SelfServicePortalCommunicationTester extends Actor
         return false;
     }
 
-    /**
-     * @param string $assetReference
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function createCartChangeTransferWithSspAsset(string $assetReference): CartChangeTransfer
     {
         $itemTransfer = new ItemTransfer();
@@ -147,9 +133,6 @@ class SelfServicePortalCommunicationTester extends Actor
         return $cartChangeTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function createCartChangeTransferWithoutSspAsset(): CartChangeTransfer
     {
         $itemTransfer = new ItemTransfer();
@@ -161,9 +144,6 @@ class SelfServicePortalCommunicationTester extends Actor
         return $cartChangeTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function createEmptyCartChangeTransfer(): CartChangeTransfer
     {
         $cartChangeTransfer = new CartChangeTransfer();
@@ -173,9 +153,6 @@ class SelfServicePortalCommunicationTester extends Actor
         return $cartChangeTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
-     */
     public function createSspAssetCollectionTransfer(): SspAssetCollectionTransfer
     {
         $sspAssetTransfer = new SspAssetTransfer();
@@ -211,9 +188,6 @@ class SelfServicePortalCommunicationTester extends Actor
         return $mock;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
     public function createOrderTransferWithItems(): OrderTransfer
     {
         $itemTransfer1 = new ItemTransfer();
@@ -228,9 +202,6 @@ class SelfServicePortalCommunicationTester extends Actor
         return $orderTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
     public function createEmptyOrderTransfer(): OrderTransfer
     {
         $orderTransfer = new OrderTransfer();
@@ -264,12 +235,6 @@ class SelfServicePortalCommunicationTester extends Actor
         ];
     }
 
-    /**
-     * @param int $idProduct
-     * @param int $idShipmentType
-     *
-     * @return bool
-     */
     public function ensureProductShipmentTypeRelationExists(int $idProduct, int $idShipmentType): bool
     {
         $productShipmentTypeQuery = $this->getProductShipmentTypeQuery()
@@ -311,9 +276,6 @@ class SelfServicePortalCommunicationTester extends Actor
         return $productConcreteTransfer;
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery
-     */
     protected function getProductShipmentTypeQuery(): SpyProductShipmentTypeQuery
     {
         return SpyProductShipmentTypeQuery::create();
@@ -335,17 +297,6 @@ class SelfServicePortalCommunicationTester extends Actor
         return $servicePointCollection;
     }
 
-    /**
-     * @param string $uuid
-     * @param int $id
-     * @param string $name
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTypeTransfer
-     */
-
-    /**
-     * @return void
-     */
     public function ensureSalesOrderItemProductClassTableIsEmpty(): void
     {
         $this->getSalesOrderItemProductClassQuery()
@@ -353,9 +304,6 @@ class SelfServicePortalCommunicationTester extends Actor
             ->delete();
     }
 
-    /**
-     * @return void
-     */
     public function ensureSalesOrderItemSspAssetTableIsEmpty(): void
     {
         $this->getSalesOrderItemSspAssetQuery()
@@ -363,28 +311,16 @@ class SelfServicePortalCommunicationTester extends Actor
             ->delete();
     }
 
-    /**
-     * @return int
-     */
     public function countSalesOrderItemProductClasses(): int
     {
         return $this->getSalesOrderItemProductClassQuery()->count();
     }
 
-    /**
-     * @return int
-     */
     public function countSalesOrderItemSspAssets(): int
     {
         return $this->getSalesOrderItemSspAssetQuery()->count();
     }
 
-    /**
-     * @param int $idSalesOrderItem
-     * @param string $name
-     *
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClass|null
-     */
     public function findSalesOrderItemProductClass(int $idSalesOrderItem, string $name): ?SpySalesOrderItemProductClass
     {
         return $this->getSalesOrderItemProductClassQuery()
@@ -416,13 +352,6 @@ class SelfServicePortalCommunicationTester extends Actor
         return $productClassNames;
     }
 
-    /**
-     * @param string $uuid
-     * @param int $id
-     * @param string $name
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTypeTransfer
-     */
     public function createShipmentTypeTransfer(
         string $uuid = self::TEST_SHIPMENT_TYPE_UUID,
         int $id = self::TEST_SHIPMENT_TYPE_ID,
@@ -436,12 +365,6 @@ class SelfServicePortalCommunicationTester extends Actor
         return $shipmentTypeTransfer;
     }
 
-    /**
-     * @param int $idSalesOrderItem
-     * @param string $assetReference
-     *
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAsset|null
-     */
     public function findSalesOrderItemSspAsset(int $idSalesOrderItem, string $assetReference): ?SpySalesOrderItemSspAsset
     {
         return $this->getSalesOrderItemSspAssetQuery()
@@ -450,17 +373,11 @@ class SelfServicePortalCommunicationTester extends Actor
             ->findOne();
     }
 
-    /**
-     * @return void
-     */
     public function ensureProductClassTableIsEmpty(): void
     {
         $this->truncateProductClassTable();
     }
 
-    /**
-     * @return void
-     */
     public function truncateProductClassTable(): void
     {
         $this->getProductToProductClassQuery()->deleteAll();
@@ -475,33 +392,21 @@ class SelfServicePortalCommunicationTester extends Actor
         return $this->getProductClassQuery()->find()->getArrayCopy();
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery
-     */
     protected function getProductClassQuery(): SpyProductClassQuery
     {
         return SpyProductClassQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductToProductClassQuery
-     */
     protected function getProductToProductClassQuery(): SpyProductToProductClassQuery
     {
         return SpyProductToProductClassQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClassQuery
-     */
     protected function getSalesOrderItemProductClassQuery(): SpySalesOrderItemProductClassQuery
     {
         return SpySalesOrderItemProductClassQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAssetQuery
-     */
     protected function getSalesOrderItemSspAssetQuery(): SpySalesOrderItemSspAssetQuery
     {
         return SpySalesOrderItemSspAssetQuery::create();

@@ -15,12 +15,6 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery;
 
 class FileAttachmentSaver
 {
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery $companyFileQuery
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery $companyBusinessUnitFileQuery
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery $companyUserFileQuery
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery $sspAssetFileQuery
-     */
     public function __construct(
         protected SpyCompanyFileQuery $companyFileQuery,
         protected SpyCompanyBusinessUnitFileQuery $companyBusinessUnitFileQuery,
@@ -29,11 +23,6 @@ class FileAttachmentSaver
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentTransfer
-     */
     public function saveBusinessUnitFileAttachment(FileAttachmentTransfer $fileAttachmentTransfer): FileAttachmentTransfer
     {
         if (!$fileAttachmentTransfer->getBusinessUnitCollection()?->getCompanyBusinessUnits()) {
@@ -54,11 +43,6 @@ class FileAttachmentSaver
         return $fileAttachmentTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentTransfer
-     */
     public function saveCompanyFileAttachments(FileAttachmentTransfer $fileAttachmentTransfer): FileAttachmentTransfer
     {
         if (!$fileAttachmentTransfer->getCompanyCollection()?->getCompanies()) {
@@ -79,11 +63,6 @@ class FileAttachmentSaver
         return $fileAttachmentTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentTransfer
-     */
     public function saveCompanyUserAttachment(FileAttachmentTransfer $fileAttachmentTransfer): FileAttachmentTransfer
     {
         if (!$fileAttachmentTransfer->getCompanyUserCollection()?->getCompanyUsers()) {
@@ -104,11 +83,6 @@ class FileAttachmentSaver
         return $fileAttachmentTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentTransfer
-     */
     public function saveSspAssetFileAttachment(FileAttachmentTransfer $fileAttachmentTransfer): FileAttachmentTransfer
     {
         if (!$fileAttachmentTransfer->getSspAssetCollection()?->getSspAssets()) {

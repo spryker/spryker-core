@@ -21,45 +21,26 @@ class SspInquiryMenuItemWidget extends AbstractWidget
      */
     protected const PAGE_KEY_SSP_INQUIRY_PAGE = 'ssp-inquiry';
 
-    /**
-     * @param string $activePage
-     */
     public function __construct(string $activePage)
     {
         $this->addActivePageParameter($activePage);
     }
 
-    /**
-     * @param string $activePage
-     *
-     * @return void
-     */
     protected function addActivePageParameter(string $activePage): void
     {
         $this->addParameter(static::PARAMETER_IS_ACTIVE_PAGE, $this->isSspInquiryListPageActive($activePage));
     }
 
-    /**
-     * @return string
-     */
     public static function getName(): string
     {
         return 'SspInquiryMenuItemWidget';
     }
 
-    /**
-     * @return string
-     */
     public static function getTemplate(): string
     {
         return '@SelfServicePortal/views/inquiry-menu-item/inquiry-menu-item.twig';
     }
 
-    /**
-     * @param string $activePage
-     *
-     * @return bool
-     */
     protected function isSspInquiryListPageActive(string $activePage): bool
     {
         return $activePage === static::PAGE_KEY_SSP_INQUIRY_PAGE;

@@ -15,9 +15,6 @@ class SspAssetCustomerPermissionChecker implements SspAssetCustomerPermissionChe
 {
     use PermissionAwareTrait;
 
-    /**
-     * @return bool
-     */
     public function canViewAsset(): bool
     {
         $canViewCompanySspAssets = $this->can(ViewCompanySspAssetPermissionPlugin::KEY); // THIS IS Ok (fail fast) ZED mirror created

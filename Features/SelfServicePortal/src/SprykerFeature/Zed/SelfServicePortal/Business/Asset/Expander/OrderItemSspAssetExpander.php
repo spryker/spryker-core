@@ -14,21 +14,12 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInt
 
 class OrderItemSspAssetExpander implements OrderItemSspAssetExpanderInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInterface $sspAssetReader
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Extractor\SalesOrderItemIdExtractorInterface $salesOrderItemIdExtractor
-     */
     public function __construct(
         protected readonly SspAssetReaderInterface $sspAssetReader,
         protected readonly SalesOrderItemIdExtractorInterface $salesOrderItemIdExtractor
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
     public function expandOrderItemsWithSspAssets(OrderTransfer $orderTransfer): OrderTransfer
     {
         $salesOrderItemIds = $this->salesOrderItemIdExtractor->extractSalesOrderItemIds($orderTransfer);

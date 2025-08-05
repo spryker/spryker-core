@@ -34,9 +34,6 @@ class SspModelManagementFacadeTest extends Unit
      */
     protected $selfServicePortalFacade;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $this->selfServicePortalFacade = new SelfServicePortalFacade();

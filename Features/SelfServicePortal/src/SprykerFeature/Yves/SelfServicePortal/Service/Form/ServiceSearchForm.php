@@ -66,11 +66,6 @@ class ServiceSearchForm extends AbstractType
      */
     public const FIELD_FILTERS = 'filters';
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -84,9 +79,6 @@ class ServiceSearchForm extends AbstractType
         ]);
     }
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return static::FORM_NAME;

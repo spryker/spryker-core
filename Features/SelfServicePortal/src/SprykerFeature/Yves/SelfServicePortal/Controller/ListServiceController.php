@@ -27,11 +27,6 @@ class ListServiceController extends AbstractController
      */
     protected const QUERY_PARAM_SSP_ASSET_REFERENCE = 'ssp-asset-reference';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Spryker\Yves\Kernel\View\View
-     */
     public function listAction(Request $request): View
     {
         $viewData = $this->executeListAction($request);
@@ -88,13 +83,6 @@ class ListServiceController extends AbstractController
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Form\FormInterface $serviceSearchForm
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspServiceCriteriaTransfer
-     */
     protected function handleServiceSearchFormSubmit(
         Request $request,
         FormInterface $serviceSearchForm,
@@ -110,12 +98,6 @@ class ListServiceController extends AbstractController
             );
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspServiceCriteriaTransfer
-     */
     protected function setPagination(
         Request $request,
         SspServiceCriteriaTransfer $sspServiceCriteriaTransfer

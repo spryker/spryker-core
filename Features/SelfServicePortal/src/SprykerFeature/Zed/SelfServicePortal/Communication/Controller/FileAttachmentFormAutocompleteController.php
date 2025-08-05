@@ -23,11 +23,6 @@ class FileAttachmentFormAutocompleteController extends AbstractController
      */
     protected const REQUEST_PARAM_TERM = 'term';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function companyAction(Request $request): JsonResponse
     {
         $term = (string)$request->query->get(static::REQUEST_PARAM_TERM, '');
@@ -38,11 +33,6 @@ class FileAttachmentFormAutocompleteController extends AbstractController
         return $this->jsonResponse($options);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function companyUserAction(Request $request): JsonResponse
     {
         $term = (string)$request->query->get(static::REQUEST_PARAM_TERM, '');
@@ -53,11 +43,6 @@ class FileAttachmentFormAutocompleteController extends AbstractController
         return $this->jsonResponse($options);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function companyBusinessUnitAction(Request $request): JsonResponse
     {
         $term = (string)$request->query->get(static::REQUEST_PARAM_TERM, '');

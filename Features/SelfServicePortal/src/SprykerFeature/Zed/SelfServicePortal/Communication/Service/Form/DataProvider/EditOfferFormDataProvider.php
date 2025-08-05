@@ -71,11 +71,6 @@ class EditOfferFormDataProvider
         $this->formEventSubscribers = $formEventSubscribers;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
-     */
     public function getData(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
         return $productOfferTransfer;
@@ -126,11 +121,6 @@ class EditOfferFormDataProvider
         return $options;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
     public function addModelTransformers(FormBuilderInterface $builder): void
     {
         foreach ($this->formDataTransformers as $field => $modelTransformer) {
@@ -138,11 +128,6 @@ class EditOfferFormDataProvider
         }
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
     public function addEventSubscribers(FormBuilderInterface $builder): void
     {
         foreach ($this->formEventSubscribers as $eventSubscriber) {

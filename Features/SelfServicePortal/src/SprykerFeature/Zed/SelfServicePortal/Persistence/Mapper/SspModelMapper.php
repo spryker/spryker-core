@@ -14,19 +14,10 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 
 class SspModelMapper
 {
-    /**
-     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
-     */
     public function __construct(protected UtilDateTimeServiceInterface $utilDateTimeService)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspModelTransfer $sspModelTransfer
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspModel $sspModelEntity
-     *
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspModel
-     */
     public function mapSspModelTransferToSpySspModelEntity(
         SspModelTransfer $sspModelTransfer,
         SpySspModel $sspModelEntity
@@ -38,12 +29,6 @@ class SspModelMapper
         return $sspModelEntity;
     }
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspModel $spySspModelEntity
-     * @param \Generated\Shared\Transfer\SspModelTransfer $sspModelTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspModelTransfer
-     */
     public function mapSpySspModelEntityToSspModelTransfer(
         SpySspModel $spySspModelEntity,
         SspModelTransfer $sspModelTransfer

@@ -11,9 +11,6 @@ use SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig;
 
 class ShipmentTypeGroupSorter implements ShipmentTypeGroupSorterInterface
 {
-    /**
-     * @param \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(protected SelfServicePortalConfig $selfServicePortalConfig)
     {
     }

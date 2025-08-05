@@ -13,10 +13,6 @@ use Symfony\Component\Form\FormTypeInterface;
 
 class ShipmentTypeProductConcreteFormExpander implements ShipmentTypeProductConcreteFormExpanderInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\DataProvider\ShipmentTypeProductConcreteFormDataProvider $dataProvider
-     * @param \Symfony\Component\Form\FormTypeInterface $form
-     */
     public function __construct(
         protected ShipmentTypeProductConcreteFormDataProvider $dataProvider,
         protected FormTypeInterface $form

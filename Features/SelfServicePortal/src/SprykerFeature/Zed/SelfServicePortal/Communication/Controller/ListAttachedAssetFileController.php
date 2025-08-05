@@ -38,11 +38,6 @@ class ListAttachedAssetFileController extends AbstractController
         return ['attachedFileTable' => $attachedFileTable->render()];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function tableAction(Request $request): JsonResponse
     {
         $attachedFileTable = $this

@@ -145,9 +145,6 @@ class SspAssetFormDataToTransferMapperTest extends Unit
         return $sspAssetTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\SspAssetTransfer
-     */
     protected function createSspAssetTransferWithNullAssignment(): SspAssetTransfer
     {
         $sspAssetTransfer = new SspAssetTransfer();

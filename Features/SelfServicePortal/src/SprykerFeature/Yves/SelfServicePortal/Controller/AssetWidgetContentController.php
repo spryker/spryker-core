@@ -29,11 +29,6 @@ class AssetWidgetContentController extends AbstractController
      */
     protected const RESPONSE_KEY_CONTENT = 'content';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function indexAction(Request $request): JsonResponse
     {
         $assetWidgetContentViewData = $this->getAssetWidgetContentViewData($request);
@@ -80,11 +75,6 @@ class AssetWidgetContentController extends AbstractController
         ];
     }
 
-    /**
-     * @param string $searchString
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCriteriaTransfer
-     */
     protected function createSspAssetCriteriaTransfer(string $searchString): SspAssetCriteriaTransfer
     {
         $sspAssetCriteriaTransfer = new SspAssetCriteriaTransfer();

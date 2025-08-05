@@ -11,9 +11,6 @@ use SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig;
 
 class ShipmentTypeChecker implements ShipmentTypeCheckerInterface
 {
-    /**
-     * @param \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(protected SelfServicePortalConfig $selfServicePortalConfig)
     {
     }

@@ -48,9 +48,6 @@ class FileSizeFormatterTwigPlugin extends AbstractPlugin implements TwigPluginIn
         return $twig;
     }
 
-    /**
-     * @return \Twig\TwigFilter
-     */
     protected function createFilter(): TwigFilter
     {
         return new TwigFilter(

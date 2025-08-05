@@ -27,11 +27,6 @@ class SspInquiryReader implements SspInquiryReaderInterface
      */
     protected const DEFAULT_PAGE = 1;
 
-    /**
-     * @param \SprykerFeature\Client\SelfServicePortal\SelfServicePortalClientInterface $selfServicePortalClient
-     * @param \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     * @param \Spryker\Client\Store\StoreClientInterface $storeClient
-     */
     public function __construct(
         protected SelfServicePortalClientInterface $selfServicePortalClient,
         protected SelfServicePortalConfig $selfServicePortalConfig,
@@ -39,12 +34,6 @@ class SspInquiryReader implements SspInquiryReaderInterface
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
-     */
     public function getSspInquiryCollection(Request $request, SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCollectionTransfer
     {
         $sspInquiryCriteriaTransfer->setPagination($this->createPaginationTransfer($request));
@@ -56,12 +45,6 @@ class SspInquiryReader implements SspInquiryReaderInterface
         return $this->selfServicePortalClient->getSspInquiryCollection($sspInquiryCriteriaTransfer);
     }
 
-    /**
-     * @param string $reference
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer|null
-     */
     public function getSspInquiry(string $reference, CompanyUserTransfer $companyUserTransfer): ?SspInquiryTransfer
     {
           $sspInquiryCollectionResponseTransfer = $this->selfServicePortalClient->getSspInquiryCollection(
@@ -91,11 +74,6 @@ class SspInquiryReader implements SspInquiryReaderInterface
         return $sspInquiryCollectionResponseTransfer->getSspInquiries()->getIterator()->current();
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
-     */
     protected function createPaginationTransfer(Request $request): PaginationTransfer
     {
         $paginationTransfer = new PaginationTransfer();

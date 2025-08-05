@@ -34,19 +34,11 @@ class SingleAddressPerShipmentTypePreSubmitHandler implements SingleAddressPerSh
      */
     protected const EXTRA_FIELD_SKIP_VALIDATION = 'skip_validation';
 
-    /**
-     * @param \SprykerFeature\Yves\SelfServicePortal\Service\Checker\AddressFormCheckerInterface $addressFormChecker
-     */
     public function __construct(
         protected AddressFormCheckerInterface $addressFormChecker
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return void
-     */
     public function handlePreSubmit(FormEvent $event): void
     {
         $data = $event->getData();
@@ -115,12 +107,6 @@ class SingleAddressPerShipmentTypePreSubmitHandler implements SingleAddressPerSh
         return $this->addressFormChecker->isApplicableShipmentType($shipmentTypeKey);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $currentShipmentTypeKey
-     *
-     * @return bool
-     */
     protected function isSameShipmentType(ItemTransfer $itemTransfer, string $currentShipmentTypeKey): bool
     {
         return $itemTransfer->getShipmentType()?->getKey() === $currentShipmentTypeKey;

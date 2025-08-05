@@ -52,9 +52,6 @@ class SspServiceCancellableOrderItemExpanderPluginTest extends Unit
      */
     protected $omsFacadeMock;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -71,9 +68,6 @@ class SspServiceCancellableOrderItemExpanderPluginTest extends Unit
         $this->plugin->setBusinessFactory($factoryMock);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandSetsIsCancellableToTrueWhenStateFlagIsCancellable(): void
     {
         // Arrange
@@ -93,9 +87,6 @@ class SspServiceCancellableOrderItemExpanderPluginTest extends Unit
         $this->assertTrue($expandedItemTransfers[0]->getIsCancellable());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandSetsIsCancellableToFalseWhenStateFlagIsNotCancellable(): void
     {
         // Arrange
@@ -115,9 +106,6 @@ class SspServiceCancellableOrderItemExpanderPluginTest extends Unit
         $this->assertFalse($expandedItemTransfers[0]->getIsCancellable());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandSetsIsCancellableToFalseWhenStateHasNoFlags(): void
     {
         // Arrange
@@ -137,9 +125,6 @@ class SspServiceCancellableOrderItemExpanderPluginTest extends Unit
         $this->assertFalse($expandedItemTransfers[0]->getIsCancellable());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandSetsIsCancellableToFalseWhenItemHasNoState(): void
     {
         // Arrange
@@ -158,9 +143,6 @@ class SspServiceCancellableOrderItemExpanderPluginTest extends Unit
         $this->assertFalse($expandedItemTransfers[0]->getIsCancellable());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandHandlesMultipleItems(): void
     {
         // Arrange
@@ -184,12 +166,6 @@ class SspServiceCancellableOrderItemExpanderPluginTest extends Unit
         $this->assertFalse($expandedItemTransfers[1]->getIsCancellable());
     }
 
-    /**
-     * @param string $processName
-     * @param string $stateName
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function createItemTransferWithState(string $processName, string $stateName): ItemTransfer
     {
         $stateTransfer = new ItemStateTransfer();

@@ -14,18 +14,10 @@ use Spryker\Zed\Comment\Business\CommentFacadeInterface;
 
 class CommentSspInquiryExpander implements SspInquiryExpanderInterface
 {
-    /**
-     * @param \Spryker\Zed\Comment\Business\CommentFacadeInterface $commentFacade
-     */
     public function __construct(protected CommentFacadeInterface $commentFacade)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCollectionTransfer $sspInquiryCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
-     */
     public function expand(SspInquiryCollectionTransfer $sspInquiryCollectionTransfer): SspInquiryCollectionTransfer
     {
          $sspInquiryIds = [];
@@ -57,11 +49,6 @@ class CommentSspInquiryExpander implements SspInquiryExpanderInterface
         return $sspInquiryCollectionTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return bool
-     */
     public function isApplicable(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): bool
     {
         return !$sspInquiryCriteriaTransfer->getInclude() || $sspInquiryCriteriaTransfer->getInclude()->getWithComments();

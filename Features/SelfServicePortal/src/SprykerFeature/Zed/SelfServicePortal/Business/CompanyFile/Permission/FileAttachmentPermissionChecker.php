@@ -19,11 +19,6 @@ class FileAttachmentPermissionChecker implements FileAttachmentPermissionChecker
 {
     use PermissionAwareTrait;
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return bool
-     */
     public function isCompanyUserGrantedToApplyCriteria(FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): bool
     {
         if ($fileAttachmentCriteriaTransfer->getUser()) {

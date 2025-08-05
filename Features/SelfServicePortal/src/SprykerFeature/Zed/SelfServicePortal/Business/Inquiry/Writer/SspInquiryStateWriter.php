@@ -19,11 +19,6 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class SspInquiryStateWriter implements SspInquiryStateWriterInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Reader\SspInquiryReaderInterface $sspInquiryReader
-     * @param \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface $stateMachineFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(
         protected SspInquiryReaderInterface $sspInquiryReader,
         protected StateMachineFacadeInterface $stateMachineFacade,
@@ -31,11 +26,6 @@ class SspInquiryStateWriter implements SspInquiryStateWriterInterface
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer $sspInquiryCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer
-     */
     public function cancelSspInquiry(SspInquiryCollectionRequestTransfer $sspInquiryCollectionRequestTransfer): SspInquiryCollectionResponseTransfer
     {
         $sspInquiryReferences = [];

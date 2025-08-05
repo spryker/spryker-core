@@ -20,22 +20,12 @@ use SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig;
 
 class SspAssetFormDataProvider
 {
-    /**
-     * @param \SprykerFeature\Client\SelfServicePortal\SelfServicePortalClientInterface $sspAssetManagementClient
-     * @param \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig $config
-     */
     public function __construct(
         protected SelfServicePortalClientInterface $sspAssetManagementClient,
         protected SelfServicePortalConfig $config
     ) {
     }
 
-    /**
-     * @param string $sspAssetReference
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetTransfer|null
-     */
     public function getData(string $sspAssetReference, CompanyUserTransfer $companyUserTransfer): ?SspAssetTransfer
     {
         $sspAssetCollectionTransfer = $this->sspAssetManagementClient->getSspAssetCollection(
@@ -71,11 +61,6 @@ class SspAssetFormDataProvider
         ];
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     *
-     * @return string
-     */
     protected function getAssetImageUrl(SspAssetTransfer $sspAssetTransfer): string
     {
         $sspAssetImagePath = Url::generate(SelfServicePortalPageRouteProviderPlugin::ROUTE_NAME_ASSET_VIEW_IMAGE, ['ssp-asset-reference' => $sspAssetTransfer->getReferenceOrFail()])->build();

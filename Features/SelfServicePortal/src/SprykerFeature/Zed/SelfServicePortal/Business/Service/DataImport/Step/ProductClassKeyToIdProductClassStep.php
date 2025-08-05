@@ -22,9 +22,6 @@ class ProductClassKeyToIdProductClassStep implements DataImportStepInterface
      */
     protected array $idProductClassCache = [];
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery $productClassQuery
-     */
     public function __construct(
         protected SpyProductClassQuery $productClassQuery
     ) {

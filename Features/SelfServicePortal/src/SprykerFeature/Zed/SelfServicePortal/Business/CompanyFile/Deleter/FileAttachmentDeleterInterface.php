@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer;
 
 interface FileAttachmentDeleterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer
-     */
     public function deleteFileAttachmentCollection(
         FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
     ): FileAttachmentCollectionResponseTransfer;

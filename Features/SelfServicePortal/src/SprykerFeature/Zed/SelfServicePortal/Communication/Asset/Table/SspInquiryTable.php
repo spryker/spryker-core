@@ -52,11 +52,6 @@ class SspInquiryTable extends AbstractTable
      */
     protected const COL_ACTIONS = 'actions';
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySspAssetQuery $sspInquirySspAssetQuery
-     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
-     */
     public function __construct(
         protected SspAssetTransfer $sspAssetTransfer,
         protected SpySspInquirySspAssetQuery $sspInquirySspAssetQuery,
@@ -65,11 +60,6 @@ class SspInquiryTable extends AbstractTable
         $this->baseUrl = static::BASE_URL;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setUrl(sprintf('table?%s=%s', static::PARAM_ID_SSP_ASSET, $this->sspAssetTransfer->getIdSspAssetOrFail()));
@@ -91,11 +81,6 @@ class SspInquiryTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $baseData = [
@@ -111,9 +96,6 @@ class SspInquiryTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySspAssetQuery
-     */
     protected function prepareQuery(): SpySspInquirySspAssetQuery
     {
         $this->sspInquirySspAssetQuery

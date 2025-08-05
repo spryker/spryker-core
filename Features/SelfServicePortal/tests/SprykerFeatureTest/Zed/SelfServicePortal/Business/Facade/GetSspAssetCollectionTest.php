@@ -50,9 +50,6 @@ class GetSspAssetCollectionTest extends Unit
      */
     protected SelfServicePortalFacade $selfServicePortalFacade;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $this->selfServicePortalFacade = new SelfServicePortalFacade();
@@ -65,9 +62,6 @@ class GetSspAssetCollectionTest extends Unit
         ]);
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspAssetCollectionReturnsAssetsWithBusinessUnitSspAssetPermission(): void
     {
         // Arrange
@@ -99,9 +93,6 @@ class GetSspAssetCollectionTest extends Unit
         $this->assertSame('Test Asset', $sspAssetCollectionTransfer->getSspAssets()[0]->getName());
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspAssetCollectionReturnsAssetsWithCompanySspAssetPermission(): void
     {
         // Arrange
@@ -133,9 +124,6 @@ class GetSspAssetCollectionTest extends Unit
         $this->assertSame('Test Asset', $sspAssetCollectionTransfer->getSspAssets()[0]->getName());
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspAssetCollectionReturnsEmptyCollectionWithoutPermissions(): void
     {
         // Arrange
@@ -163,9 +151,6 @@ class GetSspAssetCollectionTest extends Unit
         $this->assertCount(0, $sspAssetCollectionTransfer->getSspAssets());
     }
 
-    /**
-     * @return void
-     */
     public function testGetSspAssetCollectionReturnsSpecificAssetWithPermissions(): void
     {
         // Arrange

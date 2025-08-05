@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\FileCollectionTransfer;
 
 interface SspInquiryFileDeleterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\FileCollectionTransfer $fileCollectionTransfer
-     *
-     * @return void
-     */
     public function deleteSspInquiryFile(FileCollectionTransfer $fileCollectionTransfer): void;
 }

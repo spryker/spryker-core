@@ -27,11 +27,6 @@ class StockCreateOfferFormEventSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return void
-     */
     public function onSubmit(FormEvent $event): void
     {
         $productOfferTransfer = $event->getData();

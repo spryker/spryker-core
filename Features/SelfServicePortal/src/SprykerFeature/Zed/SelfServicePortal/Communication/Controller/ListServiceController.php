@@ -34,9 +34,6 @@ class ListServiceController extends AbstractController
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function tableAction(): JsonResponse
     {
         $serviceTable = $this->getFactory()

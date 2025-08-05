@@ -17,21 +17,12 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class FileSspInquiryPreCreateHook implements SspInquiryPreCreateHookInterface
 {
-    /**
-     * @param \Spryker\Zed\FileManager\Business\FileManagerFacadeInterface $fileManagerFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(
         protected FileManagerFacadeInterface $fileManagerFacade,
         protected SelfServicePortalConfig $selfServicePortalConfig
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer
-     */
     public function execute(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
     {
         foreach ($sspInquiryTransfer->getFiles() as $fileTransfer) {
@@ -41,21 +32,11 @@ class FileSspInquiryPreCreateHook implements SspInquiryPreCreateHookInterface
         return $sspInquiryTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return bool
-     */
     public function isApplicable(SspInquiryTransfer $sspInquiryTransfer): bool
     {
         return $sspInquiryTransfer->getFiles()->count() > 0;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return void
-     */
     protected function processFileTransfer(FileTransfer $fileTransfer): void
     {
         $fileUploadTransfer = $fileTransfer->getFileUploadOrFail();
@@ -66,12 +47,6 @@ class FileSspInquiryPreCreateHook implements SspInquiryPreCreateHookInterface
         $fileTransfer->setIdFile($fileManagerDataTransfer->getFile() ? $fileManagerDataTransfer->getFile()->getIdFile() : null);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     * @param \Generated\Shared\Transfer\FileUploadTransfer $fileUploadTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
-     */
     protected function createFileManagerDataTransfer(FileTransfer $fileTransfer, FileUploadTransfer $fileUploadTransfer): FileManagerDataTransfer
     {
         return (new FileManagerDataTransfer())
@@ -80,11 +55,6 @@ class FileSspInquiryPreCreateHook implements SspInquiryPreCreateHookInterface
             ->setContent($this->decodeFileContent($fileTransfer->getEncodedContentOrFail()));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileUploadTransfer $fileUploadTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileTransfer
-     */
     protected function createFileTransfer(FileUploadTransfer $fileUploadTransfer): FileTransfer
     {
         return (new FileTransfer())
@@ -92,11 +62,6 @@ class FileSspInquiryPreCreateHook implements SspInquiryPreCreateHookInterface
             ->setFileUpload($fileUploadTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileUploadTransfer $fileUploadTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileInfoTransfer
-     */
     protected function createFileInfoTransfer(FileUploadTransfer $fileUploadTransfer): FileInfoTransfer
     {
         return (new FileInfoTransfer())
@@ -106,11 +71,6 @@ class FileSspInquiryPreCreateHook implements SspInquiryPreCreateHookInterface
             ->setStorageName($this->selfServicePortalConfig->getInquiryFileUploadStorageName());
     }
 
-    /**
-     * @param string $encodedContent
-     *
-     * @return string
-     */
     protected function decodeFileContent(string $encodedContent): string
     {
         return gzdecode(base64_decode($encodedContent)) ?: '';

@@ -25,18 +25,10 @@ class SspServiceMapper
      */
     protected const COMPANY_NAME_VIRTUAL_COLUMN = 'company_name';
 
-    /**
-     * @param \Spryker\Zed\Oms\Business\OmsFacadeInterface $omsFacade
-     */
     public function __construct(protected OmsFacadeInterface $omsFacade)
     {
     }
 
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
-     *
-     * @return \Generated\Shared\Transfer\SspServiceTransfer
-     */
     public function mapSalesOrderItemEntityToSspServiceTransfer(SpySalesOrderItem $salesOrderItemEntity): SspServiceTransfer
     {
         $serviceTransfer = (new SspServiceTransfer())->setOrder((new OrderTransfer()));

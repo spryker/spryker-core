@@ -18,9 +18,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploadMapper implements FileUploadMapperInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(protected SelfServicePortalConfig $selfServicePortalConfig)
     {
     }
@@ -46,11 +43,6 @@ class FileUploadMapper implements FileUploadMapperInterface
         return $fileUploadTransfers;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileUploadTransfer $fileUploadTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileTransfer
-     */
     public function mapFileUploadTransferToFileTransfer(FileUploadTransfer $fileUploadTransfer): FileTransfer
     {
         $fileTransfer = new FileTransfer();
@@ -59,11 +51,6 @@ class FileUploadMapper implements FileUploadMapperInterface
         return $fileTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
-     */
     public function mapFileTransferToFileManagerDataTransfer(FileTransfer $fileTransfer): FileManagerDataTransfer
     {
         $fileManagerDataTransfer = new FileManagerDataTransfer();
@@ -83,11 +70,6 @@ class FileUploadMapper implements FileUploadMapperInterface
         return $fileManagerDataTransfer;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile
-     *
-     * @return \Generated\Shared\Transfer\FileUploadTransfer
-     */
     protected function mapUploadedFileToFileUploadTransfer(UploadedFile $uploadedFile): FileUploadTransfer
     {
         $fileUploadTransfer = new FileUploadTransfer();
@@ -101,11 +83,6 @@ class FileUploadMapper implements FileUploadMapperInterface
         return $fileUploadTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileTransfer
-     */
     protected function setFileName(FileTransfer $fileTransfer): FileTransfer
     {
         $fileUploadTransfer = $fileTransfer->getFileUpload();
@@ -146,11 +123,6 @@ class FileUploadMapper implements FileUploadMapperInterface
         return $fileContent;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileInfoTransfer
-     */
     protected function mapFileTransferToFileInfoTransfer(FileTransfer $fileTransfer): FileInfoTransfer
     {
         $fileInfo = new FileInfoTransfer();

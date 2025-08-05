@@ -26,10 +26,6 @@ class SspServicePointNameForItemWidget extends AbstractWidget
      */
     protected const PARAMETER_SCHEDULED_AT = 'scheduledAt';
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param bool $showServicePointName
-     */
     public function __construct(ItemTransfer $itemTransfer, bool $showServicePointName = true)
     {
         $this->addServicePointNameParameter($itemTransfer, $showServicePointName);
@@ -60,12 +56,6 @@ class SspServicePointNameForItemWidget extends AbstractWidget
         return '@SelfServicePortal/views/service-point-name-for-cart-item/service-point-name-for-cart-item.twig';
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param bool $showServicePointName
-     *
-     * @return void
-     */
     protected function addServicePointNameParameter(ItemTransfer $itemTransfer, bool $showServicePointName = true): void
     {
         $servicePointName = '';
@@ -77,11 +67,6 @@ class SspServicePointNameForItemWidget extends AbstractWidget
         $this->addParameter(static::PARAMETER_SERVICE_POINT_NAME, $servicePointName);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
     protected function addScheduledAtParameter(ItemTransfer $itemTransfer): void
     {
         $scheduledAt = null;

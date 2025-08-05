@@ -57,11 +57,6 @@ class SingleAddressPerShipmentTypeAddressStepForm extends AbstractType
         return $this;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return void
-     */
     protected function addSingleAddressPerShipmentTypeField(FormEvent $event): void
     {
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */

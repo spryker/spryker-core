@@ -124,11 +124,6 @@ class ServiceTable extends AbstractTable
      */
     protected const URL_PATH_SELF_SERVICE_PORTAL_VIEW = '/self-service-portal/view-service';
 
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $salesOrderItemQuery
-     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $SelfServicePortalConfig
-     */
     public function __construct(
         protected SpySalesOrderItemQuery $salesOrderItemQuery,
         protected UtilDateTimeServiceInterface $utilDateTimeService,
@@ -136,11 +131,6 @@ class ServiceTable extends AbstractTable
     ) {
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setHeader($this->getHeaders());
@@ -225,9 +215,6 @@ class ServiceTable extends AbstractTable
         return $results;
     }
 
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
     protected function prepareQuery(): SpySalesOrderItemQuery
     {
         $query = $this->salesOrderItemQuery->useSpySalesOrderItemProductClassQuery()
@@ -240,11 +227,6 @@ class ServiceTable extends AbstractTable
         return $this->joinOrderData($query);
     }
 
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
     protected function joinOrderData(SpySalesOrderItemQuery $query): SpySalesOrderItemQuery
     {
         // @phpstan-ignore-next-line
@@ -299,13 +281,6 @@ class ServiceTable extends AbstractTable
         ];
     }
 
-    /**
-     * @param string $orderReference
-     * @param int $idSalesOrder
-     * @param int $idSalesOrderItem
-     *
-     * @return string
-     */
     protected function createOrderReferenceLink(string $orderReference, int $idSalesOrder, int $idSalesOrderItem): string
     {
         $url = Url::generate(
@@ -321,12 +296,6 @@ class ServiceTable extends AbstractTable
         );
     }
 
-    /**
-     * @param string $firstName
-     * @param string $lastName
-     *
-     * @return string
-     */
     protected function formatCustomerName(string $firstName, string $lastName): string
     {
         return sprintf('%s %s', $firstName, $lastName);

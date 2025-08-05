@@ -17,9 +17,6 @@ class ProductConcreteClassExpander implements ProductConcreteClassExpanderInterf
      */
     protected $productClassReader;
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ProductClassReaderInterface $productClassReader
-     */
     public function __construct(ProductClassReaderInterface $productClassReader)
     {
         $this->productClassReader = $productClassReader;

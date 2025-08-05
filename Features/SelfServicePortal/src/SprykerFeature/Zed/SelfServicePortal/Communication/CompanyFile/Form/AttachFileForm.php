@@ -115,19 +115,11 @@ class AttachFileForm extends AbstractType
      */
     protected const DATASOURCE_MIN_CHARACTERS = 4;
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return static::BLOCK_PREFIX;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
@@ -160,11 +152,6 @@ class AttachFileForm extends AbstractType
         $this->addPreSetDataEventListeners($builder);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
     protected function addPreSetDataEventListeners(FormBuilderInterface $builder): void
     {
         $this->addPreSetDataEventToCompanyField($builder);
@@ -172,11 +159,6 @@ class AttachFileForm extends AbstractType
         $this->addPreSetDataEventToCompanyBusinessUnitField($builder);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
     protected function addPreSetDataEventToCompanyField(FormBuilderInterface $builder): void
     {
         $builder->get(static::FIELD_COMPANY_IDS)->addEventListener(
@@ -204,11 +186,6 @@ class AttachFileForm extends AbstractType
         );
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
     protected function addPreSetDataEventToCompanyUserField(FormBuilderInterface $builder): void
     {
         $builder->get(static::FIELD_COMPANY_USER_IDS)->addEventListener(
@@ -237,11 +214,6 @@ class AttachFileForm extends AbstractType
         );
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
     protected function addPreSetDataEventToCompanyBusinessUnitField(FormBuilderInterface $builder): void
     {
         $builder->get(static::FIELD_COMPANY_BUSINESS_UNIT_IDS)->addEventListener(

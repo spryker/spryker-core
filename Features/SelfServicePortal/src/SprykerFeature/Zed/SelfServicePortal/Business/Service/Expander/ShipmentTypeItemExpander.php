@@ -21,11 +21,6 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepository
 
 class ShipmentTypeItemExpander implements ShipmentTypeItemExpanderInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ShipmentTypeReaderInterface $shipmentTypeReader
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $SelfServicePortalRepository
-     * @param \Spryker\Zed\ProductOfferShipmentType\Business\ProductOfferShipmentTypeFacadeInterface $productOfferShipmentTypeFacade
-     */
     public function __construct(
         protected ShipmentTypeReaderInterface $shipmentTypeReader,
         protected SelfServicePortalRepositoryInterface $SelfServicePortalRepository,
@@ -33,11 +28,6 @@ class ShipmentTypeItemExpander implements ShipmentTypeItemExpanderInterface
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function expandCartItemsWithShipmentType(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         if (!$cartChangeTransfer->getItems()->count()) {
@@ -58,11 +48,6 @@ class ShipmentTypeItemExpander implements ShipmentTypeItemExpanderInterface
         return $cartChangeTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     public function expandQuoteItemsWithShipmentType(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         if (!$quoteTransfer->getItems()->count()) {
@@ -391,12 +376,6 @@ class ShipmentTypeItemExpander implements ShipmentTypeItemExpanderInterface
         return $indexedBundleItems;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $shipmentTypeTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function setShipmentTypeUuid(
         ItemTransfer $itemTransfer,
         ShipmentTypeTransfer $shipmentTypeTransfer

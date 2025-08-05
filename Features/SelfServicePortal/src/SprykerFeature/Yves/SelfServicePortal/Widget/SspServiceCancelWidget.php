@@ -32,9 +32,6 @@ class SspServiceCancelWidget extends AbstractWidget
      */
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     */
     public function __construct(ItemTransfer $itemTransfer)
     {
         $this->addFormParameter($itemTransfer);
@@ -66,11 +63,6 @@ class SspServiceCancelWidget extends AbstractWidget
         return '@SelfServicePortal/views/service-cancel/service-cancel.twig';
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
     protected function addFormParameter(ItemTransfer $itemTransfer): void
     {
         $form = $this->getFactory()->getSspServiceCancelForm($itemTransfer);
@@ -78,21 +70,11 @@ class SspServiceCancelWidget extends AbstractWidget
         $this->addParameter(static::PARAMETER_FORM, $form->createView());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
     protected function addOrderItemParameter(ItemTransfer $itemTransfer): void
     {
         $this->addParameter(static::PARAMETER_ORDER_ITEM, $itemTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
     protected function addIsVisibleParameter(ItemTransfer $itemTransfer): void
     {
         $serviceClassName = $this->getConfig()->getServiceProductClassName();

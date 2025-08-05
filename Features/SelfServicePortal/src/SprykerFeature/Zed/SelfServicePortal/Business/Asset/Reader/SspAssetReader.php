@@ -36,11 +36,6 @@ class SspAssetReader implements SspAssetReaderInterface
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
-     */
     public function getSspAssetCollection(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): SspAssetCollectionTransfer
     {
         if (!$this->assetValidator->isCompanyUserGrantedToApplyCriteria($sspAssetCriteriaTransfer)) {
@@ -92,11 +87,6 @@ class SspAssetReader implements SspAssetReaderInterface
         return $indexedAssets;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionTransfer $sspAssetCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
-     */
     public function expandWithFile(SspAssetCollectionTransfer $sspAssetCollectionTransfer): SspAssetCollectionTransfer
     {
         $fileIds = [];

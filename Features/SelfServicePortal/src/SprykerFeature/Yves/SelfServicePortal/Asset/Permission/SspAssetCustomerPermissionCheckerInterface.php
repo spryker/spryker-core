@@ -9,8 +9,5 @@ namespace SprykerFeature\Yves\SelfServicePortal\Asset\Permission;
 
 interface SspAssetCustomerPermissionCheckerInterface
 {
-    /**
-     * @return bool
-     */
     public function canViewAsset(): bool;
 }

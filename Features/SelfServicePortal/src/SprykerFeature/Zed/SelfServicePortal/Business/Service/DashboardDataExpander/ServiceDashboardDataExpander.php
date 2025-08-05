@@ -32,22 +32,12 @@ class ServiceDashboardDataExpander implements ServiceDashboardDataExpanderInterf
      */
     protected const SORT_FIELD_SCHEDULED_AT = 'scheduled_at';
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ServiceReaderInterface $serviceReader
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(
         protected ServiceReaderInterface $serviceReader,
         protected SelfServicePortalConfig $selfServicePortalConfig
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DashboardResponseTransfer $dashboardResponseTransfer
-     * @param \Generated\Shared\Transfer\DashboardRequestTransfer $dashboardRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\DashboardResponseTransfer
-     */
     public function provideSspServiceDashboardData(
         DashboardResponseTransfer $dashboardResponseTransfer,
         DashboardRequestTransfer $dashboardRequestTransfer

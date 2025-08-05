@@ -12,10 +12,5 @@ use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
 
 interface ServiceReaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
-     */
     public function getSspServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer;
 }

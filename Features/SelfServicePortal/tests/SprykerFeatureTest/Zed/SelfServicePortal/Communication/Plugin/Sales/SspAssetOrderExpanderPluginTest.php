@@ -31,9 +31,6 @@ class SspAssetOrderExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testHydrateExpandsOrderItemsWithSspAssets(): void
     {
         // Arrange
@@ -72,9 +69,6 @@ class SspAssetOrderExpanderPluginTest extends Unit
         $this->assertNotNull($resultOrderTransfer->getItems()[1]->getSspAsset());
     }
 
-    /**
-     * @return void
-     */
     public function testHydrateDoesNothingWhenNoItemsProvided(): void
     {
         // Arrange
@@ -98,9 +92,6 @@ class SspAssetOrderExpanderPluginTest extends Unit
         $this->assertCount(0, $resultOrderTransfer->getItems());
     }
 
-    /**
-     * @return void
-     */
     public function testHydrateDoesNothingWhenNoAssetsAssociatedWithItem(): void
     {
         // Arrange

@@ -12,11 +12,5 @@ use Symfony\Component\Form\FormInterface;
 
 interface SspInquirySearchFormHandlerInterface
 {
-    /**
-     * @param \Symfony\Component\Form\FormInterface $sspInquirySearchForm
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCriteriaTransfer
-     */
     public function handleFormSubmit(FormInterface $sspInquirySearchForm, SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): SspInquiryCriteriaTransfer;
 }

@@ -41,11 +41,6 @@ class ListFileController extends FileAbstractController
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function tableAction(Request $request): JsonResponse
     {
         $fileAttachmentTableCriteriaTransfer = $this
@@ -57,11 +52,6 @@ class ListFileController extends FileAbstractController
         return $this->jsonResponse($fileTable->fetchData());
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentTableCriteriaTransfer
-     */
     protected function createFileAttachmentTableCriteriaTransfer(
         Request $request
     ): FileAttachmentTableCriteriaTransfer {

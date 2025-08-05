@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\DashboardResponseTransfer;
 
 interface InquiryDashboardDataExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\DashboardResponseTransfer $dashboardResponseTransfer
-     * @param \Generated\Shared\Transfer\DashboardRequestTransfer $dashboardRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\DashboardResponseTransfer
-     */
     public function provideSspInquiryDashboardData(
         DashboardResponseTransfer $dashboardResponseTransfer,
         DashboardRequestTransfer $dashboardRequestTransfer

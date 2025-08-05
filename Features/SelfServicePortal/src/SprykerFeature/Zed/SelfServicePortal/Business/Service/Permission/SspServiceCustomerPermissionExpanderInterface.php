@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
 
 interface SspServiceCustomerPermissionExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspServiceCriteriaTransfer
-     */
     public function expand(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCriteriaTransfer;
 }

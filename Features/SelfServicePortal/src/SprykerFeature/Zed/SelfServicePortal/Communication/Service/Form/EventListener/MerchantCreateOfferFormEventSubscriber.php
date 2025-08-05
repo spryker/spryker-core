@@ -34,11 +34,6 @@ class MerchantCreateOfferFormEventSubscriber implements EventSubscriberInterface
      */
     protected SelfServicePortalConfig $config;
 
-    /**
-     * @param \Spryker\Zed\Merchant\Business\MerchantFacadeInterface $merchantFacade
-     * @param \Spryker\Zed\MerchantStock\Business\MerchantStockFacadeInterface $merchantStockFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
-     */
     public function __construct(
         MerchantFacadeInterface $merchantFacade,
         MerchantStockFacadeInterface $merchantStockFacade,
@@ -59,11 +54,6 @@ class MerchantCreateOfferFormEventSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return void
-     */
     public function onSubmit(FormEvent $event): void
     {
         $productOfferTransfer = $event->getData();

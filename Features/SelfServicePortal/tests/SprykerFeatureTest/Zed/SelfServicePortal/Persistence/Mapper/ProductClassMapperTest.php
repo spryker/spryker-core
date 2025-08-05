@@ -29,17 +29,11 @@ class ProductClassMapperTest extends Unit
      */
     protected ProductClassMapper $productClassMapper;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $this->productClassMapper = new ProductClassMapper();
     }
 
-    /**
-     * @return void
-     */
     public function testMapProductClassEntityToProductClassTransfer(): void
     {
         // Arrange
@@ -54,9 +48,6 @@ class ProductClassMapperTest extends Unit
         $this->assertSame('test-class', $productClassTransfer->getName());
     }
 
-    /**
-     * @return void
-     */
     public function testMapProductClassEntitiesToProductClassCollectionTransfer(): void
     {
         // Arrange
@@ -82,12 +73,6 @@ class ProductClassMapperTest extends Unit
         $this->assertSame('test-class-2', $resultCollectionTransfer->getProductClasses()[1]->getName());
     }
 
-    /**
-     * @param int $idProductClass
-     * @param string $name
-     *
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductClass
-     */
     protected function createProductClassEntity(int $idProductClass = 1, string $name = 'test-class'): SpyProductClass
     {
         $productClassEntityMock = $this->getMockBuilder(SpyProductClass::class)

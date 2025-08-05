@@ -18,11 +18,6 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Service\DataImport\DataSet\Pro
 
 class ProductToProductClassWriterStep implements DataImportStepInterface
 {
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpyProductToProductClassQuery $productToProductClassQuery
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery $productClassQuery
-     */
     public function __construct(
         protected SpyProductToProductClassQuery $productToProductClassQuery,
         protected SpyProductQuery $productQuery,
@@ -30,11 +25,6 @@ class ProductToProductClassWriterStep implements DataImportStepInterface
     ) {
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         $idProduct = $dataSet[ProductToProductClassDataSetInterface::ID_PRODUCT];

@@ -21,14 +21,6 @@ class SspModelWriter implements SspModelWriterInterface
 {
     use TransactionTrait;
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface $entityManager
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $repository
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Validator\SspModelValidatorInterface $sspModelValidator
-     * @param \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface $sequenceNumberFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Writer\FileSspModelWriterInterface $fileSspModelWriter
-     */
     public function __construct(
         protected SelfServicePortalEntityManagerInterface $entityManager,
         protected SelfServicePortalRepositoryInterface $repository,
@@ -39,11 +31,6 @@ class SspModelWriter implements SspModelWriterInterface
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspModelCollectionResponseTransfer
-     */
     public function createSspModelCollection(
         SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer
     ): SspModelCollectionResponseTransfer {
@@ -61,11 +48,6 @@ class SspModelWriter implements SspModelWriterInterface
         return $sspModelCollectionResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspModelTransfer $sspModelTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspModelTransfer
-     */
     protected function executeModelCreation(SspModelTransfer $sspModelTransfer): SspModelTransfer
     {
         $sspModelTransfer

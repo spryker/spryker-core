@@ -30,19 +30,10 @@ class SspModelValidator implements SspModelValidatorInterface
      */
     protected const ERROR_MESSAGE_CODE_TOO_LONG = 'Model code cannot be longer than %s characters.';
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(protected SelfServicePortalConfig $selfServicePortalConfig)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspModelTransfer $sspModelTransfer
-     * @param \Generated\Shared\Transfer\SspModelCollectionResponseTransfer $sspModelCollectionResponseTransfer
-     *
-     * @return bool
-     */
     public function validateModelTransfer(
         SspModelTransfer $sspModelTransfer,
         SspModelCollectionResponseTransfer $sspModelCollectionResponseTransfer

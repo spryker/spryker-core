@@ -20,17 +20,7 @@ interface FileUploadMapperInterface
      */
     public function mapUploadedFilesToFileUploadTransfers(array $uploadedFiles): array;
 
-    /**
-     * @param \Generated\Shared\Transfer\FileUploadTransfer $fileUploadTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileTransfer
-     */
     public function mapFileUploadTransferToFileTransfer(FileUploadTransfer $fileUploadTransfer): FileTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
-     */
     public function mapFileTransferToFileManagerDataTransfer(FileTransfer $fileTransfer): FileManagerDataTransfer;
 }

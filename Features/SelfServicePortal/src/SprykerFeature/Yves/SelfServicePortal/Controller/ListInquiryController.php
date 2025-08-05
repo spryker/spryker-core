@@ -27,11 +27,6 @@ class ListInquiryController extends AbstractController
      */
     protected const QUERY_PARAM_SSP_ASSET_REFERENCE = 'ssp-asset-reference';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Spryker\Yves\Kernel\View\View
-     */
     public function indexAction(Request $request): View
     {
         return $this->view(

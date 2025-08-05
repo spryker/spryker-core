@@ -63,9 +63,6 @@ class SspShipmentTypeQuoteExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandExpandsItemsWithShipmentType(): void
     {
         // Arrange
@@ -151,9 +148,6 @@ class SspShipmentTypeQuoteExpanderPluginTest extends Unit
         $this->assertSame('Default Shipment Type', $itemTransfer->getShipmentTypeOrFail()->getName());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandDoesNothingWhenNoItemsProvided(): void
     {
         // Arrange
@@ -187,9 +181,6 @@ class SspShipmentTypeQuoteExpanderPluginTest extends Unit
         $this->assertSame($quoteTransfer, $resultQuoteTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandExpandsBundleItemsWithShipmentType(): void
     {
         // Arrange
@@ -240,9 +231,6 @@ class SspShipmentTypeQuoteExpanderPluginTest extends Unit
         $this->assertSame(static::TEST_SHIPMENT_TYPE_UUID, $bundleItemTransfer->getShipmentOrFail()->getShipmentTypeUuid());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandDoesNotExpandWhenShipmentTypeReaderReturnsNoResults(): void
     {
         // Arrange
@@ -277,11 +265,6 @@ class SspShipmentTypeQuoteExpanderPluginTest extends Unit
         $this->assertNull($itemTransfer->getShipmentTypeOrFail()->getName());
     }
 
-    /**
-     * @param string|null $shipmentTypeUuid
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function createQuoteTransferWithShipmentType(?string $shipmentTypeUuid = null): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
@@ -303,9 +286,6 @@ class SspShipmentTypeQuoteExpanderPluginTest extends Unit
         return $quoteTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function createQuoteTransferWithoutShipmentType(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();

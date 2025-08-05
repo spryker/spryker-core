@@ -16,11 +16,6 @@ class SspInquiryCriteriaExpander implements SspInquiryCriteriaExpanderInterface
 {
     use PermissionAwareTrait;
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCriteriaTransfer
-     */
     public function expandCriteriaBasedOnCompanyUserPermissions(
         SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
     ): SspInquiryCriteriaTransfer {

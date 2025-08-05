@@ -12,17 +12,7 @@ use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
 
 interface SspInquiryExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCollectionTransfer $sspInquiryCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
-     */
     public function expand(SspInquiryCollectionTransfer $sspInquiryCollectionTransfer): SspInquiryCollectionTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return bool
-     */
     public function isApplicable(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): bool;
 }

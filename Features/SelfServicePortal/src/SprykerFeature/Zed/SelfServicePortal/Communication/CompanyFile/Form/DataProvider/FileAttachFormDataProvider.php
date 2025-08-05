@@ -20,12 +20,6 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class FileAttachFormDataProvider
 {
-    /**
-     * @param \Spryker\Zed\Company\Business\CompanyFacadeInterface $companyFacade
-     * @param \Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface $companyUserFacade
-     * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(
         protected CompanyFacadeInterface $companyFacade,
         protected CompanyUserFacadeInterface $companyUserFacade,

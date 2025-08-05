@@ -19,11 +19,6 @@ class ProductShipmentTypeSaver implements ProductShipmentTypeSaverInterface
 {
     use TransactionTrait;
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface $selfServicePortalEntityManager
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
-     * @param \Spryker\Zed\Event\Business\EventFacadeInterface $eventFacade
-     */
     public function __construct(
         protected SelfServicePortalEntityManagerInterface $selfServicePortalEntityManager,
         protected SelfServicePortalRepositoryInterface $selfServicePortalRepository,
@@ -31,11 +26,6 @@ class ProductShipmentTypeSaver implements ProductShipmentTypeSaverInterface
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function saveProductShipmentTypes(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         if (!$productConcreteTransfer->getIdProductConcrete()) {
@@ -47,11 +37,6 @@ class ProductShipmentTypeSaver implements ProductShipmentTypeSaverInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     protected function executeSaveProductShipmentTypesTransaction(
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductConcreteTransfer {
@@ -93,11 +78,6 @@ class ProductShipmentTypeSaver implements ProductShipmentTypeSaverInterface
         return $shipmentTypeIds;
     }
 
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
     protected function triggerProductUpdateEvent(int $idProductConcrete): void
     {
         $eventEntityTransfer = (new EventEntityTransfer())->setId($idProductConcrete);

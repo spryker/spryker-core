@@ -35,12 +35,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class SelfServicePortalEntityManager extends AbstractEntityManager implements SelfServicePortalEntityManagerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param int $idShipmentType
-     *
-     * @return void
-     */
     public function createProductShipmentType(ProductConcreteTransfer $productConcreteTransfer, int $idShipmentType): void
     {
         $productShipmentTypeEntity = $this->getFactory()
@@ -69,11 +63,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
             ->delete();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductClassCriteriaTransfer $productClassCriteriaTransfer
-     *
-     * @return void
-     */
     public function saveProductClassesForProduct(ProductClassCriteriaTransfer $productClassCriteriaTransfer): void
     {
         $productClassConditions = $productClassCriteriaTransfer->getProductClassConditions();
@@ -103,11 +92,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         }
     }
 
-    /**
-     * @param int $idProduct
-     *
-     * @return void
-     */
     public function deleteProductClassesByProductId(int $idProduct): void
     {
         $this->getFactory()
@@ -116,12 +100,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
             ->delete();
     }
 
-    /**
-     * @param int $idSalesOrderItem
-     * @param \Generated\Shared\Transfer\ProductClassTransfer $productClassTransfer
-     *
-     * @return void
-     */
     public function saveSalesOrderItemProductClass(int $idSalesOrderItem, ProductClassTransfer $productClassTransfer): void
     {
         $salesProductClassEntity = $this->getFactory()
@@ -144,11 +122,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
-     *
-     * @return void
-     */
     public function deleteFileAttachmentCollection(
         FileAttachmentTransfer $fileAttachmentTransfer
     ): void {
@@ -195,11 +168,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
             ->delete();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentTransfer
-     */
     public function saveFileAttachment(FileAttachmentTransfer $fileAttachmentTransfer): FileAttachmentTransfer
     {
         $fileAttachmentSaver = $this->getFactory()->createFileAttachmentSaver();
@@ -212,22 +180,11 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         return $fileAttachmentTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer
-     */
     public function createSspInquiry(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
     {
         return $this->saveSspInquiry($sspInquiryTransfer, new SpySspInquiry());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspInquiry $sspInquiryEntity
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer
-     */
     protected function saveSspInquiry(SspInquiryTransfer $sspInquiryTransfer, SpySspInquiry $sspInquiryEntity): SspInquiryTransfer
     {
         $sspInquiryEntity = $this->getFactory()->createSspInquiryMapper()->mapSspInquiryTransferToSspInquiryEntity($sspInquiryTransfer, $sspInquiryEntity);
@@ -248,11 +205,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         return $sspInquiryTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer
-     */
     public function createSspInquiryFiles(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
     {
         foreach ($sspInquiryTransfer->getFiles() as $fileTransfer) {
@@ -266,11 +218,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         return $sspInquiryTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer
-     */
     public function createSspInquirySalesOrder(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
     {
         $sspInquirySalesOrderEntity = (new SpySspInquirySalesOrder())
@@ -282,11 +229,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         return $sspInquiryTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryTransfer
-     */
     public function createSspInquirySspAsset(SspInquiryTransfer $sspInquiryTransfer): SspInquiryTransfer
     {
         $sspInquirySspAssetEntity = (new SpySspInquirySspAsset())
@@ -298,11 +240,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         return $sspInquiryTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileCollectionTransfer $fileCollectionTransfer
-     *
-     * @return void
-     */
     public function deleteSspInquiryFileRelation(FileCollectionTransfer $fileCollectionTransfer): void
     {
         $fileIds = [];
@@ -318,11 +255,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         $this->getFactory()->createSspInquiryFileQuery()->filterByFkFile_In($fileIds)->delete();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetTransfer
-     */
     public function createSspAsset(SspAssetTransfer $sspAssetTransfer): SspAssetTransfer
     {
         $spySspAssetEntity = $this->getFactory()
@@ -367,11 +299,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
             ->mapSpySspAssetEntityToSspAssetTransfer($spySspAssetEntity, $sspAssetTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspModelTransfer $sspModelTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspModelTransfer
-     */
     public function createSspModel(SspModelTransfer $sspModelTransfer): SspModelTransfer
     {
         $spySspModelEntity = $this->getFactory()
@@ -385,11 +312,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
             ->mapSpySspModelEntityToSspModelTransfer($spySspModelEntity, $sspModelTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer $salesOrderItemSspAssetTransfer
-     *
-     * @return void
-     */
     public function createSalesOrderItemSspAsset(SalesOrderItemSspAssetTransfer $salesOrderItemSspAssetTransfer): void
     {
         $salesOrderItemSspAssetEntity = new SpySalesOrderItemSspAsset();
@@ -433,11 +355,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         }
     }
 
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
     public function deleteProductConcreteToProductClassRelations(int $idProductConcrete): void
     {
         $this->getFactory()

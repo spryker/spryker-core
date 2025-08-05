@@ -19,13 +19,6 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepository
 
 class OrderItemProductClassExpander implements OrderItemProductClassExpanderInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Grouper\ProductClassGrouperInterface $productClassGrouper
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Indexer\ProductClassIndexerInterface $productClassIndexer
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Utility\SkuExtractorInterface $skuExtractor
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Extractor\SalesOrderItemIdExtractorInterface $salesOrderItemIdExtractor
-     */
     public function __construct(
         protected ProductClassGrouperInterface $productClassGrouper,
         protected SelfServicePortalRepositoryInterface $selfServicePortalRepository,
@@ -35,11 +28,6 @@ class OrderItemProductClassExpander implements OrderItemProductClassExpanderInte
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
     public function expandOrderItemsWithProductClasses(OrderTransfer $orderTransfer): OrderTransfer
     {
         $salesOrderItemIds = $this->salesOrderItemIdExtractor->extractSalesOrderItemIds($orderTransfer);

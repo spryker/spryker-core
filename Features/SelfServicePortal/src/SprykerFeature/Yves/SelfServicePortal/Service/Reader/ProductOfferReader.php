@@ -14,10 +14,6 @@ use SprykerFeature\Yves\SelfServicePortal\Service\Resolver\ShopContextResolverIn
 
 class ProductOfferReader implements ProductOfferReaderInterface
 {
-    /**
-     * @param \Spryker\Client\ProductOfferStorage\ProductOfferStorageClientInterface $productOfferStorageClient
-     * @param \SprykerFeature\Yves\SelfServicePortal\Service\Resolver\ShopContextResolverInterface $shopContextResolver
-     */
     public function __construct(
         protected ProductOfferStorageClientInterface $productOfferStorageClient,
         protected ShopContextResolverInterface $shopContextResolver

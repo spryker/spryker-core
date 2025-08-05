@@ -14,19 +14,11 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepository
 
 class ProductAbstractClassExpander implements ProductAbstractClassExpanderInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
-     */
     public function __construct(
         protected SelfServicePortalRepositoryInterface $selfServicePortalRepository
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
     public function expandProductAbstractWithProductClasses(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
         if ($productAbstractTransfer->getIdProductAbstract() === null) {

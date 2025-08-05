@@ -16,9 +16,6 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\DataImport\DataSet\Ssp
 
 class CompanyUserKeyToIdCompanyUserStep implements DataImportStepInterface
 {
-    /**
-     * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $companyUserQuery
-     */
     public function __construct(protected SpyCompanyUserQuery $companyUserQuery)
     {
     }

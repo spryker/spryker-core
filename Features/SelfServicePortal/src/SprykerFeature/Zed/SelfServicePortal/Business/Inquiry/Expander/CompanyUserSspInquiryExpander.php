@@ -15,28 +15,15 @@ use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 
 class CompanyUserSspInquiryExpander implements SspInquiryExpanderInterface
 {
-    /**
-     * @param \Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface $companyUserFacade
-     */
     public function __construct(protected CompanyUserFacadeInterface $companyUserFacade)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return bool
-     */
     public function isApplicable(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): bool
     {
         return $sspInquiryCriteriaTransfer->getInclude() && $sspInquiryCriteriaTransfer->getInclude()->getWithCompanyUser();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCollectionTransfer $sspInquiryCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
-     */
     public function expand(SspInquiryCollectionTransfer $sspInquiryCollectionTransfer): SspInquiryCollectionTransfer
     {
         $companyUserCollectionTransfer = $this->companyUserFacade->getCompanyUserCollection(

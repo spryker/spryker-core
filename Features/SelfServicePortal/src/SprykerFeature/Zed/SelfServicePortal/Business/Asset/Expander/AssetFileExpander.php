@@ -17,19 +17,10 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepository
 
 class AssetFileExpander implements AssetFileExpanderInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
-     */
     public function __construct(protected SelfServicePortalRepositoryInterface $selfServicePortalRepository)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionTransfer $sspAssetCollectionTransfer
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
-     */
     public function expandAssetCollectionWithFiles(
         SspAssetCollectionTransfer $sspAssetCollectionTransfer,
         SspAssetCriteriaTransfer $sspAssetCriteriaTransfer

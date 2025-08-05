@@ -12,9 +12,6 @@ use SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig;
 
 class SspInquiryFormDataProvider
 {
-    /**
-     * @param \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(protected SelfServicePortalConfig $selfServicePortalConfig)
     {
     }

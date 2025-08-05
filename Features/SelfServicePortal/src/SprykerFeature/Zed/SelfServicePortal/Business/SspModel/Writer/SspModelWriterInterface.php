@@ -12,10 +12,5 @@ use Generated\Shared\Transfer\SspModelCollectionResponseTransfer;
 
 interface SspModelWriterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspModelCollectionResponseTransfer
-     */
     public function createSspModelCollection(SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): SspModelCollectionResponseTransfer;
 }

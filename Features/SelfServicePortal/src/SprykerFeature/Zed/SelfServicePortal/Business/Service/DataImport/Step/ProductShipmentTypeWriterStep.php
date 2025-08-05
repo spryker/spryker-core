@@ -18,19 +18,11 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Service\DataImport\DataSet\Pro
 
 class ProductShipmentTypeWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery $productShipmentTypeQuery
-     */
     public function __construct(
         protected SpyProductShipmentTypeQuery $productShipmentTypeQuery
     ) {
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         $idProduct = $dataSet[ProductShipmentTypeDataSetInterface::ID_PRODUCT];

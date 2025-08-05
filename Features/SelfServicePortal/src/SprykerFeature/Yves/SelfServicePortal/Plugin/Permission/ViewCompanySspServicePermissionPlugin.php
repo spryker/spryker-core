@@ -17,9 +17,6 @@ class ViewCompanySspServicePermissionPlugin extends AbstractPlugin implements Pe
      */
     public const KEY = 'ViewCompanySspServicePermissionPlugin';
 
-    /**
-     * @return string
-     */
     public function getKey(): string
     {
         return static::KEY;

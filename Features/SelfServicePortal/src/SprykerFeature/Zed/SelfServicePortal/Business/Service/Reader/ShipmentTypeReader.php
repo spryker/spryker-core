@@ -15,21 +15,12 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class ShipmentTypeReader implements ShipmentTypeReaderInterface
 {
-    /**
-     * @param \Spryker\Zed\ShipmentType\Business\ShipmentTypeFacadeInterface $shipmentTypeFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $SelfServicePortalConfig
-     */
     public function __construct(
         protected ShipmentTypeFacadeInterface $shipmentTypeFacade,
         protected SelfServicePortalConfig $SelfServicePortalConfig
     ) {
     }
 
-    /**
-     * @param string $storeName
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTypeTransfer|null
-     */
     public function getDefaultShipmentType(string $storeName): ?ShipmentTypeTransfer
     {
         $shipmentTypeConditionsTransfer = (new ShipmentTypeConditionsTransfer())

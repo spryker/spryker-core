@@ -29,22 +29,12 @@ class InquiryDashboardDataExpander implements InquiryDashboardDataExpanderInterf
      */
     protected const INQUIRY_DASHBOARD_PAGE_NUMBER = 1;
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Reader\SspInquiryReaderInterface $sspInquiryReader
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(
         protected SspInquiryReaderInterface $sspInquiryReader,
         protected SelfServicePortalConfig $selfServicePortalConfig
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DashboardResponseTransfer $dashboardResponseTransfer
-     * @param \Generated\Shared\Transfer\DashboardRequestTransfer $dashboardRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\DashboardResponseTransfer
-     */
     public function provideSspInquiryDashboardData(
         DashboardResponseTransfer $dashboardResponseTransfer,
         DashboardRequestTransfer $dashboardRequestTransfer
@@ -84,12 +74,6 @@ class InquiryDashboardDataExpander implements InquiryDashboardDataExpanderInterf
         return $dashboardResponseTransfer->setDashboardComponentInquiry($dashboardComponentInquiryTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\SspInquiryConditionsTransfer $sspInquiryConditionsTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryConditionsTransfer
-     */
     public function addStoreFilter(StoreTransfer $storeTransfer, SspInquiryConditionsTransfer $sspInquiryConditionsTransfer): SspInquiryConditionsTransfer
     {
         if ($storeTransfer->getIdStore()) {

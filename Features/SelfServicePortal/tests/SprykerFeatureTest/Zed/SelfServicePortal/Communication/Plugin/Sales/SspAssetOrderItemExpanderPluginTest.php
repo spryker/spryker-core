@@ -32,9 +32,6 @@ class SspAssetOrderItemExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandExpandsItemsWithSspAssets(): void
     {
         // Arrange
@@ -86,9 +83,6 @@ class SspAssetOrderItemExpanderPluginTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testExpandDoesNothingWhenNoItemsProvided(): void
     {
         // Arrange
@@ -112,9 +106,6 @@ class SspAssetOrderItemExpanderPluginTest extends Unit
         $this->assertCount(0, $resultItemTransfers);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandDoesNothingWhenNoAssetsAssociatedWithItems(): void
     {
         // Arrange

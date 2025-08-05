@@ -12,10 +12,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 class ServiceListWidget extends AbstractWidget
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspServiceCollectionTransfer|null $sspServiceCollectionTransfer
-     * @param string|null $moreLink
-     */
     public function __construct(?SspServiceCollectionTransfer $sspServiceCollectionTransfer, ?string $moreLink = null)
     {
         $this->addParameter('totalItems', $sspServiceCollectionTransfer?->getPaginationOrFail()->getNbResults());
@@ -23,17 +19,11 @@ class ServiceListWidget extends AbstractWidget
         $this->addParameter('moreLink', $moreLink);
     }
 
-    /**
-     * @return string
-     */
     public static function getName(): string
     {
         return 'ServiceListWidget';
     }
 
-    /**
-     * @return string
-     */
     public static function getTemplate(): string
     {
         return '@SelfServicePortal/views/service-list-widget/service-list.twig';

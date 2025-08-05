@@ -23,9 +23,6 @@ class SingleAddressPerShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin extends 
         return null;
     }
 
-    /**
-     * @return string
-     */
     public function getWidgetClassName(): string
     {
         return SingleAddressPerShipmentTypeWidget::class;

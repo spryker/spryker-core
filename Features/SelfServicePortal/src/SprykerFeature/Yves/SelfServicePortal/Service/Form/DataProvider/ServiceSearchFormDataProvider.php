@@ -90,11 +90,6 @@ class ServiceSearchFormDataProvider
      */
     protected $permissionClient;
 
-    /**
-     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
-     * @param \Spryker\Client\CompanyBusinessUnit\CompanyBusinessUnitClientInterface $companyBusinessUnitClient
-     * @param \Spryker\Client\Permission\PermissionClientInterface $permissionClient
-     */
     public function __construct(
         CustomerClientInterface $customerClient,
         CompanyBusinessUnitClientInterface $companyBusinessUnitClient,
@@ -171,12 +166,6 @@ class ServiceSearchFormDataProvider
         return $this->getChoicesFromCompanyBusinessUnitCollection($companyBusinessUnitCollectionTransfer);
     }
 
-    /**
-     * @param string $permissionKey
-     * @param int $idCompanyUser
-     *
-     * @return bool
-     */
     protected function can(string $permissionKey, int $idCompanyUser): bool
     {
         return $this->permissionClient->can($permissionKey, $idCompanyUser); // THIS IS Ok (fail fast) ZED mirror created

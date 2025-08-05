@@ -79,9 +79,6 @@ class UpdateSalesOrderItemCollectionTest extends Unit
      */
     protected SelfServicePortalBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -90,9 +87,6 @@ class UpdateSalesOrderItemCollectionTest extends Unit
         $this->salesFacade = $this->getSalesFacadeMock();
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateSalesOrderItemCollectionShouldReturnErrorWhenNoItemsProvided(): void
     {
         // Arrange
@@ -106,9 +100,6 @@ class UpdateSalesOrderItemCollectionTest extends Unit
         $this->tester->getFacade()->updateSalesOrderItemCollection($salesOrderItemCollectionRequestTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateSalesOrderItemCollectionShouldReturnErrorWhenOrderNotFound(): void
     {
         // Arrange
@@ -128,9 +119,6 @@ class UpdateSalesOrderItemCollectionTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateSalesOrderItemCollectionShouldReturnErrorWhenNoPaymentMethodsFound(): void
     {
         // Arrange
@@ -151,9 +139,6 @@ class UpdateSalesOrderItemCollectionTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateSalesOrderItemCollectionShouldSuccessfullyUpdateSalesOrderItems(): void
     {
         // Arrange
@@ -162,11 +147,6 @@ class UpdateSalesOrderItemCollectionTest extends Unit
             SalesDependencyProvider::HYDRATE_ORDER_PLUGINS,
             [
                 new class extends AbstractPlugin implements OrderExpanderPluginInterface {
-                    /**
-                     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-                     *
-                     * @return \Generated\Shared\Transfer\OrderTransfer
-                     */
                     public function hydrate(OrderTransfer $orderTransfer): OrderTransfer
                     {
                         return $orderTransfer->setPayments(new ArrayObject([
@@ -191,9 +171,6 @@ class UpdateSalesOrderItemCollectionTest extends Unit
         $this->assertEquals($quoteTransfer->getItems()[0], $salesOrderItemCollectionResponseTransfer->getItems()[0]);
     }
 
-    /**
-     * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
-     */
     protected function getSalesFacadeMock(): SalesFacadeInterface
     {
         $businessFactory = new SalesBusinessFactory();
@@ -210,12 +187,6 @@ class UpdateSalesOrderItemCollectionTest extends Unit
         return $salesFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
-     * @param bool $savePayment
-
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function prepareQuoteWithOneItem(PaymentMethodTransfer $paymentMethodTransfer, bool $savePayment = false): QuoteTransfer
     {
         $saveOrderTransfer = new SaveOrderTransfer();
@@ -236,9 +207,6 @@ class UpdateSalesOrderItemCollectionTest extends Unit
         return $quoteTransfer;
     }
 
-    /**
-     * @return array
-     */
     protected function getDefaultPaymentMethodSeedData(): array
     {
         $paymentMethodName = 'method-' . Uuid::uuid4()->toString();

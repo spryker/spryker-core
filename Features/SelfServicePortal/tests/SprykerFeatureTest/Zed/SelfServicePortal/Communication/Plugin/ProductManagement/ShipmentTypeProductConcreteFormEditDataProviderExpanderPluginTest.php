@@ -30,17 +30,11 @@ class ShipmentTypeProductConcreteFormEditDataProviderExpanderPluginTest extends 
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $this->tester->ensureProductShipmentTypeTableIsEmpty();
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldMapShipmentTypesToFormData(): void
     {
         // Arrange
@@ -66,9 +60,6 @@ class ShipmentTypeProductConcreteFormEditDataProviderExpanderPluginTest extends 
         );
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldNotMapShipmentTypesWhenProductHasNoShipmentTypes(): void
     {
         // Arrange
@@ -83,9 +74,6 @@ class ShipmentTypeProductConcreteFormEditDataProviderExpanderPluginTest extends 
         $this->assertEmpty($formData);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldPreserveExistingFormData(): void
     {
         // Arrange
@@ -107,9 +95,6 @@ class ShipmentTypeProductConcreteFormEditDataProviderExpanderPluginTest extends 
         $this->assertArrayHasKey(ShipmentTypeProductConcreteForm::FIELD_SHIPMENT_TYPES, $formData);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldMapMultipleShipmentTypesToFormData(): void
     {
         // Arrange

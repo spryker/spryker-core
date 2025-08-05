@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 interface SalesOrderItemReaderInterface
 {
-    /**
-     * @param int $idSalesOrderItem
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer|null
-     */
     public function findOrderItemById(int $idSalesOrderItem): ?ItemTransfer;
 }

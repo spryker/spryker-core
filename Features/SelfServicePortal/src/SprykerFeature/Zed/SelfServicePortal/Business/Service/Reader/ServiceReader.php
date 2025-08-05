@@ -14,21 +14,12 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepository
 
 class ServiceReader implements ServiceReaderInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Permission\SspServiceCustomerPermissionExpanderInterface $sspServiceCustomerPermissionExpander
-     */
     public function __construct(
         protected SelfServicePortalRepositoryInterface $selfServicePortalRepository,
         protected SspServiceCustomerPermissionExpanderInterface $sspServiceCustomerPermissionExpander
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
-     */
     public function getSspServiceCollection(SspServiceCriteriaTransfer $sspServiceCriteriaTransfer): SspServiceCollectionTransfer
     {
         $sspServiceCriteriaTransfer = $this->sspServiceCustomerPermissionExpander->expand($sspServiceCriteriaTransfer);

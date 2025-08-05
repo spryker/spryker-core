@@ -55,9 +55,6 @@ class ShipmentTypePreAddToCartPluginTest extends Unit
      */
     protected SelfServicePortalYvesTester $tester;
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartExpandsItemWithShipmentTypeWhenValidUuidProvided(): void
     {
         // Arrange
@@ -99,9 +96,6 @@ class ShipmentTypePreAddToCartPluginTest extends Unit
         $this->assertSame(static::TEST_SHIPMENT_TYPE_ID, $resultItemTransfer->getShipmentTypeOrFail()->getIdShipmentType());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenParameterNotProvided(): void
     {
         // Arrange
@@ -125,9 +119,6 @@ class ShipmentTypePreAddToCartPluginTest extends Unit
         $this->assertNull($resultItemTransfer->getShipmentType());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenParameterIsEmpty(): void
     {
         // Arrange
@@ -153,9 +144,6 @@ class ShipmentTypePreAddToCartPluginTest extends Unit
         $this->assertNull($resultItemTransfer->getShipmentType());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenShipmentTypeNotFound(): void
     {
         // Arrange
@@ -188,9 +176,6 @@ class ShipmentTypePreAddToCartPluginTest extends Unit
         $this->assertNull($resultItemTransfer->getShipmentType());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartKeepsExistingShipment(): void
     {
         // Arrange

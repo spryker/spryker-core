@@ -75,12 +75,6 @@ class FileSearchFilterFormDataProvider
      */
     public const FILE_ATTACHMENT_TYPE_ALL_LABEL = 'self_service_portal.company_file.file_attachment_type.all';
 
-    /**
-     * @param \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     * @param \Spryker\Client\CompanyUser\CompanyUserClientInterface $companyUserClient
-     * @param \Spryker\Client\CompanyBusinessUnit\CompanyBusinessUnitClientInterface $companyBusinessUnitClient
-     * @param \SprykerFeature\Client\SelfServicePortal\SelfServicePortalClientInterface $selfServicePortalClient
-     */
     public function __construct(
         protected SelfServicePortalConfig $selfServicePortalConfig,
         protected CompanyUserClientInterface $companyUserClient,

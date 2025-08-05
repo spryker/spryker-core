@@ -30,17 +30,11 @@ class ProductClassProductConcreteAfterUpdatePluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $this->tester->setDependency(SelfServicePortalDependencyProvider::FACADE_PRODUCT_STORAGE, $this->createMock(ProductStorageFacadeInterface::class));
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateSavesProductClassesForProductConcrete(): void
     {
         // Arrange
@@ -67,9 +61,6 @@ class ProductClassProductConcreteAfterUpdatePluginTest extends Unit
         $this->assertContains($productClassTransfer->getName(), $productClassNames, 'Expected product class relation was not found in the database');
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateSavesMultipleProductClassesForProductConcrete(): void
     {
         // Arrange
@@ -98,9 +89,6 @@ class ProductClassProductConcreteAfterUpdatePluginTest extends Unit
         $this->assertContains($productClass2Transfer->getName(), $productClassNames, 'Second product class relation was not found in the database');
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateOverwritesExistingProductClassesForProductConcrete(): void
     {
         // Arrange
@@ -135,9 +123,6 @@ class ProductClassProductConcreteAfterUpdatePluginTest extends Unit
         $this->assertNotContains($initialProductClassTransfer->getName(), $updatedClassNames, 'Initial product class should be removed after update');
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateHandlesProductConcreteWithNoProductClasses(): void
     {
         // Arrange

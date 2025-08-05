@@ -35,19 +35,11 @@ class OrderItemCanceler implements OrderItemCancelerInterface
      */
     protected OmsFacadeInterface $omsFacade;
 
-    /**
-     * @param \Spryker\Zed\Oms\Business\OmsFacadeInterface $omsFacade
-     */
     public function __construct(OmsFacadeInterface $omsFacade)
     {
         $this->omsFacade = $omsFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer
-     */
     public function cancelSalesOrderItemCollection(
         SalesOrderItemCollectionRequestTransfer $salesOrderItemCollectionRequestTransfer
     ): SalesOrderItemCollectionResponseTransfer {

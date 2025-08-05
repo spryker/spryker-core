@@ -18,12 +18,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class SspModelFormDataToTransferMapper implements SspModelFormDataToTransferMapperInterface
 {
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param \Generated\Shared\Transfer\SspModelTransfer $sspModelTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspModelTransfer
-     */
     public function mapFormDataToSspModelTransfer(FormInterface $form, SspModelTransfer $sspModelTransfer): SspModelTransfer
     {
         $imageFile = $form->get(SspModelForm::FIELD_IMAGE)->get(SspModelImageForm::FIELD_FILE)->getData();
@@ -62,11 +56,6 @@ class SspModelFormDataToTransferMapper implements SspModelFormDataToTransferMapp
         return $fileContent;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile
-     *
-     * @return \Generated\Shared\Transfer\FileUploadTransfer
-     */
     protected function createFileUploadTransfer(UploadedFile $uploadedFile): FileUploadTransfer
     {
         return (new FileUploadTransfer())

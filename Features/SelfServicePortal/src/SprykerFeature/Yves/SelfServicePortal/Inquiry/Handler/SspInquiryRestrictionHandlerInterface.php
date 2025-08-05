@@ -11,10 +11,5 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 interface SspInquiryRestrictionHandlerInterface
 {
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
-     *
-     * @return void
-     */
     public function handleRestriction(ControllerEvent $event): void;
 }

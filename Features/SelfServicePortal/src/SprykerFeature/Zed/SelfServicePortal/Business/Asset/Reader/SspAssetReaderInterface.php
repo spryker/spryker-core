@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 
 interface SspAssetReaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
-     */
     public function getSspAssetCollection(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): SspAssetCollectionTransfer;
 
     /**

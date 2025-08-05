@@ -40,17 +40,11 @@ class CmsBlockCompanyBusinessUnitCmsBlockStorageReaderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
     }
 
-    /**
-     * @return void
-     */
     public function testCmsBlockCompanyBusinessUnitCmsBlockStorageReaderPluginResolvesCorrectBlock(): void
     {
         // Arrange

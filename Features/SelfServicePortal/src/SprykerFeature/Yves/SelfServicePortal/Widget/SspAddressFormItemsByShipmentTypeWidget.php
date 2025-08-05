@@ -21,9 +21,6 @@ class SspAddressFormItemsByShipmentTypeWidget extends AbstractWidget
      */
     protected const PARAMETER_SHIPMENT_TYPE_GROUPS = 'shipmentTypeGroups';
 
-  /**
-   * @param \Symfony\Component\Form\FormView $checkoutAddressForm
-   */
     public function __construct(FormView $checkoutAddressForm)
     {
         $this->addShipmentTypeGroupsParameter($checkoutAddressForm);
@@ -53,11 +50,6 @@ class SspAddressFormItemsByShipmentTypeWidget extends AbstractWidget
         return '@SelfServicePortal/views/address-form-items-by-shipment-type/address-form-items-by-shipment-type.twig';
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $checkoutAddressForm
-     *
-     * @return void
-     */
     protected function addShipmentTypeGroupsParameter(FormView $checkoutAddressForm): void
     {
         $shipmentTypeGroups = $this->getFactory()

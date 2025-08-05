@@ -21,21 +21,12 @@ class StatusHistorySspInquiryExpander implements SspInquiryExpanderInterface
      */
     protected static array $sspInquiryTypeIdStateMachineProcessMapCache = [];
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     * @param \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface $stateMachineFacade
-     */
     public function __construct(
         protected SelfServicePortalConfig $selfServicePortalConfig,
         protected StateMachineFacadeInterface $stateMachineFacade
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCollectionTransfer $sspInquiryCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionTransfer
-     */
     public function expand(SspInquiryCollectionTransfer $sspInquiryCollectionTransfer): SspInquiryCollectionTransfer
     {
         foreach ($sspInquiryCollectionTransfer->getSspInquiries() as $sspInquiryTransfer) {
@@ -50,21 +41,11 @@ class StatusHistorySspInquiryExpander implements SspInquiryExpanderInterface
         return $sspInquiryCollectionTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
-     *
-     * @return bool
-     */
     public function isApplicable(SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer): bool
     {
         return !$sspInquiryCriteriaTransfer->getInclude() || $sspInquiryCriteriaTransfer->getInclude()->getWithStatusHistory();
     }
 
-    /**
-     * @param string $type
-     *
-     * @return int
-     */
     protected function getIdProcessByInquiryType(string $type): int
     {
         if (in_array($type, static::$sspInquiryTypeIdStateMachineProcessMapCache)) {

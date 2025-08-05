@@ -24,9 +24,6 @@ use SprykerFeature\Client\SelfServicePortal\Zed\SelfServicePortalStubInterface;
 
 class SelfServicePortalFactory extends AbstractFactory
 {
-    /**
-     * @return \SprykerFeature\Client\SelfServicePortal\Zed\SelfServicePortalStubInterface
-     */
     public function createSelfServicePortalStub(): SelfServicePortalStubInterface
     {
         return new SelfServicePortalStub(
@@ -34,25 +31,16 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerFeature\Client\SelfServicePortal\Service\Reader\ShipmentTypeStorageReaderInterface
-     */
     public function createShipmentTypeStorageReader(): ShipmentTypeStorageReaderInterface
     {
         return new ShipmentTypeStorageReader($this->getShipmentTypeStorageClient(), $this->getStoreClient());
     }
 
-    /**
-     * @return \SprykerFeature\Client\SelfServicePortal\ShipmentType\Expander\ShipmentTypeProductViewExpanderInterface
-     */
     public function createShipmentTypeProductViewExpander(): ShipmentTypeProductViewExpanderInterface
     {
         return new ShipmentTypeProductViewExpander($this->createShipmentTypeStorageReader());
     }
 
-    /**
-     * @return \SprykerFeature\Client\SelfServicePortal\Dashboard\Reader\CmsBlockCompanyBusinessUnitStorageReaderInterface
-     */
     public function createCmsBlockCompanyBusinessUnitStorageReader(): CmsBlockCompanyBusinessUnitStorageReaderInterface
     {
         return new CmsBlockCompanyBusinessUnitStorageReader(
@@ -63,41 +51,26 @@ class SelfServicePortalFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Client\Storage\StorageClientInterface
-     */
     public function getStorageClient(): StorageClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_STORAGE);
     }
 
-    /**
-     * @return \Spryker\Service\Synchronization\SynchronizationServiceInterface
-     */
     public function getSynchronizationService(): SynchronizationServiceInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
 
-    /**
-     * @return \Spryker\Client\Locale\LocaleClientInterface
-     */
     public function getLocaleClient(): LocaleClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_LOCALE);
     }
 
-    /**
-     * @return \Spryker\Client\Store\StoreClientInterface
-     */
     public function getStoreClient(): StoreClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_STORE);
     }
 
-    /**
-     * @return \Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageClientInterface
-     */
     public function getShipmentTypeStorageClient(): ShipmentTypeStorageClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_SHIPMENT_TYPE_STORAGE);

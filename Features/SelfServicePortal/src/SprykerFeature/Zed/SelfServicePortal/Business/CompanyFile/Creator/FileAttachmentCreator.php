@@ -19,25 +19,12 @@ class FileAttachmentCreator implements FileAttachmentCreatorInterface
 {
     use TransactionTrait;
 
-    /**
-     * @var \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface
-     */
-    protected SelfServicePortalEntityManagerInterface $entityManager;
-
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface $entityManager
-     */
     public function __construct(
-        SelfServicePortalEntityManagerInterface $entityManager
+        protected SelfServicePortalEntityManagerInterface $entityManager
     ) {
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCollectionResponseTransfer
-     */
     public function createFileAttachmentCollection(
         FileAttachmentCollectionRequestTransfer $fileAttachmentCollectionRequestTransfer
     ): FileAttachmentCollectionResponseTransfer {

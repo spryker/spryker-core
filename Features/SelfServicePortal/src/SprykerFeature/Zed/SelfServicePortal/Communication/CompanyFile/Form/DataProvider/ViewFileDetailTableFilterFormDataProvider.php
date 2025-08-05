@@ -13,10 +13,6 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class ViewFileDetailTableFilterFormDataProvider
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     * @param \Spryker\Zed\Translator\Business\TranslatorFacadeInterface $translatorFacade
-     */
     public function __construct(
         protected SelfServicePortalConfig $selfServicePortalConfig,
         protected TranslatorFacadeInterface $translatorFacade

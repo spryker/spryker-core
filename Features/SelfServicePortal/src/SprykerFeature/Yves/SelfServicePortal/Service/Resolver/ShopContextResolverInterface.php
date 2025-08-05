@@ -11,8 +11,5 @@ use Generated\Shared\Transfer\ShopContextTransfer;
 
 interface ShopContextResolverInterface
 {
-    /**
-     * @return \Generated\Shared\Transfer\ShopContextTransfer
-     */
     public function resolve(): ShopContextTransfer;
 }

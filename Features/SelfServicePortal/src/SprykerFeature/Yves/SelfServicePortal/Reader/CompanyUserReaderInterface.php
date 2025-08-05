@@ -11,8 +11,5 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 
 interface CompanyUserReaderInterface
 {
-    /**
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
     public function getCurrentCompanyUser(): CompanyUserTransfer;
 }

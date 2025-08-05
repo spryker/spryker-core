@@ -61,11 +61,6 @@ class ViewFileController extends FileAbstractController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function tableAction(Request $request): JsonResponse
     {
         $idFile = $this->castId($request->get(static::REQUEST_PARAM_ID_FILE));
@@ -79,12 +74,6 @@ class ViewFileController extends FileAbstractController
         return $this->jsonResponse($viewFileDetailTable->fetchData());
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $idFile
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer
-     */
     protected function createFileAttachmentViewDetailTableCriteriaTransfer(
         Request $request,
         int $idFile

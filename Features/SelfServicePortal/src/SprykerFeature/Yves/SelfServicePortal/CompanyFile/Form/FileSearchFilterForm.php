@@ -59,11 +59,6 @@ class FileSearchFilterForm extends AbstractType
      */
     public const FIELD_ORDER_DIRECTION = 'orderDirection';
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -75,9 +70,6 @@ class FileSearchFilterForm extends AbstractType
         ]);
     }
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return static::FORM_NAME;

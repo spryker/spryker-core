@@ -101,9 +101,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
      */
     protected FileAttachmentCriteriaPermissionExpander|MockObject $fileAttachmentPermissionExpanderMock;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $this->tester->setDependency(static::PLUGIN_WRITER, new FileSystemWriterPlugin());
@@ -132,9 +129,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetFilesAttachmentsForCompanyWithPermissions(): void
     {
         // Arrange
@@ -176,9 +170,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetFileAttachmentsForSspAssetWithPermissions(): void
     {
         // Arrange
@@ -226,9 +217,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetFilesAttachmentsForCompanyWithoutPermissions(): void
     {
         // Arrange
@@ -262,9 +250,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         $this->assertCount(0, $fileAttachmentCollectionTransfer->getFileAttachments());
     }
 
-    /**
-     * @return void
-     */
     public function testGetFilesAttachmentsForCompanyUserWithPermissions(): void
     {
         // Arrange
@@ -297,9 +282,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetFilesAttachmentsForBusinessUnitWithPermissions(): void
     {
         // Arrange
@@ -337,9 +319,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetFilesAttachmentsWithMixedPermissionLevels(): void
     {
         // Arrange
@@ -399,9 +378,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         $this->assertContains($userFileTransfer->getIdFile(), $returnedFileIds);
     }
 
-    /**
-     * @return void
-     */
     public function testGetFilesAttachmentsWithMixedEntityTypes(): void
     {
         // Arrange
@@ -457,9 +433,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         $this->assertContains($sspAssetFileTransfer->getIdFile(), $returnedFileIds);
     }
 
-    /**
-     * @return void
-     */
     public function testGetFilesAttachmentsWithPartialPermissions(): void
     {
         // Arrange
@@ -532,9 +505,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         $this->facade->setFactory($factoryMock);
     }
 
-    /**
-     * @return void
-     */
     public function testGetFileAttachmentsReturnsEmptyCollectionWhenNoFilesExist(): void
     {
         // Arrange
@@ -563,9 +533,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         $this->assertCount(0, $fileAttachmentCollectionTransfer->getFileAttachments());
     }
 
-    /**
-     * @return void
-     */
     public function testGetFileAttachmentsFilteredByDateRange(): void
     {
         // Arrange
@@ -617,9 +584,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetFileAttachmentsFilteredByFileType(): void
     {
         // Arrange
@@ -665,9 +629,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetFileAttachmentsFilteredBySearchString(): void
     {
         $fileByNameTransfer = $this->tester->haveFile([
@@ -728,9 +689,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         $this->assertNotContains($fileNotMatchingTransfer->getIdFile(), [$fileId1, $fileId2]);
     }
 
-    /**
-     * @return void
-     */
     public function testGetFileAttachmentCollectionWithCompanyPermissionAndBusinessUnitFilterShouldReturnFiles(): void
     {
         // Arrange
@@ -786,9 +744,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetFileAttachmentCollectionWithBusinessUnitPermissionAndBusinessUnitFilterShouldNotReturnFiles(): void
     {
         // Arrange

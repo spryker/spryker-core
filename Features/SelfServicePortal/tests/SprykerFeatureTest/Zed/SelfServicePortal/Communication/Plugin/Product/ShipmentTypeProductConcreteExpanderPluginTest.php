@@ -27,17 +27,11 @@ class ShipmentTypeProductConcreteExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $this->tester->ensureProductShipmentTypeTableIsEmpty();
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldExpandProductConcreteWithExistingShipmentTypes(): void
     {
         // Arrange
@@ -61,9 +55,6 @@ class ShipmentTypeProductConcreteExpanderPluginTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldNotExpandProductConcreteWithoutShipmentTypes(): void
     {
         // Arrange
@@ -78,9 +69,6 @@ class ShipmentTypeProductConcreteExpanderPluginTest extends Unit
         $this->assertCount(0, $expandedProductConcreteTransfers[0]->getShipmentTypes());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldExpandProductConcreteOnlyWithRelatedShipmentTypes(): void
     {
         // Arrange
@@ -111,9 +99,6 @@ class ShipmentTypeProductConcreteExpanderPluginTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldExpandMultipleProductsWithTheirShipmentTypes(): void
     {
         // Arrange

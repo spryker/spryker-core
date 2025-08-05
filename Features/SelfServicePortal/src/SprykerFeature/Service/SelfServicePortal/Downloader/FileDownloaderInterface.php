@@ -12,13 +12,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 interface FileDownloaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     * @param int $chunkSize
-     * @param string $disposition
-     *
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
-     */
     public function createFileDownloadResponse(
         FileTransfer $fileTransfer,
         int $chunkSize,

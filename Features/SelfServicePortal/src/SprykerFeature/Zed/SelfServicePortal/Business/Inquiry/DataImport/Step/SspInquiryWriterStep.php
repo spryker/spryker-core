@@ -28,10 +28,6 @@ class SspInquiryWriterStep implements DataImportStepInterface
      */
     protected const SSP_INQUIRY_REFERENCE_PREFIX = 'INQR';
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
-     * @param \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface $sequenceNumberFacade
-     */
     public function __construct(
         protected SelfServicePortalConfig $config,
         protected SequenceNumberFacadeInterface $sequenceNumberFacade
@@ -72,11 +68,6 @@ class SspInquiryWriterStep implements DataImportStepInterface
         $dataSet[SspInquiryDataSetInterface::ID_SSP_INQUIRY] = $sspInquiryEntity->getIdSspInquiry();
     }
 
-    /**
-     * @param string $storeName
-     *
-     * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
-     */
     protected function getInquirySequenceNumberSettings(string $storeName): SequenceNumberSettingsTransfer
     {
         return (new SequenceNumberSettingsTransfer())
@@ -84,11 +75,6 @@ class SspInquiryWriterStep implements DataImportStepInterface
             ->setPrefix($this->createPrefix($storeName));
     }
 
-    /**
-     * @param string $storeName
-     *
-     * @return string
-     */
     protected function createPrefix(string $storeName): string
     {
         $sequenceNumberPrefixParts = [];

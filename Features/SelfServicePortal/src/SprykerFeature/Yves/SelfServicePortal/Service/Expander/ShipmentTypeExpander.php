@@ -15,10 +15,6 @@ use SprykerFeature\Yves\SelfServicePortal\Widget\SspShipmentTypeServicePointSele
 
 class ShipmentTypeExpander implements ShipmentTypeExpanderInterface
 {
- /**
-  * @param \SprykerFeature\Yves\SelfServicePortal\Service\Reader\ShipmentTypeReaderInterface $shipmentTypeReader
-  * @param \Spryker\Client\Store\StoreClientInterface $storeClient
-  */
     public function __construct(
         protected ShipmentTypeReaderInterface $shipmentTypeReader,
         protected StoreClientInterface $storeClient

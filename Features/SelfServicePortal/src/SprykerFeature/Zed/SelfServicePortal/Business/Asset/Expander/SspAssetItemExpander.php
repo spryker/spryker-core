@@ -14,19 +14,11 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInt
 
 class SspAssetItemExpander implements SspAssetItemExpanderInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInterface $sspAssetReader
-     */
     public function __construct(
         protected SspAssetReaderInterface $sspAssetReader
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function expandCartItemsWithSspAssets(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         $assetReferences = $this->extractAssetReferencesFromItems($cartChangeTransfer);

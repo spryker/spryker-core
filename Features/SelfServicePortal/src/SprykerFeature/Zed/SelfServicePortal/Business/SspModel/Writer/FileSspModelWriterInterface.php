@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\SspModelTransfer;
 
 interface FileSspModelWriterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspModelTransfer $sspModelTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspModelTransfer
-     */
     public function createFile(SspModelTransfer $sspModelTransfer): SspModelTransfer;
 }

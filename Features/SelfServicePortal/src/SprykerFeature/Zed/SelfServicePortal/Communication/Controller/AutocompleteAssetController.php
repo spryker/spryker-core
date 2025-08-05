@@ -28,11 +28,6 @@ class AutocompleteAssetController extends AbstractController
      */
     protected const REQUEST_PARAM_TERM = 'term';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function assetAction(Request $request): JsonResponse
     {
         $term = (string)$request->query->get(static::REQUEST_PARAM_TERM, '');
@@ -57,11 +52,6 @@ class AutocompleteAssetController extends AbstractController
         return $this->formatAssetsForAutocomplete($sspAssetCollectionTransfer);
     }
 
-    /**
-     * @param string $term
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
-     */
     protected function getSspAssetCollectionBySearchTerm(string $term): SspAssetCollectionTransfer
     {
         $sspAssetCriteriaTransfer = new SspAssetCriteriaTransfer();

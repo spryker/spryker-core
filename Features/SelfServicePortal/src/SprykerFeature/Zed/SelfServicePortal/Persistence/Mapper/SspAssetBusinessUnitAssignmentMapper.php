@@ -42,12 +42,6 @@ class SspAssetBusinessUnitAssignmentMapper
         return $sspAssetCollectionTransfer;
     }
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnit $sspAssetToCompanyBusinessUnitEntity
-     * @param \Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer $sspAssetBusinessUnitAssignmentTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer
-     */
     protected function mapSspAssetToCompanyBusinessUnitEntityToSspAssetBusinessUnitAssignmentTransfer(
         SpySspAssetToCompanyBusinessUnit $sspAssetToCompanyBusinessUnitEntity,
         SspAssetBusinessUnitAssignmentTransfer $sspAssetBusinessUnitAssignmentTransfer

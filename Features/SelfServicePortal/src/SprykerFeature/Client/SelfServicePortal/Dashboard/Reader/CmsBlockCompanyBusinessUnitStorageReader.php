@@ -29,12 +29,6 @@ class CmsBlockCompanyBusinessUnitStorageReader implements CmsBlockCompanyBusines
      */
     protected const FIELD_ID = 'id';
 
-    /**
-     * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
-     * @param \Spryker\Service\Synchronization\SynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Client\Store\StoreClientInterface $storeClient
-     * @param \Spryker\Client\Locale\LocaleClientInterface $localeClient
-     */
     public function __construct(
         protected StorageClientInterface $storageClient,
         protected SynchronizationServiceInterface $synchronizationService,
@@ -71,15 +65,6 @@ class CmsBlockCompanyBusinessUnitStorageReader implements CmsBlockCompanyBusines
         return [(new CmsBlockTransfer())->setKey($blocks[static::FIELD_ID])];
     }
 
-    /**
-     * @param string $reference
-     * @param int $companyUnitId
-     * @param string $resourceName
-     * @param string|null $localeName
-     * @param string|null $storeName
-     *
-     * @return string
-     */
     protected function generateKey(
         string $reference,
         int $companyUnitId,

@@ -58,11 +58,6 @@ class ShipmentTypeProductConcreteForm extends AbstractType
         $this->addShipmentTypeField($builder, $options);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -94,11 +89,6 @@ class ShipmentTypeProductConcreteForm extends AbstractType
             ->addModelTransformer($this->createShipmentTypesModelTransformer($builder));
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
     protected function createShipmentTypesModelTransformer(FormBuilderInterface $builder): CallbackTransformer
     {
         return new CallbackTransformer(

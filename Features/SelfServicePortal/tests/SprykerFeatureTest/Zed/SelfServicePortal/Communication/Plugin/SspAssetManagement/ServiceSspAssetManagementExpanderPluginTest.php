@@ -54,9 +54,6 @@ class ServiceSspAssetManagementExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandShouldReturnCorrectSspAssetCollection(): void
     {
         // Arrange
@@ -89,9 +86,6 @@ class ServiceSspAssetManagementExpanderPluginTest extends Unit
         }
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\SspServiceCollectionTransfer
-     */
     protected function createMockSspServiceCollection(): SspServiceCollectionTransfer
     {
         $sspServiceTransfer = (new SspServiceTransfer())

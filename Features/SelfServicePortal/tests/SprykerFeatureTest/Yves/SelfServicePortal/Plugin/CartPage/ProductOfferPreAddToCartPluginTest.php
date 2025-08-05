@@ -39,9 +39,6 @@ class ProductOfferPreAddToCartPluginTest extends Unit
      */
     protected SelfServicePortalYvesTester $tester;
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartExpandsItemWithProductOfferReferenceWhenValidReferenceProvided(): void
     {
         // Arrange
@@ -71,9 +68,6 @@ class ProductOfferPreAddToCartPluginTest extends Unit
         $this->assertSame(static::TEST_PRODUCT_OFFER_REFERENCE, $resultItemTransfer->getProductOfferReference());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenProductOfferReferenceParamNotProvided(): void
     {
         // Arrange
@@ -96,9 +90,6 @@ class ProductOfferPreAddToCartPluginTest extends Unit
         $this->assertNull($resultItemTransfer->getProductOfferReference());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenProductOfferReferenceIsEmpty(): void
     {
         // Arrange
@@ -123,9 +114,6 @@ class ProductOfferPreAddToCartPluginTest extends Unit
         $this->assertNull($resultItemTransfer->getProductOfferReference());
     }
 
-    /**
-     * @return void
-     */
     public function testPreAddToCartDoesNotExpandItemWhenProductOfferNotFound(): void
     {
         // Arrange

@@ -28,11 +28,6 @@ class SspAssetValidator implements SspAssetValidatorInterface
      */
     protected const MESSAGE_ASSET_CREATION_ACCESS_DENIED = 'self_service_portal.asset.access.denied';
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     *
-     * @return bool
-     */
     public function isCompanyUserGrantedToApplyCriteria(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): bool
     {
         $companyUserTransfer = $sspAssetCriteriaTransfer->getCompanyUser();
@@ -44,12 +39,6 @@ class SspAssetValidator implements SspAssetValidatorInterface
         return $this->isCompanyUserAllowedToViewAsset($companyUserTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer
-     */
     public function validateRequestGrantedToCreateAsset(
         SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer,
         ?CompanyUserTransfer $companyUserTransfer
@@ -72,12 +61,6 @@ class SspAssetValidator implements SspAssetValidatorInterface
         return $sspAssetCollectionResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     * @param \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
-     *
-     * @return bool
-     */
     public function validateAssetTransfer(
         SspAssetTransfer $sspAssetTransfer,
         SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
@@ -93,12 +76,6 @@ class SspAssetValidator implements SspAssetValidatorInterface
         return true;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
-     *
-     * @return bool
-     */
     public function isAssetUpdateGranted(
         SspAssetTransfer $sspAssetTransfer,
         ?CompanyUserTransfer $companyUserTransfer
@@ -122,12 +99,6 @@ class SspAssetValidator implements SspAssetValidatorInterface
         return false;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
-     *
-     * @return bool
-     */
     public function isUnassignBusinessUnitFromAssetGranted(
         SspAssetTransfer $sspAssetTransfer,
         ?CompanyUserTransfer $companyUserTransfer

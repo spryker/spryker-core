@@ -27,9 +27,6 @@ class SspInquiryValidator implements SspInquiryValidatorInterface
      */
     protected const MESSAGE_INQUIRY_CREATION_ACCESS_DENIED = 'self_service_portal.inquiry.access.denied';
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(protected SelfServicePortalConfig $selfServicePortalConfig)
     {
     }
@@ -52,12 +49,6 @@ class SspInquiryValidator implements SspInquiryValidatorInterface
         return $validationErrors;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer $sspInquiryCollectionResponseTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer
-     */
     public function validateRequestGrantedToCreateInquiry(
         SspInquiryCollectionResponseTransfer $sspInquiryCollectionResponseTransfer,
         ?CompanyUserTransfer $companyUserTransfer
@@ -307,11 +298,6 @@ class SspInquiryValidator implements SspInquiryValidatorInterface
         }
     }
 
-    /**
-     * @param string|int $size
-     *
-     * @return int
-     */
     protected function normalizeBinaryFormat(int|string $size): int
     {
         $factors = [

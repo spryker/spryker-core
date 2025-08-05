@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface ProductAbstractClassExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
     public function expandProductAbstractWithProductClasses(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer;
 }

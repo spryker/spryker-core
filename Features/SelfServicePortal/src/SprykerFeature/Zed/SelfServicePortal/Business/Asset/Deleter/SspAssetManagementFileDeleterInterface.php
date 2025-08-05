@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\FileCollectionTransfer;
 
 interface SspAssetManagementFileDeleterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\FileCollectionTransfer $fileCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileCollectionTransfer
-     */
     public function deleteSspAssetRelationsByFileCollection(FileCollectionTransfer $fileCollectionTransfer): FileCollectionTransfer;
 }

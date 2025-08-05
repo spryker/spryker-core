@@ -21,35 +21,21 @@ class DashboardMenuItemWidget extends AbstractWidget
      */
     protected const PAGE_KEY_DASHBOARD_PAGE = 'dashboard';
 
-    /**
-     * @param string $activePage
-     */
     public function __construct(string $activePage)
     {
         $this->addActivePageParameter($activePage);
     }
 
-    /**
-     * @return string
-     */
     public static function getName(): string
     {
         return 'DashboardMenuItemWidget';
     }
 
-    /**
-     * @return string
-     */
     public static function getTemplate(): string
     {
         return '@SelfServicePortal/views/dashboard-menu-item/dashboard-menu-item.twig';
     }
 
-    /**
-     * @param string $activePage
-     *
-     * @return void
-     */
     protected function addActivePageParameter(string $activePage): void
     {
         $this->addParameter(

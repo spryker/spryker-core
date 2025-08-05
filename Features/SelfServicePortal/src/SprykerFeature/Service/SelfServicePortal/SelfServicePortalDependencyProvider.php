@@ -20,11 +20,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
      */
     public const SERVICE_FILE_MANAGER = 'SERVICE_FILE_MANAGER';
 
-    /**
-     * @param \Spryker\Service\Kernel\Container $container
-     *
-     * @return \Spryker\Service\Kernel\Container
-     */
     public function provideServiceDependencies(Container $container): Container
     {
         $container = parent::provideServiceDependencies($container);
@@ -33,11 +28,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Kernel\Container $container
-     *
-     * @return \Spryker\Service\Kernel\Container
-     */
     protected function addFileManagerService(Container $container): Container
     {
         $container->set(static::SERVICE_FILE_MANAGER, function (Container $container) {

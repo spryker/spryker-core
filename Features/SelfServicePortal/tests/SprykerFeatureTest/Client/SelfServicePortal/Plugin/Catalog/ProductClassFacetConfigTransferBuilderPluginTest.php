@@ -35,9 +35,6 @@ class ProductClassFacetConfigTransferBuilderPluginTest extends Unit
      */
     protected const PARAMETER_NAME = 'product-class-names';
 
-    /**
-     * @return void
-     */
     public function testBuildShouldReturnCorrectlyConfiguredFacetConfigTransfer(): void
     {
         // Arrange

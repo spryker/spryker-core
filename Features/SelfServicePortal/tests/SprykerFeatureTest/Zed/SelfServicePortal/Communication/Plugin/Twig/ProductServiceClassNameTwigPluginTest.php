@@ -37,9 +37,6 @@ class ProductServiceClassNameTwigPluginTest extends Unit
      */
     protected const TEST_SERVICE_PRODUCT_CLASS_NAME = 'testServiceProductClassName';
 
-    /**
-     * @return void
-     */
     public function testExtendAddsServiceProductClassNameGlobalVariable(): void
     {
         // Arrange
@@ -76,11 +73,6 @@ class ProductServiceClassNameTwigPluginTest extends Unit
         return $configMock;
     }
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
-     *
-     * @return \SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Twig\ProductServiceClassNameTwigPlugin
-     */
     protected function createPluginWithConfig(SelfServicePortalConfig $config): ProductServiceClassNameTwigPlugin
     {
         $pluginMock = $this->getMockBuilder(ProductServiceClassNameTwigPlugin::class)

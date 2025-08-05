@@ -16,21 +16,12 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class FileSspAssetWriter implements FileSspAssetWriterInterface
 {
-    /**
-     * @param \Spryker\Zed\FileManager\Business\FileManagerFacadeInterface $fileManagerFacade
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
-     */
     public function __construct(
         protected FileManagerFacadeInterface $fileManagerFacade,
         protected SelfServicePortalConfig $config
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetTransfer
-     */
     public function createFile(SspAssetTransfer $sspAssetTransfer): SspAssetTransfer
     {
         $fileTransfer = $sspAssetTransfer->getImage();
@@ -48,11 +39,6 @@ class FileSspAssetWriter implements FileSspAssetWriterInterface
         return $sspAssetTransfer->setImage($fileManagerDataTransfer->getFileOrFail()->setFileContent(null));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetTransfer
-     */
     public function updateFile(SspAssetTransfer $sspAssetTransfer): SspAssetTransfer
     {
         $fileTransfer = $sspAssetTransfer->getImage();
@@ -75,11 +61,6 @@ class FileSspAssetWriter implements FileSspAssetWriterInterface
             ->setImage($fileManagerDataTransfer->getFileOrFail()->setFileContent(null));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
-     */
     protected function saveImageFile(FileTransfer $fileTransfer): FileManagerDataTransfer
     {
         $fileUploadTransfer = $fileTransfer->getFileUploadOrFail();

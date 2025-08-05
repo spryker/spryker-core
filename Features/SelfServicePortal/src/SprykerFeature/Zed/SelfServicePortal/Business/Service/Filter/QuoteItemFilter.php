@@ -36,10 +36,6 @@ class QuoteItemFilter implements QuoteItemFilterInterface
      */
     protected MessengerFacadeInterface $messengerFacade;
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
-     * @param \Spryker\Zed\Messenger\Business\MessengerFacadeInterface $messengerFacade
-     */
     public function __construct(
         SelfServicePortalConfig $config,
         MessengerFacadeInterface $messengerFacade
@@ -48,11 +44,6 @@ class QuoteItemFilter implements QuoteItemFilterInterface
         $this->messengerFacade = $messengerFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     public function filterOutServicesWithoutShipmentTypes(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         if (!$quoteTransfer->getItems()->count()) {
@@ -76,11 +67,6 @@ class QuoteItemFilter implements QuoteItemFilterInterface
         return $quoteTransfer->setItems($filteredItems);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
     protected function isFiltrationNeeded(ItemTransfer $itemTransfer): bool
     {
         $serviceProductClassName = $this->config->getServiceProductClassName();

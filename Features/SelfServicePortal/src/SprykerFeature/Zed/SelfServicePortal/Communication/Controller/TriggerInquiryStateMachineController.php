@@ -37,11 +37,6 @@ class TriggerInquiryStateMachineController extends AbstractController
      */
     protected const ROUTE_SSP_INQUIRY_DETAIL_PAGE = '/self-service-portal/view-inquiry';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function indexAction(Request $request): RedirectResponse
     {
         $idSspInquiry = $this->castId($request->query->get(static::PARAM_ID));
@@ -126,11 +121,6 @@ class TriggerInquiryStateMachineController extends AbstractController
         return (bool)$isSuccessful;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspInquiryTransfer $sspInquiryTransfer
-     *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer
-     */
     protected function createStateMachineItemTransfer(SspInquiryTransfer $sspInquiryTransfer): StateMachineItemTransfer
     {
         $config = $this->getFactory()->getConfig();

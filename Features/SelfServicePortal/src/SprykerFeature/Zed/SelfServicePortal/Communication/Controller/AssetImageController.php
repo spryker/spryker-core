@@ -48,11 +48,6 @@ class AssetImageController extends AbstractController
      */
     protected const HEADER_CACHE_CONTROL = 'Cache-Control';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function indexAction(Request $request): Response
     {
         $sspAssetReference = $request->get('ssp-asset-reference');
@@ -75,11 +70,6 @@ class AssetImageController extends AbstractController
         return $this->createDownloadResponse($sspAssetTransfer->getImageOrFail());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
-     */
     protected function createDownloadResponse(FileTransfer $fileTransfer): StreamedResponse
     {
         $chunkSize = $this->getFactory()->getConfig()->getSspAssetImageReadChunkSize();

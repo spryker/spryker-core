@@ -30,11 +30,6 @@ class ServicePointEditOfferFormEventSubscriber implements EventSubscriberInterfa
         ];
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return void
-     */
     public function expandFormWithServices(FormEvent $event): void
     {
         $productOfferTransfer = $event->getData();
@@ -71,11 +66,6 @@ class ServicePointEditOfferFormEventSubscriber implements EventSubscriberInterfa
         }
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return void
-     */
     public function expandProductOfferWithServices(FormEvent $event): void
     {
         $productOfferTransfer = $event->getData();
@@ -107,11 +97,6 @@ class ServicePointEditOfferFormEventSubscriber implements EventSubscriberInterfa
         $productOfferTransfer->setServices($services);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return void
-     */
     public function expandProductOfferWithServicesOnPreSubmitEvent(FormEvent $event): void
     {
         $formData = $event->getData();

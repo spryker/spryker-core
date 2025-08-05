@@ -38,16 +38,10 @@ class CreateSspAssetSspInquiryFormExpander implements CreateSspInquiryFormExpand
      */
     protected const SINGLE_OPTION_COUNT = 1;
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     */
     public function __construct(protected RequestStack $requestStack)
     {
     }
 
-    /**
-     * @return bool
-     */
     public function isApplicable(): bool
     {
         $request = $this->requestStack->getCurrentRequest();

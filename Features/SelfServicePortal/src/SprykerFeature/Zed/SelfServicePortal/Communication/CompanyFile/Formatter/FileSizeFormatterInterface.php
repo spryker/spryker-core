@@ -9,11 +9,5 @@ namespace SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatt
 
 interface FileSizeFormatterInterface
 {
-    /**
-     * @param int $fileSize
-     * @param int $numberOfDecimals
-     *
-     * @return string
-     */
     public function formatFileSize(int $fileSize, int $numberOfDecimals): string;
 }

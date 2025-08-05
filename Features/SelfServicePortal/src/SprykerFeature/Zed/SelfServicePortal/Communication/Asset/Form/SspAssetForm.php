@@ -137,19 +137,11 @@ class SspAssetForm extends AbstractType
      */
     public const FORM_NAME = 'assetForm';
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return static::FORM_NAME;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
@@ -399,11 +391,6 @@ class SspAssetForm extends AbstractType
         return $this;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
     protected function addAssignedBusinessUnitDataListener(FormBuilderInterface $builder): void
     {
         $builder->addEventListener(

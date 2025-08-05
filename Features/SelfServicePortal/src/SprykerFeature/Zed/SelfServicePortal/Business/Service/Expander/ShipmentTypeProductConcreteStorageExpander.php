@@ -14,10 +14,6 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepository
 
 class ShipmentTypeProductConcreteStorageExpander implements ShipmentTypeProductConcreteStorageExpanderInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Service\Reader\ProductShipmentTypeReaderInterface $productShipmentTypeReader
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
-     */
     public function __construct(
         protected ProductShipmentTypeReaderInterface $productShipmentTypeReader,
         protected SelfServicePortalRepositoryInterface $selfServicePortalRepository

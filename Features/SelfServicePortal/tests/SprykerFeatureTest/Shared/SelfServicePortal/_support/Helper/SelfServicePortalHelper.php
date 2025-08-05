@@ -70,9 +70,6 @@ class SelfServicePortalHelper extends Module
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
-    /**
-     * @return void
-     */
     public function ensureProductClassTableIsEmpty(): void
     {
         $this->getProductClassQuery()->deleteAll();
@@ -105,12 +102,6 @@ class SelfServicePortalHelper extends Module
         return $productClassTransfer;
     }
 
-    /**
-     * @param int $idProduct
-     * @param int $idProductClass
-     *
-     * @return void
-     */
     public function haveProductToProductClass(
         int $idProduct,
         int $idProductClass
@@ -132,12 +123,6 @@ class SelfServicePortalHelper extends Module
         });
     }
 
-    /**
-     * @param int $idSalesOrderItem
-     * @param int $idSalesProductClass
-     *
-     * @return void
-     */
     public function haveSalesOrderItemToProductClass(
         int $idSalesOrderItem,
         int $idSalesProductClass
@@ -180,12 +165,6 @@ class SelfServicePortalHelper extends Module
         return $productAbstractTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $shipmentTypeTransfer
-     *
-     * @return void
-     */
     public function haveProductConcreteShipmentType(
         ProductConcreteTransfer $productConcreteTransfer,
         ShipmentTypeTransfer $shipmentTypeTransfer
@@ -202,12 +181,6 @@ class SelfServicePortalHelper extends Module
         });
     }
 
-    /**
-     * @param array $seedData
-     * @param int|null $idCompanyBusinessUnit
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
-     */
     public function haveSalesRepresentativeCmsBlockForBusinessUnit(array $seedData = [], ?int $idCompanyBusinessUnit = 0): CmsBlockGlossaryTransfer
     {
         $cmsBlockTemplateTransfer = $this->getCmsBlockFacade()->findTemplate('@CmsBlock/template/title_and_content_block.twig');
@@ -281,12 +254,6 @@ class SelfServicePortalHelper extends Module
         return $sspInquiryTransfer;
     }
 
-    /**
-     * @param int $idSalesOrder
-     * @param int $idSspAsset
-     *
-     * @return void
-     */
     public function haveSalesSspAsset(int $idSalesOrder, int $idSspAsset): void
     {
         $salesOrderEntity = $this->getSalesOrderQuery()
@@ -455,12 +422,6 @@ class SelfServicePortalHelper extends Module
         return ['content' => $imageContent, 'extension' => $extension, 'type' => $type];
     }
 
-    /**
-     * @param int $idSalesOrder
-     * @param int $idSspAsset
-     *
-     * @return void
-     */
     protected function cleanupSalesSspAsset(int $idSalesOrder, int $idSspAsset): void
     {
         $salesOrderEntity = $this->getSalesOrderQuery()
@@ -532,12 +493,6 @@ class SelfServicePortalHelper extends Module
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $seedData
-     *
-     * @return void
-     */
     protected function setStoreRelation(CmsBlockTransfer $cmsBlockTransfer, array $seedData = []): void
     {
         if (!isset($seedData[CmsBlockTransfer::STORE_RELATION])) {
@@ -550,19 +505,11 @@ class SelfServicePortalHelper extends Module
         );
     }
 
-    /**
-     * @return \Spryker\Zed\CmsBlock\Business\CmsBlockFacadeInterface
-     */
     protected function getCmsBlockFacade(): CmsBlockFacadeInterface
     {
         return $this->getLocator()->cmsBlock()->facade();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return void
-     */
     protected function createTranslations(CmsBlockTransfer $cmsBlockTransfer): void
     {
         $cmsBlockGlossaryPlaceholderTranslationTransfer = (new CmsBlockGlossaryPlaceholderTranslationBuilder())
@@ -597,11 +544,6 @@ class SelfServicePortalHelper extends Module
         $this->getCmsBlockFacade()->saveGlossary($cmsBlockGlossaryTransfer);
     }
 
-    /**
-     * @param int $idProductClass
-     *
-     * @return void
-     */
     protected function cleanupProductClass(int $idProductClass): void
     {
         $this->getProductToProductClassQuery()
@@ -613,12 +555,6 @@ class SelfServicePortalHelper extends Module
             ->delete();
     }
 
-    /**
-     * @param int $idProduct
-     * @param int $idProductClass
-     *
-     * @return void
-     */
     protected function cleanupProductToProductClass(int $idProduct, int $idProductClass): void
     {
         $this->getProductToProductClassQuery()
@@ -627,12 +563,6 @@ class SelfServicePortalHelper extends Module
             ->delete();
     }
 
-    /**
-     * @param int $idSalesOrderItem
-     * @param int $idSalesProductClass
-     *
-     * @return void
-     */
     protected function cleanupSalesOrderItemToProductClass(int $idSalesOrderItem, int $idSalesProductClass): void
     {
         $this->getSalesOrderItemProductClassQuery()
@@ -641,11 +571,6 @@ class SelfServicePortalHelper extends Module
             ->delete();
     }
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentType $productShipmentTypeEntity
-     *
-     * @return void
-     */
     protected function deleteProductConcreteShipmentType(SpyProductShipmentType $productShipmentTypeEntity): void
     {
         $this->createProductShipmentTypeQuery()
@@ -653,41 +578,26 @@ class SelfServicePortalHelper extends Module
             ->delete();
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery
-     */
     protected function createProductShipmentTypeQuery(): SpyProductShipmentTypeQuery
     {
         return SpyProductShipmentTypeQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery
-     */
     protected function getProductClassQuery(): SpyProductClassQuery
     {
         return SpyProductClassQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyProductToProductClassQuery
-     */
     protected function getProductToProductClassQuery(): SpyProductToProductClassQuery
     {
         return SpyProductToProductClassQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClassQuery
-     */
     protected function getSalesOrderItemProductClassQuery(): SpySalesOrderItemProductClassQuery
     {
         return SpySalesOrderItemProductClassQuery::create();
     }
 
-    /**
-     * @return void
-     */
     public function ensureFileAttachmentTablesAreEmpty(): void
     {
         $this->createCompanyFileQuery()->deleteAll();
@@ -695,9 +605,6 @@ class SelfServicePortalHelper extends Module
         $this->createCompanyBusinessUnitFileQuery()->deleteAll();
     }
 
-    /**
-     * @return void
-     */
     public function ensureSalesOrderItemProductClassDatabaseTablesAreEmpty(): void
     {
         $this->getSalesOrderItemProductClassQuery()->deleteAll();
@@ -773,11 +680,6 @@ class SelfServicePortalHelper extends Module
         });
     }
 
-    /**
-     * @param array $data
-     *
-     * @return void
-     */
     public function haveCompanyBusinessUnitFileAttachment(array $data): void
     {
         $companyBusinessUnitFileEntity = $this->createCompanyBusinessUnitFileQuery()
@@ -792,11 +694,6 @@ class SelfServicePortalHelper extends Module
         });
     }
 
-    /**
-     * @param array $data
-     *
-     * @return void
-     */
     public function haveSspAssetFileAttachment(array $data): void
     {
         $sspAssetFileEntity = $this->createSspAssetFileQuery()
@@ -811,49 +708,31 @@ class SelfServicePortalHelper extends Module
         });
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery
-     */
     public function createCompanyFileQuery(): SpyCompanyFileQuery
     {
         return SpyCompanyFileQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery
-     */
     public function createCompanyUserFileQuery(): SpyCompanyUserFileQuery
     {
         return SpyCompanyUserFileQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery
-     */
     public function createCompanyBusinessUnitFileQuery(): SpyCompanyBusinessUnitFileQuery
     {
         return SpyCompanyBusinessUnitFileQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery
-     */
     public function createSspAssetFileQuery(): SpySspAssetFileQuery
     {
         return SpySspAssetFileQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySalesProductClassQuery
-     */
     public function getSalesProductClassQuery(): SpySalesProductClassQuery
     {
         return SpySalesProductClassQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
-     */
     protected function getSalesOrderQuery(): SpySalesOrderQuery
     {
         return SpySalesOrderQuery::create();

@@ -43,12 +43,6 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
      */
     protected const FILE_ATTACHMENT_DEFAULT_PAGE = 1;
 
-    /**
-     * @param \SprykerFeature\Yves\SelfServicePortal\Reader\CompanyUserReaderInterface $companyUserReader
-     * @param \SprykerFeature\Client\SelfServicePortal\SelfServicePortalClientInterface $selfServicePortalClient
-     * @param \SprykerFeature\Yves\SelfServicePortal\CompanyFile\Formatter\TimeZoneFormatterInterface $timeZoneFormatter
-     * @param \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     */
     public function __construct(
         protected CompanyUserReaderInterface $companyUserReader,
         protected SelfServicePortalClientInterface $selfServicePortalClient,
@@ -57,12 +51,6 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
     ) {
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Form\FormInterface $fileSearchFilterForm
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
-     */
     public function handleSearchFormSubmit(
         Request $request,
         FormInterface $fileSearchFilterForm
@@ -104,11 +92,6 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
         return $this->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer
-     */
     protected function getFileAttachmentCriteriaTransfer(Request $request): FileAttachmentCriteriaTransfer
     {
         $fileAttachmentConditionsTransfer = (new FileAttachmentConditionsTransfer())
@@ -187,11 +170,6 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
         return $fileAttachmentCriteriaTransfer;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
-     */
     protected function getPaginationTransfer(Request $request): PaginationTransfer
     {
         return (new PaginationTransfer())
@@ -202,23 +180,12 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
             ->setMaxPerPage($this->selfServicePortalConfig->getFileAttachmentDefaultMaxPerPage());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCollectionTransfer
-     */
     protected function getFileAttachmentCollection(
         FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
     ): FileAttachmentCollectionTransfer {
         return $this->selfServicePortalClient->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
     }
 
-    /**
-     * @param string|null $businessUnitEntity
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer
-     */
     protected function applyBusinessUnitEntityFilter(
         ?string $businessUnitEntity,
         FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
@@ -263,12 +230,6 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
         return $fileAttachmentCriteriaTransfer;
     }
 
-    /**
-     * @param string|null $sspAssetEntity
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer
-     */
     protected function applySspAssetUnitEntityFilter(
         ?string $sspAssetEntity,
         FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer

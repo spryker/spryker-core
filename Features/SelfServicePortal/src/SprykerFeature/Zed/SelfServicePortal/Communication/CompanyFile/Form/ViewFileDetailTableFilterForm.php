@@ -76,19 +76,11 @@ class ViewFileDetailTableFilterForm extends AbstractType
      */
     protected const FIELD_ID_FILE = 'id-file';
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return '';
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -190,9 +182,6 @@ class ViewFileDetailTableFilterForm extends AbstractType
         return $this;
     }
 
-    /**
-     * @return callable
-     */
     protected function formatDate(): callable
     {
         return fn ($date) => DateTime::createFromFormat(static::DATE_TIME_FORMAT, $date) ?: null;

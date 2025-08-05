@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 interface OrderItemProductClassExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
     public function expandOrderItemsWithProductClasses(OrderTransfer $orderTransfer): OrderTransfer;
 }

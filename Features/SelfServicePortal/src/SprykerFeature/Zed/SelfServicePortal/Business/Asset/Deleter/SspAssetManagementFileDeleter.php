@@ -17,11 +17,6 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityMana
 
 class SspAssetManagementFileDeleter implements SspAssetManagementFileDeleterInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInterface $sspAssetReader
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\SspAssetWriterInterface $sspAssetWriter
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface $entityManager
-     */
     public function __construct(
         protected SspAssetReaderInterface $sspAssetReader,
         protected SspAssetWriterInterface $sspAssetWriter,
@@ -29,11 +24,6 @@ class SspAssetManagementFileDeleter implements SspAssetManagementFileDeleterInte
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileCollectionTransfer $fileCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileCollectionTransfer
-     */
     public function deleteSspAssetRelationsByFileCollection(FileCollectionTransfer $fileCollectionTransfer): FileCollectionTransfer
     {
         $fileIds = [];

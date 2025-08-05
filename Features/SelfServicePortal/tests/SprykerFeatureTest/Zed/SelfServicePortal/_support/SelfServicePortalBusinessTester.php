@@ -56,11 +56,6 @@ class SelfServicePortalBusinessTester extends Actor
 {
     use _generated\SelfServicePortalBusinessTesterActions;
 
-    /**
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     public function getValidBaseQuoteTransfer(PaymentMethodTransfer $paymentMethodTransfer): QuoteTransfer
     {
         $country = new SpyCountry();
@@ -107,11 +102,6 @@ class SelfServicePortalBusinessTester extends Actor
             ->setStore($storeTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer|null $companyTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
     public function createCompanyUser(?CompanyTransfer $companyTransfer = null): CompanyUserTransfer
     {
         if ($companyTransfer === null) {
@@ -128,12 +118,6 @@ class SelfServicePortalBusinessTester extends Actor
         ]);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
     public function haveCompanyUserWithPermissions(
         CompanyTransfer $companyTransfer,
         PermissionCollectionTransfer $permissionCollectionTransfer
@@ -166,11 +150,6 @@ class SelfServicePortalBusinessTester extends Actor
         return $companyUserTransfer;
     }
 
-    /**
-     * @param string $stateMachineProcessName
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
     public function createOrderByStateMachineProcessName(string $stateMachineProcessName): OrderTransfer
     {
         $quoteTransfer = $this->buildFakeQuote(
@@ -188,22 +167,11 @@ class SelfServicePortalBusinessTester extends Actor
             ->setItems($saveOrderTransfer->getOrderItems());
     }
 
-    /**
-     * @param int $idSalesOrderItem
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem|null
-     */
     public function findSalesOrderItemByIdSalesOrderItem(int $idSalesOrderItem): ?SpySalesOrderItem
     {
         return SpySalesOrderItemQuery::create()->findOneByIdSalesOrderItem($idSalesOrderItem);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function buildFakeQuote(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteTransfer
     {
         $quoteTransfer = (new QuoteBuilder())

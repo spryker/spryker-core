@@ -27,11 +27,6 @@ class StockEditOfferFormEventSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return void
-     */
     public function expandFormWithStock(FormEvent $event): void
     {
         $productOfferTransfer = $event->getData();
@@ -58,11 +53,6 @@ class StockEditOfferFormEventSubscriber implements EventSubscriberInterface
         );
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return void
-     */
     public function expandProductOfferWithStock(FormEvent $event): void
     {
         $productOfferTransfer = $event->getData();

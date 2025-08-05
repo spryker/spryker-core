@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 
 interface SalesOrderItemSspAssetSaverInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     *
-     * @return void
-     */
     public function saveSalesOrderItemSspAssetsFromQuote(
         QuoteTransfer $quoteTransfer,
         SaveOrderTransfer $saveOrderTransfer

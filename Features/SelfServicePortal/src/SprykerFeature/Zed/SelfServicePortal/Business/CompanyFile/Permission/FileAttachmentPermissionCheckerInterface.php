@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
 
 interface FileAttachmentPermissionCheckerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
-     *
-     * @return bool
-     */
     public function isCompanyUserGrantedToApplyCriteria(FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): bool;
 }

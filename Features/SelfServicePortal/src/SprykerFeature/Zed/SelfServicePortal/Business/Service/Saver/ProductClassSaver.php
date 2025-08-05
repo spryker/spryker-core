@@ -18,12 +18,6 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepository
 
 class ProductClassSaver implements ProductClassSaverInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface $selfServicePortalEntityManager
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface $selfServicePortalRepository
-     * @param \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface $productPageSearchFacade
-     * @param \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface $productStorageFacade
-     */
     public function __construct(
         protected SelfServicePortalEntityManagerInterface $selfServicePortalEntityManager,
         protected SelfServicePortalRepositoryInterface $selfServicePortalRepository,
@@ -32,11 +26,6 @@ class ProductClassSaver implements ProductClassSaverInterface
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function saveProductClassesForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         if (!count($productConcreteTransfer->getProductClasses()) || !$productConcreteTransfer->getIdProductConcrete()) {

@@ -35,10 +35,6 @@ class SspItemAssetSelectorWidget extends AbstractWidget
      */
     protected const PARAMETER_PRODUCT = 'product';
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param bool $isDisabled
-     */
     public function __construct(
         ProductViewTransfer $productViewTransfer,
         bool $isDisabled = false
@@ -72,29 +68,16 @@ class SspItemAssetSelectorWidget extends AbstractWidget
         return '@SelfServicePortal/views/item-asset-selector/item-asset-selector.twig';
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return void
-     */
     protected function addProductParameter(ProductViewTransfer $productViewTransfer): void
     {
         $this->addParameter(static::PARAMETER_PRODUCT, $productViewTransfer);
     }
 
-    /**
-     * @param bool $isDisabled
-     *
-     * @return void
-     */
     protected function addIsDisabledParameter(bool $isDisabled): void
     {
         $this->addParameter(static::PARAMETER_IS_DISABLED, $isDisabled);
     }
 
-    /**
-     * @return void
-     */
     protected function addIsVisibleParameter(): void
     {
         $isVisible = $this->getFactory()->getCustomerClient()->isLoggedIn();

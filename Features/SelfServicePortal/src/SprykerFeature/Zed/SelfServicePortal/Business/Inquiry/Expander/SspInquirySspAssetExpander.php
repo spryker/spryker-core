@@ -30,22 +30,12 @@ class SspInquirySspAssetExpander implements SspInquirySspAssetExpanderInterface
      */
     protected const INQUIRY_ASSET_EXPANDER_PAGE_NUMBER = 1;
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Reader\SspInquiryReaderInterface $sspInquiryReader
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $config
-     */
     public function __construct(
         protected SspInquiryReaderInterface $sspInquiryReader,
         protected SelfServicePortalConfig $config
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionTransfer $sspAssetCollectionTransfer
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
-     */
     public function expandAssetCollectionWithSspInquiries(
         SspAssetCollectionTransfer $sspAssetCollectionTransfer,
         SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
@@ -61,11 +51,6 @@ class SspInquirySspAssetExpander implements SspInquirySspAssetExpanderInterface
         return $this->expandAssetsWithInquiries($sspAssetCollectionTransfer, $sspInquiryCollectionTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspInquiryOwnerConditionGroupTransfer
-     */
     protected function createSspInquiryOwnerConditionGroupTransfer(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): SspInquiryOwnerConditionGroupTransfer
     {
         $sspInquiryOwnerConditionGroupTransfer = new SspInquiryOwnerConditionGroupTransfer();
@@ -118,12 +103,6 @@ class SspInquirySspAssetExpander implements SspInquirySspAssetExpanderInterface
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionTransfer $sspAssetCollectionTransfer
-     * @param \Generated\Shared\Transfer\SspInquiryCollectionTransfer $sspInquiryCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
-     */
     protected function expandAssetsWithInquiries(
         SspAssetCollectionTransfer $sspAssetCollectionTransfer,
         SspInquiryCollectionTransfer $sspInquiryCollectionTransfer

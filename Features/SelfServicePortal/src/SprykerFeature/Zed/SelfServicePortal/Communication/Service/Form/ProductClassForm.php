@@ -81,9 +81,6 @@ class ProductClassForm extends AbstractType
         return $choices;
     }
 
-    /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
     protected function createProductClassModelTransformer(): CallbackTransformer
     {
         return new CallbackTransformer(

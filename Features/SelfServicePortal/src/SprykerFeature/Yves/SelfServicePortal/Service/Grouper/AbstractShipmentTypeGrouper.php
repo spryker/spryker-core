@@ -22,10 +22,6 @@ abstract class AbstractShipmentTypeGrouper
      */
     protected const SHIPMENT_TYPE_GROUP_ITEMS = 'items';
 
-    /**
-     * @param \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig $SelfServicePortalConfig
-     * @param \SprykerFeature\Yves\SelfServicePortal\Service\Sorter\ShipmentTypeGroupSorterInterface $shipmentTypeGroupSorter
-     */
     public function __construct(
         protected SelfServicePortalConfig $SelfServicePortalConfig,
         protected ShipmentTypeGroupSorterInterface $shipmentTypeGroupSorter

@@ -12,18 +12,10 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityMana
 
 class SspInquiryFileDeleter implements SspInquiryFileDeleterInterface
 {
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface $selfServicePortalEntityManager
-     */
     public function __construct(protected SelfServicePortalEntityManagerInterface $selfServicePortalEntityManager)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileCollectionTransfer $fileCollectionTransfer
-     *
-     * @return void
-     */
     public function deleteSspInquiryFile(FileCollectionTransfer $fileCollectionTransfer): void
     {
         $this->selfServicePortalEntityManager->deleteSspInquiryFileRelation($fileCollectionTransfer);

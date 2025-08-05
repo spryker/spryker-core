@@ -13,12 +13,6 @@ use Symfony\Component\Form\FormInterface;
 
 interface SspAssetFormDataToTransferMapperInterface
 {
-    /**
-     * @param \Symfony\Component\Form\FormInterface $sspAssetForm
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetTransfer
-     */
     public function mapFormDataToSspAssetTransfer(FormInterface $sspAssetForm, SspAssetTransfer $sspAssetTransfer): SspAssetTransfer;
 
     /**

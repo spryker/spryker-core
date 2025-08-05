@@ -35,20 +35,10 @@ class FileDownloader implements FileDownloaderInterface
      */
     protected const TRANSLITERATOR_RULE = 'Any-Latin;Latin-ASCII;';
 
-    /**
-     * @param \Spryker\Service\FileManager\FileManagerServiceInterface $fileManagerService
-     */
     public function __construct(protected FileManagerServiceInterface $fileManagerService)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     * @param int $chunkSize
-     * @param string $disposition
-     *
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
-     */
     public function createFileDownloadResponse(
         FileTransfer $fileTransfer,
         int $chunkSize,
@@ -97,9 +87,6 @@ class FileDownloader implements FileDownloaderInterface
         return $response;
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
-     */
     protected function createErrorResponse(): StreamedResponse
     {
         return new StreamedResponse(function (): void {
@@ -107,11 +94,6 @@ class FileDownloader implements FileDownloaderInterface
         }, Response::HTTP_NOT_FOUND);
     }
 
-    /**
-     * @param string $fileName
-     *
-     * @return string
-     */
     protected function transliterateFileName(string $fileName): string
     {
         $transliterator = Transliterator::create(static::TRANSLITERATOR_RULE);

@@ -28,17 +28,11 @@ class ShipmentTypeProductConcretePostUpdatePluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $this->tester->ensureProductShipmentTypeTableIsEmpty();
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateAddsNewShipmentTypeToExistingOnes(): void
     {
         // Arrange
@@ -64,9 +58,6 @@ class ShipmentTypeProductConcretePostUpdatePluginTest extends Unit
         $this->assertContains($newShipmentTypeTransfer->getIdShipmentTypeOrFail(), $shipmentTypeIds);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateReplacesExistingShipmentTypesWithNewOnes(): void
     {
         // Arrange
@@ -92,9 +83,6 @@ class ShipmentTypeProductConcretePostUpdatePluginTest extends Unit
         $this->assertNotContains($oldShipmentTypeTransfer->getIdShipmentTypeOrFail(), $shipmentTypeIds);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateWithSameShipmentTypesDoesNotChangeRelations(): void
     {
         // Arrange
@@ -116,9 +104,6 @@ class ShipmentTypeProductConcretePostUpdatePluginTest extends Unit
         $this->assertContains($shipmentTypeTransfer->getIdShipmentTypeOrFail(), $shipmentTypeIds);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateWithEmptyShipmentTypesDeletesAllRelations(): void
     {
         // Arrange
@@ -141,9 +126,6 @@ class ShipmentTypeProductConcretePostUpdatePluginTest extends Unit
         $this->assertEmpty($shipmentTypeIds);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateWithMultipleShipmentTypesCreatesAllRelations(): void
     {
         // Arrange

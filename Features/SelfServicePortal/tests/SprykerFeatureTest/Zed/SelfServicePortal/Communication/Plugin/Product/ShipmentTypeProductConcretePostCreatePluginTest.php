@@ -27,17 +27,11 @@ class ShipmentTypeProductConcretePostCreatePluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $this->tester->ensureProductShipmentTypeTableIsEmpty();
     }
 
-    /**
-     * @return void
-     */
     public function testCreateShouldCreateProductShipmentTypeRelation(): void
     {
         // Arrange
@@ -58,9 +52,6 @@ class ShipmentTypeProductConcretePostCreatePluginTest extends Unit
         $this->assertTrue($productShipmentTypeRelationExists);
     }
 
-    /**
-     * @return void
-     */
     public function testCreateShouldNotCreateProductShipmentTypeRelationWhenProductHasNoShipmentTypes(): void
     {
         // Arrange

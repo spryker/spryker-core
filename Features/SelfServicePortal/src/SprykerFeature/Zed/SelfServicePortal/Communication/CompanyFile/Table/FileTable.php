@@ -82,13 +82,6 @@ class FileTable extends AbstractTable
      */
     protected const URL_TABLE = '/table';
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
-     * @param \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatter\FileSizeFormatterInterface $fileSizeFormatter
-     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
-     * @param \SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatter\TimeZoneFormatterInterface $timeZoneFormatter
-     * @param \Generated\Shared\Transfer\FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer
-     */
     public function __construct(
         protected SpyFileQuery $fileQuery,
         protected FileSizeFormatterInterface $fileSizeFormatter,
@@ -98,11 +91,6 @@ class FileTable extends AbstractTable
     ) {
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setHeader([
@@ -140,9 +128,6 @@ class FileTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @return string
-     */
     protected function getTableUrl(): string
     {
         return Url::generate(
@@ -186,9 +171,6 @@ class FileTable extends AbstractTable
         ];
     }
 
-    /**
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
     protected function prepareQuery(): SpyFileQuery
     {
         $fileQuery = $this->fileQuery->innerJoinSpyFileInfo()
@@ -202,12 +184,6 @@ class FileTable extends AbstractTable
         return $fileQuery;
     }
 
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
-     * @param \Generated\Shared\Transfer\FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
     protected function applyFilters(
         SpyFileQuery $fileQuery,
         FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer

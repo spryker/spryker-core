@@ -28,9 +28,6 @@ class ProductClassProductConcreteStorageCollectionExpanderPluginTest extends Uni
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandShouldExpandProductConcreteWithProductClassNames(): void
     {
         // Arrange
@@ -61,9 +58,6 @@ class ProductClassProductConcreteStorageCollectionExpanderPluginTest extends Uni
         $this->assertContains($productClassTransfer->getName(), $productClassNames);
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldNotExpandProductConcreteWithoutProductClasses(): void
     {
         // Arrange
@@ -83,9 +77,6 @@ class ProductClassProductConcreteStorageCollectionExpanderPluginTest extends Uni
         $this->assertEmpty($expandedProductConcreteStorageTransfers[0]->getProductClassNames());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldExpandOnlyWithRelatedProductClasses(): void
     {
         // Arrange
@@ -125,9 +116,6 @@ class ProductClassProductConcreteStorageCollectionExpanderPluginTest extends Uni
         $this->assertEmpty($expandedProductConcreteStorageTransfers[1]->getProductClassNames());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandShouldHandleEmptyCollection(): void
     {
         // Act

@@ -709,6 +709,18 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Returns the path to the CodeSniffer feature ruleset.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCodeSnifferFeatureRuleset(): string
+    {
+        return $this->getPathToFeature() . 'phpcs.xml';
+    }
+
+    /**
      * @api
      *
      * @return string

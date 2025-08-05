@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\FileTransfer;
 
 interface FileReaderInterface
 {
-    /**
-     * @param int $idFile
-     *
-     * @return \Generated\Shared\Transfer\FileTransfer|null
-     */
     public function findFileByIdFile(int $idFile): ?FileTransfer;
 }

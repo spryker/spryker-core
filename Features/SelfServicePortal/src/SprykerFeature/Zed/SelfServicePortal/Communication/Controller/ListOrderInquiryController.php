@@ -33,11 +33,6 @@ class ListOrderInquiryController extends AbstractGatewayController
         return ['orderInquiryTable' => $sspInquiryTable->render()];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function tableAction(Request $request): JsonResponse
     {
          $sspInquiryTable = $this

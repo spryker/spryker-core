@@ -349,17 +349,34 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected function resolveRulesetPath(string $directory): string
     {
         $architecturalRulesetFilepath = dirname($directory) . DIRECTORY_SEPARATOR . static::CUSTOM_RULESET;
-        $command = $this->command;
 
         if (file_exists($architecturalRulesetFilepath) === true) {
-            $command = preg_replace(
-                static::DEFAULT_RULESET_PATTERN,
-                sprintf(static::REPLACEMENT_PLACEHOLDER, $architecturalRulesetFilepath),
-                $command,
-            );
+            return $this->createCommand($architecturalRulesetFilepath);
+        }
+        $parentDirectory = dirname(dirname($directory));
+        $parentArchitecturalRulesetFilepath = $parentDirectory . DIRECTORY_SEPARATOR . static::CUSTOM_RULESET;
+
+        if (file_exists($parentArchitecturalRulesetFilepath) === true) {
+            return $this->createCommand($parentArchitecturalRulesetFilepath);
         }
 
-        return $command;
+        return $this->command;
+    }
+
+    /**
+     * @param string $architecturalRulesetFilepath
+     *
+     * @return string
+     */
+    protected function createCommand(string $architecturalRulesetFilepath): string
+    {
+        $command = $this->command;
+
+        return preg_replace(
+            static::DEFAULT_RULESET_PATTERN,
+            sprintf(static::REPLACEMENT_PLACEHOLDER, $architecturalRulesetFilepath),
+            $command,
+        );
     }
 
     /**

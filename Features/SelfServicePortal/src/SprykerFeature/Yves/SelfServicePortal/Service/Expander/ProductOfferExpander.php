@@ -17,9 +17,6 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
      */
     protected const PARAM_PRODUCT_OFFER_REFERENCE = 'product_offer_reference';
 
-    /**
-     * @param \Spryker\Client\ProductOfferStorage\ProductOfferStorageClientInterface $productOfferStorageClient
-     */
     public function __construct(protected ProductOfferStorageClientInterface $productOfferStorageClient)
     {
     }

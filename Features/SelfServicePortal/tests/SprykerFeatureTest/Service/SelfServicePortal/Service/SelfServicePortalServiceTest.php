@@ -35,9 +35,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class SelfServicePortalServiceTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testCreateFileDownloadResponseCreatesStreamedResponseWhenFileExists(): void
     {
         // Arrange
@@ -83,9 +80,6 @@ class SelfServicePortalServiceTest extends Unit
         $this->assertSame($fileContent, $output);
     }
 
-    /**
-     * @return void
-     */
     public function testCreateFileDownloadResponseCreatesErrorResponseWhenFileDoesNotExist(): void
     {
         // Arrange
@@ -158,11 +152,6 @@ class SelfServicePortalServiceTest extends Unit
         return $fileManagerServiceMock;
     }
 
-    /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $fileManagerServiceMock
-     *
-     * @return \SprykerFeature\Service\SelfServicePortal\SelfServicePortalService
-     */
     protected function createService(MockObject $fileManagerServiceMock): SelfServicePortalService
     {
         $service = new SelfServicePortalService();
@@ -189,11 +178,6 @@ class SelfServicePortalServiceTest extends Unit
                 $this->loggerMock = $loggerMock;
             }
 
-            /**
-             * @param \Spryker\Shared\Log\Config\LoggerConfigInterface|null $loggerConfig
-             *
-             * @return \Psr\Log\LoggerInterface
-             */
             protected function getLogger(?LoggerConfigInterface $loggerConfig = null): LoggerInterface
             {
                 return $this->loggerMock;
@@ -207,9 +191,6 @@ class SelfServicePortalServiceTest extends Unit
         return $service;
     }
 
-    /**
-     * @return \Psr\Log\LoggerInterface
-     */
     protected function createLoggerMock(): LoggerInterface
     {
         return $this->createMock(LoggerInterface::class);

@@ -14,43 +14,20 @@ use Generated\Shared\Transfer\SspAssetTransfer;
 
 interface SspAssetValidatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer
-     */
     public function validateRequestGrantedToCreateAsset(
         SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer,
         ?CompanyUserTransfer $companyUserTransfer
     ): SspAssetCollectionResponseTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     * @param \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
-     *
-     * @return bool
-     */
     public function validateAssetTransfer(
         SspAssetTransfer $sspAssetTransfer,
         SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
     ): bool;
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
-     *
-     * @return bool
-     */
     public function isAssetUpdateGranted(
         SspAssetTransfer $sspAssetTransfer,
         ?CompanyUserTransfer $companyUserTransfer
     ): bool;
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     *
-     * @return bool
-     */
     public function isCompanyUserGrantedToApplyCriteria(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): bool;
 }

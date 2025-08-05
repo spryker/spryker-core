@@ -31,9 +31,6 @@ class SspAssetItemExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandItemsExpandsItemsWithSspAssetWhenSspAssetReferenceProvided(): void
     {
         // Arrange
@@ -74,9 +71,6 @@ class SspAssetItemExpanderPluginTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsDoesNothingWhenNoSspAssetReferenceProvided(): void
     {
         // Arrange
@@ -101,9 +95,6 @@ class SspAssetItemExpanderPluginTest extends Unit
         $this->assertNull($itemTransfer->getSspAsset());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsDoesNothingWhenNoItemsProvided(): void
     {
         // Arrange
@@ -127,9 +118,6 @@ class SspAssetItemExpanderPluginTest extends Unit
         $this->assertCount(0, $resultCartChangeTransfer->getItems());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsDoesNothingWhenRepositoryReturnsNoResults(): void
     {
         // Arrange

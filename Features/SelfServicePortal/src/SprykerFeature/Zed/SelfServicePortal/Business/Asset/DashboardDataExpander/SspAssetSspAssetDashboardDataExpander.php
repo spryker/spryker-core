@@ -39,20 +39,11 @@ class SspAssetSspAssetDashboardDataExpander implements SspAssetDashboardDataExpa
      */
     protected const PAGE_NUMBER = 1;
 
-    /**
-     * @param \SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInterface $assetReader
-     */
     public function __construct(
         protected SspAssetReaderInterface $assetReader
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DashboardResponseTransfer $dashboardResponseTransfer
-     * @param \Generated\Shared\Transfer\DashboardRequestTransfer $dashboardRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\DashboardResponseTransfer
-     */
     public function provideSspAssetDashboardData(
         DashboardResponseTransfer $dashboardResponseTransfer,
         DashboardRequestTransfer $dashboardRequestTransfer

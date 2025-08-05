@@ -27,9 +27,6 @@ class UnassignSspAssetPermissionPlugin extends AbstractPlugin implements Executa
      */
     public const KEY = 'UnassignSspAssetPermissionPlugin';
 
-    /**
-     * @return string
-     */
     public function getKey(): string
     {
         return static::KEY;

@@ -45,9 +45,6 @@ class ServicePointQuoteExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandItemsExpandsItemsWithServicePoint(): void
     {
         // Arrange
@@ -75,9 +72,6 @@ class ServicePointQuoteExpanderPluginTest extends Unit
         $this->assertNotNull($itemTransfer->getServicePointOrFail()->getName());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsDoesNothingWhenNoServicePointUuidProvided(): void
     {
         // Arrange
@@ -102,9 +96,6 @@ class ServicePointQuoteExpanderPluginTest extends Unit
         $this->assertNull($itemTransfer->getServicePoint());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsDoesNothingWhenNoItemsProvided(): void
     {
         // Arrange
@@ -130,9 +121,6 @@ class ServicePointQuoteExpanderPluginTest extends Unit
         $this->assertCount(0, $resultQuoteTransfer->getItems());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsDoesNothingWhenServicePointFacadeReturnsNoResults(): void
     {
         // Arrange
@@ -161,9 +149,6 @@ class ServicePointQuoteExpanderPluginTest extends Unit
         $this->assertNull($itemTransfer->getServicePointOrFail()->getName());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsExpandsBundleItemsWithServicePoint(): void
     {
         // Arrange
@@ -200,11 +185,6 @@ class ServicePointQuoteExpanderPluginTest extends Unit
         $this->assertNotNull($bundleItemTransfer->getServicePointOrFail()->getName());
     }
 
-    /**
-     * @param string|null $servicePointUuid
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function createQuoteTransferWithServicePoint(?string $servicePointUuid = null): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
@@ -223,9 +203,6 @@ class ServicePointQuoteExpanderPluginTest extends Unit
         return $quoteTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function createQuoteTransferWithoutServicePoint(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();

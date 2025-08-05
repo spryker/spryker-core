@@ -30,11 +30,6 @@ class AssignedBusinessUnitTable extends AbstractTable
      */
     public const PARAM_ID_SSP_ASSET = 'id-ssp-asset';
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery $sspAssetToCompanyBusinessUnitQuery
-     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
-     */
     public function __construct(
         protected SspAssetTransfer $sspAssetTransfer,
         protected SpySspAssetToCompanyBusinessUnitQuery $sspAssetToCompanyBusinessUnitQuery,
@@ -43,11 +38,6 @@ class AssignedBusinessUnitTable extends AbstractTable
         $this->baseUrl = static::BASE_URL;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setUrl(sprintf('table?%s=%s', static::PARAM_ID_SSP_ASSET, $this->sspAssetTransfer->getIdSspAssetOrFail()));
@@ -67,11 +57,6 @@ class AssignedBusinessUnitTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $baseData = [
@@ -85,9 +70,6 @@ class AssignedBusinessUnitTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery
-     */
     protected function prepareQuery(): SpySspAssetToCompanyBusinessUnitQuery
     {
         $this->sspAssetToCompanyBusinessUnitQuery

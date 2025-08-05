@@ -46,9 +46,6 @@ class ServicePointItemExpanderPluginTest extends Unit
      */
     protected SelfServicePortalCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandItemsExpandsItemsWithServicePoint(): void
     {
         // Arrange
@@ -76,9 +73,6 @@ class ServicePointItemExpanderPluginTest extends Unit
         $this->assertNotNull($itemTransfer->getServicePointOrFail()->getName());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsDoesNothingWhenNoServicePointUuidProvided(): void
     {
         // Arrange
@@ -103,9 +97,6 @@ class ServicePointItemExpanderPluginTest extends Unit
         $this->assertNull($itemTransfer->getServicePoint());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsDoesNothingWhenNoItemsProvided(): void
     {
         // Arrange
@@ -133,9 +124,6 @@ class ServicePointItemExpanderPluginTest extends Unit
         $this->assertCount(0, $resultCartChangeTransfer->getItems());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsDoesNothingWhenServicePointFacadeReturnsNoResults(): void
     {
         // Arrange
@@ -164,9 +152,6 @@ class ServicePointItemExpanderPluginTest extends Unit
         $this->assertNull($itemTransfer->getServicePointOrFail()->getName());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandItemsExpandsBundleItemsWithServicePoint(): void
     {
         // Arrange
@@ -207,11 +192,6 @@ class ServicePointItemExpanderPluginTest extends Unit
         $this->assertNotNull($bundleItemTransfer->getServicePointOrFail()->getName());
     }
 
-    /**
-     * @param string|null $servicePointUuid
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     protected function createCartChangeTransferWithServicePoint(?string $servicePointUuid = null): CartChangeTransfer
     {
         $cartChangeTransfer = new CartChangeTransfer();
@@ -232,9 +212,6 @@ class ServicePointItemExpanderPluginTest extends Unit
         return $cartChangeTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     protected function createCartChangeTransferWithoutServicePoint(): CartChangeTransfer
     {
         $cartChangeTransfer = new CartChangeTransfer();

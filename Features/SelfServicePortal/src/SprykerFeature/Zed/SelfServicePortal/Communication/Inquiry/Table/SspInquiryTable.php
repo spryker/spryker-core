@@ -57,12 +57,6 @@ class SspInquiryTable extends AbstractTable
      */
     protected const CUSTOMER_FULL_NAME_FIELD_PATTERN = 'CONCAT(%s,\'%s\',%s)';
 
-    /**
-     * @param \Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery $sspInquiryQuery
-     * @param \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig $selfServicePortalConfig
-     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
-     * @param \Generated\Shared\Transfer\SspInquiryConditionsTransfer $sspInquiryConditionsTransfer
-     */
     public function __construct(
         protected SpySspInquiryQuery $sspInquiryQuery,
         protected SelfServicePortalConfig $selfServicePortalConfig,
@@ -71,11 +65,6 @@ class SspInquiryTable extends AbstractTable
     ) {
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $url = Url::generate(
@@ -109,11 +98,6 @@ class SspInquiryTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $baseData = [
@@ -131,9 +115,6 @@ class SspInquiryTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @return \Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery
-     */
     protected function prepareQuery(): SpySspInquiryQuery
     {
         $this->sspInquiryQuery
@@ -220,9 +201,6 @@ class SspInquiryTable extends AbstractTable
         return implode(' ', $buttons);
     }
 
-    /**
-     * @return string
-     */
     protected function getCustomerFullNameFieldPattern(): string
     {
         return sprintf(

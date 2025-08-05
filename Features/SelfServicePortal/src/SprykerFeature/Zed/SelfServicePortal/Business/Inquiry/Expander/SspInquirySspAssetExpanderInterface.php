@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 
 interface SspInquirySspAssetExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionTransfer $sspAssetCollectionTransfer
-     * @param \Generated\Shared\Transfer\SspAssetCriteriaTransfer $sspAssetCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\SspAssetCollectionTransfer
-     */
     public function expandAssetCollectionWithSspInquiries(
         SspAssetCollectionTransfer $sspAssetCollectionTransfer,
         SspAssetCriteriaTransfer $sspAssetCriteriaTransfer

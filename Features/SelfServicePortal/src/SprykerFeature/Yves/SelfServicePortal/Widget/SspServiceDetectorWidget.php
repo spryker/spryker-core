@@ -45,9 +45,6 @@ class SspServiceDetectorWidget extends AbstractWidget
         $this->addParameter(static::PARAMETER_IS_SERVICE, $this->isSspService($productData));
     }
 
-    /**
-     * @return string
-     */
     public static function getName(): string
     {
         return 'SspServiceDetectorWidget';

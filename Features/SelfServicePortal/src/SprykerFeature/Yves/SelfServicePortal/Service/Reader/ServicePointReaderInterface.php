@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\ServicePointSearchRequestTransfer;
 
 interface ServicePointReaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ServicePointSearchRequestTransfer $servicePointSearchRequestTransfer
-     *
-     * @return string
-     */
     public function searchServicePoints(ServicePointSearchRequestTransfer $servicePointSearchRequestTransfer): string;
 }
