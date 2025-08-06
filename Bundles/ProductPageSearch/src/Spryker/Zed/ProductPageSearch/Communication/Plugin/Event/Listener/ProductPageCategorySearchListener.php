@@ -50,7 +50,7 @@ class ProductPageCategorySearchListener extends AbstractProductPageSearchListene
         $relatedCategoryIds = $this->getRelatedCategoryIds($categoryIds);
         $productAbstractIds = $this->getRepository()->getProductAbstractIdsByCategoryIds($relatedCategoryIds);
 
-        $this->publish($productAbstractIds);
+        $this->publish(array_fill_keys($productAbstractIds, null));
     }
 
     /**

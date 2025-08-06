@@ -10,14 +10,18 @@ namespace Spryker\Zed\ProductPageSearch\Persistence;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetToProductImageTableMap;
+use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductAbstractPageSearchTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductConcretePageSearchTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
 use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchTableMap;
 use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -88,23 +92,30 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     }
 
     /**
-     * @param array<string> $productConcreteSkus
+     * @param array<string, int> $productConcreteSkuTimestampMap
      *
-     * @return array<int>
+     * @return array<int, int>
      */
-    public function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus): array
+    public function getProductAbstractIdTimestampMap(array $productConcreteSkuTimestampMap): array
     {
-        if (!$productConcreteSkus) {
+        if (!$productConcreteSkuTimestampMap) {
             return [];
         }
+        $productAbstractIdTimestampMap = [];
 
-        return $this->getFactory()
+        $productData = $this->getFactory()
             ->getProductQuery()
-            ->filterBySku_In($productConcreteSkus)
+            ->filterBySku_In(array_keys($productConcreteSkuTimestampMap))
             ->withColumn(Criteria::DISTINCT . ' ' . SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, static::FK_PRODUCT_ABSTRACT)
-            ->select([static::FK_PRODUCT_ABSTRACT])
+            ->select([static::FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_SKU])
             ->find()
             ->getData();
+
+        foreach ($productData as $product) {
+            $productAbstractIdTimestampMap[(int)$product[static::FK_PRODUCT_ABSTRACT]] = $productConcreteSkuTimestampMap[$product[SpyProductTableMap::COL_SKU]];
+        }
+
+        return $productAbstractIdTimestampMap;
     }
 
     /**
@@ -198,20 +209,75 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     /**
      * @module ProductImage
      *
-     * @param list<int> $productImageSetIds
+     * @param array<int, int> $productImageSetIdTimestampMap
      *
-     * @return list<int>
+     * @return array<int, int>
      */
-    public function getProductAbstractIdsByProductImageSetIds(array $productImageSetIds): array
+    public function getProductAbstractIdsByProductImageSetIds(array $productImageSetIdTimestampMap): array
     {
-        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractIds */
-        $productAbstractIds = $this->getFactory()
+        $productAbstractIdTimestampMap = [];
+        $productImageData = $this->getFactory()
             ->getProductImageSetQuery()
-            ->filterByIdProductImageSet_In($productImageSetIds)
-            ->select([SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT])
-            ->find();
+            ->filterByIdProductImageSet_In(array_keys($productImageSetIdTimestampMap))
+            ->select([SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductImageSetTableMap::COL_ID_PRODUCT_IMAGE_SET])
+            ->find()
+            ->getData();
 
-        return $productAbstractIds->toArray();
+        foreach ($productImageData as $productImage) {
+            $productAbstractIdTimestampMap[(int)$productImage[SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT]] = $productImageSetIdTimestampMap[$productImage[SpyProductImageSetTableMap::COL_ID_PRODUCT_IMAGE_SET]];
+        }
+
+        return $productAbstractIdTimestampMap;
+    }
+
+    /**
+     * @module ProductImage
+     *
+     * @param array<int, int> $productImageSetIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getConcreteProductIdTimestampMapByProductImageSetIds(array $productImageSetIdTimestampMap): array
+    {
+        $concreteProductIdTimestampMap = [];
+        $productImageData = $this->getFactory()
+            ->getProductImageSetQuery()
+            ->filterByIdProductImageSet_In(array_keys($productImageSetIdTimestampMap))
+            ->select([SpyProductImageSetTableMap::COL_FK_PRODUCT, SpyProductImageSetTableMap::COL_ID_PRODUCT_IMAGE_SET])
+            ->find()
+            ->getData();
+
+        foreach ($productImageData as $productImage) {
+            $concreteProductIdTimestampMap[(int)$productImage[SpyProductImageSetTableMap::COL_FK_PRODUCT]] = $productImageSetIdTimestampMap[$productImage[SpyProductImageSetTableMap::COL_ID_PRODUCT_IMAGE_SET]];
+        }
+
+        return $concreteProductIdTimestampMap;
+    }
+
+    /**
+     * @module ProductImage
+     *
+     * @param array<int, int> $productImageIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getConcreteProductIdTimestampMapByProductImageIds(array $productImageIdTimestampMap): array
+    {
+        $concreteProductIdTimestampMap = [];
+        $productImageData = $this->getFactory()
+            ->getProductImageSetQuery()
+            ->useSpyProductImageSetToProductImageQuery()
+                ->filterByFkProductImage_In(array_keys($productImageIdTimestampMap))
+            ->endUse()
+            ->select([SpyProductImageSetTableMap::COL_FK_PRODUCT, SpyProductImageSetToProductImageTableMap::COL_FK_PRODUCT_IMAGE])
+            ->find()
+            ->getData();
+
+        foreach ($productImageData as $productImage) {
+            $concreteProductIdTimestampMap[(int)$productImage[SpyProductImageSetTableMap::COL_FK_PRODUCT]] = $productImageIdTimestampMap[$productImage[SpyProductImageSetToProductImageTableMap::COL_FK_PRODUCT_IMAGE]];
+        }
+
+        return $concreteProductIdTimestampMap;
     }
 
     /**
@@ -395,6 +461,36 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     }
 
     /**
+     * @module PriceProduct
+     *
+     * @param array<int, int> $priceProductStoreIdTimestampMap
+     *
+     * @return array<int>
+     */
+    public function getProductAbstractIdTimestampMapByPriceProductStoreIds(array $priceProductStoreIdTimestampMap): array
+    {
+        if (!$priceProductStoreIdTimestampMap) {
+            return [];
+        }
+
+        $productAbstractIdTimestampMap = [];
+        $productAbstractData = $this->getFactory()
+            ->getPriceProductPropelQuery()
+            ->select([SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyPriceProductStoreTableMap::COL_ID_PRICE_PRODUCT_STORE])
+            ->usePriceProductStoreQuery()
+            ->filterByIdPriceProductStore_In(array_keys($priceProductStoreIdTimestampMap))
+            ->endUse()
+            ->find()
+            ->getData();
+
+        foreach ($productAbstractData as $productAbstract) {
+            $productAbstractIdTimestampMap[(int)$productAbstract[SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT]] = $priceProductStoreIdTimestampMap[$productAbstract[SpyPriceProductStoreTableMap::COL_ID_PRICE_PRODUCT_STORE]];
+        }
+
+        return $productAbstractIdTimestampMap;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param array<int> $productIds
      *
@@ -416,5 +512,177 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         return $this->getFactory()
             ->createProductPageSearchMapper()
             ->mapProductConcretePageSearchEntityCollectionToSynchronizationDataTransfers($productConcretePageSearchEntityCollection);
+    }
+
+    /**
+     * @param array<int, int> $productIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getProductAbstractIdTimestampMapByProductIds(array $productIdTimestampMap): array
+    {
+        $productAbstractIdTimestampMap = [];
+        $concreteProductData = $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProduct()
+            ->select([SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->filterByIdProduct_In(array_keys($productIdTimestampMap))
+            ->find()
+            ->getData();
+
+        foreach ($concreteProductData as $concreteProduct) {
+            $productAbstractIdTimestampMap[(int)$concreteProduct[SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT]] = $productIdTimestampMap[$concreteProduct[SpyProductTableMap::COL_ID_PRODUCT]];
+        }
+
+        return $productAbstractIdTimestampMap;
+    }
+
+    /**
+     * @param array<int, int> $productAbstractIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getConcreteProductIdTimestampMapByProductAbstractIds(array $productAbstractIdTimestampMap): array
+    {
+        $concreteProductIdTimestampMap = [];
+        $concreteProductData = $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProduct()
+            ->select([SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->filterByFkProductAbstract_In(array_keys($productAbstractIdTimestampMap))
+            ->find()
+            ->getData();
+
+        foreach ($concreteProductData as $concreteProduct) {
+            $concreteProductIdTimestampMap[(int)$concreteProduct[SpyProductTableMap::COL_ID_PRODUCT]] = $productAbstractIdTimestampMap[$concreteProduct[SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT]];
+        }
+
+        return $concreteProductIdTimestampMap;
+    }
+
+    /**
+     * @param array<int, int> $productImageIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getProductAbstractIdTimestampMapByProductImageId(array $productImageIdTimestampMap): array
+    {
+        $productAbstractIdTimestampMap = [];
+        $productAbstractData = $this->getFactory()->getProductImageQueryContainer()
+            ->queryProductImageSetToProductImage()
+            ->filterByFkProductImage_In(array_keys($productImageIdTimestampMap))
+            ->innerJoinSpyProductImageSet()
+            ->withColumn('DISTINCT ' . SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT, static::FK_PRODUCT_ABSTRACT)
+            ->select([static::FK_PRODUCT_ABSTRACT, SpyProductImageSetToProductImageTableMap::COL_FK_PRODUCT_IMAGE])
+            ->addAnd(SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT, null, ModelCriteria::NOT_EQUAL)
+            ->find()
+            ->getData();
+
+        foreach ($productAbstractData as $productAbstract) {
+            $productAbstractIdTimestampMap[(int)$productAbstract[static::FK_PRODUCT_ABSTRACT]] = $productImageIdTimestampMap[$productAbstract[SpyProductImageSetToProductImageTableMap::COL_FK_PRODUCT_IMAGE]];
+        }
+
+        return $productAbstractIdTimestampMap;
+    }
+
+    /**
+     * @param array<int, int> $priceTypeIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getAllProductAbstractIdTimestampMapByPriceTypeIds(array $priceTypeIdTimestampMap): array
+    {
+        $productAbstractIdTimestampMap = [];
+        $priceProductData = $this->getFactory()
+            ->getPriceQueryContainer()
+            ->queryPriceProduct()
+            ->addAnd(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT, null, Criteria::NOT_EQUAL)
+            ->filterByFkPriceType_In(array_keys($priceTypeIdTimestampMap))
+            ->distinct()
+            ->select([SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyPriceProductTableMap::COL_FK_PRICE_TYPE])
+            ->find()
+            ->getData();
+
+        foreach ($priceProductData as $priceProduct) {
+            $productAbstractIdTimestampMap[(int)$priceProduct[SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT]] = $priceTypeIdTimestampMap[$priceProduct[SpyPriceProductTableMap::COL_FK_PRICE_TYPE]];
+        }
+
+        return $productAbstractIdTimestampMap;
+    }
+
+    /**
+     * @param array<int, int> $productIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getAllProductAbstractIdTimestampMapByPriceProductIds(array $productIdTimestampMap): array
+    {
+        $productAbstractIdTimestampMap = [];
+        $priceProductData = $this->getFactory()
+            ->getPriceQueryContainer()
+            ->queryPriceProduct()
+            ->select([SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT])
+            ->addAnd(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT, null, Criteria::NOT_EQUAL)
+            ->filterByIdPriceProduct_In(array_keys($productIdTimestampMap));
+
+        foreach ($priceProductData as $priceProduct) {
+            $productAbstractIdTimestampMap[(int)$priceProduct[SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT]] = $productIdTimestampMap[$priceProduct[SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT]];
+        }
+
+        return $productAbstractIdTimestampMap;
+    }
+
+    /**
+     * @param array<int, int> $productAbstractIdTimestampMap
+     *
+     * @return array<int>
+     */
+    public function getRelevantProductAbstractIdsToUpdate(array $productAbstractIdTimestampMap): array
+    {
+        $productAbstractData = $this->getFactory()
+            ->createProductAbstractPageSearch()
+            ->select([SpyProductAbstractPageSearchTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductAbstractPageSearchTableMap::COL_UPDATED_AT])
+            ->filterByFkProductAbstract_In(array_keys($productAbstractIdTimestampMap))
+            ->find()
+            ->getData();
+
+        foreach ($productAbstractData as $productAbstract) {
+            $idProductAbstract = $productAbstract[SpyProductAbstractPageSearchTableMap::COL_FK_PRODUCT_ABSTRACT];
+            if (
+                !empty($productAbstractIdTimestampMap[$idProductAbstract])
+                && $productAbstractIdTimestampMap[$idProductAbstract] <= strtotime($productAbstract[SpyProductAbstractPageSearchTableMap::COL_UPDATED_AT])
+            ) {
+                unset($productAbstractIdTimestampMap[$idProductAbstract]);
+            }
+        }
+
+        return array_keys($productAbstractIdTimestampMap);
+    }
+
+    /**
+     * @param array<int, int> $productIdTimestampMap
+     *
+     * @return array<int>
+     */
+    public function getRelevantProductConcreteIdsToUpdate(array $productIdTimestampMap): array
+    {
+        $productData = $this->getFactory()
+            ->createProductConcretePageSearchQuery()
+            ->select([SpyProductConcretePageSearchTableMap::COL_FK_PRODUCT, SpyProductConcretePageSearchTableMap::COL_UPDATED_AT])
+            ->filterByFkProduct_In(array_keys($productIdTimestampMap))
+            ->find()
+            ->getData();
+
+        foreach ($productData as $product) {
+            $idProduct = $product[SpyProductConcretePageSearchTableMap::COL_FK_PRODUCT];
+            if (
+                !empty($productIdTimestampMap[$idProduct])
+                && $productIdTimestampMap[$idProduct] <= strtotime($product[SpyProductConcretePageSearchTableMap::COL_UPDATED_AT])
+            ) {
+                unset($productIdTimestampMap[$idProduct]);
+            }
+        }
+
+        return array_keys($productIdTimestampMap);
     }
 }

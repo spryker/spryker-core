@@ -14,6 +14,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractStoreTableMap;
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  */
 class ProductAbstractStoreProductConcretePageSearchUnpublishListener extends AbstractProductConcretePageSearchListener
 {

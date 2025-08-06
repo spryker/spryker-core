@@ -199,4 +199,17 @@
     <transfer name="EventEntity">
         <property name="modifiedColumns" type="array" singular="modifiedColumns"/>
     </transfer>
+
+    <transfer name="HydrateEventsRequest">
+        <property name="eventEntities" type="EventEntity[]" singular="eventEntity" description="Collection of event entities to be processed"/>
+        <property name="foreignKeyName" type="string" description="Name of the foreign key field used for grouping or identification"/>
+        <property name="additionalValueName" type="string" description="Name of the additional value field used for custom mapping or grouping"/>
+    </transfer>
+
+    <transfer name="HydrateEventsResponse">
+        <property name="idTimestampMap" type="array" associative="true" singular="id" description="Map of event entity IDs to their corresponding timestamps"/>
+        <property name="foreignKeyTimestampMap" type="array" associative="true" singular="foreignKey" description="Map of foreign key values to their corresponding timestamps"/>
+        <property name="additionalValueTimestampMap" type="array" associative="true" singular="additionalValue" description="Map of additional values to their corresponding timestamps"/>
+    </transfer>
+    
 </transfers>

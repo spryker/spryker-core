@@ -104,4 +104,14 @@
         <property name="storeName" type="string"/>
     </transfer>
 
+    <transfer name="HydrateEventsRequest">
+        <property name="eventEntities" type="EventEntity[]" singular="eventEntity" description="Collection of event entities to be processed"/>
+        <property name="foreignKeyName" type="string" description="Name of the foreign key field used for grouping or identification"/>
+    </transfer>
+
+    <transfer name="HydrateEventsResponse">
+        <property name="idTimestampMap" type="array" associative="true" singular="id" description="Map of event entity IDs to their corresponding timestamps"/>
+        <property name="foreignKeyTimestampMap" type="array" associative="true" singular="foreignKey" description="Map of foreign key values to their corresponding timestamps"/>
+    </transfer>
+
 </transfers>

@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
 /**
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductStorage\ProductStorageConfig getConfig()
@@ -27,12 +30,17 @@ class ProductConcreteProductAbstractStorageListener extends AbstractProductConcr
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
-        if (!$productAbstractIds) {
+        $hydrateEventsResponseTransfer = $this->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers)),
+        );
+
+        if (!$hydrateEventsResponseTransfer->getIdTimestampMap()) {
             return;
         }
 
-        $productIds = $this->getQueryContainer()->queryProductIdsByProductAbstractIds($productAbstractIds)->find()->getData();
-        $this->publishConcreteProducts($productIds);
+        $this->publishConcreteProducts(
+            $this->getRepository()->getProductIdTimestampMap($hydrateEventsResponseTransfer->getIdTimestampMap()),
+        );
     }
 }

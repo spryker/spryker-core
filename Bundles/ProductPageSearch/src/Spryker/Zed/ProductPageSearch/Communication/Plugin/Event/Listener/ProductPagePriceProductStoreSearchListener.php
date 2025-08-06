@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
@@ -14,6 +16,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
  * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\PriceProductDefaultProductPagePublishListener} instead.
  *
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
@@ -30,9 +33,12 @@ class ProductPagePriceProductStoreSearchListener extends AbstractProductPageSear
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $priceProductIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT);
-        $productAbstractIds = $this->getQueryContainer()->queryAllProductAbstractIdsByPriceProductIds($priceProductIds)->find()->getData();
+        $hydrateEventsResponseTransfer = $this->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers))
+                ->setForeignKeyName(SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT),
+        );
 
-        $this->publish($productAbstractIds);
+        $this->publish($this->getRepository()->getAllProductAbstractIdTimestampMapByPriceProductIds($hydrateEventsResponseTransfer->getForeignKeyTimestampMap()));
     }
 }

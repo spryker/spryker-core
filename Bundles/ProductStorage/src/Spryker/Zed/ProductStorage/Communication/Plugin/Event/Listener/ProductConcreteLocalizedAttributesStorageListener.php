@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
 /**
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductStorage\ProductStorageConfig getConfig()
@@ -28,11 +31,12 @@ class ProductConcreteLocalizedAttributesStorageListener extends AbstractProductC
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
-            $eventEntityTransfers,
-            SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT,
+        $hydrateEventsResponseTransfer = $this->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers))
+                ->setForeignKeyName(SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT),
         );
 
-        $this->publishConcreteProducts($productIds);
+        $this->publishConcreteProducts($hydrateEventsResponseTransfer->getForeignKeyTimestampMap());
     }
 }

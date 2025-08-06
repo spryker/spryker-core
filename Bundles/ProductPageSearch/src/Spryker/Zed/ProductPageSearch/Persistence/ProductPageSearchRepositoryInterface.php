@@ -26,11 +26,11 @@ interface ProductPageSearchRepositoryInterface
     public function getProductConcretePageSearchTransfers(array $productIds): array;
 
     /**
-     * @param array<string> $productConcreteSkus
+     * @param array<string, int> $productConcreteSkuTimestampMap
      *
-     * @return array<int>
+     * @return array<int, int>
      */
-    public function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus): array;
+    public function getProductAbstractIdTimestampMap(array $productConcreteSkuTimestampMap): array;
 
     /**
      * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
@@ -56,6 +56,15 @@ interface ProductPageSearchRepositoryInterface
      * @return array<int>
      */
     public function getProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): array;
+
+    /**
+     * @module PriceProduct
+     *
+     * @param array<int, int> $priceProductStoreIdTimestampMap
+     *
+     * @return array<int>
+     */
+    public function getProductAbstractIdTimestampMapByPriceProductStoreIds(array $priceProductStoreIdTimestampMap): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
@@ -87,11 +96,31 @@ interface ProductPageSearchRepositoryInterface
     public function getConcreteProductsByProductAbstractIds(array $productAbstractIds): array;
 
     /**
-     * @param list<int> $productImageSetIds
+     * @module ProductImage
      *
-     * @return list<int>
+     * @param array<int, int> $productImageSetIdTimestampMap
+     *
+     * @return array<int, int>
      */
-    public function getProductAbstractIdsByProductImageSetIds(array $productImageSetIds): array;
+    public function getProductAbstractIdsByProductImageSetIds(array $productImageSetIdTimestampMap): array;
+
+    /**
+     * @module ProductImage
+     *
+     * @param array<int, int> $productImageSetIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getConcreteProductIdTimestampMapByProductImageSetIds(array $productImageSetIdTimestampMap): array;
+
+    /**
+     * @module ProductImage
+     *
+     * @param array<int, int> $productImageIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getConcreteProductIdTimestampMapByProductImageIds(array $productImageIdTimestampMap): array;
 
     /**
      * @param list<int> $categoryNodeIds
@@ -106,4 +135,53 @@ interface ProductPageSearchRepositoryInterface
      * @return list<int>
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
+
+    /**
+     * @param array<int, int> $productIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getProductAbstractIdTimestampMapByProductIds(array $productIdTimestampMap): array;
+
+    /**
+     * @param array<int, int> $productAbstractIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getConcreteProductIdTimestampMapByProductAbstractIds(array $productAbstractIdTimestampMap): array;
+
+    /**
+     * @param array<int, int> $productImageIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getProductAbstractIdTimestampMapByProductImageId(array $productImageIdTimestampMap): array;
+
+    /**
+     * @param array<int, int> $priceTypeIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getAllProductAbstractIdTimestampMapByPriceTypeIds(array $priceTypeIdTimestampMap): array;
+
+    /**
+     * @param array<int, int> $productIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getAllProductAbstractIdTimestampMapByPriceProductIds(array $productIdTimestampMap): array;
+
+    /**
+     * @param array<int, int> $productAbstractIdTimestampMap
+     *
+     * @return array<int>
+     */
+    public function getRelevantProductAbstractIdsToUpdate(array $productAbstractIdTimestampMap): array;
+
+    /**
+     * @param array<int, int> $productIdTimestampMap
+     *
+     * @return array<int>
+     */
+    public function getRelevantProductConcreteIdsToUpdate(array $productIdTimestampMap): array;
 }

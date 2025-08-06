@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.2",
-        "spryker/event-behavior": "^1.10.0",
+        "spryker/event-behavior": "^1.32.0",
         "spryker/kernel": "^3.77.0",
         "spryker/laminas": "^1.0.0",
         "spryker/locale": "^3.1.0 || ^4.0.0",
@@ -30,7 +30,6 @@
         "spryker/container": "*",
         "spryker/event": "*",
         "spryker/product-attribute": "*",
-        "spryker/product-page-search": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
         "spryker/rabbit-mq": "*",

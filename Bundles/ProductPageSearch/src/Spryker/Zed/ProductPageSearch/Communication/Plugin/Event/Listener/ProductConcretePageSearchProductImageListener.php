@@ -7,13 +7,15 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
-use Generated\Shared\Transfer\ProductImageFilterTransfer;
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  */
 class ProductConcretePageSearchProductImageListener extends AbstractProductConcretePageSearchListener
 {
@@ -29,14 +31,13 @@ class ProductConcretePageSearchProductImageListener extends AbstractProductConcr
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $productImageIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferIds($eventEntityTransfers);
+        $hydrateEventsResponseTransfer = $this->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers)),
+        );
 
-        $productConcreteIds = $this->getFactory()
-            ->getProductImageFacade()
-            ->getProductConcreteIds((new ProductImageFilterTransfer())->setProductImageIds($productImageIds));
+        $productConcreteIdTimestampMap = $this->getRepository()->getConcreteProductIdTimestampMapByProductImageIds($hydrateEventsResponseTransfer->getIdTimestampMap());
 
-        $this->publish($productConcreteIds);
+        $this->publish($productConcreteIdTimestampMap);
     }
 }

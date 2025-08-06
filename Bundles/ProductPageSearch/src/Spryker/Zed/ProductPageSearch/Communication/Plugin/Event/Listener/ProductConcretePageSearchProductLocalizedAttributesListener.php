@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 
@@ -15,6 +17,7 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  */
 class ProductConcretePageSearchProductLocalizedAttributesListener extends AbstractProductConcretePageSearchListener
 {
@@ -28,16 +31,18 @@ class ProductConcretePageSearchProductLocalizedAttributesListener extends Abstra
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $productIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventEntityTransfers, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT);
-
         if (
             $eventName === ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_CREATE
             || $eventName === ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE
             || $eventName === ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_DELETE
         ) {
-            $this->publish($productIds);
+            $hydrateEventsResponseTransfer = $this->hydrateEventDataTransfer(
+                (new HydrateEventsRequestTransfer())
+                    ->setEventEntities(new ArrayObject($eventEntityTransfers))
+                    ->setForeignKeyName(SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT),
+            );
+
+            $this->publish($hydrateEventsResponseTransfer->getForeignKeyTimestampMap());
         }
     }
 }

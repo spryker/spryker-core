@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
 /**
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductStorage\ProductStorageConfig getConfig()
@@ -28,19 +31,20 @@ class ProductConcreteProductAbstractUrlStorageListener extends AbstractProductCo
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $productAbstractIds = $this->getValidProductIds($eventEntityTransfers);
-        if (!$productAbstractIds) {
+        $productAbstractIdTimestampMap = $this->getValidProductIds($eventEntityTransfers);
+        if (!$productAbstractIdTimestampMap) {
             return;
         }
 
-        $productIds = $this->getQueryContainer()->queryProductIdsByProductAbstractIds($productAbstractIds)->find()->getData();
-        $this->publishConcreteProducts($productIds);
+        $this->publishConcreteProducts(
+            $this->getRepository()->getProductIdTimestampMap($productAbstractIdTimestampMap),
+        );
     }
 
     /**
      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
-     * @return array
+     * @return array<int, int>
      */
     protected function getValidProductIds(array $eventTransfers)
     {
@@ -54,9 +58,10 @@ class ProductConcreteProductAbstractUrlStorageListener extends AbstractProductCo
             }
         }
 
-        return $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
-            $validEventTransfers,
-            SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT,
-        );
+        return $this->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($validEventTransfers))
+                ->setForeignKeyName(SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT),
+        )->getForeignKeyTimestampMap();
     }
 }

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductPageSearch\Dependency\Facade;
 
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
+use Generated\Shared\Transfer\HydrateEventsResponseTransfer;
+
 class ProductPageSearchToEventBehaviorFacadeBridge implements ProductPageSearchToEventBehaviorFacadeInterface
 {
     /**
@@ -41,6 +44,16 @@ class ProductPageSearchToEventBehaviorFacadeBridge implements ProductPageSearchT
     public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName)
     {
         return $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, $foreignKeyColumnName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\HydrateEventsRequestTransfer $hydrateEventsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\HydrateEventsResponseTransfer
+     */
+    public function hydrateEventDataTransfer(HydrateEventsRequestTransfer $hydrateEventsRequestTransfer): HydrateEventsResponseTransfer
+    {
+        return $this->eventBehaviorFacade->hydrateEventDataTransfer($hydrateEventsRequestTransfer);
     }
 
     /**

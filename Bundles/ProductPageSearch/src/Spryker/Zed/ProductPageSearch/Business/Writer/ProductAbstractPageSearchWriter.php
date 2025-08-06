@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business\Writer;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductAbstractPagePublisherInterface;
 use Spryker\Zed\ProductPageSearch\Business\Reader\CategoryReaderInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToEventBehaviorFacadeInterface;
@@ -73,14 +75,15 @@ class ProductAbstractPageSearchWriter implements ProductAbstractPageSearchWriter
      */
     public function writeProductAbstractPageSearchCollectionByProductImageSetToProductImageEvents(array $eventEntityTransfers): void
     {
-        $productImageSetIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
-            $eventEntityTransfers,
-            static::COL_FK_PRODUCT_IMAGE_SET,
+        $hydrateEventsResponseTransfer = $this->eventBehaviorFacade->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers))
+                ->setForeignKeyName(static::COL_FK_PRODUCT_IMAGE_SET),
         );
 
-        $productAbstractIds = $this->productPageSearchRepository->getProductAbstractIdsByProductImageSetIds($productImageSetIds);
+        $productAbstractIdTimestampMap = $this->productPageSearchRepository->getProductAbstractIdsByProductImageSetIds($hydrateEventsResponseTransfer->getForeignKeyTimestampMap());
 
-        $this->productAbstractPagePublisher->publish($productAbstractIds);
+        $this->productAbstractPagePublisher->publish($productAbstractIdTimestampMap);
     }
 
     /**

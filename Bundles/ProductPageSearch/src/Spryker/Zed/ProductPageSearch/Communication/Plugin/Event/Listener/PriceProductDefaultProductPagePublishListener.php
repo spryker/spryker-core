@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductDefaultTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
@@ -15,6 +17,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  */
 class PriceProductDefaultProductPagePublishListener extends AbstractProductPageSearchListener implements EventBulkHandlerInterface
 {
@@ -30,9 +33,13 @@ class PriceProductDefaultProductPagePublishListener extends AbstractProductPageS
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $priceProductStoreIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyPriceProductDefaultTableMap::COL_FK_PRICE_PRODUCT_STORE);
-        $productAbstractIds = $this->getFacade()->getProductAbstractIdsByPriceProductStoreIds($priceProductStoreIds);
+        $hydrateEventsResponseTransfer = $this->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers))
+                ->setForeignKeyName(SpyPriceProductDefaultTableMap::COL_FK_PRICE_PRODUCT_STORE),
+        );
+        $productAbstractIdTimestampMap = $this->getRepository()->getProductAbstractIdTimestampMapByPriceProductStoreIds($hydrateEventsResponseTransfer->getForeignKeyTimestampMap());
 
-        $this->publish($productAbstractIds);
+        $this->publish($productAbstractIdTimestampMap);
     }
 }

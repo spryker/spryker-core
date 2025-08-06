@@ -12,6 +12,7 @@ use Codeception\Stub;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage;
 use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery;
+use Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorageQuery;
 use ReflectionClass;
 use Spryker\Zed\ProductStorage\Business\ProductStorageFacade;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\AbstractProductConcreteStorageListener;
@@ -93,6 +94,30 @@ class ProductStorageCommunicationTester extends Actor
     public function mockProductStorageFacade(): ProductStorageFacade
     {
         return Stub::makeEmpty(ProductStorageFacade::class);
+    }
+
+    /**
+     * @param int $isAbstractProduct
+     *
+     * @return int|null
+     */
+    public function getAbstractProductStorageEntityTimestamp(int $isAbstractProduct): ?int
+    {
+        $spyProductAbstractStorageEntity = SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract($isAbstractProduct)->findOne();
+
+        return $spyProductAbstractStorageEntity ? $spyProductAbstractStorageEntity->getUpdatedAt()->getTimestamp() : null;
+    }
+
+    /**
+     * @param int $isProductConcrete
+     *
+     * @return int|null
+     */
+    public function getProductConcreteStorageEntityTimestamp(int $isProductConcrete): ?int
+    {
+        $spyAbstractConcreteStorageEntity = SpyProductConcreteStorageQuery::create()->filterByFkProduct($isProductConcrete)->findOne();
+
+        return $spyAbstractConcreteStorageEntity ? $spyAbstractConcreteStorageEntity->getUpdatedAt()->getTimestamp() : null;
     }
 
     /**

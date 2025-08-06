@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
+use Generated\Shared\Transfer\HydrateEventsResponseTransfer;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -16,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  */
-class AbstractProductPageSearchListener extends AbstractPlugin
+abstract class AbstractProductPageSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * @var array<int>
@@ -34,27 +37,33 @@ class AbstractProductPageSearchListener extends AbstractPlugin
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
-     * @param array<int> $productAbstractIds
+     * @param array<int, int|null> $productAbstractIdTimestampMap
      *
      * @return void
      */
-    protected function publish(array $productAbstractIds)
+    protected function publish(array $productAbstractIdTimestampMap)
     {
-        $productAbstractIds = array_values(array_unique(array_diff($productAbstractIds, static::$publishedProductAbstractIds)));
-        if ($productAbstractIds) {
-            $this->getFacade()->publish($productAbstractIds);
+        // Filters IDs if it had been processed in the current process
+        $productAbstractIds = array_values(array_unique(array_diff(array_keys($productAbstractIdTimestampMap), static::$publishedProductAbstractIds)));
+        // Exclude IDs if they were processed in current process
+        $productAbstractIdTimestampMap = array_intersect_key($productAbstractIdTimestampMap, array_flip($productAbstractIds));
+        // Filters IDs if it had been processed in parallel processes
+        $productAbstractIdsForUpdate = $this->getRepository()->getRelevantProductAbstractIdsToUpdate($productAbstractIdTimestampMap);
+
+        if ($productAbstractIdsForUpdate) {
+            $this->getFacade()->publish($productAbstractIdsForUpdate);
         }
         static::$publishedProductAbstractIds = array_merge(static::$publishedProductAbstractIds, $productAbstractIds);
     }
 
     /**
-     * @param array<int> $productAbstractIds
+     * @param array<int, int> $productAbstractIdTimestampMap
      *
      * @return void
      */
-    protected function unpublish(array $productAbstractIds)
+    protected function unpublish(array $productAbstractIdTimestampMap)
     {
-        $productAbstractIds = array_values(array_unique(array_diff($productAbstractIds, static::$unpublishedProductAbstractIds)));
+        $productAbstractIds = array_values(array_unique(array_diff(array_keys($productAbstractIdTimestampMap), static::$unpublishedProductAbstractIds)));
         if ($productAbstractIds) {
             $this->getFacade()->unpublish($productAbstractIds);
         }
@@ -96,5 +105,15 @@ class AbstractProductPageSearchListener extends AbstractPlugin
         }
 
         return $categoryNodeIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\HydrateEventsRequestTransfer $hydrateEventsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\HydrateEventsResponseTransfer
+     */
+    protected function hydrateEventDataTransfer(HydrateEventsRequestTransfer $hydrateEventsRequestTransfer): HydrateEventsResponseTransfer
+    {
+        return $this->getFactory()->getEventBehaviorFacade()->hydrateEventDataTransfer($hydrateEventsRequestTransfer);
     }
 }

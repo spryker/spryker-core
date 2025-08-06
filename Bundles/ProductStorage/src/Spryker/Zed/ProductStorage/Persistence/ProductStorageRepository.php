@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductStorage\Persistence;
 use Generator;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductStorage\Persistence\Map\SpyProductAbstractStorageTableMap;
+use Orm\Zed\ProductStorage\Persistence\Map\SpyProductConcreteStorageTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -137,7 +139,6 @@ class ProductStorageRepository extends AbstractRepository implements ProductStor
             ->orderByIdProductAbstractStorage()
             ->limit($limit)
             ->offset($offset);
-        $sitemapUrlTransfers = [];
         $productStorageMapper = $this->getFactory()->createProductStorageMapper();
 
         do {
@@ -168,5 +169,82 @@ class ProductStorageRepository extends AbstractRepository implements ProductStor
             ->distinct()
             ->find()
             ->getData();
+    }
+
+    /**
+     * @param array<int, int> $productAbstractIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getProductIdTimestampMap(array $productAbstractIdTimestampMap): array
+    {
+        $concreteProductIdTimestampMap = [];
+        $concreteProductData = $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProduct()
+            ->select([SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->filterByFkProductAbstract_In(array_keys($productAbstractIdTimestampMap))
+            ->find()
+            ->getData();
+
+        foreach ($concreteProductData as $concreteProduct) {
+            $concreteProductIdTimestampMap[(int)$concreteProduct[SpyProductTableMap::COL_ID_PRODUCT]] = $productAbstractIdTimestampMap[$concreteProduct[SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT]];
+        }
+
+        return $concreteProductIdTimestampMap;
+    }
+
+    /**
+     * @param array<int, int> $productAbstractIdTimestampMap
+     *
+     * @return array<int>
+     */
+    public function getRelevantProductAbstractIdsToUpdate(array $productAbstractIdTimestampMap): array
+    {
+        $productAbstractData = $this->getFactory()
+            ->createSpyProductAbstractStorageQuery()
+            ->select([SpyProductAbstractStorageTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductAbstractStorageTableMap::COL_UPDATED_AT])
+            ->filterByFkProductAbstract_In(array_keys($productAbstractIdTimestampMap))
+            ->find()
+            ->getData();
+
+        foreach ($productAbstractData as $productAbstract) {
+            $idProductAbstract = $productAbstract[SpyProductAbstractStorageTableMap::COL_FK_PRODUCT_ABSTRACT];
+            if (
+                !empty($productAbstractIdTimestampMap[$idProductAbstract])
+                && $productAbstractIdTimestampMap[$idProductAbstract] <= strtotime($productAbstract[SpyProductAbstractStorageTableMap::COL_UPDATED_AT])
+            ) {
+                unset($productAbstractIdTimestampMap[$idProductAbstract]);
+            }
+        }
+
+        return array_keys($productAbstractIdTimestampMap);
+    }
+
+    /**
+     * @param array<int, int> $productIdTimestampMap
+     *
+     * @return array<int>
+     */
+    public function getRelevantProductConcreteIdsToUpdate(array $productIdTimestampMap): array
+    {
+        $productData = $this->getFactory()
+            ->createSpyProductConcreteStorageQuery()
+            ->select([SpyProductConcreteStorageTableMap::COL_FK_PRODUCT, SpyProductConcreteStorageTableMap::COL_UPDATED_AT])
+            ->filterByFkProduct_In(array_keys($productIdTimestampMap))
+            ->find()
+            ->getData();
+
+        foreach ($productData as $product) {
+            $idProduct = $product[SpyProductConcreteStorageTableMap::COL_FK_PRODUCT];
+            if (
+                !empty($productIdTimestampMap[$idProduct])
+                && $productIdTimestampMap[$idProduct] <= strtotime($product[SpyProductConcreteStorageTableMap::COL_UPDATED_AT])
+            ) {
+                unset($productIdTimestampMap[$idProduct]);
+            }
+        }
+
+        return array_keys($productIdTimestampMap);
     }
 }

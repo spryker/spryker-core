@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
 /**
@@ -35,16 +37,18 @@ class ProductPageAvailabilityStockSearchListener extends AbstractProductPageSear
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $productConcreteSkus = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransfersAdditionalValues($eventEntityTransfers, static::COL_SKU);
+        $hydrateEventsResponseTransfer = $this->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers))
+                ->setAdditionalValueName(static::COL_SKU),
+        );
 
-        $productAbstractIds = $this->getRepository()->getProductAbstractIdsByProductConcreteSkus($productConcreteSkus);
+        $productAbstractIdTimestampMap = $this->getRepository()->getProductAbstractIdTimestampMap($hydrateEventsResponseTransfer->getAdditionalValueTimestampMap());
 
-        if (!$productAbstractIds) {
+        if (!$productAbstractIdTimestampMap) {
             return;
         }
 
-        $this->publish($productAbstractIds);
+        $this->publish($productAbstractIdTimestampMap);
     }
 }

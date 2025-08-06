@@ -12,6 +12,7 @@ use Codeception\Stub;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\Base\SpyProductAbstractPageSearch;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
+use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
 use ReflectionClass;
 use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\AbstractProductConcretePageSearchListener;
@@ -111,5 +112,29 @@ class ProductPageSearchCommunicationTester extends Actor
     protected function getProductAbstractPageSearchPropelQuery(): SpyProductAbstractPageSearchQuery
     {
         return SpyProductAbstractPageSearchQuery::create();
+    }
+
+    /**
+     * @param int $isAbstractProduct
+     *
+     * @return int|null
+     */
+    public function getProductAbstractPageSearchEntityTimestamp(int $isAbstractProduct): ?int
+    {
+        $spyProductAbstractPageSearchEntity = SpyProductAbstractPageSearchQuery::create()->findOneByFkProductAbstract($isAbstractProduct);
+
+        return $spyProductAbstractPageSearchEntity ? $spyProductAbstractPageSearchEntity->getUpdatedAt()->getTimestamp() : null;
+    }
+
+    /**
+     * @param int $isProductConcrete
+     *
+     * @return int|null
+     */
+    public function getProductConcreteStorageEntityTimestamp(int $isProductConcrete): ?int
+    {
+        $spyProductConcretePageSearchEntity = SpyProductConcretePageSearchQuery::create()->findOneByFkProduct($isProductConcrete);
+
+        return $spyProductConcretePageSearchEntity ? $spyProductConcretePageSearchEntity->getUpdatedAt()->getTimestamp() : null;
     }
 }

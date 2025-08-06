@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 
 /**
@@ -14,6 +16,7 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  */
 class ProductConcretePageSearchProductAbstractListener extends AbstractProductConcretePageSearchListener
 {
@@ -27,38 +30,18 @@ class ProductConcretePageSearchProductAbstractListener extends AbstractProductCo
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $productAbstractIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferIds($eventEntityTransfers);
-
-        $productIds = $this->getProductIds($productAbstractIds);
+        $hydrateEventsResponseTransfer = $this->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers)),
+        );
+        $productIdTimestampMap = $this->getRepository()->getConcreteProductIdTimestampMapByProductAbstractIds($hydrateEventsResponseTransfer->getIdTimestampMap());
 
         if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE) {
-            $this->unpublish($productIds);
+            $this->unpublish($productIdTimestampMap);
         }
 
         if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE || $eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE) {
-            $this->publish($productIds);
+            $this->publish($productIdTimestampMap);
         }
-    }
-
-    /**
-     * @param array<int> $productAbstractIds
-     *
-     * @return array<int>
-     */
-    protected function getProductIds(array $productAbstractIds): array
-    {
-        $productIds = [];
-        foreach ($productAbstractIds as $idProductAbstract) {
-            $productIds = array_merge(
-                $productIds,
-                $this->getFactory()
-                    ->getProductFacade()
-                    ->findProductConcreteIdsByAbstractProductId($idProductAbstract),
-            );
-        }
-
-        return $productIds;
     }
 }

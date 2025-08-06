@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
-use Generated\Shared\Transfer\ProductImageFilterTransfer;
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetToProductImageTableMap;
 
 /**
@@ -15,6 +16,7 @@ use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetToProductImageTableMa
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  */
 class ProductConcretePageSearchProductImageSetToProductImageListener extends AbstractProductConcretePageSearchListener
 {
@@ -30,14 +32,14 @@ class ProductConcretePageSearchProductImageSetToProductImageListener extends Abs
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $productImageSetIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventEntityTransfers, SpyProductImageSetToProductImageTableMap::COL_FK_PRODUCT_IMAGE_SET);
+        $hydrateEventsResponseTransfer = $this->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers))
+                ->setForeignKeyName(SpyProductImageSetToProductImageTableMap::COL_FK_PRODUCT_IMAGE_SET),
+        );
 
-        $productConcreteIds = $this->getFactory()
-            ->getProductImageFacade()
-            ->getProductConcreteIds((new ProductImageFilterTransfer())->setProductImageSetIds($productImageSetIds));
+        $productConcreteIdTimestampMap = $this->getRepository()->getConcreteProductIdTimestampMapByProductImageSetIds($hydrateEventsResponseTransfer->getForeignKeyTimestampMap());
 
-        $this->publish($productConcreteIds);
+        $this->publish($productConcreteIdTimestampMap);
     }
 }

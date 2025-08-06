@@ -10,17 +10,20 @@ namespace SprykerTest\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractStoreTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery;
 use Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorageQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use PHPUnit\Framework\MockObject\Rule\InvokedCount as InvokedCountMatcher;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductStorage\Business\ProductStorageBusinessFactory;
 use Spryker\Zed\ProductStorage\Business\ProductStorageFacade;
@@ -114,7 +117,6 @@ class ProductStorageListenerTest extends Unit
     public function testProductAbstractStorageListenerStoreDataToProcessUniqueProducts(): void
     {
         // Assert
-        SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $productStorageFacadeMock = $this->tester->mockProductStorageFacade();
         $productStorageFacadeMock->expects($this->once())
             ->method('publishAbstractProducts')
@@ -154,7 +156,6 @@ class ProductStorageListenerTest extends Unit
     public function testProductConcreteStorageListenerStoreDataToProcessUniqueProducts(): void
     {
         // Assert
-        SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $productStorageFacadeMock = $this->tester->mockProductStorageFacade();
         $productStorageFacadeMock->expects($this->once())
             ->method('publishConcreteProducts')
@@ -164,8 +165,8 @@ class ProductStorageListenerTest extends Unit
             ->with([$this->productConcreteTransfer->getIdProductConcrete(), 1234]);
 
         // Arrange
-        $productConcreteLocalizedAttributesStorageListener = new ProductConcreteLocalizedAttributesStorageListener();
-        $productConcreteLocalizedAttributesStorageListener->setFacade($productStorageFacadeMock);
+        $productConcreteStoragePublishListener = new ProductConcreteStoragePublishListener();
+        $productConcreteStoragePublishListener->setFacade($productStorageFacadeMock);
         $productConcreteProductAbstractStorageListener = new ProductConcreteProductAbstractStorageListener();
         $productConcreteProductAbstractStorageListener->setFacade($productStorageFacadeMock);
         $productConcreteStoragePublishListener = new ProductConcreteStoragePublishListener();
@@ -178,9 +179,60 @@ class ProductStorageListenerTest extends Unit
         ];
 
         // Act
-        $productConcreteLocalizedAttributesStorageListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_CONCRETE_PUBLISH);
+        $productConcreteStoragePublishListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_CONCRETE_PUBLISH);
         $productConcreteProductAbstractStorageListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_CONCRETE_PUBLISH);
         $productConcreteStoragePublishListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_CONCRETE_UNPUBLISH);
+    }
+
+    /**
+     * @dataProvider getProductListenerDataProvider
+     *
+     * @param \Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface $listener
+     * @param callable $callableEventEntityTransfer
+     * @param string $eventName
+     * @param int $deltaTime
+     * @param \PHPUnit\Framework\MockObject\Rule\InvokedCount $invokedCountMatcher
+     * @param bool $isAbstractProduct
+     *
+     * @return void
+     */
+    public function testProductStorageListenerEventsWithTimestamps(
+        EventBulkHandlerInterface $listener,
+        callable $callableEventEntityTransfer,
+        string $eventName,
+        int $deltaTime,
+        InvokedCountMatcher $invokedCountMatcher,
+        bool $isAbstractProduct
+    ): void {
+        // Arrange
+        $lastStorageTimestamp =
+            $isAbstractProduct ?
+                $this->tester->getAbstractProductStorageEntityTimestamp($this->productConcreteTransfer->getFkProductAbstract()) :
+                $this->tester->getProductConcreteStorageEntityTimestamp($this->productConcreteTransfer->getIdProductConcrete());
+        if ($lastStorageTimestamp === null) {
+            $productStoragePublishListener = $isAbstractProduct ? new ProductAbstractStoragePublishListener() : new ProductConcreteStoragePublishListener();
+            $productStoragePublishListener->handleBulk([(new EventEntityTransfer())->setId($isAbstractProduct ? $this->productConcreteTransfer->getFkProductAbstract() : $this->productConcreteTransfer->getIdProductConcrete())], $eventName);
+            $this->tester->cleanUpProcessedConcreteProductIds();
+            $this->tester->cleanUpProcessedAbstractProductIds();
+        }
+
+        // Assert
+        $productStorageFacadeMock = $this->tester->mockProductStorageFacade();
+        $productStorageFacadeMock->expects($invokedCountMatcher)->method($isAbstractProduct ? 'publishAbstractProducts' : 'publishConcreteProducts');
+
+        // Arrange
+        $lastStorageTimestamp =
+            $isAbstractProduct ?
+                $this->tester->getAbstractProductStorageEntityTimestamp($this->productConcreteTransfer->getFkProductAbstract()) :
+                $this->tester->getProductConcreteStorageEntityTimestamp($this->productConcreteTransfer->getIdProductConcrete());
+        $listener->setFacade($productStorageFacadeMock);
+        $eventEntityTransfer = $callableEventEntityTransfer($this->productConcreteTransfer);
+        $eventEntityTransfer->setTimestamp($lastStorageTimestamp + $deltaTime);
+
+        // Act
+        $listener->handleBulk([$eventEntityTransfer], $eventName);
+        $this->tester->cleanUpProcessedConcreteProductIds();
+        $this->tester->cleanUpProcessedAbstractProductIds();
     }
 
     /**
@@ -592,5 +644,250 @@ class ProductStorageListenerTest extends Unit
     protected function getStoreFacade(): StoreFacadeInterface
     {
         return $this->tester->getLocator()->store()->facade();
+    }
+
+    /**
+     * @return array
+     */
+    public function getProductListenerDataProvider(): array
+    {
+        return [
+             // concrete product - events when earlier or equal timestamp
+            'ProductConcreteProductAbstractStorageListener with earlier or equal timestamp' => [
+                new ProductConcreteProductAbstractStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())->setId($productConcreteTransfer->getFkProductAbstract());
+                },
+                ProductEvents::PRODUCT_CONCRETE_PUBLISH,
+                0,
+                $this->never(),
+                false,
+            ],
+            'ProductConcreteLocalizedAttributesStorageListener with earlier or equal timestamp' => [
+                new ProductConcreteLocalizedAttributesStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())
+                        ->setId($productConcreteTransfer->getFkProductAbstract())
+                        ->setForeignKeys([SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete()]);
+                },
+                ProductEvents::PRODUCT_CONCRETE_PUBLISH,
+                0,
+                $this->never(),
+                false,
+            ],
+            'ProductConcreteProductAbstractUrlStorageListener with earlier or equal timestamp' => [
+                new ProductConcreteProductAbstractUrlStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())
+                        ->setId(1)
+                        ->setModifiedColumns([SpyUrlTableMap::COL_URL, SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT])
+                        ->setForeignKeys([SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract()]);
+                },
+                ProductEvents::PRODUCT_CONCRETE_PUBLISH,
+                0,
+                $this->never(),
+                false,
+            ],
+            'ProductConcreteStoragePublishListener with earlier or equal timestamp' => [
+                new ProductConcreteStoragePublishListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())->setId($productConcreteTransfer->getIdProductConcrete());
+                },
+                ProductEvents::PRODUCT_CONCRETE_PUBLISH,
+                0,
+                $this->never(),
+                false,
+            ],
+            'ProductConcreteProductAbstractRelationStorageListener with earlier or equal timestamp' => [
+                new ProductConcreteProductAbstractRelationStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())
+                        ->setId(1)
+                        ->setForeignKeys([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract()]);
+                },
+                ProductEvents::PRODUCT_CONCRETE_PUBLISH,
+                0,
+                $this->never(),
+                false,
+            ],
+            'ProductConcreteProductAbstractLocalizedAttributesStorageListener with earlier or equal timestamp' => [
+                new ProductConcreteProductAbstractLocalizedAttributesStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())
+                        ->setId(1)
+                        ->setForeignKeys([SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract()]);
+                },
+                ProductEvents::PRODUCT_CONCRETE_PUBLISH,
+                0,
+                $this->never(),
+                false,
+            ],
+            // concrete product - new events with a later timestamp
+            'ProductConcreteProductAbstractStorageListener with a later timestamp' => [
+                new ProductConcreteProductAbstractStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())->setId($productConcreteTransfer->getFkProductAbstract());
+                },
+                ProductEvents::PRODUCT_CONCRETE_PUBLISH,
+                1,
+                $this->once(),
+                false,
+            ],
+            'ProductConcreteLocalizedAttributesStorageListener with a later timestamp' => [
+                new ProductConcreteLocalizedAttributesStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())
+                        ->setId($productConcreteTransfer->getFkProductAbstract())
+                        ->setForeignKeys([SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete()]);
+                },
+                ProductEvents::PRODUCT_CONCRETE_PUBLISH,
+                1,
+                $this->once(),
+                false,
+            ],
+            'ProductConcreteProductAbstractUrlStorageListener with a later timestamp' => [
+                new ProductConcreteProductAbstractUrlStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())
+                        ->setId(1)
+                        ->setModifiedColumns([SpyUrlTableMap::COL_URL, SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT])
+                        ->setForeignKeys([SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract()]);
+                },
+                ProductEvents::PRODUCT_CONCRETE_PUBLISH,
+                1,
+                $this->once(),
+                false,
+            ],
+            'ProductConcreteStoragePublishListener with a later timestamp' => [
+                new ProductConcreteStoragePublishListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())->setId($productConcreteTransfer->getIdProductConcrete());
+                },
+                ProductEvents::PRODUCT_CONCRETE_PUBLISH,
+                1,
+                $this->once(),
+                false,
+            ],
+            'ProductConcreteProductAbstractRelationStorageListener with a later timestamp' => [
+                new ProductConcreteProductAbstractRelationStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())
+                        ->setId(1)
+                        ->setForeignKeys([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract()]);
+                },
+                ProductEvents::PRODUCT_CONCRETE_PUBLISH,
+                1,
+                $this->once(),
+                false,
+            ],
+            'ProductConcreteProductAbstractLocalizedAttributesStorageListener with a later timestamp' => [
+                new ProductConcreteProductAbstractLocalizedAttributesStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())
+                        ->setId(1)
+                        ->setForeignKeys([SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract()]);
+                },
+                ProductEvents::PRODUCT_CONCRETE_PUBLISH,
+                1,
+                $this->once(),
+                false,
+            ],
+            // abstract product - events when earlier or equal timestamp
+            'ProductAbstractStoragePublishListener with earlier or equal timestamp' => [
+                new ProductAbstractStoragePublishListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())->setId($productConcreteTransfer->getFkProductAbstract());
+                },
+                ProductEvents::PRODUCT_ABSTRACT_PUBLISH,
+                1,
+                $this->once(),
+                true,
+            ],
+            'ProductAbstractLocalizedAttributesStorageListener with earlier or equal timestamp' => [
+                new ProductAbstractLocalizedAttributesStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())
+                        ->setId(1)
+                        ->setForeignKeys([SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT => $productConcreteTransfer->getIdProductConcrete()]);
+                },
+                ProductEvents::PRODUCT_ABSTRACT_PUBLISH,
+                1,
+                $this->once(),
+                true,
+            ],
+            'ProductAbstractStoreStorageListener with earlier or equal timestamp' => [
+                new ProductAbstractStoreStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())
+                        ->setId(1)
+                        ->setForeignKeys([SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract()]);
+                },
+                ProductEvents::PRODUCT_ABSTRACT_PUBLISH,
+                1,
+                $this->once(),
+                true,
+            ],
+            'ProductAbstractUrlStorageListener with earlier or equal timestamp' => [
+                new ProductAbstractUrlStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())
+                        ->setId(1)
+                        ->setForeignKeys([SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract()])
+                        ->setModifiedColumns([SpyUrlTableMap::COL_URL, SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT]);
+                },
+                ProductEvents::PRODUCT_ABSTRACT_PUBLISH,
+                1,
+                $this->once(),
+                true,
+            ],
+            // abstract product - new events with a later timestamp
+            'ProductAbstractStoragePublishListener with a later timestamp' => [
+                new ProductAbstractStoragePublishListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())->setId($productConcreteTransfer->getFkProductAbstract());
+                },
+                ProductEvents::PRODUCT_ABSTRACT_PUBLISH,
+                1,
+                $this->once(),
+                true,
+            ],
+            'ProductAbstractLocalizedAttributesStorageListener with a later timestamp' => [
+                new ProductAbstractLocalizedAttributesStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())
+                        ->setId(1)
+                        ->setForeignKeys([SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT => $productConcreteTransfer->getIdProductConcrete()]);
+                },
+                ProductEvents::PRODUCT_ABSTRACT_PUBLISH,
+                1,
+                $this->once(),
+                true,
+            ],
+            'ProductAbstractStoreStorageListener with a later timestamp' => [
+                new ProductAbstractStoreStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())
+                        ->setId(1)
+                        ->setForeignKeys([SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract()]);
+                },
+                ProductEvents::PRODUCT_ABSTRACT_PUBLISH,
+                1,
+                $this->once(),
+                true,
+            ],
+            'ProductAbstractUrlStorageListener with a later timestamp' => [
+                new ProductAbstractUrlStorageListener(),
+                function (ProductConcreteTransfer $productConcreteTransfer): EventEntityTransfer {
+                    return (new EventEntityTransfer())
+                        ->setId(1)
+                        ->setForeignKeys([SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract()])
+                        ->setModifiedColumns([SpyUrlTableMap::COL_URL, SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT]);
+                },
+                ProductEvents::PRODUCT_ABSTRACT_PUBLISH,
+                1,
+                $this->once(),
+                true,
+            ],
+        ];
     }
 }

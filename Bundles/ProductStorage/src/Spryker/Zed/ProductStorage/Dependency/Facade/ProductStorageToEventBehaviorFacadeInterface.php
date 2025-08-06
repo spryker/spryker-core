@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
+use Generated\Shared\Transfer\HydrateEventsResponseTransfer;
+
 interface ProductStorageToEventBehaviorFacadeInterface
 {
     /**
@@ -22,5 +25,12 @@ interface ProductStorageToEventBehaviorFacadeInterface
      *
      * @return array
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
+    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\HydrateEventsRequestTransfer $hydrateEventsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\HydrateEventsResponseTransfer
+     */
+    public function hydrateEventDataTransfer(HydrateEventsRequestTransfer $hydrateEventsRequestTransfer): HydrateEventsResponseTransfer;
 }

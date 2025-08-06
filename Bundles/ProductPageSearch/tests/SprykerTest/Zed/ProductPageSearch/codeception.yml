@@ -65,6 +65,7 @@ suites:
                 - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper
+                - SprykerTest\Client\Queue\Helper\QueueHelper
                 - \SprykerTest\Client\RabbitMq\Helper\RabbitMqHelper
                 - \SprykerTest\Client\Testify\Helper\ClientHelper
                 - \SprykerTest\Client\Testify\Helper\ConfigHelper

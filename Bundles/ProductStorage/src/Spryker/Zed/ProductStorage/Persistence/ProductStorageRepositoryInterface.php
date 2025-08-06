@@ -48,6 +48,27 @@ interface ProductStorageRepositoryInterface
     public function getSitemapGeneratorUrls(string $storeName, int $limit): Generator;
 
     /**
+     * @param array<int, int> $productAbstractIdTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getProductIdTimestampMap(array $productAbstractIdTimestampMap): array;
+
+    /**
+     * @param array<int, int> $productIdTimestampMap
+     *
+     * @return array<int>
+     */
+    public function getRelevantProductConcreteIdsToUpdate(array $productIdTimestampMap): array;
+
+    /**
+     * @param array<int, int> $productAbstractIdTimestampMap
+     *
+     * @return array<int>
+     */
+    public function getRelevantProductAbstractIdsToUpdate(array $productAbstractIdTimestampMap): array;
+
+    /**
      * @param list<int> $productIds
      *
      * @return list<int>

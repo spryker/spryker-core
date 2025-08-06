@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 
@@ -15,6 +17,7 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
  *   and {@link Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductAbstractUnpublishListener} instead.
  *
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
@@ -31,15 +34,18 @@ class ProductPageProductAbstractListener extends AbstractProductPageSearchListen
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
+        $hydrateEventsResponseTransfer = $this->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers)),
+        );
 
         if (
             $eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE ||
             $eventName === ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH
         ) {
-            $this->unpublish($productAbstractIds);
+            $this->unpublish($hydrateEventsResponseTransfer->getIdTimestampMap());
         } else {
-            $this->publish($productAbstractIds);
+            $this->publish($hydrateEventsResponseTransfer->getIdTimestampMap());
         }
     }
 }

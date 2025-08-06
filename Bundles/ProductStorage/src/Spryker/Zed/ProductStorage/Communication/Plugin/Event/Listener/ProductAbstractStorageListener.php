@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 
@@ -14,6 +16,7 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
  * @deprecated Use {@link \Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductAbstractStoragePublishListener} and {@link \Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductAbstractStorageUnpublishListener} instead.
  *
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductStorage\ProductStorageConfig getConfig()
@@ -30,15 +33,17 @@ class ProductAbstractStorageListener extends AbstractProductStorageListener impl
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
-
+        $hydrateEventsResponseTransfer = $this->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers)),
+        );
         if (
             $eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE ||
             $eventName === ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH
         ) {
-            $this->unpublishProductAbstracts($productAbstractIds);
+            $this->unpublishProductAbstracts($hydrateEventsResponseTransfer->getIdTimestampMap());
         } else {
-            $this->publishAbstractProducts($productAbstractIds);
+            $this->publishAbstractProducts($hydrateEventsResponseTransfer->getIdTimestampMap());
         }
     }
 }
