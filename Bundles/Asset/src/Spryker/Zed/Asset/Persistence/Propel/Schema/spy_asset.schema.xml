@@ -8,7 +8,7 @@
         <column name="asset_name" required="true" type="VARCHAR" size="255" description="The name of an asset."/>
         <column name="asset_content" required="true" type="LONGVARCHAR" description="The content of an asset."/>
         <column name="is_active" required="false" type="BOOLEAN" default="true" description="A boolean flag indicating if an entity is currently active."/>
-        <column name="last_message_timestamp" required="false" type="TIMESTAMP" description="The timestamp of the last message received for an asset, used for synchronization."/>
+        <column name="last_message_timestamp" required="false" size="6" type="TIMESTAMP" description="The timestamp of the last message received for an asset, used for synchronization."/>
 
         <unique name="spy_asset-unique-asset_uuid">
             <unique-column name="asset_uuid"/>

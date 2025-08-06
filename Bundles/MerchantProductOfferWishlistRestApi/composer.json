@@ -6,9 +6,9 @@
     "require": {
         "php": ">=8.2",
         "spryker/kernel": "^3.33.0",
+        "spryker/transfer": "^3.42.0",
         "spryker/wishlist": "^8.4.0",
-        "spryker/wishlists-rest-api-extension": "^1.0.0",
-        "spryker/transfer": "^3.42.0"
+        "spryker/wishlists-rest-api-extension": "^1.0.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
