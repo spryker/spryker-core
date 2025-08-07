@@ -82,8 +82,9 @@ class ProductAbstractPageSearchWriter implements ProductAbstractPageSearchWriter
         );
 
         $productAbstractIdTimestampMap = $this->productPageSearchRepository->getProductAbstractIdsByProductImageSetIds($hydrateEventsResponseTransfer->getForeignKeyTimestampMap());
+        $productAbstractIdsForUpdate = $this->productPageSearchRepository->getRelevantProductAbstractIdsToUpdate($productAbstractIdTimestampMap);
 
-        $this->productAbstractPagePublisher->publish($productAbstractIdTimestampMap);
+        $this->productAbstractPagePublisher->publish($productAbstractIdsForUpdate);
     }
 
     /**
