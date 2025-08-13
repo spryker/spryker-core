@@ -5,11 +5,11 @@
     "license": "proprietary",
     "require": {
         "galbar/jsonpath": "^1.0",
-        "php": ">=8.2"
+        "php": ">=8.3"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "scripts": {},
+    "scripts": [],
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"

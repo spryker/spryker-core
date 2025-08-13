@@ -8,8 +8,7 @@
 
 namespace Spryker\Shared\SessionFile\Handler;
 
-if (PHP_VERSION_ID >= 80200) {
-    trait SessionHandlerFileTrait
+trait SessionHandlerFileTrait
     {
         /**
          * @param string $savePath
@@ -104,102 +103,4 @@ if (PHP_VERSION_ID >= 80200) {
          * @return int|false
          */
         abstract protected function executeGc(int $maxLifetime): int|false;
-    }
-} else {
-    trait SessionHandlerFileTrait
-    {
-        /**
-         * @param string $savePath
-         * @param string $sessionName
-         *
-         * @return bool
-         */
-        #[\ReturnTypeWillChange]
-        public function open($savePath, $sessionName)
-        {
-            return $this->executeOpen($savePath, $sessionName);
-        }
-
-        /**
-         * @param string $sessionId
-         *
-         * @return string
-         */
-        #[\ReturnTypeWillChange]
-        public function read(string $sessionId): string
-        {
-            return $this->executeRead($sessionId);
-        }
-
-        /**
-         * @param string $sessionId
-         * @param string $sessionData
-         *
-         * @return bool
-         */
-        #[\ReturnTypeWillChange]
-        public function write($sessionId, $sessionData)
-        {
-            return $this->executeWrite($sessionId, $sessionData);
-        }
-
-        /**
-         * @param string $sessionId
-         *
-         * @return bool
-         */
-        #[\ReturnTypeWillChange]
-        public function destroy($sessionId)
-        {
-            return $this->executeDestroy($sessionId);
-        }
-
-        /**
-         * @param int $maxLifetime
-         *
-         * @return int|false
-         */
-        #[\ReturnTypeWillChange]
-        public function gc($maxLifetime)
-        {
-            return $this->executeGc($maxLifetime);
-        }
-
-        /**
-         * @param string $savePath
-         * @param string $sessionName
-         *
-         * @return bool
-         */
-        abstract protected function executeOpen(string $savePath, string $sessionName): bool;
-
-        /**
-         * @param string $sessionId
-         *
-         * @return string
-         */
-        abstract protected function executeRead(string $sessionId): string;
-
-        /**
-         * @param string $sessionId
-         * @param string $sessionData
-         *
-         * @return bool
-         */
-        abstract protected function executeWrite(string $sessionId, string $sessionData): bool;
-
-        /**
-         * @param string $sessionId
-         *
-         * @return bool
-         */
-        abstract protected function executeDestroy(string $sessionId): bool;
-
-        /**
-         * @param int $maxLifetime
-         *
-         * @return int|false
-         */
-        abstract protected function executeGc(int $maxLifetime): int|false;
-    }
 }

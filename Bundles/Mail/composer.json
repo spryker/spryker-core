@@ -4,7 +4,7 @@
     "description": "Mail module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/glossary": "^3.0.0",
         "spryker/kernel": "^3.52.0",
         "spryker/locale": "^3.0.0 || ^4.0.0",

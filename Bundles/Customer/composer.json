@@ -4,7 +4,7 @@
     "description": "Customer module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/authorization-extension": "^1.0.0",
         "spryker/checkout-extension": "^1.2.0",

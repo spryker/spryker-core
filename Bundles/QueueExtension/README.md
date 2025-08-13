@@ -1,6 +1,6 @@
 # QueueExtension Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/queue-extension/v/stable.svg)](https://packagist.org/packages/spryker/queue-extension)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.3-8892BF.svg)](https://php.net/)
 
 Queue extension provides plugin interfaces for the queue functionality.
 

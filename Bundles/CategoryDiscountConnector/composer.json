@@ -4,7 +4,7 @@
     "description": "CategoryDiscountConnector module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/category": "^5.8.0",
         "spryker/discount": "^9.0.0",
         "spryker/discount-extension": "^1.2.0",

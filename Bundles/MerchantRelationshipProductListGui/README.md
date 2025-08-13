@@ -1,6 +1,6 @@
 # MerchantRelationshipProductListGui Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/merchant-relationship-product-list-gui/v/stable.svg)](https://packagist.org/packages/spryker/merchant-relationship-product-list-gui)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.3-8892BF.svg)](https://php.net/)
 
 MerchantRelationshipProductListGui is a user interface module to manage product lists in the Zed Administration Interface.
 

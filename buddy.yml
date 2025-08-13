@@ -13,7 +13,7 @@
       - action: Build Project
         type: BUILD
         docker_image_name: spryker/php
-        docker_image_tag: 8.2
+        docker_image_tag: 8.3
         execute_commands:
             - 'composer config github-oauth.github.com ${GITHUB_TOKEN}'
             - COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --prefer-dist --optimize-autoloader
@@ -39,7 +39,7 @@
       - action: PHP Validation
         type: BUILD
         docker_image_name: spryker/php
-        docker_image_tag: 8.2
+        docker_image_tag: 8.3
         execute_commands:
             - chmod +x *.sh
             - bash ci_check_touched_modules.sh
@@ -48,7 +48,7 @@
       - action: Module codeception include checker
         type: BUILD
         docker_image_name: spryker/php
-        docker_image_tag: 8.2
+        docker_image_tag: 8.3
         execute_commands:
             - chmod +x *.sh
             - bash ci_check_module_codeception.sh Bundles SprykerTest

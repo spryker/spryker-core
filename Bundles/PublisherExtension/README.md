@@ -1,6 +1,6 @@
 # PublisherExtension Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/publisher-extension/v/stable.svg)](https://packagist.org/packages/spryker/publisher-extension)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.3-8892BF.svg)](https://php.net/)
 
 PublisherExtension is providing a set of publisher plugin interfaces for Storage and Search modules.
 

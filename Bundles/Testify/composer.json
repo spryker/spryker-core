@@ -7,7 +7,7 @@
         "codeception/codeception": "^5.1.2",
         "fakerphp/faker": "^1.16.0",
         "mikey179/vfsstream": "^1.6.7",
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/application": "^3.12.0",
         "spryker/application-extension": "^1.0.0",
         "spryker/config": "^3.5.0",

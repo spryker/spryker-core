@@ -4,7 +4,7 @@
     "description": "PaymentAppShipment module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/kernel": "^3.30.0",
         "spryker/payment-app-extension": "^1.1.0",
         "spryker/shipment": "^8.0.0",

@@ -4,7 +4,7 @@
     "description": "SalesOrderAmendment module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/availability-extension": "^1.2.0",
         "spryker/cart-extension": "^4.0.0",
         "spryker/cart-reorder-extension": "^1.0.0",

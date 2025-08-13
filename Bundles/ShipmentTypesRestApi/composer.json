@@ -4,7 +4,7 @@
     "description": "ShipmentTypesRestApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/checkout-rest-api-extension": "^1.3.0",
         "spryker/glossary-storage": "^1.5.0",
         "spryker/glue-application": "^1.8.0",

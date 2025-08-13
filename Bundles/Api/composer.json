@@ -4,7 +4,7 @@
     "description": "Api module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/api-extension": "^0.1.0",
         "spryker/event-dispatcher-extension": "^1.0.0",
         "spryker/kernel": "^3.52.0",

@@ -4,7 +4,7 @@
     "description": "CompanyBusinessUnitGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/business-on-behalf-gui-extension": "^1.0.0",
         "spryker/company": "^1.0.0",
         "spryker/company-business-unit": "^2.18.0",

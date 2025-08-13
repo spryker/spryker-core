@@ -1,6 +1,6 @@
 # MerchantFile Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/merchant-file/v/stable.svg)](https://packagist.org/packages/spryker/merchant-file)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.3-8892BF.svg)](https://php.net/)
 
 This module provides the functionality to save files in the Merchant Portal. The files are only accessible to the merchant who uploaded them.
 

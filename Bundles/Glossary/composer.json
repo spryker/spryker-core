@@ -4,7 +4,7 @@
     "description": "Glossary module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/gui": "^3.0.0",
         "spryker/kernel": "^3.52.0",

@@ -4,7 +4,7 @@
     "description": "WarehouseUserGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/gui": "^3.46.0",
         "spryker/kernel": "^3.30.0",
         "spryker/propel-orm": "^1.0.0",

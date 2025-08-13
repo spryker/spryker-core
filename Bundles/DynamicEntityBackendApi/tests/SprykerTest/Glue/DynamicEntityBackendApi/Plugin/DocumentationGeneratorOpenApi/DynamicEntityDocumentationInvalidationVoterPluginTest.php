@@ -84,27 +84,8 @@ class DynamicEntityDocumentationInvalidationVoterPluginTest extends Unit
     /**
      * @return void
      */
-    public function testIsInvalidatedWithIntervalAsEmptyStringWillCallWarning(): void
-    {
-        if (PHP_VERSION_ID >= 80300) {
-            $this->markTestSkipped('This test only applies to PHP <= 8.2 where warnings are generated instead of exceptions.');
-        }
-
-        //Assert
-        $this->expectExceptionMessage('DateInterval::createFromDateString(): Unknown or bad format () at position 0 ( ): Empty string');
-
-        $this->runIsInvalidatedWithIntervalAsEmptyString();
-    }
-
-    /**
-     * @return void
-     */
     public function testIsInvalidatedWithIntervalAsEmptyStringWillThrowException(): void
     {
-        if (PHP_VERSION_ID < 80300) {
-            $this->markTestSkipped('This test only applies to PHP <= 8.3 where exceptions are generated instead of warnings.');
-        }
-
         //Assert
         $this->expectExceptionMessage('Unknown or bad format () at position 0 ( ): Empty string');
 
@@ -114,27 +95,8 @@ class DynamicEntityDocumentationInvalidationVoterPluginTest extends Unit
     /**
      * @return void
      */
-    public function testIsInvalidatedWillCallWarning(): void
-    {
-        if (PHP_VERSION_ID >= 80300) {
-            $this->markTestSkipped('This test only applies to PHP <= 8.2 where warnings are generated instead of exceptions.');
-        }
-
-        // Assert
-        $this->expectExceptionMessage('DateInterval::createFromDateString(): Unknown or bad format (9999999) at position 4 (9): Unexpected character');
-
-        $this->runIsInvalidatedWithIntervalAsUnexpectedCharacter();
-    }
-
-    /**
-     * @return void
-     */
     public function testIsInvalidatedWillCallException(): void
     {
-        if (PHP_VERSION_ID < 80300) {
-            $this->markTestSkipped('This test only applies to PHP <= 8.3 where exceptions are generated instead of warnings.');
-        }
-
         // Assert
         $this->expectExceptionMessage('Unknown or bad format (9999999) at position 4 (9): Unexpected character');
 

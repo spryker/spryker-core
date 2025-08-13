@@ -4,7 +4,7 @@
     "description": "OrderAmendmentExample module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/checkout": "^6.9.0",
         "spryker/checkout-extension": "^1.4.0",
         "spryker/kernel": "^3.76.0",

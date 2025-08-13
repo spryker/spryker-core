@@ -4,7 +4,7 @@
     "description": "GlueStorefrontApiApplicationAuthorizationConnector module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/authorization": "^1.2.0",
         "spryker/authorization-extension": "^1.1.0",
         "spryker/documentation-generator-api-extension": "^1.0.0",

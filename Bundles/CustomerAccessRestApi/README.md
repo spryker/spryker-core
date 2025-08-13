@@ -1,6 +1,6 @@
 # CustomerAccessRestApi Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/customer-access-rest-api/v/stable.svg)](https://packagist.org/packages/spryker/customer-access-rest-api)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.3-8892BF.svg)](https://php.net/)
 
 This module provides endpoints for unauthorized customer access feature.
 

@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "hidehalo/nanoid-php": "^2.0",
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/kernel": "^3.30.0",
         "spryker/ramsey-uuid": "^1.0.0 || ^2.0.0",
         "spryker/transfer": "^3.27.0"

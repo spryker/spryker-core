@@ -4,7 +4,7 @@
     "description": "ApiKeyGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/api-key": "^2.0.0",
         "spryker/gui": "^3.38.0",
         "spryker/kernel": "^3.33.0",

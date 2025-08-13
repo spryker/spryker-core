@@ -4,7 +4,7 @@
     "description": "Gui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/form-extension": "^1.0.0",
         "spryker/gui-extension": "^1.0.0",
         "spryker/kernel": "^3.52.0",

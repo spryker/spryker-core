@@ -4,7 +4,7 @@
     "description": "FileManagerDataImport module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/data-import": "^1.3.0",
         "spryker/file-manager": "^2.3.0",
         "spryker/kernel": "^3.30.0"

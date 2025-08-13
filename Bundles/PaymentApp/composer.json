@@ -4,7 +4,7 @@
     "description": "PaymentApp module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/cart": "^7.5.0",
         "spryker/kernel": "^3.30.0",
         "spryker/kernel-app": "^1.0.0",
