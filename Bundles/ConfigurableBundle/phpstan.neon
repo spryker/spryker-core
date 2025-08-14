@@ -3,5 +3,3 @@ parameters:
     ignoreErrors:
         - '#Method .+ should return .+Query but returns .+Criteria#'
         - '#Call to an undefined method .+SpyProductImageQuery\|.+SpyProductImageSetQuery::filterByFkLocale\(\)#'
-        -
-            identifier: missingType.iterableValue

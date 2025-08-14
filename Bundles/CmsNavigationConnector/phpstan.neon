@@ -2,5 +2,3 @@ parameters:
     level: 7
     ignoreErrors:
         - '#Parameter \#2 \$isActive of method .+NavigationNodeIsActiveUpdaterInterface::updateCmsPageNavigationNodes\(\) expects bool, string\|null given.#'
-        -
-            identifier: missingType.iterableValue
