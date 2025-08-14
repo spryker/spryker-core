@@ -767,6 +767,7 @@
         <property name="createdDate" type="string"/>
         <property name="businessUnitAssignments" type="SspAssetBusinessUnitAssignment[]" singular="businessUnitAssignment"/>
         <property name="image" type="File"/>
+        <property name="externalImageUrl" type="string"/>
         <property name="status" type="string"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
         <property name="sspServiceCollection" type="SspServiceCollection"/>

@@ -66,6 +66,16 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     public const IMPORT_TYPE_SSP_INQUIRY = 'ssp-inquiry';
 
     /**
+     * Specification:
+     * - Import type for ssp asset.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const IMPORT_TYPE_SSP_ASSET = 'ssp-asset';
+
+    /**
      * @uses \Spryker\Shared\ShipmentType\ShipmentTypeConfig::SHIPMENT_TYPE_DELIVERY
      *
      * @var string
@@ -719,6 +729,23 @@ class SelfServicePortalConfig extends AbstractBundleConfig
         return (new DataImporterDataSourceConfigurationTransfer())
             ->setImportType(static::IMPORT_TYPE_SSP_INQUIRY)
             ->setFileName('ssp_inquiry.csv')
+            ->setModuleName(static::MODULE_NAME)
+            ->setDirectory('/data/data/import/common/common/');
+    }
+
+    /**
+     * Specification:
+     * - Import configuration for ssp asset.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
+     */
+    public function getSspAssetDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
+    {
+        return (new DataImporterDataSourceConfigurationTransfer())
+            ->setImportType(static::IMPORT_TYPE_SSP_ASSET)
+            ->setFileName('ssp_asset.csv')
             ->setModuleName(static::MODULE_NAME)
             ->setDirectory('/data/data/import/common/common/');
     }

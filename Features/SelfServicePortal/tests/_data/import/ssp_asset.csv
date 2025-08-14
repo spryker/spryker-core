@@ -1,0 +1,3 @@
+reference,name,serial_number,note,external_image_url,business_unit_key,assigned_business_unit_keys
+TEST-ASSET-001,Test Laptop,SN123456789,Test laptop for development,https://example.com/laptop.jpg,test_business_unit_1,"test_business_unit_2,test_business_unit_3"
+TEST-ASSET-002,Test Monitor,SN987654321,Test monitor for office use,,test_business_unit_2,test_business_unit_1

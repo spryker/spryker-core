@@ -116,7 +116,7 @@
 
                     {% set rows = data.assets | map(sspAsset => {
                         reference: sspAsset.reference,
-                        image: sspAsset.image ? url('customer/ssp-asset/view-image', { 'ssp-asset-reference': sspAsset.reference }) : null,
+                        image: sspAsset.image ? url('customer/ssp-asset/view-image', { 'ssp-asset-reference': sspAsset.reference }) : (sspAsset.externalImageUrl ?: null),
                         name: sspAsset.name,
                         business_unit: sspAsset.companyBusinessUnit ? sspAsset.companyBusinessUnit.name : '',
                         serial_number: sspAsset.serialNumber,

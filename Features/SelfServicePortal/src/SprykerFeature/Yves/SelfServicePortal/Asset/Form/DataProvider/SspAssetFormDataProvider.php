@@ -56,8 +56,15 @@ class SspAssetFormDataProvider
      */
     public function getOptions(SspAssetTransfer $sspAssetTransfer): array
     {
+        $imageUrl = null;
+        if ($sspAssetTransfer->getImage()) {
+            $imageUrl = $this->getAssetImageUrl($sspAssetTransfer);
+        } elseif ($sspAssetTransfer->getExternalImageUrl()) {
+            $imageUrl = $sspAssetTransfer->getExternalImageUrl();
+        }
+
         return [
-            SspAssetForm::OPTION_ORIGINAL_IMAGE_URL => $sspAssetTransfer->getImage() ? $this->getAssetImageUrl($sspAssetTransfer) : null,
+            SspAssetForm::OPTION_ORIGINAL_IMAGE_URL => $imageUrl,
         ];
     }
 

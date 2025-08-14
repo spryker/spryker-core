@@ -32,11 +32,18 @@
                         {% for asset in data.assets %}
                             <div class="{{ config.name }}__block" data-qa="asset-item-preview">
                                 <a href="{{ path('customer/ssp-asset/details', {'reference': asset.reference}) }}" class="{{ config.name }}__link">
+                                    {% set imageUrl = null %}
+                                    {% if asset.image %}
+                                        {% set imageUrl = url('customer/ssp-asset/view-image', { 'ssp-asset-reference': asset.reference }) %}
+                                    {% elseif asset.externalImageUrl %}
+                                        {% set imageUrl = asset.externalImageUrl %}
+                                    {% endif %}
+
                                     {% include molecule('lazy-image') with {
                                         class: "#{config.name}__image",
                                         data: {
                                             imagePlaceholder: publicPath('images/image-placeholder.png'),
-                                            imageSrc: asset.image ? url('customer/ssp-asset/view-image', { 'ssp-asset-reference': asset.reference }) : null | default(null),
+                                            imageSrc: imageUrl,
                                             imageTitle: asset.name,
                                             isBackground: true,
                                         },

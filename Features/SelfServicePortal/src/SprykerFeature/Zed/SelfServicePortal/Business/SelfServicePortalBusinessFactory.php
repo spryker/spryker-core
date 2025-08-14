@@ -38,6 +38,11 @@ use Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DashboardDataExpander\SspAssetDashboardDataExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DashboardDataExpander\SspAssetSspAssetDashboardDataExpander;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\AssignedBusinessUnitKeysToIdStep;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\BusinessUnitKeyToIdCompanyBusinessUnitStep;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\ExternalImageUrlValidationStep;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\SspAssetBusinessUnitAssignmentStep;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\SspAssetWriterStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Deleter\SspAssetManagementFileDeleter;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Deleter\SspAssetManagementFileDeleterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\AssetFileExpander;
@@ -732,6 +737,55 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getSequenceNumberFacade(),
         );
+    }
+
+    public function getSspAssetDataImporter(): DataImporterInterface
+    {
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->getSspAssetDataImporterConfiguration(),
+        );
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        if ($dataSetStepBroker instanceof DataImportStepAwareInterface) {
+            $dataSetStepBroker
+                ->addStep($this->createBusinessUnitKeyToIdCompanyBusinessUnitStep())
+                ->addStep($this->createAssignedBusinessUnitKeysToIdStep())
+                ->addStep($this->createExternalImageUrlValidationStep())
+                ->addStep($this->createSspAssetWriterStep())
+                ->addStep($this->createSspAssetBusinessUnitAssignmentStep());
+        }
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    public function createSspAssetBusinessUnitAssignmentStep(): DataImportStepInterface
+    {
+        return new SspAssetBusinessUnitAssignmentStep();
+    }
+
+    public function createSspAssetWriterStep(): DataImportStepInterface
+    {
+        return new SspAssetWriterStep(
+            $this->getConfig(),
+        );
+    }
+
+    public function createBusinessUnitKeyToIdCompanyBusinessUnitStep(): DataImportStepInterface
+    {
+        return new BusinessUnitKeyToIdCompanyBusinessUnitStep();
+    }
+
+    public function createAssignedBusinessUnitKeysToIdStep(): DataImportStepInterface
+    {
+        return new AssignedBusinessUnitKeysToIdStep();
+    }
+
+    public function createExternalImageUrlValidationStep(): DataImportStepInterface
+    {
+        return new ExternalImageUrlValidationStep();
     }
 
     public function createCompanyUserKeyToIdCompanyUserStep(): DataImportStepInterface

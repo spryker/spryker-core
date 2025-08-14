@@ -11,10 +11,12 @@ use Generated\Shared\Transfer\SspAssetTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Url;
 
 /**
  * @method \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig getConfig()
@@ -35,6 +37,11 @@ class SspAssetForm extends AbstractType
      * @var string
      */
     protected const FIELD_NOTE = 'note';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_EXTERNAL_IMAGE_URL = 'externalImageUrl';
 
     /**
      * @var string
@@ -70,6 +77,7 @@ class SspAssetForm extends AbstractType
         $this
             ->addNameField($builder)
             ->addSerialNumberField($builder)
+            ->addExternalImageUrlField($builder)
             ->addNoteField($builder)
             ->addImageField($builder, $options);
     }
@@ -154,6 +162,35 @@ class SspAssetForm extends AbstractType
         $builder->add(static::FIELD_IMAGE, SspAssetImageForm::class, [
             'mapped' => false,
             SspAssetImageForm::OPTION_ORIGINAL_IMAGE_URL => $options[static::OPTION_ORIGINAL_IMAGE_URL] ?? null,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addExternalImageUrlField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_EXTERNAL_IMAGE_URL, UrlType::class, [
+            'label' => 'self_service_portal.asset.form.external_image_url',
+            'required' => false,
+            'sanitize_xss' => true,
+            'constraints' => [
+                new Length([
+                    'max' => 2048,
+                    'maxMessage' => 'External image URL cannot be longer than {{ limit }} characters.',
+                ]),
+                new Url([
+                    'message' => 'Please enter a valid URL.',
+                ]),
+            ],
+            'attr' => [
+                'placeholder' => 'Please enter a valid URL.',
+                'data-qa' => 'ssp-asset-external-image-url-field',
+            ],
         ]);
 
         return $this;

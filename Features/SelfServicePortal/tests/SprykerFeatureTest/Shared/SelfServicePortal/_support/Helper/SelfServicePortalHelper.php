@@ -29,6 +29,8 @@ use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\Company\Persistence\SpyCompanyQuery;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery;
@@ -744,5 +746,66 @@ class SelfServicePortalHelper extends Module
     protected function getSspAssetQuery(): SpySspAssetQuery
     {
         return SpySspAssetQuery::create();
+    }
+
+    protected function getSspAssetToCompanyBusinessUnitQuery(): SpySspAssetToCompanyBusinessUnitQuery
+    {
+        return SpySspAssetToCompanyBusinessUnitQuery::create();
+    }
+
+    public function ensureSspAssetTableIsEmpty(): void
+    {
+        $this->getSspAssetQuery()->deleteAll();
+    }
+
+    public function ensureSspAssetToCompanyBusinessUnitTableIsEmpty(): void
+    {
+        $this->getSspAssetToCompanyBusinessUnitQuery()->deleteAll();
+    }
+
+    /**
+     * @return array<\Orm\Zed\SelfServicePortal\Persistence\SpySspAsset>
+     */
+    public function getAllSspAssets(): array
+    {
+        return $this->getSspAssetQuery()->find()->getData();
+    }
+
+    public function findSspAssetByReference(string $reference): ?SpySspAsset
+    {
+        return $this->getSspAssetQuery()->findOneByReference($reference);
+    }
+
+    /**
+     * @return array<\Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnit>
+     */
+    public function getAllSspAssetToCompanyBusinessUnitAssignments(): array
+    {
+        return $this->getSspAssetToCompanyBusinessUnitQuery()->find()->getData();
+    }
+
+    public function haveCompanyBusinessUnitForDataImport(array $businessUnitData = []): void
+    {
+        $companyEntity = SpyCompanyQuery::create()
+            ->filterByName('Test Company')
+            ->findOneOrCreate();
+
+        if ($companyEntity->isNew()) {
+            $companyEntity->setName('Test Company')
+                ->setKey('test_company')
+                ->setStatus('approved')
+                ->save();
+        }
+
+        $businessUnitEntity = SpyCompanyBusinessUnitQuery::create()
+            ->filterByKey($businessUnitData['key'])
+            ->findOneOrCreate();
+
+        if ($businessUnitEntity->isNew()) {
+            $businessUnitEntity->setFkCompany($companyEntity->getIdCompany())
+                ->setKey($businessUnitData['key'])
+                ->setName($businessUnitData['name'] ?? $businessUnitData['key'])
+                ->save();
+        }
     }
 }

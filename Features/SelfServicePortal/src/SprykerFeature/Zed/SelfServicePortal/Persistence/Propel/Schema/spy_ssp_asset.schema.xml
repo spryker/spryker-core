@@ -28,6 +28,7 @@
         <column name="serial_number" required="false" size="255" type="VARCHAR"/>
         <column name="status" required="true" size="255" type="VARCHAR"/>
         <column name="fk_image_file" required="false" type="INTEGER"/>
+        <column name="external_image_url" required="false" size="2048" type="VARCHAR"/>
         <column name="note" required="false" type="LONGVARCHAR"/>
         <column name="fk_company_business_unit" required="false" type="INTEGER"/>
 

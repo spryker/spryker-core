@@ -134,11 +134,15 @@ class SspAssetFormDataProvider
 
     public function getAssetImageUrl(SspAssetTransfer $sspAssetTransfer): ?string
     {
-        if (!$sspAssetTransfer->getImage()) {
-            return null;
+        if ($sspAssetTransfer->getImage()) {
+            return Url::generate(static::ROUTE_NAME_ASSET_VIEW_IMAGE, ['ssp-asset-reference' => $sspAssetTransfer->getReferenceOrFail()])->build();
         }
 
-        return Url::generate(static::ROUTE_NAME_ASSET_VIEW_IMAGE, ['ssp-asset-reference' => $sspAssetTransfer->getReferenceOrFail()])->build();
+        if ($sspAssetTransfer->getExternalImageUrl()) {
+            return $sspAssetTransfer->getExternalImageUrl();
+        }
+
+        return null;
     }
 
     /**

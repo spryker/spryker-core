@@ -17,6 +17,7 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
@@ -24,6 +25,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Url;
 
 /**
  * @method \SprykerFeature\Zed\SelfServicePortal\Communication\SelfServicePortalCommunicationFactory getFactory()
@@ -57,6 +59,11 @@ class SspAssetForm extends AbstractType
      * @var string
      */
     protected const FIELD_NOTE = 'note';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_EXTERNAL_IMAGE_URL = 'externalImageUrl';
 
     /**
      * @var string
@@ -174,6 +181,7 @@ class SspAssetForm extends AbstractType
             ->addNameField($builder)
             ->addSerialNumberField($builder)
             ->addStatusField($builder, $options)
+            ->addExternalImageUrlField($builder)
             ->addNoteField($builder)
             ->addCompanyField($builder, $options)
             ->addAssignedBusinessUnitField($builder, $options)
@@ -657,5 +665,34 @@ class SspAssetForm extends AbstractType
         }
 
         return $companyIds;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addExternalImageUrlField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_EXTERNAL_IMAGE_URL, UrlType::class, [
+            'label' => 'External image URL',
+            'required' => false,
+            'sanitize_xss' => true,
+            'constraints' => [
+                new Length([
+                    'max' => 2048,
+                    'maxMessage' => 'External image URL cannot be longer than {{ limit }} characters.',
+                ]),
+                new Url([
+                    'message' => 'Please enter a valid URL.',
+                ]),
+            ],
+            'attr' => [
+                'placeholder' => 'https://example.com/image.jpg',
+                'data-qa' => 'ssp-asset-external-image-url-field',
+            ],
+        ]);
+
+        return $this;
     }
 }
