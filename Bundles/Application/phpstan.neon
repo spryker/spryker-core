@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     dynamicConstantNames:
         - APPLICATION
@@ -18,6 +17,7 @@ parameters:
         - '#^Call to function method_exists\(\) with Symfony\\Component\\HttpKernel\\Event\\ResponseEvent and#'
         - '#Call to an undefined method Symfony\\Component\\HttpKernel\\Event\\ResponseEvent\:\:isMainRequest\(\).#'
         - '#Call to an undefined method Symfony\\Component\\HttpKernel\\Event\\KernelEvent\:\:isMainRequest\(\).#'
-
+        -
+            identifier: missingType.iterableValue
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Application/src/Spryker/Shared/Application/Communication/ControllerServiceBuilder.php'

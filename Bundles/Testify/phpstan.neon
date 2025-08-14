@@ -1,5 +1,6 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Parameter \#2 \$callback of function array_filter expects \(callable\(.+\): bool\)\|null, .+ given.#'
+        -
+            identifier: missingType.iterableValue

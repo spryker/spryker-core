@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Client/CmsPageSearch/Plugin/Elasticsearch/Query/CmsPageSearchQueryPlugin.php'
@@ -8,3 +7,5 @@ parameters:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Client/CmsPageSearch/Plugin/Elasticsearch/QueryExpander/SortedCmsPageQueryExpanderPlugin.php'
     ignoreErrors:
         - '#Parameter \#1 \$dateTime of method .+CmsPageSearchWriter::convertDateTimeToString\(\) expects DateTime\|null, .+null given.#'
+        -
+            identifier: missingType.iterableValue

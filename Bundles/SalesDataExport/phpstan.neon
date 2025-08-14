@@ -1,6 +1,7 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method Orm\\.+Query::orderByFkSalesOrder\(\).#'
         - '#Call to an undefined method Orm\\.+Query::orderByIdSalesOrder\(\).#'
+        -
+            identifier: missingType.iterableValue

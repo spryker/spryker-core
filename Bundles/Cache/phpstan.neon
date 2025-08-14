@@ -1,5 +1,7 @@
 parameters:
+    ignoreErrors:
+        -
+            identifier: missingType.iterableValue
     level: 8
     dynamicConstantNames:
         - APPLICATION_CODE_BUCKET
-    checkMissingIterableValueType: false

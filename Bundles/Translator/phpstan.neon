@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#constructor expects Symfony\\Contracts\\Translation\\TranslatorInterface#'
@@ -9,3 +8,5 @@ parameters:
         - '#Return typehint of method .+TranslatorValidatorPlugin::getTranslator\(\) has invalid type .*LegacyTranslatorProxy.#'
         - '#Parameter \#1 \$translator of method Symfony\\Component\\Validator\\ValidatorBuilder::setTranslator\(\) expects Symfony\\Component\\Translation\\TranslatorInterface, Spryker\\Shared\\Translator\\TranslatorInterface|Symfony\\Component\\Validator\\Util\\LegacyTranslatorProxy given.#'
         - '#Method .+TranslatorValidatorPlugin::getTranslator\(\) has invalid return type .*LegacyTranslatorProxy.#'
+        -
+            identifier: missingType.iterableValue

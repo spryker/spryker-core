@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Query/QueryBuilder.php'
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Query/QueryBuilderInterface.php'
@@ -41,4 +40,6 @@ parameters:
         - { message: '#Call to an undefined method object::getIndex\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Shared/Search/Provider/AbstractIndexClientProvider.php' }
         - { message: '#Method Spryker\\Zed\\SearchExtension\\Dependency\\Plugin\\InstallPluginInterface::install\(\) invoked with 2 parameters, 1 required.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/SearchInstaller.php' }
         - { message: '#If condition is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/SearchStringSetterInterface.php' }
+        -
+            identifier: missingType.iterableValue
     reportUnmatchedIgnoredErrors: false

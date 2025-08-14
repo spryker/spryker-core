@@ -1,7 +1,6 @@
 parameters:
     level: 7
     reportUnmatchedIgnoredErrors: false
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Constant T_SEMICOLON not found.#'
         - '#Constant T_OPEN_PARENTHESIS not found.#'
@@ -16,3 +15,5 @@ parameters:
         - '#Parameter \#2 \$callback of function array_filter expects .+, .+glob.+ given#'
         - '#Parameter \#2 \$callback of function array_filter expects \(callable\(mixed\): bool\)\|null, .+ given.#'
         - '#Parameter \#2 \$callback of function array_filter expects \(callable\(string\): bool\)\|null, .+ given.#'
+        -
+            identifier: missingType.iterableValue

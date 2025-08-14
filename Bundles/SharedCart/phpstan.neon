@@ -1,6 +1,7 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method .+\\SpyTouchStorageQuery::joinWithCustomer\(\).#'
         - '#Call to an undefined method .+\\SpyShoppingListPermissionGroupQuery::groupByIdQuote\(\).#'
+        -
+            identifier: missingType.iterableValue

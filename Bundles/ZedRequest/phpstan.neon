@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
     dynamicConstantNames:
         - APPLICATION
@@ -13,3 +12,5 @@ parameters:
         - '#Parameter \#3 \$requestOptions of method .+\\AbstractZedClientInterface::call\(\) expects array\|null, array\|int\|null given.#'
         - '#Call to an undefined method ReflectionType\:\:isBuiltin\(\)#'
         - '#Call to an undefined method ReflectionType\:\:getName\(\)#'
+        -
+            identifier: missingType.iterableValue

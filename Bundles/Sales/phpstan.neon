@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::getFkCustomer\(\)\.#'
@@ -8,3 +7,5 @@ parameters:
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::getCustomer\(\)\.#'
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::setCustomer\(\)\.#'
         - '#Call to an undefined method Orm\\.+Query::groupByIdSalesOrder\(\).#'
+        -
+            identifier: missingType.iterableValue

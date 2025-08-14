@@ -1,7 +1,8 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Cannot access offset int on Traversable<.+ItemTransfer>#'
         - '#Call to an undefined method Orm\\Zed\\#'
+        -
+            identifier: missingType.iterableValue

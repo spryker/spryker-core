@@ -1,7 +1,8 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method Orm\\.+Query::useStockQuery\(\).#'
         - '#Call to an undefined method Orm\\.+Query::useSpyProductQuery\(\).#'
         - '#Call to an undefined method Orm\\.+Query::innerJoinWithStock\(\).#'
+        -
+            identifier: missingType.iterableValue

@@ -1,6 +1,7 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method .+SpyPriceProductQuery::joinWithPriceProductDefault\(\)#'
         - '#Parameter \#1 \$idEntity of method .+MoneyValueTransfer::setIdEntity\(\) expects int\|null, string given#'
+        -
+            identifier: missingType.iterableValue

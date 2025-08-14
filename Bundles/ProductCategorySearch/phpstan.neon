@@ -1,6 +1,7 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method Orm\\Zed\\Category\\Persistence\\SpyCategoryQuery\|Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery::useSpyCategoryStoreQuery\(\)#'
         - '#Cannot access an offset on Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory.#'
+        -
+            identifier: missingType.iterableValue

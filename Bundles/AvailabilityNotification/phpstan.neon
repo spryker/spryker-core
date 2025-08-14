@@ -1,6 +1,7 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Strict comparison using === between string and false will always evaluate to false.#'
+        -
+            identifier: missingType.iterableValue

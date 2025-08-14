@@ -1,5 +1,6 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::filterByFkAclEntitySegment\(\).#'
+        -
+            identifier: missingType.iterableValue

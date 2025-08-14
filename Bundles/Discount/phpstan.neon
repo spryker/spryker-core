@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Parameter \#1 \$value of method .+ClauseTransfer::setValue\(\) expects string\|null, int given.#'
@@ -9,3 +8,5 @@ parameters:
         - '#Parameter \#1 \$v of method .+SpyDiscount::setAmount\(\) expects int, string\|null given.#'
         - '#PHPDoc tag @throws with type UnexpectedTypeException is not subtype of Throwable#'
         - '#Call to an undefined method Orm\\.+Query::useSpyDiscountStoreQuery\(\).#'
+        -
+            identifier: missingType.iterableValue

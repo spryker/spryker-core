@@ -1,6 +1,7 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Call to an undefined method .+getUsername\(\).#'
+        -
+            identifier: missingType.iterableValue

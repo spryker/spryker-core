@@ -1,5 +1,6 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method Orm\\.+\\SpyWishlistQuery::joinCompany\(\).#'
+        -
+            identifier: missingType.iterableValue

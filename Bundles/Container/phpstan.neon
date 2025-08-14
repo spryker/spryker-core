@@ -1,6 +1,7 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Parameter \#1 \$object of function spl_object_hash expects object, class-string|object given.#'
+        -
+            identifier: missingType.iterableValue

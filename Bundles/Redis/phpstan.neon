@@ -1,6 +1,5 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#PHPDoc tag @param for parameter \$keysOrArgs with type array is not subtype of native type array<int, mixed>#'
@@ -9,3 +8,5 @@ parameters:
         - '#Strict comparison using === between '''' and ''docker.dev'' will always evaluate to false.#'
         - { message: '#Unreachable statement - code above always terminates#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Redis/src/Spryker/Client/Redis/Adapter/VersionAgnosticPredisAdapter.php' }
         - '#Instanceof between int and Predis\\Response\\Status will always evaluate to false.#'
+        -
+            identifier: missingType.iterableValue

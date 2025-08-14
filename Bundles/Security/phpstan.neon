@@ -1,7 +1,6 @@
 parameters:
     level: 8
     reportUnmatchedIgnoredErrors: false
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Parameter \#3 \$eventDispatcher of class .+LogoutListener constructor expects .+EventDispatcherInterface, .+LogoutSuccessHandlerInterface|.+EventDispatcherInterface given.#'
         - '#Class .+AuthenticationTrustResolver constructor invoked with 0 parameters, 2 required.#'
@@ -32,6 +31,8 @@ parameters:
         - '#Class .+LogoutEvent not found.#'
         - '#Call to method .+ on an unknown class .+LogoutEvent.#'
         - '#Parameter \$event of method .+onLogout\(\) has invalid type .+LogoutEvent.#'
+        -
+            identifier: missingType.iterableValue
     excludePaths:
         # phpstan throws an internal error because of autoloading `Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface` which does not exist in Symfony 6+
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Security/src/Spryker/Zed/Security/Communication/Plugin/Application/SecurityApplicationPlugin.php'

@@ -1,6 +1,7 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method .+\\SpyShoppingListCompanyUserQuery.*::orderByIdQuoteRequest\(\)#'
         - '#Call to an undefined method .+\\SpyShoppingListCompanyUserQuery.*::useSpyQuoteRequestVersionQuery\(\)#'
+        -
+            identifier: missingType.iterableValue

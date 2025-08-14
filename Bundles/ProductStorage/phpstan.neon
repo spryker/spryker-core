@@ -1,9 +1,10 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Parameter \#1 \$reference of method .+SynchronizationDataTransfer::setReference\(\) expects string\|null, int given#'
         - '#Call to an undefined method .+\\Spy.+Query::filterByFkProductAbstract_In\(\)#'
         - '#Call to an undefined method .+\\Spy.+Query::filterByFkProduct_In\(\)#'
         - '#Call to an undefined method .+\\Spy.+Query::filterByFkProductAbstract\(\)#'
         - '#Call to an undefined method .+\\Spy.+Query::orderByFkLocale\(\)#'
+        -
+            identifier: missingType.iterableValue

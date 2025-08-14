@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method Orm\\.+Redirect::getFkResourceRedirect\(\).#'
         - '#Call to an undefined method Orm\\.+Redirect::getUrl\(\).#'
@@ -10,3 +9,5 @@ parameters:
         - '#Call to an undefined method Orm\\.+Query::useSpyUrlQuery\(\).#'
         - '#Call to an undefined method Orm\\.+Query::useSpyCmsPageLocalizedAttributesQuery\(\).#'
         - '#Call to an undefined method Orm\\.+Query::useSpyCmsPageStoreQuery\(\).#'
+        -
+            identifier: missingType.iterableValue

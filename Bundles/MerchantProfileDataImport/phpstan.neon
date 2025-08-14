@@ -1,5 +1,6 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface\|Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterBeforeImportAwareInterface\|Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface\|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface::[a-zA-Z]*\(\)#'
+        -
+            identifier: missingType.iterableValue

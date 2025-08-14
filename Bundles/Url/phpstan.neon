@@ -1,5 +1,6 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Method .+Observers\(\) should return .+SaveObserverInterface\>#'
+        -
+            identifier: missingType.iterableValue

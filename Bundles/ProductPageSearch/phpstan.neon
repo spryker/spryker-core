@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/ProductPageSearch/src/Spryker/Zed/ProductPageSearch/Persistence/ProductPageSearchQueryContainer.php'
@@ -12,3 +11,5 @@ parameters:
         - '#Property .+\\PricePageDataExpanderPlugin::\$idStoreMapBuffer \(array<int>\|null\) does not accept array<int\|null>.#'
         - '#Parameter \#2 \$(size|length) of function array_chunk expects int<1, max>, int given.#'
         - '#Property .+::\$underscoreToDashFilter with generic class Laminas\\Filter\\Word\\UnderscoreToDash does not specify its types\: TOptions#'
+        -
+            identifier: missingType.iterableValue

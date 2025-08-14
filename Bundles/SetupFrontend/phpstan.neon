@@ -1,6 +1,7 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Cannot cast non-empty-array<string>\|non-empty-string\|true to string.#'
+        -
+            identifier: missingType.iterableValue

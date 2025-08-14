@@ -1,6 +1,7 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: true
     checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Method Spryker\\Zed\\Store\\Communication\\Plugin\\MessageBroker\\StoreReferenceMessageValidatorPlugin::isValid\(\) should return bool but returns bool\|null.#'
+        -
+            identifier: missingType.iterableValue

@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Method .+Type::addDocuments\(\) invoked with 2 parameters, 1 required.#'
         - '#Property .*TypelessMappingAdapter::\$elasticaMapping has unknown class Elastica\\Mapping as its type.#'
@@ -26,4 +25,6 @@ parameters:
         - '#Call to an undefined method .+IndexAdapterInterface::flush\(\).#'
         - '#Parameter \#1 \$function of function call_user_func_array expects callable\(\): mixed, .+ given.#'
         - '#Parameter \#1 \$callback of function call_user_func_array expects callable\(\): mixed, .+ given.#'
+        -
+            identifier: missingType.iterableValue
     reportUnmatchedIgnoredErrors: false

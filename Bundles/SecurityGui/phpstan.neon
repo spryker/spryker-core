@@ -1,6 +1,5 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
@@ -8,3 +7,5 @@ parameters:
         - '#PHPDoc tag @throws with type .+UsernameNotFoundException\|.+UserNotFoundException is not subtype of Throwable#'
         - '#Parameter \#1 \$passport of method .+LoginFormAuthenticator::createToken\(\) expects .+Passport, .+PassportInterface given.#'
         - '#Call to an undefined method .+AuthenticationSuccessHandlerInterface::executeOnAuthenticationSuccess\(\).#'
+        -
+            identifier: missingType.iterableValue

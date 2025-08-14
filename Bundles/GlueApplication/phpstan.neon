@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Strict comparison using === between int<1, max> and 0 will always evaluate to false.#'
@@ -12,5 +11,7 @@ parameters:
         - '#Method .+CustomRouteMatcher::createControllerInstance\(\) should return .+AbstractController but returns object.#'
         - '#Parameter \#1 \$[a-zA-Z]* of class ReflectionClass constructor expects class-string<T of object>\|T of object, string given.#'
         - '#Parameter \#1 \$separator of function explode expects non-empty-string, string given.#'
+        -
+            identifier: missingType.iterableValue
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/GlueApplication/src/Spryker/Glue/GlueApplication/Plugin/Rest/GlueRouterPluginTrait.php'

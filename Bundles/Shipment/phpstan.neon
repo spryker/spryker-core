@@ -1,7 +1,8 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method Orm\\.+Query::filterByName\(\).#'
         - '#Call to an undefined method Orm\\.+Query::filterByIdShipmentMethod\(\).#'
         - '#Call to an undefined method Orm\\.+Query::filterByPricePlugin\(\).#'
+        -
+            identifier: missingType.iterableValue

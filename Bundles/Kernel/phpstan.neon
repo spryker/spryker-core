@@ -1,6 +1,5 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     dynamicConstantNames:
         - APPLICATION
@@ -24,3 +23,5 @@ parameters:
         - { message: '#Array \(array.+\) does not accept object.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/BundleProxy.php' }
         - '#Property .+::\$filter with generic class Laminas\\Filter\\Word\\DashToCamelCase does not specify its types\: TOptions#'
         - '#Method .+::getFilter\(\) return type with generic class Laminas\\Filter\\Word\\DashToCamelCase does not specify its types\: TOptions#'
+        -
+            identifier: missingType.iterableValue

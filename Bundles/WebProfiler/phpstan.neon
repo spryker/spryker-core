@@ -1,8 +1,9 @@
 parameters:
     level: 8
     reportUnmatchedIgnoredErrors: false
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Method .+RouteCollection::add\(\) invoked with 3 parameters, 2 required.#'
         - '#Instantiated class Symfony\\Bundle\\WebProfilerBundle\\Controller\\ExceptionController not found.#'
         - '#Class Spryker\\Shared\\WebProfiler\\DataCollector\\RequestDataCollector extends \@final class Symfony\\Component\\HttpKernel\\DataCollector\\RequestDataCollector.#'
+        -
+            identifier: missingType.iterableValue
