@@ -2,5 +2,3 @@ parameters:
     level: 7
     ignoreErrors:
         - '#Call to an undefined method Orm\\.+Query::filterByName\(\).#'
-        -
-            identifier: missingType.iterableValue

@@ -1,3 +1,5 @@
 parameters:
     level: 8
-    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        -
+            identifier: missingType.generics

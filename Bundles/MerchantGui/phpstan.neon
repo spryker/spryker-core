@@ -2,5 +2,6 @@ parameters:
     ignoreErrors:
         -
             identifier: missingType.iterableValue
+        -
+            identifier: missingType.generics
     level: 7
-    checkGenericClassInNonGenericObjectType: false

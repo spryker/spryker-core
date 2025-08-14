@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Parameter \#1 \$value of method .+ClauseTransfer::setValue\(\) expects string\|null, int given.#'
         - '#Parameter \#1 \$grossAmount of method .+MoneyValueTransfer::setGrossAmount\(\) expects int\|null, string given.#'
@@ -10,3 +9,5 @@ parameters:
         - '#Call to an undefined method Orm\\.+Query::useSpyDiscountStoreQuery\(\).#'
         -
             identifier: missingType.iterableValue
+        -
+            identifier: missingType.generics

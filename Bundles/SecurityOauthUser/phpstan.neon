@@ -1,7 +1,6 @@
 parameters:
     level: 8
     reportUnmatchedIgnoredErrors: false
-    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Call to an undefined method .+loadUserByUsername\(\).#'
         - '#Call to an undefined method .+getUsername\(\).#'
@@ -11,3 +10,5 @@ parameters:
         - '#PHPDoc tag @throws with type .+UsernameNotFoundException\|.+UserNotFoundException is not subtype of Throwable#'
         -
             identifier: missingType.iterableValue
+        -
+            identifier: missingType.generics

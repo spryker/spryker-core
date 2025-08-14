@@ -2,6 +2,7 @@ parameters:
     ignoreErrors:
         -
             identifier: missingType.iterableValue
+        -
+            identifier: missingType.generics
     level: 8
-    checkGenericClassInNonGenericObjectType: false
     reportUnmatchedIgnoredErrors: false

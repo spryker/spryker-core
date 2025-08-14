@@ -2,5 +2,3 @@ parameters:
     level: 8
     ignoreErrors:
         - '#Call to function is_string\(\) with DateTime\|null will always evaluate to false.#'
-        -
-            identifier: missingType.iterableValue
