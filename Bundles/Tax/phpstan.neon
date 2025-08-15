@@ -1,4 +1,5 @@
 parameters:
+    level: 7
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         -
@@ -6,4 +7,3 @@ parameters:
 #        For compatibility with Symfony 5.4+
         - message: '#PHPDoc tag @return contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
         - message: '#PHPDoc tag @implements contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
-    level: 7
