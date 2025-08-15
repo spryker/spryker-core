@@ -3,8 +3,8 @@
 
     <table name="spy_sequence_number">
         <column name="id_sequence_number" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="current_id" type="INTEGER" required="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="current_id" type="INTEGER" required="true" description="The current value of a sequence number."/>
         <unique name="spy_sequence_number-name">
             <unique-column name="name"/>
         </unique>

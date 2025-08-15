@@ -7,28 +7,28 @@
     </transfer>
 
     <transfer name="ShareDetail">
-        <property name="uuid" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
         <property name="idCompanyUser" type="int"/>
-        <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
-        <property name="companyUser" type="CompanyUser"/>
+        <property name="quotePermissionGroup" type="QuotePermissionGroup" description="A group defining permissions for actions on a quote."/>
+        <property name="companyUser" type="CompanyUser" description="A user associated with a company."/>
         <property name="idQuoteCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="ShareDetailCollection">
-        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail" description="A collection of details for sharing a resource."/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="uuid" type="string"/>
-        <property name="customer" type="Customer"/>
-        <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
-        <property name="customerReference" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="customer" type="Customer" description="A data object representing a customer."/>
+        <property name="quotePermissionGroup" type="QuotePermissionGroup" description="A group defining permissions for actions on a quote."/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
         <property name="idQuote" type="int"/>
     </transfer>
 
     <transfer name="QuoteResponse">
-        <property name="quoteTransfer" type="Quote"/>
-        <property name="isSuccessful" type="bool"/>
+        <property name="quoteTransfer" type="Quote" description="A data transfer object representing a quote."/>
+        <property name="isSuccessful" type="bool" description="A boolean flag indicating if an operation completed successfully."/>
     </transfer>
 
     <transfer name="QuotePermissionGroup">
@@ -36,8 +36,8 @@
     </transfer>
 
     <transfer name="QuotePermissionGroupResponse">
-        <property name="quotePermissionGroups" type="QuotePermissionGroup[]" singular="quotePermissionGroup"/>
-        <property name="isSuccessful" type="bool"/>
+        <property name="quotePermissionGroups" type="QuotePermissionGroup[]" singular="quotePermissionGroup" description="A collection of permission groups associated with a quote."/>
+        <property name="isSuccessful" type="bool" description="A boolean flag indicating if an operation completed successfully."/>
     </transfer>
 
     <transfer name="QuoteCompanyUser">
@@ -45,22 +45,22 @@
         <property name="fkCompanyUser" type="int"/>
         <property name="fkQuotePermissionGroup" type="int"/>
         <property name="fkQuote" type="int"/>
-        <property name="quote" type="Quote"/>
-        <property name="uuid" type="string"/>
+        <property name="quote" type="Quote" description="A data object representing a shopping cart before it becomes an order."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="ShareCartRequest">
         <property name="idCompanyUser" type="int"/>
-        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
-        <property name="quoteUuid" type="string"/>
-        <property name="customerReference" type="string"/>
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail" description="A collection of details for sharing a resource."/>
+        <property name="quoteUuid" type="string" description="The universally unique identifier for a quote."/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
         <property name="idQuote" type="int"/>
     </transfer>
 
     <transfer name="ShareCartResponse">
-        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
-        <property name="isSuccessful" type="bool"/>
-        <property name="errorIdentifier" type="string"/>
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail" description="A collection of details for sharing a resource."/>
+        <property name="isSuccessful" type="bool" description="A boolean flag indicating if an operation completed successfully."/>
+        <property name="errorIdentifier" type="string" description="A unique identifier for a specific type of error."/>
     </transfer>
 
     <transfer name="ShareDetailCriteriaFilter">
@@ -69,31 +69,31 @@
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int"/>
-        <property name="code" type="string"/>
-        <property name="detail" type="string"/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="CompanyUserStorage">
         <property name="idCompanyUser" type="int"/>
         <property name="idCompany" type="int"/>
-        <property name="uuid" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="CompanyUser">
-        <property name="uuid" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
         <property name="fkCompany" type="int"/>
         <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="RestUser">
         <property name="idCompany" type="int"/>
-        <property name="naturalIdentifier" type="string"/>
+        <property name="naturalIdentifier" type="string" description="A human-readable unique identifier for a resource, such as a user's email."/>
     </transfer>
 
     <transfer name="Customer">
-        <property name="companyUserTransfer" type="CompanyUser"/>
-        <property name="customerReference" type="string"/>
+        <property name="companyUserTransfer" type="CompanyUser" description="A data transfer object for a company user."/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
     </transfer>
 
 </transfers>

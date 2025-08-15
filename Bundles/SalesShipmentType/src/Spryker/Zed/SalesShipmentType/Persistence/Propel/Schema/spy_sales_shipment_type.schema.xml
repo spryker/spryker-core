@@ -3,8 +3,8 @@
 
     <table name="spy_sales_shipment_type" idMethod="native" identifierQuoting="true">
         <column name="id_sales_shipment_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="key" type="VARCHAR" size="255" required="true"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="key" type="VARCHAR" size="255" required="true" description="A unique key used to identify an entity or a piece of data."/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
 
         <unique name="spy_sales_shipment_type-key-name">
             <unique-column name="key"/>

@@ -6,7 +6,7 @@
     </table>
 
     <table name="spy_shopping_list_item" identifierQuoting="true">
-        <column name="key" required="false" type="VARCHAR" size="255"/>
+        <column name="key" required="false" type="VARCHAR" size="255" description="A unique key used to identify an entity or a piece of data."/>
         <unique name="spy_shopping_list_item-unique-key">
             <unique-column name="key"/>
         </unique>

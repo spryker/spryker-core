@@ -2,7 +2,7 @@
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence">
 
     <table name="spy_sales_order">
-        <column name="quote_request_version_reference" required="false" size="255" type="VARCHAR"/>
+        <column name="quote_request_version_reference" required="false" size="255" type="VARCHAR" description="A reference to the specific quote request version that this sales order was created from."/>
     </table>
 
 </database>

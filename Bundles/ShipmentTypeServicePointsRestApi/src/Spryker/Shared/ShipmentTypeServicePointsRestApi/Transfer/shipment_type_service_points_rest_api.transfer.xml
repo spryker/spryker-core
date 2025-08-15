@@ -5,19 +5,19 @@
     </transfer>
 
     <transfer name="RestCheckoutRequestAttributes">
-        <property name="customer" type="RestCustomer"/>
-        <property name="shipments" type="RestShipments[]" singular="shipment"/>
-        <property name="shipment" type="RestShipment"/>
-        <property name="shippingAddress" type="RestAddress"/>
-        <property name="servicePoints" type="RestServicePoint[]" singular="servicePoint" strict="true"/>
+        <property name="customer" type="RestCustomer" description="A data object representing a customer."/>
+        <property name="shipments" type="RestShipments[]" singular="shipment" description="A collection of shipment details for an order."/>
+        <property name="shipment" type="RestShipment" description="The shipment details for an order."/>
+        <property name="shippingAddress" type="RestAddress" description="The address where an order should be shipped."/>
+        <property name="servicePoints" type="RestServicePoint[]" singular="servicePoint" strict="true" description="A collection of service points."/>
     </transfer>
 
     <transfer name="RestCustomer">
-        <property name="firstName" type="string"/>
-        <property name="lastName" type="string"/>
-        <property name="email" type="string"/>
-        <property name="salutation" type="string"/>
-        <property name="customerReference" type="string"/>
+        <property name="firstName" type="string" description="The first name of a person."/>
+        <property name="lastName" type="string" description="The last name of a user or customer."/>
+        <property name="email" type="string" description="The email address of a user or contact."/>
+        <property name="salutation" type="string" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
     </transfer>
 
     <transfer name="RestShipment">
@@ -26,154 +26,154 @@
 
     <transfer name="RestShipments">
         <property name="idShipmentMethod" type="int"/>
-        <property name="items" type="string[]" singular="item"/>
-        <property name="shippingAddress" type="RestAddress"/>
+        <property name="items" type="string[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
+        <property name="shippingAddress" type="RestAddress" description="The address where an order should be shipped."/>
     </transfer>
 
     <transfer name="RestServicePoint" strict="true">
         <property name="idServicePoint" type="string"/>
-        <property name="items" type="string[]" singular="item"/>
+        <property name="items" type="string[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
     </transfer>
 
     <transfer name="RestErrorCollection">
-        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError" description="A collection of error messages formatted for a REST API response."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int"/>
-        <property name="detail" type="string"/>
-        <property name="code" type="string"/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
     </transfer>
 
     <transfer name="ShipmentTypeStorage" strict="true">
-        <property name="shipmentMethodIds" type="int[]" singular="idShipmentMethod"/>
-        <property name="serviceType" type="ServiceTypeStorage"/>
-        <property name="key" type="string"/>
+        <property name="shipmentMethodIds" type="int[]" singular="idShipmentMethod" description="A collection of shipment method IDs."/>
+        <property name="serviceType" type="ServiceTypeStorage" description="The type of a service."/>
+        <property name="key" type="string" description="A unique key used to identify an entity or a piece of data."/>
     </transfer>
 
     <transfer name="ServiceTypeStorage" strict="true">
-        <property name="uuid" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="GlueResource">
-        <property name="type" type="string"/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
         <property name="id" type="string"/>
-        <property name="attributes" type="AbstractAttributes"/>
+        <property name="attributes" type="AbstractAttributes" description="A set of key-value pairs describing a product or entity."/>
     </transfer>
 
     <transfer name="ServiceTypeResourceCollection">
-        <property name="serviceTypeResources" type="GlueResource[]" singular="serviceTypeResource"/>
+        <property name="serviceTypeResources" type="GlueResource[]" singular="serviceTypeResource" description="A collection of service type resources."/>
     </transfer>
 
     <transfer name="ServiceTypeResourceConditions" strict="true">
-        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="uuids" type="string[]" singular="uuid" description="A collection of Universally Unique Identifiers."/>
     </transfer>
 
     <transfer name="ServiceTypeResourceCriteria" strict="true">
-        <property name="serviceTypeResourceConditions" type="ServiceTypeResourceConditions"/>
+        <property name="serviceTypeResourceConditions" type="ServiceTypeResourceConditions" description="Resource conditions for a service type."/>
     </transfer>
 
     <transfer name="ShipmentTypeStorageCollection" strict="true">
-        <property name="shipmentTypeStorages" type="ShipmentTypeStorage[]" singular="shipmentTypeStorage"/>
+        <property name="shipmentTypeStorages" type="ShipmentTypeStorage[]" singular="shipmentTypeStorage" description="A collection of shipment type storage objects."/>
     </transfer>
 
     <transfer name="ShipmentTypeStorageCriteria" strict="true">
-        <property name="shipmentTypeStorageConditions" type="ShipmentTypeStorageConditions"/>
+        <property name="shipmentTypeStorageConditions" type="ShipmentTypeStorageConditions" description="Conditions for filtering shipment type storage."/>
     </transfer>
 
     <transfer name="ShipmentTypeStorageConditions" strict="true">
-        <property name="storeName" type="string"/>
+        <property name="storeName" type="string" description="The name of a store."/>
     </transfer>
 
     <transfer name="ServicePointStorageCollection" strict="true">
-        <property name="servicePointStorages" type="ServicePointStorage[]" singular="servicePointStorage"/>
+        <property name="servicePointStorages" type="ServicePointStorage[]" singular="servicePointStorage" description="A collection of service point storage objects."/>
     </transfer>
 
     <transfer name="ServicePointStorageCriteria" strict="true">
-        <property name="servicePointStorageConditions" type="ServicePointStorageConditions"/>
+        <property name="servicePointStorageConditions" type="ServicePointStorageConditions" description="Conditions for filtering service point storage."/>
     </transfer>
 
     <transfer name="ServicePointStorageConditions" strict="true">
-        <property name="uuids" type="string[]" singular="uuid"/>
-        <property name="storeName" type="string"/>
+        <property name="uuids" type="string[]" singular="uuid" description="A collection of Universally Unique Identifiers."/>
+        <property name="storeName" type="string" description="The name of a store."/>
     </transfer>
 
     <transfer name="ServicePointStorage" strict="true">
-        <property name="address" type="ServicePointAddressStorage"/>
-        <property name="uuid" type="string"/>
+        <property name="address" type="ServicePointAddressStorage" description="A physical address."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="ServicePointAddressStorage" strict="true">
-        <property name="address1" type="string"/>
-        <property name="address2" type="string"/>
-        <property name="address3" type="string"/>
-        <property name="zipCode" type="string"/>
-        <property name="city" type="string"/>
-        <property name="country" type="CountryStorage"/>
+        <property name="address1" type="string" description="The first line of a street address."/>
+        <property name="address2" type="string" description="The second line of a street address."/>
+        <property name="address3" type="string" description="The third line of a street address."/>
+        <property name="zipCode" type="string" description="The postal code for an address."/>
+        <property name="city" type="string" description="The city part of an address."/>
+        <property name="country" type="CountryStorage" description="The country associated with an address or entity."/>
     </transfer>
 
     <transfer name="Store">
-        <property name="name" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="RestAddress">
-        <property name="iso2Code" type="string" restRequestParameter="required"/>
+        <property name="iso2Code" type="string" restRequestParameter="required" description="The two-letter ISO code for a country."/>
     </transfer>
 
     <transfer name="CountryStorage" strict="true">
-        <property name="iso2Code" type="string"/>
+        <property name="iso2Code" type="string" description="The two-letter ISO code for a country."/>
     </transfer>
 
     <transfer name="Customer">
-        <property name="firstName" type="string"/>
-        <property name="lastName" type="string"/>
-        <property name="salutation" type="string"/>
+        <property name="firstName" type="string" description="The first name of a person."/>
+        <property name="lastName" type="string" description="The last name of a user or customer."/>
+        <property name="salutation" type="string" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="items" type="Item[]" singular="item"/>
-        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
-        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="items" type="Item[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead." description="The shipment details for an order."/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead." description="The address where an order should be shipped."/>
     </transfer>
 
     <transfer name="Shipment">
-        <property name="method" type="ShipmentMethod"/>
-        <property name="shippingAddress" type="Address"/>
+        <property name="method" type="ShipmentMethod" description="The HTTP method for an endpoint."/>
+        <property name="shippingAddress" type="Address" description="The address where an order should be shipped."/>
     </transfer>
 
     <transfer name="Address">
-        <property name="firstName" type="string"/>
-        <property name="lastName" type="string"/>
-        <property name="salutation" type="string"/>
+        <property name="firstName" type="string" description="The first name of a person."/>
+        <property name="lastName" type="string" description="The last name of a user or customer."/>
+        <property name="salutation" type="string" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
     </transfer>
 
     <transfer name="ShipmentMethod">
         <property name="idShipmentMethod" type="int"/>
-        <property name="shipmentType" type="ShipmentType" strict="true"/>
+        <property name="shipmentType" type="ShipmentType" strict="true" description="The type of shipment (e.g., 'delivery', 'pickup')."/>
     </transfer>
 
     <transfer name="CustomerResponse">
-        <property name="customerTransfer" type="Customer"/>
+        <property name="customerTransfer" type="Customer" description="A data transfer object containing customer information."/>
     </transfer>
 
     <transfer name="CustomerCriteria">
-        <property name="customerReference" type="string"/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
     </transfer>
 
     <transfer name="ShipmentMethodsCollection">
-        <property name="shipmentMethods" type="ShipmentMethods[]" singular="shipmentMethods"/>
+        <property name="shipmentMethods" type="ShipmentMethods[]" singular="shipmentMethods" description="A collection of available shipment methods."/>
     </transfer>
 
     <transfer name="ShipmentType" strict="true">
-        <property name="key" type="string"/>
+        <property name="key" type="string" description="A unique key used to identify an entity or a piece of data."/>
     </transfer>
 
     <transfer name="Item">
-        <property name="shipment" type="Shipment"/>
+        <property name="shipment" type="Shipment" description="The shipment details for an order."/>
     </transfer>
 
     <transfer name="ShipmentMethods">
-        <property name="methods" type="ShipmentMethod[]" singular="method"/>
+        <property name="methods" type="ShipmentMethod[]" singular="method" description="A collection of methods."/>
     </transfer>
 
 </transfers>

@@ -4,10 +4,10 @@
     <table name="spy_sales_order_invoice">
         <column name="id_sales_order_invoice" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
-        <column name="reference" type="VARCHAR" size="64" required="false"/>
-        <column name="issue_date" type="TIMESTAMP" required="false"/>
-        <column name="template_path" type="VARCHAR" size="255" required="true"/>
-        <column name="email_sent" type="BOOLEAN" required="true" default="false"/>
+        <column name="reference" type="VARCHAR" size="64" required="false" description="A reference to another resource or definition."/>
+        <column name="issue_date" type="TIMESTAMP" required="false" description="The date on which a sales invoice was issued."/>
+        <column name="template_path" type="VARCHAR" size="255" required="true" description="The file system path to the template used for rendering a sales invoice."/>
+        <column name="email_sent" type="BOOLEAN" required="true" default="false" description="A flag indicating if an email has been sent."/>
 
         <behavior name="timestampable"/>
 

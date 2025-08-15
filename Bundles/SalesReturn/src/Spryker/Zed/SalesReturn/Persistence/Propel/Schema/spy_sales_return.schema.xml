@@ -3,9 +3,9 @@
 
     <table name="spy_sales_return" idMethod="native" allowPkInsert="true">
         <column name="id_sales_return" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="return_reference" type="VARCHAR" size="255" required="true"/>
-        <column name="customer_reference" type="VARCHAR" size="255" required="false"/>
-        <column name="store" type="VARCHAR" size="255" required="true"/>
+        <column name="return_reference" type="VARCHAR" size="255" required="true" description="A unique reference for a return."/>
+        <column name="customer_reference" type="VARCHAR" size="255" required="false" description="A unique reference for a customer."/>
+        <column name="store" type="VARCHAR" size="255" required="true" description="The store context for an operation, determining which store's data is used."/>
 
         <behavior name="timestampable"/>
 
@@ -28,8 +28,8 @@
         <column name="id_sales_return_item" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_sales_return" type="INTEGER" required="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
-        <column name="uuid" required="false" type="VARCHAR" size="36"/>
-        <column name="reason" type="LONGVARCHAR" required="false"/>
+        <column name="uuid" required="false" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
+        <column name="reason" type="LONGVARCHAR" required="false" description="The reason for a return or other action."/>
 
         <behavior name="timestampable"/>
 
@@ -62,7 +62,7 @@
 
     <table name="spy_sales_return_reason" idMethod="native" allowPkInsert="true">
         <column name="id_sales_return_reason" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="glossary_key_reason" required="true" type="VARCHAR" size="255"/>
+        <column name="glossary_key_reason" required="true" type="VARCHAR" size="255" description="The glossary key for a return reason."/>
 
         <unique name="spy_sales_return_reason-glossary_key_reason">
             <unique-column name="glossary_key_reason"/>

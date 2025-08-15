@@ -2,23 +2,23 @@
 <transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="spryker:transfer-01" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestQuoteRequestsAttributes">
-        <property name="status" type="string"/>
-        <property name="isLatestVersionVisible" type="bool"/>
-        <property name="quoteRequestReference" type="string"/>
-        <property name="createdAt" type="string"/>
-        <property name="validUntil" type="string"/>
-        <property name="versions" type="string[]" singular="version"/>
-        <property name="shownVersion" type="RestQuoteRequestVersion"/>
-        <property name="customer" type="RestQuoteRequestCustomer" strict="true"/>
+        <property name="status" type="string" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
+        <property name="isLatestVersionVisible" type="bool" description="A flag indicating if the latest version of a quote request is visible."/>
+        <property name="quoteRequestReference" type="string" description="A unique reference for a quote request."/>
+        <property name="createdAt" type="string" description="The timestamp when an entity was created."/>
+        <property name="validUntil" type="string" description="The date until which an entity is valid."/>
+        <property name="versions" type="string[]" singular="version" description="A collection of versions."/>
+        <property name="shownVersion" type="RestQuoteRequestVersion" description="The version of a quote request shown to the user."/>
+        <property name="customer" type="RestQuoteRequestCustomer" strict="true" description="A data object representing a customer."/>
     </transfer>
 
     <transfer name="RestQuoteRequestCustomer" strict="true">
         <property name="idCustomer" type="int"/>
-        <property name="email" type="string"/>
-        <property name="salutation" type="string"/>
-        <property name="firstName" type="string"/>
-        <property name="lastName" type="string"/>
-        <property name="customerReference" type="string"/>
+        <property name="email" type="string" description="The email address of a user or contact."/>
+        <property name="salutation" type="string" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <property name="firstName" type="string" description="The first name of a person."/>
+        <property name="lastName" type="string" description="The last name of a user or customer."/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
         <property name="idCompanyUser" type="int"/>
         <property name="idCompany" type="int"/>
         <property name="idCompanyBusinessUnit" type="int"/>
@@ -37,124 +37,124 @@
     </transfer>
 
     <transfer name="RestQuoteRequestVersion">
-        <property name="version" type="int"/>
-        <property name="versionReference" type="string"/>
-        <property name="createdAt" type="string"/>
-        <property name="metadata" type="array" singular="metadata"/>
-        <property name="cart" type="RestQuoteRequestsCart"/>
+        <property name="version" type="int" description="The version number of an entity."/>
+        <property name="versionReference" type="string" description="A reference to a specific version."/>
+        <property name="createdAt" type="string" description="The timestamp when an entity was created."/>
+        <property name="metadata" type="array" singular="metadata" description="A collection of metadata."/>
+        <property name="cart" type="RestQuoteRequestsCart" description="A shopping cart or quote object."/>
     </transfer>
 
     <transfer name="RestQuoteRequestsRequestAttributes" strict="true">
-        <property name="cartUuid" type="string" restRequestParameter="yes"/>
-        <property name="metadata" type="array" singular="metadata" restRequestParameter="yes"/>
+        <property name="cartUuid" type="string" restRequestParameter="yes" description="The universally unique identifier for a cart."/>
+        <property name="metadata" type="array" singular="metadata" restRequestParameter="yes" description="A collection of metadata."/>
     </transfer>
 
     <transfer name="RestQuoteRequestsCart">
-        <property name="priceMode" type="string"/>
-        <property name="store" type="string"/>
-        <property name="currency" type="string"/>
-        <property name="totals" type="RestQuoteRequestsTotals"/>
-        <property name="billingAddress" type="RestQuoteRequestsAddress"/>
-        <property name="items" type="RestQuoteRequestItem[]" singular="item"/>
+        <property name="priceMode" type="string" description="The mode for price calculation, typically &quot;GROSS_MODE&quot; or &quot;NET_MODE&quot;."/>
+        <property name="store" type="string" description="The store context for an operation, determining which store's data is used."/>
+        <property name="currency" type="string" description="The currency used for a transaction or price."/>
+        <property name="totals" type="RestQuoteRequestsTotals" description="An object containing the calculated totals for an order or quote (e.g., subtotal, grandTotal)."/>
+        <property name="billingAddress" type="RestQuoteRequestsAddress" description="The address used for billing purposes."/>
+        <property name="items" type="RestQuoteRequestItem[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
     </transfer>
 
     <transfer name="RestQuoteRequestsTotals" strict="true">
-        <property name="expenseTotal" type="int"/>
-        <property name="discountTotal" type="int"/>
-        <property name="taxTotal" type="int"/>
-        <property name="subtotal" type="int"/>
-        <property name="grandTotal" type="int"/>
-        <property name="priceToPay" type="int"/>
+        <property name="expenseTotal" type="int" description="The total cost of all expenses in an order."/>
+        <property name="discountTotal" type="int" description="The total amount of discounts applied to an order."/>
+        <property name="taxTotal" type="int" description="The total amount of tax calculated for an order or quote."/>
+        <property name="subtotal" type="int" description="The total price of all items before discounts, taxes, and shipping are applied."/>
+        <property name="grandTotal" type="int" description="The final total of an order, including all costs and discounts."/>
+        <property name="priceToPay" type="int" description="The final amount that the customer has to pay."/>
     </transfer>
 
     <transfer name="RestQuoteRequestsDiscounts">
-        <property name="displayName" type="string"/>
-        <property name="amount" type="int"/>
-        <property name="code" type="string"/>
+        <property name="displayName" type="string" description="A display name for an entity."/>
+        <property name="amount" type="int" description="A numerical value, often used for price, quantity, or discount."/>
+        <property name="code" type="string" description="A unique code, often for currency, country, or barcode."/>
     </transfer>
 
     <transfer name="RestQuoteRequestsAddress">
-        <property name="salutation" type="string"/>
-        <property name="firstName" type="string"/>
-        <property name="lastName" type="string"/>
-        <property name="address1" type="string"/>
-        <property name="address2" type="string"/>
-        <property name="address3" type="string"/>
-        <property name="zipCode" type="string"/>
-        <property name="city" type="string"/>
-        <property name="country" type="string"/>
-        <property name="iso2Code" type="string"/>
-        <property name="company" type="string"/>
-        <property name="phone" type="string"/>
-        <property name="isDefaultShipping" type="bool"/>
-        <property name="isDefaultBilling" type="bool"/>
+        <property name="salutation" type="string" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <property name="firstName" type="string" description="The first name of a person."/>
+        <property name="lastName" type="string" description="The last name of a user or customer."/>
+        <property name="address1" type="string" description="The first line of a street address."/>
+        <property name="address2" type="string" description="The second line of a street address."/>
+        <property name="address3" type="string" description="The third line of a street address."/>
+        <property name="zipCode" type="string" description="The postal code for an address."/>
+        <property name="city" type="string" description="The city part of an address."/>
+        <property name="country" type="string" description="The country associated with an address or entity."/>
+        <property name="iso2Code" type="string" description="The two-letter ISO code for a country."/>
+        <property name="company" type="string" description="A company entity."/>
+        <property name="phone" type="string" description="The phone number."/>
+        <property name="isDefaultShipping" type="bool" description="A flag indicating if an address is the default for shipping."/>
+        <property name="isDefaultBilling" type="bool" description="A flag indicating if an address is the default for billing."/>
     </transfer>
 
     <transfer name="RestQuoteRequestItem">
-        <property name="sku" type="string"/>
-        <property name="quantity" type="int"/>
-        <property name="groupKey" type="string"/>
-        <property name="abstractSku" type="string"/>
-        <property name="amount" type="int"/>
-        <property name="calculations" type="RestQuoteRequestsCalculations"/>
-        <property name="unitPrice" type="int" strict="true"/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <property name="quantity" type="int" description="The number of units for an item."/>
+        <property name="groupKey" type="string" description="A key used to group items together, typically in a cart or order."/>
+        <property name="abstractSku" type="string" description="The Stock Keeping Unit (SKU) for an abstract product."/>
+        <property name="amount" type="int" description="A numerical value, often used for price, quantity, or discount."/>
+        <property name="calculations" type="RestQuoteRequestsCalculations" description="An object containing detailed price calculations for a cart item."/>
+        <property name="unitPrice" type="int" strict="true" description="The price of a single unit of an item."/>
     </transfer>
 
     <transfer name="RestQuoteRequestsCalculations" strict="true">
-        <property name="unitPrice" type="int"/>
-        <property name="sumPrice" type="int"/>
+        <property name="unitPrice" type="int" description="The price of a single unit of an item."/>
+        <property name="sumPrice" type="int" description="The total price for all units of an item (unitPrice * quantity)."/>
 
-        <property name="taxRate" type="int"/>
+        <property name="taxRate" type="int" description="The tax rate applied to an item."/>
 
-        <property name="unitNetPrice" type="int"/>
-        <property name="sumNetPrice" type="int"/>
+        <property name="unitNetPrice" type="int" description="The price of a single unit of an item, excluding tax."/>
+        <property name="sumNetPrice" type="int" description="The total price for all units of an item, excluding tax."/>
 
-        <property name="unitGrossPrice" type="int"/>
-        <property name="sumGrossPrice" type="int"/>
+        <property name="unitGrossPrice" type="int" description="The price of a single unit of an item, including tax."/>
+        <property name="sumGrossPrice" type="int" description="The total price for all units of an item, including tax."/>
 
-        <property name="unitTaxAmountFullAggregation" type="int"/>
-        <property name="sumTaxAmountFullAggregation" type="int"/>
+        <property name="unitTaxAmountFullAggregation" type="int" description="The total tax amount for a single unit, including all associated options and expenses."/>
+        <property name="sumTaxAmountFullAggregation" type="int" description="The total tax amount for all units of an item, including all associated options and expenses."/>
 
-        <property name="sumSubtotalAggregation" type="int"/>
-        <property name="unitSubtotalAggregation" type="int"/>
+        <property name="sumSubtotalAggregation" type="int" description="The total subtotal for all units of an item, including options and expenses, before discounts."/>
+        <property name="unitSubtotalAggregation" type="int" description="The subtotal for a single unit, including options and expenses, before discounts."/>
 
-        <property name="unitProductOptionPriceAggregation" type="int"/>
-        <property name="sumProductOptionPriceAggregation" type="int"/>
+        <property name="unitProductOptionPriceAggregation" type="int" description="The total price of all selected options for a single unit of an item."/>
+        <property name="sumProductOptionPriceAggregation" type="int" description="The total price of all selected options for all units of an item."/>
 
-        <property name="unitDiscountAmountAggregation" type="int"/>
-        <property name="sumDiscountAmountAggregation" type="int"/>
+        <property name="unitDiscountAmountAggregation" type="int" description="The total discount amount applied to a single unit of an item."/>
+        <property name="sumDiscountAmountAggregation" type="int" description="The total discount amount applied to all units of an item."/>
 
-        <property name="unitDiscountAmountFullAggregation" type="int"/>
-        <property name="sumDiscountAmountFullAggregation" type="int"/>
+        <property name="unitDiscountAmountFullAggregation" type="int" description="The total discount amount for a single unit, including all associated options and expenses."/>
+        <property name="sumDiscountAmountFullAggregation" type="int" description="The total discount amount for all units of an item, including all associated options and expenses."/>
 
-        <property name="unitPriceToPayAggregation" type="int"/>
-        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="unitPriceToPayAggregation" type="int" description="The final price to pay for a single unit, after all discounts and including all options/expenses."/>
+        <property name="sumPriceToPayAggregation" type="int" description="The final price to pay for all units of an item, after all discounts and including all options/expenses."/>
     </transfer>
 
     <transfer name="QuoteRequestResponse">
-        <property name="isSuccessful" type="bool"/>
-        <property name="messages" type="Message[]" singular="message"/>
-        <property name="quoteRequest" type="QuoteRequest"/>
+        <property name="isSuccessful" type="bool" description="A boolean flag indicating if an operation completed successfully."/>
+        <property name="messages" type="Message[]" singular="message" description="A collection of informational, success, or error messages."/>
+        <property name="quoteRequest" type="QuoteRequest" description="A data object representing a customer's request for a price quote."/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="code" type="string"/>
-        <property name="status" type="int"/>
-        <property name="detail" type="string"/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="customer" type="Customer"/>
-        <property name="companyUser" type="CompanyUser"/>
-        <property name="uuid" type="string"/>
-        <property name="customerReference" type="string"/>
-        <property name="currency" type="Currency"/>
-        <property name="store" type="Store"/>
-        <property name="totals" type="Totals"/>
+        <property name="customer" type="Customer" description="A data object representing a customer."/>
+        <property name="companyUser" type="CompanyUser" description="A user associated with a company."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
+        <property name="currency" type="Currency" description="The currency used for a transaction or price."/>
+        <property name="store" type="Store" description="The store context for an operation, determining which store's data is used."/>
+        <property name="totals" type="Totals" description="An object containing the calculated totals for an order or quote (e.g., subtotal, grandTotal)."/>
     </transfer>
 
     <transfer name="ShipmentGroup">
-        <property name="items" type="Item[]" singular="item"/>
+        <property name="items" type="Item[]" singular="item" description="A collection of items, typically in a cart, order, or list."/>
     </transfer>
 
     <transfer name="Item">
@@ -162,87 +162,87 @@
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
-        <property name="customer" type="Customer"/>
+        <property name="customer" type="Customer" description="A data object representing a customer."/>
         <property name="fkCompany" type="int"/>
         <property name="fkCompanyBusinessUnit" type="int"/>
     </transfer>
 
     <transfer name="RestUser">
-        <property name="surrogateIdentifier" type="int"/>
-        <property name="naturalIdentifier" type="string"/>
+        <property name="surrogateIdentifier" type="int" description="A system-generated, non-human-readable unique identifier (like an auto-incrementing ID)."/>
+        <property name="naturalIdentifier" type="string" description="A human-readable unique identifier for a resource, such as a user's email."/>
         <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="Customer">
         <property name="idCustomer" type="int"/>
-        <property name="companyUserTransfer" type="CompanyUser"/>
-        <property name="customerReference" type="string"/>
+        <property name="companyUserTransfer" type="CompanyUser" description="A data transfer object for a company user."/>
+        <property name="customerReference" type="string" description="A unique reference for a customer."/>
     </transfer>
 
     <transfer name="QuoteResponse">
-        <property name="isSuccessful" type="bool"/>
-        <property name="quoteTransfer" type="Quote"/>
-        <property name="errors" type="QuoteError[]" singular="error"/>
+        <property name="isSuccessful" type="bool" description="A boolean flag indicating if an operation completed successfully."/>
+        <property name="quoteTransfer" type="Quote" description="A data transfer object representing a quote."/>
+        <property name="errors" type="QuoteError[]" singular="error" description="A collection of error objects."/>
     </transfer>
 
     <transfer name="QuoteRequest">
-        <property name="companyUser" type="CompanyUser"/>
-        <property name="validUntil" type="string"/>
-        <property name="quoteRequestVersions" type="QuoteRequestVersion[]" singular="quoteRequestVersion"/>
-        <property name="latestVersion" type="QuoteRequestVersion"/>
-        <property name="quoteRequestReference" type="string"/>
-        <property name="isLatestVersionVisible" type="bool"/>
-        <property name="latestVisibleVersion" type="QuoteRequestVersion"/>
+        <property name="companyUser" type="CompanyUser" description="A user associated with a company."/>
+        <property name="validUntil" type="string" description="The date until which an entity is valid."/>
+        <property name="quoteRequestVersions" type="QuoteRequestVersion[]" singular="quoteRequestVersion" description="A collection of quote request versions."/>
+        <property name="latestVersion" type="QuoteRequestVersion" description="The latest version of a quote request."/>
+        <property name="quoteRequestReference" type="string" description="A unique reference for a quote request."/>
+        <property name="isLatestVersionVisible" type="bool" description="A flag indicating if the latest version of a quote request is visible."/>
+        <property name="latestVisibleVersion" type="QuoteRequestVersion" description="The latest version of a quote request that is visible to the user."/>
     </transfer>
 
     <transfer name="QuoteRequestVersion">
-        <property name="quote" type="Quote"/>
-        <property name="versionReference" type="string"/>
-        <property name="metadata" type="array" singular="metadata"/>
+        <property name="quote" type="Quote" description="A data object representing a shopping cart before it becomes an order."/>
+        <property name="versionReference" type="string" description="A reference to a specific version."/>
+        <property name="metadata" type="array" singular="metadata" description="A collection of metadata."/>
     </transfer>
 
     <transfer name="Message">
-        <property name="value" type="string"/>
-        <property name="message" type="string"/>
+        <property name="value" type="string" description="A generic value for a property, often used in key-value pairs or translations."/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
     </transfer>
 
     <transfer name="Pagination">
-        <property name="nbResults" type="int"/>
-        <property name="maxPerPage" type="int"/>
-        <property name="page" type="int"/>
+        <property name="nbResults" type="int" description="The total number of results found for a query."/>
+        <property name="maxPerPage" type="int" description="The maximum number of items to show on a single page."/>
+        <property name="page" type="int" description="The current page number in a paginated result set."/>
     </transfer>
 
     <transfer name="QuoteRequestCollection">
-        <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest"/>
-        <property name="pagination" type="Pagination"/>
+        <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest" description="A collection of quote requests."/>
+        <property name="pagination" type="Pagination" description="An object containing all pagination-related data for a list of results."/>
     </transfer>
 
     <transfer name="Currency">
-        <property name="code" type="string"/>
+        <property name="code" type="string" description="A unique code, often for currency, country, or barcode."/>
     </transfer>
 
     <transfer name="Store">
-        <property name="name" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="Totals">
     </transfer>
 
     <transfer name="QuoteError">
-        <property name="message" type="string"/>
-        <property name="errorIdentifier" type="string"/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
+        <property name="errorIdentifier" type="string" description="A unique identifier for a specific type of error."/>
     </transfer>
 
     <transfer name="QuoteRequestFilter">
-        <property name="companyUser" type="CompanyUser"/>
+        <property name="companyUser" type="CompanyUser" description="A user associated with a company."/>
         <property name="idCompanyUser" type="int"/>
-        <property name="quoteRequestReference" type="string"/>
-        <property name="pagination" type="Pagination"/>
-        <property name="withVersions" type="bool"/>
+        <property name="quoteRequestReference" type="string" description="A unique reference for a quote request."/>
+        <property name="pagination" type="Pagination" description="An object containing all pagination-related data for a list of results."/>
+        <property name="withVersions" type="bool" description="A flag to include version information in the response."/>
     </transfer>
 
     <transfer name="RestCartsAttributes">
-        <property name="isLocked" type="bool" strict="true"/>
+        <property name="isLocked" type="bool" strict="true" description="A flag indicating if an entity is locked for editing."/>
     </transfer>
 
 </transfers>

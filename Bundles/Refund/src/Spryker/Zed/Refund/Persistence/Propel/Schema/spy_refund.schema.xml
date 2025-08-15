@@ -5,8 +5,8 @@
         <column name="id_refund" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" required="true" type="INTEGER"/>
 
-        <column name="amount" required="true" type="INTEGER"/>
-        <column name="comment" type="LONGVARCHAR"/>
+        <column name="amount" required="true" type="INTEGER" description="A numerical value, often used for price, quantity, or discount."/>
+        <column name="comment" type="LONGVARCHAR" description="A user-submitted comment or note."/>
 
         <foreign-key name="spy_refund-fk_sales_order" foreignTable="spy_sales_order">
             <reference foreign="id_sales_order" local="fk_sales_order"/>

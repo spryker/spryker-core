@@ -3,9 +3,9 @@
 
     <table name="spy_sales_order_amendment" idMethod="native">
         <column name="id_sales_order_amendment" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
-        <column name="uuid" type="VARCHAR" required="false" size="36"/>
-        <column name="original_order_reference" type="VARCHAR" required="true" size="255"/>
-        <column name="amended_order_reference" type="VARCHAR" required="true" size="255"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36" description="A Universally Unique Identifier for an entity."/>
+        <column name="original_order_reference" type="VARCHAR" required="true" size="255" description="The reference of the original order that was amended."/>
+        <column name="amended_order_reference" type="VARCHAR" required="true" size="255" description="The reference of the new order created from an amendment."/>
 
         <unique name="spy_sales_order_amendment-unique-uuid">
             <unique-column name="uuid"/>
@@ -29,11 +29,11 @@
 
     <table name="spy_sales_order_amendment_quote" idMethod="native">
         <column name="id_sales_order_amendment_quote" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
-        <column name="uuid" type="VARCHAR" required="false" size="36"/>
-        <column name="store" type="VARCHAR" required="false" size="255"/>
-        <column name="customer_reference" type="VARCHAR" required="true" size="255"/>
-        <column name="amendment_order_reference" type="VARCHAR" required="true" size="255"/>
-        <column name="quote_data" required="true" type="CLOB"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36" description="A Universally Unique Identifier for an entity."/>
+        <column name="store" type="VARCHAR" required="false" size="255" description="The store context for an operation, determining which store's data is used."/>
+        <column name="customer_reference" type="VARCHAR" required="true" size="255" description="A unique reference for a customer."/>
+        <column name="amendment_order_reference" type="VARCHAR" required="true" size="255" description="A reference to an amended sales order."/>
+        <column name="quote_data" required="true" type="CLOB" description="A serialized representation of a quote, stored with a sales order amendment."/>
 
         <unique name="spy_sales_order_amendment_quote-uuid">
             <unique-column name="uuid"/>
