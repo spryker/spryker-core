@@ -13,6 +13,7 @@ use Generated\Shared\DataBuilder\LocalizedProductSetBuilder;
 use Generated\Shared\DataBuilder\ProductImageBuilder;
 use Generated\Shared\DataBuilder\ProductSetBuilder;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ProductSetTransfer;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
@@ -83,13 +84,17 @@ class ProductSetStorageCommunicationTester extends Actor
 
     /**
      * @param array<\Generated\Shared\Transfer\ProductImageTransfer> $productImageTransfers
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductSetTransfer
      */
-    public function createProductSetWithProductImages(array $productImageTransfers): ProductSetTransfer
+    public function createProductSetWithProductImages(array $productImageTransfers, ?LocaleTransfer $localeTransfer = null): ProductSetTransfer
     {
+        if (!$localeTransfer) {
+            $localeTransfer = $this->haveLocale();
+        }
         $localizedProductSetTransfer = (new LocalizedProductSetBuilder())->withProductSetData()->build();
-        $localizedProductSetTransfer->setLocale($this->haveLocale());
+        $localizedProductSetTransfer->setLocale($localeTransfer);
 
         $productAbstractTransfer = $this->haveProductAbstract();
 

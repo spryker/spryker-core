@@ -59,7 +59,7 @@ class PropelGroupedSchemaFinderTest extends AbstractPropelSchemaTest
         touch($subDirectory . DIRECTORY_SEPARATOR . static::NAME_OF_SCHEMA_FILE_GROUP);
 
         $schemaFinder = new PropelSchemaFinder(
-            [$this->getFixtureDirectory(), $subDirectory],
+            [$this->getFixtureDirectory()],
         );
 
         $schemaGrouper = new PropelGroupedSchemaFinder(

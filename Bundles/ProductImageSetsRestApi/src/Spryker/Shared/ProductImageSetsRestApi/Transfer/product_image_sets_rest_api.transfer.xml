@@ -13,6 +13,8 @@
     <transfer name="RestImagesAttributes">
         <property name="externalUrlLarge" type="string" description="The URL for a large version of an image."/>
         <property name="externalUrlSmall" type="string" description="The URL for a small version of an image."/>
+        <property name="altTextLarge" type="string" strict="true" description="The alternative text for a large version of an image."/>
+        <property name="altTextSmall" type="string" strict="true" description="The alternative text for a small version of an image."/>
     </transfer>
 
     <transfer name="ProductAbstractImageStorage">
@@ -34,6 +36,11 @@
     <transfer name="ProductConcreteStorage">
         <property name="idProductConcrete" type="int"/>
         <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="RestCatalogSearchProductImage">
+        <property name="altTextLarge" type="string" strict="true" description="The alternative text for a large version of an image."/>
+        <property name="altTextSmall" type="string" strict="true" description="The alternative text for a small version of an image."/>
     </transfer>
 
 </transfers>

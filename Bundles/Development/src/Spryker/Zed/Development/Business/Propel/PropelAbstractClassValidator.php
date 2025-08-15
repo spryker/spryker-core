@@ -86,16 +86,26 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
         }
         $moduleSchemaFileFinder = $this->getModuleSchemaFileFinder($module);
 
-        $isModuleValid = true;
-
         foreach ($moduleSchemaFileFinder as $schemaFile) {
-            $isValid = $this->abstractClassesForTablesExist($output, $module, $schemaFile);
-            if (!$isValid) {
-                $isModuleValid = false;
+            if (is_dir($schemaFile->getPathname())) {
+                $moduleNestedSchemaFileFinder = new Finder();
+                $moduleNestedSchemaFileFinder->in($schemaFile->getPathname());
+
+                foreach ($moduleNestedSchemaFileFinder as $nestedSchemaFile) {
+                    if (!$this->abstractClassesForTablesExist($output, $module, $nestedSchemaFile)) {
+                        return false;
+                    }
+                }
+
+                continue;
+            }
+
+            if (!$this->abstractClassesForTablesExist($output, $module, $schemaFile)) {
+                return false;
             }
         }
 
-        return $isModuleValid;
+        return true;
     }
 
     /**

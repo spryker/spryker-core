@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductSetPageSearchTransfer;
 use Generated\Shared\Transfer\StorageProductImageTransfer;
 use Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearch;
 use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface;
+use Spryker\Zed\ProductSetPageSearch\Business\Expander\ProductSetPageSearchExpanderInterface;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetInterface;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilEncodingInterface;
 use Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface;
@@ -25,51 +26,21 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
     public const COL_ID_PRODUCT_SET = 'id_product_set';
 
     /**
-     * @var \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface
-     */
-    protected $queryContainer;
-
-    /**
-     * @var \Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilEncodingInterface
-     */
-    protected $utilEncodingService;
-
-    /**
-     * @var \Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface
-     */
-    protected $productSetPageSearchDataMapper;
-
-    /**
-     * @var \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetInterface
-     */
-    protected $productSetFacade;
-
-    /**
-     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
-     *
-     * @var bool
-     */
-    protected $isSendingToQueue = true;
-
-    /**
      * @param \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface $productSetPageSearchDataMapper
      * @param \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetInterface $productSetFacade
      * @param bool $isSendingToQueue
+     * @param \Spryker\Zed\ProductSetPageSearch\Business\Expander\ProductSetPageSearchExpanderInterface|null $productSetPageSearchExpander
      */
     public function __construct(
-        ProductSetPageSearchQueryContainerInterface $queryContainer,
-        ProductSetPageSearchToUtilEncodingInterface $utilEncodingService,
-        ProductSetSearchDataMapperInterface $productSetPageSearchDataMapper,
-        ProductSetPageSearchToProductSetInterface $productSetFacade,
-        $isSendingToQueue
+        protected ProductSetPageSearchQueryContainerInterface $queryContainer,
+        protected ProductSetPageSearchToUtilEncodingInterface $utilEncodingService,
+        protected ProductSetSearchDataMapperInterface $productSetPageSearchDataMapper,
+        protected ProductSetPageSearchToProductSetInterface $productSetFacade,
+        protected bool $isSendingToQueue = true,
+        protected ?ProductSetPageSearchExpanderInterface $productSetPageSearchExpander = null
     ) {
-        $this->queryContainer = $queryContainer;
-        $this->utilEncodingService = $utilEncodingService;
-        $this->productSetPageSearchDataMapper = $productSetPageSearchDataMapper;
-        $this->productSetFacade = $productSetFacade;
-        $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
@@ -144,6 +115,12 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
         }
 
         $productSetPageSearchTransfer = $this->getProductSetPageSearchTransfer($spyProductSetLocalizedEntity);
+
+        if ($this->productSetPageSearchExpander) {
+            $productSetPageSearchTransfer = $this->productSetPageSearchExpander
+                ->expandProductSetPageSearchWithProductImageAlternativeTexts($productSetPageSearchTransfer);
+        }
+
         $localeTransfer = (new LocaleTransfer())
             ->setLocaleName($spyProductSetLocalizedEntity['SpyLocale']['locale_name'])
             ->setIdLocale($spyProductSetLocalizedEntity['SpyLocale']['id_locale']);

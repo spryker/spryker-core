@@ -7,7 +7,12 @@
 
 namespace Spryker\Client\ProductImageStorage;
 
+use Exception;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToGlossaryStorageClientInterface;
+use Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToProductImageClientInterface;
+use Spryker\Client\ProductImageStorage\Expander\ProductImageStorageExpander;
+use Spryker\Client\ProductImageStorage\Expander\ProductImageStorageExpanderInterface;
 use Spryker\Client\ProductImageStorage\Expander\ProductViewImageExpander;
 use Spryker\Client\ProductImageStorage\Resolver\ProductConcreteImageInheritanceResolver;
 use Spryker\Client\ProductImageStorage\Resolver\ProductConcreteImageInheritanceResolverInterface;
@@ -15,6 +20,9 @@ use Spryker\Client\ProductImageStorage\Storage\ProductAbstractImageStorageReader
 use Spryker\Client\ProductImageStorage\Storage\ProductConcreteImageStorageReader;
 use Spryker\Client\ProductImageStorage\Storage\ProductImageStorageKeyGenerator;
 
+/**
+ * @method \Spryker\Client\ProductImageStorage\ProductImageStorageConfig getConfig()
+ */
 class ProductImageStorageFactory extends AbstractFactory
 {
     /**
@@ -33,7 +41,11 @@ class ProductImageStorageFactory extends AbstractFactory
      */
     public function createProductAbstractImageStorageReader()
     {
-        return new ProductAbstractImageStorageReader($this->getStorage(), $this->createProductImageStorageKeyGenerator());
+        return new ProductAbstractImageStorageReader(
+            $this->getStorage(),
+            $this->createProductImageStorageKeyGenerator(),
+            $this->createProductImageStorageExpander(),
+        );
     }
 
     /**
@@ -41,7 +53,11 @@ class ProductImageStorageFactory extends AbstractFactory
      */
     public function createProductConcreteImageStorageReader()
     {
-        return new ProductConcreteImageStorageReader($this->getStorage(), $this->createProductImageStorageKeyGenerator());
+        return new ProductConcreteImageStorageReader(
+            $this->getStorage(),
+            $this->createProductImageStorageKeyGenerator(),
+            $this->createProductImageStorageExpander(),
+        );
     }
 
     /**
@@ -64,6 +80,20 @@ class ProductImageStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ProductImageStorage\Expander\ProductImageStorageExpanderInterface|null
+     */
+    public function createProductImageStorageExpander(): ?ProductImageStorageExpanderInterface
+    {
+        if (!$this->getProductImageClient()->isProductImageAlternativeTextEnabled()) {
+            return null;
+        }
+
+        return new ProductImageStorageExpander(
+            $this->getGlossaryStorageClient(),
+        );
+    }
+
+    /**
      * @return \Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageInterface
      */
     public function getStorage()
@@ -77,5 +107,38 @@ class ProductImageStorageFactory extends AbstractFactory
     public function getSynchronizationService()
     {
         return $this->getProvidedDependency(ProductImageStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): ProductImageStorageToGlossaryStorageClientInterface
+    {
+        $this->assertProductImageAlternativeTextEnabled();
+
+        return $this->getProvidedDependency(ProductImageStorageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToProductImageClientInterface
+     */
+    public function getProductImageClient(): ProductImageStorageToProductImageClientInterface
+    {
+        return $this->getProvidedDependency(ProductImageStorageDependencyProvider::CLIENT_PRODUCT_IMAGE);
+    }
+
+    /**
+     * @deprecated This method will be removed in the next major version.
+     * The product image alternative text feature will be enabled by default and the dependency will be mandatory.
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
+    protected function assertProductImageAlternativeTextEnabled(): void
+    {
+        if (!$this->getProductImageClient()->isProductImageAlternativeTextEnabled()) {
+            throw new Exception('ProductImageAlternativeText is not enabled. Enable it in the ProductImage module shared config first.');
+        }
     }
 }

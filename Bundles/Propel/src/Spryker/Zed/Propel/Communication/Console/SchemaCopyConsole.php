@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
+use Exception;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -42,9 +43,24 @@ class SchemaCopyConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->info('Clean schema directory');
-        $this->getFacade()->cleanPropelSchemaDirectory();
+        try {
+            $this->getFacade()->cleanPropelSchemaDirectory();
+        } catch (Exception $e) {
+            $this->error($e->getMessage());
+            $this->error('Please check project schema directory and try again.');
+
+            return static::CODE_ERROR;
+        }
+
         $this->info('Copy and merge schema files');
-        $this->getFacade()->copySchemaFilesToTargetDirectory();
+        try {
+            $this->getFacade()->copySchemaFilesToTargetDirectory();
+        } catch (Exception $e) {
+            $this->error($e->getMessage());
+            $this->error('Please check your schema files and try again.');
+
+            return static::CODE_ERROR;
+        }
 
         return static::CODE_SUCCESS;
     }

@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\ProductSetPageSearch;
 
+use Exception;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToEventBehaviorFacadeBridge;
+use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToGlossaryFacadeBridge;
+use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductImageFacadeBridge;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetBridge;
 use Spryker\Zed\ProductSetPageSearch\Dependency\QueryContainer\ProductSetPageSearchToProductImageQueryContainerBridge;
 use Spryker\Zed\ProductSetPageSearch\Dependency\QueryContainer\ProductSetPageSearchToProductSetQueryContainerBridge;
@@ -53,12 +57,22 @@ class ProductSetPageSearchDependencyProvider extends AbstractBundleDependencyPro
     /**
      * @var string
      */
+    public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
+
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
 
     /**
      * @var string
      */
     public const STORE = 'STORE';
+
+    /**
+     * @var string
+     */
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -88,6 +102,8 @@ class ProductSetPageSearchDependencyProvider extends AbstractBundleDependencyPro
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addProductSetFacade($container);
+        $container = $this->addGlossaryFacade($container);
+        $container = $this->addProductImageFacade($container);
 
         return $container;
     }
@@ -133,6 +149,39 @@ class ProductSetPageSearchDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_PRODUCT_SET, function (Container $container) {
             return new ProductSetPageSearchToProductSetBridge($container->getLocator()->productSet()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGlossaryFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
+            $module = 'glossary';
+            try {
+                return new ProductSetPageSearchToGlossaryFacadeBridge($container->getLocator()->$module()->facade());
+            } catch (FacadeNotFoundException) {
+                throw new Exception('Missing "spryker/glossary" module.');
+            }
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductImageFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
+            return new ProductSetPageSearchToProductImageFacadeBridge($container->getLocator()->productImage()->facade());
         });
 
         return $container;

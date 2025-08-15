@@ -15,21 +15,19 @@ use Orm\Zed\ProductImage\Persistence\SpyProductImage;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\ProductImage\Business\Expander\ProductImageSetExpanderInterface;
 use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface;
 
 class ProductImageTransferMapper implements ProductImageTransferMapperInterface
 {
     /**
-     * @var \Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface
-     */
-    protected $localeFacade;
-
-    /**
      * @param \Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductImage\Business\Expander\ProductImageSetExpanderInterface|null $productImageSetExpander
      */
-    public function __construct(ProductImageToLocaleInterface $localeFacade)
-    {
-        $this->localeFacade = $localeFacade;
+    public function __construct(
+        protected ProductImageToLocaleInterface $localeFacade,
+        protected ?ProductImageSetExpanderInterface $productImageSetExpander = null
+    ) {
     }
 
     /**
@@ -44,7 +42,12 @@ class ProductImageTransferMapper implements ProductImageTransferMapperInterface
             $transferList[] = $this->mapProductImageSet($productImageSetEntity);
         }
 
-        return $transferList;
+        if (!$this->productImageSetExpander) {
+            return $transferList;
+        }
+
+        return $this->productImageSetExpander
+            ->expandProductImageSetCollectionWithProductImageAlternativeTextTranslations($transferList);
     }
 
     /**

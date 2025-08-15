@@ -30,6 +30,8 @@
     </transfer>
 
     <transfer name="StorageProductImage">
+        <property name="altTextSmall" type="string" strict="true"/>
+        <property name="altTextLarge" type="string" strict="true"/>
     </transfer>
 
     <transfer name="PageMap">
@@ -51,6 +53,16 @@
 
     <transfer name="Store">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Translation">
+        <property name="isActive" type="bool"/>
+        <property name="glossaryKey" type="GlossaryKey" strict="true"/>
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="GlossaryKey">
+        <property name="key" type="string"/>
     </transfer>
 
 </transfers>

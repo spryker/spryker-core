@@ -7,7 +7,7 @@
         "php": ">=8.2",
         "spryker/event-behavior": "^1.1.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/product-image": "^3.5.0",
+        "spryker/product-image": "^3.20.0",
         "spryker/product-set": "^1.3.0",
         "spryker/propel-orm": "^1.5.0",
         "spryker/sitemap-extension": "^1.1.0",
@@ -20,16 +20,21 @@
         "spryker/url": "^3.3.0"
     },
     "require-dev": {
+        "spryker/application": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/event": "*",
+        "spryker/glossary": "*",
         "spryker/locale": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
+        "spryker/queue": "*",
         "spryker/testify": "*",
         "spryker/url-storage": "*"
     },
     "suggest": {
         "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+        "spryker/glossary": "For optional ProductImageAlternativeText feature, minimal required version is 3.16.0",
         "spryker/url-storage": "If you want to use UrlStorage plugins, minimum required version: 0.2.0"
     },
     "autoload": {

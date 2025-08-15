@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductImage\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleCriteriaTransfer;
+
 interface ProductImageToLocaleInterface
 {
     /**
@@ -27,9 +29,11 @@ interface ProductImageToLocaleInterface
     public function getAvailableLocales();
 
     /**
+     * @param \Generated\Shared\Transfer\LocaleCriteriaTransfer|null $localeCriteriaTransfer
+     *
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection();
+    public function getLocaleCollection(?LocaleCriteriaTransfer $localeCriteriaTransfer = null): array;
 
     /**
      * @param int $idLocale

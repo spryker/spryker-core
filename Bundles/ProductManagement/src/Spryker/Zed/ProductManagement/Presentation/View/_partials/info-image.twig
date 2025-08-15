@@ -21,11 +21,12 @@
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="row">
-                                {% for image in imageSet.product_images %}
-                                    <div class="col-lg-3">
-                                        <img src="{{ image.image_preview }}" style="max-width: 100px; max-height: 100px">
-                                    </div>
-                                {% endfor %}
+                                {% include ['@ProductImage/ProductManagement/_partials/info-images.twig', '@ProductManagement/View/_partials/info-images.twig'] with {
+                                    data: {
+                                        images: imageSet.product_images,
+                                        localeName: localeName,
+                                    },
+                                } only %}
                             </div>
                         {% endblock %}
 

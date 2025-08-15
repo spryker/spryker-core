@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductImage\Business\Model;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\ProductImage\Business\Expander\ProductImageSetExpanderInterface;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface;
 use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
@@ -38,21 +39,34 @@ class Reader implements ReaderInterface
     protected $productImageRepository;
 
     /**
+     * @var \Spryker\Zed\ProductImage\ProductImageConfig
+     */
+    protected $productImageConfig;
+
+    /**
+     * @var \Spryker\Zed\ProductImage\Business\Expander\ProductImageSetExpanderInterface
+     */
+    protected ?ProductImageSetExpanderInterface $productImageSetExpander;
+
+    /**
      * @param \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface $productImageContainer
      * @param \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface $transferMapper
      * @param \Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductImage\Persistence\ProductImageRepositoryInterface $productImageRepository
+     * @param \Spryker\Zed\ProductImage\Business\Expander\ProductImageSetExpanderInterface|null $productImageSetExpander
      */
     public function __construct(
         ProductImageQueryContainerInterface $productImageContainer,
         ProductImageTransferMapperInterface $transferMapper,
         ProductImageToLocaleInterface $localeFacade,
-        ProductImageRepositoryInterface $productImageRepository
+        ProductImageRepositoryInterface $productImageRepository,
+        ?ProductImageSetExpanderInterface $productImageSetExpander = null
     ) {
         $this->productImageContainer = $productImageContainer;
         $this->transferMapper = $transferMapper;
         $this->localeFacade = $localeFacade;
         $this->productImageRepository = $productImageRepository;
+        $this->productImageSetExpander = $productImageSetExpander;
     }
 
     /**
@@ -121,7 +135,14 @@ class Reader implements ReaderInterface
             return null;
         }
 
-        return $this->transferMapper->mapProductImageSet($productImageSetEntity);
+        $productImageSetTransfer = $this->transferMapper->mapProductImageSet($productImageSetEntity);
+
+        if (!$this->productImageSetExpander) {
+            return $productImageSetTransfer;
+        }
+
+        return $this->productImageSetExpander
+            ->expandProductImageSetCollectionWithProductImageAlternativeTextTranslations([$productImageSetTransfer])[0];
     }
 
     /**

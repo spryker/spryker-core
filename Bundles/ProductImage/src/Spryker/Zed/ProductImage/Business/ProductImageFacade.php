@@ -386,4 +386,18 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
             ->createProductImageSetReader()
             ->getAbstractProductImageSetCollection($productImageSetCriteriaTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated This method will be removed in the next major version. Product image alternative text will be enabled by default.
+     *
+     * @return bool
+     */
+    public function isProductImageAlternativeTextEnabled(): bool
+    {
+        return $this->getFactory()->getConfig()->isProductImageAlternativeTextEnabled();
+    }
 }

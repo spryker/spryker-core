@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\Propel\Business;
 
+use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver as SharedAbstractClassResolver;
+use Spryker\Shared\Kernel\ClassResolver\Config\SharedConfigResolver;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver as ZedAbstractClassResolver;
+use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Zed\Propel\Business\ConfigReader\PropelConfigReader;
 use Spryker\Zed\Propel\Business\ConfigReader\PropelConfigReaderInterface;
 use Spryker\Zed\Propel\Business\Model\DirectoryRemover;
@@ -68,6 +72,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
             $this->createGroupedSchemaFinder(),
             $this->createSchemaWriter(),
             $this->createSchemaMerger(),
+            $this->createBundleConfigResolver(),
+            $this->createSharedConfigResolver(),
         );
     }
 
@@ -76,11 +82,9 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      */
     public function createGroupedSchemaFinder()
     {
-        $schemaFinder = new PropelGroupedSchemaFinder(
+        return new PropelGroupedSchemaFinder(
             $this->createSchemaFinder(),
         );
-
-        return $schemaFinder;
     }
 
     /**
@@ -88,11 +92,9 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      */
     public function createSchemaFinder()
     {
-        $schemaFinder = new PropelSchemaFinder(
+        return new PropelSchemaFinder(
             $this->getConfig()->getPropelSchemaPathPatterns(),
         );
-
-        return $schemaFinder;
     }
 
     /**
@@ -100,11 +102,9 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      */
     public function createCoreSchemaFinder()
     {
-        $schemaFinder = new PropelSchemaFinder(
+        return new PropelSchemaFinder(
             $this->getConfig()->getCorePropelSchemaPathPatterns(),
         );
-
-        return $schemaFinder;
     }
 
     /**
@@ -112,12 +112,10 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      */
     public function createSchemaWriter()
     {
-        $schemaWriter = new PropelSchemaWriter(
+        return new PropelSchemaWriter(
             $this->createFilesystem(),
             $this->getConfig()->getSchemaDirectory(),
         );
-
-        return $schemaWriter;
     }
 
     /**
@@ -125,13 +123,11 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      */
     public function createSchemaMerger()
     {
-        $propelSchemaMerger = new PropelSchemaMerger(
+        return new PropelSchemaMerger(
             $this->getUtilTextService(),
             $this->createPropelSchemaElementFilter(),
             $this->getConfig(),
         );
-
-        return $propelSchemaMerger;
     }
 
     /**
@@ -179,9 +175,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      */
     public function createFilesystem()
     {
-        $filesystem = new Filesystem();
-
-        return $filesystem;
+        return new Filesystem();
     }
 
     /**
@@ -406,13 +400,11 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      */
     public function createSchemaValidator()
     {
-        $propelSchemaValidator = new PropelSchemaValidator(
+        return new PropelSchemaValidator(
             $this->createGroupedSchemaFinder(),
             $this->getUtilTextService(),
             $this->getConfig()->getWhitelistForAllowedAttributeValueChanges(),
         );
-
-        return $propelSchemaValidator;
     }
 
     /**
@@ -455,5 +447,21 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     public function getPropelSchemaElementFilterPlugins(): array
     {
         return $this->getProvidedDependency(PropelDependencyProvider::PLUGINS_PROPEL_SCHEMA_ELEMENT_FILTER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver
+     */
+    public function createBundleConfigResolver(): ZedAbstractClassResolver
+    {
+        return new BundleConfigResolver();
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver
+     */
+    public function createSharedConfigResolver(): SharedAbstractClassResolver
+    {
+        return new SharedConfigResolver();
     }
 }

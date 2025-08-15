@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use Orm\Zed\ProductSetStorage\Persistence\SpyProductSetStorage;
+use Spryker\Zed\ProductSetStorage\Business\Expander\ProductSetDataStorageExpanderInterface;
 use Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface;
 
 class ProductSetStorageWriter implements ProductSetStorageWriterInterface
@@ -27,18 +28,6 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
     public const COL_IS_ACTIVE = 'is_active';
 
     /**
-     * @var \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface
-     */
-    protected $queryContainer;
-
-    /**
-     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
-     *
-     * @var bool
-     */
-    protected $isSendingToQueue = true;
-
-    /**
      * @var array
      */
     protected $superAttributes = [];
@@ -46,11 +35,13 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
     /**
      * @param \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
+     * @param \Spryker\Zed\ProductSetStorage\Business\Expander\ProductSetDataStorageExpanderInterface|null $productSetDataStorageExpander
      */
-    public function __construct(ProductSetStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
-    {
-        $this->queryContainer = $queryContainer;
-        $this->isSendingToQueue = $isSendingToQueue;
+    public function __construct(
+        protected ProductSetStorageQueryContainerInterface $queryContainer,
+        protected bool $isSendingToQueue = true,
+        protected ?ProductSetDataStorageExpanderInterface $productSetDataStorageExpander = null
+    ) {
     }
 
     /**
@@ -138,6 +129,14 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
 
         $productSetStorageTransfer->setProductAbstractIds($productAbstractIds);
         $productSetStorageTransfer->setImageSets($productImageSet);
+
+        if ($this->productSetDataStorageExpander) {
+            $productSetStorageTransfer = $this->productSetDataStorageExpander->expandProductSetDataStorageWithProductImageAlternativeTexts(
+                $productSetStorageTransfer,
+                $spyProductSetLocalizedEntity,
+            );
+        }
+
         $spyProductSetStorageEntity->setFkProductSet($spyProductSetLocalizedEntity['SpyProductSet'][static::COL_ID_PRODUCT_SET]);
         $spyProductSetStorageEntity->setData($productSetStorageTransfer->toArray());
         $spyProductSetStorageEntity->setLocale($spyProductSetLocalizedEntity['SpyLocale']['locale_name']);
