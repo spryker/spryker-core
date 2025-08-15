@@ -22,6 +22,7 @@ use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\FileUploadTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductClassTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SalesProductClassTransfer;

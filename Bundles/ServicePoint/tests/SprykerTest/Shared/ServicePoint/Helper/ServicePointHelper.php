@@ -106,6 +106,13 @@ class ServicePointHelper extends Module
      */
     public function haveServiceType(array $seed = []): ServiceTypeTransfer
     {
+        if (isset($seed[ServiceTypeTransfer::KEY])) {
+            $serviceTypeEntity = $this->getServiceTypeQuery()->findOneByKey($seed[ServiceTypeTransfer::KEY]);
+            if ($serviceTypeEntity) {
+                return (new ServiceTypeTransfer())->fromArray($serviceTypeEntity->toArray(), true);
+            }
+        }
+
         $serviceTypeTransfer = (new ServiceTypeBuilder($seed))->build();
 
         $serviceTypeEntity = (new SpyServiceType())

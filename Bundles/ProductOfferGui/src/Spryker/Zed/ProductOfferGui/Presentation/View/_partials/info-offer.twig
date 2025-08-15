@@ -21,7 +21,7 @@
         <div class="row form-group">
             <div class="col-xs-2"><b>{{ 'Approval Status' | trans }}</b></div>
             <div class="col-xs-10">
-                <span class="label {{ statusLabelClass }}">{{ statusTitle }}</span>
+                <span class="label {{ statusLabelClass }}" data-qa="product-offer-approval-status">{{ statusTitle }}</span>
             </div>
         </div>
 
@@ -36,17 +36,17 @@
         <div class="row form-group">
             <div class="col-xs-2"><b>{{ 'Status' | trans }}</b></div>
             <div class="col-xs-10">
-                <span class="label {{ isActiveLabelClass }}">{{ isActiveTitle }}</span>
+                <span class="label {{ isActiveLabelClass }}" data-qa="product-offer-status">{{ isActiveTitle }}</span>
             </div>
         </div>
-        <div class="hr-line-dashed"></div>
+        <div class="hr-line-dashed"></div> 
 
         {% if relatedStores %}
             <div class="row form-group">
                 <div class="col-xs-2"><b>{{ 'Stores' | trans }}</b></div>
                 <div class="col-xs-10">
                     {% for relatedStore in relatedStores %}
-                        <span class="label label-info">{{ relatedStore.name }}</span>
+                        <span class="label label-info" data-qa="product-offer-store">{{ relatedStore.name }}</span>
                     {% endfor %}
                 </div>
             </div>

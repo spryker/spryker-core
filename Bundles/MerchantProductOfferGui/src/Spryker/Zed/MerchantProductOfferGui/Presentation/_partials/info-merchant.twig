@@ -3,7 +3,7 @@
         <div class="row form-group">
             <div class="col-xs-2"><b>{{ 'Merchant' | trans }}</b></div>
             <div class="col-xs-10">
-                <a target="_blank" href="{{ url('/merchant-gui/edit-merchant', {'id-merchant': idMerchant}) }}">{{ merchantName }}</a></div>
+                <a target="_blank" href="{{ url('/merchant-gui/edit-merchant', {'id-merchant': idMerchant}) }}" data-qa="merchant-name">{{ merchantName }}</a></div>
         </div>
 
         <div class="row form-group">
