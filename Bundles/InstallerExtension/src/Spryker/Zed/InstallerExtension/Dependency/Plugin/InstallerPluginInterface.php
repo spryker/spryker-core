@@ -25,5 +25,5 @@ interface InstallerPluginInterface
      *
      * @return void
      */
-    public function install(): void;
+    public function install();
 }
