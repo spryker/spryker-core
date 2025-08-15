@@ -9,6 +9,9 @@ namespace Spryker\Zed\Tax\Communication\Form\Transform;
 
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<string|int|float|null, string>
+ */
 class PercentageTransformer implements DataTransformerInterface
 {
     /**

@@ -259,7 +259,7 @@ class TableFilterForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\DateTimeInterface|null, string|null>
      */
     protected function createDateTimeTransformer(): DataTransformerInterface
     {

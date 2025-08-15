@@ -24,6 +24,9 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerc
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>, string>
+ */
 class PriceProductOfferTransformer implements DataTransformerInterface
 {
     /**

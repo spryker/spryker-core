@@ -124,14 +124,15 @@ class ServicePointSearchRequestBuilder implements ServicePointSearchRequestBuild
     protected function mapRestRequestFiltersToRequestParameters(RestRequestInterface $restRequest, array $requestParameters): array
     {
         foreach ($restRequest->getFilters() as $resourceName => $resourceFilters) {
-            /** @var \Spryker\Glue\GlueApplication\Rest\Request\Data\Filter $filter */
-            $filters = $resourceFilters;
-            if ($resourceName !== ServicePointsRestApiConfig::RESOURCE_SERVICE_POINTS || !isset($filters[0])) {
+            if ($resourceName !== ServicePointsRestApiConfig::RESOURCE_SERVICE_POINTS) {
                 continue;
             }
 
-            /** @var \Spryker\Glue\GlueApplication\Rest\Request\Data\Filter $filter */
-            $filter = $resourceFilters[0];
+            $filter = reset($resourceFilters);
+            if ($filter === false) {
+                continue;
+            }
+
             if ($filter->getField() === static::REQUEST_PARAMETER_SERVICE_TYPE_KEY) {
                 $requestParameters[static::PARAMETER_SERVICE_TYPES] = [$filter->getValue()];
 

@@ -16,6 +16,9 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReader
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>, string|null>
+ */
 class PriceProductTransformer implements DataTransformerInterface
 {
     /**

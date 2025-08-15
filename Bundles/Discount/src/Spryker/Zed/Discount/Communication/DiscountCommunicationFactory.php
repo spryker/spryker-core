@@ -85,7 +85,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer|\Symfony\Component\Form\DataTransformerInterface
+     * @return \Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer|\Symfony\Component\Form\DataTransformerInterface<int|null, string|array|null>
      */
     public function createCalculatorAmountTransformer()
     {

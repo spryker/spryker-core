@@ -35,7 +35,7 @@ class ServiceProductOfferFormEventListenerExpander implements ServiceProductOffe
     protected const FIELD_SERVICE = ProductOfferTransfer::SERVICES;
 
     /**
-     * @var \Symfony\Component\Form\DataTransformerInterface
+     * @var \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\ServiceTransfer>|null, array<int, string>|null>
      */
     protected DataTransformerInterface $serviceDataTransformer;
 
@@ -50,7 +50,7 @@ class ServiceProductOfferFormEventListenerExpander implements ServiceProductOffe
     protected ServiceValidatorInterface $serviceValidator;
 
     /**
-     * @param \Symfony\Component\Form\DataTransformerInterface $serviceDataTransformer
+     * @param \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\ServiceTransfer>|null, array<int, string>|null> $serviceDataTransformer
      * @param \Spryker\Zed\ProductOfferServicePointMerchantPortalGui\Communication\Form\DataProvider\ServiceDataProviderInterface $serviceDataProvider
      * @param \Spryker\Zed\ProductOfferServicePointMerchantPortalGui\Communication\Form\Validator\ServiceValidatorInterface $serviceValidator
      */

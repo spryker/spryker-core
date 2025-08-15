@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<\ArrayAccess<int, \Generated\Shared\Transfer\MerchantProfileAddressTransfer>|null, \Generated\Shared\Transfer\MerchantProfileAddressTransfer>
+ *
  * @method \Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\MerchantProfileMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantProfileMerchantPortalGui\MerchantProfileMerchantPortalGuiConfig getConfig()
  */

@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer;
 use Spryker\DecimalObject\Decimal;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements DataTransformerInterface<\Spryker\DecimalObject\Decimal|null, float|null>
+ */
 class QuantityTransformer implements DataTransformerInterface
 {
     /**

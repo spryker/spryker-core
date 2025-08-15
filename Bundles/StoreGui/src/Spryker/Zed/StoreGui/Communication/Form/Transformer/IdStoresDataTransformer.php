@@ -10,6 +10,9 @@ namespace Spryker\Zed\StoreGui\Communication\Form\Transformer;
 use Spryker\Zed\StoreGui\Dependency\Service\StoreGuiToUtilEncodingServiceInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<array<int, int>|null, string|null>
+ */
 class IdStoresDataTransformer implements DataTransformerInterface
 {
     /**

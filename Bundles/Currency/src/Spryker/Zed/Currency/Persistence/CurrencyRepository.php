@@ -278,7 +278,7 @@ class CurrencyRepository extends AbstractRepository implements CurrencyRepositor
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \ArrayObject|array<\Generated\Shared\Transfer\SortTransfer> $sortTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\SortTransfer>|array<\Generated\Shared\Transfer\SortTransfer> $sortTransfers
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */

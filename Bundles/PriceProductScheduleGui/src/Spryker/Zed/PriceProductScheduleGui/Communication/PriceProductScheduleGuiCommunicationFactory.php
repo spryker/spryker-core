@@ -400,7 +400,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<int|null, float|null>
      */
     public function createPriceTransformer(): DataTransformerInterface
     {
@@ -408,7 +408,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<string|null, \DateTime|null>
      */
     public function createDateTransformer(): DataTransformerInterface
     {

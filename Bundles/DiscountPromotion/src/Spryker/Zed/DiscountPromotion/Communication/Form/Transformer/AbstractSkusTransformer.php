@@ -9,6 +9,9 @@ namespace Spryker\Zed\DiscountPromotion\Communication\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<array<string>|null, string>
+ */
 class AbstractSkusTransformer implements DataTransformerInterface
 {
     /**

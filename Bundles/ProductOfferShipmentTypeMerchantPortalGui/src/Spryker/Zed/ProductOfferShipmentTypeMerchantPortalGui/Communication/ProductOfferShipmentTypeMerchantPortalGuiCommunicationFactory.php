@@ -45,7 +45,7 @@ class ProductOfferShipmentTypeMerchantPortalGuiCommunicationFactory extends Abst
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\ShipmentTypeTransfer>|null, list<string>|null>
      */
     public function createShipmentTypeDataTransformer(): DataTransformerInterface
     {

@@ -124,7 +124,7 @@ class MerchantRelationshipMerchantPortalGuiCommunicationFactory extends Abstract
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\CompanyBusinessUnitTransfer>, list<int>>
      */
     public function createAssigneeCompanyBusinessUnitsDataTransformer(): DataTransformerInterface
     {

@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements DataTransformerInterface<array<mixed>, array<mixed>>
+ */
 class ProductConcreteEditFormDataTransformer implements DataTransformerInterface
 {
     /**

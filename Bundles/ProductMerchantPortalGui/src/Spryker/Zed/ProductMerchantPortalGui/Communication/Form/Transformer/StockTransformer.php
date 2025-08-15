@@ -11,6 +11,9 @@ use ArrayObject;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\StockProductTransfer>, \Generated\Shared\Transfer\StockProductTransfer>
+ */
 class StockTransformer implements DataTransformerInterface
 {
     /**

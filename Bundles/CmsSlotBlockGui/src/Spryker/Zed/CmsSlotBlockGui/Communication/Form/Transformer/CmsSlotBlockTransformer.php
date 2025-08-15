@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\CmsSlotBlockConditionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<\Generated\Shared\Transfer\CmsSlotBlockTransfer|null, array|null>
+ */
 class CmsSlotBlockTransformer implements DataTransformerInterface
 {
     /**

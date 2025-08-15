@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductOption\Communication\Form\Transformer;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyFacadeInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<int|null, string|null>
+ */
 class PriceTransformer implements DataTransformerInterface
 {
     /**

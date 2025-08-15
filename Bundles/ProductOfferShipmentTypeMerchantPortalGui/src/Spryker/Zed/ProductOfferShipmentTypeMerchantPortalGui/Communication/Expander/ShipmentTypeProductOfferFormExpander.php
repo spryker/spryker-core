@@ -36,13 +36,13 @@ class ShipmentTypeProductOfferFormExpander implements ShipmentTypeProductOfferFo
     protected ShipmentTypeProductOfferDataProviderInterface $shipmentTypeProductOfferDataProvider;
 
     /**
-     * @var \Symfony\Component\Form\DataTransformerInterface
+     * @var \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\ShipmentTypeTransfer>|null, list<string>|null>
      */
     protected DataTransformerInterface $shipmentTypeDataTransformer;
 
     /**
      * @param \Spryker\Zed\ProductOfferShipmentTypeMerchantPortalGui\Communication\Form\DataProvider\ShipmentTypeProductOfferDataProviderInterface $shipmentTypeProductOfferDataProvider
-     * @param \Symfony\Component\Form\DataTransformerInterface $shipmentTypeDataTransformer
+     * @param \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\ShipmentTypeTransfer>|null, list<string>|null> $shipmentTypeDataTransformer
      */
     public function __construct(
         ShipmentTypeProductOfferDataProviderInterface $shipmentTypeProductOfferDataProvider,

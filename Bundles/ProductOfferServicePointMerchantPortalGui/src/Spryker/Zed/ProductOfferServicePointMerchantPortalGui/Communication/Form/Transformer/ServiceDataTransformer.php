@@ -11,6 +11,9 @@ use ArrayObject;
 use Generated\Shared\Transfer\ServiceTransfer;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<ArrayObject<int, ServiceTransfer>|null, list<string>|null>
+ */
 class ServiceDataTransformer implements DataTransformerInterface
 {
     /**

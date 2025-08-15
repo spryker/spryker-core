@@ -64,7 +64,7 @@ class ServiceProductOfferFormExpander implements ServiceProductOfferFormExpander
     protected ProductOfferServicePointMerchantPortalGuiToUtilEncodingInterface $utilEncodingService;
 
     /**
-     * @var \Symfony\Component\Form\DataTransformerInterface
+     * @var \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\ServiceTransfer>|null, array<int, string>|null>
      */
     protected DataTransformerInterface $serviceDataTransformer;
 
@@ -80,7 +80,7 @@ class ServiceProductOfferFormExpander implements ServiceProductOfferFormExpander
 
     /**
      * @param \Spryker\Zed\ProductOfferServicePointMerchantPortalGui\Dependency\Service\ProductOfferServicePointMerchantPortalGuiToUtilEncodingInterface $utilEncodingService
-     * @param \Symfony\Component\Form\DataTransformerInterface $serviceDataTransformer
+     * @param \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\ServiceTransfer>|null, array<int, string>|null> $serviceDataTransformer
      * @param \Spryker\Zed\ProductOfferServicePointMerchantPortalGui\Communication\Form\DataProvider\ServiceDataProviderInterface $serviceDataProvider
      * @param \Spryker\Zed\ProductOfferServicePointMerchantPortalGui\Communication\Expander\ServiceProductOfferFormEventListenerExpanderInterface $serviceProductOfferFormEventListenerExpander
      */

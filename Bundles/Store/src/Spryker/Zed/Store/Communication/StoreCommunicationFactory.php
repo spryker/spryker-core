@@ -21,7 +21,7 @@ use Spryker\Zed\Store\Communication\Form\Transformer\IdStoresDataTransformer;
 class StoreCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<array<int, int>|null, string>
      */
     public function createIdStoresDataTransformer()
     {

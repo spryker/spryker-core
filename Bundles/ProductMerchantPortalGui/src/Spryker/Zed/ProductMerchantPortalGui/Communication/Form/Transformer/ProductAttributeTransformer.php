@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements DataTransformerInterface<mixed, array<mixed>|null>
+ */
 class ProductAttributeTransformer implements DataTransformerInterface
 {
     /**

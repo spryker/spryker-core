@@ -11,6 +11,9 @@ use ArrayObject;
 use Generated\Shared\Transfer\StoreTransfer;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<ArrayObject<int, StoreTransfer>|null, array<int>|null>
+ */
 class StoresTransformer implements DataTransformerInterface
 {
     /**

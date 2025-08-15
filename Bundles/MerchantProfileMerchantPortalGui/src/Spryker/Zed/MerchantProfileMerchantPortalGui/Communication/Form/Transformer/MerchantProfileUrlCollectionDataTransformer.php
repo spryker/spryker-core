@@ -10,6 +10,9 @@ namespace Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\Transf
 use ArrayObject;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>|null, \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>>
+ */
 class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInterface
 {
     /**

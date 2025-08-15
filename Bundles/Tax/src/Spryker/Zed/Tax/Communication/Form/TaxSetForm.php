@@ -112,7 +112,7 @@ class TaxSetForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, mixed>|null, array<int, mixed>|null>
      */
     protected function createModelTransformer(): DataTransformerInterface
     {

@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements DataTransformerInterface<\Generated\Shared\Transfer\LocaleTransfer|null, int|null>
+ */
 class LocaleTransformer implements DataTransformerInterface
 {
     /**

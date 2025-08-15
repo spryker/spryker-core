@@ -10,10 +10,13 @@ namespace Spryker\Zed\MerchantGui\Communication\Form\Transformer;
 use ArrayObject;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>, \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>>
+ */
 class MerchantUrlCollectionDataTransformer implements DataTransformerInterface
 {
     /**
-     * @param array<\Generated\Shared\Transfer\UrlTransfer> $value
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>|null $value
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>
      */
@@ -34,7 +37,7 @@ class MerchantUrlCollectionDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\UrlTransfer> $value
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>|null $value
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>
      */
