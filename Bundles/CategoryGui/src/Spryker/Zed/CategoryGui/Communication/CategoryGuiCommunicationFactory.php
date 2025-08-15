@@ -306,7 +306,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\NodeTransfer>, array<\Generated\Shared\Transfer\NodeTransfer>>
      */
     public function createCategoryExtraParentsTransformer(): DataTransformerInterface
     {
