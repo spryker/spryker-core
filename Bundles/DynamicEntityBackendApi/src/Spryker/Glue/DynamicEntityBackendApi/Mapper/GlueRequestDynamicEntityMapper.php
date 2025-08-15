@@ -120,7 +120,7 @@ class GlueRequestDynamicEntityMapper
             return null;
         }
 
-        /** @var array<string,mixed>|null $decodedContent */
+        /** @var array<string, mixed> |null $decodedContent*/
         $decodedContent = $this->serviceUtilEncoding->decodeJson($glueRequestTransfer->getContent(), true);
         $dataCollection = $decodedContent['data'] ?? null;
 

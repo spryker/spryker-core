@@ -11,7 +11,7 @@ use ArrayObject;
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**
- * @implements \Symfony\Component\Form\DataTransformerInterface<ArrayObject<array-key, mixed>|null, array<array-key, mixed>>
+ * @implements \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<array-key, mixed>|null, array<array-key, mixed>>
  */
 class ArrayToArrayObjectTransformer implements DataTransformerInterface
 {

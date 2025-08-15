@@ -26,5 +26,5 @@ interface MetaDataProviderPluginInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function getRequestMetaData(TransferInterface $transfer);
+    public function getRequestMetaData(TransferInterface $transfer): TransferInterface;
 }

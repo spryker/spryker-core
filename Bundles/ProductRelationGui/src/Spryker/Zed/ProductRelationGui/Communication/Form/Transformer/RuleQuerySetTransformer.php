@@ -12,7 +12,7 @@ use Spryker\Zed\ProductRelationGui\Dependency\Service\ProductRelationGuiToUtilEn
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**
- * @implements DataTransformerInterface<PropelQueryBuilderRuleSetTransfer|null, string|null>
+ * @implements \Symfony\Component\Form\DataTransformerInterface<\Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer|null, string|null>
  */
 class RuleQuerySetTransformer implements DataTransformerInterface
 {

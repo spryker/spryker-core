@@ -11,7 +11,7 @@ use Spryker\DecimalObject\Decimal;
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**
- * @implements DataTransformerInterface<\Spryker\DecimalObject\Decimal|null, float|null>
+ * @implements \Symfony\Component\Form\DataTransformerInterface<\Spryker\DecimalObject\Decimal|null, float|null>
  */
 class QuantityTransformer implements DataTransformerInterface
 {

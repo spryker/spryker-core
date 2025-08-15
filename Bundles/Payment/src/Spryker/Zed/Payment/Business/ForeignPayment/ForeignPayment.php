@@ -282,7 +282,7 @@ class ForeignPayment implements ForeignPaymentInterface
             return $initializePreOrderPaymentResponseTransfer;
         }
 
-        /** @var array<string,mixed> $decodedResponseBody */
+        /** @var array<string, mixed> $decodedResponseBody*/
         $decodedResponseBody = $this->utilEncodingService->decodeJson($acpHttpResponseTransfer->getContentOrFail(), true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {

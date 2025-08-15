@@ -17,7 +17,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPorta
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**
- * @implements DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>, string|null>
+ * @implements \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>, string|null>
  */
 class PriceProductTransformer implements DataTransformerInterface
 {

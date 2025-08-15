@@ -11,7 +11,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPorta
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**
- * @implements DataTransformerInterface<mixed, array<mixed>|null>
+ * @implements \Symfony\Component\Form\DataTransformerInterface<mixed, array<mixed>|null>
  */
 class ProductAttributeTransformer implements DataTransformerInterface
 {
