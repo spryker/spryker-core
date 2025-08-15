@@ -278,7 +278,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     {
         preg_match('#Zed\/(?<module>[[:alpha:]]+)\/Persistence#', $splFileInfo->getPath(), $matches);
 
-        return $matches['module'];
+        return $matches['module'] ?? '';
     }
 
     /**

@@ -2,5 +2,3 @@ parameters:
     level: 8
     ignoreErrors:
         - '#Call to an undefined method .+SpyUrlQuery::useSpyProductLocalizedAttributesQuery\(\).#'
-        -
-            identifier: missingType.generics

@@ -1,7 +1,4 @@
 parameters:
-    ignoreErrors:
-        -
-            identifier: missingType.iterableValue
     level: 8
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/CustomerCatalog/src/Spryker/Client/CustomerCatalog/Plugin/Search/ProductListQueryExpanderPlugin.php'

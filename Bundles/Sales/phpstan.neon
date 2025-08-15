@@ -8,5 +8,3 @@ parameters:
         - '#Call to an undefined method Orm\\.+Query::groupByIdSalesOrder\(\).#'
         -
             identifier: missingType.iterableValue
-        -
-            identifier: missingType.generics

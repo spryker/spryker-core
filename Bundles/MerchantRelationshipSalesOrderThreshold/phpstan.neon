@@ -2,5 +2,3 @@ parameters:
     level: 7
     ignoreErrors:
         - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\Criteria\|Propel\\Runtime\\Util\\PropelConditionalProxy::filterBy.+\(\).#'
-        -
-            identifier: missingType.iterableValue

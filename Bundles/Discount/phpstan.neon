@@ -9,5 +9,3 @@ parameters:
         - '#Call to an undefined method Orm\\.+Query::useSpyDiscountStoreQuery\(\).#'
         -
             identifier: missingType.iterableValue
-        -
-            identifier: missingType.generics

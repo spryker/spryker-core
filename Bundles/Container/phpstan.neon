@@ -2,6 +2,7 @@ parameters:
     level: 8
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
-        - '#Parameter \#1 \$object of function spl_object_hash expects object, class-string|object given.#'
+        - '#Parameter \#1 \$object of function spl_object_hash expects object, class-string\|object given.#'
+        - '#Parameter \#1 \$service of method Spryker\\Service\\Container\\Container::factory\(\) expects object, class-string\|object given#'
         -
             identifier: missingType.iterableValue

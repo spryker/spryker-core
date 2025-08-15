@@ -5,5 +5,3 @@ parameters:
         - '#Call to an undefined method Orm\\.+\\SpyUserQuery::groupByIdProductRelation\(\)#'
         -
             identifier: missingType.iterableValue
-        -
-            identifier: missingType.generics

@@ -273,7 +273,9 @@ class Worker implements WorkerInterface
      */
     protected function getQueueWorkerOutputFileNameBasedOnType(): string
     {
+        /** @var string $outputFileName */
         $outputFileName = $this->queueConfig->getQueueWorkerOutputFileName();
+
         if (is_resource($outputFileName)) {
             return stream_get_meta_data($outputFileName)['uri'];
         }
