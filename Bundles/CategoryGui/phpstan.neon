@@ -2,8 +2,6 @@ parameters:
     ignoreErrors:
         -
             identifier: missingType.iterableValue
-        -
-            identifier: missingType.generics
     level: 8
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/CategoryGui/src/Spryker/Zed/CategoryGui/Communication/Table/CategoryTable.php'

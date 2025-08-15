@@ -1,6 +1,10 @@
 parameters:
     level: 7
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
+#        For compatibility with Symfony 5.4+
+        - message: '#PHPDoc tag @return contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
+        - message: '#PHPDoc tag @implements contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
         - '#Cannot access offset .+ on .+SpyProductOptionValue.#'
         - '#Parameter \#2 \$callback of function usort expects callable\(.+ItemTransfer, .+ItemTransfer\): int, Closure\(.+ItemTransfer, .+ItemTransfer\): bool given.#'
         - '#Call to an undefined method Orm\\.+Query::filterByName\(\).#'
