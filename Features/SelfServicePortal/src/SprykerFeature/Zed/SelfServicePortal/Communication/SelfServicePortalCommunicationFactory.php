@@ -26,16 +26,13 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySspAssetQuery;
-use Spryker\Service\FileManager\FileManagerServiceInterface;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Company\Business\CompanyFacadeInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
-use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\FileManager\Business\FileManagerFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\Mail\Business\MailFacadeInterface;
 use Spryker\Zed\Merchant\Business\MerchantFacadeInterface;
 use Spryker\Zed\MerchantStock\Business\MerchantStockFacadeInterface;
 use Spryker\Zed\Oms\Business\OmsFacadeInterface;
@@ -625,19 +622,9 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PLUGINS_STATE_MACHINE_CONDITION);
     }
 
-    public function getMailFacade(): MailFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_MAIL);
-    }
-
     public function getStateMachineFacade(): StateMachineFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_STATE_MACHINE);
-    }
-
-    public function getFileManagerService(): FileManagerServiceInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_FILE_MANAGER);
     }
 
     public function getProductQuery(): SpyProductQuery
@@ -758,11 +745,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     public function getDateTimeService(): UtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_UTIL_DATE_TIME);
-    }
-
-    public function getCustomerFacade(): CustomerFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_CUSTOMER);
     }
 
     /**

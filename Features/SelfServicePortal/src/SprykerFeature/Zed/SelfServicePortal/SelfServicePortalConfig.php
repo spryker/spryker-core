@@ -7,9 +7,7 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal;
 
-use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer;
-use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
@@ -76,6 +74,36 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     public const IMPORT_TYPE_SSP_ASSET = 'ssp-asset';
 
     /**
+     * Specification:
+     * - Import type for ssp models.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const IMPORT_TYPE_SSP_MODEL = 'ssp-model';
+
+    /**
+     * Specification:
+     * - Import type for ssp asset model relations.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const IMPORT_TYPE_SSP_MODEL_ASSET = 'ssp-model-asset';
+
+    /**
+     * Specification:
+     * - Import type for ssp model product list relations.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const IMPORT_TYPE_SSP_MODEL_PRODUCT_LIST = 'ssp-model-product-list';
+
+    /**
      * @uses \Spryker\Shared\ShipmentType\ShipmentTypeConfig::SHIPMENT_TYPE_DELIVERY
      *
      * @var string
@@ -94,16 +122,6 @@ class SelfServicePortalConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Default page number for inquiry asset expansion pagination.
-     *
-     * @api
-     *
-     * @var int
-     */
-    protected const SSP_INQUIRY_ASSET_EXPANDER_PAGE_NUMBER = 1;
-
-    /**
-     * Specification:
      * - Default max per page for inquiry asset expansion pagination.
      *
      * @api
@@ -111,16 +129,6 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      * @var int
      */
     protected const SSP_INQUIRY_ASSET_EXPANDER_MAX_PER_PAGE = 3;
-
-    /**
-     * Specification:
-     * - Default page number for inquiry dashboard.
-     *
-     * @api
-     *
-     * @var int
-     */
-    protected const DEFAULT_INQUIRY_DASHBOARD_PAGE_NUMBER = 1;
 
     /**
      * Specification:
@@ -195,16 +203,6 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      * @var int
      */
     protected const DEFAULT_FILE_ATTACHMENT_FORM_AUTOCOMPLETE_LIMIT = 10;
-
-    /**
-     * @var string
-     */
-    protected const SSP_INQUIRY_REFERENCE_PREFIX = 'INQR';
-
-    /**
-     * @var string
-     */
-    protected const NAME_SSP_INQUIRY_REFERENCE = 'SspInquiryReference';
 
     /**
      * @var string
@@ -303,29 +301,6 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     }
 
     /**
-     * @api
-     *
-     * @param string $fileName
-     * @param string $importType
-     *
-     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
-     */
-    public function buildImporterConfiguration(
-        string $fileName,
-        string $importType
-    ): DataImporterConfigurationTransfer {
-        $dataImporterReaderConfiguration = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfiguration->setFileName($fileName);
-
-        $dataImporterConfiguration = new DataImporterConfigurationTransfer();
-        $dataImporterConfiguration
-            ->setImportType($importType)
-            ->setReaderConfiguration($dataImporterReaderConfiguration);
-
-        return $dataImporterConfiguration;
-    }
-
-    /**
      * Specification:
      * - Returns the default shipment type key.
      * - The default shipment type key is used for new products.
@@ -369,6 +344,10 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the payment method to state machine process mapping.
+     * - Maps payment methods to their corresponding state machine processes.
+     *
      * @example The format of returned array is:
      * [
      *    'PAYMENT_METHOD_1' => StateMachineProcess_1',
@@ -450,6 +429,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the maximum file size allowed for company file uploads.
+     *
      * @api
      *
      * @return string
@@ -460,6 +442,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the list of allowed MIME types for company file uploads.
+     *
      * @api
      *
      * @return list<string>
@@ -470,6 +455,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the list of allowed file extensions for company file uploads.
+     *
      * @api
      *
      * @return list<string>
@@ -494,6 +482,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the prefix for company file sequence number generation.
+     *
      * @api
      *
      * @return string
@@ -504,6 +495,9 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the name for company file sequence number generation.
+     *
      * @api
      *
      * @return string
@@ -752,6 +746,60 @@ class SelfServicePortalConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     * - Import configuration for ssp model.
+     * - Returns data source configuration for importing ssp models.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
+     */
+    public function getSspModelDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
+    {
+        return (new DataImporterDataSourceConfigurationTransfer())
+            ->setImportType(static::IMPORT_TYPE_SSP_MODEL)
+            ->setFileName('ssp_model.csv')
+            ->setModuleName(static::MODULE_NAME)
+            ->setDirectory('/data/data/import/common/common/');
+    }
+
+    /**
+     * Specification:
+     * - Import configuration for ssp model asset relations.
+     * - Returns data source configuration for importing ssp model to asset relations.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
+     */
+    public function getSspModelAssetDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
+    {
+        return (new DataImporterDataSourceConfigurationTransfer())
+            ->setImportType(static::IMPORT_TYPE_SSP_MODEL_ASSET)
+            ->setFileName('ssp_model_asset.csv')
+            ->setModuleName(static::MODULE_NAME)
+            ->setDirectory('/data/data/import/common/common/');
+    }
+
+    /**
+     * Specification:
+     * - Import configuration for ssp model product list relations.
+     * - Returns data source configuration for importing ssp model to product list relations.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
+     */
+    public function getSspModelProductListDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
+    {
+        return (new DataImporterDataSourceConfigurationTransfer())
+            ->setImportType(static::IMPORT_TYPE_SSP_MODEL_PRODUCT_LIST)
+            ->setFileName('ssp_model_product_list.csv')
+            ->setModuleName(static::MODULE_NAME)
+            ->setDirectory('/data/data/import/common/common/');
+    }
+
+    /**
+     * Specification:
      * - Defines the read chunk size in bytes.
      * - Used for reading inquiry files in chunks during file download in backoffice.
      *
@@ -919,10 +967,11 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      * Specification:
      * - Defines the Storage for model image file.
      * - A `FileSystemConstants::FILESYSTEM_SERVICE` with the same storage name must be defined.
+     * - Throws exception if storage name is not configured.
      *
      * @api
      *
-     * @throw SspModelImageFileStorageNameIsNotConfigured
+     * @throws \SprykerFeature\Zed\SelfServicePortal\Business\Service\Exception\SspModelImageFileStorageNameIsNotConfigured
      *
      * @return string
      */

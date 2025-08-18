@@ -1067,6 +1067,7 @@
         <property name="reference" type="string"/>
         <property name="name" type="string"/>
         <property name="code" type="string"/>
+        <property name="imageUrl" type="string"/>
         <property name="image" type="File"/>
         <property name="productLists" type="ProductList[]" singular="productList"/>
     </transfer>

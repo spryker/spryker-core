@@ -11,16 +11,20 @@ namespace SprykerFeatureTest\Zed\SelfServicePortal;
 
 use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ProductListBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
+use Orm\Zed\ProductList\Persistence\Base\SpyProductListQuery;
+use Orm\Zed\ProductList\Persistence\SpyProductList;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpyProductShipmentTypeTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery;
@@ -29,6 +33,9 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClass;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAsset;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAssetQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToSspModelQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModelToProductListQuery;
 use PHPUnit\Framework\MockObject\MockObject;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
 
@@ -410,5 +417,111 @@ class SelfServicePortalCommunicationTester extends Actor
     protected function getSalesOrderItemSspAssetQuery(): SpySalesOrderItemSspAssetQuery
     {
         return SpySalesOrderItemSspAssetQuery::create();
+    }
+
+    public function ensureSspModelTableIsEmpty(): void
+    {
+        $this->getSspModelQuery()->deleteAll();
+    }
+
+    public function truncateSspModelTable(): void
+    {
+        $this->getSspModelQuery()->deleteAll();
+    }
+
+    /**
+     * @return array<\Orm\Zed\SelfServicePortal\Persistence\SpySspModel>
+     */
+    public function getAllSspModels(): array
+    {
+        return $this->getSspModelQuery()->find()->getData();
+    }
+
+    public function ensureSspModelToProductListTableIsEmpty(): void
+    {
+        $this->getSspModelToProductListQuery()->deleteAll();
+    }
+
+    /**
+     * @param int $sspModelId
+     *
+     * @return array<\Orm\Zed\SelfServicePortal\Persistence\SpySspModelToProductList>
+     */
+    public function getSspModelToProductListRelations(int $sspModelId): array
+    {
+        return $this->getSspModelToProductListQuery()
+            ->filterByFkSspModel($sspModelId)
+            ->joinWithSpySspModel()
+            ->joinWithSpyProductList()
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param int $sspModelId
+     *
+     * @return array<\Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToSspModel>
+     */
+    public function getSspModelAssetRelations(int $sspModelId): array
+    {
+        return $this->getSspAssetToSspModelQuery()
+            ->filterByFkSspModel($sspModelId)
+            ->joinWithSpySspAsset()
+            ->joinWithSpySspModel()
+            ->find()
+            ->getData();
+    }
+
+    protected function getSspModelQuery(): SpySspModelQuery
+    {
+        return SpySspModelQuery::create();
+    }
+
+    protected function getSspModelToProductListQuery(): SpySspModelToProductListQuery
+    {
+        return SpySspModelToProductListQuery::create();
+    }
+
+    protected function getSspAssetToSspModelQuery(): SpySspAssetToSspModelQuery
+    {
+        return SpySspAssetToSspModelQuery::create();
+    }
+
+    public function haveProductList(array $seed = []): ProductListTransfer
+    {
+        $productListTransfer = (new ProductListBuilder($seed))->build();
+
+        $productListEntity = (new SpyProductList())->fromArray($productListTransfer->toArray());
+
+        $productListEntity->save();
+        $productListTransfer->setIdProductList($productListEntity->getIdProductList());
+
+        return $productListTransfer;
+    }
+
+    public function truncateProductListTable(array $keys = []): void
+    {
+        SpyProductListQuery::create()->filterByKey_In($keys)->delete();
+    }
+
+    public function isSspModelAssetRelationExists(int $sspModelId, int $sspAssetId): bool
+    {
+        return SpySspAssetToSspModelQuery::create()
+            ->filterByFkSspModel($sspModelId)
+            ->filterByFkSspAsset($sspAssetId)
+            ->exists();
+    }
+
+    public function isSspModelProductListRelationExists(int $modelId, int $productListId): bool
+    {
+        return SpySspModelToProductListQuery::create()
+            ->filterByFkSspModel($modelId)
+            ->filterByFkProductList($productListId)
+            ->exists();
+    }
+
+    public function ensureSspAssetToSspModelTableIsEmpty(): void
+    {
+        $this->getSspAssetToSspModelQuery()->deleteAll();
     }
 }

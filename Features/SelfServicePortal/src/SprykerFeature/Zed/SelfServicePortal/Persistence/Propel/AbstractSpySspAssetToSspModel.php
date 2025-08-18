@@ -7,10 +7,10 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Persistence\Propel;
 
-use Orm\Zed\SelfServicePortal\Persistence\Base\SpySspModel as BaseSpySspModel;
+use Orm\Zed\SelfServicePortal\Persistence\Base\SpySspAssetToSspModel as BaseSpySspAssetToSspModel;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_ssp_model' table.
+ * Skeleton subclass for representing a row from the 'spy_ssp_asset_to_ssp_model' table.
  *
  *
  *
@@ -18,6 +18,6 @@ use Orm\Zed\SelfServicePortal\Persistence\Base\SpySspModel as BaseSpySspModel;
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpySspModel extends BaseSpySspModel
+abstract class AbstractSpySspAssetToSspModel extends BaseSpySspAssetToSspModel
 {
 }

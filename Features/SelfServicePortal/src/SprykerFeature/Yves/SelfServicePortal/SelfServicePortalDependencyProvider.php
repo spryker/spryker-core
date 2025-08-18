@@ -8,7 +8,6 @@
 namespace SprykerFeature\Yves\SelfServicePortal;
 
 use Spryker\Client\CompanyUser\CompanyUserClientInterface;
-use Spryker\Service\FileManager\FileManagerServiceInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
@@ -65,22 +64,12 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @var string
      */
-    public const SERVICE_FILE_MANAGER = 'SERVICE_FILE_MANAGER';
-
-    /**
-     * @var string
-     */
     public const TWIG_ENVIRONMENT = 'TWIG_ENVIRONMENT';
 
     /**
      * @var string
      */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
-
-    /**
-     * @var string
-     */
-    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
     /**
      * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
@@ -121,9 +110,7 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addTwigService($container);
         $container = $this->addSalesClient($container);
         $container = $this->addGlossaryStorageClient($container);
-        $container = $this->addProductStorageClient($container);
         $container = $this->addCompanyUserClient($container);
-        $container = $this->addFileManagerService($container);
         $container = $this->addRouterService($container);
         $container = $this->addRequestStackService($container);
         $container = $this->addSelfServicePortalService($container);
@@ -221,28 +208,10 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    protected function addProductStorageClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
-            return $container->getLocator()->productStorage()->client();
-        });
-
-        return $container;
-    }
-
     protected function addCompanyUserClient(Container $container): Container
     {
         $container->set(static::CLIENT_COMPANY_USER, function (Container $container): CompanyUserClientInterface {
             return $container->getLocator()->companyUser()->client();
-        });
-
-        return $container;
-    }
-
-    protected function addFileManagerService(Container $container): Container
-    {
-        $container->set(static::SERVICE_FILE_MANAGER, function (Container $container): FileManagerServiceInterface {
-            return $container->getLocator()->fileManager()->service();
         });
 
         return $container;

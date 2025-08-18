@@ -8,17 +8,14 @@
 namespace SprykerFeature\Zed\SelfServicePortal;
 
 use Orm\Zed\CompanyUser\Persistence\Base\SpyCompanyUserQuery;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery;
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
-use Spryker\Service\FileManager\FileManagerServiceInterface;
 use Spryker\Zed\Comment\Business\CommentFacadeInterface;
 use Spryker\Zed\Company\Business\CompanyFacadeInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
@@ -135,11 +132,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @var string
      */
-    public const FORM_FACTORY = 'FORM_FACTORY';
-
-    /**
-     * @var string
-     */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
 
     /**
@@ -166,11 +158,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
-
-    /**
-     * @var string
-     */
-    public const FACADE_SSP_ASSET_MANAGEMENT = 'FACADE_SSP_ASSET_MANAGEMENT';
 
     /**
      * @var string
@@ -220,22 +207,12 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @var string
      */
-    public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_ABSTRACT';
-
-    /**
-     * @var string
-     */
     public const PROPEL_QUERY_FILE = 'PROPEL_QUERY_FILE';
 
     /**
      * @var string
      */
     public const PROPEL_QUERY_FILE_INFO = 'PROPEL_QUERY_FILE_INFO';
-
-    /**
-     * @var string
-     */
-    public const PROPEL_QUERY_CUSTOMER = 'PROPEL_QUERY_CUSTOMER';
 
     /**
      * @var string
@@ -251,11 +228,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
-
-    /**
-     * @var string
-     */
-    public const SERVICE_FILE_MANAGER = 'SERVICE_FILE_MANAGER';
 
     /**
      * @var string
@@ -309,7 +281,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addSequenceNumberFacade($container);
         $container = $this->addFileQuery($container);
         $container = $this->addFileInfoQuery($container);
-        $container = $this->addFileManagerService($container);
         $container = $this->addMailFacade($container);
         $container = $this->addStateMachineFacade($container);
         $container = $this->addStateMachineConditionPlugins($container);
@@ -329,7 +300,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductPropelQuery($container);
         $container = $this->addShipmentTypeQuery($container);
         $container = $this->addProductShipmentTypeQuery($container);
-        $container = $this->addProductAbstractQuery($container);
         $container = $this->addSalesFacade($container);
         $container = $this->addOmsFacade($container);
         $container = $this->addServicePointFacade($container);
@@ -361,7 +331,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addSalesOrderItemPropelQuery($container);
         $container = $this->addFileQuery($container);
         $container = $this->addFileInfoQuery($container);
-        $container = $this->addCustomerQuery($container);
         $container = $this->addStateMachineItemStateQuery($container);
         $container = $this->addUtilDateTimeService($container);
 
@@ -647,15 +616,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    protected function addProductAbstractQuery(Container $container): Container
-    {
-        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function (Container $container): SpyProductAbstractQuery {
-            return SpyProductAbstractQuery::create();
-        }));
-
-        return $container;
-    }
-
     protected function addProductQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function (Container $container): SpyProductQuery {
@@ -687,24 +647,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::PROPEL_QUERY_COMPANY_USER, $container->factory(function (): SpyCompanyUserQuery {
             return SpyCompanyUserQuery::create();
-        }));
-
-        return $container;
-    }
-
-    protected function addFileManagerService(Container $container): Container
-    {
-        $container->set(static::SERVICE_FILE_MANAGER, function (Container $container): FileManagerServiceInterface {
-            return $container->getLocator()->fileManager()->service();
-        });
-
-        return $container;
-    }
-
-    protected function addCustomerQuery(Container $container): Container
-    {
-        $container->set(static::PROPEL_QUERY_CUSTOMER, $container->factory(function (): SpyCustomerQuery {
-            return SpyCustomerQuery::create();
         }));
 
         return $container;

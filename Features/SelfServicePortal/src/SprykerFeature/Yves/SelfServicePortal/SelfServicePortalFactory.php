@@ -15,12 +15,10 @@ use Spryker\Client\Customer\CustomerClientInterface;
 use Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface;
 use Spryker\Client\Permission\PermissionClientInterface;
 use Spryker\Client\ProductOfferStorage\ProductOfferStorageClientInterface;
-use Spryker\Client\ProductStorage\ProductStorageClientInterface;
 use Spryker\Client\Sales\SalesClientInterface;
 use Spryker\Client\ServicePointSearch\ServicePointSearchClientInterface;
 use Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageClientInterface;
 use Spryker\Client\Store\StoreClientInterface;
-use Spryker\Service\FileManager\FileManagerServiceInterface;
 use Spryker\Shared\Twig\TwigExtension;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Router\Router\RouterInterface;
@@ -472,11 +470,6 @@ class SelfServicePortalFactory extends AbstractFactory
         return $this->getTwigEnvironment()->getGlobals()['app']['locale'];
     }
 
-    public function getProductStorageClient(): ProductStorageClientInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_PRODUCT_STORAGE);
-    }
-
     public function getCustomerClient(): CustomerClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_CUSTOMER);
@@ -500,11 +493,6 @@ class SelfServicePortalFactory extends AbstractFactory
     public function getCompanyUserClient(): CompanyUserClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_COMPANY_USER);
-    }
-
-    public function getFileManagerService(): FileManagerServiceInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_FILE_MANAGER);
     }
 
     public function getRouter(): RouterInterface

@@ -28,7 +28,8 @@ filter:
         - Features/*/src/SprykerFeature/*/*/*Repository.php
         - Features/*/src/SprykerFeature/*/*/*EntityManager.php
         - Features/*/src/SprykerFeature/*/*/*Config.php
-        - Features/*/src/SprykerFeature/Yves/*/*/*Factory.php
+        - Features/*/src/SprykerFeature/Yves/*/*Factory.php
+        - Features/*/tests/SprykerFeatureTest/Shared/*/*/*/*Helper.php
 
 build_failure_conditions:
     - 'project.metric("scrutinizer.quality", < 9.80)'

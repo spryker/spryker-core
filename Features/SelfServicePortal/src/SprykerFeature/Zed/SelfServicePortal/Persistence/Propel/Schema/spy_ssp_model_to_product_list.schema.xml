@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SelfServicePortal\Persistence" package="src.Orm.Zed.SelfServicePortal.Persistence">
+
+    <table name="spy_ssp_model_to_product_list" idMethod="native" allowPkInsert="true">
+        <column name="id_ssp_model_to_product_list" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_ssp_model" required="true" type="INTEGER"/>
+        <column name="fk_product_list" required="true" type="INTEGER"/>
+
+        <foreign-key foreignTable="spy_ssp_model" onDelete="CASCADE">
+            <reference local="fk_ssp_model" foreign="id_ssp_model"/>
+        </foreign-key>
+
+        <foreign-key foreignTable="spy_product_list" onDelete="CASCADE">
+            <reference local="fk_product_list" foreign="id_product_list"/>
+        </foreign-key>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_ssp_model_to_product_list_pk_seq"/>
+
+        <unique name="spy_ssp_model_to_product_list_fk_ssp_model_fk_product_list_unique">
+            <unique-column name="fk_ssp_model"/>
+            <unique-column name="fk_product_list"/>
+        </unique>
+    </table>
+
+</database>

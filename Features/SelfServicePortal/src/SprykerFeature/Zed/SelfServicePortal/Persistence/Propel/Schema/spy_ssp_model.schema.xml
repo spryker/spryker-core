@@ -5,11 +5,16 @@
         <column name="reference" required="true" size="255" type="VARCHAR"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <column name="code" required="false" size="255" type="VARCHAR"/>
+        <column name="image_url" required="false" size="255" type="VARCHAR"/>
         <column name="fk_image_file" required="false" type="INTEGER"/>
 
         <foreign-key foreignTable="spy_file" phpName="File" onDelete="SET NULL">
             <reference local="fk_image_file" foreign="id_file"/>
         </foreign-key>
+
+        <unique>
+            <unique-column name="reference"/>
+        </unique>
 
         <behavior name="timestampable"/>
 
