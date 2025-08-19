@@ -9,6 +9,7 @@
     "sLoadingRecords": "Учитавање...",
     "sProcessing": "Обрада...",
     "sSearch": "Претрага:",
+    "searchPlaceholder": "Претрага:",
     "sZeroRecords": "Нису пронађени одговарајући записи",
     "oPaginate": {
         "sFirst": "Почетна",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": активирајте да сортирате колону узлазно",
         "sSortDescending": ": активирајте да сортирате колону силазно"
-    }
+    },
+    "remove": "Уклони"
 }

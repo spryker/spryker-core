@@ -7,10 +7,12 @@
     "sInfoFiltered": " - filteeritud _MAX_ kirje seast.",
     "sInfoPostFix": "K&otilde;ik kuvatud kirjed p&otilde;hinevad reaalsetel tulemustel.",
     "sSearch": "Otsi k&otilde;ikide tulemuste seast:",
+    "searchPlaceholder": "Otsi k&otilde;ikide tulemuste seast:",
     "oPaginate": {
         "sFirst": "Algus",
         "sPrevious": "Eelmine",
         "sNext": "J&auml;rgmine",
         "sLast": "Viimane"
-    }
+    },
+    "remove": "Eemalda"
 }

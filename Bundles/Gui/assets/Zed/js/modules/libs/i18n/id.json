@@ -8,11 +8,13 @@
     "sInfoFiltered": "(disaring dari _MAX_ entri keseluruhan)",
     "sInfoPostFix": "",
     "sSearch": "Cari:",
+    "searchPlaceholder": "Cari:",
     "sUrl": "",
     "oPaginate": {
         "sFirst": "Pertama",
         "sPrevious": "Sebelumnya",
         "sNext": "Selanjutnya",
         "sLast": "Terakhir"
-    }
+    },
+    "remove": "Hapus"
 }

@@ -9,6 +9,7 @@
     "sLoadingRecords": "กำลังโหลดข้อมูล...",
     "sProcessing": "กำลังดำเนินการ...",
     "sSearch": "ค้นหา: ",
+    "searchPlaceholder": "ค้นหา: ",
     "sZeroRecords": "ไม่พบข้อมูล",
     "oPaginate": {
         "sFirst": "หน้าแรก",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": เปิดใช้งานการเรียงข้อมูลจากน้อยไปมาก",
         "sSortDescending": ": เปิดใช้งานการเรียงข้อมูลจากมากไปน้อย"
-    }
+    },
+    "remove": "ลบ"
 }

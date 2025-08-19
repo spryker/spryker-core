@@ -8,6 +8,7 @@
     "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
     "sInfoPostFix": "",
     "sSearch": "Buscar:",
+    "searchPlaceholder": "Buscar:",
     "sUrl": "",
     "sInfoThousands": ",",
     "sLoadingRecords": "Cargando...",
@@ -24,5 +25,6 @@
     "buttons": {
         "copy": "Copiar",
         "colvis": "Visibilidad"
-    }
+    },
+    "remove": "Eliminar"
 }

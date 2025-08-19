@@ -927,6 +927,8 @@ abstract class AbstractTable
             'url' => $this->defaultUrl,
             'baseUrl' => $this->baseUrl,
             'header' => [],
+            'tableAttributes' => [],
+            'headerAttributes' => [],
         ];
 
         if ($this->getConfiguration() instanceof TableConfiguration) {
@@ -944,6 +946,8 @@ abstract class AbstractTable
                 'stateSave' => $this->config->isStateSave(),
                 'paging' => $this->config->isPaging(),
                 'ordering' => $this->config->isOrdering(),
+                'tableAttributes' => $this->config->getTableAttributes(),
+                'headerAttributes' => $this->config->getHeaderAttributes(),
             ];
 
             $configArray = array_merge($configArray, $configTableArray);

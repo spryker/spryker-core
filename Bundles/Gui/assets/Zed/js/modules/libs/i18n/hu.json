@@ -9,6 +9,7 @@
     "sLoadingRecords": "Betöltés...",
     "sProcessing": "Feldolgozás...",
     "sSearch": "Keresés:",
+    "searchPlaceholder": "Keresés:",
     "sZeroRecords": "Nincs a keresésnek megfelelő találat",
     "oPaginate": {
         "sFirst": "Első",
@@ -36,5 +37,6 @@
             "_": "%d sor másolva",
             "1": "1 sor másolva"
         }
-    }
+    },
+    "remove": "Eltávolítás"
 }

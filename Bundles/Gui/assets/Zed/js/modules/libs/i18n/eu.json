@@ -8,6 +8,7 @@
     "sInfoFiltered": "(guztira _MAX_ erregistro iragazten)",
     "sInfoPostFix": "",
     "sSearch": "Aurkitu:",
+    "searchPlaceholder": "Aurkitu:",
     "sUrl": "",
     "sInfoThousands": ",",
     "sLoadingRecords": "Abiarazten...",
@@ -20,5 +21,6 @@
     "oAria": {
         "sSortAscending": ": Zutabea goranzko eran ordenatzeko aktibatu ",
         "sSortDescending": ": Zutabea beheranzko eran ordenatzeko aktibatu"
-    }
+    },
+    "remove": "Kendu"
 }

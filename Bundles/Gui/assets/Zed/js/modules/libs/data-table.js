@@ -20,12 +20,8 @@ var locale = getLocale();
 
 var translationObj = getTranslation(locale);
 
-if (translationObj.sSearch) {
-    translationObj.searchPlaceholder = translationObj.sSearch.replace(/\&nbsp;|:/gi, '');
-}
-
 var defaultConfiguration = {
-    scrollX: 'auto',
+    scrollX: true,
     language: translationObj,
     dom:
         "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'f>>" +
@@ -36,7 +32,7 @@ var defaultConfiguration = {
 var noSearchConfiguration = {
     bFilter: false,
     bInfo: false,
-    scrollX: 'auto',
+    scrollX: true,
 };
 
 function setTableErrorMode(errorMode) {

@@ -1,4 +1,8 @@
 export class DatePicker {
+    constructor() {
+        this.init();
+    }
+
     init() {
         this.initSingle();
         this.initRange();

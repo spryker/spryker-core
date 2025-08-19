@@ -9,6 +9,7 @@
     "sLoadingRecords": "Diproses...",
     "sProcessing": "Sedang diproses...",
     "sSearch": "Carian:",
+    "searchPlaceholder": "Carian:",
     "sZeroRecords": "Tiada padanan rekod yang dijumpai.",
     "oPaginate": {
         "sFirst": "Pertama",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": diaktifkan kepada susunan lajur menaik",
         "sSortDescending": ": diaktifkan kepada susunan lajur menurun"
-    }
+    },
+    "remove": "Keluarkan"
 }

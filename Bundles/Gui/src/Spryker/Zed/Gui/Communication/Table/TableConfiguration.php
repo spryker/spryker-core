@@ -116,6 +116,16 @@ class TableConfiguration
     protected $hasSearchableFieldsWithAggregateFunctions = false;
 
     /**
+     * @var array<string, mixed>
+     */
+    protected array $tableAttributes = [];
+
+    /**
+     * @var array<string, mixed>
+     */
+    protected array $headerAttributes = [];
+
+    /**
      * @return array
      */
     public function getRawColumns()
@@ -141,6 +151,42 @@ class TableConfiguration
         $this->hasSearchableFieldsWithAggregateFunctions = $hasSearchableFieldsWithAggregateFunctions;
 
         return $this;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getTableAttributes(): array
+    {
+        return $this->tableAttributes;
+    }
+
+    /**
+     * @param array<string, mixed> $tableAttributes
+     *
+     * @return void
+     */
+    public function setTableAttributes(array $tableAttributes): void
+    {
+        $this->tableAttributes = $tableAttributes;
+    }
+
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function getHeaderAttributes(): array
+    {
+        return $this->headerAttributes;
+    }
+
+    /**
+     * @param array<string, mixed> $headerAttributes
+     *
+     * @return void
+     */
+    public function setHeaderAttributes(array $headerAttributes): void
+    {
+        $this->headerAttributes = $headerAttributes;
     }
 
     /**

@@ -9,6 +9,7 @@
     "sLoadingRecords": "Inapakia...",
     "sProcessing": "Processing...",
     "sSearch": "Tafuta:",
+    "searchPlaceholder": "Tafuta:",
     "sZeroRecords": "Rekodi vinavyolingana haziku patikana",
     "oPaginate": {
         "sFirst": "Mwanzo",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": seti kulainisha sanjari kwa mtindo wa upandaji",
         "sSortDescending": ": seti kulainisha sanjari kwa mtindo wa mteremko"
-    }
+    },
+    "remove": "Ondoa"
 }

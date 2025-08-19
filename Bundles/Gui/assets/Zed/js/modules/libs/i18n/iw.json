@@ -8,11 +8,14 @@
     "infoFiltered": "(מסונן מסך _MAX_  רשומות)",
     "infoPostFix": "",
     "search": "חפש:",
+    "sSearch": "חפש:",
+    "searchPlaceholder": "חפש:",
     "url": "",
     "paginate": {
         "first": "ראשון",
         "previous": "קודם",
         "next": "הבא",
         "last": "אחרון"
-    }
+    },
+    "remove": "הסר"
 }

@@ -7,6 +7,7 @@
     "sInfoFiltered": " (gefilterd uit _MAX_ resultaten)",
     "sInfoPostFix": "",
     "sSearch": "Zoeken:",
+    "searchPlaceholder": "Zoeken:",
     "sEmptyTable": "Geen resultaten aanwezig in de tabel",
     "sInfoThousands": ".",
     "sLoadingRecords": "Een moment geduld aub - bezig met laden...",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": activeer om kolom oplopend te sorteren",
         "sSortDescending": ": activeer om kolom aflopend te sorteren"
-    }
+    },
+    "remove": "Verwijderen"
 }

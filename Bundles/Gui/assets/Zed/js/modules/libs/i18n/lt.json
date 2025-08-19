@@ -9,14 +9,15 @@
     "sLoadingRecords": "Įkeliama...",
     "sProcessing": "Apdorojama...",
     "sSearch": "Ieškoti:",
+    "searchPlaceholder": "Ieškoti:",
     "sThousands": " ",
     "sUrl": "",
     "sZeroRecords": "Įrašų nerasta",
-
     "oPaginate": {
         "sFirst": "Pirmas",
         "sPrevious": "Ankstesnis",
         "sNext": "Tolimesnis",
         "sLast": "Paskutinis"
-    }
+    },
+    "remove": "Pašalinti"
 }

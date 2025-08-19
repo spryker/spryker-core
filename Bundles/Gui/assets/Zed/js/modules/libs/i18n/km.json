@@ -9,6 +9,7 @@
     "sLoadingRecords": "កំពុងផ្ទុក...",
     "sProcessing": "កំពុងដំណើរការ...",
     "sSearch": "ស្វែងរក:",
+    "searchPlaceholder": "ស្វែងរក:",
     "sZeroRecords": "មិនមានទិន្នន័យត្រូវតាមលក្ខខណ្ឌស្វែងរកទេ",
     "oPaginate": {
         "sFirst": "ដំបូងគេ",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": ចុចដើម្បីរៀបជួរឈរនេះតាមលំដាប់ឡើង",
         "sSortDescending": ": ចុចដើម្បីរៀបជួរឈរនេះតាមលំដាប់ចុះ"
-    }
+    },
+    "remove": "លុប"
 }

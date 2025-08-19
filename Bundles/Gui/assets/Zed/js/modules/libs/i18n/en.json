@@ -9,6 +9,7 @@
     "sLoadingRecords": "Loading...",
     "sProcessing": "Processing...",
     "sSearch": "Search:",
+    "searchPlaceholder": "Search:",
     "sZeroRecords": "No matching records found",
     "oPaginate": {
         "sFirst": "First",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": activate to sort column ascending",
         "sSortDescending": ": activate to sort column descending"
-    }
+    },
+    "remove": "Remove"
 }

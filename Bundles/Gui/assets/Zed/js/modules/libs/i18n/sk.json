@@ -9,6 +9,7 @@
     "sLoadingRecords": "Načítavam...",
     "sProcessing": "Spracúvam...",
     "sSearch": "Hľadať:",
+    "searchPlaceholder": "Hľadať:",
     "sZeroRecords": "Nenašli sa žiadne vyhovujúce záznamy",
     "oPaginate": {
         "sFirst": "Prvá",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": aktivujte na zoradenie stĺpca vzostupne",
         "sSortDescending": ": aktivujte na zoradenie stĺpca zostupne"
-    }
+    },
+    "remove": "Odstrániť"
 }

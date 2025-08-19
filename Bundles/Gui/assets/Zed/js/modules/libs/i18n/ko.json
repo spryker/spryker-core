@@ -9,6 +9,7 @@
     "sLoadingRecords": "읽는중...",
     "sProcessing": "처리중...",
     "sSearch": "검색:",
+    "searchPlaceholder": "검색:",
     "sZeroRecords": "검색 결과가 없습니다",
     "oPaginate": {
         "sFirst": "처음",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": 오름차순 정렬",
         "sSortDescending": ": 내림차순 정렬"
-    }
+    },
+    "remove": "제거"
 }

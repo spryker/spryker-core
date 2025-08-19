@@ -1,9 +1,22 @@
 {# this template is used to render the table without ajax call #}
-<table class="table table-striped table-bordered table-hover" {% if id %} id="{{ id }}" {% endif %}>
+<table class="table table-striped table-bordered table-hover"
+    {% if id %} id="{{ id }}" {% endif %}
+    {% if tableAttributes is defined and tableAttributes is iterable -%}
+        {% for attrName, attrValue in tableAttributes %}
+            {{- "#{attrName}=#{attrValue | json_encode()}" -}}
+        {% endfor %}
+    {% endif -%}
+>
     <thead>
         <tr>
-            {% for title in table.header %}
-                <th>{{ title | trans }}</th>
+            {% for id, title in table.header %}
+                <th
+                    {% if headerAttributes is defined and id in headerAttributes %}
+                        {% for attrName, attrValue in headerAttributes[id] %}
+                            {{- "#{attrName}=#{attrValue | json_encode()}" -}}
+                        {% endfor %}
+                    {% endif %}
+                >{{ title | trans }}</th>
             {% endfor %}
         </tr>
     </thead>

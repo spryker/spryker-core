@@ -9,6 +9,7 @@
     "sLoadingRecords": "Duke punuar...",
     "sProcessing": "Duke procesuar...",
     "sSearch": "Kërkoni:",
+    "searchPlaceholder": "Kërkoni:",
     "sZeroRecords": "Asnjë e dhënë nuk u gjet",
     "oPaginate": {
         "sFirst": "E para",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": aktivizo për të sortuar kolumnin me vlera në ngritje",
         "sSortDescending": ": aktivizo për të sortuar kolumnin me vlera në zbritje"
-    }
+    },
+    "remove": "Hiq"
 }

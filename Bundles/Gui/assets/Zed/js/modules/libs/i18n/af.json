@@ -9,6 +9,7 @@
     "sLoadingRecords": "laai...",
     "sProcessing": "verwerking...",
     "sSearch": "soektog:",
+    "searchPlaceholder": "soektog:",
     "sZeroRecords": "Geen treffers gevind",
     "oPaginate": {
         "sFirst": "eerste",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": aktiveer kolom stygende te sorteer",
         "sSortDescending": ": aktiveer kolom orde te sorteer"
-    }
+    },
+    "remove": "Verwyder"
 }

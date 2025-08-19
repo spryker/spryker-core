@@ -9,6 +9,7 @@
     "sLoadingRecords": "Wird geladen ..",
     "sProcessing": "Bitte warten ..",
     "sSearch": "Suchen",
+    "searchPlaceholder": "Suchen",
     "sZeroRecords": "Keine Einträge vorhanden",
     "oPaginate": {
         "sFirst": "Erste",
@@ -37,5 +38,6 @@
             "_": "%d Zeilen kopiert",
             "1": "1 Zeile kopiert"
         }
-    }
+    },
+    "remove": "Entfernen"
 }

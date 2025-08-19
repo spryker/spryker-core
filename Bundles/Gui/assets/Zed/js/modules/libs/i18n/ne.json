@@ -9,6 +9,7 @@
     "sLoadingRecords": "लोड हुँदैछ...",
     "sProcessing": "प्रगति हुदैंछ ...",
     "sSearch": "खोजी:",
+    "searchPlaceholder": "खोजी:",
     "sUrl": "",
     "sZeroRecords": "कुनै मिल्ने रेकर्ड फेला परेन",
     "oPaginate": {
@@ -20,5 +21,6 @@
     "oAria": {
         "sSortAscending": ": अगाडिबाट अक्षरात्मक रूपमा क्रमबद्ध गराउने",
         "sSortDescending": ": पछाडिबाट अक्षरात्मक रूपमा क्रमबद्ध गराउने"
-    }
+    },
+    "remove": "हटाउनुहोस्"
 }

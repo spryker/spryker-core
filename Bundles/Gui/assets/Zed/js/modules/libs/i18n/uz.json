@@ -8,6 +8,7 @@
     "sLoadingRecords": "Yozuvlar yuklanmoqda...",
     "sProcessing": "Ishlayapman...",
     "sSearch": "Izlash:",
+    "searchPlaceholder": "Izlash:",
     "sZeroRecords": "Ma'lumot yo'q.",
     "oPaginate": {
         "sFirst": "Birinchi",
@@ -18,5 +19,6 @@
     "oAria": {
         "sSortAscending": ": to'g'ri tartiblash",
         "sSortDescending": ": teskari tartiblash"
-    }
+    },
+    "remove": "O'chirish"
 }

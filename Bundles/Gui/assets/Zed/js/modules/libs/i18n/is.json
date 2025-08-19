@@ -9,6 +9,7 @@
     "sLoadingRecords": "Hleð...",
     "sProcessing": "Úrvinnsla...",
     "sSearch": "Leita:",
+    "searchPlaceholder": "Leita:",
     "sZeroRecords": "Engar færslur fundust",
     "oPaginate": {
         "sFirst": "Fyrsta",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": virkja til að raða dálki í hækkandi röð",
         "sSortDescending": ": virkja til að raða dálki lækkandi í röð"
-    }
+    },
+    "remove": "Fjarlægja"
 }
