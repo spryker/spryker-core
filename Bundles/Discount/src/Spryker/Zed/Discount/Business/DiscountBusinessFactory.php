@@ -46,6 +46,8 @@ use Spryker\Zed\Discount\Business\DecisionRule\PriceModeDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TimeDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TotalQuantityDecisionRule;
+use Spryker\Zed\Discount\Business\Deleter\DiscountVoucherPoolDeleter;
+use Spryker\Zed\Discount\Business\Deleter\DiscountVoucherPoolDeleterInterface;
 use Spryker\Zed\Discount\Business\Deleter\SalesDiscountDeleter;
 use Spryker\Zed\Discount\Business\Deleter\SalesDiscountDeleterInterface;
 use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformer;
@@ -566,6 +568,14 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createSalesDiscountDeleter(): SalesDiscountDeleterInterface
     {
         return new SalesDiscountDeleter($this->getEntityManager(), $this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Deleter\DiscountVoucherPoolDeleterInterface
+     */
+    public function createDiscountVoucherPoolDeleter(): DiscountVoucherPoolDeleterInterface
+    {
+        return new DiscountVoucherPoolDeleter($this->getEntityManager());
     }
 
     /**

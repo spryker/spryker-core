@@ -92,4 +92,18 @@ interface DiscountEntityManagerInterface
      * @return void
      */
     public function deleteSalesDiscountCodesBySalesDiscountIds(array $salesDiscountIds): void;
+
+    /**
+     * @param int $idDiscountVoucherPool
+     *
+     * @return void
+     */
+    public function deleteDiscountVouchersByIdDiscountVoucherPool(int $idDiscountVoucherPool): void;
+
+    /**
+     * @param int $idDiscountVoucherPool
+     *
+     * @return void
+     */
+    public function deleteDiscountVoucherPoolByIdDiscountVoucherPool(int $idDiscountVoucherPool): void;
 }
