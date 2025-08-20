@@ -20,12 +20,15 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAssetQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetStorageQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToSspModelQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySalesOrderQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySspAssetQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModelStorageQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -39,7 +42,12 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspInquiryMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspInquiryMapperInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspModelMapper;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper\SspServiceMapper;
+use SprykerFeature\Zed\SelfServicePortal\Persistence\Propel\Mapper\SspAssetStorageEntityMapper;
+use SprykerFeature\Zed\SelfServicePortal\Persistence\Propel\Mapper\SspAssetStorageEntityMapperInterface;
+use SprykerFeature\Zed\SelfServicePortal\Persistence\Propel\Mapper\SspModelStorageEntityMapper;
+use SprykerFeature\Zed\SelfServicePortal\Persistence\Propel\Mapper\SspModelStorageEntityMapperInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\QueryBuilder\FileAttachmentQueryBuilder;
+use SprykerFeature\Zed\SelfServicePortal\Persistence\QueryBuilder\SspModelQueryBuilder;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\Saver\FileAttachmentSaver;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalDependencyProvider;
 
@@ -73,11 +81,6 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesOrderItemProductClassQuery(): SpySalesOrderItemProductClassQuery
     {
         return SpySalesOrderItemProductClassQuery::create();
-    }
-
-    public function createSalesOrderItemQuery(): SpySalesOrderItemQuery
-    {
-        return SpySalesOrderItemQuery::create();
     }
 
     public function createCompanyFileQuery(): SpyCompanyFileQuery
@@ -118,19 +121,6 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     public function createSspInquirySspAssetQuery(): SpySspInquirySspAssetQuery
     {
         return SpySspInquirySspAssetQuery::create();
-    }
-
-    /**
-     * @return array<\Propel\Runtime\ActiveQuery\ModelCriteria>
-     */
-    public function getFileAttachmentQueryList(): array
-    {
-        return [
-            $this->createCompanyFileQuery(),
-            $this->createCompanyUserFileQuery(),
-            $this->createCompanyBusinessUnitFileQuery(),
-            $this->createSspAssetFileQuery(),
-        ];
     }
 
     public function createSspServiceMapper(): SspServiceMapper
@@ -210,6 +200,36 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     public function createSspModelQuery(): SpySspModelQuery
     {
         return SpySspModelQuery::create();
+    }
+
+    public function createSspModelStorageQuery(): SpySspModelStorageQuery
+    {
+        return SpySspModelStorageQuery::create();
+    }
+
+    public function createSspModelStorageEntityMapper(): SspModelStorageEntityMapperInterface
+    {
+        return new SspModelStorageEntityMapper();
+    }
+
+    public function createSspAssetStorageQuery(): SpySspAssetStorageQuery
+    {
+        return SpySspAssetStorageQuery::create();
+    }
+
+    public function createSspAssetStorageEntityMapper(): SspAssetStorageEntityMapperInterface
+    {
+        return new SspAssetStorageEntityMapper();
+    }
+
+    public function createSspModelQueryBuilder(): SspModelQueryBuilder
+    {
+        return new SspModelQueryBuilder();
+    }
+
+    public function createSspAssetToSspModelQuery(): SpySspAssetToSspModelQuery
+    {
+        return SpySspAssetToSspModelQuery::create();
     }
 
     public function getSalesOrderItemSspAssetQuery(): SpySalesOrderItemSspAssetQuery

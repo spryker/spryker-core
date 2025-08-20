@@ -36,6 +36,8 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\ShipmentType\Helper\ShipmentTypeHelper
@@ -44,10 +46,14 @@ suites:
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Zed\Sales\Helper\BusinessHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
-                - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
                 - \SprykerTest\Zed\Company\Helper\CompanyHelper
+                - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
+                - \SprykerTest\Zed\ProductList\Helper\ProductListHelper
+                - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
+                - \SprykerTest\Client\RabbitMq\Helper\RabbitMqHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
                 - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SspModelHelper
-
+                - \SprykerTest\Client\Testify\Helper\ConfigHelper
     Business:
         path: Business
         actor: SelfServicePortalBusinessTester

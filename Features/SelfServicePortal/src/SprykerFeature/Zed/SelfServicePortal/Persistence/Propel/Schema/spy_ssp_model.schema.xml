@@ -21,4 +21,23 @@
         <id-method-parameter value="spy_ssp_model_pk_seq"/>
     </table>
 
+
+    <table name="spy_ssp_model_storage" identifierQuoting="true">
+        <column name="id_ssp_model_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_ssp_model" type="INTEGER" required="true"/>
+
+        <index name="spy_ssp_model_storage-fk_ssp_model">
+            <index-column name="fk_ssp_model"/>
+        </index>
+
+        <id-method-parameter value="spy_ssp_model_storage_pk_seq"/>
+
+        <behavior name="synchronization">
+            <parameter name="resource" value="ssp_model"/>
+            <parameter name="key_suffix_column" value="fk_ssp_model"/>
+            <parameter name="queue_group" value="sync.storage.ssp_model"/>
+        </behavior>
+
+        <behavior name="timestampable"/>
+    </table>
 </database>

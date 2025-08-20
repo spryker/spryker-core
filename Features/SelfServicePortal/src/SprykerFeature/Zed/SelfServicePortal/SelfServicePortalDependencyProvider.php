@@ -22,6 +22,7 @@ use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\Event\Business\EventFacadeInterface;
+use Spryker\Zed\EventBehavior\Business\EventBehaviorFacadeInterface;
 use Spryker\Zed\FileManager\Business\FileManagerFacadeInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -73,6 +74,11 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_EVENT = 'FACADE_EVENT';
+
+    /**
+     * @var string
+     */
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
     /**
      * @var string
@@ -297,6 +303,7 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductOfferShipmentTypeFacade($container);
         $container = $this->addShipmentTypeFacade($container);
         $container = $this->addEventFacade($container);
+        $container = $this->addEventBehaviorFacade($container);
         $container = $this->addProductPropelQuery($container);
         $container = $this->addShipmentTypeQuery($container);
         $container = $this->addProductShipmentTypeQuery($container);
@@ -377,6 +384,15 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_EVENT, static function (Container $container): EventFacadeInterface {
             return $container->getLocator()->event()->facade();
+        });
+
+        return $container;
+    }
+
+    protected function addEventBehaviorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, static function (Container $container): EventBehaviorFacadeInterface {
+            return $container->getLocator()->eventBehavior()->facade();
         });
 
         return $container;

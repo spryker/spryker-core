@@ -3,6 +3,8 @@ include:
     - tests/SprykerFeatureTest/Zed/SelfServicePortal
     - tests/SprykerFeatureTest/Yves/SelfServicePortal
     - tests/SprykerFeatureTest/Service/SelfServicePortal
+    - tests/SprykerFeatureTest/Client/SelfServicePortal
+
 paths:
     tests: tests/
     log: tests/_output/

@@ -21,6 +21,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAwareInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\Event\Business\EventFacadeInterface;
+use Spryker\Zed\EventBehavior\Business\EventBehaviorFacadeInterface;
 use Spryker\Zed\FileManager\Business\FileManagerFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Mail\Business\MailFacadeInterface;
@@ -54,6 +55,8 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Permission\SspAssetCusto
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Permission\SspAssetCustomerPermissionExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReader;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Storage\SspAssetStorageWriter;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Storage\SspAssetStorageWriterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Validator\SspAssetValidator;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Validator\SspAssetValidatorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\FileSspAssetWriter;
@@ -184,6 +187,8 @@ use SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePoin
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\DataImport\Step\SspModelProductListWriterStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\DataImport\Step\SspModelWriterStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\DataImport\Step\SsptModelAsseWriterStep;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Storage\SspModelStorageWriter;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Storage\SspModelStorageWriterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Validator\SspModelValidator;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Validator\SspModelValidatorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Writer\FileSspModelWriter;
@@ -758,6 +763,7 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     {
         return new SspAssetWriterStep(
             $this->getConfig(),
+            $this->getEventFacade(),
         );
     }
 
@@ -1111,6 +1117,29 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductClassIndexer(),
         );
+    }
+
+    public function createSspModelStorageWriter(): SspModelStorageWriterInterface
+    {
+        return new SspModelStorageWriter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->getEventBehaviorFacade(),
+        );
+    }
+
+    public function createSspAssetStorageWriter(): SspAssetStorageWriterInterface
+    {
+        return new SspAssetStorageWriter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->getEventBehaviorFacade(),
+        );
+    }
+
+    public function getEventBehaviorFacade(): EventBehaviorFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
 
     public function getSspModelDataImporter(): DataImporterInterface

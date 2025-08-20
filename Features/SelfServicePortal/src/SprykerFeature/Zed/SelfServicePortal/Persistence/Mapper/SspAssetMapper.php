@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\SspAssetIncludeTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
+use Generated\Shared\Transfer\SspModelTransfer;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAsset;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 
@@ -54,7 +55,11 @@ class SspAssetMapper
 
         if ($spySspAssetEntity->getFkCompanyBusinessUnit()) {
             $sspAssetTransfer->setCompanyBusinessUnit(
-                (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($spySspAssetEntity->getFkCompanyBusinessUnit()),
+                (new CompanyBusinessUnitTransfer())
+                    ->setIdCompanyBusinessUnit(
+                        $spySspAssetEntity->getFkCompanyBusinessUnit(),
+                    )
+                    ->setFkCompany($spySspAssetEntity->getSpyCompanyBusinessUnit()?->getFkCompany()),
             );
         }
 
@@ -75,6 +80,16 @@ class SspAssetMapper
             $sspAssetTransfer->setCompanyBusinessUnit(
                 (new CompanyBusinessUnitTransfer())->fromArray($companyBusinessUnit->toArray(), true),
             );
+        }
+
+        if ($sspAssetIncludeTransfer->getWithSspModels()) {
+            foreach ($spySspAssetEntity->getSpySspAssetToSspModels() as $spySspAssetToSspModelEntity) {
+                $spySspModelEntity = $spySspAssetToSspModelEntity->getSpySspModel();
+                if ($spySspModelEntity) {
+                    $sspModelTransfer = (new SspModelTransfer())->fromArray($spySspModelEntity->toArray(), true);
+                    $sspAssetTransfer->addModel($sspModelTransfer);
+                }
+            }
         }
 
         return $sspAssetTransfer;

@@ -9,12 +9,15 @@ namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 
 use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductClassCollectionTransfer;
 use Generated\Shared\Transfer\ProductClassCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
+use Generated\Shared\Transfer\SspModelCollectionTransfer;
+use Generated\Shared\Transfer\SspModelCriteriaTransfer;
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
 
@@ -91,4 +94,22 @@ interface SelfServicePortalRepositoryInterface
      * @return void
      */
     public function deleteSalesOrderItemProductClassesBySalesOrderItemIds(array $salesOrderItemIds): void;
+
+    public function getSspModelCollection(SspModelCriteriaTransfer $sspModelCriteriaTransfer): SspModelCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param list<int> $sspModelIds
+     *
+     * @return list<\Generated\Shared\Transfer\SynchronizationDataTransfer>
+     */
+    public function getSspModelStorageSynchronizationDataTransfers(FilterTransfer $filterTransfer, array $sspModelIds = []): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param list<int> $sspAssetIds
+     *
+     * @return list<\Generated\Shared\Transfer\SynchronizationDataTransfer>
+     */
+    public function getSspAssetStorageSynchronizationDataTransfers(FilterTransfer $filterTransfer, array $sspAssetIds = []): array;
 }

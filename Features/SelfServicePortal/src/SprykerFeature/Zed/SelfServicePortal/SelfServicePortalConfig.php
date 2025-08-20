@@ -1132,4 +1132,17 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     {
         return static::SSP_MODEL_DEFAULT_IMAGE_FILE_MAX_SIZE;
     }
+
+    /**
+     * Specification:
+     * - Returns the synchronization pool name for SSP model and assets storage.
+     *
+     * @api
+     *
+     * @return string|null
+     */
+    public function getSelfServicePortalStorageSynchronizationPoolName(): ?string
+    {
+        return 'synchronizationPool';
+    }
 }

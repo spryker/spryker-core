@@ -13,6 +13,7 @@ use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\ProductListBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -23,6 +24,7 @@ use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
+use Generated\Shared\Transfer\SspModelTransfer;
 use Orm\Zed\ProductList\Persistence\Base\SpyProductListQuery;
 use Orm\Zed\ProductList\Persistence\SpyProductList;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpyProductShipmentTypeTableMap;
@@ -33,8 +35,18 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClass;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAsset;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAssetQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAsset;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetStorage;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetStorageQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnit;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToSspModel;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToSspModelQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModelStorage;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModelStorageQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModelToProductList;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelToProductListQuery;
 use PHPUnit\Framework\MockObject\MockObject;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
@@ -57,6 +69,117 @@ use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepository
 class SelfServicePortalCommunicationTester extends Actor
 {
     use _generated\SelfServicePortalCommunicationTesterActions;
+
+    /**
+     * Storage JSON field names
+     *
+     * @var string
+     */
+    protected const STORAGE_FIELD_ID_MODEL = 'id_model';
+
+    /**
+     * @var string
+     */
+    protected const STORAGE_FIELD_WHITELIST_IDS = 'whitelist_ids';
+
+    /**
+     * Default test data values
+     *
+     * @var string
+     */
+    protected const DEFAULT_SSP_MODEL_REFERENCE_PREFIX = 'REF-';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_SSP_MODEL_NAME = 'Test Model';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_SSP_MODEL_CODE_PREFIX = 'CODE-';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_SSP_ASSET_REFERENCE_PREFIX = 'ASSET-REF-';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_SSP_ASSET_NAME = 'Test Asset';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_SSP_ASSET_SERIAL_NUMBER_PREFIX = 'SN-';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_SSP_ASSET_STATUS = 'active';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_BUSINESS_UNIT_NAME_PREFIX = 'Test Business Unit ';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_BUSINESS_UNIT_EMAIL = 'test@example.com';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORAGE_KEY_PREFIX = 'test-key';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORAGE_REFERENCE_PREFIX = 'ASSET-REF-';
+
+    /**
+     * Asset storage field names
+     *
+     * @var string
+     */
+    protected const STORAGE_FIELD_ID_ASSET = 'id_asset';
+
+    /**
+     * @var string
+     */
+    protected const STORAGE_FIELD_BUSINESS_UNIT_IDS = 'business_unit_ids';
+
+    /**
+     * @var string
+     */
+    protected const STORAGE_FIELD_NAME = 'name';
+
+    /**
+     * @var string
+     */
+    protected const STORAGE_FIELD_COMPANY_IDS = 'company_ids';
+
+    /**
+     * @var string
+     */
+    protected const STORAGE_FIELD_SERIAL_NUMBER = 'serial_number';
+
+    /**
+     * @var string
+     */
+    protected const STORAGE_FIELD_MODEL_IDS = 'model_ids';
+
+    /**
+     * @var string
+     */
+    protected const STORAGE_FIELD_ID_OWNER_BUSINESS_UNIT = 'id_owner_business_unit';
+
+    /**
+     * @var string
+     */
+    protected const STORAGE_FIELD_ID_OWNER_COMPANY_ID = 'id_owner_company_id';
 
     /**
      * @var string
@@ -417,6 +540,242 @@ class SelfServicePortalCommunicationTester extends Actor
     protected function getSalesOrderItemSspAssetQuery(): SpySalesOrderItemSspAssetQuery
     {
         return SpySalesOrderItemSspAssetQuery::create();
+    }
+
+    public function haveSspModel(array $seedData = []): SspModelTransfer
+    {
+        $sspModelEntity = SpySspModelQuery::create()
+            ->filterByReference($seedData['reference'] ?? static::DEFAULT_SSP_MODEL_REFERENCE_PREFIX . uniqid())
+            ->findOneOrCreate();
+
+        $sspModelEntity->setName($seedData['name'] ?? static::DEFAULT_SSP_MODEL_NAME);
+        $sspModelEntity->setCode($seedData['code'] ?? static::DEFAULT_SSP_MODEL_CODE_PREFIX . uniqid());
+        if (isset($seedData['fk_image_file'])) {
+            $sspModelEntity->setFkImageFile($seedData['fk_image_file']);
+        }
+        $sspModelEntity->save();
+
+        $sspModelTransfer = new SspModelTransfer();
+        $sspModelTransfer->setIdSspModel($sspModelEntity->getIdSspModel());
+        $sspModelTransfer->setReference($sspModelEntity->getReference());
+        $sspModelTransfer->setName($sspModelEntity->getName());
+        $sspModelTransfer->setCode($sspModelEntity->getCode());
+
+        return $sspModelTransfer;
+    }
+
+    public function haveSspAsset(array $seedData = []): SspAssetTransfer
+    {
+        $companyBusinessUnitTransfer = $seedData['companyBusinessUnit'] ?? $seedData['company_business_unit'] ?? $seedData['COMPANY_BUSINESS_UNIT'] ?? $this->createDefaultCompanyBusinessUnit();
+
+        $sspAssetEntity = new SpySspAsset();
+        $sspAssetEntity->setReference($seedData['reference'] ?? static::DEFAULT_SSP_ASSET_REFERENCE_PREFIX . uniqid());
+        $sspAssetEntity->setName($seedData['name'] ?? static::DEFAULT_SSP_ASSET_NAME);
+        $sspAssetEntity->setSerialNumber($seedData['serialNumber'] ?? $seedData['serial_number'] ?? $seedData['SERIAL_NUMBER'] ?? static::DEFAULT_SSP_ASSET_SERIAL_NUMBER_PREFIX . uniqid());
+        $sspAssetEntity->setStatus($seedData['status'] ?? static::DEFAULT_SSP_ASSET_STATUS);
+        $sspAssetEntity->setFkCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+        $sspAssetEntity->save();
+
+        $sspAssetTransfer = new SspAssetTransfer();
+        $sspAssetTransfer->setIdSspAsset($sspAssetEntity->getIdSspAsset());
+        $sspAssetTransfer->setReference($sspAssetEntity->getReference());
+        $sspAssetTransfer->setName($sspAssetEntity->getName());
+        $sspAssetTransfer->setSerialNumber($sspAssetEntity->getSerialNumber());
+        $sspAssetTransfer->setStatus($sspAssetEntity->getStatus());
+        $sspAssetTransfer->setCompanyBusinessUnit($companyBusinessUnitTransfer);
+
+        return $sspAssetTransfer;
+    }
+
+    public function createDefaultCompanyBusinessUnit(): CompanyBusinessUnitTransfer
+    {
+        $companyTransfer = $this->haveCompany();
+
+        return $this->haveCompanyBusinessUnit([
+            'name' => static::DEFAULT_BUSINESS_UNIT_NAME_PREFIX . uniqid(),
+            'email' => static::DEFAULT_BUSINESS_UNIT_EMAIL,
+            'fk_company' => $companyTransfer->getIdCompany(),
+        ]);
+    }
+
+    public function clearSspModelData(): void
+    {
+        $this->getSspModelToProductListQuery()->deleteAll();
+        $this->getSspModelQuery()->deleteAll();
+    }
+
+    public function clearSspAssetData(): void
+    {
+        $this->getSspAssetToSspModelQuery()->deleteAll();
+        $this->getSspAssetQuery()->deleteAll();
+    }
+
+    public function clearSspModelStorageData(): void
+    {
+        $this->getSspModelStorageQuery()->deleteAll();
+    }
+
+    public function clearSspAssetStorageData(): void
+    {
+        $this->getSspAssetStorageQuery()->deleteAll();
+    }
+
+    /**
+     * @param int $idSspModel
+     *
+     * @return array|null
+     */
+    public function findSspModelStorageData(int $idSspModel): ?array
+    {
+        $sspModelStorageEntity = $this->getSspModelStorageQuery()
+            ->filterByFkSspModel($idSspModel)
+            ->findOne();
+
+        if (!$sspModelStorageEntity) {
+            return null;
+        }
+
+        $data = $sspModelStorageEntity->getData();
+
+        return is_string($data) ? json_decode($data, true) : (is_array($data) ? $data : null);
+    }
+
+    /**
+     * @param int $idSspAsset
+     *
+     * @return array|null
+     */
+    public function findSspAssetStorageData(int $idSspAsset): ?array
+    {
+        $sspAssetStorageEntity = $this->getSspAssetStorageQuery()
+            ->filterByFkSspAsset($idSspAsset)
+            ->findOne();
+
+        if (!$sspAssetStorageEntity) {
+            return null;
+        }
+
+        $data = $sspAssetStorageEntity->getData();
+
+        return is_string($data) ? json_decode($data, true) : (is_array($data) ? $data : null);
+    }
+
+    public function haveSspModelToProductListAssignment(int $idSspModel, int $idProductList): SpySspModelToProductList
+    {
+        $assignmentEntity = new SpySspModelToProductList();
+        $assignmentEntity->setFkSspModel($idSspModel);
+        $assignmentEntity->setFkProductList($idProductList);
+        $assignmentEntity->save();
+
+        return $assignmentEntity;
+    }
+
+    public function haveSspAssetToModelAssignment(int $idSspAsset, int $idSspModel): SpySspAssetToSspModel
+    {
+        $assignmentEntity = new SpySspAssetToSspModel();
+        $assignmentEntity->setFkSspAsset($idSspAsset);
+        $assignmentEntity->setFkSspModel($idSspModel);
+        $assignmentEntity->save();
+
+        return $assignmentEntity;
+    }
+
+    public function haveSspAssetToCompanyBusinessUnitAssignment(int $idSspAsset, int $idCompanyBusinessUnit): SpySspAssetToCompanyBusinessUnit
+    {
+        $assignmentEntity = new SpySspAssetToCompanyBusinessUnit();
+        $assignmentEntity->setFkSspAsset($idSspAsset);
+        $assignmentEntity->setFkCompanyBusinessUnit($idCompanyBusinessUnit);
+        $assignmentEntity->save();
+
+        return $assignmentEntity;
+    }
+
+    public function haveSspModelStorageEntity(array $seedData = []): SpySspModelStorage
+    {
+        $idSspModel = $seedData[static::STORAGE_FIELD_ID_MODEL] ?? 1;
+
+        $sspModelEntity = $this->getSspModelQuery()
+            ->filterByIdSspModel($idSspModel)
+            ->findOne();
+
+        if (!$sspModelEntity) {
+            $sspModelTransfer = $this->haveSspModel([
+                'reference' => 'REF-' . $idSspModel,
+                'name' => 'Test Model ' . $idSspModel,
+                'code' => 'CODE-' . $idSspModel,
+            ]);
+            $idSspModel = $sspModelTransfer->getIdSspModel();
+        }
+
+        $storageData = [
+            static::STORAGE_FIELD_ID_MODEL => $idSspModel,
+            static::STORAGE_FIELD_WHITELIST_IDS => $seedData[static::STORAGE_FIELD_WHITELIST_IDS] ?? [],
+        ];
+
+        $sspModelStorageEntity = new SpySspModelStorage();
+        $sspModelStorageEntity->setFkSspModel($idSspModel);
+        $sspModelStorageEntity->setData(json_encode($storageData));
+        $sspModelStorageEntity->setKey('ssp_model:' . $idSspModel);
+        $sspModelStorageEntity->save();
+
+        return $sspModelStorageEntity;
+    }
+
+    public function haveSspAssetStorage(int $sspAssetId, array $businessUnitIds = []): SpySspAssetStorage
+    {
+        $storageData = json_encode([
+            static::STORAGE_FIELD_ID_ASSET => $sspAssetId,
+            static::STORAGE_FIELD_BUSINESS_UNIT_IDS => $businessUnitIds,
+        ]);
+
+        $sspAssetStorageEntity = new SpySspAssetStorage();
+        $sspAssetStorageEntity->setFkSspAsset($sspAssetId);
+        $sspAssetStorageEntity->setData($storageData);
+        $sspAssetStorageEntity->setKey(sprintf('ssp_asset:%d', $sspAssetId));
+        $sspAssetStorageEntity->setReference(static::DEFAULT_STORAGE_REFERENCE_PREFIX . uniqid());
+        $sspAssetStorageEntity->save();
+
+        return $sspAssetStorageEntity;
+    }
+
+    /**
+     * @param int $sspModelId
+     * @param array<int> $whitelistIds
+     *
+     * @return void
+     */
+    public function haveSspModelStorage(int $sspModelId, array $whitelistIds): void
+    {
+        $storageData = json_encode([
+            static::STORAGE_FIELD_ID_MODEL => $sspModelId,
+            static::STORAGE_FIELD_WHITELIST_IDS => $whitelistIds,
+        ]);
+
+        $sspModelStorageEntity = new SpySspModelStorage();
+        $sspModelStorageEntity->setFkSspModel($sspModelId);
+        $sspModelStorageEntity->setData($storageData);
+        $sspModelStorageEntity->setKey(sprintf('ssp_model:%d', $sspModelId));
+        $sspModelStorageEntity->save();
+    }
+
+    protected function getSspModelStorageQuery(): SpySspModelStorageQuery
+    {
+        return SpySspModelStorageQuery::create();
+    }
+
+    protected function getSspAssetQuery(): SpySspAssetQuery
+    {
+        return SpySspAssetQuery::create();
+    }
+
+    protected function getSspAssetStorageQuery(): SpySspAssetStorageQuery
+    {
+        return SpySspAssetStorageQuery::create();
+    }
+
+    protected function getSspAssetToCompanyBusinessUnitQuery(): SpySspAssetToCompanyBusinessUnitQuery
+    {
+        return SpySspAssetToCompanyBusinessUnitQuery::create();
     }
 
     public function ensureSspModelTableIsEmpty(): void

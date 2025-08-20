@@ -85,4 +85,24 @@
         <id-method-parameter value="spy_sales_order_item_ssp_asset_pk_seq"/>
     </table>
 
+    <table name="spy_ssp_asset_storage" identifierQuoting="true">
+        <column name="id_ssp_asset_storage" type="BIGINT" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_ssp_asset" type="INTEGER" required="true"/>
+        <column name="reference" type="VARCHAR" size="255" required="true" description="A unique reference identifier for a specific asset."/>
+
+        <index name="spy_ssp_asset_storage-fk_ssp_asset">
+            <index-column name="fk_ssp_asset"/>
+        </index>
+
+        <behavior name="synchronization">
+            <parameter name="resource" value="ssp_asset"/>
+            <parameter name="key_suffix_column" value="reference"/>
+            <parameter name="queue_group" value="sync.storage.ssp_asset"/>
+        </behavior>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_ssp_asset_storage_pk_seq"/>
+    </table>
+
 </database>

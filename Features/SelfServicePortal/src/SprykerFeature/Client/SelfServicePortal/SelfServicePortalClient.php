@@ -17,10 +17,14 @@ use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
+use Generated\Shared\Transfer\SspAssetStorageCollectionTransfer;
+use Generated\Shared\Transfer\SspAssetStorageCriteriaTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
+use Generated\Shared\Transfer\SspModelStorageCollectionTransfer;
+use Generated\Shared\Transfer\SspModelStorageCriteriaTransfer;
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -199,5 +203,39 @@ class SelfServicePortalClient extends AbstractClient implements SelfServicePorta
         return $this->getFactory()
             ->createSelfServicePortalStub()
             ->updateSspAssetCollection($sspAssetCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspModelStorageCriteriaTransfer $sspModelStorageCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspModelStorageCollectionTransfer
+     */
+    public function getSspModelStorageCollection(
+        SspModelStorageCriteriaTransfer $sspModelStorageCriteriaTransfer
+    ): SspModelStorageCollectionTransfer {
+        return $this->getFactory()
+            ->createSspModelStorageReader()
+            ->getSspModelStorageCollection($sspModelStorageCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspAssetStorageCriteriaTransfer $sspAssetStorageCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspAssetStorageCollectionTransfer
+     */
+    public function getSspAssetStorageCollection(
+        SspAssetStorageCriteriaTransfer $sspAssetStorageCriteriaTransfer
+    ): SspAssetStorageCollectionTransfer {
+        return $this->getFactory()
+            ->createSspAssetStorageReader()
+            ->getSspAssetStorageCollection($sspAssetStorageCriteriaTransfer);
     }
 }

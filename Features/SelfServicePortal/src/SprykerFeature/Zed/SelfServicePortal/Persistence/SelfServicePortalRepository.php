@@ -10,6 +10,7 @@ namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductClassCollectionTransfer;
@@ -21,6 +22,9 @@ use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryConditionsTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
+use Generated\Shared\Transfer\SspModelCollectionTransfer;
+use Generated\Shared\Transfer\SspModelCriteriaTransfer;
+use Generated\Shared\Transfer\SspModelTransfer;
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
 use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
@@ -39,6 +43,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
 /**
  * @method \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalPersistenceFactory getFactory()
@@ -155,7 +160,7 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
 
         $query = $query->groupByIdSalesOrderItem();
 
-        $sspServiceEntities = $this->getSspServicePaginatedCollection($query, $sspServiceCriteriaTransfer);
+        $sspServiceEntities = $this->getPaginatedCollection($query, $sspServiceCriteriaTransfer->getPagination());
 
         $sspServiceMapper = $this->getFactory()->createSspServiceMapper();
         $sspServiceTransfers = $sspServiceMapper->mapSalesOrderItemEntitiesToSspServiceTransfers($sspServiceEntities->getData());
@@ -375,7 +380,7 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $this->getFactory()
             ->createFileMapper()
             ->mapFileEntityCollectionToFileAttachmentCollectionTransfer(
-                $this->getPaginatedFileAttachmentCollection($query, $fileAttachmentCriteriaTransfer->getPagination()),
+                $this->getPaginatedCollection($query, $fileAttachmentCriteriaTransfer->getPagination()),
                 $fileAttachmentCollectionTransfer,
             );
     }
@@ -389,7 +394,7 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
             ->joinWithStateMachineItemState();
 
          $sspInquiryQuery = $this->applyInquiryFilters($sspInquiryQuery, $sspInquiryCriteriaTransfer);
-         $sspInquiryEntities = $this->getPaginatedInquiryCollection($sspInquiryQuery, $sspInquiryCriteriaTransfer->getPagination());
+         $sspInquiryEntities = $this->getPaginatedCollection($sspInquiryQuery, $sspInquiryCriteriaTransfer->getPagination());
          $sspInquiryMapper = $this->getFactory()->createSspInquiryMapper();
 
         foreach ($sspInquiryEntities as $sspInquiryEntity) {
@@ -617,60 +622,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $sspInquiryQuery;
     }
 
-    protected function getPaginatedInquiryCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null): Collection
-    {
-        if ($paginationTransfer === null) {
-            return $query->find();
-        }
-
-        $page = $paginationTransfer
-            ->requirePage()
-            ->getPageOrFail();
-
-        $maxPerPage = $paginationTransfer
-            ->requireMaxPerPage()
-            ->getMaxPerPageOrFail();
-
-        $paginationModel = $query->paginate($page, $maxPerPage);
-
-        $paginationTransfer->setNbResults($paginationModel->getNbResults());
-        $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
-        $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
-        $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
-        $paginationTransfer->setLastPage($paginationModel->getLastPage());
-        $paginationTransfer->setNextPage($paginationModel->getNextPage());
-        $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
-
-        return $paginationModel->getResults();
-    }
-
-    protected function getPaginatedFileAttachmentCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null): Collection
-    {
-        if ($paginationTransfer === null) {
-            return $query->find();
-        }
-
-        $page = $paginationTransfer
-            ->requirePage()
-            ->getPageOrFail();
-
-        $maxPerPage = $paginationTransfer
-            ->requireMaxPerPage()
-            ->getMaxPerPageOrFail();
-
-        $paginationModel = $query->paginate($page, $maxPerPage);
-
-        $paginationTransfer->setNbResults($paginationModel->getNbResults());
-        $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
-        $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
-        $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
-        $paginationTransfer->setLastPage($paginationModel->getLastPage());
-        $paginationTransfer->setNextPage($paginationModel->getNextPage());
-        $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
-
-        return $paginationModel->getResults();
-    }
-
     public function getSspAssetCollection(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer): SspAssetCollectionTransfer
     {
         $sspAssetCollectionTransfer = new SspAssetCollectionTransfer();
@@ -684,7 +635,15 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
             $sspAssetQuery->joinWithSpyCompanyBusinessUnit(Criteria::LEFT_JOIN);
         }
 
-        $sspAssetEntities = $this->getAssetPaginatedCollection($sspAssetQuery, $sspAssetCriteriaTransfer->getPagination());
+        if ($sspAssetCriteriaTransfer->getInclude()?->getWithSspModels()) {
+            $sspAssetQuery
+                ->leftJoinWithSpySspAssetToSspModel()
+                ->useSpySspAssetToSspModelQuery(null, Criteria::LEFT_JOIN)
+                    ->leftJoinSpySspModel()
+                ->endUse();
+        }
+
+        $sspAssetEntities = $this->getPaginatedCollection($sspAssetQuery, $sspAssetCriteriaTransfer->getPagination());
         $sspAssetIds = [];
         foreach ($sspAssetEntities as $sspAssetEntity) {
             $sspAssetTransfer = $this->getFactory()
@@ -827,33 +786,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $sspAssetQuery;
     }
 
-    protected function getAssetPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null): Collection
-    {
-        if ($paginationTransfer === null) {
-            return $query->find();
-        }
-
-        $page = $paginationTransfer
-            ->requirePage()
-            ->getPageOrFail();
-
-        $maxPerPage = $paginationTransfer
-            ->requireMaxPerPage()
-            ->getMaxPerPageOrFail();
-
-        $paginationModel = $query->paginate($page, $maxPerPage);
-
-        $paginationTransfer->setNbResults($paginationModel->getNbResults());
-        $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
-        $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
-        $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
-        $paginationTransfer->setLastPage($paginationModel->getLastPage());
-        $paginationTransfer->setNextPage($paginationModel->getNextPage());
-        $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
-
-        return $paginationModel->getResults();
-    }
-
     /**
      * @param array<int> $salesOrderItemIds
      *
@@ -930,21 +862,20 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
             ->delete();
     }
 
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
-     * @param \Generated\Shared\Transfer\SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-     *
-     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
-     */
-    protected function getSspServicePaginatedCollection(
-        SpySalesOrderItemQuery $query,
-        SspServiceCriteriaTransfer $sspServiceCriteriaTransfer
-    ): Collection {
-        if (!$sspServiceCriteriaTransfer->getPagination()) {
+    protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null): Collection
+    {
+        if ($paginationTransfer === null) {
             return $query->find();
         }
 
-        $paginationTransfer = $sspServiceCriteriaTransfer->getPaginationOrFail();
+        if ($paginationTransfer->getOffset() !== null && $paginationTransfer->getLimit() !== null) {
+            $query->offset($paginationTransfer->getOffset());
+            $query->limit($paginationTransfer->getLimit());
+            $paginationTransfer->setNbResults($query->count());
+
+            return $query->find();
+        }
+
         $page = $paginationTransfer
             ->requirePage()
             ->getPageOrFail();
@@ -964,5 +895,85 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
 
         return $paginationModel->getResults();
+    }
+
+    public function getSspModelCollection(SspModelCriteriaTransfer $sspModelCriteriaTransfer): SspModelCollectionTransfer
+    {
+        $sspModelCollectionTransfer = new SspModelCollectionTransfer();
+
+        $sspModelQuery = $this->getFactory()->createSspModelQuery();
+        $sspModelQuery = $this->getFactory()->createSspModelQueryBuilder()->applyCriteria($sspModelQuery, $sspModelCriteriaTransfer);
+
+        $sspModelEntities = $this->getPaginatedCollection($sspModelQuery, $sspModelCriteriaTransfer->getPagination());
+
+        foreach ($sspModelEntities as $sspModelEntity) {
+            $sspModelTransfer = $this->getFactory()
+                ->createModelMapper()
+                ->mapSpySspModelEntityToSspModelTransfer($sspModelEntity, new SspModelTransfer());
+
+            if ($sspModelCriteriaTransfer->getWithSspAssets()) {
+                $sspModelTransfer = $this->getFactory()
+                    ->createModelMapper()
+                    ->mapSpySspModelEntityToSspModelTransferWithAssets($sspModelEntity, $sspModelTransfer);
+            }
+
+            if ($sspModelCriteriaTransfer->getWithProductLists()) {
+                $sspModelTransfer = $this->getFactory()
+                    ->createModelMapper()
+                    ->mapSpySspModelEntityToSspModelTransferWithProductLists($sspModelEntity, $sspModelTransfer);
+            }
+
+            $sspModelCollectionTransfer->addSspModel($sspModelTransfer);
+        }
+
+        $sspModelCollectionTransfer->setPagination($sspModelCriteriaTransfer->getPagination());
+
+        return $sspModelCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param list<int> $sspModelIds
+     *
+     * @return list<\Generated\Shared\Transfer\SynchronizationDataTransfer>
+     */
+    public function getSspModelStorageSynchronizationDataTransfers(FilterTransfer $filterTransfer, array $sspModelIds = []): array
+    {
+        if ($filterTransfer->getLimit() === 0) {
+            return [];
+        }
+
+        $sspModelStorageQuery = $this->getFactory()->createSspModelStorageQuery();
+
+        if ($sspModelIds) {
+            $sspModelStorageQuery->filterByFkSspModel_In($sspModelIds);
+        }
+
+        return $this->buildQueryFromCriteria($sspModelStorageQuery, $filterTransfer)
+            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
+            ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param list<int> $sspAssetIds
+     *
+     * @return list<\Generated\Shared\Transfer\SynchronizationDataTransfer>
+     */
+    public function getSspAssetStorageSynchronizationDataTransfers(FilterTransfer $filterTransfer, array $sspAssetIds = []): array
+    {
+        if ($filterTransfer->getLimit() === 0) {
+            return [];
+        }
+
+        $sspAssetStorageQuery = $this->getFactory()->createSspAssetStorageQuery();
+
+        if ($sspAssetIds) {
+            $sspAssetStorageQuery->filterByFkSspAsset_In($sspAssetIds);
+        }
+
+        return $this->buildQueryFromCriteria($sspAssetStorageQuery, $filterTransfer)
+            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
+            ->find();
     }
 }

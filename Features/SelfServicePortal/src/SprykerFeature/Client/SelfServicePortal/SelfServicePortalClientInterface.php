@@ -17,10 +17,14 @@ use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
+use Generated\Shared\Transfer\SspAssetStorageCollectionTransfer;
+use Generated\Shared\Transfer\SspAssetStorageCriteriaTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
+use Generated\Shared\Transfer\SspModelStorageCollectionTransfer;
+use Generated\Shared\Transfer\SspModelStorageCriteriaTransfer;
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
 
@@ -188,4 +192,40 @@ interface SelfServicePortalClientInterface
      * @return \Generated\Shared\Transfer\SspAssetCollectionResponseTransfer
      */
     public function updateSspAssetCollection(SspAssetCollectionRequestTransfer $sspAssetCollectionRequestTransfer): SspAssetCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `SspModelStorageCriteriaTransfer.sspModelStorageConditions` to be set.
+     * - Retrieves SSP model storage data filtered by criteria from Storage.
+     * - Uses `SspModelStorageCriteriaTransfer.sspModelStorageConditions.sspModelIds` to filter by SSP model IDs.
+     * - Returns `SspModelStorageCollectionTransfer` filled with found SSP models.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspModelStorageCriteriaTransfer $sspModelStorageCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspModelStorageCollectionTransfer
+     */
+    public function getSspModelStorageCollection(
+        SspModelStorageCriteriaTransfer $sspModelStorageCriteriaTransfer
+    ): SspModelStorageCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves SSP asset storage collection from storage based on criteria.
+     * - Requires SspAssetStorageCriteriaTransfer.sspAssetStorageConditions to be set.
+     * - Requires SspAssetStorageCriteriaTransfer.companyUser to be set.
+     * - Filters by SSP asset references provided in criteria conditions.
+     * - Filters out assets that company user does not have access to based on ViewBusinessUnitSspAssetPermissionPlugin and ViewCompanySspAssetPermissionPlugin permission.
+     * - Returns collection of SSP asset storage transfers.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspAssetStorageCriteriaTransfer $sspAssetStorageCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspAssetStorageCollectionTransfer
+     */
+    public function getSspAssetStorageCollection(
+        SspAssetStorageCriteriaTransfer $sspAssetStorageCriteriaTransfer
+    ): SspAssetStorageCollectionTransfer;
 }

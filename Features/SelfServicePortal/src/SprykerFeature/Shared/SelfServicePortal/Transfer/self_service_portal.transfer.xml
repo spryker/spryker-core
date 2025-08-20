@@ -734,6 +734,7 @@
 
     <transfer name="Filter">
         <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
     </transfer>
 
     <transfer name="SequenceNumberSettings">
@@ -771,6 +772,7 @@
         <property name="status" type="string"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
         <property name="sspServiceCollection" type="SspServiceCollection"/>
+        <property name="models" type="SspModel[]" singular="model"/>
     </transfer>
 
     <transfer name="SspAssetConditions" strict="true">
@@ -799,6 +801,7 @@
         <property name="withAssignedBusinessUnits" type="bool"/>
         <property name="withImageFile" type="bool"/>
         <property name="withServicesCount" type="int"/>
+        <property name="withSspModels" type="bool"/>
     </transfer>
 
     <transfer name="DashboardRequest">
@@ -1070,13 +1073,18 @@
         <property name="imageUrl" type="string"/>
         <property name="image" type="File"/>
         <property name="productLists" type="ProductList[]" singular="productList"/>
+        <property name="sspAssets" type="SspAsset[]" singular="sspAsset"/>
     </transfer>
 
     <transfer name="SspModelCriteria" strict="true">
         <property name="sspModelConditions" type="SspModelConditions"/>
+        <property name="withSspAssets" type="bool"/>
+        <property name="withProductLists" type="bool"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="SspModelConditions" strict="true">
+        <property name="sspModelIds" type="int[]" singular="sspModelId"/>
     </transfer>
 
     <transfer name="SspModelCollection" strict="true">
@@ -1095,5 +1103,59 @@
 
     <transfer name="ProductList">
         <property name="idProductList" type="int"/>
+        <property name="title" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="ProductListStorage" strict="true">
+        <property name="idProductList" type="int"/>
+    </transfer>
+
+    <transfer name="SspModelStorage" strict="true">
+        <property name="idModel" type="int"/>
+        <property name="whitelists" type="ProductListStorage[]" singular="whitelist"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitStorage" strict="true">
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="fkCompany" type="int"/>
+    </transfer>
+
+    <transfer name="SspAssetBusinessUnitAssignmentStorage" strict="true">
+        <property name="companyBusinessUnit" type="CompanyBusinessUnitStorage"/>
+    </transfer>
+
+    <transfer name="SspAssetStorage" strict="true">
+        <property name="idAsset" type="int"/>
+        <property name="reference" type="string"/>
+        <property name="businessUnitAssignments" type="SspAssetBusinessUnitAssignmentStorage[]" singular="businessUnitAssignment"/>
+        <property name="name" type="string"/>
+        <property name="serialNumber" type="string"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnitStorage"/>
+    </transfer>
+
+    <transfer name="SspModelStorageCollection" strict="true">
+        <property name="sspModelStorages" type="SspModelStorage[]" singular="sspModelStorage"/>
+    </transfer>
+
+    <transfer name="SspModelStorageCriteria" strict="true">
+        <property name="sspModelStorageConditions" type="SspModelStorageConditions"/>
+    </transfer>
+
+    <transfer name="SspModelStorageConditions" strict="true">
+        <property name="sspModelIds" type="int[]" singular="sspModelId"/>
+    </transfer>
+
+    <transfer name="SspAssetStorageCollection" strict="true">
+        <property name="sspAssetStorages" type="SspAssetStorage[]" singular="sspAssetStorage"/>
+    </transfer>
+
+    <transfer name="SspAssetStorageCriteria" strict="true">
+        <property name="sspAssetStorageConditions" type="SspAssetStorageConditions"/>
+        <property name="companyUser" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="SspAssetStorageConditions" strict="true">
+        <property name="references" type="string[]" singular="reference"/>
     </transfer>
 </transfers>

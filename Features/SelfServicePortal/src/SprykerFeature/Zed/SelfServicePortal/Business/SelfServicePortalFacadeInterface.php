@@ -26,6 +26,8 @@ use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
 use Generated\Shared\Transfer\SspModelCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspModelCollectionResponseTransfer;
+use Generated\Shared\Transfer\SspModelCollectionTransfer;
+use Generated\Shared\Transfer\SspModelCriteriaTransfer;
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
 
@@ -261,4 +263,18 @@ interface SelfServicePortalFacadeInterface
      * @return \Generated\Shared\Transfer\SspModelCollectionResponseTransfer
      */
     public function createSspModelCollection(SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): SspModelCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves models by criteria from Persistence.
+     * - Uses pagination, sorting and filtering from criteria.
+     * - Expands models with relations based on criteria includes.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspModelCriteriaTransfer $sspModelCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspModelCollectionTransfer
+     */
+    public function getSspModelCollection(SspModelCriteriaTransfer $sspModelCriteriaTransfer): SspModelCollectionTransfer;
 }
