@@ -1,6 +1,8 @@
 {
     "processing": "Uzgaidiet ...",
     "search": "Meklēt:",
+    "sSearch": "Meklēt:",
+    "searchPlaceholder": "Meklēt:",
     "lengthMenu": "Rādīt _MENU_ ierakstus",
     "info": "Parādīti _START_ līdz _END_ no _TOTAL_ ierakstiem",
     "infoEmpty": "Nav ierakstu",
@@ -18,5 +20,6 @@
     "aria": {
         "sortAscending": ": aktivizēt kolonnu, lai kārtotu augoši",
         "sortDescending": ": aktivizēt kolonnu, lai kārtotu dilstoši"
-    }
+    },
+    "remove": "Noņemt"
 }

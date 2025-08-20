@@ -17,7 +17,11 @@
         "spryker/code-sniffer": "*",
         "spryker/propel": "^3.0.0",
         "spryker/publisher": "*",
+        "spryker/symfony": "*",
         "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/symfony": "When the EventListenerDumpConsole command should be used."
     },
     "autoload": {
         "psr-4": {

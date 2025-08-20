@@ -9,6 +9,7 @@
     "sLoadingRecords": "በማቅረብ ላይ...",
     "sProcessing": "በማቀናበር ላይ...",
     "sSearch": "ፈልግ:",
+    "searchPlaceholder": "ፈልግ:",
     "sZeroRecords": "ከሚፈለገው ጋር የሚሚሳሰል ዝርዝር አልተገኘም",
     "oPaginate": {
         "sFirst": "መጀመሪያ",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": ከመጀመሪያ ወደ መጨረሻ(ወጪ) አደራደር",
         "sSortDescending": ": ከመጨረሻ ወደ መጀመሪያ(ወራጅ) አደራደር"
-    }
+    },
+    "remove": "አስወግድ"
 }

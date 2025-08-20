@@ -161,3 +161,4 @@ Reference,Reference
 Note,Note
 "Asset created date","Asset created date"
 "Services are required when a service point is selected.","Services are required when a service point is selected."
+"Note: If no image is uploaded locally, the asset will use the image from the provided URL.","Note: If no image is uploaded locally, the asset will use the image from the provided URL."

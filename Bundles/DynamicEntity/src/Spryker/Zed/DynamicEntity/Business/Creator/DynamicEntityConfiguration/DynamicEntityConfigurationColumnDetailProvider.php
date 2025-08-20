@@ -358,7 +358,7 @@ class DynamicEntityConfigurationColumnDetailProvider implements DynamicEntityCon
      */
     protected function getIsColumnRequired(SimpleXMLElement $columnXmlElement): bool
     {
-        if (isset($columnXmlElement['required'])) {
+        if (isset($columnXmlElement['required']) && (string)$columnXmlElement['autoIncrement'] !== 'true') {
             return ((string)$columnXmlElement['required'] === 'true') ? true : false;
         }
 

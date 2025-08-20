@@ -7,6 +7,7 @@
     "sInfoFiltered": "(адфільтравана з _MAX_ запісаў)",
     "sInfoPostFix": "",
     "sSearch": "Пошук:",
+    "searchPlaceholder": "Пошук:",
     "sUrl": "",
     "oPaginate": {
         "sFirst": "Першая",
@@ -17,5 +18,6 @@
     "oAria": {
         "sSortAscending": ": актываваць для сартавання слупка па ўзрастанні",
         "sSortDescending": ": актываваць для сартавання слупка па змяншэнні"
-    }
+    },
+    "remove": "Выдаліць"
 }

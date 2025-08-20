@@ -6,22 +6,22 @@
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
 
-        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms, n/a"/>
-        <column name="first_name" required="true" size="100" type="VARCHAR"/>
-        <column name="middle_name" required="false" size="100" type="VARCHAR"/>
-        <column name="last_name" required="true" size="100" type="VARCHAR"/>
-        <column name="address1" size="255" type="VARCHAR"/>
-        <column name="address2" size="255" type="VARCHAR"/>
-        <column name="address3" size="255" type="VARCHAR"/>
-        <column name="company" size="255" type="VARCHAR"/>
-        <column name="city" size="255" type="VARCHAR" required="true"/>
-        <column name="zip_code" size="15" type="VARCHAR" required="true"/>
-        <column name="po_box" size="255" type="VARCHAR"/>
-        <column name="phone" size="255" type="VARCHAR"/>
-        <column name="cell_phone" size="255" type="VARCHAR"/>
-        <column name="description" size="255" type="VARCHAR"/>
-        <column name="comment" size="255" type="VARCHAR"/>
-        <column name="email" size="255" type="VARCHAR" required="false"/>
+        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms, n/a" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <column name="first_name" required="true" size="100" type="VARCHAR" description="The first name of a person."/>
+        <column name="middle_name" required="false" size="100" type="VARCHAR" description="The middle name of a person."/>
+        <column name="last_name" required="true" size="100" type="VARCHAR" description="The last name of a user or customer."/>
+        <column name="address1" size="255" type="VARCHAR" description="The first line of a street address."/>
+        <column name="address2" size="255" type="VARCHAR" description="The second line of a street address."/>
+        <column name="address3" size="255" type="VARCHAR" description="The third line of a street address."/>
+        <column name="company" size="255" type="VARCHAR" description="A company entity."/>
+        <column name="city" size="255" type="VARCHAR" required="true" description="The city part of an address."/>
+        <column name="zip_code" size="15" type="VARCHAR" required="true" description="The postal code for an address."/>
+        <column name="po_box" size="255" type="VARCHAR" description="A Post Office box number."/>
+        <column name="phone" size="255" type="VARCHAR" description="The phone number."/>
+        <column name="cell_phone" size="255" type="VARCHAR" description="The cell phone number."/>
+        <column name="description" size="255" type="VARCHAR" description="A description of an entity."/>
+        <column name="comment" size="255" type="VARCHAR" description="A user-submitted comment or note."/>
+        <column name="email" size="255" type="VARCHAR" required="false" description="The email address of a user or contact."/>
 
         <behavior name="timestampable"/>
 
@@ -41,23 +41,23 @@
         <column name="fk_region" type="INTEGER"/>
         <column name="fk_sales_order_address" type="INTEGER" required="true"/>
 
-        <column name="is_billing" type="BOOLEAN" default="0"/>
-        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms, n/a"/>
-        <column name="first_name" required="true" size="100" type="VARCHAR"/>
-        <column name="middle_name" required="false" size="100" type="VARCHAR"/>
-        <column name="last_name" required="true" size="100" type="VARCHAR"/>
-        <column name="address1" size="255" type="VARCHAR"/>
-        <column name="address2" size="255" type="VARCHAR"/>
-        <column name="address3" size="255" type="VARCHAR"/>
-        <column name="company" size="255" type="VARCHAR"/>
-        <column name="city" size="255" type="VARCHAR" required="true"/>
-        <column name="zip_code" size="15" type="VARCHAR" required="true"/>
-        <column name="po_box" size="255" type="VARCHAR"/>
-        <column name="phone" size="255" type="VARCHAR"/>
-        <column name="cell_phone" size="255" type="VARCHAR"/>
-        <column name="description" size="255" type="VARCHAR"/>
-        <column name="comment" size="255" type="VARCHAR"/>
-        <column name="email" size="255" type="VARCHAR" required="false"/>
+        <column name="is_billing" type="BOOLEAN" default="0" description="A flag indicating if an address is used for billing."/>
+        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms, n/a" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <column name="first_name" required="true" size="100" type="VARCHAR" description="The first name of a person."/>
+        <column name="middle_name" required="false" size="100" type="VARCHAR" description="The middle name of a person."/>
+        <column name="last_name" required="true" size="100" type="VARCHAR" description="The last name of a user or customer."/>
+        <column name="address1" size="255" type="VARCHAR" description="The first line of a street address."/>
+        <column name="address2" size="255" type="VARCHAR" description="The second line of a street address."/>
+        <column name="address3" size="255" type="VARCHAR" description="The third line of a street address."/>
+        <column name="company" size="255" type="VARCHAR" description="A company entity."/>
+        <column name="city" size="255" type="VARCHAR" required="true" description="The city part of an address."/>
+        <column name="zip_code" size="15" type="VARCHAR" required="true" description="The postal code for an address."/>
+        <column name="po_box" size="255" type="VARCHAR" description="A Post Office box number."/>
+        <column name="phone" size="255" type="VARCHAR" description="The phone number."/>
+        <column name="cell_phone" size="255" type="VARCHAR" description="The cell phone number."/>
+        <column name="description" size="255" type="VARCHAR" description="A description of an entity."/>
+        <column name="comment" size="255" type="VARCHAR" description="A user-submitted comment or note."/>
+        <column name="email" size="255" type="VARCHAR" required="false" description="The email address of a user or contact."/>
 
         <behavior name="timestampable"/>
 
@@ -79,17 +79,17 @@
         <column name="fk_sales_order_address_shipping" type="INTEGER" required="false"/>
         <column name="fk_locale" type="INTEGER"/>
 
-        <column name="email" required="false" size="255" type="VARCHAR"/>
-        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms, n/a" required="false"/>
-        <column name="first_name" required="false" size="100" type="VARCHAR"/>
-        <column name="last_name" required="false" size="100" type="VARCHAR"/>
-        <column name="order_reference" type="VARCHAR" size="45" required="true"/>
-        <column name="is_test" type="BOOLEAN" required="true" default="false"/>
+        <column name="email" required="false" size="255" type="VARCHAR" description="The email address of a user or contact."/>
+        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms, n/a" required="false" description="The salutation of a person (e.g., Mr., Mrs., Dr.)."/>
+        <column name="first_name" required="false" size="100" type="VARCHAR" description="The first name of a person."/>
+        <column name="last_name" required="false" size="100" type="VARCHAR" description="The last name of a user or customer."/>
+        <column name="order_reference" type="VARCHAR" size="45" required="true" description="A unique reference identifier for a sales order."/>
+        <column name="is_test" type="BOOLEAN" required="true" default="false" description="A flag indicating if an order is a test order."/>
 
-        <column name="store" type="VARCHAR" size="255" required="false"/>
-        <column name="currency_iso_code" type="VARCHAR" size="5" required="false"/>
+        <column name="store" type="VARCHAR" size="255" required="false" description="The store context for an operation, determining which store's data is used."/>
+        <column name="currency_iso_code" type="VARCHAR" size="5" required="false" description="The ISO code for a currency."/>
 
-        <column name="price_mode" type="ENUM" valueSet="NET_MODE, GROSS_MODE" required="false"/>
+        <column name="price_mode" type="ENUM" valueSet="NET_MODE, GROSS_MODE" required="false" description="The mode for price calculation, typically &quot;GROSS_MODE&quot; or &quot;NET_MODE&quot;."/>
 
         <behavior name="timestampable"/>
 
@@ -120,13 +120,13 @@
         <column name="id_sales_order_totals" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true" default="0"/>
 
-        <column name="subtotal" type="INTEGER" required="false" default="0"/>
-        <column name="order_expense_total" type="INTEGER" required="false" default="0"/>
-        <column name="discount_total" type="INTEGER" required="false" default="0"/>
-        <column name="grand_total" type="INTEGER" required="false" default="0"/>
-        <column name="refund_total" type="INTEGER" required="false" default="0"/>
-        <column name="canceled_total" type="INTEGER" required="false" default="0"/>
-        <column name="tax_total" type="INTEGER" required="false" default="0"/>
+        <column name="subtotal" type="INTEGER" required="false" default="0" description="The total price of all items before discounts, taxes, and shipping are applied."/>
+        <column name="order_expense_total" type="INTEGER" required="false" default="0" description="The total cost of all expenses in an order."/>
+        <column name="discount_total" type="INTEGER" required="false" default="0" description="The total amount of discounts applied to an order."/>
+        <column name="grand_total" type="INTEGER" required="false" default="0" description="The final total of an order, including all costs and discounts."/>
+        <column name="refund_total" type="INTEGER" required="false" default="0" description="The total amount to be refunded."/>
+        <column name="canceled_total" type="INTEGER" required="false" default="0" description="The total value of canceled items in an order."/>
+        <column name="tax_total" type="INTEGER" required="false" default="0" description="The total amount of tax calculated for an order or quote."/>
 
         <foreign-key name="spy_sales_order_totals-fk_sales_order" foreignTable="spy_sales_order" phpName="Order" refPhpName="OrderTotal">
             <reference local="fk_sales_order" foreign="id_sales_order"/>
@@ -143,12 +143,12 @@
         <column name="fk_oms_order_item_state" type="INTEGER" required="true"/>
         <column name="fk_oms_order_process" type="INTEGER" required="false"/>
 
-        <column name="last_state_change" type="TIMESTAMP" required="true" defaultExpr="CURRENT_TIMESTAMP"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="sku" type="VARCHAR" size="255" required="true"/>
+        <column name="last_state_change" type="TIMESTAMP" required="true" defaultExpr="CURRENT_TIMESTAMP" description="The timestamp of the last state change for an order item."/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="sku" type="VARCHAR" size="255" required="true" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
         <column name="gross_price" type="INTEGER" required="true" description="/price for one unit including tax, without shipping, coupons/"/>
-        <column name="canceled_amount" type="INTEGER" required="false" default="0"/>
-        <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="false"/>
+        <column name="canceled_amount" type="INTEGER" required="false" default="0" description="The amount that has been canceled from an order item."/>
+        <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="false" description="The tax rate applied to an item."/>
         <column name="quantity" type="INTEGER" unsigned="true" default="1" required="true" description="/Quantity ordered for item/"/>
         <column name="group_key" type="VARCHAR" size="255" required="false" description=""/>
 
@@ -188,9 +188,9 @@
         <column name="id_sales_order_note" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
-        <column name="message" type="VARCHAR" size="255" required="true"/>
-        <column name="command" type="VARCHAR" size="255" required="true"/>
-        <column name="success" type="BOOLEAN" required="true"/>
+        <column name="message" type="VARCHAR" size="255" required="true" description="A message providing information, success, or error details."/>
+        <column name="command" type="VARCHAR" size="255" required="true" description="A command to be executed by the system."/>
+        <column name="success" type="BOOLEAN" required="true" description="A boolean flag indicating the success of a state machine transition."/>
 
         <behavior name="timestampable"/>
 
@@ -204,8 +204,8 @@
         <column name="id_sales_order_comment" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
-        <column name="username" type="VARCHAR" size="255" required="false" default="NULL"/>
-        <column name="message" type="LONGVARCHAR" required="true"/>
+        <column name="username" type="VARCHAR" size="255" required="false" default="NULL" description="The login name for a user account, typically an email address."/>
+        <column name="message" type="LONGVARCHAR" required="true" description="A message providing information, success, or error details."/>
 
         <behavior name="timestampable"/>
 
@@ -218,11 +218,11 @@
     <table name="spy_sales_expense">
         <column name="id_sales_expense" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="false" default="NULL"/>
-        <column name="type" type="VARCHAR" size="150"/>
-        <column name="name" type="VARCHAR" size="255"/>
-        <column name="gross_price" type="INTEGER" required="true"/>
-        <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="false"/>
-        <column name="canceled_amount" type="INTEGER" required="false" default="0"/>
+        <column name="type" type="VARCHAR" size="150" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <column name="name" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="gross_price" type="INTEGER" required="true" description="The gross price (including tax)."/>
+        <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="false" description="The tax rate applied to an item."/>
+        <column name="canceled_amount" type="INTEGER" required="false" default="0" description="The amount that has been canceled from an order item."/>
 
         <column name="net_price" type="INTEGER" required="false" default="0" description="/Price for one unit not including tax, without shipping, coupons/"/>
         <column name="price" type="INTEGER" required="false" default="0" description="/Price for item, can be gross or net price depending on tax mode/"/>
@@ -247,8 +247,8 @@
     <table name="spy_sales_order_item_metadata">
         <column name="id_sales_order_item_metadata" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
-        <column name="super_attributes" type="LONGVARCHAR" required="true"/>
-        <column name="image" type="LONGVARCHAR"/>
+        <column name="super_attributes" type="LONGVARCHAR" required="true" description="A collection of super attributes for a product."/>
+        <column name="image" type="LONGVARCHAR" description="An image object or URL."/>
 
         <behavior name="timestampable"/>
 

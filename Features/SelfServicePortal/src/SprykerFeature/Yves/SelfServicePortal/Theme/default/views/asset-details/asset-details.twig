@@ -48,9 +48,18 @@
             {% endblock %}
 
             {% block information %}
+                {% set imageUrl = null %}
+                {% if data.asset.image is not empty %}
+                    {% set imageUrl = url('customer/ssp-asset/view-image', { 'ssp-asset-reference': data.asset.reference }) %}
+                {% elseif data.asset.externalImageUrl is not empty %}
+                    {% set imageUrl = data.asset.externalImageUrl %}
+                {% else %}
+                    {% set imageUrl = publicPath('images/image-placeholder.png') %}
+                {% endif %}
+
                 {% include molecule('asset-information', 'SelfServicePortal') with {
                     data: {
-                        image: data.asset.image is not empty ? url('customer/ssp-asset/view-image', { 'ssp-asset-reference': data.asset.reference }) : publicPath('images/image-placeholder.png'),
+                        image: imageUrl,
                         name: data.asset.name,
                         reference: data.asset.reference,
                         information: [

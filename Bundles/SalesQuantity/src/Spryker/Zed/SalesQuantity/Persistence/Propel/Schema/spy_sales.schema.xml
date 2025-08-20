@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence">
 
     <table name="spy_sales_order_item">
-        <column name="is_quantity_splittable" required="true" type="BOOLEAN" defaultValue="true"/>
+        <column name="is_quantity_splittable" required="true" type="BOOLEAN" defaultValue="true" description="Indicates if the quantity of an order item can be split across multiple shipments."/>
     </table>
 
 </database>

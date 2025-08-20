@@ -13,6 +13,46 @@ use SprykerFeature\Shared\SelfServicePortal\Exception\SspInquiryCancelStatusNotF
 class SelfServicePortalConfig extends AbstractSharedConfig
 {
     /**
+     * Specification:
+     * - Queue name as used for processing SSP model storage messages.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const QUEUE_NAME_SYNC_STORAGE_SSP_MODEL = 'sync.storage.ssp_model';
+
+    /**
+     * Specification:
+     * - Queue name as used for processing SSP asset storage messages.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const QUEUE_NAME_SYNC_STORAGE_SSP_ASSET = 'sync.storage.ssp_asset';
+
+    /**
+     * Specification:
+     * - Defines resource name, that will be used for key generation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const SSP_MODEL_RESOURCE_NAME = 'ssp_model';
+
+    /**
+     * Specification:
+     * - Defines resource name, that will be used for key generation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const SSP_ASSET_RESOURCE_NAME = 'ssp_asset';
+
+    /**
      * Specification
      * - Constant is used to group product-related page data expanders.
      *
@@ -164,6 +204,156 @@ class SelfServicePortalConfig extends AbstractSharedConfig
      * @var int
      */
     protected const DEFAULT_FILE_DASHBOARD_MAX_PER_PAGE = 3;
+
+    /**
+     * Specification:
+     * - This event is used for spy_ssp_model entity creation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SSP_MODEL_CREATE = 'Entity.spy_ssp_model.create';
+
+    /**
+     * Specification:
+     * - This event is used for spy_ssp_model entity update.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SSP_MODEL_UPDATE = 'Entity.spy_ssp_model.update';
+
+    /**
+     * Specification:
+     * - This event is used for SSP model publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const SSP_MODEL_PUBLISH = 'SspModel.ssp_model.publish';
+
+    /**
+     * Specification:
+     * - This event is used for spy_ssp_model_to_product_list entity creation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SSP_MODEL_TO_PRODUCT_LIST_CREATE = 'Entity.spy_ssp_model_to_product_list.create';
+
+    /**
+     * Specification:
+     * - This event is used for spy_ssp_model_to_product_list entity update.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SSP_MODEL_TO_PRODUCT_LIST_UPDATE = 'Entity.spy_ssp_model_to_product_list.update';
+
+    /**
+     * Specification:
+     * - This event is used for spy_ssp_model_to_product_list entity deletion.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SSP_MODEL_TO_PRODUCT_LIST_DELETE = 'Entity.spy_ssp_model_to_product_list.delete';
+
+    /**
+     * Specification:
+     * - This event is used for spy_ssp_asset entity creation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SSP_ASSET_CREATE = 'Entity.spy_ssp_asset.create';
+
+    /**
+     * Specification:
+     * - This event is used for spy_ssp_asset entity update.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SSP_ASSET_UPDATE = 'Entity.spy_ssp_asset.update';
+
+    /**
+     * Specification:
+     * - This event is used for SSP asset publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const SSP_ASSET_PUBLISH = 'SspAsset.ssp_asset.publish';
+
+    /**
+     * Specification:
+     * - This event is used for spy_ssp_asset_to_company_business_unit entity creation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SSP_ASSET_TO_COMPANY_BUSINESS_UNIT_CREATE = 'Entity.spy_ssp_asset_to_company_business_unit.create';
+
+    /**
+     * Specification:
+     * - This event is used for spy_ssp_asset_to_company_business_unit entity update.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SSP_ASSET_TO_COMPANY_BUSINESS_UNIT_UPDATE = 'Entity.spy_ssp_asset_to_company_business_unit.update';
+
+    /**
+     * Specification:
+     * - This event is used for spy_ssp_asset_to_company_business_unit entity deletion.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SSP_ASSET_TO_COMPANY_BUSINESS_UNIT_DELETE = 'Entity.spy_ssp_asset_to_company_business_unit.delete';
+
+    /**
+     * Specification:
+     * - This event is used for spy_ssp_asset_to_model entity creation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SSP_ASSET_TO_MODEL_CREATE = 'Entity.spy_ssp_asset_to_ssp_model.create';
+
+    /**
+     * Specification:
+     * - This event is used for spy_ssp_asset_to_model entity update.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SSP_ASSET_TO_MODEL_UPDATE = 'Entity.spy_ssp_asset_to_ssp_model.update';
+
+    /**
+     * Specification:
+     * - This event is used for spy_ssp_asset_to_model entity deletion.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SSP_ASSET_TO_MODEL_DELETE = 'Entity.spy_ssp_asset_to_ssp_model.delete';
 
     /**
      * Specification:

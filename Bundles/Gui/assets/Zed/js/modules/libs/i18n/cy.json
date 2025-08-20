@@ -9,6 +9,7 @@
     "sLoadingRecords": "Wrthi'n llwytho...",
     "sProcessing": "Wrthi'n prosesu...",
     "sSearch": "Chwilio:",
+    "searchPlaceholder": "Chwilio:",
     "sZeroRecords": "Heb ddod o hyd i gofnodion sy'n cyfateb",
     "oPaginate": {
         "sFirst": "Cyntaf",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": rhoi ar waith i drefnu colofnau o'r lleiaf i'r mwyaf",
         "sSortDescending": ": rhoi ar waith i drefnu colofnau o'r mwyaf i'r lleiaf"
-    }
+    },
+    "remove": "Tynnu"
 }

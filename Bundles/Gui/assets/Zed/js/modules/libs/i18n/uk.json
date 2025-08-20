@@ -7,6 +7,7 @@
     "sInfoFiltered": "(відфільтровано з _MAX_ записів)",
     "sInfoPostFix": "",
     "sSearch": "Пошук:",
+    "searchPlaceholder": "Пошук:",
     "sUrl": "",
     "oPaginate": {
         "sFirst": "Перша",
@@ -17,5 +18,6 @@
     "oAria": {
         "sSortAscending": ": активувати для сортування стовпців за зростанням",
         "sSortDescending": ": активувати для сортування стовпців за спаданням"
-    }
+    },
+    "remove": "Видалити"
 }

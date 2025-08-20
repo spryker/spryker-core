@@ -40,24 +40,26 @@ class QuoteShareDetailsReader implements QuoteShareDetailsReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param bool $excludeAnonymizedCustomers
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function getShareDetailsByIdQuote(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer
+    public function getShareDetailsByIdQuote(QuoteTransfer $quoteTransfer, bool $excludeAnonymizedCustomers = false): ShareDetailCollectionTransfer
     {
         $quoteTransfer->requireIdQuote();
 
-        return $this->sharedCartRepository->findShareDetailsByQuoteId($quoteTransfer->getIdQuote());
+        return $this->sharedCartRepository->findShareDetailsByQuoteId($quoteTransfer->getIdQuote(), $excludeAnonymizedCustomers);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     * @param bool $excludeAnonymizedCustomers
      *
      * @return array<\Generated\Shared\Transfer\ShareDetailCollectionTransfer>
      */
-    public function getSharedCartDetails(ShareCartRequestTransfer $shareCartRequestTransfer): array
+    public function getSharedCartDetails(ShareCartRequestTransfer $shareCartRequestTransfer, bool $excludeAnonymizedCustomers = false): array
     {
-        return $this->sharedCartRepository->getSharedCartDetails($shareCartRequestTransfer);
+        return $this->sharedCartRepository->getSharedCartDetails($shareCartRequestTransfer, $excludeAnonymizedCustomers);
     }
 
     /**

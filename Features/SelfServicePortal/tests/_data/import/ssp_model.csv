@@ -1,0 +1,4 @@
+reference,name,code,image_url
+MODEL--1,Test Model 1,TEST001,https://example.com/image1.jpg
+MODEL--2,Test Model 2,TEST002,https://example.com/image2.jpg
+MODEL--3,Test Model 3,TEST003,

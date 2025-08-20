@@ -10,7 +10,7 @@
         "spryker/kernel": "^3.66.0",
         "spryker/shipment-type": "^1.0.0",
         "spryker/symfony": "^3.0.0",
-        "spryker/transfer": "^3.31.0"
+        "spryker/transfer": "^3.42.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

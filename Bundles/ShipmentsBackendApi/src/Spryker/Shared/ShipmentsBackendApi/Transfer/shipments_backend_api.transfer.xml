@@ -2,56 +2,56 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="SalesShipmentCriteria" strict="true">
-        <property name="salesShipmentConditions" type="SalesShipmentConditions"/>
+        <property name="salesShipmentConditions" type="SalesShipmentConditions" description="Conditions for filtering sales shipments."/>
     </transfer>
 
     <transfer name="SalesShipmentConditions" strict="true">
-        <property name="orderItemUuids" type="string[]" singular="orderItemUuid"/>
-        <property name="withOrderItems" type="bool"/>
+        <property name="orderItemUuids" type="string[]" singular="orderItemUuid" description="A collection of Universally Unique Identifiers (UUIDs) for order items."/>
+        <property name="withOrderItems" type="bool" description="A flag to include order items in the response."/>
     </transfer>
 
     <transfer name="SalesShipmentResourceCollection" strict="true">
-        <property name="salesShipmentResources" type="GlueResource[]" singular="salesShipmentResource"/>
-        <property name="shipments" type="Shipment[]" singular="shipment"/>
+        <property name="salesShipmentResources" type="GlueResource[]" singular="salesShipmentResource" description="A collection of sales shipment resources."/>
+        <property name="shipments" type="Shipment[]" singular="shipment" description="A collection of shipment details for an order."/>
     </transfer>
 
     <transfer name="SalesShipmentsBackendApiAttributes" strict="true">
-        <property name="requestedDeliveryDate" type="string" strict="true"/>
+        <property name="requestedDeliveryDate" type="string" strict="true" description="The delivery date requested by the customer."/>
     </transfer>
 
     <transfer name="Shipment">
-        <property name="uuid" type="string" strict="true"/>
-        <property name="orderItems" type="Item[]" singular="orderItem"/>
+        <property name="uuid" type="string" strict="true" description="A Universally Unique Identifier for an entity."/>
+        <property name="orderItems" type="Item[]" singular="orderItem" description="A collection of items within a sales order."/>
     </transfer>
 
     <transfer name="SalesShipmentCollection" strict="true">
-        <property name="shipments" type="Shipment[]" singular="shipment"/>
+        <property name="shipments" type="Shipment[]" singular="shipment" description="A collection of shipment details for an order."/>
     </transfer>
 
     <transfer name="GlueResource">
-        <property name="type" type="string"/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
         <property name="id" type="string"/>
-        <property name="attributes" type="AbstractAttributes"/>
-        <property name="relationships" type="GlueRelationship[]" singular="relationship"/>
+        <property name="attributes" type="AbstractAttributes" description="A set of key-value pairs describing a product or entity."/>
+        <property name="relationships" type="GlueRelationship[]" singular="relationship" description="A collection of relationships between resources."/>
     </transfer>
 
     <transfer name="GlueRelationship">
-        <property name="resources" type="GlueResource[]" singular="resource"/>
+        <property name="resources" type="GlueResource[]" singular="resource" description="A collection of data entities in a REST API."/>
     </transfer>
 
     <transfer name="GlueRequest">
     </transfer>
 
     <transfer name="Item">
-        <property name="uuid" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="PickingListItemsBackendApiAttributes" strict="true">
-        <property name="orderItem" type="OrderItemsBackendApiAttributes"/>
+        <property name="orderItem" type="OrderItemsBackendApiAttributes" description="An item within an order."/>
     </transfer>
 
     <transfer name="OrderItemsBackendApiAttributes" strict="true">
-        <property name="uuid" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
 </transfers>

@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Url;
 
 /**
  * @method \SprykerFeature\Zed\SelfServicePortal\Communication\SelfServicePortalCommunicationFactory getFactory()
@@ -42,6 +43,11 @@ class SspModelForm extends AbstractType
      * @var string
      */
     public const FIELD_IMAGE = 'model_image';
+
+    /**
+     * @var string
+     */
+    public const FIELD_IMAGE_URL = 'image_url';
 
     /**
      * @var string
@@ -75,6 +81,13 @@ class SspModelForm extends AbstractType
     protected const MESSAGE_CODE_TOO_LONG = 'Model code cannot be longer than {{ limit }} characters.';
 
     /**
+     * @uses SspModelValidator::ERROR_MESSAGE_IMAGE_URL_INVALID
+     *
+     * @var string
+     */
+    protected const MESSAGE_IMAGE_URL_INVALID = 'Please enter a valid image URL.';
+
+    /**
      * @var string
      */
     protected const LABEL_MODEL_NAME = 'Model Name';
@@ -83,6 +96,11 @@ class SspModelForm extends AbstractType
      * @var string
      */
     protected const LABEL_MODEL_CODE = 'Model Code';
+
+    /**
+     * @var string
+     */
+    protected const LABEL_IMAGE_URL = 'Image URL';
 
     public function getBlockPrefix(): string
     {
@@ -112,6 +130,7 @@ class SspModelForm extends AbstractType
         $this
             ->addNameField($builder)
             ->addCodeField($builder)
+            ->addImageUrlField($builder)
             ->addImageField($builder, $options);
     }
 
@@ -153,6 +172,26 @@ class SspModelForm extends AbstractType
                 new Length([
                     'max' => $this->getConfig()->getSspModelCodeMaxLength(),
                     'maxMessage' => static::MESSAGE_CODE_TOO_LONG,
+                ]),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addImageUrlField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_IMAGE_URL, TextType::class, [
+            'label' => static::LABEL_IMAGE_URL,
+            'required' => false,
+            'constraints' => [
+                new Url([
+                    'message' => static::MESSAGE_IMAGE_URL_INVALID,
                 ]),
             ],
         ]);

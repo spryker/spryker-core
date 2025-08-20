@@ -9,6 +9,7 @@
     "sLoadingRecords": "Ачааллаж байна...",
     "sProcessing": "Боловсруулж байна...",
     "sSearch": "Хайлт:",
+    "searchPlaceholder": "Хайлт:",
     "sZeroRecords": "Тохирох бичлэг олдсонгүй",
     "oPaginate": {
         "sFirst": "Эхнийх",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": цагаан толгойн дарааллаар эрэмбэлэх",
         "sSortDescending": ": цагаан толгойн эсрэг дарааллаар эрэмбэлэх"
-    }
+    },
+    "remove": "Устгах"
 }

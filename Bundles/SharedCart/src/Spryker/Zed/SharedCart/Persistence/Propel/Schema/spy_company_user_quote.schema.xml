@@ -6,7 +6,7 @@
         <column name="fk_company_user" required="true" type="INTEGER"/>
         <column name="fk_quote" required="true" type="INTEGER"/>
         <column name="fk_quote_permission_group" required="true" type="INTEGER"/>
-        <column name="is_default" required="true" defaultValue="true" type="BOOLEAN"/>
+        <column name="is_default" required="true" defaultValue="true" type="BOOLEAN" description="A flag indicating if an entity is the default one."/>
 
         <id-method-parameter value="id_quote_company_user_pk_seq"/>
 
@@ -42,8 +42,8 @@
 
     <table name="spy_quote_permission_group" idMethod="native" allowPkInsert="true">
         <column name="id_quote_permission_group" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="is_default" type="BOOLEAN" required="true" defaultValue="false"/>
+        <column name="name" type="VARCHAR" size="255" required="true" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="is_default" type="BOOLEAN" required="true" defaultValue="false" description="A flag indicating if an entity is the default one."/>
 
         <id-method-parameter value="spy_quote_permission_group_pk_seq"/>
     </table>

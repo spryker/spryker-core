@@ -403,31 +403,41 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
 
     /**
      * @param array<int> $quoteIds
+     * @param bool $excludeAnonymizedCustomers
      *
      * @return \Propel\Runtime\Collection\Collection
      */
-    protected function getQuoteCompanyUserEntities(array $quoteIds): Collection
+    protected function getQuoteCompanyUserEntities(array $quoteIds, bool $excludeAnonymizedCustomers = false): Collection
     {
         $quoteCompanyUserQuery = $this->getFactory()
-            ->createQuoteCompanyUserQuery();
-
-        return $quoteCompanyUserQuery
+            ->createQuoteCompanyUserQuery()
             ->filterByFkQuote_In($quoteIds)
             ->joinWithSpyCompanyUser()
             ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)
-            ->joinWithCustomer()
-            ->endUse()
-            ->find();
+                ->joinWithCustomer()
+            ->endUse();
+
+        if ($excludeAnonymizedCustomers) {
+            $quoteCompanyUserQuery
+                ->addAnd(
+                    SpyCustomerTableMap::COL_ANONYMIZED_AT,
+                    null,
+                    Criteria::ISNULL,
+                );
+        }
+
+        return $quoteCompanyUserQuery->find();
     }
 
     /**
      * @param int $idQuote
+     * @param bool $excludeAnonymizedCustomers
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function findShareDetailsByQuoteId(int $idQuote): ShareDetailCollectionTransfer
+    public function findShareDetailsByQuoteId(int $idQuote, bool $excludeAnonymizedCustomers = false): ShareDetailCollectionTransfer
     {
-        $quoteCompanyUserEntities = $this->getQuoteCompanyUserEntities([$idQuote]);
+        $quoteCompanyUserEntities = $this->getQuoteCompanyUserEntities([$idQuote], $excludeAnonymizedCustomers);
 
         return $this->getFactory()
             ->createQuoteShareDetailMapper()
@@ -436,13 +446,14 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
 
     /**
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     * @param bool $excludeAnonymizedCustomers
      *
      * @return array<\Generated\Shared\Transfer\ShareDetailCollectionTransfer>
      */
-    public function getSharedCartDetails(ShareCartRequestTransfer $shareCartRequestTransfer): array
+    public function getSharedCartDetails(ShareCartRequestTransfer $shareCartRequestTransfer, bool $excludeAnonymizedCustomers = false): array
     {
         $quoteIds = $shareCartRequestTransfer->getQuoteIds();
-        $quoteCompanyUserEntities = $this->getQuoteCompanyUserEntities($quoteIds);
+        $quoteCompanyUserEntities = $this->getQuoteCompanyUserEntities($quoteIds, $excludeAnonymizedCustomers);
         $permissionGroupList = $this->findQuotePermissionGroupList(new QuotePermissionGroupCriteriaFilterTransfer());
 
         return $this->getFactory()

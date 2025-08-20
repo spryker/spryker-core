@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductListGui\Communication\Table;
 
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class AvailableProductConcreteTable extends AbstractProductConcreteTable
@@ -19,6 +20,27 @@ class AvailableProductConcreteTable extends AbstractProductConcreteTable
     protected const DEFAULT_URL = 'available-product-concrete-table';
 
     protected const TABLE_IDENTIFIER = self::DEFAULT_URL;
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     */
+    protected function configure(TableConfiguration $config): TableConfiguration
+    {
+        $config = parent::configure($config);
+
+        $config->setTableAttributes([
+            'data-selectable' => [
+                'moveToSelector' => '#productsToBeAssigned',
+                'inputSelector' => '#productListAggregate_productIdsToBeAssigned',
+                'counterHolderSelector' => 'a[href="#tab-content-assignment_product"]',
+                'colId' => 'spy_product.id_product',
+            ],
+        ]);
+
+        return $config;
+    }
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery

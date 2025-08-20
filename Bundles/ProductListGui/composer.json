@@ -7,7 +7,7 @@
         "php": ">=8.3",
         "spryker/category": "^4.6.0 || ^5.0.0",
         "spryker/configurable-bundle-gui-extension": "^1.0.0",
-        "spryker/gui": "^3.45.0",
+        "spryker/gui": "^3.65.0",
         "spryker/kernel": "^3.33.0",
         "spryker/locale": "^3.1.0 || ^4.0.0",
         "spryker/product": "^6.4.0",

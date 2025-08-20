@@ -86,4 +86,14 @@ interface EventFacadeInterface
      * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function forwardMessages(array $queueMessageTransfers): array;
+
+    /**
+     * Specification:
+     * - Returns a list of the on the project level configured events the used queues, and their listeners.
+     *
+     * @api
+     *
+     * @return array<string, array<string, array<string, mixed>>>
+     */
+    public function dumpEventListener(): array;
 }

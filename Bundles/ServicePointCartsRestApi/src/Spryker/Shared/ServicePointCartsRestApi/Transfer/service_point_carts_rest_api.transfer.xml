@@ -5,15 +5,15 @@
     </transfer>
 
     <transfer name="RestCheckoutRequestAttributes">
-        <property name="shipments" type="RestShipments[]" singular="shipment" restRequestParameter="yes"/>
-        <property name="shipment" type="RestShipment"/>
+        <property name="shipments" type="RestShipments[]" singular="shipment" restRequestParameter="yes" description="A collection of shipment details for an order."/>
+        <property name="shipment" type="RestShipment" description="The shipment details for an order."/>
     </transfer>
 
     <transfer name="RestShipments">
     </transfer>
 
     <transfer name="QuoteReplacementResponse" strict="true">
-        <property name="quote" type="Quote"/>
+        <property name="quote" type="Quote" description="A data object representing a shopping cart before it becomes an order."/>
     </transfer>
 
     <transfer name="RestShipment">

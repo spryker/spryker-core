@@ -53,10 +53,15 @@
                             {{ form_errors(child) }}
                         {% endfor %}
 
+                        {% set currentImage = fileInput.attr['original-image-url'] | default(null) %}
+                        {% if not currentImage and data.form.externalImageUrl.vars.value %}
+                            {% set currentImage = data.form.externalImageUrl.vars.value %}
+                        {% endif %}
+
                         {% include molecule('image-uploader', 'SelfServicePortal') with {
                             class: 'spacing-x spacing-top--big',
                             data: {
-                                image: fileInput.attr['original-image-url'] | default(null),
+                                image: currentImage,
                                 inputAttrs: fileInput.attr | merge({
                                     id: fileInput.id,
                                     name: fileInput.full_name,
@@ -69,6 +74,13 @@
                         } only %}
 
                         {% do data.form.asset_image.setRendered() %}
+
+                        <div class="form-group spacing-top--big">
+                            {{ form_label(data.form.externalImageUrl) }}
+                            {{ form_widget(data.form.externalImageUrl) }}
+                            {{ form_errors(data.form.externalImageUrl) }}
+                            <p class="help-block" style="font-style: italic; margin-top: 5px;">{{ 'self_service_portal.asset.form.external_image_url.note' | trans }}</p>
+                        </div>
                     </div>
 
                     <div class="col col--sm-12 col--lg-6">

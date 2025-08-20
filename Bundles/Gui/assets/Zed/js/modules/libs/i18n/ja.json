@@ -9,6 +9,7 @@
     "sLoadingRecords": "読み込み中...",
     "sProcessing": "処理中...",
     "sSearch": "検索:",
+    "searchPlaceholder": "検索:",
     "sZeroRecords": "一致するレコードがありません",
     "oPaginate": {
         "sFirst": "先頭",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": 列を昇順に並べ替えるにはアクティブにする",
         "sSortDescending": ": 列を降順に並べ替えるにはアクティブにする"
-    }
+    },
+    "remove": "削除"
 }

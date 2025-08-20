@@ -8,7 +8,6 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Business;
 
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery;
@@ -22,6 +21,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAwareInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\Event\Business\EventFacadeInterface;
+use Spryker\Zed\EventBehavior\Business\EventBehaviorFacadeInterface;
 use Spryker\Zed\FileManager\Business\FileManagerFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Mail\Business\MailFacadeInterface;
@@ -38,8 +38,11 @@ use Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DashboardDataExpander\SspAssetDashboardDataExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DashboardDataExpander\SspAssetSspAssetDashboardDataExpander;
-use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Deleter\SspAssetManagementFileDeleter;
-use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Deleter\SspAssetManagementFileDeleterInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\AssignedBusinessUnitKeysToIdStep;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\BusinessUnitKeyToIdCompanyBusinessUnitStep;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\ExternalImageUrlValidationStep;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\SspAssetBusinessUnitAssignmentStep;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\SspAssetWriterStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\AssetFileExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\AssetFileExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\OrderItemSspAssetExpander;
@@ -52,6 +55,8 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Permission\SspAssetCusto
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Permission\SspAssetCustomerPermissionExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReader;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Storage\SspAssetStorageWriter;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Storage\SspAssetStorageWriterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Validator\SspAssetValidator;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Validator\SspAssetValidatorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\FileSspAssetWriter;
@@ -110,8 +115,6 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Reader\SspInquiryReade
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Reader\SspInquiryReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Validator\SspInquiryValidator;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Validator\SspInquiryValidatorInterface;
-use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Writer\SspInquiryFileDeleter;
-use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Writer\SspInquiryFileDeleterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Writer\SspInquiryStateWriter;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Writer\SspInquiryStateWriterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Writer\SspInquiryWriter;
@@ -133,8 +136,6 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemProd
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemProductClassExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemScheduleExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\OrderItemScheduleExpanderInterface;
-use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductAbstractClassExpander;
-use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductAbstractClassExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Expander\ProductClassProductConcreteStorageExpander;
@@ -183,13 +184,17 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Service\Utility\SkuExtractor;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Utility\SkuExtractorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePointSearchCoordinatesExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePointSearchCoordinatesExpanderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\DataImport\Step\SspModelProductListWriterStep;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\DataImport\Step\SspModelWriterStep;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\DataImport\Step\SsptModelAsseWriterStep;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Storage\SspModelStorageWriter;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Storage\SspModelStorageWriterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Validator\SspModelValidator;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Validator\SspModelValidatorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Writer\FileSspModelWriter;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Writer\FileSspModelWriterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Writer\SspModelWriter;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Writer\SspModelWriterInterface;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalDependencyProvider;
 
 /**
@@ -606,13 +611,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    public function createSspInquiryFileDeleter(): SspInquiryFileDeleterInterface
-    {
-        return new SspInquiryFileDeleter(
-            $this->getEntityManager(),
-        );
-    }
-
     public function createSspInquiryValidator(): SspInquiryValidatorInterface
     {
         return new SspInquiryValidator($this->getConfig());
@@ -732,6 +730,56 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getSequenceNumberFacade(),
         );
+    }
+
+    public function getSspAssetDataImporter(): DataImporterInterface
+    {
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->getSspAssetDataImporterConfiguration(),
+        );
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        if ($dataSetStepBroker instanceof DataImportStepAwareInterface) {
+            $dataSetStepBroker
+                ->addStep($this->createBusinessUnitKeyToIdCompanyBusinessUnitStep())
+                ->addStep($this->createAssignedBusinessUnitKeysToIdStep())
+                ->addStep($this->createExternalImageUrlValidationStep())
+                ->addStep($this->createSspAssetWriterStep())
+                ->addStep($this->createSspAssetBusinessUnitAssignmentStep());
+        }
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    public function createSspAssetBusinessUnitAssignmentStep(): DataImportStepInterface
+    {
+        return new SspAssetBusinessUnitAssignmentStep();
+    }
+
+    public function createSspAssetWriterStep(): DataImportStepInterface
+    {
+        return new SspAssetWriterStep(
+            $this->getConfig(),
+            $this->getEventFacade(),
+        );
+    }
+
+    public function createBusinessUnitKeyToIdCompanyBusinessUnitStep(): DataImportStepInterface
+    {
+        return new BusinessUnitKeyToIdCompanyBusinessUnitStep();
+    }
+
+    public function createAssignedBusinessUnitKeysToIdStep(): DataImportStepInterface
+    {
+        return new AssignedBusinessUnitKeysToIdStep();
+    }
+
+    public function createExternalImageUrlValidationStep(): DataImportStepInterface
+    {
+        return new ExternalImageUrlValidationStep();
     }
 
     public function createCompanyUserKeyToIdCompanyUserStep(): DataImportStepInterface
@@ -864,11 +912,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return new SalesOrderItemIdExtractor();
     }
 
-    public function getPersistenceEntityManager(): SelfServicePortalEntityManagerInterface
-    {
-        return $this->getEntityManager();
-    }
-
     public function getStateMachineFacade(): StateMachineFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_STATE_MACHINE);
@@ -942,11 +985,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_PRODUCT_OFFER_SHIPMENT_TYPE);
     }
 
-    public function getProductAbstractQuery(): SpyProductAbstractQuery
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);
-    }
-
     public function getSalesFacade(): SalesFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SALES);
@@ -1004,15 +1042,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductClassProductConcreteStorageExpander(
             $this->createProductClassReader(),
-        );
-    }
-
-    public function createSspAssetManagementFileDeleter(): SspAssetManagementFileDeleterInterface
-    {
-        return new SspAssetManagementFileDeleter(
-            $this->createSspAssetReader(),
-            $this->createSspAssetWriter(),
-            $this->getEntityManager(),
         );
     }
 
@@ -1077,13 +1106,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    public function createProductAbstractClassExpander(): ProductAbstractClassExpanderInterface
-    {
-        return new ProductAbstractClassExpander(
-            $this->getRepository(),
-        );
-    }
-
     public function createSkuExtractor(): SkuExtractorInterface
     {
         return new SkuExtractor();
@@ -1095,5 +1117,97 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductClassIndexer(),
         );
+    }
+
+    public function createSspModelStorageWriter(): SspModelStorageWriterInterface
+    {
+        return new SspModelStorageWriter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->getEventBehaviorFacade(),
+        );
+    }
+
+    public function createSspAssetStorageWriter(): SspAssetStorageWriterInterface
+    {
+        return new SspAssetStorageWriter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->getEventBehaviorFacade(),
+        );
+    }
+
+    public function getEventBehaviorFacade(): EventBehaviorFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    public function getSspModelDataImporter(): DataImporterInterface
+    {
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->getSspModelDataImporterConfiguration(),
+        );
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        if ($dataSetStepBroker instanceof DataImportStepAwareInterface) {
+            $dataSetStepBroker->addStep($this->createSspModelWriterStep());
+        }
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    public function createSspModelWriterStep(): DataImportStepInterface
+    {
+        return new SspModelWriterStep(
+            $this->getConfig(),
+            $this->getSequenceNumberFacade(),
+        );
+    }
+
+    public function getSspAssetModelDataImporter(): DataImporterInterface
+    {
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->getSspModelAssetDataImporterConfiguration(),
+        );
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        if ($dataSetStepBroker instanceof DataImportStepAwareInterface) {
+            $dataSetStepBroker->addStep($this->createSspAssetModelWriterStep());
+        }
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    public function createSspAssetModelWriterStep(): DataImportStepInterface
+    {
+        return new SsptModelAsseWriterStep();
+    }
+
+    public function getSspModelProductListDataImporter(): DataImporterInterface
+    {
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->getSspModelProductListDataImporterConfiguration(),
+        );
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        if ($dataSetStepBroker instanceof DataImportStepAwareInterface) {
+            $dataSetStepBroker->addStep($this->createSspModelProductListWriterStep());
+        }
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    public function createSspModelProductListWriterStep(): DataImportStepInterface
+    {
+        return new SspModelProductListWriterStep();
     }
 }

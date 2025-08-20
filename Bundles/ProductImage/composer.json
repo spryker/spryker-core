@@ -10,15 +10,22 @@
         "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/product": "^5.0.0 || ^6.0.0",
         "spryker/product-extension": "^1.4.0",
+        "spryker/product-page-search-extension": "^1.4.0",
+        "spryker/propel": "^3.46.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
+        "spryker/application": "*",
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
-        "spryker/propel": "*",
+        "spryker/glossary": "*",
         "spryker/store": "*",
         "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/glossary": "For optional ProductImageAlternativeText feature, minimal required version is 3.16.0",
+        "spryker/store": "For optional ProductImageAlternativeText feature, minimal required version is 1.1.0"
     },
     "autoload": {
         "psr-4": {

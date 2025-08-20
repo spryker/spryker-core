@@ -9,6 +9,7 @@
     "sLoadingRecords": "იტვირთება...",
     "sProcessing": "მუშავდება...",
     "sSearch": "ძიება:",
+    "searchPlaceholder": "ძიება:",
     "sZeroRecords": "არაფერი მოიძებნა",
     "oPaginate": {
         "sFirst": "პირველი",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": სვეტის დალაგება ზრდის მიხედვით",
         "sSortDescending": ": სვეტის დალაგება კლების მიხედვით"
-    }
+    },
+    "remove": "ამოღება"
 }

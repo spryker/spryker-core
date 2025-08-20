@@ -9,6 +9,7 @@
     "sLoadingRecords": "Laddar...",
     "sProcessing": "Bearbetar...",
     "sSearch": "Sök:",
+    "searchPlaceholder": "Sök:",
     "sZeroRecords": "Hittade inga matchande resultat",
     "oPaginate": {
         "sFirst": "Första",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": aktivera för att sortera kolumnen i stigande ordning",
         "sSortDescending": ": aktivera för att sortera kolumnen i fallande ordning"
-    }
+    },
+    "remove": "Ta bort"
 }

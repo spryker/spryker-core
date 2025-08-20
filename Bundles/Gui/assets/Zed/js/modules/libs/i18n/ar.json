@@ -9,6 +9,7 @@
     "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
     "sInfoPostFix": "",
     "sSearch": "ابحث:",
+    "searchPlaceholder": "ابحث:",
     "sUrl": "",
     "oPaginate": {
         "sFirst": "الأول",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
         "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
-    }
+    },
+    "remove": "إزالة"
 }

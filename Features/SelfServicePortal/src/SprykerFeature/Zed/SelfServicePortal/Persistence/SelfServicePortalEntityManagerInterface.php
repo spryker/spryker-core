@@ -87,4 +87,22 @@ interface SelfServicePortalEntityManagerInterface
      * @return void
      */
     public function saveProductConcreteProductClassRelations(int $idProductConcrete, array $productClassIds): void;
+
+    public function saveSspModelStorage(SspModelTransfer $sspModelTransfer): void;
+
+    /**
+     * @param array<int> $sspModelIds
+     *
+     * @return void
+     */
+    public function deleteSspModelStorageBySspModelIds(array $sspModelIds): void;
+
+    public function saveSspAssetStorage(SspAssetTransfer $sspAssetTransfer): void;
+
+    /**
+     * @param array<int> $sspAssetIds
+     *
+     * @return void
+     */
+    public function deleteSspAssetStorageBySspAssetIds(array $sspAssetIds): void;
 }

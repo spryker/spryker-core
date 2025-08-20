@@ -1,0 +1,2 @@
+reference,name,serial_number,note,external_image_url,business_unit_key,assigned_business_unit_keys
+INVALID-URL-ASSET-001,Invalid URL Asset,SN111111111,Asset with invalid URL,invalid-url-format,test_business_unit_1,

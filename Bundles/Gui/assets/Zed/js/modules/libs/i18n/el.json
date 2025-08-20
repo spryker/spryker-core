@@ -10,6 +10,7 @@
     "sLoadingRecords": "Φόρτωση...",
     "sProcessing": "Επεξεργασία...",
     "sSearch": "Αναζήτηση:",
+    "searchPlaceholder": "Αναζήτηση:",
     "sSearchPlaceholder": "Αναζήτηση",
     "sThousands": ".",
     "sUrl": "",
@@ -23,5 +24,6 @@
     "oAria": {
         "sSortAscending": ": ενεργοποιήστε για αύξουσα ταξινόμηση της στήλης",
         "sSortDescending": ": ενεργοποιήστε για φθίνουσα ταξινόμηση της στήλης"
-    }
+    },
+    "remove": "Αφαίρεση"
 }

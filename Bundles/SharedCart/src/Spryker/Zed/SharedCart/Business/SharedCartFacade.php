@@ -191,7 +191,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     {
         return $this->getFactory()
             ->createQuoteShareDetailsReader()
-            ->getShareDetailsByIdQuote($quoteTransfer);
+            ->getShareDetailsByIdQuote($quoteTransfer, true);
     }
 
     /**
@@ -207,7 +207,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     {
         return $this->getFactory()
             ->createQuoteShareDetailsReader()
-            ->getSharedCartDetails($shareCartRequestTransfer);
+            ->getSharedCartDetails($shareCartRequestTransfer, true);
     }
 
     /**

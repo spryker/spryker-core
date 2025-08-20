@@ -110,5 +110,19 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSetStorage/Business/ProductSetStorageBusinessFactory.php",
+        "description": "Factories: The factory method `assertProductImageAlternativeTextEnabled()` violates rule \"Factories should only contain get*() and create*() methods.\"",
+        "rule": "FactoryOnlyGetAndCreateRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSetStorage/Dependency/Facade/ProductSetStorageToGlossaryFacadeBridge.php",
+        "description": "Bridges: Method `getTranslationsByGlossaryKeysAndLocaleTransfers()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
     }
 ]

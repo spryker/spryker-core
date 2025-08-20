@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductImage;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 
 /**
@@ -53,5 +54,20 @@ class ProductImageBusinessTester extends Actor
     public function isDynamicStoreEnabled(): bool
     {
         return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
+    }
+
+    /**
+     * @param array<string, array<string, string>> $translationsData
+     *
+     * @return void
+     */
+    public function haveTranslations(array $translationsData): void
+    {
+        foreach ($translationsData as $glossaryKey => $translationsIndexedByLocaleName) {
+            $this->haveTranslation([
+                KeyTranslationTransfer::GLOSSARY_KEY => $glossaryKey,
+                KeyTranslationTransfer::LOCALES => $translationsIndexedByLocaleName,
+            ]);
+        }
     }
 }

@@ -7,11 +7,13 @@
     "sInfoFiltered": "(филтрирани от общо _MAX_ резултата)",
     "sInfoPostFix": "",
     "sSearch": "Търсене:",
+    "searchPlaceholder": "Търсене:",
     "sUrl": "",
     "oPaginate": {
         "sFirst": "Първа",
         "sPrevious": "Предишна",
         "sNext": "Следваща",
         "sLast": "Последна"
-    }
+    },
+    "remove": "Премахни"
 }

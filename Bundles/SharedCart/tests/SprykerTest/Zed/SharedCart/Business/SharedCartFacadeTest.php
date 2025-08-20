@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ResourceShareDataTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\SharedCart\Communication\Plugin\ReadSharedCartPermissionPlugin;
 use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
@@ -385,6 +386,91 @@ class SharedCartFacadeTest extends Unit
         $this->assertSame(
             $otherCustomerTransfer->getCustomerReference(),
             $customerCollectionTransfer->getCustomers()->offsetGet(0)->getCustomerReference(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetShareDetailsByIdQuoteShouldReturnNoCompanyUsersForAnonymizedCustomers(): void
+    {
+        // Arrange
+        $anonymizedCustomerTransfer = $this->tester->haveCustomer([
+            'anonymized_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER_REFERENCE => $anonymizedCustomerTransfer->getCustomerReference(),
+            QuoteTransfer::CUSTOMER => $anonymizedCustomerTransfer,
+        ]);
+
+        $companyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::FK_CUSTOMER => $anonymizedCustomerTransfer->getIdCustomer(),
+            CompanyUserTransfer::CUSTOMER => $anonymizedCustomerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+
+        $this->tester->haveQuoteCompanyUser(
+            $companyUserTransfer,
+            $quoteTransfer,
+            $this->tester->haveQuotePermissionGroup(static::PERMISSION_GROUP_FULL_ACCESS, [
+                ReadSharedCartPermissionPlugin::KEY,
+                WriteSharedCartPermissionPlugin::KEY,
+            ]),
+        );
+
+        // Act
+        $shareDetailCollectionTransfer = $this->tester->getFacade()
+            ->getShareDetailsByIdQuote($quoteTransfer);
+
+        // Assert
+        $this->assertEmpty(
+            $shareDetailCollectionTransfer->getShareDetails(),
+            'No company user should be returned for an anonymized customer.',
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetSharedCartDetailsShouldReturnNoCompanyUsersForAnonymizedCustomers(): void
+    {
+        // Arrange
+        $anonymizedCustomerTransfer = $this->tester->haveCustomer([
+            'anonymized_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER_REFERENCE => $anonymizedCustomerTransfer->getCustomerReference(),
+            QuoteTransfer::CUSTOMER => $anonymizedCustomerTransfer,
+        ]);
+
+        $companyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::FK_CUSTOMER => $anonymizedCustomerTransfer->getIdCustomer(),
+            CompanyUserTransfer::CUSTOMER => $anonymizedCustomerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+
+        $this->tester->haveQuoteCompanyUser(
+            $companyUserTransfer,
+            $quoteTransfer,
+            $this->tester->haveQuotePermissionGroup(static::PERMISSION_GROUP_FULL_ACCESS, [
+                ReadSharedCartPermissionPlugin::KEY,
+                WriteSharedCartPermissionPlugin::KEY,
+            ]),
+        );
+
+        // Act
+        $shareCartRequestTransfer = (new ShareCartRequestTransfer())
+            ->setQuoteIds([$quoteTransfer->getIdQuote()]);
+
+        $shareDetails = $this->tester->getFacade()
+            ->getSharedCartDetails($shareCartRequestTransfer);
+
+        // Assert
+        $this->assertEmpty(
+            $shareDetails,
+            'No company user should be returned for an anonymized customer.',
         );
     }
 

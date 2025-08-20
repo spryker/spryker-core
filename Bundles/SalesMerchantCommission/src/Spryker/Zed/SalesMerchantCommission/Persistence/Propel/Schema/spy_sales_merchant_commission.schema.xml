@@ -3,12 +3,12 @@
 
     <table name="spy_sales_merchant_commission">
         <column name="id_sales_merchant_commission" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="uuid" type="VARCHAR" required="false" size="36"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36" description="A Universally Unique Identifier for an entity."/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="false"/>
-        <column name="name" type="VARCHAR" required="true" size="255"/>
-        <column name="amount" type="INTEGER" default="0" required="false"/>
-        <column name="refunded_amount" type="INTEGER" default="0" required="false"/>
+        <column name="name" type="VARCHAR" required="true" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="amount" type="INTEGER" default="0" required="false" description="A numerical value, often used for price, quantity, or discount."/>
+        <column name="refunded_amount" type="INTEGER" default="0" required="false" description="The amount of a merchant commission that has been refunded."/>
 
         <behavior name="timestampable"/>
 

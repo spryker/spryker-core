@@ -7,8 +7,16 @@
 
 namespace Spryker\Zed\ProductSetStorage\Business;
 
+use Exception;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductSetStorage\Business\Expander\ProductSetDataStorageExpander;
+use Spryker\Zed\ProductSetStorage\Business\Expander\ProductSetDataStorageExpanderInterface;
+use Spryker\Zed\ProductSetStorage\Business\Reader\GlossaryReader;
+use Spryker\Zed\ProductSetStorage\Business\Reader\GlossaryReaderInterface;
 use Spryker\Zed\ProductSetStorage\Business\Storage\ProductSetStorageWriter;
+use Spryker\Zed\ProductSetStorage\Dependency\Facade\ProductSetStorageToGlossaryFacadeInterface;
+use Spryker\Zed\ProductSetStorage\Dependency\Facade\ProductSetStorageToProductImageFacadeInterface;
+use Spryker\Zed\ProductSetStorage\ProductSetStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductSetStorage\ProductSetStorageConfig getConfig()
@@ -25,6 +33,68 @@ class ProductSetStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductSetStorageWriter(
             $this->getQueryContainer(),
             $this->getConfig()->isSendingToQueue(),
+            $this->createProductSetDataStorageExpander(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetStorage\Business\Expander\ProductSetDataStorageExpanderInterface|null
+     */
+    public function createProductSetDataStorageExpander(): ?ProductSetDataStorageExpanderInterface
+    {
+        if (!$this->getProductImageFacade()->isProductImageAlternativeTextEnabled()) {
+            return null;
+        }
+
+        return new ProductSetDataStorageExpander(
+            $this->createGlossaryReader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetStorage\Business\Reader\GlossaryReaderInterface|null
+     */
+    public function createGlossaryReader(): ?GlossaryReaderInterface
+    {
+        if (!$this->getProductImageFacade()->isProductImageAlternativeTextEnabled()) {
+            return null;
+        }
+
+        return new GlossaryReader(
+            $this->getGlossaryFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetStorage\Dependency\Facade\ProductSetStorageToGlossaryFacadeInterface
+     */
+    public function getGlossaryFacade(): ProductSetStorageToGlossaryFacadeInterface
+    {
+        $this->assertProductImageAlternativeTextEnabled();
+
+        return $this->getProvidedDependency(ProductSetStorageDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetStorage\Dependency\Facade\ProductSetStorageToProductImageFacadeInterface
+     */
+    public function getProductImageFacade(): ProductSetStorageToProductImageFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductSetStorageDependencyProvider::FACADE_PRODUCT_IMAGE);
+    }
+
+    /**
+     * @deprecated This method will be removed in the next major version.
+     * The product image alternative text feature will be enabled by default and the dependency will be mandatory.
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
+    protected function assertProductImageAlternativeTextEnabled(): void
+    {
+        if (!$this->getProductImageFacade()->isProductImageAlternativeTextEnabled()) {
+            throw new Exception('ProductImageAlternativeText is not enabled. Enable it in the module config first.');
+        }
     }
 }

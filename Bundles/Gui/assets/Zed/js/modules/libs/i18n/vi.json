@@ -7,11 +7,13 @@
     "sInfoFiltered": "(được lọc từ _MAX_ mục)",
     "sInfoPostFix": "",
     "sSearch": "Tìm:",
+    "searchPlaceholder": "Tìm:",
     "sUrl": "",
     "oPaginate": {
         "sFirst": "Đầu",
         "sPrevious": "Trước",
         "sNext": "Tiếp",
         "sLast": "Cuối"
-    }
+    },
+    "remove": "Xóa"
 }

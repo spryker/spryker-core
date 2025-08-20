@@ -9,6 +9,7 @@
     "sLoadingRecords": "Nalagam...",
     "sProcessing": "Obdelujem...",
     "sSearch": "Išči:",
+    "searchPlaceholder": "Išči:",
     "sZeroRecords": "Nobeden zapis ne ustreza",
     "oPaginate": {
         "sFirst": "Prvi",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": vključite za naraščujoči sort",
         "sSortDescending": ": vključite za padajoči sort"
-    }
+    },
+    "remove": "Odstrani"
 }

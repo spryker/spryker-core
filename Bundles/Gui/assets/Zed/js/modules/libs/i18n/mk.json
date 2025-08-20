@@ -9,11 +9,13 @@
     "sInfoFiltered": "(филтрирано од вкупно _MAX_ записи)",
     "sInfoPostFix": "",
     "sSearch": "Барај",
+    "searchPlaceholder": "Барај",
     "sUrl": "",
     "oPaginate": {
         "sFirst": "Почетна",
         "sPrevious": "Претходна",
         "sNext": "Следна",
         "sLast": "Последна"
-    }
+    },
+    "remove": "Отстрани"
 }

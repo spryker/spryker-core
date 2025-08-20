@@ -10,6 +10,7 @@
     "sLoadingRecords": "Yükleniyor...",
     "sProcessing": "İşleniyor...",
     "sSearch": "Ara:",
+    "searchPlaceholder": "Ara:",
     "sZeroRecords": "Eşleşen kayıt bulunamadı",
     "oPaginate": {
         "sFirst": "İlk",
@@ -27,5 +28,6 @@
             "0": "",
             "1": "1 kayıt seçildi"
         }
-    }
+    },
+    "remove": "Kaldır"
 }

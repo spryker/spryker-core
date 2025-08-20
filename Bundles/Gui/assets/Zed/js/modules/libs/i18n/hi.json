@@ -7,11 +7,13 @@
     "sInfoFiltered": "(_MAX_ कुल प्रविष्टियों में से छठा हुआ)",
     "sInfoPostFix": "",
     "sSearch": "खोजें:",
+    "searchPlaceholder": "खोजें:",
     "sUrl": "",
     "oPaginate": {
         "sFirst": "प्रथम",
         "sPrevious": "पिछला",
         "sNext": "अगला",
         "sLast": "अंतिम"
-    }
+    },
+    "remove": "हटाएं"
 }

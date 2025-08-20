@@ -17,6 +17,9 @@
         <property name="sortOrder" type="int"/>
         <property name="externalUrlSmall" type="string"/>
         <property name="externalUrlLarge" type="string"/>
+        <property name="altTextSmall" type="string" strict="true"/>
+        <property name="altTextLarge" type="string" strict="true"/>
+        <property name="translations" type="ProductImageTranslation[]" singular="translation" strict="true"/>
     </transfer>
 
     <transfer name="ProductAbstract">
@@ -100,6 +103,45 @@
         <property name="lastPage" type="int"/>
         <property name="nextPage" type="int"/>
         <property name="previousPage" type="int"/>
+    </transfer>
+
+    <transfer name="ProductImageTranslation" strict="true">
+        <property name="altTextSmall" type="string"/>
+        <property name="altTextLarge" type="string"/>
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="Translation">
+        <property name="value" type="string"/>
+        <property name="glossaryKey" type="GlossaryKey" strict="true"/>
+        <property name="fkLocale" type="int"/>
+        <property name="isActive" type="bool"/>
+    </transfer>
+
+    <transfer name="GlossaryKey">
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="LocaleCriteria">
+        <property name="localeConditions" type="LocaleConditions"/>
+    </transfer>
+
+    <transfer name="LocaleConditions">
+        <property name="storeNames" type="string[]" singular="storeName"/>
+    </transfer>
+
+    <transfer name="ProductPageSearch">
+        <property name="productImages" type="array" singular="productImages"/>
+        <property name="locale" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcretePageSearch">
+        <property name="images" type="array" singular="image"/>
+        <property name="locale" type="string"/>
     </transfer>
 
 </transfers>

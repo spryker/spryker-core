@@ -5,10 +5,10 @@
         <column name="id_sales_reclamation" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
-        <column name="customer_name" size="511" type="VARCHAR" required="true"/>
-        <column name="customer_reference" size="255" type="VARCHAR" required="false"/>
-        <column name="customer_email" size="255" type="VARCHAR" required="true"/>
-        <column name="is_open" type="BOOLEAN" required="true"/>
+        <column name="customer_name" size="511" type="VARCHAR" required="true" description="The name of the customer."/>
+        <column name="customer_reference" size="255" type="VARCHAR" required="false" description="A unique reference for a customer."/>
+        <column name="customer_email" size="255" type="VARCHAR" required="true" description="The email address of the customer."/>
+        <column name="is_open" type="BOOLEAN" required="true" description="A flag indicating if a sales reclamation is still open."/>
 
         <behavior name="timestampable"/>
 

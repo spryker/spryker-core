@@ -46,7 +46,7 @@
                                     {% deprecated 'Will be moved to a plugin in the next major release.' %}
                                     <li><a href="/user/edit/password-reset">{{ 'Reset password' | trans }}</a></li>
                                     {% if app.twig.getFunction('layout_navigation_items') %}
-                                        {{ layout_navigation_items() | raw }}
+                                        {% include '@Gui/Partials/navigation-items.twig' %}
                                     {% endif %}
                                 </ul>
                             </li>

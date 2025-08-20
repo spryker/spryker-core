@@ -98,4 +98,16 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
             ->createMessageForwarder()
             ->forwardMessages($queueMessageTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return array<string, array<string, array<string, mixed>>>
+     */
+    public function dumpEventListener(): array
+    {
+        return $this->getFactory()->createEventListenerDumper()->dump();
+    }
 }

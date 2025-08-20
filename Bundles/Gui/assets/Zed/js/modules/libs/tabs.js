@@ -132,6 +132,15 @@ Tabs.prototype.activateTab = function (element, hash) {
     }
 
     this.onTabChange(element.attr('href'));
+
+    document.dispatchEvent(
+        new CustomEvent('TABS-CHANGE-EVENT', {
+            detail: {
+                id: element.attr('href'),
+            },
+            bubbles: true,
+        }),
+    );
 };
 
 Tabs.prototype.showHideNavigationButtons = function () {

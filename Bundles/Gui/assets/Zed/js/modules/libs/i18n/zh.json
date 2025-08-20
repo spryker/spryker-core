@@ -7,6 +7,7 @@
     "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
     "sInfoPostFix": "",
     "sSearch": "搜索:",
+    "searchPlaceholder": "搜索:",
     "sUrl": "",
     "sEmptyTable": "表中数据为空",
     "sLoadingRecords": "载入中...",
@@ -20,5 +21,6 @@
     "oAria": {
         "sSortAscending": ": 以升序排列此列",
         "sSortDescending": ": 以降序排列此列"
-    }
+    },
+    "remove": "删除"
 }

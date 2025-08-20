@@ -11,29 +11,22 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractImageStorageTransfer;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageInterface;
+use Spryker\Client\ProductImageStorage\Expander\ProductImageStorageExpanderInterface;
 use Spryker\Client\ProductImageStorage\ProductImageStorageConfig;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig as ProductImageStorageConstants;
 
 class ProductAbstractImageStorageReader implements ProductAbstractImageStorageReaderInterface
 {
     /**
-     * @var \Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageInterface
-     */
-    protected $storageClient;
-
-    /**
-     * @var \Spryker\Client\ProductImageStorage\Storage\ProductImageStorageKeyGeneratorInterface
-     */
-    protected $productImageStorageKeyGenerator;
-
-    /**
      * @param \Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageInterface $storageClient
      * @param \Spryker\Client\ProductImageStorage\Storage\ProductImageStorageKeyGeneratorInterface $productImageStorageKeyGenerator
+     * @param \Spryker\Client\ProductImageStorage\Expander\ProductImageStorageExpanderInterface|null $productImageStorageExpander
      */
-    public function __construct(ProductImageStorageToStorageInterface $storageClient, ProductImageStorageKeyGeneratorInterface $productImageStorageKeyGenerator)
-    {
-        $this->storageClient = $storageClient;
-        $this->productImageStorageKeyGenerator = $productImageStorageKeyGenerator;
+    public function __construct(
+        protected ProductImageStorageToStorageInterface $storageClient,
+        protected ProductImageStorageKeyGeneratorInterface $productImageStorageKeyGenerator,
+        protected ?ProductImageStorageExpanderInterface $productImageStorageExpander = null
+    ) {
     }
 
     /**
@@ -71,9 +64,19 @@ class ProductAbstractImageStorageReader implements ProductAbstractImageStorageRe
             return $productImageStorageTransfer;
         }
 
-        $key = $this->productImageStorageKeyGenerator->generateKey(ProductImageStorageConstants::PRODUCT_ABSTRACT_IMAGE_RESOURCE_NAME, $idProductAbstract, $locale);
+        $key = $this->productImageStorageKeyGenerator->generateKey(
+            ProductImageStorageConstants::PRODUCT_ABSTRACT_IMAGE_RESOURCE_NAME,
+            $idProductAbstract,
+            $locale,
+        );
+        $productAbstractImageStorageTransfer = $this->findProductImageProductStorageTransfer($key);
 
-        return $this->findProductImageProductStorageTransfer($key);
+        if (!$productAbstractImageStorageTransfer || !$this->productImageStorageExpander) {
+            return $productAbstractImageStorageTransfer;
+        }
+
+        return $this->productImageStorageExpander
+            ->expandProductAbstractImageStorageTransferWithProductImageAlternativeTexts($productAbstractImageStorageTransfer, $locale);
     }
 
     /**

@@ -9,6 +9,7 @@
     "sLoadingRecords": "ஏற்றுகிறது ...",
     "sProcessing": "செயலாக்க ...",
     "sSearch": "தேடல்:",
+    "searchPlaceholder": "தேடல்:",
     "sZeroRecords": "பொருத்தமான பதிவுகள் இல்லை",
     "oPaginate": {
         "sFirst": "முதல்",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": நிரலை ஏறுவரிசையில் வரிசைப்படுத்த செயல்படுத்த",
         "sSortDescending": ": நிரலை இறங்கு வரிசைப்படுத்த செயல்படுத்த"
-    }
+    },
+    "remove": "அகற்று"
 }

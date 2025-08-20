@@ -4,8 +4,8 @@
     <table name="spy_sales_order_item_service_point" idMethod="native" identifierQuoting="true">
         <column name="id_sales_order_item_service_point" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
-        <column name="name" type="VARCHAR" required="true" size="255"/>
-        <column name="key" type="VARCHAR" required="true" size="255"/>
+        <column name="name" type="VARCHAR" required="true" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="key" type="VARCHAR" required="true" size="255" description="A unique key used to identify an entity or a piece of data."/>
 
         <foreign-key name="spy_sales_order_item_service_point-fk_sales_order_item" foreignTable="spy_sales_order_item" phpName="SalesOrderItem" refPhpName="SalesOrderItemServicePoint">
             <reference local="fk_sales_order_item" foreign="id_sales_order_item"/>

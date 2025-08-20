@@ -269,13 +269,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
             ->mapSpySspAssetEntityToSspAssetTransfer($spySspAssetEntity, $sspAssetTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     *
-     * @throws \Propel\Runtime\Exception\InvalidArgumentException
-     *
-     * @return \Generated\Shared\Transfer\SspAssetTransfer
-     */
     public function updateSspAsset(SspAssetTransfer $sspAssetTransfer): SspAssetTransfer
     {
         $spySspAssetEntity = $this->getFactory()
@@ -382,5 +375,65 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
                 $productConcreteProductClassEntity->save();
             }
         }
+    }
+
+    public function saveSspModelStorage(SspModelTransfer $sspModelTransfer): void
+    {
+        $sspModelStorageEntity = $this->getFactory()
+            ->createSspModelStorageQuery()
+            ->filterByFkSspModel($sspModelTransfer->getIdSspModelOrFail())
+            ->findOneOrCreate();
+
+        $sspModelStorageEntity = $this->getFactory()
+            ->createSspModelStorageEntityMapper()
+            ->mapSspModelTransferToSspModelStorageEntity($sspModelTransfer, $sspModelStorageEntity);
+
+        $sspModelStorageEntity->save();
+    }
+
+    /**
+     * @param array<int> $sspModelIds
+     *
+     * @return void
+     */
+    public function deleteSspModelStorageBySspModelIds(array $sspModelIds): void
+    {
+        /** @var \Propel\Runtime\Collection\ObjectCollection $sspModelStorageCollection */
+        $sspModelStorageCollection = $this->getFactory()
+            ->createSspModelStorageQuery()
+            ->filterByFkSspModel_In($sspModelIds)
+            ->find();
+
+        $sspModelStorageCollection->delete();
+    }
+
+    public function saveSspAssetStorage(SspAssetTransfer $sspAssetTransfer): void
+    {
+        $sspAssetStorageEntity = $this->getFactory()
+            ->createSspAssetStorageQuery()
+            ->filterByFkSspAsset($sspAssetTransfer->getIdSspAssetOrFail())
+            ->findOneOrCreate();
+
+        $sspAssetStorageEntity = $this->getFactory()
+            ->createSspAssetStorageEntityMapper()
+            ->mapSspAssetTransferToSspAssetStorageEntity($sspAssetTransfer, $sspAssetStorageEntity);
+
+        $sspAssetStorageEntity->save();
+    }
+
+    /**
+     * @param array<int> $sspAssetIds
+     *
+     * @return void
+     */
+    public function deleteSspAssetStorageBySspAssetIds(array $sspAssetIds): void
+    {
+        /** @var \Propel\Runtime\Collection\ObjectCollection $sspAssetStorageCollection */
+        $sspAssetStorageCollection = $this->getFactory()
+            ->createSspAssetStorageQuery()
+            ->filterByFkSspAsset_In($sspAssetIds)
+            ->find();
+
+        $sspAssetStorageCollection->delete();
     }
 }

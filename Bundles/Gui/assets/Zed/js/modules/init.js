@@ -22,6 +22,7 @@ import { ImageUploader } from './libs/image-uploader';
 import { Highlight } from './libs/highlight';
 import { DownloadAction } from './libs/download-action';
 import { CopyAction } from './libs/copy-action';
+import { Table } from './libs/table/table';
 import FormWithExternalFields from './form-with-external-fields';
 
 var dataTablesSearchDelay = function () {
@@ -40,7 +41,6 @@ var dataTablesSearchDelay = function () {
                     dataTableApi.settings()[0].jqXHR.abort();
                     dataTableApi.search(self.value).draw();
                 }, 1000);
-                return;
             });
         }
     });
@@ -78,29 +78,29 @@ $(document).ready(function () {
     });
 
     $('.gui-table-data').on('draw.dt', function (e, settings) {
-        var windowWidth = $(document).width(),
-            windowHeight = $(document).height(),
-            $toggleWrap = $(this).find('.dropdown'),
-            $toggleDropdown;
+        var windowWidth = $(document).width();
+        var windowHeight = $(document).height();
+        var $toggleWrap = $(this).find('.dropdown');
+        var $toggleDropdown;
 
         $toggleWrap.on('show.bs.dropdown', function () {
             $toggleDropdown = $(this).find('.dropdown-menu');
 
-            var $button = $(this).find('.dropdown-toggle'),
-                buttonWidth = $button.width(),
-                buttonHeight = $button.height(),
-                buttonTopOffset = $button.offset().top,
-                buttonLeftOffset = $button.offset().left,
-                dropdownWidth = $toggleDropdown.width(),
-                dropdownHeight = $toggleDropdown.height(),
-                requiredWidth = buttonLeftOffset + dropdownWidth,
-                requiredHeight = buttonTopOffset + buttonHeight + dropdownHeight,
-                dropdownPositionStyles = {
-                    top: buttonTopOffset + buttonHeight + 5 + 'px',
-                    left: buttonLeftOffset + 'px',
-                    display: 'block',
-                    zIndex: '10000',
-                };
+            var $button = $(this).find('.dropdown-toggle');
+            var buttonWidth = $button.width();
+            var buttonHeight = $button.height();
+            var buttonTopOffset = $button.offset().top;
+            var buttonLeftOffset = $button.offset().left;
+            var dropdownWidth = $toggleDropdown.width();
+            var dropdownHeight = $toggleDropdown.height();
+            var requiredWidth = buttonLeftOffset + dropdownWidth;
+            var requiredHeight = buttonTopOffset + buttonHeight + dropdownHeight;
+            var dropdownPositionStyles = {
+                top: buttonTopOffset + buttonHeight + 5 + 'px',
+                left: buttonLeftOffset + 'px',
+                display: 'block',
+                zIndex: '10000',
+            };
 
             if (requiredWidth >= windowWidth) {
                 dropdownPositionStyles.left = buttonLeftOffset + buttonWidth - dropdownWidth + 'px';
@@ -259,7 +259,7 @@ $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
 
-    new DatePicker().init();
+    new DatePicker();
     new Dropzone();
     new FormSubmitter();
     new ImageUploader();
@@ -267,6 +267,7 @@ $(document).ready(function () {
     new Highlight();
     new CopyAction();
     new DownloadAction();
+    new Table();
 });
 
 $(window).on('load', function () {

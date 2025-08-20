@@ -10,6 +10,7 @@
     "sInfoFiltered": "(ֆիլտրվել է ընդհանուր _MAX_ արդյունքներից)",
     "sInfoPostFix": "",
     "sSearch": "Փնտրել",
+    "searchPlaceholder": "Փնտրել",
     "oPaginate": {
         "sFirst": "Առաջին էջ",
         "sPrevious": "Նախորդ էջ",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": ակտիվացրեք աճման կարգով դասավորելու համար",
         "sSortDescending": ": ակտիվացրեք նվազման կարգով դասավորելու համար"
-    }
+    },
+    "remove": "Հեռացնել"
 }

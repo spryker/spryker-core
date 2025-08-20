@@ -9,6 +9,7 @@
     "sLoadingRecords": "පූරණය වෙමින් පවතී...",
     "sProcessing": "සැකසෙමින් පවතී...",
     "sSearch": "සොයන්න :",
+    "searchPlaceholder": "සොයන්න :",
     "sZeroRecords": "ගැලපෙන වාර්තා නොමැත.",
     "oPaginate": {
         "sFirst": "පළමු",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": තීරුව ආරෝහනව තෝරන්න",
         "sSortDescending": ": තීරුව අවරෝහනව තෝරන්න"
-    }
+    },
+    "remove": "ඉවත් කරන්න"
 }

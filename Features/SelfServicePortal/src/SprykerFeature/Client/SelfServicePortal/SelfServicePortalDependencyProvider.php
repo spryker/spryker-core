@@ -9,6 +9,7 @@ namespace SprykerFeature\Client\SelfServicePortal;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Permission\PermissionClientInterface;
 use Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageClientInterface;
 use Spryker\Client\Store\StoreClientInterface;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
@@ -45,6 +46,16 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
      */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
+
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addZedRequestClient($container);
@@ -53,6 +64,8 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
         $container = $this->addLocaleClient($container);
+        $container = $this->addUtilEncodingService($container);
+        $container = $this->addPermissionClient($container);
 
         return $container;
     }
@@ -106,6 +119,24 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return $container->getLocator()->locale()->client();
+        });
+
+        return $container;
+    }
+
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return $container->getLocator()->utilEncoding()->service();
+        });
+
+        return $container;
+    }
+
+    protected function addPermissionClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PERMISSION, function (Container $container): PermissionClientInterface {
+            return $container->getLocator()->permission()->client();
         });
 
         return $container;

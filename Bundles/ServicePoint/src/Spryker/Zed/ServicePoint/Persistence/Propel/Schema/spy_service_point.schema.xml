@@ -3,10 +3,10 @@
 
     <table name="spy_service_point" idMethod="native" identifierQuoting="true">
         <column name="id_service_point" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
-        <column name="uuid" type="VARCHAR" required="false" size="36"/>
-        <column name="name" type="VARCHAR" required="true" size="255"/>
-        <column name="key" type="VARCHAR" required="true" size="255"/>
-        <column name="is_active" type="BOOLEAN" required="true"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36" description="A Universally Unique Identifier for an entity."/>
+        <column name="name" type="VARCHAR" required="true" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="key" type="VARCHAR" required="true" size="255" description="A unique key used to identify an entity or a piece of data."/>
+        <column name="is_active" type="BOOLEAN" required="true" description="A boolean flag indicating if an entity is currently active."/>
 
         <unique name="spy_service_point-key">
             <unique-column name="key"/>
@@ -51,13 +51,13 @@
         <column name="fk_service_point" type="INTEGER" required="true"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER" required="false"/>
-        <column name="address1" type="VARCHAR" required="true" size="255"/>
-        <column name="address2" type="VARCHAR" required="true" size="255"/>
-        <column name="address3" type="VARCHAR" required="false" size="255"/>
-        <column name="zip_code" type="VARCHAR" required="true" size="15"/>
-        <column name="city" type="VARCHAR" required="true" size="255"/>
+        <column name="address1" type="VARCHAR" required="true" size="255" description="The first line of a street address."/>
+        <column name="address2" type="VARCHAR" required="true" size="255" description="The second line of a street address."/>
+        <column name="address3" type="VARCHAR" required="false" size="255" description="The third line of a street address."/>
+        <column name="zip_code" type="VARCHAR" required="true" size="15" description="The postal code for an address."/>
+        <column name="city" type="VARCHAR" required="true" size="255" description="The city part of an address."/>
 
-        <column name="uuid" type="VARCHAR" required="false" size="36"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36" description="A Universally Unique Identifier for an entity."/>
 
         <unique name="spy_service_point_address-unique-uuid">
             <unique-column name="uuid"/>
@@ -88,11 +88,11 @@
 
     <table name="spy_service" idMethod="native" identifierQuoting="true">
         <column name="id_service" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
-        <column name="uuid" type="VARCHAR" required="false" size="36"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36" description="A Universally Unique Identifier for an entity."/>
         <column name="fk_service_point" type="INTEGER" required="true"/>
         <column name="fk_service_type" type="INTEGER" required="true"/>
-        <column name="key" type="VARCHAR" required="true" size="255"/>
-        <column name="is_active" type="BOOLEAN" required="true"/>
+        <column name="key" type="VARCHAR" required="true" size="255" description="A unique key used to identify an entity or a piece of data."/>
+        <column name="is_active" type="BOOLEAN" required="true" description="A boolean flag indicating if an entity is currently active."/>
 
         <foreign-key name="spy_service-fk_service_point" foreignTable="spy_service_point" phpName="ServicePoint" refPhpName="Service">
             <reference local="fk_service_point" foreign="id_service_point"/>
@@ -126,9 +126,9 @@
 
     <table name="spy_service_type" idMethod="native" identifierQuoting="true">
         <column name="id_service_type" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
-        <column name="uuid" type="VARCHAR" required="false" size="36"/>
-        <column name="name" type="VARCHAR" required="true" size="255"/>
-        <column name="key" type="VARCHAR" required="true" size="255"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36" description="A Universally Unique Identifier for an entity."/>
+        <column name="name" type="VARCHAR" required="true" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="key" type="VARCHAR" required="true" size="255" description="A unique key used to identify an entity or a piece of data."/>
 
         <unique name="spy_service_type-unique-uuid">
             <unique-column name="uuid"/>

@@ -8,6 +8,7 @@
     "sInfoFiltered": "(filtrado dun total de _MAX_ rexistros)",
     "sInfoPostFix": "",
     "sSearch": "Buscar:",
+    "searchPlaceholder": "Buscar:",
     "sUrl": "",
     "sInfoThousands": ",",
     "sLoadingRecords": "Cargando...",
@@ -20,5 +21,6 @@
     "oAria": {
         "sSortAscending": ": Activar para ordenar a columna de maneira ascendente",
         "sSortDescending": ": Activar para ordenar a columna de maneira descendente"
-    }
+    },
+    "remove": "Eliminar"
 }

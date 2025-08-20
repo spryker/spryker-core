@@ -7,11 +7,13 @@
     "sInfoFiltered": "(scagtha ó _MAX_ iontrálacha iomlán)",
     "sInfoPostFix": "",
     "sSearch": "Cuardaigh:",
+    "searchPlaceholder": "Cuardaigh:",
     "sUrl": "",
     "oPaginate": {
         "sFirst": "An Chéad",
         "sPrevious": "Roimhe Seo",
         "sNext": "Ar Aghaidh",
         "sLast": "Last"
-    }
+    },
+    "remove": "Bain"
 }

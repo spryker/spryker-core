@@ -3,9 +3,9 @@
 
     <table name="spy_shopping_list">
         <column name="id_shopping_list" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="description" type="VARCHAR" size="255"/>
+        <column name="customer_reference" required="true" type="VARCHAR" size="255" description="A unique reference for a customer."/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="description" type="VARCHAR" size="255" description="A description of an entity."/>
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_shopping_list_pk_seq"/>
     </table>
@@ -13,8 +13,8 @@
     <table name="spy_shopping_list_item">
         <column name="id_shopping_list_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_shopping_list" required="true" type="INTEGER"/>
-        <column name="sku" type="VARCHAR" size="255"/>
-        <column name="quantity" type="INTEGER" unsigned="true" default="1" required="true"/>
+        <column name="sku" type="VARCHAR" size="255" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <column name="quantity" type="INTEGER" unsigned="true" default="1" required="true" description="The number of units for an item."/>
 
         <foreign-key name="spy_shopping_list_item-fk_shopping_list" foreignTable="spy_shopping_list">
             <reference local="fk_shopping_list" foreign="id_shopping_list"/>
@@ -84,7 +84,7 @@
 
     <table name="spy_shopping_list_permission_group">
         <column name="id_shopping_list_permission_group" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
+        <column name="name" required="true" type="VARCHAR" size="255" description="The name of an entity (e.g., user, category, product, role)."/>
         <id-method-parameter value="spy_shopping_list_permission_group_pk_seq"/>
     </table>
 

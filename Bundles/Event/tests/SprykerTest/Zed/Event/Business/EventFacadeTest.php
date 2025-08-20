@@ -5,6 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace SprykerTest\Zed\Event\Business;
 
 use Codeception\Test\Unit;
@@ -28,6 +30,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Event\EventDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use SprykerTest\Zed\Event\EventBusinessTester;
 use SprykerTest\Zed\Event\Stub\TestEventBulkListenerPluginStub;
 
 /**
@@ -51,7 +54,7 @@ class EventFacadeTest extends Unit
     /**
      * @var \SprykerTest\Zed\Event\EventBusinessTester
      */
-    protected $tester;
+    protected EventBusinessTester $tester;
 
     /**
      * @return void

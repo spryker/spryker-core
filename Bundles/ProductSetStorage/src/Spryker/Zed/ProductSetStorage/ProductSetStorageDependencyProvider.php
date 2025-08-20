@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\ProductSetStorage;
 
+use Exception;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductSetStorage\Dependency\Facade\ProductSetStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\ProductSetStorage\Dependency\Facade\ProductSetStorageToGlossaryFacadeBridge;
+use Spryker\Zed\ProductSetStorage\Dependency\Facade\ProductSetStorageToProductImageFacadeBridge;
 use Spryker\Zed\ProductSetStorage\Dependency\QueryContainer\ProductSetStorageToProductImageQueryContainerBridge;
 use Spryker\Zed\ProductSetStorage\Dependency\QueryContainer\ProductSetStorageToProductSetQueryContainerBridge;
 
@@ -44,6 +48,29 @@ class ProductSetStorageDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     /**
+     * @var string
+     */
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+
+    /**
+     * @var string
+     */
+    public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = $this->addGlossaryFacade($container);
+        $container = $this->addProductImageFacade($container);
+
+        return $container;
+    }
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -70,6 +97,39 @@ class ProductSetStorageDependencyProvider extends AbstractBundleDependencyProvid
 
         $container->set(static::QUERY_CONTAINER_PRODUCT_IMAGE, function (Container $container) {
             return new ProductSetStorageToProductImageQueryContainerBridge($container->getLocator()->productImage()->queryContainer());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGlossaryFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
+            $module = 'glossary';
+            try {
+                return new ProductSetStorageToGlossaryFacadeBridge($container->getLocator()->$module()->facade());
+            } catch (FacadeNotFoundException) {
+                throw new Exception('Missing "spryker/glossary" module.');
+            }
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductImageFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
+            return new ProductSetStorageToProductImageFacadeBridge($container->getLocator()->productImage()->facade());
         });
 
         return $container;

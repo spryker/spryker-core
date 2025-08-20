@@ -8,6 +8,7 @@
     "sInfoFiltered": "(filtrado de _MAX_ registos no total)",
     "sInfoPostFix": "",
     "sSearch": "Procurar:",
+    "searchPlaceholder": "Procurar:",
     "sUrl": "",
     "oPaginate": {
         "sFirst": "Primeiro",
@@ -18,5 +19,6 @@
     "oAria": {
         "sSortAscending": ": Ordenar colunas de forma ascendente",
         "sSortDescending": ": Ordenar colunas de forma descendente"
-    }
+    },
+    "remove": "Remover"
 }

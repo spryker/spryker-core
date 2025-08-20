@@ -26,6 +26,8 @@ use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
 use Generated\Shared\Transfer\SspModelCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspModelCollectionResponseTransfer;
+use Generated\Shared\Transfer\SspModelCollectionTransfer;
+use Generated\Shared\Transfer\SspModelCriteriaTransfer;
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -264,5 +266,20 @@ class SelfServicePortalFacade extends AbstractFacade implements SelfServicePorta
     public function createSspModelCollection(SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): SspModelCollectionResponseTransfer
     {
         return $this->getFactory()->createSspModelWriter()->createSspModelCollection($sspModelCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspModelCriteriaTransfer $sspModelCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspModelCollectionTransfer
+     */
+    public function getSspModelCollection(SspModelCriteriaTransfer $sspModelCriteriaTransfer): SspModelCollectionTransfer
+    {
+        return $this->getRepository()
+            ->getSspModelCollection($sspModelCriteriaTransfer);
     }
 }

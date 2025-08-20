@@ -148,8 +148,8 @@ class ProductPageSearchFacadeTest extends Unit
 
         // Assert
         $this->assertContains(
-            $productImageSetTransfer->getProductImages()->offsetGet(0)->toArray(false, true),
-            $expandedProductConcretePageSearchTransfer->getImages(),
+            json_decode(json_encode($productImageSetTransfer->getProductImages()->offsetGet(0)->toArray(false, true)), true),
+            json_decode(json_encode($expandedProductConcretePageSearchTransfer->getImages()), true),
         );
     }
 

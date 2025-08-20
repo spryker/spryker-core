@@ -10,7 +10,7 @@ namespace SprykerFeature\Zed\SelfServicePortal\Persistence\Propel;
 use Orm\Zed\SelfServicePortal\Persistence\Base\SpySspModel as BaseSpySspModel;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'spy_ssp_model' table.
+ * Skeleton subclass for representing a row from the 'spy_ssp_model' table.
  *
  *
  *

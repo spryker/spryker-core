@@ -122,6 +122,8 @@ class SearchHttpClientTester extends Actor
                     ->setName(static::STORE_NAME)
                     ->setStoreReference('store-reference'),
             );
+        $storeClient->method('isCurrentStoreDefined')
+            ->willReturn(true);
 
         $this->mockFactoryMethod('getStoreClient', $storeClient);
         $this->setDependency(SearchHttpDependencyProvider::CLIENT_STORE, $storeClient);

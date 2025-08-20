@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Propel\Business\Model;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\Kernel\ClassResolver\Config\SharedConfigResolver;
+use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelSchema;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
@@ -72,7 +74,7 @@ class PropelSchemaTest extends Unit
         $merger = $this->createPropelSchemaMerger();
 
         $this->assertFalse(file_exists($this->getFixtureTargetDirectory() . DIRECTORY_SEPARATOR . 'foo_foo.schema.xml'));
-        $schema = new PropelSchema($groupedFinder, $writer, $merger);
+        $schema = new PropelSchema($groupedFinder, $writer, $merger, new BundleConfigResolver(), new SharedConfigResolver());
         $schema->copy();
 
         $this->assertTrue(file_exists($this->getFixtureTargetDirectory() . DIRECTORY_SEPARATOR . 'foo_foo.schema.xml'));
@@ -92,7 +94,7 @@ class PropelSchemaTest extends Unit
         $merger = $this->createPropelSchemaMerger();
 
         $this->assertFalse(file_exists($this->getFixtureTargetDirectory() . DIRECTORY_SEPARATOR . 'foo_bar.schema.xml'));
-        $schema = new PropelSchema($groupedFinder, $writer, $merger);
+        $schema = new PropelSchema($groupedFinder, $writer, $merger, new BundleConfigResolver(), new SharedConfigResolver());
         $schema->copy();
 
         $this->assertTrue(file_exists($this->getFixtureTargetDirectory() . DIRECTORY_SEPARATOR . 'foo_bar.schema.xml'));

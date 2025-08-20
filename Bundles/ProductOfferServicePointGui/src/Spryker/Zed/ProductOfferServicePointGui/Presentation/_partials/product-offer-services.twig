@@ -6,7 +6,7 @@
         <div class="row form-group">
             {% for service in services %}
                 {% if service.servicePoint is defined and service.serviceType is defined %}
-                    <div class="col-xs-10">
+                    <div class="col-xs-10" data-qa="product-offer-service-point">
                         {{ service.servicePoint.key }} - {{ service.servicePoint.name }} - {{ service.serviceType.name }}
                     </div>
                 {% endif %}

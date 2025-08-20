@@ -9,6 +9,7 @@
     "sLoadingRecords": "منتظر اوسئ...",
     "sProcessing": "منتظر اوسئ...",
     "sSearch": "لټون:",
+    "searchPlaceholder": "لټون:",
     "sZeroRecords": "د لټون مطابق معلومات و نه موندل سول",
     "oPaginate": {
         "sFirst": "لومړۍ",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": په صعودي ډول مرتبول",
         "sSortDescending": ": په نزولي ډول مرتبول"
-    }
+    },
+    "remove": "لرې کړئ"
 }

@@ -7,10 +7,17 @@
 
 namespace Spryker\Zed\ProductSetPageSearch\Business;
 
+use Exception;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapper;
 use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface;
+use Spryker\Zed\ProductSetPageSearch\Business\Expander\ProductSetPageSearchExpander;
+use Spryker\Zed\ProductSetPageSearch\Business\Expander\ProductSetPageSearchExpanderInterface;
+use Spryker\Zed\ProductSetPageSearch\Business\Reader\GlossaryReader;
+use Spryker\Zed\ProductSetPageSearch\Business\Reader\GlossaryReaderInterface;
 use Spryker\Zed\ProductSetPageSearch\Business\Search\ProductSetPageSearchWriter;
+use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToGlossaryFacadeInterface;
+use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductImageFacadeInterface;
 use Spryker\Zed\ProductSetPageSearch\ProductSetPageSearchDependencyProvider;
 
 /**
@@ -30,6 +37,7 @@ class ProductSetPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->createProductSetSearchDataMapper(),
             $this->getProductSetFacade(),
             $this->getConfig()->isSendingToQueue(),
+            $this->createProductSetPageSearchExpander(),
         );
     }
 
@@ -55,5 +63,66 @@ class ProductSetPageSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductSetSearchDataMapper(): ProductSetSearchDataMapperInterface
     {
         return new ProductSetSearchDataMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetPageSearch\Business\Expander\ProductSetPageSearchExpanderInterface|null
+     */
+    public function createProductSetPageSearchExpander(): ?ProductSetPageSearchExpanderInterface
+    {
+        if (!$this->getProductImageFacade()->isProductImageAlternativeTextEnabled()) {
+            return null;
+        }
+
+        return new ProductSetPageSearchExpander(
+            $this->createGlossaryReader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetPageSearch\Business\Reader\GlossaryReaderInterface|null
+     */
+    public function createGlossaryReader(): ?GlossaryReaderInterface
+    {
+        if (!$this->getProductImageFacade()->isProductImageAlternativeTextEnabled()) {
+            return null;
+        }
+
+        return new GlossaryReader(
+            $this->getGlossaryFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToGlossaryFacadeInterface
+     */
+    public function getGlossaryFacade(): ProductSetPageSearchToGlossaryFacadeInterface
+    {
+        $this->assertProductImageAlternativeTextEnabled();
+
+        return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductImageFacadeInterface
+     */
+    public function getProductImageFacade(): ProductSetPageSearchToProductImageFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::FACADE_PRODUCT_IMAGE);
+    }
+
+    /**
+     * @deprecated This method will be removed in the next major version.
+     * The product image alternative text feature will be enabled by default and the dependency will be mandatory.
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
+    protected function assertProductImageAlternativeTextEnabled(): void
+    {
+        if (!$this->getProductImageFacade()->isProductImageAlternativeTextEnabled()) {
+            throw new Exception('ProductImageAlternativeText is not enabled. Enable it in the ProductImage module config first.');
+        }
     }
 }

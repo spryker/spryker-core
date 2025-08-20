@@ -161,3 +161,4 @@ Reference,Referenz
 Note,Notiz
 "Asset created date","Erstellungsdatum des Assets"
 "Services are required when a service point is selected.","Dienstleistungen sind erforderlich, wenn eine Servicestelle ausgewählt ist."
+"Note: If no image is uploaded locally, the asset will use the image from the provided URL.","Hinweis: Wenn kein Bild lokal hochgeladen wird, verwendet das Asset standardmäßig das Bild von der angegebenen URL."

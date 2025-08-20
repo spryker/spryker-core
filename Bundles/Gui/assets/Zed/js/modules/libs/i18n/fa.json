@@ -9,6 +9,7 @@
     "sLoadingRecords": "در حال بارگزاری...",
     "sProcessing": "در حال پردازش...",
     "sSearch": "جستجو:",
+    "searchPlaceholder": "جستجو:",
     "sZeroRecords": "رکوردی با این مشخصات پیدا نشد",
     "oPaginate": {
         "sFirst": "ابتدا",
@@ -19,5 +20,6 @@
     "oAria": {
         "sSortAscending": ": فعال سازی نمایش به صورت صعودی",
         "sSortDescending": ": فعال سازی نمایش به صورت نزولی"
-    }
+    },
+    "remove": "حذف"
 }

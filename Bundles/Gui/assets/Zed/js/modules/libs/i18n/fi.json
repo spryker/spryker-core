@@ -9,6 +9,7 @@
     "sLoadingRecords": "Ladataan...",
     "sProcessing": "Hetkinen...",
     "sSearch": "Etsi:",
+    "searchPlaceholder": "Etsi:",
     "sZeroRecords": "Tietoja ei löytynyt",
     "oPaginate": {
         "sFirst": "Ensimmäinen",
@@ -35,5 +36,6 @@
         },
         "copyTitle": "Kopioi leikepöydälle",
         "copyKeys": "Paina <i>ctrl</i> tai <i>\u2318</i> + <i>C</i> kopioidaksesi taulukon arvot<br> leikepöydälle. <br><br>Peruuttaaksesi klikkaa tähän tai Esc."
-    }
+    },
+    "remove": "Poista"
 }

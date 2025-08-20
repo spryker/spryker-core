@@ -7,11 +7,13 @@
     "sInfoFiltered": "(filtrate dintr-un total de _MAX_ înregistrări)",
     "sInfoPostFix": "",
     "sSearch": "Caută:",
+    "searchPlaceholder": "Caută:",
     "sUrl": "",
     "oPaginate": {
         "sFirst": "Prima",
         "sPrevious": "Precedenta",
         "sNext": "Următoarea",
         "sLast": "Ultima"
-    }
+    },
+    "remove": "Elimină"
 }

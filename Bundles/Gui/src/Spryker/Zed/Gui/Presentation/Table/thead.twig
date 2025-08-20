@@ -2,7 +2,13 @@
 <thead>
     <tr>
         {% for id, value in config.header %}
-        <th id="{{ id }}" data-qa="{{ id }}">
+        <th id="{{ id }}" data-qa="{{ id }}"
+            {% if config.headerAttributes is defined and id in config.headerAttributes %}
+                {% for attrName, attrValue in config.headerAttributes[id] %}
+                    {{- "#{attrName}=#{attrValue | json_encode()}" -}}
+                {% endfor %}
+            {% endif %}
+        >
             {{ value | trans }}
         </th>
         {% endfor %}

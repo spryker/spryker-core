@@ -12,6 +12,12 @@
         data-page-length="{{ config.pageLength }}"
     {% endif -%}
 
+    {% if config.tableAttributes is defined and config.tableAttributes is iterable -%}
+        {% for attrName, attrValue in config.tableAttributes %}
+            {{- "#{attrName}=#{attrValue | json_encode()}" -}}
+        {% endfor %}
+    {% endif -%}
+
     {% include 'table-data-order.twig' -%}
     {% include 'table-data-columns.twig' -%}
     data-qa="data-table"

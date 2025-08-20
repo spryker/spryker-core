@@ -275,7 +275,7 @@ class ServiceTable extends AbstractTable
             ),
             static::COL_COMPANY => $item[static::COL_COMPANY],
             static::COL_SERVICE => $item[static::COL_SERVICE],
-            static::COL_SCHEDULED_AT => $this->utilDateTimeService->formatDateTime($item[static::COL_SCHEDULED_AT]),
+            static::COL_SCHEDULED_AT => $item[static::COL_SCHEDULED_AT] ? $this->utilDateTimeService->formatDateTime($item[static::COL_SCHEDULED_AT]) : null,
             static::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[static::COL_CREATED_AT]),
             static::COL_ACTIONS => $this->buildLinks($item),
         ];

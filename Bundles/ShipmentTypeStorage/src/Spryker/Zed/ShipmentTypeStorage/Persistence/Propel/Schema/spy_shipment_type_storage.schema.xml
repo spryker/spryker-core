@@ -24,8 +24,8 @@
 
     <table name="spy_shipment_type_list_storage" identifierQuoting="true">
         <column name="id_shipment_type_list_storage" type="integer" autoIncrement="true" primaryKey="true"/>
-        <column name="key" type="VARCHAR" size="255" required="true"/>
-        <column name="data" type="LONGVARCHAR" required="false"/>
+        <column name="key" type="VARCHAR" size="255" required="true" description="A unique key used to identify an entity or a piece of data."/>
+        <column name="data" type="LONGVARCHAR" required="false" description="A generic data payload."/>
         <id-method-parameter value="id_shipment_type_list_storage_pk_seq"/>
         <behavior name="synchronization">
             <parameter name="store" required="true"/>

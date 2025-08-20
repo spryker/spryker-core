@@ -204,6 +204,32 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
     }
 
     /**
+     * @param int $idDiscountVoucherPool
+     *
+     * @return void
+     */
+    public function deleteDiscountVouchersByIdDiscountVoucherPool(int $idDiscountVoucherPool): void
+    {
+        $this->getFactory()
+            ->createDiscountVoucherQuery()
+            ->filterByFkDiscountVoucherPool($idDiscountVoucherPool)
+            ->delete();
+    }
+
+    /**
+     * @param int $idDiscountVoucherPool
+     *
+     * @return void
+     */
+    public function deleteDiscountVoucherPoolByIdDiscountVoucherPool(int $idDiscountVoucherPool): void
+    {
+        $this->getFactory()
+            ->createDiscountVoucherPoolQuery()
+            ->filterByIdDiscountVoucherPool($idDiscountVoucherPool)
+            ->delete();
+    }
+
+    /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *

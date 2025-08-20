@@ -3,8 +3,8 @@
 
     <table name="spy_shipment_carrier" identifierQuoting="true">
         <column name="id_shipment_carrier" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" required="true" size="255" type="VARCHAR"/>
-        <column name="is_active" type="BOOLEAN" default="true" required="true"/>
+        <column name="name" required="true" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="is_active" type="BOOLEAN" default="true" required="true" description="A boolean flag indicating if an entity is currently active."/>
 
         <index name="spy_shipment_carrier-is_active">
             <index-column name="is_active"/>
@@ -16,13 +16,13 @@
         <column name="id_shipment_method" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_shipment_carrier" type="INTEGER" required="true"/>
         <column name="fk_tax_set" type="INTEGER" required="false"/>
-        <column name="name" required="true" size="255" type="VARCHAR"/>
-        <column name="shipment_method_key" required="false" size="255" type="VARCHAR"/>
-        <column name="is_active" type="BOOLEAN" default="true" required="true"/>
+        <column name="name" required="true" size="255" type="VARCHAR" description="The name of an entity (e.g., user, category, product, role)."/>
+        <column name="shipment_method_key" required="false" size="255" type="VARCHAR" description="The unique key for a shipment method."/>
+        <column name="is_active" type="BOOLEAN" default="true" required="true" description="A boolean flag indicating if an entity is currently active."/>
         <column name="default_price" type="INTEGER" required="false" description="Deprecated"/>
-        <column name="availability_plugin" size="255" type="VARCHAR"/>
-        <column name="price_plugin" size="255" type="VARCHAR"/>
-        <column name="delivery_time_plugin" size="255" type="VARCHAR"/>
+        <column name="availability_plugin" size="255" type="VARCHAR" description="A plugin to check shipment method availability."/>
+        <column name="price_plugin" size="255" type="VARCHAR" description="The plugin used to calculate the price of a shipment method."/>
+        <column name="delivery_time_plugin" size="255" type="VARCHAR" description="A plugin to calculate the delivery time for a shipment."/>
 
         <foreign-key name="spy_shipment_method-fk_shipment_carrier" foreignTable="spy_shipment_carrier" phpName="ShipmentCarrier" refPhpName="ShipmentMethods">
             <reference local="fk_shipment_carrier" foreign="id_shipment_carrier"/>
@@ -43,8 +43,8 @@
         <column name="fk_currency" required="true" type="INTEGER"/>
         <column name="fk_store" required="false" type="INTEGER"/>
         <column name="fk_shipment_method" required="true" type="INTEGER"/>
-        <column name="default_gross_price" required="false" type="INTEGER"/>
-        <column name="default_net_price" required="false" type="INTEGER"/>
+        <column name="default_gross_price" required="false" type="INTEGER" description="The default gross price."/>
+        <column name="default_net_price" required="false" type="INTEGER" description="The default net price."/>
 
         <foreign-key name="spy_shipment_method_price-fk_currency" foreignTable="spy_currency" phpName="Currency" refPhpName="ShipmentMethodPrice">
             <reference local="fk_currency" foreign="id_currency"/>

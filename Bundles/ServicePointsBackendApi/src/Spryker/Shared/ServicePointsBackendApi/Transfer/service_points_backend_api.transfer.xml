@@ -2,193 +2,193 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ServicePointsBackendApiAttributes" strict="true">
-        <property name="name" type="string"/>
-        <property name="key" type="string"/>
-        <property name="isActive" type="bool"/>
-        <property name="stores" type="string[]" singular="store"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="key" type="string" description="A unique key used to identify an entity or a piece of data."/>
+        <property name="isActive" type="bool" description="A boolean flag indicating if an entity is currently active."/>
+        <property name="stores" type="string[]" singular="store" description="A collection of store data transfer objects."/>
     </transfer>
 
     <transfer name="ServicePointAddressesBackendApiAttributes" strict="true">
-        <property name="uuid" type="string"/>
-        <property name="regionUuid" type="string"/>
-        <property name="countryIso2Code" type="string"/>
-        <property name="address1" type="string"/>
-        <property name="address2" type="string"/>
-        <property name="address3" type="string"/>
-        <property name="city" type="string"/>
-        <property name="zipCode" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="regionUuid" type="string" description="The UUID of a region."/>
+        <property name="countryIso2Code" type="string" description="The two-letter ISO code for a country."/>
+        <property name="address1" type="string" description="The first line of a street address."/>
+        <property name="address2" type="string" description="The second line of a street address."/>
+        <property name="address3" type="string" description="The third line of a street address."/>
+        <property name="city" type="string" description="The city part of an address."/>
+        <property name="zipCode" type="string" description="The postal code for an address."/>
     </transfer>
 
     <transfer name="ServicePoint" strict="true">
-        <property name="storeRelation" type="StoreRelation"/>
-        <property name="uuid" type="string"/>
+        <property name="storeRelation" type="StoreRelation" description="A data object representing the relationship between an entity and one or more stores."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="StoreRelation">
-        <property name="stores" type="Store[]" singular="stores"/>
+        <property name="stores" type="Store[]" singular="stores" description="A collection of store data transfer objects."/>
     </transfer>
 
     <transfer name="Store">
-        <property name="name" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
     </transfer>
 
     <transfer name="ServicePointCollectionResponse" strict="true">
-        <property name="errors" type="Error[]" singular="error"/>
-        <property name="servicePoints" type="ServicePoint[]" singular="servicePoint"/>
+        <property name="errors" type="Error[]" singular="error" description="A collection of error objects."/>
+        <property name="servicePoints" type="ServicePoint[]" singular="servicePoint" description="A collection of service points."/>
     </transfer>
 
     <transfer name="ServicePointCollectionRequest" strict="true">
-        <property name="servicePoints" type="ServicePoint[]" singular="servicePoint"/>
-        <property name="isTransactional" type="bool"/>
+        <property name="servicePoints" type="ServicePoint[]" singular="servicePoint" description="A collection of service points."/>
+        <property name="isTransactional" type="bool" description="A flag to indicate if a request should be processed within a database transaction."/>
     </transfer>
 
     <transfer name="ServicePointCriteria" strict="true">
-        <property name="pagination" type="Pagination"/>
-        <property name="servicePointConditions" type="ServicePointConditions"/>
-        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination" description="An object containing all pagination-related data for a list of results."/>
+        <property name="servicePointConditions" type="ServicePointConditions" description="Conditions for filtering service points."/>
+        <property name="sortCollection" type="Sort[]" singular="sort" description="A collection of sorting parameters."/>
     </transfer>
 
     <transfer name="ServicePointCollection" strict="true">
-        <property name="servicePoints" type="ServicePoint[]" singular="servicePoint"/>
+        <property name="servicePoints" type="ServicePoint[]" singular="servicePoint" description="A collection of service points."/>
     </transfer>
 
     <transfer name="ServicePointConditions" strict="true">
-        <property name="uuids" type="string[]" singular="uuid"/>
-        <property name="withStoreRelations" type="bool"/>
+        <property name="uuids" type="string[]" singular="uuid" description="A collection of Universally Unique Identifiers."/>
+        <property name="withStoreRelations" type="bool" description="A flag to include store relations in the response."/>
     </transfer>
 
     <transfer name="ServiceTypesBackendApiAttributes" strict="true">
-        <property name="name" type="string"/>
-        <property name="key" type="string"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="key" type="string" description="A unique key used to identify an entity or a piece of data."/>
     </transfer>
 
     <transfer name="ServiceType" strict="true">
-        <property name="uuid" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="ServiceTypeCollectionResponse" strict="true">
-        <property name="errors" type="Error[]" singular="error"/>
-        <property name="serviceTypes" type="ServiceType[]" singular="serviceType"/>
+        <property name="errors" type="Error[]" singular="error" description="A collection of error objects."/>
+        <property name="serviceTypes" type="ServiceType[]" singular="serviceType" description="A collection of service types."/>
     </transfer>
 
     <transfer name="ServiceTypeCollectionRequest" strict="true">
-        <property name="serviceTypes" type="ServiceType[]" singular="serviceType"/>
-        <property name="isTransactional" type="bool"/>
+        <property name="serviceTypes" type="ServiceType[]" singular="serviceType" description="A collection of service types."/>
+        <property name="isTransactional" type="bool" description="A flag to indicate if a request should be processed within a database transaction."/>
     </transfer>
 
     <transfer name="ServiceTypeCriteria" strict="true">
-        <property name="pagination" type="Pagination"/>
-        <property name="serviceTypeConditions" type="ServiceTypeConditions"/>
-        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination" description="An object containing all pagination-related data for a list of results."/>
+        <property name="serviceTypeConditions" type="ServiceTypeConditions" description="Conditions for filtering service types."/>
+        <property name="sortCollection" type="Sort[]" singular="sort" description="A collection of sorting parameters."/>
     </transfer>
 
     <transfer name="ServiceTypeCollection" strict="true">
-        <property name="serviceTypes" type="ServiceType[]" singular="serviceType"/>
+        <property name="serviceTypes" type="ServiceType[]" singular="serviceType" description="A collection of service types."/>
     </transfer>
 
     <transfer name="ServiceTypeConditions" strict="true">
-        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="uuids" type="string[]" singular="uuid" description="A collection of Universally Unique Identifiers."/>
     </transfer>
 
     <transfer name="Service" strict="true">
-        <property name="uuid" type="string"/>
-        <property name="servicePoint" type="ServicePoint"/>
-        <property name="serviceType" type="ServiceType"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="servicePoint" type="ServicePoint" description="A physical location where services are offered."/>
+        <property name="serviceType" type="ServiceType" description="The type of a service."/>
     </transfer>
 
     <transfer name="ServiceCollectionResponse" strict="true">
-        <property name="errors" type="Error[]" singular="error"/>
-        <property name="services" type="Service[]" singular="service"/>
+        <property name="errors" type="Error[]" singular="error" description="A collection of error objects."/>
+        <property name="services" type="Service[]" singular="service" description="A collection of services."/>
     </transfer>
 
     <transfer name="ServiceCollectionRequest" strict="true">
-        <property name="services" type="Service[]" singular="service"/>
-        <property name="isTransactional" type="bool"/>
+        <property name="services" type="Service[]" singular="service" description="A collection of services."/>
+        <property name="isTransactional" type="bool" description="A flag to indicate if a request should be processed within a database transaction."/>
     </transfer>
 
     <transfer name="ServiceCriteria" strict="true">
-        <property name="pagination" type="Pagination"/>
-        <property name="serviceConditions" type="ServiceConditions"/>
-        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination" description="An object containing all pagination-related data for a list of results."/>
+        <property name="serviceConditions" type="ServiceConditions" description="Conditions for filtering services."/>
+        <property name="sortCollection" type="Sort[]" singular="sort" description="A collection of sorting parameters."/>
     </transfer>
 
     <transfer name="ServiceCollection" strict="true">
-        <property name="services" type="Service[]" singular="service"/>
+        <property name="services" type="Service[]" singular="service" description="A collection of services."/>
     </transfer>
 
     <transfer name="ServiceConditions" strict="true">
-        <property name="uuids" type="string[]" singular="uuid"/>
-        <property name="servicePointUuids" type="string[]" singular="servicePointUuid"/>
-        <property name="serviceTypeUuids" type="string[]" singular="serviceTypeUuid"/>
+        <property name="uuids" type="string[]" singular="uuid" description="A collection of Universally Unique Identifiers."/>
+        <property name="servicePointUuids" type="string[]" singular="servicePointUuid" description="A collection of Universally Unique Identifiers (UUIDs) for service points."/>
+        <property name="serviceTypeUuids" type="string[]" singular="serviceTypeUuid" description="A collection of UUIDs for service types."/>
     </transfer>
 
     <transfer name="ServicesBackendApiAttributes" strict="true">
-        <property name="uuid" type="string"/>
-        <property name="isActive" type="bool"/>
-        <property name="key" type="string"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="isActive" type="bool" description="A boolean flag indicating if an entity is currently active."/>
+        <property name="key" type="string" description="A unique key used to identify an entity or a piece of data."/>
     </transfer>
 
     <transfer name="ServicesRequestBackendApiAttributes" strict="true">
-        <property name="serviceTypeUuid" type="string"/>
-        <property name="servicePointUuid" type="string"/>
-        <property name="isActive" type="bool"/>
-        <property name="key" type="string"/>
+        <property name="serviceTypeUuid" type="string" description="A UUID for a service type."/>
+        <property name="servicePointUuid" type="string" description="A UUID for a service point."/>
+        <property name="isActive" type="bool" description="A boolean flag indicating if an entity is currently active."/>
+        <property name="key" type="string" description="A unique key used to identify an entity or a piece of data."/>
     </transfer>
 
     <transfer name="GlueResourceMethodCollection">
-        <property name="getCollection" type="GlueResourceMethodConfiguration"/>
-        <property name="get" type="GlueResourceMethodConfiguration"/>
-        <property name="post" type="GlueResourceMethodConfiguration"/>
-        <property name="patch" type="GlueResourceMethodConfiguration"/>
+        <property name="getCollection" type="GlueResourceMethodConfiguration" description="An annotation or configuration for the 'get collection' (list) action of a resource."/>
+        <property name="get" type="GlueResourceMethodConfiguration" description="An annotation or configuration for the 'get single item' action of a resource."/>
+        <property name="post" type="GlueResourceMethodConfiguration" description="An annotation or configuration for the 'create' (POST) action of a resource."/>
+        <property name="patch" type="GlueResourceMethodConfiguration" description="An annotation or configuration for the 'update' (PATCH) action of a resource."/>
     </transfer>
 
     <transfer name="GlueResourceMethodConfiguration">
-        <property name="attributes" type="string"/>
+        <property name="attributes" type="string" description="A set of key-value pairs describing a product or entity."/>
     </transfer>
 
     <transfer name="GlueRequest">
-        <property name="resource" type="GlueResource"/>
-        <property name="locale" type="string"/>
-        <property name="pagination" type="Pagination"/>
-        <property name="sortings" type="Sort[]" singular="sorting"/>
-        <property name="parentResources" type="GlueResource[]" singular="parentResource" associative="true"/>
-        <property name="attributes" type="array" singular="attribute"/>
+        <property name="resource" type="GlueResource" description="A data entity in a REST API."/>
+        <property name="locale" type="string" description="The locale context for a request or entity, affecting language and regional formats."/>
+        <property name="pagination" type="Pagination" description="An object containing all pagination-related data for a list of results."/>
+        <property name="sortings" type="Sort[]" singular="sorting" description="A collection of sorting criteria applied to a query."/>
+        <property name="parentResources" type="GlueResource[]" singular="parentResource" associative="true" description="A collection of parent resources."/>
+        <property name="attributes" type="array" singular="attribute" description="A set of key-value pairs describing a product or entity."/>
     </transfer>
 
     <transfer name="GlueResponse">
-        <property name="resources" type="GlueResource[]" singular="resource"/>
-        <property name="errors" type="GlueError[]" singular="error"/>
-        <property name="httpStatus" type="int"/>
+        <property name="resources" type="GlueResource[]" singular="resource" description="A collection of data entities in a REST API."/>
+        <property name="errors" type="GlueError[]" singular="error" description="A collection of error objects."/>
+        <property name="httpStatus" type="int" description="The HTTP status code of a response."/>
     </transfer>
 
     <transfer name="GlueResource">
         <property name="id" type="string"/>
-        <property name="attributes" type="AbstractAttributes"/>
-        <property name="type" type="string"/>
-        <property name="relationships" type="GlueRelationship[]" singular="relationship"/>
+        <property name="attributes" type="AbstractAttributes" description="A set of key-value pairs describing a product or entity."/>
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <property name="relationships" type="GlueRelationship[]" singular="relationship" description="A collection of relationships between resources."/>
     </transfer>
 
     <transfer name="ServicePointResourceCollection">
-        <property name="servicePointResources" type="GlueResource[]" singular="servicePointResource"/>
+        <property name="servicePointResources" type="GlueResource[]" singular="servicePointResource" description="A collection of service point resources."/>
     </transfer>
 
     <transfer name="ServiceTypeResourceCollection">
-        <property name="serviceTypeResources" type="GlueResource[]" singular="serviceTypeResource"/>
+        <property name="serviceTypeResources" type="GlueResource[]" singular="serviceTypeResource" description="A collection of service type resources."/>
     </transfer>
 
     <transfer name="GlueError">
-        <property name="code" type="string"/>
-        <property name="status" type="int"/>
-        <property name="message" type="string"/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
     </transfer>
 
     <transfer name="Error">
-        <property name="message" type="string"/>
-        <property name="parameters" type="array" singular="parameter"/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
+        <property name="parameters" type="array" singular="parameter" description="A collection of parameters for a request or operation."/>
     </transfer>
 
     <transfer name="Region">
-        <property name="uuid" type="string" strict="true"/>
+        <property name="uuid" type="string" strict="true" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="Pagination">
@@ -198,41 +198,41 @@
     </transfer>
 
     <transfer name="ServicePointAddress" strict="true">
-        <property name="servicePoint" type="ServicePoint"/>
-        <property name="country" type="Country"/>
-        <property name="region" type="Region"/>
-        <property name="uuid" type="string"/>
+        <property name="servicePoint" type="ServicePoint" description="A physical location where services are offered."/>
+        <property name="country" type="Country" description="The country associated with an address or entity."/>
+        <property name="region" type="Region" description="The region or state part of an address."/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
     </transfer>
 
     <transfer name="ServicePointAddressCollectionResponse" strict="true">
-        <property name="errors" type="Error[]" singular="error"/>
-        <property name="servicePointAddresses" type="ServicePointAddress[]" singular="servicePointAddress"/>
+        <property name="errors" type="Error[]" singular="error" description="A collection of error objects."/>
+        <property name="servicePointAddresses" type="ServicePointAddress[]" singular="servicePointAddress" description="A collection of addresses for service points."/>
     </transfer>
 
     <transfer name="ServicePointAddressCollectionRequest" strict="true">
-        <property name="servicePointAddresses" type="ServicePointAddress[]" singular="servicePointAddress"/>
-        <property name="isTransactional" type="bool"/>
+        <property name="servicePointAddresses" type="ServicePointAddress[]" singular="servicePointAddress" description="A collection of addresses for service points."/>
+        <property name="isTransactional" type="bool" description="A flag to indicate if a request should be processed within a database transaction."/>
     </transfer>
 
     <transfer name="ServicePointAddressConditions" strict="true">
-        <property name="servicePointUuids" type="string[]" singular="servicePointUuid"/>
-        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="servicePointUuids" type="string[]" singular="servicePointUuid" description="A collection of Universally Unique Identifiers (UUIDs) for service points."/>
+        <property name="uuids" type="string[]" singular="uuid" description="A collection of Universally Unique Identifiers."/>
     </transfer>
 
     <transfer name="ServicePointAddressCriteria" strict="true">
-        <property name="servicePointAddressConditions" type="ServicePointAddressConditions"/>
+        <property name="servicePointAddressConditions" type="ServicePointAddressConditions" description="Conditions for filtering service point addresses."/>
     </transfer>
 
     <transfer name="ServicePointAddressCollection" strict="true">
-        <property name="servicePointAddresses" type="ServicePointAddress[]" singular="servicePointAddress"/>
+        <property name="servicePointAddresses" type="ServicePointAddress[]" singular="servicePointAddress" description="A collection of addresses for service points."/>
     </transfer>
 
     <transfer name="GlueRelationship">
-        <property name="resources" type="GlueResource[]" singular="resource"/>
+        <property name="resources" type="GlueResource[]" singular="resource" description="A collection of data entities in a REST API."/>
     </transfer>
 
     <transfer name="Country">
-        <property name="iso2Code" type="string"/>
+        <property name="iso2Code" type="string" description="The two-letter ISO code for a country."/>
     </transfer>
 
 </transfers>

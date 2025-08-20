@@ -145,7 +145,7 @@ abstract class AbstractProductConcreteTable extends AbstractTable
             static::COLUMN_SKU => $product[SpyProductTableMap::COL_SKU],
             static::COLUMN_NAME => $product[SpyProductLocalizedAttributesTableMap::COL_NAME],
             static::COLUMN_ACTION => sprintf(
-                '<input class="%s-all-products-checkbox" type="checkbox"  value="%d">',
+                '<input class="%s-all-products-checkbox js-selectable-table-checkbox" type="checkbox"  value="%d">',
                 static::TABLE_IDENTIFIER,
                 $product[SpyProductTableMap::COL_ID_PRODUCT],
             ),

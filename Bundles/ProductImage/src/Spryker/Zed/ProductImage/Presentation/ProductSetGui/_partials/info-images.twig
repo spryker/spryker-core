@@ -1,0 +1,24 @@
+{% for image in data.images %}
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="col-lg-4">
+                <img src="{{ image.externalUrlSmall }}" style="max-width: 100px; max-height: 100px">
+            </div>
+            <div class="col-lg-8">
+                {% if image.translations is not empty %}
+                    {{ 'Alternative text' | trans }}:<br>
+                    {% if data.localeName != 'default' %}
+                        {{ 'Small' | trans }}: {{ image.translations[0].altTextSmall }}<br>
+                        {{ 'Large' | trans }}: {{ image.translations[0].altTextLarge }}
+                    {% else %}
+                        {% for translation in image.translations %}
+                            <b>{{ translation.locale.localeName | upper }}:</b><br>
+                            {{ 'Small' | trans }}: {{ translation.altTextSmall }}<br>
+                            {{ 'Large' | trans }}: {{ translation.altTextLarge }}<br>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endfor %}

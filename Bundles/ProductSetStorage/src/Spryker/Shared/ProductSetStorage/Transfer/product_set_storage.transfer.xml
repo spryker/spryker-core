@@ -34,6 +34,8 @@
         <property name="idProductImage" type="int"/>
         <property name="externalUrlSmall" type="string"/>
         <property name="externalUrlLarge" type="string"/>
+        <property name="altTextSmall" type="string" strict="true"/>
+        <property name="altTextLarge" type="string" strict="true"/>
     </transfer>
 
     <transfer name="SynchronizationData">
@@ -54,6 +56,20 @@
         <property name="updatedAt" type="string"/>
         <property name="languageCode" type="string"/>
         <property name="storeName" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Translation">
+        <property name="isActive" type="bool"/>
+        <property name="glossaryKey" type="GlossaryKey" strict="true"/>
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="GlossaryKey">
+        <property name="key" type="string"/>
     </transfer>
 
 </transfers>
