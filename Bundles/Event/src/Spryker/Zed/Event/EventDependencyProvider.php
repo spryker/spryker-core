@@ -5,11 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace Spryker\Zed\Event;
 
 use Spryker\Zed\Event\Dependency\Client\EventToQueueBridge;
 use Spryker\Zed\Event\Dependency\EventCollection;
+use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\EventSubscriberCollection;
+use Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface;
 use Spryker\Zed\Event\Dependency\Service\EventToUtilEncoding;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -44,7 +48,7 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addEventListenerCollection($container);
         $container = $this->addEventSubscriberCollection($container);
@@ -57,7 +61,7 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
-    public function getEventListenerCollection()
+    public function getEventListenerCollection(): EventCollectionInterface
     {
         return new EventCollection();
     }
@@ -65,7 +69,7 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface
      */
-    public function getEventSubscriberCollection()
+    public function getEventSubscriberCollection(): EventSubscriberCollectionInterface
     {
         return new EventSubscriberCollection();
     }

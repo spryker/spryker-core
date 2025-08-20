@@ -11,6 +11,16 @@ class MerchantStorageConfig
 {
     /**
      * Specification:
+     * - Queue name as used for publishing merchant events.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PUBLISH_MERCHANT = 'publish.merchant';
+
+    /**
+     * Specification:
      * - Queue name as used for processing merchant messages.
      *
      * @api
