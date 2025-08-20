@@ -51,7 +51,7 @@ export class Table {
 
     constructor(options = {}) {
         this.options = { ...Table.#defaultOptions, ...options };
-        this.data.options.debounce ??= 1000;
+        this.options.debounce ??= 1000;
         this.init();
     }
 
