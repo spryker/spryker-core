@@ -86,10 +86,11 @@ interface SharedCartRepositoryInterface
 
     /**
      * @param int $idQuote
+     * @param bool $excludeAnonymizedCustomers
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function findShareDetailsByQuoteId(int $idQuote): ShareDetailCollectionTransfer;
+    public function findShareDetailsByQuoteId(int $idQuote, bool $excludeAnonymizedCustomers = false): ShareDetailCollectionTransfer;
 
     /**
      * @param int $idQuotePermissionGroup
@@ -124,10 +125,11 @@ interface SharedCartRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     * @param bool $excludeAnonymizedCustomers
      *
      * @return array<\Generated\Shared\Transfer\ShareDetailCollectionTransfer>
      */
-    public function getSharedCartDetails(ShareCartRequestTransfer $shareCartRequestTransfer): array;
+    public function getSharedCartDetails(ShareCartRequestTransfer $shareCartRequestTransfer, bool $excludeAnonymizedCustomers = false): array;
 
     /**
      * @param int $idQuote
