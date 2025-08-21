@@ -49,7 +49,7 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
     /**
      * @var string
      */
-    protected const PARAMETER_HAS_ONLY_DELIVERY_SHIPMENT_TYPE = 'hasOnlyDeliveryShipmentType';
+    protected const PARAMETER_HAS_ONLY_DELIVERY_LIKE_SHIPMENT_TYPE = 'hasOnlyDeliveryLikeShipmentType';
 
     /**
      * @var string
@@ -119,8 +119,8 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
         $shipmentTypeChecker = $this->getFactory()->createShipmentTypeChecker();
         $hasOnlyServiceShipmentType = $hasShipmentTypes && $shipmentTypeChecker
             ->hasOnlyServiceShipmentType($shipmentTypeList);
-        $hasOnlyDeliveryShipmentType = $hasShipmentTypes && $shipmentTypeChecker
-            ->hasOnlyDeliveryShipmentType($shipmentTypeList);
+        $hasOnlyDeliveryLikeShipmentType = $hasShipmentTypes && $shipmentTypeChecker
+            ->hasOnlyDeliveryLikeShipmentType($shipmentTypeList);
         $hasShipmentTypeWithRequiredLocation = $hasShipmentTypes && $shipmentTypeChecker
             ->hasShipmentTypeWithRequiredLocation($shipmentTypeList);
 
@@ -128,7 +128,7 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
         $this->addIsDisabledParameter($isDisabled);
         $this->addShipmentTypeOptionsParameter($shipmentTypeList);
         $this->addHasOnlyServiceShipmentTypeParameter($hasOnlyServiceShipmentType);
-        $this->addHasOnlyDeliveryShipmentTypeParameter($hasOnlyDeliveryShipmentType);
+        $this->addHasOnlyDeliveryLikeShipmentTypeParameter($hasOnlyDeliveryLikeShipmentType);
         $this->addHasShipmentTypeWithRequiredLocationParameter($hasShipmentTypeWithRequiredLocation);
         $this->isServiceDateTimeFieldVisible($productViewTransfer);
         $this->addFormFieldShipmentTypeUuidParameter();
@@ -171,9 +171,9 @@ class SspShipmentTypeServicePointSelectorWidget extends AbstractWidget
         $this->addParameter(static::PARAMETER_HAS_ONLY_SERVICE_SHIPMENT_TYPE, $hasOnlyServiceShipmentType);
     }
 
-    protected function addHasOnlyDeliveryShipmentTypeParameter(bool $hasOnlyDeliveryShipmentType): void
+    protected function addHasOnlyDeliveryLikeShipmentTypeParameter(bool $hasOnlyDeliveryLikeShipmentType): void
     {
-        $this->addParameter(static::PARAMETER_HAS_ONLY_DELIVERY_SHIPMENT_TYPE, $hasOnlyDeliveryShipmentType);
+        $this->addParameter(static::PARAMETER_HAS_ONLY_DELIVERY_LIKE_SHIPMENT_TYPE, $hasOnlyDeliveryLikeShipmentType);
     }
 
     /**

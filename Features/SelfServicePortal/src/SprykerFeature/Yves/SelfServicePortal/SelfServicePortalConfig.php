@@ -711,4 +711,19 @@ class SelfServicePortalConfig extends AbstractBundleConfig
             static::SHIPMENT_TYPE_ON_SITE_SERVICE,
         ];
     }
+
+    /**
+     * Specification:
+     * - Returns the shipment type keys that behave like delivery.
+     * - These shipment types will be treated the same as delivery in business logic.
+     * - Override this method in project-level configuration to define delivery-like shipment types.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getDeliveryLikeShipmentTypes(): array
+    {
+        return [];
+    }
 }
