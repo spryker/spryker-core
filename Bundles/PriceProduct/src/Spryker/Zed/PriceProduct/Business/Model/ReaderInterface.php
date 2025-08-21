@@ -100,4 +100,11 @@ interface ReaderInterface
      * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getValidPrices(array $priceProductFilterTransfers): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\PriceProductTransfer>>
+     */
+    public function findProductConcretePricesWithoutPriceExtractionByConcreteAbstractMap(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
 }

@@ -14,6 +14,17 @@ use Generated\Shared\Transfer\ProductImageSetCriteriaTransfer;
 interface ProductImageRepositoryInterface
 {
     /**
+     * @param int $idProduct
+     * @param array<int> $excludeIdProductImageSets
+     *
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
+     */
+    public function getProductImageSetsWithProductImagesAndLocale(
+        int $idProduct,
+        array $excludeIdProductImageSets = []
+    ): array;
+
+    /**
      * @param array<int> $productIds
      * @param int $idLocale
      *

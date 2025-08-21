@@ -46,6 +46,11 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     public const LOCALE_NAME = 'LOCALE_NAME';
 
     /**
+     * @var array<int, array<string>>
+     */
+    protected static $localesByIdStoreMap;
+
+    /**
      * @var \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface
      */
     protected $queryContainer;
@@ -172,20 +177,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     public function unpublish(array $productAbstractIds)
     {
         $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
-
-        $this->deleteProductAbstractPageSearchEntities($productAbstractPageSearchEntities);
-    }
-
-    /**
-     * @param array<\Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch> $productAbstractPageSearchEntities
-     *
-     * @return void
-     */
-    protected function deleteProductAbstractPageSearchEntities(array $productAbstractPageSearchEntities)
-    {
-        foreach ($productAbstractPageSearchEntities as $productAbstractPageSearchEntity) {
-            $productAbstractPageSearchEntity->delete();
-        }
+        $this->productPageSearchWriter->deleteProductAbstractPageSearchEntities($productAbstractPageSearchEntities);
+        $this->productPageSearchWriter->commitRemaining();
     }
 
     /**
@@ -218,7 +211,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
         $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
         if (!$productAbstractLocalizedEntities) {
-            $this->deleteProductAbstractPageSearchEntities($productAbstractPageSearchEntities);
+            $this->productPageSearchWriter->deleteProductAbstractPageSearchEntities($productAbstractPageSearchEntities);
+            $this->productPageSearchWriter->commitRemaining();
 
             return;
         }
@@ -237,6 +231,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             $productPageLoadTransfer,
             $isRefresh,
         );
+
+        $this->productPageSearchWriter->commitRemaining();
     }
 
     /**
@@ -511,66 +507,42 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      */
     protected function findProductAbstractLocalizedEntities(array $productAbstractIds)
     {
-        $allProductAbstractLocalizedEntities = [];
-        $localesByStore = [];
-        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
-            $productAbstractLocalizedEntities = $this
-                ->queryContainer
-                ->queryProductAbstractLocalizedEntitiesByProductAbstractIdsAndStore($productAbstractIds, $storeTransfer)
-                ->find()
-                ->getData();
+        $localesByIdStoreMap = $this->getLocalesByIdStoreMap();
+        /** @var array<int> $allStoreIds */
+        $allStoreIds = array_keys($localesByIdStoreMap);
+        $allLocaleIsoCodes = array_merge(...array_values($localesByIdStoreMap));
 
-            if (!isset($localesByStore[$storeTransfer->getName()])) {
-                $localesByStore[$storeTransfer->getName()] = $storeTransfer->getAvailableLocaleIsoCodes();
-            }
-            $productConcreteEntities = $this->getProductConcreteEntitiesWithProductSearchEntities($productAbstractIds, $localesByStore[$storeTransfer->getName()]);
-            $allProductAbstractLocalizedEntities[] = $this->hydrateProductAbstractLocalizedEntitiesWithProductConcreteEntities($productConcreteEntities, $productAbstractLocalizedEntities);
-        }
-
-        return array_merge(...$allProductAbstractLocalizedEntities);
-    }
-
-    /**
-     * @param array<int> $productAbstractIds
-     * @param array<string> $localeIsoCodes
-     *
-     * @return array
-     */
-    protected function getProductConcreteEntitiesWithProductSearchEntities(array $productAbstractIds, array $localeIsoCodes): array
-    {
-        $productConcreteEntities = $this->getProductConcreteEntitiesByProductAbstractIdsAndLocaleIsoCodes($productAbstractIds, $localeIsoCodes);
-        $productSearchEntities = $this->getProductSearchEntitiesByProductConcreteIdsAndLocaleIsoCodes(array_column($productConcreteEntities, 'id_product'), $localeIsoCodes);
-        $productConcreteEntities = $this->hydrateProductConcreteEntitiesWithProductSearchEntities($productSearchEntities, $productConcreteEntities);
-
-        return $productConcreteEntities;
-    }
-
-    /**
-     * @param array<int> $productAbstractIds
-     * @param array<string> $localeIsoCodes
-     *
-     * @return array
-     */
-    protected function getProductConcreteEntitiesByProductAbstractIdsAndLocaleIsoCodes(array $productAbstractIds, array $localeIsoCodes): array
-    {
-        return $this->queryContainer
-            ->queryProductConcretesByAbstractProductIdsAndLocaleIsoCodes($productAbstractIds, $localeIsoCodes)
+        $productAbstractLocalizedAttributeDataCollection = $this
+            ->queryContainer
+            ->queryProductAbstractLocalizedAttributesByProductAbstractIdsAndStoreIdsAndLocaleIds(
+                $productAbstractIds,
+                $allStoreIds,
+                $allLocaleIsoCodes,
+            )
             ->find()
             ->getData();
-    }
 
-    /**
-     * @param array<int> $productConcreteIds
-     * @param array<string> $localeIsoCodes
-     *
-     * @return array
-     */
-    protected function getProductSearchEntitiesByProductConcreteIdsAndLocaleIsoCodes(array $productConcreteIds, array $localeIsoCodes): array
-    {
-        return $this->queryContainer
-            ->queryProductSearchByProductConcreteIdsAndLocaleIsoCodes($productConcreteIds, $localeIsoCodes)
+        $productConcreteEntities = $this->queryContainer
+            ->queryProductConcretesByAbstractProductIdsAndLocaleIsoCodes($productAbstractIds, $allLocaleIsoCodes)
             ->find()
             ->getData();
+
+        $productConcreteIds = array_column($productConcreteEntities, 'id_product');
+
+        $productSearchEntities = $this->queryContainer
+            ->queryProductSearchByProductConcreteIdsAndLocaleIsoCodes($productConcreteIds, $allLocaleIsoCodes)
+            ->find()
+            ->getData();
+
+        $productConcreteEntities = $this->hydrateProductConcreteEntitiesWithProductSearchEntities(
+            $productSearchEntities,
+            $productConcreteEntities,
+        );
+
+        return $this->hydrateProductAbstractLocalizedEntitiesWithProductConcreteEntities(
+            $productConcreteEntities,
+            $productAbstractLocalizedAttributeDataCollection,
+        );
     }
 
     /**
@@ -716,8 +688,16 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         array $mappedProductAbstractPageSearchEntities,
         array $pairs
     ) {
+        $localesByIdStoreMap = $this->getLocalesByIdStoreMap();
+
         foreach ($productAbstractStores as $productAbstractStore) {
+            $idStore = $productAbstractStore['fk_store'];
             $storeName = $productAbstractStore['SpyStore']['name'];
+
+            if (!in_array($localeName, $localesByIdStoreMap[$idStore])) {
+                continue;
+            }
+
             $productAbstractLocalizedEntity[SharedProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA] = $productPayloadTransfer;
 
             $searchEntity = $mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName] ??
@@ -854,5 +834,21 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         }
 
         return $productPageSearchTransfers[0] ?? null;
+    }
+
+    /**
+     * @return array<int, array<string>>
+     */
+    protected function getLocalesByIdStoreMap(): array
+    {
+        if (static::$localesByIdStoreMap === null) {
+            static::$localesByIdStoreMap = [];
+
+            foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+                static::$localesByIdStoreMap[(int)$storeTransfer->getIdStore()] = $storeTransfer->getAvailableLocaleIsoCodes();
+            }
+        }
+
+        return static::$localesByIdStoreMap;
     }
 }

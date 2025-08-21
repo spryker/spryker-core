@@ -692,4 +692,20 @@ interface PriceProductFacadeInterface
         ProductConcreteTransfer $productConcreteTransfer,
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductConcreteTransfer;
+
+    /**
+     * Specification:
+     * - Reads concrete product prices from database.
+     * - Filters results by price type name when provided in criteria.
+     * - Filters results by store when provided in criteria.
+     * - Filters results by currency when provided in criteria.
+     * - Concrete prices overwrites abstracts for matching price types.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\PriceProductTransfer>>
+     */
+    public function findProductConcretePricesWithoutPriceExtractionByConcreteAbstractMap(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
 }

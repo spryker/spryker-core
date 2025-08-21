@@ -260,4 +260,22 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery
      */
     public function queryProductSearchByProductConcreteIdsAndLocaleIsoCodes(array $productConcreteIds, array $localeIsoCodes): SpyProductSearchQuery;
+
+    /**
+     * Specification:
+     *  - Returns `SpyProductAbstractLocalizedAttributesQuery` filtered by abstract product ids, locale iso codes and store ids.
+     *
+     * @api
+     *
+     * @param array<int> $productAbstractIds
+     * @param array<int> $storeIds
+     * @param array<string> $localeIsoCodes
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function queryProductAbstractLocalizedAttributesByProductAbstractIdsAndStoreIdsAndLocaleIds(
+        array $productAbstractIds,
+        array $storeIds,
+        array $localeIsoCodes
+    ): SpyProductAbstractLocalizedAttributesQuery;
 }

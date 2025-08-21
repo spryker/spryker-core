@@ -16,9 +16,12 @@ use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPrice
 use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToStoreFacadeInterface;
 use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainer;
 use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface;
+use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 
 class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWriterInterface
 {
+    use ActiveRecordBatchProcessorTrait;
+
     /**
      * @var \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface
      */
@@ -112,7 +115,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
                 unset($priceProductConcreteStorageMap[$idProductConcrete][$storeName]);
 
                 if ($this->hasProductConcretePrices($priceGroup)) {
-                    $this->storePriceProduct(
+                    $this->persistPriceProduct(
                         $idProductConcrete,
                         $storeName,
                         $priceGroup,
@@ -125,6 +128,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
                 $this->deletePriceProduct($priceProductConcreteStorage);
             }
         }
+        $this->commit();
 
         array_walk_recursive($priceProductConcreteStorageMap, function (SpyPriceProductConcreteStorage $priceProductConcreteStorageEntity) {
             $priceProductConcreteStorageEntity->delete();
@@ -169,7 +173,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
      *
      * @return void
      */
-    protected function storePriceProduct(
+    protected function persistPriceProduct(
         $idProductConcrete,
         $storeName,
         array $priceGroup,
@@ -182,8 +186,9 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
             ->setFkProduct($idProductConcrete)
             ->setStore($storeName)
             ->setData($priceProductStorageTransfer->toArray(true))
-            ->setIsSendingToQueue($this->isSendingToQueue)
-            ->save();
+            ->setIsSendingToQueue($this->isSendingToQueue);
+
+        $this->persist($priceProductConcreteStorageEntity);
     }
 
     /**
@@ -201,25 +206,40 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     /**
      * @param array<int> $productAbstractIdMap Keys are product concrete ids, values are product abstract ids
      *
-     * @return array First level keys are product concrete ids, second level keys are store names, values are grouped prices.
+     * @return array<int, array<string, array<\Generated\Shared\Transfer\PriceProductTransfer>>>
      */
     protected function getProductConcretePriceGroup(array $productAbstractIdMap)
     {
         $priceGroups = [];
         $priceProductCriteria = $this->getPriceCriteriaTransfer();
-        foreach ($productAbstractIdMap as $idProductConcrete => $idProductAbstract) {
-            $productConcretePriceProductTransfers = $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction($idProductConcrete, $idProductAbstract, $priceProductCriteria);
-            $priceGroups[$idProductConcrete] = [];
-            foreach ($productConcretePriceProductTransfers as $priceProductTransfer) {
-                $storeName = $this->getStoreNameById($priceProductTransfer->getMoneyValue()->getFkStore());
-                $priceGroups[$idProductConcrete][$storeName][] = $priceProductTransfer;
-            }
+        $priceProductCriteria->setProductConcreteToAbstractIdMaps($productAbstractIdMap);
+        $productConcretePriceProductTransfers = $this->priceProductFacade->findProductConcretePricesWithoutPriceExtractionByConcreteAbstractMap($priceProductCriteria);
 
-            foreach ($priceGroups[$idProductConcrete] as $storeName => $priceProductTransferCollection) {
-                $priceGroups[$idProductConcrete][$storeName] = $this->priceProductFacade->groupPriceProductCollection(
-                    $priceProductTransferCollection,
-                );
-            }
+        foreach ($productConcretePriceProductTransfers as $idProductConcrete => $priceProductTransfers) {
+            $priceGroups = $this->groupProductConcretePrice($idProductConcrete, $priceProductTransfers, $priceGroups);
+        }
+
+        return $priceGroups;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param array $priceProductTransfers
+     * @param array<int, array<string, array<\Generated\Shared\Transfer\PriceProductTransfer>>> $priceGroups
+     *
+     * @return array<int, array<string, array<\Generated\Shared\Transfer\PriceProductTransfer>>>
+     */
+    protected function groupProductConcretePrice(int $idProductConcrete, array $priceProductTransfers, array $priceGroups = []): array
+    {
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $storeName = $this->getStoreNameById($priceProductTransfer->getMoneyValue()->getFkStore());
+            $priceGroups[$idProductConcrete][$storeName][] = $priceProductTransfer;
+        }
+
+        foreach ($priceGroups[$idProductConcrete] as $storeName => $priceProductTransferCollection) {
+            $priceGroups[$idProductConcrete][$storeName] = $this->priceProductFacade->groupPriceProductCollection(
+                $priceProductTransferCollection,
+            );
         }
 
         return $priceGroups;

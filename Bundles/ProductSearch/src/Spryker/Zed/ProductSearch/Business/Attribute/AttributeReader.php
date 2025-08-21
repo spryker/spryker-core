@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductSearch\Business\Attribute;
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use PDO;
+use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferMapperInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
@@ -54,26 +55,30 @@ class AttributeReader implements AttributeReaderInterface
      */
     public function getAttribute($idProductSearchAttribute)
     {
-        $attributeEntity = $this->getAttributeEntity($idProductSearchAttribute);
+        $attributeData = $this->getAttributeData($idProductSearchAttribute);
 
-        if (!$attributeEntity) {
+        if (!$attributeData) {
             return null;
         }
 
         return $this->productAttributeTransferMapper
-            ->convertProductAttribute($attributeEntity);
+            ->convertProductAttribute($attributeData);
     }
 
     /**
      * @param int $idProductSearchAttribute
      *
-     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute|null
+     * @return array<string, mixed>
      */
-    protected function getAttributeEntity($idProductSearchAttribute)
+    protected function getAttributeData($idProductSearchAttribute): array
     {
-        return $this->productSearchQueryContainer
+        /** @var array|null $attributeData */
+        $attributeData = $this->productSearchQueryContainer
             ->queryFilterPreferencesTable()
+            ->setFormatter(ArrayFormatter::class)
             ->findOneByIdProductSearchAttribute($idProductSearchAttribute);
+
+        return $attributeData;
     }
 
     /**
@@ -118,14 +123,15 @@ class AttributeReader implements AttributeReaderInterface
     public function getAttributeList()
     {
         $productSearchAttributes = [];
-        $productSearchAttributeEntities = $this->productSearchQueryContainer
+        $productSearchAttributeCollection = $this->productSearchQueryContainer
             ->queryFilterPreferencesTable()
             ->orderByPosition()
+            ->setFormatter(ArrayFormatter::class)
             ->find();
 
-        foreach ($productSearchAttributeEntities as $productSearchAttributeEntity) {
+        foreach ($productSearchAttributeCollection as $productSearchAttribute) {
             $productSearchAttributes[] = $this->productAttributeTransferMapper
-                ->convertProductAttribute($productSearchAttributeEntity);
+                ->convertProductAttribute($productSearchAttribute);
         }
 
         return $productSearchAttributes;

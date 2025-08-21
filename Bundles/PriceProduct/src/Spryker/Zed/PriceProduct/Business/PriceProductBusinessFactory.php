@@ -99,6 +99,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->createPriceProductMapper(),
             $this->getConfig(),
             $this->getPriceProductService(),
+            $this->getRepository(),
+            $this->createPriceProductExpander(),
         );
     }
 

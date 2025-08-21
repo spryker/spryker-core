@@ -15,9 +15,12 @@ use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterfac
 use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface;
 use Spryker\Zed\ProductStorage\Persistence\ProductStorageRepositoryInterface;
+use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 
 class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterface
 {
+    use ActiveRecordBatchProcessorTrait;
+
     /**
      * @var string
      */
@@ -157,6 +160,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         }
 
         $this->storeData($productAbstractLocalizedEntities, $productAbstractStorageEntities);
+        $this->commit();
     }
 
     /**
@@ -169,6 +173,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         $spyProductStorageEntities = $this->findProductAbstractStorageEntities($productAbstractIds);
 
         $this->deleteProductAbstractStorageEntities($spyProductStorageEntities);
+        $this->commit();
     }
 
     /**
@@ -179,19 +184,19 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected function deleteProductAbstractStorageEntities(array $productAbstractStorageEntities)
     {
         foreach ($productAbstractStorageEntities as $productAbstractStorageEntity) {
-            $productAbstractStorageEntity->delete();
+            $this->remove($productAbstractStorageEntity);
         }
     }
 
     /**
-     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage $productAbstractStorage
+     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage $productAbstractStorageEntity
      *
      * @return void
      */
-    protected function deleteProductAbstractStorageEntity(SpyProductAbstractStorage $productAbstractStorage)
+    protected function deleteProductAbstractStorageEntity(SpyProductAbstractStorage $productAbstractStorageEntity)
     {
-        if (!$productAbstractStorage->isNew()) {
-            $productAbstractStorage->delete();
+        if (!$productAbstractStorageEntity->isNew()) {
+            $this->remove($productAbstractStorageEntity);
         }
     }
 
@@ -397,8 +402,9 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
             ->setData($productAbstractStorageTransfer->toArray())
             ->setStore($storeName)
             ->setLocale($localeName)
-            ->setIsSendingToQueue($this->isSendingToQueue)
-            ->save();
+            ->setIsSendingToQueue($this->isSendingToQueue);
+
+        $this->persist($spyProductStorageEntity);
     }
 
     /**

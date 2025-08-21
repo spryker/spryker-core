@@ -304,7 +304,7 @@ class PriceProductBusinessTester extends Actor
     /**
      * @return \Spryker\Shared\PriceProduct\PriceProductConfig
      */
-    protected function createSharedPriceProductConfig(): PriceProductConfig
+    public function createSharedPriceProductConfig(): PriceProductConfig
     {
         return new PriceProductConfig();
     }

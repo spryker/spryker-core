@@ -716,4 +716,39 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
 
         return new ArrayObject($priceProductStoreTransfers);
     }
+
+    /**
+     * @param array<int> $productConcreteIds
+     * @param array<int> $productAbstractIds
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array
+     */
+    public function findProductPricesByConcreteIdsOrAbstractIds(
+        array $productConcreteIds,
+        array $productAbstractIds,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): array {
+        $priceProductQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer)
+            ->joinWith(static::PRICE_PRODUCT_RELATION_NAME)
+            ->usePriceProductQuery()
+            ->filterByFkProduct_In($productConcreteIds);
+
+        if (!$priceProductCriteriaTransfer->getOnlyConcretePrices()) {
+            $priceProductQuery
+                ->addOr(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT, $productAbstractIds, Criteria::IN);
+        }
+
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery */
+        $priceProductStoreQuery = $priceProductQuery->endUse();
+
+        $priceProductStoreEntities = $this->getPriceProductStoreEntitiesPerDimension(
+            $priceProductCriteriaTransfer,
+            $priceProductStoreQuery,
+        );
+
+        return $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
+    }
 }

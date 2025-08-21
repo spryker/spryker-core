@@ -188,4 +188,17 @@ interface PriceProductRepositoryInterface
      * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getProductPricesByCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ArrayObject;
+
+    /**
+     * @param array<int> $productConcreteIds
+     * @param array<int> $productAbstractIds
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array
+     */
+    public function findProductPricesByConcreteIdsOrAbstractIds(
+        array $productConcreteIds,
+        array $productAbstractIds,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): array;
 }

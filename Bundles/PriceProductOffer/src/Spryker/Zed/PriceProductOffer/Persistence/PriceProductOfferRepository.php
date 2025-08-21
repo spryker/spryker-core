@@ -18,6 +18,7 @@ use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProductOffer\Persistence\Map\SpyPriceProductOfferTableMap;
 use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
+use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -71,11 +72,17 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
 
         $this->applyCriteria($priceProductOfferQuery, $priceProductOfferCriteriaTransfer);
 
-        $priceProductOfferEntities = $priceProductOfferQuery->find();
+        /** @var \Propel\Runtime\Collection\ArrayCollection $priceProductOfferDataCollection */
+        $priceProductOfferDataCollection = $priceProductOfferQuery
+            ->setFormatter(ArrayFormatter::class)
+            ->find();
 
         return $this->getFactory()
             ->createPriceProductOfferMapper()
-            ->mapPriceProductOfferEntitiesToPriceProductTransfers($priceProductOfferEntities, new ArrayObject());
+            ->mapPriceProductOfferDataCollectionToPriceProductTransfers(
+                $priceProductOfferDataCollection,
+                new ArrayObject(),
+            );
     }
 
     /**

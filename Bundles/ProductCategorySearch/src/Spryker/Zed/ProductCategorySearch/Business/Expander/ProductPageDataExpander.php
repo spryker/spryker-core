@@ -47,11 +47,6 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     protected const ID_LOCALE = 'id_locale';
 
     /**
-     * @var array<array<array<array<int>>>>
-     */
-    protected static $categoryTreeIds;
-
-    /**
      * @var \Spryker\Zed\ProductCategorySearch\Business\Builder\ProductCategoryTreeBuilderInterface
      */
     protected $productCategoryTreeBuilder;
@@ -308,16 +303,10 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
      */
     protected function getCategoryNodeParentIds(int $idCategoryNode, LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer): array
     {
-        $storeName = $storeTransfer->getNameOrFail();
-        $idLocale = $localeTransfer->getIdLocaleOrFail();
-
-        if (!isset(static::$categoryTreeIds[$storeName][$idLocale])) {
-            static::$categoryTreeIds[$storeName][$idLocale] = $this->productCategoryTreeBuilder->buildProductCategoryTree(
-                $localeTransfer,
-                $storeTransfer,
-            );
-        }
-
-        return static::$categoryTreeIds[$storeName][$idLocale][$idCategoryNode];
+        return $this->productCategoryTreeBuilder->buildProductCategoryTree(
+            $localeTransfer,
+            $storeTransfer,
+            true,
+        )[$idCategoryNode];
     }
 }

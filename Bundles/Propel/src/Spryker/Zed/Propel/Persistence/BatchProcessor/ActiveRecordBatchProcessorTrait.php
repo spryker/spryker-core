@@ -21,7 +21,6 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\Util\PropelDateTime;
 use Spryker\Zed\Propel\Exception\StatementNotPreparedException;
-use Spryker\Zed\Propel\Persistence\BatchEntityHooksInterface;
 use Spryker\Zed\Propel\Persistence\BatchEntityPostSaveInterface;
 use Spryker\Zed\Propel\PropelConfig;
 use Throwable;
@@ -40,12 +39,17 @@ trait ActiveRecordBatchProcessorTrait
     /**
      * @var array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      */
-    protected $entitiesToInsert = [];
+    protected array $entitiesToInsert = [];
 
     /**
      * @var array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      */
-    protected $entitiesToUpdate = [];
+    protected array $entitiesToUpdate = [];
+
+    /**
+     * @var array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
+     */
+    protected array $entitiesToRemove = [];
 
     /**
      * @var array<\Propel\Runtime\Map\TableMap>
@@ -85,10 +89,31 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
+     *
+     * @return void
+     */
+    public function remove(ActiveRecordInterface $entity): void
+    {
+        if ($entity->isNew()) {
+            return;
+        }
+
+        $className = get_class($entity);
+
+        if (!isset($this->entitiesToRemove[$className])) {
+            $this->entitiesToRemove[$className] = [];
+        }
+
+        $this->entitiesToRemove[$className][] = $entity;
+    }
+
+    /**
      * @return bool
      */
     public function commit(): bool
     {
+        $this->removeEntities($this->entitiesToRemove);
         $this->insertEntities($this->entitiesToInsert);
         $this->updateEntities($this->entitiesToUpdate);
 
@@ -127,6 +152,24 @@ trait ActiveRecordBatchProcessorTrait
             $this->postSaveEntityProcession($entities, $connection);
             $this->executePostInsert($entities, $connection);
             $this->executePostSave($entities, $connection);
+        }
+    }
+
+    /**
+     * @param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>> $entitiesToRemove
+     *
+     * @return void
+     */
+    protected function removeEntities(array $entitiesToRemove): void
+    {
+        foreach ($entitiesToRemove as $entityClassName => $entities) {
+            $connection = $this->getWriteConnection($entityClassName);
+
+            $entities = $this->executeEntitiesPreDelete($entities, $connection);
+            $entities = $this->executePreDelete($entities, $connection);
+            $this->deleteEntitiesInBulk($entityClassName, $entities);
+            $this->postDeleteEntityProcession($entities, $connection);
+            $this->executePostDelete($entities, $connection);
         }
     }
 
@@ -180,8 +223,26 @@ trait ActiveRecordBatchProcessorTrait
     {
         foreach ($entities as $entity) {
             $entity->preSave($connection);
-            if ($entity instanceof BatchEntityHooksInterface) {
-                $entity->batchPreSaveHook();
+            if (method_exists($entity, 'preSaveSynchronizationBehavior')) {
+                $entity->preSaveSynchronizationBehavior();
+            }
+        }
+
+        return $entities;
+    }
+
+    /**
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $entities
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
+     *
+     * @return array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
+     */
+    protected function executeEntitiesPreDelete(array $entities, ConnectionInterface $connection): array
+    {
+        foreach ($entities as $entity) {
+            $entity->preDelete($connection);
+            if (method_exists($entity, 'postDeleteSynchronizationBehavior')) {
+                $entity->postDeleteSynchronizationBehavior();
             }
         }
 
@@ -208,8 +269,8 @@ trait ActiveRecordBatchProcessorTrait
 
         foreach ($entities as $entity) {
             $entity->postSave($connection);
-            if ($entity instanceof BatchEntityHooksInterface) {
-                $entity->batchPostSaveHook();
+            if (method_exists($entity, 'postSaveSynchronizationBehavior')) {
+                $entity->postSaveSynchronizationBehavior();
             }
         }
     }
@@ -233,12 +294,40 @@ trait ActiveRecordBatchProcessorTrait
      * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $entities
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      *
+     * @return array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
+     */
+    protected function executePreDelete(array $entities, ConnectionInterface $connection): array
+    {
+        array_filter($entities, function (ActiveRecordInterface $entity) use ($connection) {
+            return $entity->preDelete($connection);
+        });
+
+        return $entities;
+    }
+
+    /**
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $entities
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
+     *
      * @return void
      */
     protected function executePostInsert(array $entities, ConnectionInterface $connection): void
     {
         foreach ($entities as $entity) {
             $entity->postInsert($connection);
+        }
+    }
+
+    /**
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $entities
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
+     *
+     * @return void
+     */
+    protected function executePostDelete(array $entities, ConnectionInterface $connection): void
+    {
+        foreach ($entities as $entity) {
+            $entity->postDelete($connection);
         }
     }
 
@@ -281,6 +370,19 @@ trait ActiveRecordBatchProcessorTrait
         foreach ($entities as $entity) {
             $entity->resetModified();
             $entity->setNew(false);
+        }
+    }
+
+    /**
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $entities
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
+     *
+     * @return void
+     */
+    protected function postDeleteEntityProcession(array $entities, ConnectionInterface $connection): void
+    {
+        foreach ($entities as $entity) {
+            $entity->setDeleted(true);
         }
     }
 
@@ -338,6 +440,40 @@ trait ActiveRecordBatchProcessorTrait
     {
         $this->entitiesToInsert = [];
         $this->entitiesToUpdate = [];
+        $this->entitiesToRemove = [];
+    }
+
+    /**
+     * @param string $entityClassName
+     * @param array $entitiesToRemove
+     *
+     * @return void
+     */
+    protected function deleteEntitiesInBulk(string $entityClassName, array $entitiesToRemove): void
+    {
+        $primaryKeys = [];
+        foreach ($entitiesToRemove as $entity) {
+            if (!$entity instanceof ActiveRecordInterface) {
+                continue;
+            }
+
+            $primaryKey = $entity->getPrimaryKey();
+
+            if (is_array($primaryKey)) {
+                continue;
+            }
+
+            $primaryKeys[] = $primaryKey;
+        }
+
+        if (!$primaryKeys) {
+            return;
+        }
+
+        $queryClass = $entityClassName . 'Query';
+        /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $query */
+        $query = new $queryClass();
+        $query->filterByPrimaryKeys($primaryKeys)->delete();
     }
 
     /**

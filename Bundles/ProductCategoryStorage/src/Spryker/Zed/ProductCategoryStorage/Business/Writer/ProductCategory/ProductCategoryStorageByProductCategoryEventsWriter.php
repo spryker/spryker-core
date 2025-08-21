@@ -44,7 +44,7 @@ class ProductCategoryStorageByProductCategoryEventsWriter implements ProductCate
     {
         $productAbstractIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
 
-        $this->productCategoryStorageWriter->writeCollection($productAbstractIds);
+        $this->productCategoryStorageWriter->writeCollection(array_unique($productAbstractIds));
     }
 
     /**
@@ -59,6 +59,6 @@ class ProductCategoryStorageByProductCategoryEventsWriter implements ProductCate
             SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
         );
 
-        $this->productCategoryStorageWriter->writeCollection($productAbstractIds);
+        $this->productCategoryStorageWriter->writeCollection(array_unique($productAbstractIds));
     }
 }

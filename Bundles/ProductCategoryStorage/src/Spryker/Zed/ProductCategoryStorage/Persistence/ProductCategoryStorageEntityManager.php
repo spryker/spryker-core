@@ -9,12 +9,15 @@ namespace Spryker\Zed\ProductCategoryStorage\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 
 /**
  * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStoragePersistenceFactory getFactory()
  */
 class ProductCategoryStorageEntityManager extends AbstractEntityManager implements ProductCategoryStorageEntityManagerInterface
 {
+    use ActiveRecordBatchProcessorTrait;
+
     /**
      * @param array<int> $productAbstractIds
      *
@@ -54,8 +57,7 @@ class ProductCategoryStorageEntityManager extends AbstractEntityManager implemen
         if (!$productAbstractCategoryStorageEntity) {
             return;
         }
-
-        $productAbstractCategoryStorageEntity->delete();
+        $this->remove($productAbstractCategoryStorageEntity);
     }
 
     /**
@@ -80,6 +82,6 @@ class ProductCategoryStorageEntityManager extends AbstractEntityManager implemen
             ->findOneOrCreate();
 
         $productAbstractCategoryStorageEntity->setData($productAbstractCategoryStorageTransfer->toArray());
-        $productAbstractCategoryStorageEntity->save();
+        $this->persist($productAbstractCategoryStorageEntity);
     }
 }

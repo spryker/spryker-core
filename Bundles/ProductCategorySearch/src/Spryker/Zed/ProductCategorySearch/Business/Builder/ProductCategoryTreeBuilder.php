@@ -39,6 +39,11 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
     protected const COLUMN_STORE_NAME = 'store_name';
 
     /**
+     * @var array<array<array<array<int>>>>
+     */
+    protected static $categoryTreeIds = [];
+
+    /**
      * @var \Spryker\Zed\ProductCategorySearch\Persistence\ProductCategorySearchRepositoryInterface
      */
     protected $productCategorySearchRepository;
@@ -54,11 +59,19 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param bool $usesCache
      *
      * @return array<array<int>>
      */
-    public function buildProductCategoryTree(LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer): array
+    public function buildProductCategoryTree(LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer, bool $usesCache = false): array
     {
+        $storeName = $storeTransfer->getNameOrFail();
+        $idLocale = $localeTransfer->getIdLocaleOrFail();
+
+        if ($usesCache === true && isset(static::$categoryTreeIds[$storeName][$idLocale])) {
+            return static::$categoryTreeIds[$storeName][$idLocale];
+        }
+
         $categoryTree = [];
 
         $categoryNodeIds = $this->productCategorySearchRepository->getCategoryNodeIdsByLocaleAndStore($localeTransfer, $storeTransfer);
@@ -73,7 +86,9 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
             );
         }
 
-        return $categoryTree;
+        static::$categoryTreeIds[$storeName][$idLocale] = $categoryTree;
+
+        return static::$categoryTreeIds[$storeName][$idLocale];
     }
 
     /**

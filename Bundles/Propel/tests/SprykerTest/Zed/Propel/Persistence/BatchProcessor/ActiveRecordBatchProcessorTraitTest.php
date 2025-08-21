@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Propel\Persistence\BatchProcessor;
 
 use Closure;
 use Codeception\Test\Unit;
+use PDOException;
 use PHPUnit\Framework\ExpectationFailedException;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
@@ -140,6 +141,40 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
                 || strpos($message, 'Duplicate entry') !== false
                 || strpos($message, 'Cannot assign bundle product or use bundled product as a bundle') !== false
             ) {
+                codecept_debug($throwable->getMessage());
+
+                return;
+            }
+
+            throw new ExpectationFailedException($throwable->getMessage(), null, $throwable);
+        }
+    }
+
+    /**
+     * @dataProvider dataProvider
+     *
+     * @group delete
+     *
+     * @param string $entityClassName
+     *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     *
+     * @return void
+     */
+    public function testCommitShouldDeleteEntitiesInBatch(string $entityClassName)
+    {
+        codecept_debug($entityClassName);
+
+        try {
+            $batchProcessor = $this->getActiveRecordBatchProcessor();
+
+            foreach ($this->tester->getEntityCollection($entityClassName) as $entity) {
+                $batchProcessor->remove($entity);
+            }
+
+            $this->assertTrue($batchProcessor->commit());
+        } catch (Throwable $throwable) {
+            if ($throwable->getPrevious() instanceof PDOException && strpos($throwable->getPrevious()->getMessage(), 'Cannot delete or update a parent row: a foreign key constraint fails') !== false) {
                 codecept_debug($throwable->getMessage());
 
                 return;
