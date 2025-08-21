@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerFeatureTest\Zed\SelfServicePortal\Business;
+namespace SprykerFeatureTest\Zed\SelfServicePortal\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\SspModelCollectionRequestTransfer;

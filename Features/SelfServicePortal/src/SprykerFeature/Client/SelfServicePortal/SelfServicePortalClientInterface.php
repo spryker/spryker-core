@@ -34,7 +34,7 @@ interface SelfServicePortalClientInterface
      * Specification:
      * - Retrieves a collection of services based on criteria.
      * - Uses Zed facade to fetch the data.
-     * - Returns a SspServiceCollectionTransfer with the services and pagination information.
+     * - Returns a `SspServiceCollectionTransfer` with the services and pagination information.
      *
      * @api
      *
@@ -48,8 +48,8 @@ interface SelfServicePortalClientInterface
      * Specification:
      * - Makes Zed request.
      * - Gets files according to permissions.
-     * - Uses FileAttachmentCriteriaTransfer to filter files.
-     * - Returns a FileAttachmentCollectionTransfer with the files based on criteria includes.
+     * - Uses `FileAttachmentCriteriaTransfer` to filter files.
+     * - Returns a `FileAttachmentCollectionTransfer` with the files based on criteria includes.
      *
      * @api
      *
@@ -77,7 +77,7 @@ interface SelfServicePortalClientInterface
      * Specification:
      * - Updates sales order items collection.
      * - Uses Zed facade to perform the update.
-     * - Returns a SalesOrderItemCollectionResponseTransfer with the updated items and potential errors.
+     * - Returns a `SalesOrderItemCollectionResponseTransfer` with the updated items and potential errors.
      *
      * @api
      *
@@ -93,7 +93,7 @@ interface SelfServicePortalClientInterface
      * Specification:
      * - Cancels sales order items collection.
      * - Uses Zed facade to perform the cancellation.
-     * - Returns a SalesOrderItemCollectionResponseTransfer with potential errors.
+     * - Returns a `SalesOrderItemCollectionResponseTransfer` with potential errors.
      *
      * @api
      *
@@ -134,7 +134,7 @@ interface SelfServicePortalClientInterface
     /**
      * Specification:
      * - Cancels ssp inquiries from the provided collection.
-     * - Requires SspInquiryCollectionRequestTransfer.sspInquiries.reference to be provided.
+     * - Requires `SspInquiryCollectionRequestTransfer.sspInquiries.reference` to be provided.
      *
      * @api
      *

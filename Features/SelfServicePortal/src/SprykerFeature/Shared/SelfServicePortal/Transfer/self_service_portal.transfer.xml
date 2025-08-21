@@ -772,7 +772,7 @@
         <property name="status" type="string"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
         <property name="sspServiceCollection" type="SspServiceCollection"/>
-        <property name="models" type="SspModel[]" singular="model"/>
+        <property name="sspModels" type="SspModel[]" singular="sspModel"/>
     </transfer>
 
     <transfer name="SspAssetConditions" strict="true">
@@ -850,6 +850,8 @@
         <property name="store" type="string"/>
         <property name="locale" type="string"/>
         <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="CmsBlockGlossaryPlaceholderTranslation">
@@ -1158,4 +1160,17 @@
     <transfer name="SspAssetStorageConditions" strict="true">
         <property name="references" type="string[]" singular="reference"/>
     </transfer>
+
+    <transfer name="SspAssetSearch" strict="true">
+        <property name="idSspAsset" type="int"/>
+        <property name="name" type="string"/>
+        <property name="data" type="array" singular="data"/>
+        <property name="structuredData" type="string"/>
+        <property name="store" type="string"/>
+    </transfer>
+
+    <transfer name="SspAssetSearchCollection" strict="true">
+        <property name="sspAssets" type="SspAssetSearch[]" singular="sspAsset"/>
+    </transfer>
+
 </transfers>

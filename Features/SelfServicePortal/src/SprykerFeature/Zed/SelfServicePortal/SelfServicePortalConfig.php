@@ -301,6 +301,94 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     }
 
     /**
+     *  Specification:
+     *  - Import configuration for ssp inquiry.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
+     */
+    public function getSspInquiryDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
+    {
+        return (new DataImporterDataSourceConfigurationTransfer())
+            ->setImportType(static::IMPORT_TYPE_SSP_INQUIRY)
+            ->setFileName('ssp_inquiry.csv')
+            ->setModuleName(static::MODULE_NAME)
+            ->setDirectory('/data/data/import/common/common/');
+    }
+
+    /**
+     * Specification:
+     * - Import configuration for ssp asset.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
+     */
+    public function getSspAssetDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
+    {
+        return (new DataImporterDataSourceConfigurationTransfer())
+            ->setImportType(static::IMPORT_TYPE_SSP_ASSET)
+            ->setFileName('ssp_asset.csv')
+            ->setModuleName(static::MODULE_NAME)
+            ->setDirectory('/data/data/import/common/common/');
+    }
+
+    /**
+     * Specification:
+     * - Import configuration for ssp model.
+     * - Returns data source configuration for importing ssp models.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
+     */
+    public function getSspModelDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
+    {
+        return (new DataImporterDataSourceConfigurationTransfer())
+            ->setImportType(static::IMPORT_TYPE_SSP_MODEL)
+            ->setFileName('ssp_model.csv')
+            ->setModuleName(static::MODULE_NAME)
+            ->setDirectory('/data/data/import/common/common/');
+    }
+
+    /**
+     * Specification:
+     * - Import configuration for ssp model asset relations.
+     * - Returns data source configuration for importing ssp model to asset relations.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
+     */
+    public function getSspModelAssetDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
+    {
+        return (new DataImporterDataSourceConfigurationTransfer())
+            ->setImportType(static::IMPORT_TYPE_SSP_MODEL_ASSET)
+            ->setFileName('ssp_model_asset.csv')
+            ->setModuleName(static::MODULE_NAME)
+            ->setDirectory('/data/data/import/common/common/');
+    }
+
+    /**
+     * Specification:
+     * - Import configuration for ssp model product list relations.
+     * - Returns data source configuration for importing ssp model to product list relations.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
+     */
+    public function getSspModelProductListDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
+    {
+        return (new DataImporterDataSourceConfigurationTransfer())
+            ->setImportType(static::IMPORT_TYPE_SSP_MODEL_PRODUCT_LIST)
+            ->setFileName('ssp_model_product_list.csv')
+            ->setModuleName(static::MODULE_NAME)
+            ->setDirectory('/data/data/import/common/common/');
+    }
+
+    /**
      * Specification:
      * - Returns the default shipment type key.
      * - The default shipment type key is used for new products.
@@ -711,94 +799,6 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     }
 
     /**
-     *  Specification:
-     *  - Import configuration for ssp inquiry.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
-     */
-    public function getSspInquiryDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
-    {
-        return (new DataImporterDataSourceConfigurationTransfer())
-            ->setImportType(static::IMPORT_TYPE_SSP_INQUIRY)
-            ->setFileName('ssp_inquiry.csv')
-            ->setModuleName(static::MODULE_NAME)
-            ->setDirectory('/data/data/import/common/common/');
-    }
-
-    /**
-     * Specification:
-     * - Import configuration for ssp asset.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
-     */
-    public function getSspAssetDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
-    {
-        return (new DataImporterDataSourceConfigurationTransfer())
-            ->setImportType(static::IMPORT_TYPE_SSP_ASSET)
-            ->setFileName('ssp_asset.csv')
-            ->setModuleName(static::MODULE_NAME)
-            ->setDirectory('/data/data/import/common/common/');
-    }
-
-    /**
-     * Specification:
-     * - Import configuration for ssp model.
-     * - Returns data source configuration for importing ssp models.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
-     */
-    public function getSspModelDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
-    {
-        return (new DataImporterDataSourceConfigurationTransfer())
-            ->setImportType(static::IMPORT_TYPE_SSP_MODEL)
-            ->setFileName('ssp_model.csv')
-            ->setModuleName(static::MODULE_NAME)
-            ->setDirectory('/data/data/import/common/common/');
-    }
-
-    /**
-     * Specification:
-     * - Import configuration for ssp model asset relations.
-     * - Returns data source configuration for importing ssp model to asset relations.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
-     */
-    public function getSspModelAssetDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
-    {
-        return (new DataImporterDataSourceConfigurationTransfer())
-            ->setImportType(static::IMPORT_TYPE_SSP_MODEL_ASSET)
-            ->setFileName('ssp_model_asset.csv')
-            ->setModuleName(static::MODULE_NAME)
-            ->setDirectory('/data/data/import/common/common/');
-    }
-
-    /**
-     * Specification:
-     * - Import configuration for ssp model product list relations.
-     * - Returns data source configuration for importing ssp model to product list relations.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
-     */
-    public function getSspModelProductListDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
-    {
-        return (new DataImporterDataSourceConfigurationTransfer())
-            ->setImportType(static::IMPORT_TYPE_SSP_MODEL_PRODUCT_LIST)
-            ->setFileName('ssp_model_product_list.csv')
-            ->setModuleName(static::MODULE_NAME)
-            ->setDirectory('/data/data/import/common/common/');
-    }
-
-    /**
      * Specification:
      * - Defines the read chunk size in bytes.
      * - Used for reading inquiry files in chunks during file download in backoffice.
@@ -1144,5 +1144,18 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     public function getSelfServicePortalStorageSynchronizationPoolName(): ?string
     {
         return 'synchronizationPool';
+    }
+
+    /**
+     * Specification:
+     * - Returns the SSP asset search synchronization pool name.
+     *
+     * @api
+     *
+     * @return string|null
+     */
+    public function getSspAssetSearchSynchronizationPoolName(): ?string
+    {
+        return null;
     }
 }

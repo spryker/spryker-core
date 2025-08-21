@@ -88,6 +88,7 @@ suites:
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\Permission\Helper\PermissionHelper
                 - \SprykerTest\Zed\CompanyRole\Helper\CompanyRoleHelper
+                - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SspModelHelper
 
     Persistence:
         path: Persistence

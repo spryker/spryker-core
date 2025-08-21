@@ -37,7 +37,7 @@ interface SelfServicePortalFacadeInterface
      * Specification:
      * - Retrieves a collection of services.
      * - Uses the provided criteria to filter and sort the results.
-     * - Returns a SspServiceCollectionTransfer transfer object with the results and pagination information.
+     * - Returns a `SspServiceCollectionTransfer` transfer object with the results and pagination information.
      *
      * @api
      *
@@ -176,7 +176,7 @@ interface SelfServicePortalFacadeInterface
     /**
      * Specification:
      * - Cancels ssp inquiries from provided collection.
-     * - Requires SspInquiryCollectionRequestTransfer.sspInquiries.reference to be provided.
+     * - Requires `SspInquiryCollectionRequestTransfer.sspInquiries.reference` to be provided.
      *
      * @api
      *

@@ -42,6 +42,7 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
@@ -977,6 +978,26 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
 
         return $this->buildQueryFromCriteria($sspAssetStorageQuery, $filterTransfer)
             ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
+            ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param array<int> $sspAssetIds
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SelfServicePortal\Persistence\SpySspAssetSearch>
+     */
+    public function getSspAssetSearchEntitiesByIds(FilterTransfer $filterTransfer, array $sspAssetIds = []): ObjectCollection
+    {
+        $query = $this->getFactory()
+            ->createSspAssetSearchPropelQuery();
+
+        if ($sspAssetIds) {
+            $query->filterByFkSspAsset_In($sspAssetIds);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(ModelCriteria::FORMAT_OBJECT)
             ->find();
     }
 }

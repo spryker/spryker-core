@@ -34,6 +34,16 @@ class SelfServicePortalConfig extends AbstractSharedConfig
 
     /**
      * Specification:
+     * - Defines queue name as used for processing ssp asset search synchronization.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const QUEUE_NAME_SYNC_SEARCH_SSP_ASSET = 'sync.search.ssp_asset';
+
+    /**
+     * Specification:
      * - Defines resource name, that will be used for key generation.
      *
      * @api

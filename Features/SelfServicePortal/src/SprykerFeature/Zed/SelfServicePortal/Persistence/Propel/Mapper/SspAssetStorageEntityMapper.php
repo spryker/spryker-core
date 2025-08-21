@@ -124,7 +124,7 @@ class SspAssetStorageEntityMapper implements SspAssetStorageEntityMapperInterfac
     protected function extractModelIds(SspAssetTransfer $sspAssetTransfer): array
     {
         $modelIds = [];
-        foreach ($sspAssetTransfer->getModels() as $sspModelTransfer) {
+        foreach ($sspAssetTransfer->getSspModels() as $sspModelTransfer) {
             $modelIds[] = $sspModelTransfer->getIdSspModelOrFail();
         }
 

@@ -48,8 +48,6 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySspModelStorage;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelStorageQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelToProductList;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelToProductListQuery;
-use PHPUnit\Framework\MockObject\MockObject;
-use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
 
 /**
  * Inherited Methods
@@ -296,26 +294,6 @@ class SelfServicePortalCommunicationTester extends Actor
         $sspAssetCollectionTransfer->addSspAsset($sspAssetTransfer);
 
         return $sspAssetCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetCollectionTransfer|null $returnValue
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface
-     */
-    public function createSelfServicePortalRepositoryMock(?SspAssetCollectionTransfer $returnValue = null): MockObject
-    {
-        $mockBuilder = $this->getMockBuilder(SelfServicePortalRepositoryInterface::class);
-        $mockBuilder->disableOriginalConstructor();
-
-        $mock = $mockBuilder->getMock();
-
-        if ($returnValue !== null) {
-            $mock->method('getSspAssetCollection')
-                ->willReturn($returnValue);
-        }
-
-        return $mock;
     }
 
     public function createOrderTransferWithItems(): OrderTransfer
@@ -783,11 +761,6 @@ class SelfServicePortalCommunicationTester extends Actor
         $this->getSspModelQuery()->deleteAll();
     }
 
-    public function truncateSspModelTable(): void
-    {
-        $this->getSspModelQuery()->deleteAll();
-    }
-
     /**
      * @return array<\Orm\Zed\SelfServicePortal\Persistence\SpySspModel>
      */
@@ -865,7 +838,7 @@ class SelfServicePortalCommunicationTester extends Actor
 
     public function isSspModelAssetRelationExists(int $sspModelId, int $sspAssetId): bool
     {
-        return SpySspAssetToSspModelQuery::create()
+        return $this->getSspAssetToSspModelQuery()
             ->filterByFkSspModel($sspModelId)
             ->filterByFkSspAsset($sspAssetId)
             ->exists();

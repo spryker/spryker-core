@@ -13,6 +13,7 @@ use Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductToProductClassQuery;
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery;
+use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\Comment\Business\CommentFacadeInterface;
 use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
@@ -42,6 +43,7 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\Assigned
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\BusinessUnitKeyToIdCompanyBusinessUnitStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\ExternalImageUrlValidationStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\SspAssetBusinessUnitAssignmentStep;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\SspAssetPublishEventWriterStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step\SspAssetWriterStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\AssetFileExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\AssetFileExpanderInterface;
@@ -51,16 +53,22 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\SspAssetItemExp
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Expander\SspAssetItemExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Extractor\SalesOrderItemIdExtractor;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Extractor\SalesOrderItemIdExtractorInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Mapper\SspAssetSearchMapper;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Mapper\SspAssetSearchMapperInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Permission\SspAssetCustomerPermissionExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Permission\SspAssetCustomerPermissionExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReader;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetSearchReader;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetSearchReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Storage\SspAssetStorageWriter;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Storage\SspAssetStorageWriterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Validator\SspAssetValidator;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Validator\SspAssetValidatorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\FileSspAssetWriter;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\FileSspAssetWriterInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\SspAssetSearchWriter;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\SspAssetSearchWriterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\SspAssetWriter;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\SspAssetWriterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Creator\FileAttachmentCreator;
@@ -184,9 +192,9 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Service\Utility\SkuExtractor;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Utility\SkuExtractorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePointSearchCoordinatesExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePointSearchCoordinatesExpanderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\DataImport\Step\SspModelAssetWriterStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\DataImport\Step\SspModelProductListWriterStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\DataImport\Step\SspModelWriterStep;
-use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\DataImport\Step\SsptModelAsseWriterStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Storage\SspModelStorageWriter;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Storage\SspModelStorageWriterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Validator\SspModelValidator;
@@ -746,7 +754,8 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
                 ->addStep($this->createAssignedBusinessUnitKeysToIdStep())
                 ->addStep($this->createExternalImageUrlValidationStep())
                 ->addStep($this->createSspAssetWriterStep())
-                ->addStep($this->createSspAssetBusinessUnitAssignmentStep());
+                ->addStep($this->createSspAssetBusinessUnitAssignmentStep())
+                ->addStep($this->createSspAssetPublishEventWriterStep());
         }
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -759,11 +768,17 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return new SspAssetBusinessUnitAssignmentStep();
     }
 
+    public function createSspAssetPublishEventWriterStep(): DataImportStepInterface
+    {
+        return new SspAssetPublishEventWriterStep(
+            $this->getEventFacade(),
+        );
+    }
+
     public function createSspAssetWriterStep(): DataImportStepInterface
     {
         return new SspAssetWriterStep(
             $this->getConfig(),
-            $this->getEventFacade(),
         );
     }
 
@@ -1164,6 +1179,7 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return new SspModelWriterStep(
             $this->getConfig(),
             $this->getSequenceNumberFacade(),
+            $this->getEventFacade(),
         );
     }
 
@@ -1186,7 +1202,9 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
 
     public function createSspAssetModelWriterStep(): DataImportStepInterface
     {
-        return new SsptModelAsseWriterStep();
+        return new SspModelAssetWriterStep(
+            $this->getEventFacade(),
+        );
     }
 
     public function getSspModelProductListDataImporter(): DataImporterInterface
@@ -1209,5 +1227,36 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     public function createSspModelProductListWriterStep(): DataImportStepInterface
     {
         return new SspModelProductListWriterStep();
+    }
+
+    public function createSspAssetSearchWriter(): SspAssetSearchWriterInterface
+    {
+        return new SspAssetSearchWriter(
+            $this->createSspAssetReader(),
+            $this->getEventBehaviorFacade(),
+            $this->createSspAssetSearchMapper(),
+            $this->getEntityManager(),
+        );
+    }
+
+    public function createSspAssetSearchMapper(): SspAssetSearchMapperInterface
+    {
+        return new SspAssetSearchMapper(
+            $this->getUtilEncodingService(),
+            $this->getStoreFacade(),
+        );
+    }
+
+    public function createSspAssetSearchReader(): SspAssetSearchReaderInterface
+    {
+        return new SspAssetSearchReader(
+            $this->getRepository(),
+            $this->createSspAssetSearchMapper(),
+        );
+    }
+
+    public function getUtilEncodingService(): UtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

@@ -88,13 +88,11 @@ class SspAssetMapper
             $sspAssetTransfer->setCompanyBusinessUnit($companyBusinessUnitTransfer);
         }
 
-        if ($sspAssetIncludeTransfer->getWithSspModels()) {
-            foreach ($spySspAssetEntity->getSpySspAssetToSspModels() as $spySspAssetToSspModelEntity) {
-                $spySspModelEntity = $spySspAssetToSspModelEntity->getSpySspModel();
-                if ($spySspModelEntity) {
-                    $sspModelTransfer = (new SspModelTransfer())->fromArray($spySspModelEntity->toArray(), true);
-                    $sspAssetTransfer->addModel($sspModelTransfer);
-                }
+        if ($sspAssetIncludeTransfer->getWithSspModels() && $spySspAssetEntity->getSpySspAssetToSspModels()->count()) {
+            foreach ($spySspAssetEntity->getSpySspAssetToSspModels() as $sspAssetToSspModelEntity) {
+                $sspAssetTransfer->getSspModels()->append(
+                    (new SspModelTransfer())->fromArray($sspAssetToSspModelEntity->getSpySspModel()->toArray(), true),
+                );
             }
         }
 

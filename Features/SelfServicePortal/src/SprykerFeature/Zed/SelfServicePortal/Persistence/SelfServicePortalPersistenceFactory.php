@@ -20,6 +20,7 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAssetQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetSearchQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetStorageQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToSspModelQuery;
@@ -255,5 +256,10 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesOrderItemMapper(): SalesOrderItemMapper
     {
         return new SalesOrderItemMapper();
+    }
+
+    public function createSspAssetSearchPropelQuery(): SpySspAssetSearchQuery
+    {
+        return new SpySspAssetSearchQuery();
     }
 }

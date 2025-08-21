@@ -16,6 +16,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery;
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
+use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\Comment\Business\CommentFacadeInterface;
 use Spryker\Zed\Company\Business\CompanyFacadeInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
@@ -260,6 +261,11 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
      */
     public const PLUGINS_SSP_ASSET_MANAGEMENT_EXPANDER = 'PLUGINS_SSP_ASSET_MANAGEMENT_EXPANDER';
 
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
@@ -303,7 +309,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductOfferShipmentTypeFacade($container);
         $container = $this->addShipmentTypeFacade($container);
         $container = $this->addEventFacade($container);
-        $container = $this->addEventBehaviorFacade($container);
         $container = $this->addProductPropelQuery($container);
         $container = $this->addShipmentTypeQuery($container);
         $container = $this->addProductShipmentTypeQuery($container);
@@ -325,6 +330,8 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductStorageFacade($container);
         $container = $this->addMailFacade($container);
         $container = $this->addCustomerFacade($container);
+        $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -384,15 +391,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_EVENT, static function (Container $container): EventFacadeInterface {
             return $container->getLocator()->event()->facade();
-        });
-
-        return $container;
-    }
-
-    protected function addEventBehaviorFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_EVENT_BEHAVIOR, static function (Container $container): EventBehaviorFacadeInterface {
-            return $container->getLocator()->eventBehavior()->facade();
         });
 
         return $container;
@@ -761,5 +759,23 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     protected function getStateMachineCommandPlugins(): array
     {
         return [];
+    }
+
+    protected function addEventBehaviorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container): EventBehaviorFacadeInterface {
+            return $container->getLocator()->eventBehavior()->facade();
+        });
+
+        return $container;
+    }
+
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container): UtilEncodingServiceInterface {
+            return $container->getLocator()->utilEncoding()->service();
+        });
+
+        return $container;
     }
 }

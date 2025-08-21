@@ -33,6 +33,7 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Orm\Zed\SelfServicePortal\Persistence\Base\SpySspAssetSearchQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery;
@@ -47,8 +48,11 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySalesProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAsset;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetSearch;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnit;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToSspModel;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToSspModelQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiry;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryFile;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryFileQuery;
@@ -72,11 +76,6 @@ class SelfServicePortalHelper extends Module
 {
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
-
-    public function ensureProductClassTableIsEmpty(): void
-    {
-        $this->getProductClassQuery()->deleteAll();
-    }
 
     /**
      * @param array<string, mixed> $productClassOverride
@@ -119,10 +118,7 @@ class SelfServicePortalHelper extends Module
         }
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($idProduct, $idProductClass): void {
-            $this->cleanupProductToProductClass(
-                $idProduct,
-                $idProductClass,
-            );
+            $this->cleanupProductToProductClass($idProduct, $idProductClass);
         });
     }
 
@@ -140,32 +136,8 @@ class SelfServicePortalHelper extends Module
         }
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($idSalesOrderItem, $idSalesProductClass): void {
-            $this->cleanupSalesOrderItemToProductClass(
-                $idSalesOrderItem,
-                $idSalesProductClass,
-            );
+            $this->cleanupSalesOrderItemToProductClass($idSalesOrderItem, $idSalesProductClass);
         });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array<\Generated\Shared\Transfer\ProductClassTransfer> $productClassTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    public function addProductClassesToProductAbstract(
-        ProductAbstractTransfer $productAbstractTransfer,
-        array $productClassTransfers
-    ): ProductAbstractTransfer {
-        foreach ($productClassTransfers as $productClassTransfer) {
-            $this->haveProductToProductClass(
-                $productAbstractTransfer->getIdProductAbstractOrFail(),
-                $productClassTransfer->getIdProductClassOrFail(),
-            );
-            $productAbstractTransfer->addProductClass($productClassTransfer);
-        }
-
-        return $productAbstractTransfer;
     }
 
     public function haveProductConcreteShipmentType(
@@ -215,13 +187,13 @@ class SelfServicePortalHelper extends Module
 
         if (!$sspInquiryTransfer->getStore()->getIdStore()) {
             $sspInquiryTransfer->getStore()->setIdStore(
-                SpyStoreQuery::create()->findOneByName($sspInquiryTransfer->getStore()->getName())->getIdStore(),
+                $this->getStoreQuery()->findOneByName($sspInquiryTransfer->getStore()->getName())->getIdStore(),
             );
         }
         $sspInquiryEntity = (new SspInquiryMapper())->mapSspInquiryTransferToSspInquiryEntity($sspInquiryTransfer, new SpySspInquiry());
 
         if ($sspInquiryTransfer->getStatus()) {
-            $stateMachineItemState = SpyStateMachineItemStateQuery::create()->findOneByName($sspInquiryTransfer->getStatus());
+            $stateMachineItemState = $this->getStateMachineItemStateQuery()->findOneByName($sspInquiryTransfer->getStatus());
             if ($stateMachineItemState) {
                 $sspInquiryEntity->setFkStateMachineItemState($stateMachineItemState->getIdStateMachineItemState());
             }
@@ -250,8 +222,8 @@ class SelfServicePortalHelper extends Module
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($sspInquiryTransfer): void {
             $this->debug(sprintf('Deleting Ssp Inquiry: %s', $sspInquiryTransfer->getIdSspInquiry()));
-            SpySspInquiryFileQuery::create()->filterByFkSspInquiry($sspInquiryTransfer->getIdSspInquiry())->delete();
-            SpySspInquiryQuery::create()->filterByIdSspInquiry($sspInquiryTransfer->getIdSspInquiry())->delete();
+            $this->getSspInquiryFileQuery()->filterByFkSspInquiry($sspInquiryTransfer->getIdSspInquiry())->delete();
+            $this->getSspInquiryQuery()->filterByIdSspInquiry($sspInquiryTransfer->getIdSspInquiry())->delete();
         });
 
         return $sspInquiryTransfer;
@@ -326,16 +298,214 @@ class SelfServicePortalHelper extends Module
             }
         }
 
+        foreach ($sspAssetTransfer->getSspModels() as $sspModelTransfer) {
+            (new SpySspAssetToSspModel())
+                ->setFkSspAsset($sspAssetEntity->getIdSspAsset())
+                ->setFkSspModel($sspModelTransfer->getIdSspModel())
+                ->save();
+        }
+
         $sspAssetTransfer->setIdSspAsset($sspAssetEntity->getIdSspAsset());
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($sspAssetTransfer): void {
             $this->debug(sprintf('Deleting Asset: %s', $sspAssetTransfer->getIdSspAsset()));
-            SpySspAssetToCompanyBusinessUnitQuery::create()->filterByFkSspAsset($sspAssetTransfer->getIdSspAsset())->delete();
-            SpySspInquirySspAssetQuery::create()->filterByFkSspAsset($sspAssetTransfer->getIdSspAsset())->delete();
-            SpySspAssetQuery::create()->filterByIdSspAsset($sspAssetTransfer->getIdSspAsset())->delete();
+            $this->getSspAssetToCompanyBusinessUnitQuery()->filterByFkSspAsset($sspAssetTransfer->getIdSspAsset())->delete();
+            $this->getSspInquirySspAssetQuery()->filterByFkSspAsset($sspAssetTransfer->getIdSspAsset())->delete();
+            $this->getSspAssetQuery()->filterByIdSspAsset($sspAssetTransfer->getIdSspAsset())->delete();
+            $this->getSspAssetToSspModelQuery()->filterByFkSspAsset($sspAssetTransfer->getIdSspAsset())->delete();
         });
 
         return $sspAssetTransfer;
+    }
+
+    public function haveSspAssetSearch(array $seedData = []): SpySspAssetSearch
+    {
+        $sspAssetSearchEntity = (new SpySspAssetSearch())->fromArray($seedData);
+
+        $sspAssetSearchEntity->save();
+
+        return $sspAssetSearchEntity;
+    }
+
+    /**
+     * @param array<string, mixed> $salesProductClassOverride
+     *
+     * @return \Generated\Shared\Transfer\SalesProductClassTransfer
+     */
+    public function haveSalesProductClass(array $salesProductClassOverride = []): SalesProductClassTransfer
+    {
+        $salesProductClassTransfer = (new SalesProductClassBuilder($salesProductClassOverride))->build();
+
+        $salesProductClassEntity = $this->getSalesProductClassQuery()
+            ->filterByName($salesProductClassTransfer->getName())
+            ->findOneOrCreate();
+
+        $salesProductClassEntity->fromArray($salesProductClassTransfer->modifiedToArray());
+        if ($salesProductClassEntity->isNew() || $salesProductClassEntity->isModified()) {
+            $salesProductClassEntity->save();
+        }
+
+        $salesProductClassTransfer->setIdSalesProductClass($salesProductClassEntity->getIdSalesProductClass());
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($salesProductClassTransfer): void {
+            $this->getSalesProductClassQuery()->filterByIdSalesProductClass($salesProductClassTransfer->getIdSalesProductClass())->delete();
+        });
+
+        return $salesProductClassTransfer;
+    }
+
+    /**
+     * @param array<string, int> $data
+     *
+     * @return void
+     */
+    public function haveCompanyFileAttachment(array $data): void
+    {
+        $companyFileEntity = $this->createCompanyFileQuery()
+            ->filterByFkFile($data['idFile'])
+            ->filterByFkCompany($data['idCompany'])
+            ->findOneOrCreate();
+
+        $companyFileEntity->save();
+
+        $this->getDataCleanupHelper()->addCleanup(function () use ($companyFileEntity): void {
+            $companyFileEntity->delete();
+        });
+    }
+
+    /**
+     * @param array<string, int> $data
+     *
+     * @return void
+     */
+    public function haveCompanyUserFileAttachment(array $data): void
+    {
+        $companyUserFileEntity = $this->createCompanyUserFileQuery()
+            ->filterByFkFile($data['idFile'])
+            ->filterByFkCompanyUser($data['idCompanyUser'])
+            ->findOneOrCreate();
+
+        if (isset($data['attachedAt'])) {
+            $companyUserFileEntity->setCreatedAt($data['attachedAt']);
+        }
+
+        $companyUserFileEntity->save();
+
+        $this->getDataCleanupHelper()->addCleanup(function () use ($companyUserFileEntity): void {
+            $companyUserFileEntity->delete();
+        });
+    }
+
+    public function haveCompanyBusinessUnitFileAttachment(array $data): void
+    {
+        $companyBusinessUnitFileEntity = $this->createCompanyBusinessUnitFileQuery()
+            ->filterByFkFile($data['idFile'])
+            ->filterByFkCompanyBusinessUnit($data['idCompanyBusinessUnit'])
+            ->findOneOrCreate();
+
+        $companyBusinessUnitFileEntity->save();
+
+        $this->getDataCleanupHelper()->addCleanup(function () use ($companyBusinessUnitFileEntity): void {
+            $companyBusinessUnitFileEntity->delete();
+        });
+    }
+
+    public function haveSspAssetFileAttachment(array $data): void
+    {
+        $sspAssetFileEntity = $this->createSspAssetFileQuery()
+            ->filterByFkFile($data['idFile'])
+            ->filterByFkSspAsset($data['idSspAsset'])
+            ->findOneOrCreate();
+
+        $sspAssetFileEntity->save();
+
+        $this->getDataCleanupHelper()->addCleanup(function () use ($sspAssetFileEntity): void {
+            $sspAssetFileEntity->delete();
+        });
+    }
+
+    public function haveCompanyBusinessUnitForDataImport(array $businessUnitData = []): void
+    {
+        $companyEntity = SpyCompanyQuery::create()
+            ->filterByName('Test Company')
+            ->findOneOrCreate();
+
+        if ($companyEntity->isNew()) {
+            $companyEntity->setName('Test Company')
+                ->setKey('test_company')
+                ->setStatus('approved')
+                ->save();
+        }
+
+        $businessUnitEntity = SpyCompanyBusinessUnitQuery::create()
+            ->filterByKey($businessUnitData['key'])
+            ->findOneOrCreate();
+
+        if ($businessUnitEntity->isNew()) {
+            $businessUnitEntity->setFkCompany($companyEntity->getIdCompany())
+                ->setKey($businessUnitData['key'])
+                ->setName($businessUnitData['name'] ?? $businessUnitData['key'])
+                ->save();
+        }
+    }
+
+    public function ensureProductClassTableIsEmpty(): void
+    {
+        $this->getProductClassQuery()->deleteAll();
+    }
+
+    public function ensureFileAttachmentTablesAreEmpty(): void
+    {
+        $this->createCompanyFileQuery()->deleteAll();
+        $this->createCompanyUserFileQuery()->deleteAll();
+        $this->createCompanyBusinessUnitFileQuery()->deleteAll();
+    }
+
+    public function ensureSalesOrderItemProductClassDatabaseTablesAreEmpty(): void
+    {
+        $this->getSalesOrderItemProductClassQuery()->deleteAll();
+        $this->getSalesProductClassQuery()->deleteAll();
+    }
+
+    public function ensureSspAssetTableIsEmpty(): void
+    {
+        $this->getSspAssetQuery()->deleteAll();
+    }
+
+    public function ensureSspAssetToCompanyBusinessUnitTableIsEmpty(): void
+    {
+        $this->getSspAssetToCompanyBusinessUnitQuery()->deleteAll();
+    }
+
+    public function ensureSspAssetToSspModelTableIsEmpty(): void
+    {
+        $this->getSspAssetToSspModelQuery()->deleteAll();
+    }
+
+    public function ensureSspAssetSearchTableIsEmpty(): void
+    {
+        $this->getSspAssetSearchQuery()->deleteAll();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array<\Generated\Shared\Transfer\ProductClassTransfer> $productClassTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function addProductClassesToProductAbstract(
+        ProductAbstractTransfer $productAbstractTransfer,
+        array $productClassTransfers
+    ): ProductAbstractTransfer {
+        foreach ($productClassTransfers as $productClassTransfer) {
+            $this->haveProductToProductClass(
+                $productAbstractTransfer->getIdProductAbstractOrFail(),
+                $productClassTransfer->getIdProductClassOrFail(),
+            );
+            $productAbstractTransfer->addProductClass($productClassTransfer);
+        }
+
+        return $productAbstractTransfer;
     }
 
     /**
@@ -425,6 +595,27 @@ class SelfServicePortalHelper extends Module
         return ['content' => $imageContent, 'extension' => $extension, 'type' => $type];
     }
 
+    /**
+     * @return array<\Orm\Zed\SelfServicePortal\Persistence\SpySspAsset>
+     */
+    public function getAllSspAssets(): array
+    {
+        return $this->getSspAssetQuery()->find()->getData();
+    }
+
+    public function findSspAssetByReference(string $reference): ?SpySspAsset
+    {
+        return $this->getSspAssetQuery()->findOneByReference($reference);
+    }
+
+    /**
+     * @return array<\Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnit>
+     */
+    public function getAllSspAssetToCompanyBusinessUnitAssignments(): array
+    {
+        return $this->getSspAssetToCompanyBusinessUnitQuery()->find()->getData();
+    }
+
     protected function cleanupSalesSspAsset(int $idSalesOrder, int $idSspAsset): void
     {
         $salesOrderEntity = $this->getSalesOrderQuery()
@@ -449,7 +640,7 @@ class SelfServicePortalHelper extends Module
         }
 
         if ($salesOrderItemIds) {
-            SpySalesOrderItemSspAssetQuery::create()
+            $this->getSalesOrderItemSspAssetQuery()
                 ->filterByFkSalesOrderItem_In($salesOrderItemIds)
                 ->filterByReference($sspAssetEntity->getReference())
                 ->delete();
@@ -457,8 +648,6 @@ class SelfServicePortalHelper extends Module
     }
 
     /**
-     * Generates and saves small images for the ssp inquiry.
-     *
      * @param int $fileAmount
      * @param \Generated\Shared\Transfer\SspInquiryTransfer|int $sspInquiryTransfer
      *
@@ -576,12 +765,17 @@ class SelfServicePortalHelper extends Module
 
     protected function deleteProductConcreteShipmentType(SpyProductShipmentType $productShipmentTypeEntity): void
     {
-        $this->createProductShipmentTypeQuery()
+        $this->getProductShipmentTypeQuery()
             ->filterByIdProductShipmentType($productShipmentTypeEntity->getIdProductShipmentType())
             ->delete();
     }
 
     protected function createProductShipmentTypeQuery(): SpyProductShipmentTypeQuery
+    {
+        return SpyProductShipmentTypeQuery::create();
+    }
+
+    protected function getProductShipmentTypeQuery(): SpyProductShipmentTypeQuery
     {
         return SpyProductShipmentTypeQuery::create();
     }
@@ -601,114 +795,54 @@ class SelfServicePortalHelper extends Module
         return SpySalesOrderItemProductClassQuery::create();
     }
 
-    public function ensureFileAttachmentTablesAreEmpty(): void
+    protected function getSalesProductClassQuery(): SpySalesProductClassQuery
     {
-        $this->createCompanyFileQuery()->deleteAll();
-        $this->createCompanyUserFileQuery()->deleteAll();
-        $this->createCompanyBusinessUnitFileQuery()->deleteAll();
+        return SpySalesProductClassQuery::create();
     }
 
-    public function ensureSalesOrderItemProductClassDatabaseTablesAreEmpty(): void
+    protected function getSalesOrderQuery(): SpySalesOrderQuery
     {
-        $this->getSalesOrderItemProductClassQuery()->deleteAll();
-        $this->getSalesProductClassQuery()->deleteAll();
+        return SpySalesOrderQuery::create();
     }
 
-    /**
-     * @param array<string, mixed> $salesProductClassOverride
-     *
-     * @return \Generated\Shared\Transfer\SalesProductClassTransfer
-     */
-    public function haveSalesProductClass(array $salesProductClassOverride = []): SalesProductClassTransfer
+    protected function getSspAssetQuery(): SpySspAssetQuery
     {
-        $salesProductClassTransfer = (new SalesProductClassBuilder($salesProductClassOverride))->build();
-
-        $salesProductClassEntity = $this->getSalesProductClassQuery()
-            ->filterByName($salesProductClassTransfer->getName())
-            ->findOneOrCreate();
-
-        $salesProductClassEntity->fromArray($salesProductClassTransfer->modifiedToArray());
-        if ($salesProductClassEntity->isNew() || $salesProductClassEntity->isModified()) {
-            $salesProductClassEntity->save();
-        }
-
-        $salesProductClassTransfer->setIdSalesProductClass($salesProductClassEntity->getIdSalesProductClass());
-
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($salesProductClassTransfer): void {
-            $this->getSalesProductClassQuery()->filterByIdSalesProductClass($salesProductClassTransfer->getIdSalesProductClass())->delete();
-        });
-
-        return $salesProductClassTransfer;
+        return SpySspAssetQuery::create();
     }
 
-    /**
-     * @param array<string, int> $data
-     *
-     * @return void
-     */
-    public function haveCompanyFileAttachment(array $data): void
+    protected function getSspAssetToCompanyBusinessUnitQuery(): SpySspAssetToCompanyBusinessUnitQuery
     {
-        $companyFileEntity = $this->createCompanyFileQuery()
-            ->filterByFkFile($data['idFile'])
-            ->filterByFkCompany($data['idCompany'])
-            ->findOneOrCreate();
-
-        $companyFileEntity->save();
-
-        $this->getDataCleanupHelper()->addCleanup(function () use ($companyFileEntity): void {
-            $companyFileEntity->delete();
-        });
+        return SpySspAssetToCompanyBusinessUnitQuery::create();
     }
 
-    /**
-     * @param array<string, int> $data
-     *
-     * @return void
-     */
-    public function haveCompanyUserFileAttachment(array $data): void
+    protected function getSspAssetToSspModelQuery(): SpySspAssetToSspModelQuery
     {
-        $companyUserFileEntity = $this->createCompanyUserFileQuery()
-            ->filterByFkFile($data['idFile'])
-            ->filterByFkCompanyUser($data['idCompanyUser'])
-            ->findOneOrCreate();
-
-        if (isset($data['attachedAt'])) {
-            $companyUserFileEntity->setCreatedAt($data['attachedAt']);
-        }
-
-        $companyUserFileEntity->save();
-
-        $this->getDataCleanupHelper()->addCleanup(function () use ($companyUserFileEntity): void {
-            $companyUserFileEntity->delete();
-        });
+        return SpySspAssetToSspModelQuery::create();
     }
 
-    public function haveCompanyBusinessUnitFileAttachment(array $data): void
+    protected function getStoreQuery(): SpyStoreQuery
     {
-        $companyBusinessUnitFileEntity = $this->createCompanyBusinessUnitFileQuery()
-            ->filterByFkFile($data['idFile'])
-            ->filterByFkCompanyBusinessUnit($data['idCompanyBusinessUnit'])
-            ->findOneOrCreate();
-
-        $companyBusinessUnitFileEntity->save();
-
-        $this->getDataCleanupHelper()->addCleanup(function () use ($companyBusinessUnitFileEntity): void {
-            $companyBusinessUnitFileEntity->delete();
-        });
+        return SpyStoreQuery::create();
     }
 
-    public function haveSspAssetFileAttachment(array $data): void
+    protected function getStateMachineItemStateQuery(): SpyStateMachineItemStateQuery
     {
-        $sspAssetFileEntity = $this->createSspAssetFileQuery()
-            ->filterByFkFile($data['idFile'])
-            ->filterByFkSspAsset($data['idSspAsset'])
-            ->findOneOrCreate();
+        return SpyStateMachineItemStateQuery::create();
+    }
 
-        $sspAssetFileEntity->save();
+    protected function getSspInquiryQuery(): SpySspInquiryQuery
+    {
+        return SpySspInquiryQuery::create();
+    }
 
-        $this->getDataCleanupHelper()->addCleanup(function () use ($sspAssetFileEntity): void {
-            $sspAssetFileEntity->delete();
-        });
+    protected function getSspInquiryFileQuery(): SpySspInquiryFileQuery
+    {
+        return SpySspInquiryFileQuery::create();
+    }
+
+    protected function getSalesOrderItemSspAssetQuery(): SpySalesOrderItemSspAssetQuery
+    {
+        return SpySalesOrderItemSspAssetQuery::create();
     }
 
     public function createCompanyFileQuery(): SpyCompanyFileQuery
@@ -731,82 +865,13 @@ class SelfServicePortalHelper extends Module
         return SpySspAssetFileQuery::create();
     }
 
-    public function getSalesProductClassQuery(): SpySalesProductClassQuery
+    public function getSspInquirySspAssetQuery(): SpySspInquirySspAssetQuery
     {
-        return SpySalesProductClassQuery::create();
+        return SpySspInquirySspAssetQuery::create();
     }
 
-    protected function getSalesOrderQuery(): SpySalesOrderQuery
+    protected function getSspAssetSearchQuery(): SpySspAssetSearchQuery
     {
-        return SpySalesOrderQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\SspAssetManagement\Persistence\SpySspAssetQuery
-     */
-    protected function getSspAssetQuery(): SpySspAssetQuery
-    {
-        return SpySspAssetQuery::create();
-    }
-
-    protected function getSspAssetToCompanyBusinessUnitQuery(): SpySspAssetToCompanyBusinessUnitQuery
-    {
-        return SpySspAssetToCompanyBusinessUnitQuery::create();
-    }
-
-    public function ensureSspAssetTableIsEmpty(): void
-    {
-        $this->getSspAssetQuery()->deleteAll();
-    }
-
-    public function ensureSspAssetToCompanyBusinessUnitTableIsEmpty(): void
-    {
-        $this->getSspAssetToCompanyBusinessUnitQuery()->deleteAll();
-    }
-
-    /**
-     * @return array<\Orm\Zed\SelfServicePortal\Persistence\SpySspAsset>
-     */
-    public function getAllSspAssets(): array
-    {
-        return $this->getSspAssetQuery()->find()->getData();
-    }
-
-    public function findSspAssetByReference(string $reference): ?SpySspAsset
-    {
-        return $this->getSspAssetQuery()->findOneByReference($reference);
-    }
-
-    /**
-     * @return array<\Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnit>
-     */
-    public function getAllSspAssetToCompanyBusinessUnitAssignments(): array
-    {
-        return $this->getSspAssetToCompanyBusinessUnitQuery()->find()->getData();
-    }
-
-    public function haveCompanyBusinessUnitForDataImport(array $businessUnitData = []): void
-    {
-        $companyEntity = SpyCompanyQuery::create()
-            ->filterByName('Test Company')
-            ->findOneOrCreate();
-
-        if ($companyEntity->isNew()) {
-            $companyEntity->setName('Test Company')
-                ->setKey('test_company')
-                ->setStatus('approved')
-                ->save();
-        }
-
-        $businessUnitEntity = SpyCompanyBusinessUnitQuery::create()
-            ->filterByKey($businessUnitData['key'])
-            ->findOneOrCreate();
-
-        if ($businessUnitEntity->isNew()) {
-            $businessUnitEntity->setFkCompany($companyEntity->getIdCompany())
-                ->setKey($businessUnitData['key'])
-                ->setName($businessUnitData['name'] ?? $businessUnitData['key'])
-                ->save();
-        }
+        return SpySspAssetSearchQuery::create();
     }
 }

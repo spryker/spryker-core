@@ -7,21 +7,16 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step;
 
-use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\Event\Business\EventFacadeInterface;
-use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig as SharedSelfServicePortalConfig;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\DataSet\SspAssetDataSetInterface;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class SspAssetWriterStep implements DataImportStepInterface
 {
-    public function __construct(
-        protected SelfServicePortalConfig $config,
-        protected EventFacadeInterface $eventFacade
-    ) {
+    public function __construct(protected SelfServicePortalConfig $config)
+    {
     }
 
     /**
@@ -44,15 +39,5 @@ class SspAssetWriterStep implements DataImportStepInterface
         $sspAssetEntity->fromArray($assetData);
         $sspAssetEntity->save();
         $dataSet[SspAssetDataSetInterface::ID_SSP_ASSET] = $sspAssetEntity->getIdSspAsset();
-
-        $this->triggerPublishEvent($sspAssetEntity->getIdSspAsset());
-    }
-
-    protected function triggerPublishEvent(int $idSspAsset): void
-    {
-        $eventEntityTransfer = new EventEntityTransfer();
-        $eventEntityTransfer->setId($idSspAsset);
-
-        $this->eventFacade->trigger(SharedSelfServicePortalConfig::SSP_ASSET_PUBLISH, $eventEntityTransfer);
     }
 }

@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\SspModelCollectionTransfer;
 use Generated\Shared\Transfer\SspModelCriteriaTransfer;
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface SelfServicePortalRepositoryInterface
 {
@@ -112,4 +113,12 @@ interface SelfServicePortalRepositoryInterface
      * @return list<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSspAssetStorageSynchronizationDataTransfers(FilterTransfer $filterTransfer, array $sspAssetIds = []): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param array<int> $sspAssetIds
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SelfServicePortal\Persistence\SpySspAssetSearch>
+     */
+    public function getSspAssetSearchEntitiesByIds(FilterTransfer $filterTransfer, array $sspAssetIds = []): ObjectCollection;
 }

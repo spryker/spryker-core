@@ -8,6 +8,7 @@
 namespace SprykerFeatureTest\Shared\SelfServicePortal\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\SspModelBuilder;
 use Generated\Shared\Transfer\SspModelTransfer;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -18,10 +19,10 @@ class SspModelHelper extends Module
 
     public function haveSspModel(array $seedData = []): SspModelTransfer
     {
-        $sspModelTransfer = (new SspModelTransfer())->fromArray($seedData, true);
+        $sspModelTransfer = (new SspModelBuilder($seedData))->build();
 
         $sspModelEntity = SpySspModelQuery::create()
-            ->filterByReference($seedData['reference'])
+            ->filterByReference($sspModelTransfer->getReference())
             ->findOneOrCreate();
 
         $sspModelEntity
