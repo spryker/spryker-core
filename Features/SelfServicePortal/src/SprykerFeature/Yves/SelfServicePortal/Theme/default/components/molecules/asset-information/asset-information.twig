@@ -67,7 +67,7 @@
                     <div class="grid grid--stretch {{ config.name }}__info">
                         {% for info in data.assignments %}
                             <div class="col col--sm-12 col--md-5 {{ config.name }}__info-col" data-qa="ssp-asset-assignments">
-                                <strong>{{ info.companyBusinessUnit.name }}</strong>
+                                <strong>{{ info.companyBusinessUnit.name }}{% if info.companyBusinessUnit.company.name is defined %} ({{ info.companyBusinessUnit.company.name }}){% endif %}</strong>
                             </div>
                             <div class="col col--sm-12 col--md-7 {{ config.name }}__info-col">{{ info.assignedAt | formatDateTime }}</div>
                         {% endfor %}

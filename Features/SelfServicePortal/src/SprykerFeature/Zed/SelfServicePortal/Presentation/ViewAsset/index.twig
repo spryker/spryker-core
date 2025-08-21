@@ -69,7 +69,7 @@
                             },
                             {
                                 title: 'Business unit owner',
-                                value: sspAsset.companyBusinessUnit is not empty ? sspAsset.companyBusinessUnit.name : '---',
+                                value: sspAsset.companyBusinessUnit is not empty ? (sspAsset.companyBusinessUnit.name ~ (sspAsset.companyBusinessUnit.company.name is defined ? ' (' ~ sspAsset.companyBusinessUnit.company.name ~ ')' : '')) : '---',
                                 qa: 'ssp-asset-business-unit-owner',
                             },
                         ],

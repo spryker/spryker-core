@@ -8,6 +8,7 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Persistence\Mapper;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\SspAssetIncludeTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
@@ -73,13 +74,18 @@ class SspAssetMapper
     ): SspAssetTransfer {
         if ($sspAssetIncludeTransfer->getWithOwnerCompanyBusinessUnit() && $spySspAssetEntity->getSpyCompanyBusinessUnit()) {
             /**
-             * @var \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit $companyBusinessUnit
+             * @var \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit $companyBusinessUnitEntity
              */
-            $companyBusinessUnit = $spySspAssetEntity->getSpyCompanyBusinessUnit();
+            $companyBusinessUnitEntity = $spySspAssetEntity->getSpyCompanyBusinessUnit();
 
-            $sspAssetTransfer->setCompanyBusinessUnit(
-                (new CompanyBusinessUnitTransfer())->fromArray($companyBusinessUnit->toArray(), true),
-            );
+            $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())->fromArray($companyBusinessUnitEntity->toArray(), true);
+
+            if ($companyBusinessUnitEntity->getCompany() !== null) {
+                $companyTransfer = (new CompanyTransfer())->fromArray($companyBusinessUnitEntity->getCompany()->toArray(), true);
+                $companyBusinessUnitTransfer->setCompany($companyTransfer);
+            }
+
+            $sspAssetTransfer->setCompanyBusinessUnit($companyBusinessUnitTransfer);
         }
 
         if ($sspAssetIncludeTransfer->getWithSspModels()) {

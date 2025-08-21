@@ -127,26 +127,26 @@ class SspAssetFormDataProviderTest extends Unit
                 ],
                 'expectedOptions' => [
                     SspAssetForm::OPTION_BUSINESS_UNIT_ASSIGMENT_OPTIONS => [
-                        static::BUSINESS_UNIT_NAME_1 => static::BUSINESS_UNIT_ID_1,
-                        static::BUSINESS_UNIT_NAME_2 => static::BUSINESS_UNIT_ID_2,
+                        sprintf('%s - %s (ID: %s)', static::COMPANY_NAME_1, static::BUSINESS_UNIT_NAME_1, static::BUSINESS_UNIT_ID_1) => static::BUSINESS_UNIT_ID_1,
+                        sprintf('%s - %s (ID: %s)', static::COMPANY_NAME_2, static::BUSINESS_UNIT_NAME_2, static::BUSINESS_UNIT_ID_2) => static::BUSINESS_UNIT_ID_2,
                     ],
                     SspAssetForm::OPTION_BUSINESS_UNIT_OWNER => [
-                        static::BUSINESS_UNIT_NAME_1 => static::BUSINESS_UNIT_ID_1,
+                        sprintf('%s - %s (ID: %s)', static::COMPANY_NAME_1, static::BUSINESS_UNIT_NAME_1, static::BUSINESS_UNIT_ID_1) => static::BUSINESS_UNIT_ID_1,
                     ],
                     SspAssetForm::OPTION_COMPANY_ASSIGMENT_OPTIONS => [
-                        static::COMPANY_NAME_1 => static::COMPANY_ID_1,
-                        static::COMPANY_NAME_2 => static::COMPANY_ID_2,
+                        sprintf('%s (ID: %s)', static::COMPANY_NAME_1, static::COMPANY_ID_1) => static::COMPANY_ID_1,
+                        sprintf('%s (ID: %s)', static::COMPANY_NAME_2, static::COMPANY_ID_2) => static::COMPANY_ID_2,
                     ],
                 ],
                 'expectedAssertions' => [
                     [
                         'option' => SspAssetForm::OPTION_BUSINESS_UNIT_ASSIGMENT_OPTIONS,
-                        'key' => static::BUSINESS_UNIT_NAME_1,
+                        'key' => sprintf('%s - %s (ID: %s)', static::COMPANY_NAME_1, static::BUSINESS_UNIT_NAME_1, static::BUSINESS_UNIT_ID_1),
                         'value' => static::BUSINESS_UNIT_ID_1,
                     ],
                     [
                         'option' => SspAssetForm::OPTION_BUSINESS_UNIT_ASSIGMENT_OPTIONS,
-                        'key' => static::BUSINESS_UNIT_NAME_2,
+                        'key' => sprintf('%s - %s (ID: %s)', static::COMPANY_NAME_2, static::BUSINESS_UNIT_NAME_2, static::BUSINESS_UNIT_ID_2),
                         'value' => static::BUSINESS_UNIT_ID_2,
                     ],
                     [
@@ -155,12 +155,12 @@ class SspAssetFormDataProviderTest extends Unit
                     ],
                     [
                         'option' => SspAssetForm::OPTION_COMPANY_ASSIGMENT_OPTIONS,
-                        'key' => static::COMPANY_NAME_1,
+                        'key' => sprintf('%s (ID: %s)', static::COMPANY_NAME_1, static::COMPANY_ID_1),
                         'value' => static::COMPANY_ID_1,
                     ],
                     [
                         'option' => SspAssetForm::OPTION_COMPANY_ASSIGMENT_OPTIONS,
-                        'key' => static::COMPANY_NAME_2,
+                        'key' => sprintf('%s (ID: %s)', static::COMPANY_NAME_2, static::COMPANY_ID_2),
                         'value' => static::COMPANY_ID_2,
                     ],
                 ],
@@ -187,7 +187,7 @@ class SspAssetFormDataProviderTest extends Unit
                 ],
                 'expectedOptions' => [
                     SspAssetForm::OPTION_BUSINESS_UNIT_ASSIGMENT_OPTIONS => [
-                        static::BUSINESS_UNIT_NAME_2 => static::BUSINESS_UNIT_ID_2,
+                        sprintf('%s - %s (ID: %s)', static::COMPANY_NAME_2, static::BUSINESS_UNIT_NAME_2, static::BUSINESS_UNIT_ID_2) => static::BUSINESS_UNIT_ID_2,
                     ],
                     SspAssetForm::OPTION_BUSINESS_UNIT_OWNER => [],
                     SspAssetForm::OPTION_COMPANY_ASSIGMENT_OPTIONS => [],
@@ -195,7 +195,7 @@ class SspAssetFormDataProviderTest extends Unit
                 'expectedAssertions' => [
                     [
                         'option' => SspAssetForm::OPTION_BUSINESS_UNIT_ASSIGMENT_OPTIONS,
-                        'key' => static::BUSINESS_UNIT_NAME_2,
+                        'key' => sprintf('%s - %s (ID: %s)', static::COMPANY_NAME_2, static::BUSINESS_UNIT_NAME_2, static::BUSINESS_UNIT_ID_2),
                         'value' => static::BUSINESS_UNIT_ID_2,
                     ],
                 ],
@@ -246,7 +246,12 @@ class SspAssetFormDataProviderTest extends Unit
                         $businessUnitCollection->addCompanyBusinessUnit(
                             (new CompanyBusinessUnitTransfer())
                                 ->setIdCompanyBusinessUnit(static::BUSINESS_UNIT_ID_1)
-                                ->setName(static::BUSINESS_UNIT_NAME_1),
+                                ->setName(static::BUSINESS_UNIT_NAME_1)
+                                ->setCompany(
+                                    (new CompanyTransfer())
+                                        ->setIdCompany(static::COMPANY_ID_1)
+                                        ->setName(static::COMPANY_NAME_1),
+                                ),
                         );
                     }
 
@@ -254,7 +259,12 @@ class SspAssetFormDataProviderTest extends Unit
                         $businessUnitCollection->addCompanyBusinessUnit(
                             (new CompanyBusinessUnitTransfer())
                                 ->setIdCompanyBusinessUnit(static::BUSINESS_UNIT_ID_2)
-                                ->setName(static::BUSINESS_UNIT_NAME_2),
+                                ->setName(static::BUSINESS_UNIT_NAME_2)
+                                ->setCompany(
+                                    (new CompanyTransfer())
+                                        ->setIdCompany(static::COMPANY_ID_2)
+                                        ->setName(static::COMPANY_NAME_2),
+                                ),
                         );
                     }
                 }

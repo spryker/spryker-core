@@ -632,7 +632,10 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         $sspAssetQuery = $this->applyAssetSorting($sspAssetQuery, $sspAssetCriteriaTransfer);
 
         if ($sspAssetCriteriaTransfer->getInclude()?->getWithOwnerCompanyBusinessUnit()) {
-            $sspAssetQuery->joinWithSpyCompanyBusinessUnit(Criteria::LEFT_JOIN);
+            $sspAssetQuery->joinWithSpyCompanyBusinessUnit(Criteria::LEFT_JOIN)
+                ->useSpyCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
+                    ->joinWithCompany(Criteria::LEFT_JOIN)
+                ->endUse();
         }
 
         if ($sspAssetCriteriaTransfer->getInclude()?->getWithSspModels()) {
