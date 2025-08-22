@@ -41,12 +41,12 @@ class SspAssetToModelWritePublisherPluginTest extends Unit
     /**
      * @var string
      */
-    protected const STORE_NAME_UF = 'UF';
+    protected const STORE_NAME_AT = 'AT';
 
     /**
      * @var string
      */
-    protected const STORE_NAME_LO = 'LO';
+    protected const STORE_NAME_DE = 'DE';
 
     /**
      * @uses \Orm\Zed\SelfServicePortal\Persistence\Map\SpySspAssetToSspModelTableMap::COL_FK_SSP_ASSET
@@ -68,10 +68,18 @@ class SspAssetToModelWritePublisherPluginTest extends Unit
     {
         parent::setUp();
 
+        $storeTransferAT = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_AT,
+        ]);
+
+        $storeTransferDE = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_DE,
+        ]);
+
         $storeFacadeMock = $this->createMock(StoreFacadeInterface::class);
         $storeFacadeMock->method('getAllStores')->willReturn([
-            (new StoreTransfer())->setName(static::STORE_NAME_UF),
-            (new StoreTransfer())->setName(static::STORE_NAME_LO),
+            $storeTransferAT,
+            $storeTransferDE,
         ]);
 
         $this->tester->setDependency(
@@ -90,7 +98,7 @@ class SspAssetToModelWritePublisherPluginTest extends Unit
 
         $this->tester->setDependency(
             StoreDependencyProvider::SERVICE_STORE,
-            static::STORE_NAME_UF,
+            static::STORE_NAME_DE,
         );
 
         $this->tester->ensureSspAssetToCompanyBusinessUnitTableIsEmpty();
@@ -216,7 +224,7 @@ class SspAssetToModelWritePublisherPluginTest extends Unit
             SspAssetTransfer::BUSINESS_UNIT_ASSIGNMENTS => [
                 [SspAssetBusinessUnitAssignmentTransfer::COMPANY_BUSINESS_UNIT => $businessUnitTransfer],
             ],
-             SspAssetTransfer::SSP_MODELS => [
+            SspAssetTransfer::SSP_MODELS => [
                 $sspModelTransfer->modifiedToArray(false, true),
             ],
         ]);
@@ -357,6 +365,6 @@ class SspAssetToModelWritePublisherPluginTest extends Unit
         $this->assertArrayHasKey(SspAssetIndexMap::ID_OWNER_COMPANY_ID, $data);
 
         $this->assertSame(SelfServicePortalConfig::SSP_ASSET_RESOURCE_NAME, $data[SspAssetIndexMap::TYPE]);
-        $this->assertSame([static::STORE_NAME_UF, static::STORE_NAME_LO], $data[SspAssetIndexMap::STORE]);
+        $this->assertSame([static::STORE_NAME_AT, static::STORE_NAME_DE], $data[SspAssetIndexMap::STORE]);
     }
 }

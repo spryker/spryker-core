@@ -41,12 +41,12 @@ class SspAssetWritePublisherPluginTest extends Unit
     /**
      * @var string
      */
-    protected const STORE_NAME_UF = 'UF';
+    protected const STORE_NAME_AT = 'AT';
 
     /**
      * @var string
      */
-    protected const STORE_NAME_LO = 'LO';
+    protected const STORE_NAME_DE = 'DE';
 
     protected SelfServicePortalCommunicationTester $tester;
 
@@ -54,10 +54,18 @@ class SspAssetWritePublisherPluginTest extends Unit
     {
         parent::setUp();
 
+         $storeTransferAT = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_AT,
+         ]);
+
+        $storeTransferDE = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_DE,
+        ]);
+
         $storeFacadeMock = $this->createMock(StoreFacadeInterface::class);
         $storeFacadeMock->method('getAllStores')->willReturn([
-            (new StoreTransfer())->setName(static::STORE_NAME_UF),
-            (new StoreTransfer())->setName(static::STORE_NAME_LO),
+            $storeTransferAT,
+            $storeTransferDE,
         ]);
 
         $this->tester->setDependency(
@@ -76,7 +84,7 @@ class SspAssetWritePublisherPluginTest extends Unit
 
         $this->tester->setDependency(
             StoreDependencyProvider::SERVICE_STORE,
-            static::STORE_NAME_UF,
+            static::STORE_NAME_DE,
         );
 
         $this->tester->ensureSspAssetToCompanyBusinessUnitTableIsEmpty();
@@ -174,7 +182,7 @@ class SspAssetWritePublisherPluginTest extends Unit
             'id_owner_company_id' => $sspAssetTransfer->getCompanyBusinessUnit()?->getFkCompany(),
         ], $data[SspAssetIndexMap::SEARCH_RESULT_DATA]);
 
-        $this->assertSame([static::STORE_NAME_UF, static::STORE_NAME_LO], $data[SspAssetIndexMap::STORE]);
+        $this->assertSame([static::STORE_NAME_AT, static::STORE_NAME_DE], $data[SspAssetIndexMap::STORE]);
 
         $assignedBusinessUnitIds = array_map(
             fn (SspAssetBusinessUnitAssignmentTransfer $businessUnitAssignment) => $businessUnitAssignment->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail(),
