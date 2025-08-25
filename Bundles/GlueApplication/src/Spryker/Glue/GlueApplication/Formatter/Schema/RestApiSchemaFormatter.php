@@ -120,8 +120,12 @@ class RestApiSchemaFormatter implements SchemaFormatterInterface
             if ($resourceContext->getResourcePluginName() === null) {
                 continue;
             }
+
+            // When the current resource is an instance of the `\Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface`
+            // then skip this resource and continue with the next one.
+            // @ticket https://spryker.atlassian.net/browse/FRW-10925
             if ($this->checkIfResourceHasConvention($resourceContext->getResourcePluginName())) {
-                return $formattedData;
+                continue;
             }
 
             $formattedData = $this->formatPaths($formattedData, $resourceContext);
