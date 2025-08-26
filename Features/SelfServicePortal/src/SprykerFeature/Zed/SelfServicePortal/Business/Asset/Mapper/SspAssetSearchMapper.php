@@ -40,12 +40,17 @@ class SspAssetSearchMapper implements SspAssetSearchMapperInterface
     /**
      * @var string
      */
+    protected const SEARCH_DATA_KEY_REFERENCE = 'reference';
+
+    /**
+     * @var string
+     */
     protected const SEARCH_DATA_KEY_MODEL_IDS = 'model_ids';
 
     /**
      * @var string
      */
-    protected const SEARCH_DATA_KEY_BUSINESS_UNIT_IDS = 'busines_unit_ids';
+    protected const SEARCH_DATA_KEY_BUSINESS_UNIT_IDS = 'business_unit_ids';
 
     /**
      * @var string
@@ -139,6 +144,7 @@ class SspAssetSearchMapper implements SspAssetSearchMapperInterface
         $searchResultData = [
             static::SEARCH_DATA_KEY_NAME => $data[SspAssetTransfer::NAME] ?? null,
             static::SEARCH_DATA_KEY_SERIAL_NUMBER => $data[SspAssetTransfer::SERIAL_NUMBER] ?? null,
+            static::SEARCH_DATA_KEY_REFERENCE => $data[SspAssetTransfer::REFERENCE] ?? null,
             static::SEARCH_DATA_KEY_MODEL_IDS => array_map(fn (array $model) => $model[SspModelTransfer::ID_SSP_MODEL], $data[SspAssetTransfer::SSP_MODELS] ?? []),
             static::SEARCH_DATA_KEY_BUSINESS_UNIT_IDS => array_map(fn (array $businessUnit) => $businessUnit[SspAssetBusinessUnitAssignmentTransfer::COMPANY_BUSINESS_UNIT][CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT], $data[SspAssetTransfer::BUSINESS_UNIT_ASSIGNMENTS] ?? []),
             static::SEARCH_DATA_KEY_COMPANY_IDS => array_map(fn (array $businessUnit) => $businessUnit[SspAssetBusinessUnitAssignmentTransfer::COMPANY_BUSINESS_UNIT][CompanyBusinessUnitTransfer::COMPANY][CompanyTransfer::ID_COMPANY], $data[SspAssetTransfer::BUSINESS_UNIT_ASSIGNMENTS] ?? []),
@@ -157,6 +163,7 @@ class SspAssetSearchMapper implements SspAssetSearchMapperInterface
             SspAssetIndexMap::SUGGESTION_TERMS => $suggestionTerms,
             SspAssetIndexMap::COMPLETION_TERMS => $completionTerms,
             SspAssetIndexMap::STORE => array_map(fn (StoreTransfer $storeTransfer) => $storeTransfer->getName(), $storeTransfers),
+            SspAssetIndexMap::REFERENCE => $data[SspAssetTransfer::REFERENCE] ?? null,
             SspAssetIndexMap::ID_OWNER_BUSINESS_UNIT => $data[SspAssetTransfer::COMPANY_BUSINESS_UNIT][CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT] ?? null,
             SspAssetIndexMap::ID_OWNER_COMPANY_ID => $data[SspAssetTransfer::COMPANY_BUSINESS_UNIT][CompanyBusinessUnitTransfer::FK_COMPANY] ?? null,
             SspAssetIndexMap::COMPANY_IDS => array_map(fn (array $businessUnit) => $businessUnit[SspAssetBusinessUnitAssignmentTransfer::COMPANY_BUSINESS_UNIT][CompanyBusinessUnitTransfer::COMPANY][CompanyTransfer::ID_COMPANY], $data[SspAssetTransfer::BUSINESS_UNIT_ASSIGNMENTS]),
@@ -175,6 +182,10 @@ class SspAssetSearchMapper implements SspAssetSearchMapperInterface
 
         if (isset($data[SspAssetTransfer::NAME])) {
             $fullTextBoosted[] = $data[SspAssetTransfer::NAME];
+        }
+
+        if (isset($data[SspAssetTransfer::REFERENCE])) {
+            $fullTextBoosted[] = $data[SspAssetTransfer::REFERENCE];
         }
 
         if (isset($data[SspAssetTransfer::SSP_MODELS])) {
@@ -203,6 +214,10 @@ class SspAssetSearchMapper implements SspAssetSearchMapperInterface
             $suggestionTerms[] = $data[SspAssetTransfer::NAME];
         }
 
+        if (isset($data[SspAssetTransfer::REFERENCE])) {
+            $suggestionTerms[] = $data[SspAssetTransfer::REFERENCE];
+        }
+
         if (isset($data[SspAssetTransfer::SSP_MODELS])) {
             foreach ($data[SspAssetTransfer::SSP_MODELS] as $model) {
                 $suggestionTerms[] = $model[SspModelTransfer::NAME];
@@ -223,6 +238,10 @@ class SspAssetSearchMapper implements SspAssetSearchMapperInterface
 
         if (isset($data[SspAssetTransfer::NAME])) {
             $suggestionTerms[] = $data[SspAssetTransfer::NAME];
+        }
+
+        if (isset($data[SspAssetTransfer::REFERENCE])) {
+            $suggestionTerms[] = $data[SspAssetTransfer::REFERENCE];
         }
 
         if (isset($data[SspAssetTransfer::SSP_MODELS])) {

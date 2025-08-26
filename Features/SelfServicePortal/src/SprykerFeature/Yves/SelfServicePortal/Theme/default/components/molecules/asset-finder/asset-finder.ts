@@ -8,9 +8,11 @@ export default class AssetFinder extends Component {
     protected hiddenInput: HTMLInputElement;
     protected selectedAssetText: HTMLElement;
     protected changeButton: HTMLButtonElement;
+    protected clearElement: HTMLElement;
     protected ajaxProvider: AjaxProvider;
     protected currentSearchValue: string = '';
     protected resultsContainer: HTMLElement;
+    protected productIdInput: HTMLInputElement;
 
     protected readyCallback(): void {}
     protected init(): void {
@@ -20,6 +22,8 @@ export default class AssetFinder extends Component {
         this.changeButton = <HTMLButtonElement>this.querySelector(`.${this.jsName}__change-button`);
         this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__ajax-provider`);
         this.resultsContainer = <HTMLElement>this.querySelector(`.${this.jsName}__results-container`);
+        this.clearElement = <HTMLElement>this.querySelector(`.${this.jsName}__clear`);
+        this.productIdInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__product-id`);
 
         this.mapEvents();
     }
@@ -29,6 +33,7 @@ export default class AssetFinder extends Component {
         this.mapDocumentClickEvent();
         this.mapSelectEvent();
         this.mapChangeButtonClickEvent();
+        this.mapClearClickEvent();
     }
 
     protected mapSearchInputEvents(): void {
@@ -49,6 +54,10 @@ export default class AssetFinder extends Component {
 
     protected mapChangeButtonClickEvent(): void {
         this.changeButton.addEventListener('click', () => this.onChangeButtonClick());
+    }
+
+    protected mapClearClickEvent(): void {
+        this.clearElement.addEventListener('click', (event) => this.clearState(event));
     }
 
     protected async onInputKeyUp(): Promise<void> {
@@ -79,9 +88,14 @@ export default class AssetFinder extends Component {
         this.dispatchCustomEvent(EVENT_SELECT_ASSET, eventDetail);
     }
 
-    protected async onChangeButtonClick(): Promise<void> {
+    protected clearState(event?: Event): void {
+        event?.preventDefault();
         this.hiddenInput.value = '';
         this.classList.remove(this.selectedClass);
+    }
+
+    protected onChangeButtonClick(): void {
+        this.clearState();
         this.searchInput.focus();
     }
 

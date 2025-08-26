@@ -2,12 +2,14 @@
 
 {% define data = {
     assets: assets | default([]),
+    idProduct: idProduct
 } %}
 
 {% block body %}
     {% include molecule('asset-list', 'SelfServicePortal') with {
         data: {
             assets: data.assets,
+            idProduct: idProduct
         },
     } only %}
 {% endblock %}

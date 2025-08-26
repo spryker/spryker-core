@@ -639,11 +639,12 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
                 ->endUse();
         }
 
+        $sspAssetEntities = $this->getPaginatedCollection($sspAssetQuery, $sspAssetCriteriaTransfer->getPagination());
         if ($sspAssetCriteriaTransfer->getInclude()?->getWithSspModels()) {
             $sspAssetQuery
                 ->leftJoinWithSpySspAssetToSspModel()
                 ->useSpySspAssetToSspModelQuery(null, Criteria::LEFT_JOIN)
-                    ->leftJoinSpySspModel()
+                    ->leftJoinWithSpySspModel()
                 ->endUse();
         }
 

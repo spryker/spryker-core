@@ -7,6 +7,7 @@
 
 {% define data = {
     assets: [],
+    idProduct: null,
     emptyText: 'self_service_portal.asset.selector.no_assets_available',
 } %}
 
@@ -16,18 +17,28 @@
             {% block options %}
                 {% for asset in data.assets %}
                     {% block option %}
+                        {% set compatabilityLabel %}
+                            {% if data.idProduct %}
+                                <sapn>
+                                    {% widget 'AssetCompatibilityLabelWidget' args [asset.reference, data.idProduct] only %}
+                                    {% endwidget %}
+                                </sapn>
+                            {% endif %}
+                        {% endset %}
+
                         {% set information = {
                             serial: asset.serialNumber,
                             name: asset.name,
                             reference: asset.reference,
                             id: asset.idSspAsset,
+                            compatibilityLabel: data.idProduct ? compatabilityLabel : null,
                         } %}
 
                         <li class="list__item {{ config.name }}__item {{ config.jsName }}__item"
                             data-name="{{ asset.name }}"
                             tabIndex="0"
                             data-information="{{ information | json_encode }}">
-                            <span>{{ asset.name }}{% if asset.serialNumber %}, {{ asset.serialNumber }}{% endif %}</span>
+                            <span>{{ asset.name }}{% if asset.serialNumber %}, {{ asset.serialNumber }}{% endif %}{{ data.idProduct ? compatabilityLabel : null }}</span>
                         </li>
                     {% endblock %}
                 {% endfor %}

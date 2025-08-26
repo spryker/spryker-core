@@ -57,28 +57,28 @@ class SspAssetPublisherTriggerPluginTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->clearSspAssetData();
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
     }
 
     protected function tearDown(): void
     {
         parent::tearDown();
 
-        $this->tester->clearSspAssetData();
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
     }
 
     public function testGetDataReturnsSspAssetTransfersAccordingToOffsetAndLimit(): void
     {
         // Arrange
-        $this->tester->clearSspAssetData();
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
 
-        $this->tester->haveSspAsset([
+        $this->tester->haveAsset([
             SspAssetTransfer::NAME => 'First Asset',
         ]);
-        $this->tester->haveSspAsset([
+        $this->tester->haveAsset([
             SspAssetTransfer::NAME => 'Second Asset',
         ]);
-        $this->tester->haveSspAsset([
+        $this->tester->haveAsset([
             SspAssetTransfer::NAME => 'Third Asset',
         ]);
 
@@ -99,9 +99,9 @@ class SspAssetPublisherTriggerPluginTest extends Unit
     public function testGetDataReturnsNoSspAssetTransfersWhenLimitIsEqualToZero(): void
     {
         // Arrange
-        $this->tester->clearSspAssetData();
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
 
-        $this->tester->haveSspAsset([
+        $this->tester->haveAsset([
             SspAssetTransfer::NAME => 'Test Asset',
         ]);
 

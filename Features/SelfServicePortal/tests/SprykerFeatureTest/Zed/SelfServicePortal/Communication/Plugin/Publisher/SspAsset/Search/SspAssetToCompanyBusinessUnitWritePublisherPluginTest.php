@@ -100,9 +100,7 @@ class SspAssetToCompanyBusinessUnitWritePublisherPluginTest extends Unit
             static::STORE_NAME_DE,
         );
 
-        $this->tester->ensureSspAssetToCompanyBusinessUnitTableIsEmpty();
-        $this->tester->ensureSspAssetToSspModelTableIsEmpty();
-        $this->tester->ensureSspAssetTableIsEmpty();
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
     }
 
     public function testHandleBulkWritesSspAssetSearchDataOnBusinessUnitAssignmentCreate(): void
@@ -153,8 +151,8 @@ class SspAssetToCompanyBusinessUnitWritePublisherPluginTest extends Unit
         $this->assertArrayHasKey(SspAssetIndexMap::SEARCH_RESULT_DATA, $searchData);
 
         $resultData = $searchData[SspAssetIndexMap::SEARCH_RESULT_DATA];
-        $this->assertArrayHasKey('busines_unit_ids', $resultData);
-        $this->assertContains($businessUnitTransfer1->getIdCompanyBusinessUnit(), $resultData['busines_unit_ids']);
+        $this->assertArrayHasKey('business_unit_ids', $resultData);
+        $this->assertContains($businessUnitTransfer1->getIdCompanyBusinessUnit(), $resultData['business_unit_ids']);
 
         $this->assertArrayHasKey('company_ids', $resultData);
         $this->assertContains($companyTransfer1->getIdCompany(), $resultData['company_ids']);
@@ -191,9 +189,7 @@ class SspAssetToCompanyBusinessUnitWritePublisherPluginTest extends Unit
             'key' => 'key:1',
         ]);
 
-        $this->tester->ensureSspAssetToCompanyBusinessUnitTableIsEmpty();
-        $this->tester->ensureSspAssetToSspModelTableIsEmpty();
-        $this->tester->ensureSspAssetTableIsEmpty();
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
 
         // Act
         $sspAssetToCompanyBusinessUnitWritePublisherPlugin = new SspAssetToCompanyBusinessUnitWritePublisherPlugin();

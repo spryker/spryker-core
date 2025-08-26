@@ -32,7 +32,7 @@
                     }
                 },
                 {
-                    "string-sort": {
+                    "string_sort": {
                         "mapping": {
                             "normalizer": "lowercase_normalizer",
                             "type": "keyword"
@@ -65,7 +65,12 @@
                 },
                 "string-sort": {
                     "type": "object",
-                    "properties": {}
+                    "properties": {
+                        "name": {
+                            "type": "keyword",
+                            "normalizer": "lowercase_normalizer"
+                        }
+                    }
                 },
                 "business-unit-ids": {
                     "type": "integer"
@@ -78,6 +83,9 @@
                 },
                 "id-owner-company-id": {
                     "type": "integer"
+                },
+                "reference": {
+                    "type": "keyword"
                 }
             }
         }

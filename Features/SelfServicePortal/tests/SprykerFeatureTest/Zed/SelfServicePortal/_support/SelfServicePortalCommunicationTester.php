@@ -13,7 +13,6 @@ use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\ProductListBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -35,12 +34,9 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClass;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAsset;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAssetQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpySspAsset;
-use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetStorage;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetStorageQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnit;
-use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToSspModel;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToSspModelQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery;
@@ -100,26 +96,6 @@ class SelfServicePortalCommunicationTester extends Actor
     /**
      * @var string
      */
-    protected const DEFAULT_SSP_ASSET_REFERENCE_PREFIX = 'ASSET-REF-';
-
-    /**
-     * @var string
-     */
-    protected const DEFAULT_SSP_ASSET_NAME = 'Test Asset';
-
-    /**
-     * @var string
-     */
-    protected const DEFAULT_SSP_ASSET_SERIAL_NUMBER_PREFIX = 'SN-';
-
-    /**
-     * @var string
-     */
-    protected const DEFAULT_SSP_ASSET_STATUS = 'active';
-
-    /**
-     * @var string
-     */
     protected const DEFAULT_BUSINESS_UNIT_NAME_PREFIX = 'Test Business Unit ';
 
     /**
@@ -148,36 +124,6 @@ class SelfServicePortalCommunicationTester extends Actor
      * @var string
      */
     protected const STORAGE_FIELD_BUSINESS_UNIT_IDS = 'business_unit_ids';
-
-    /**
-     * @var string
-     */
-    protected const STORAGE_FIELD_NAME = 'name';
-
-    /**
-     * @var string
-     */
-    protected const STORAGE_FIELD_COMPANY_IDS = 'company_ids';
-
-    /**
-     * @var string
-     */
-    protected const STORAGE_FIELD_SERIAL_NUMBER = 'serial_number';
-
-    /**
-     * @var string
-     */
-    protected const STORAGE_FIELD_MODEL_IDS = 'model_ids';
-
-    /**
-     * @var string
-     */
-    protected const STORAGE_FIELD_ID_OWNER_BUSINESS_UNIT = 'id_owner_business_unit';
-
-    /**
-     * @var string
-     */
-    protected const STORAGE_FIELD_ID_OWNER_COMPANY_ID = 'id_owner_company_id';
 
     /**
      * @var string
@@ -542,50 +488,11 @@ class SelfServicePortalCommunicationTester extends Actor
         return $sspModelTransfer;
     }
 
-    public function haveSspAsset(array $seedData = []): SspAssetTransfer
-    {
-        $companyBusinessUnitTransfer = $seedData['companyBusinessUnit'] ?? $seedData['company_business_unit'] ?? $seedData['COMPANY_BUSINESS_UNIT'] ?? $this->createDefaultCompanyBusinessUnit();
-
-        $sspAssetEntity = new SpySspAsset();
-        $sspAssetEntity->setReference($seedData['reference'] ?? static::DEFAULT_SSP_ASSET_REFERENCE_PREFIX . uniqid());
-        $sspAssetEntity->setName($seedData['name'] ?? static::DEFAULT_SSP_ASSET_NAME);
-        $sspAssetEntity->setSerialNumber($seedData['serialNumber'] ?? $seedData['serial_number'] ?? $seedData['SERIAL_NUMBER'] ?? static::DEFAULT_SSP_ASSET_SERIAL_NUMBER_PREFIX . uniqid());
-        $sspAssetEntity->setStatus($seedData['status'] ?? static::DEFAULT_SSP_ASSET_STATUS);
-        $sspAssetEntity->setFkCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
-        $sspAssetEntity->save();
-
-        $sspAssetTransfer = new SspAssetTransfer();
-        $sspAssetTransfer->setIdSspAsset($sspAssetEntity->getIdSspAsset());
-        $sspAssetTransfer->setReference($sspAssetEntity->getReference());
-        $sspAssetTransfer->setName($sspAssetEntity->getName());
-        $sspAssetTransfer->setSerialNumber($sspAssetEntity->getSerialNumber());
-        $sspAssetTransfer->setStatus($sspAssetEntity->getStatus());
-        $sspAssetTransfer->setCompanyBusinessUnit($companyBusinessUnitTransfer);
-
-        return $sspAssetTransfer;
-    }
-
-    public function createDefaultCompanyBusinessUnit(): CompanyBusinessUnitTransfer
-    {
-        $companyTransfer = $this->haveCompany();
-
-        return $this->haveCompanyBusinessUnit([
-            'name' => static::DEFAULT_BUSINESS_UNIT_NAME_PREFIX . uniqid(),
-            'email' => static::DEFAULT_BUSINESS_UNIT_EMAIL,
-            'fk_company' => $companyTransfer->getIdCompany(),
-        ]);
-    }
-
     public function clearSspModelData(): void
     {
+        $this->getSspAssetToSspModelQuery()->deleteAll();
         $this->getSspModelToProductListQuery()->deleteAll();
         $this->getSspModelQuery()->deleteAll();
-    }
-
-    public function clearSspAssetData(): void
-    {
-        $this->getSspAssetToSspModelQuery()->deleteAll();
-        $this->getSspAssetQuery()->deleteAll();
     }
 
     public function clearSspModelStorageData(): void
@@ -741,24 +648,9 @@ class SelfServicePortalCommunicationTester extends Actor
         return SpySspModelStorageQuery::create();
     }
 
-    protected function getSspAssetQuery(): SpySspAssetQuery
-    {
-        return SpySspAssetQuery::create();
-    }
-
     protected function getSspAssetStorageQuery(): SpySspAssetStorageQuery
     {
         return SpySspAssetStorageQuery::create();
-    }
-
-    protected function getSspAssetToCompanyBusinessUnitQuery(): SpySspAssetToCompanyBusinessUnitQuery
-    {
-        return SpySspAssetToCompanyBusinessUnitQuery::create();
-    }
-
-    public function ensureSspModelTableIsEmpty(): void
-    {
-        $this->getSspModelQuery()->deleteAll();
     }
 
     /**

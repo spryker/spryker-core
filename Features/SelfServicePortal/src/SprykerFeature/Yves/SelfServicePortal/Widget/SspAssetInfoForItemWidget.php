@@ -20,9 +20,15 @@ class SspAssetInfoForItemWidget extends AbstractWidget
      */
     protected const PARAMETER_ASSET = 'asset';
 
+    /**
+     * @var string
+     */
+    protected const PARAMETER_ID_PRODUCT = 'idProduct';
+
     public function __construct(ItemTransfer $itemTransfer)
     {
         $this->addAssetParameter($itemTransfer);
+        $this->addIdProductParameter($itemTransfer);
     }
 
     public static function getName(): string
@@ -38,5 +44,10 @@ class SspAssetInfoForItemWidget extends AbstractWidget
     protected function addAssetParameter(ItemTransfer $itemTransfer): void
     {
         $this->addParameter(static::PARAMETER_ASSET, $itemTransfer->getSspAsset());
+    }
+
+    protected function addIdProductParameter(ItemTransfer $itemTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_ID_PRODUCT, $itemTransfer->getId());
     }
 }

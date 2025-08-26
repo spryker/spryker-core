@@ -1,7 +1,8 @@
 {% extends template('widget') %}
 
 {% define data = {
-    asset: _widget.asset
+    asset: _widget.asset,
+    idProduct: _widget.idProduct
 } %}
 
 {% block body %}
@@ -22,6 +23,9 @@
                             {{ 'self_service_portal.asset.serial_number' | trans }}: {{ data.asset.serialNumber }}
                         </li>
                     {% endif %}
+                    <li class="list__item">
+                        {% widget 'AssetCompatibilityLabelWidget' args [data.asset.reference, data.idProduct] %}{% endwidget %}
+                    </li>
                 </ul>
             {% endblock %}
         </div>

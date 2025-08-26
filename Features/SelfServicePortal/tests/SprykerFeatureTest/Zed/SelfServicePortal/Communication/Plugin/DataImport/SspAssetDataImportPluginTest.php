@@ -56,8 +56,8 @@ class SspAssetDataImportPluginTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
-        $this->tester->ensureSspAssetToCompanyBusinessUnitTableIsEmpty();
-        $this->tester->ensureSspAssetTableIsEmpty();
+
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
     }
 
     public function testImportImportsSspAssets(): void
@@ -186,7 +186,6 @@ class SspAssetDataImportPluginTest extends Unit
     {
         parent::_after();
 
-        $this->tester->ensureSspAssetToCompanyBusinessUnitTableIsEmpty();
-        $this->tester->ensureSspAssetTableIsEmpty();
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
     }
 }

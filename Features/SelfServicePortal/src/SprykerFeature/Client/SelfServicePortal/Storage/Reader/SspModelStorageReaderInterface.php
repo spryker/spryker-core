@@ -15,4 +15,11 @@ interface SspModelStorageReaderInterface
     public function getSspModelStorageCollection(
         SspModelStorageCriteriaTransfer $sspModelStorageCriteriaTransfer
     ): SspModelStorageCollectionTransfer;
+
+    /**
+     * @param list<int> $modelIds
+     *
+     * @return list<\Generated\Shared\Transfer\SspModelStorageTransfer>
+     */
+    public function getSspModelStoragesByIds(array $modelIds): array;
 }

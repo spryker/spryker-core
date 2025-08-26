@@ -72,7 +72,8 @@ class SspModelDataImportPluginTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
-        $this->tester->ensureSspModelTableIsEmpty();
+
+        $this->tester->clearSspModelData();
     }
 
     public function testImportImportsSspModels(): void

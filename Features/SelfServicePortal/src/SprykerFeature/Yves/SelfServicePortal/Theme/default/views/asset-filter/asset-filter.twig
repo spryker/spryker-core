@@ -1,0 +1,36 @@
+{% extends template('widget') %}
+
+{% define data = {
+    assetData: _widget.sspAssetData | default(null),
+    isDisabled: _widget.isDisabled ?? true,
+} %}
+
+{% block body %}
+    {% if not data.isDisabled %}
+    <div class="filter-section box spacing-top--big">
+        {% block information %}
+            {% block title %}
+                <h3 class="title--h6">{{ 'self_service_portal.asset_filter.title' | trans }}</h3>
+            {% endblock %}
+
+            {% block description %}
+                <small>{{ 'self_service_portal.asset_filter.description' | trans }}</small>
+            {% endblock %}
+
+            {% block content %}
+                {% set selected = data.assetData is not empty ? data.assetData.serial_number ? "#{data.assetData.name}, #{data.assetData.serial_number}" : data.assetData.name %}
+
+                {% include molecule('asset-finder', 'SelfServicePortal') with {
+                    modifiers: ['catalog'],
+                    data: {
+                        label: 'self_service_portal.asset_filter.select_label',
+                        formFieldName: 'ssp-asset-reference',
+                        isDisabled: false,
+                        selected: selected,
+                    }
+                } only %}
+            {% endblock %}
+        {% endblock %}
+    </div>
+    {% endif %}
+{% endblock %}

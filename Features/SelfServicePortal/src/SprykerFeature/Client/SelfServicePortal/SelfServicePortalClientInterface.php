@@ -17,6 +17,8 @@ use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
+use Generated\Shared\Transfer\SspAssetSearchCollectionTransfer;
+use Generated\Shared\Transfer\SspAssetSearchCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetStorageCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetStorageCriteriaTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
@@ -212,11 +214,27 @@ interface SelfServicePortalClientInterface
 
     /**
      * Specification:
+     * - Retrieves SSP asset search collection from search based on criteria.
+     * - Uses search engine to find assets matching the criteria.
+     * - Returns `SspAssetSearchCollectionTransfer` filled with found SSP assets.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspAssetSearchCriteriaTransfer $sspAssetSearchCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspAssetSearchCollectionTransfer
+     */
+    public function getSspAssetSearchCollection(
+        SspAssetSearchCriteriaTransfer $sspAssetSearchCriteriaTransfer
+    ): SspAssetSearchCollectionTransfer;
+
+    /**
+     * Specification:
      * - Retrieves SSP asset storage collection from storage based on criteria.
-     * - Requires SspAssetStorageCriteriaTransfer.sspAssetStorageConditions to be set.
-     * - Requires SspAssetStorageCriteriaTransfer.companyUser to be set.
+     * - Requires `SspAssetStorageCriteriaTransfer.sspAssetStorageConditions` to be set.
+     * - Requires `SspAssetStorageCriteriaTransfer.companyUser` to be set.
      * - Filters by SSP asset references provided in criteria conditions.
-     * - Filters out assets that company user does not have access to based on ViewBusinessUnitSspAssetPermissionPlugin and ViewCompanySspAssetPermissionPlugin permission.
+     * - Filters out assets that company user does not have access to based on `ViewBusinessUnitSspAssetPermissionPlugin` and `ViewCompanySspAssetPermissionPlugin` permission.
      * - Returns collection of SSP asset storage transfers.
      *
      * @api

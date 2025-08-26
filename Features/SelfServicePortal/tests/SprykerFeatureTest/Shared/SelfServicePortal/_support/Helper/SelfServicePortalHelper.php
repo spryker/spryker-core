@@ -467,14 +467,11 @@ class SelfServicePortalHelper extends Module
         $this->getSalesProductClassQuery()->deleteAll();
     }
 
-    public function ensureSspAssetTableIsEmpty(): void
-    {
-        $this->getSspAssetQuery()->deleteAll();
-    }
-
-    public function ensureSspAssetToCompanyBusinessUnitTableIsEmpty(): void
+    public function ensureSspAssetRelatedTablesAreEmpty(): void
     {
         $this->getSspAssetToCompanyBusinessUnitQuery()->deleteAll();
+        $this->getSspAssetToSspModelQuery()->deleteAll();
+        $this->getSspAssetQuery()->deleteAll();
     }
 
     public function ensureSspAssetToSspModelTableIsEmpty(): void

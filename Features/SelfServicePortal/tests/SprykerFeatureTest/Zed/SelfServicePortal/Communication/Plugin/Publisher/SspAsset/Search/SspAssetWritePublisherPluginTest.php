@@ -87,9 +87,7 @@ class SspAssetWritePublisherPluginTest extends Unit
             static::STORE_NAME_DE,
         );
 
-        $this->tester->ensureSspAssetToCompanyBusinessUnitTableIsEmpty();
-        $this->tester->ensureSspAssetToSspModelTableIsEmpty();
-        $this->tester->ensureSspAssetTableIsEmpty();
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
     }
 
     public function testHandleBulkWritesSspAssetSearchData(): void
@@ -172,11 +170,13 @@ class SspAssetWritePublisherPluginTest extends Unit
         $this->assertArrayHasKey(SspAssetIndexMap::ID_OWNER_COMPANY_ID, $data);
 
         $this->assertSame(SelfServicePortalConfig::SSP_ASSET_RESOURCE_NAME, $data[SspAssetIndexMap::TYPE]);
+
         $this->assertSame([
             'name' => $sspAssetTransfer->getName(),
             'serial_number' => $sspAssetTransfer->getSerialNumber(),
+            'reference' => $sspAssetTransfer->getReference(),
             'model_ids' => array_map(fn (SspModelTransfer $sspModel) => $sspModel->getIdSspModel(), $sspAssetTransfer->getSspModels()->getArrayCopy()),
-            'busines_unit_ids' => array_map(fn (SspAssetBusinessUnitAssignmentTransfer $businessUnitAssignment) => $businessUnitAssignment->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail(), $sspAssetTransfer->getBusinessUnitAssignments()->getArrayCopy()),
+            'business_unit_ids' => array_map(fn (SspAssetBusinessUnitAssignmentTransfer $businessUnitAssignment) => $businessUnitAssignment->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail(), $sspAssetTransfer->getBusinessUnitAssignments()->getArrayCopy()),
             'company_ids' => array_map(fn (SspAssetBusinessUnitAssignmentTransfer $businessUnitAssignment) => $businessUnitAssignment->getCompanyBusinessUnitOrFail()->getFkCompanyOrFail(), $sspAssetTransfer->getBusinessUnitAssignments()->getArrayCopy()),
             'id_owner_business_unit' => $sspAssetTransfer->getCompanyBusinessUnit()?->getIdCompanyBusinessUnitOrFail(),
             'id_owner_company_id' => $sspAssetTransfer->getCompanyBusinessUnit()?->getFkCompany(),
@@ -203,17 +203,20 @@ class SspAssetWritePublisherPluginTest extends Unit
 
         $this->assertSame(array_filter([
             $sspAssetTransfer->getName(),
+            $sspAssetTransfer->getReference(),
             ...$sspModelNames,
             $sspAssetTransfer->getSerialNumber(),
         ]), $data[SspAssetIndexMap::FULL_TEXT_BOOSTED]);
 
         $this->assertSame(array_filter([
             $sspAssetTransfer->getName(),
+            $sspAssetTransfer->getReference(),
             ...$sspModelNames,
         ]), $data[SspAssetIndexMap::SUGGESTION_TERMS]);
 
         $this->assertSame(array_filter([
             $sspAssetTransfer->getName(),
+            $sspAssetTransfer->getReference(),
             ...$sspModelNames,
         ]), $data[SspAssetIndexMap::COMPLETION_TERMS]);
 

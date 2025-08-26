@@ -4,7 +4,7 @@
 
         &.is-selected {
             #{$name}__selected {
-                display: flex;
+                display: block;
             }
 
             #{$name}__finder {
@@ -28,12 +28,17 @@
 
         &__selected {
             display: none;
-            align-items: center;
-            justify-content: space-between;
             padding: 0.5rem;
             border: 0.0625rem solid #d9d9d9;
             border-radius: 4px;
             margin-top: 0.5rem;
+        }
+
+        &__selected-data {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 0.5rem;
         }
 
         &__change-button {

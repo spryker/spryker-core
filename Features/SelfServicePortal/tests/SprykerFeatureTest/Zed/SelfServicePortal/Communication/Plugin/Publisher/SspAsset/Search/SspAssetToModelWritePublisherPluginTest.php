@@ -101,9 +101,7 @@ class SspAssetToModelWritePublisherPluginTest extends Unit
             static::STORE_NAME_DE,
         );
 
-        $this->tester->ensureSspAssetToCompanyBusinessUnitTableIsEmpty();
-        $this->tester->ensureSspAssetToSspModelTableIsEmpty();
-        $this->tester->ensureSspAssetTableIsEmpty();
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
     }
 
     public function testHandleBulkWritesSspAssetSearchDataOnModelAssignmentCreate(): void
@@ -180,9 +178,7 @@ class SspAssetToModelWritePublisherPluginTest extends Unit
             ],
         ]);
 
-        $this->tester->ensureSspAssetToCompanyBusinessUnitTableIsEmpty();
-        $this->tester->ensureSspAssetToSspModelTableIsEmpty();
-        $this->tester->ensureSspAssetTableIsEmpty();
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
 
         // Act
         $sspAssetToModelWritePublisherPlugin = new SspAssetToModelWritePublisherPlugin();

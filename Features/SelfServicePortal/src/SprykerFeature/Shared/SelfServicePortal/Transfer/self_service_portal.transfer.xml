@@ -1134,6 +1134,7 @@
         <property name="name" type="string"/>
         <property name="serialNumber" type="string"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnitStorage"/>
+        <property name="sspModels" type="SspModel[]" singular="sspModel"/>
     </transfer>
 
     <transfer name="SspModelStorageCollection" strict="true">
@@ -1163,6 +1164,8 @@
 
     <transfer name="SspAssetSearch" strict="true">
         <property name="idSspAsset" type="int"/>
+        <property name="reference" type="string"/>
+        <property name="serialNumber" type="string"/>
         <property name="name" type="string"/>
         <property name="data" type="array" singular="data"/>
         <property name="structuredData" type="string"/>
@@ -1171,6 +1174,34 @@
 
     <transfer name="SspAssetSearchCollection" strict="true">
         <property name="sspAssets" type="SspAssetSearch[]" singular="sspAsset"/>
+    </transfer>
+
+    <transfer name="SspAssetSearchCriteria" strict="true">
+        <property name="searchString" type="string"/>
+        <property name="sort" type="array" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="SearchContext">
+        <property name="sourceIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcreteProductListStorage">
+        <property name="idWhitelists" type="array" singular="idWhitelists"/>
+    </transfer>
+
+    <transfer name="PaginationConfig">
+        <property name="itemsPerPageParameterName" type="string"/>
+        <property name="maxItemsPerPage" type="int"/>
+        <property name="parameterName" type="string"/>
+        <property name="defaultItemsPerPage" type="int"/>
+    </transfer>
+
+    <transfer name="SortConfig">
+        <property name="parameterName" type="string"/>
+        <property name="isDescending" type="bool"/>
+        <property name="name" type="string"/>
+        <property name="fieldName" type="string"/>
     </transfer>
 
 </transfers>

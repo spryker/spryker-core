@@ -60,7 +60,7 @@ class SspAssetListSynchronizationDataBulkRepositoryPluginTest extends Unit
         });
 
         $this->tester->clearSspAssetStorageData();
-        $this->tester->clearSspAssetData();
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
     }
 
     protected function tearDown(): void
@@ -68,7 +68,7 @@ class SspAssetListSynchronizationDataBulkRepositoryPluginTest extends Unit
         parent::tearDown();
 
         $this->tester->clearSspAssetStorageData();
-        $this->tester->clearSspAssetData();
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
     }
 
     public function testGetDataReturnsEmptyArrayWithInvalidIds(): void
@@ -86,8 +86,8 @@ class SspAssetListSynchronizationDataBulkRepositoryPluginTest extends Unit
         // Arrange
         $this->tester->clearSspAssetStorageData();
 
-        $sspAssetTransfer1 = $this->tester->haveSspAsset();
-        $sspAssetTransfer2 = $this->tester->haveSspAsset();
+        $sspAssetTransfer1 = $this->tester->haveAsset();
+        $sspAssetTransfer2 = $this->tester->haveAsset();
 
         $this->tester->haveSspAssetStorage($sspAssetTransfer1->getIdSspAsset(), [1, 2]);
         $this->tester->haveSspAssetStorage($sspAssetTransfer2->getIdSspAsset(), [3, 4]);
@@ -108,8 +108,8 @@ class SspAssetListSynchronizationDataBulkRepositoryPluginTest extends Unit
         // Arrange
         $this->tester->clearSspAssetStorageData();
 
-        $sspAssetTransfer1 = $this->tester->haveSspAsset();
-        $sspAssetTransfer2 = $this->tester->haveSspAsset();
+        $sspAssetTransfer1 = $this->tester->haveAsset();
+        $sspAssetTransfer2 = $this->tester->haveAsset();
 
         $this->tester->haveSspAssetStorage($sspAssetTransfer1->getIdSspAsset(), [1, 2]);
         $this->tester->haveSspAssetStorage($sspAssetTransfer2->getIdSspAsset(), [3, 4]);
@@ -129,7 +129,7 @@ class SspAssetListSynchronizationDataBulkRepositoryPluginTest extends Unit
     public function testGetDataReturnsEmptyArrayWhenLimitIsZero(): void
     {
         // Arrange
-        $sspAssetTransfer = $this->tester->haveSspAsset();
+        $sspAssetTransfer = $this->tester->haveAsset();
         $this->tester->haveSspAssetStorage($sspAssetTransfer->getIdSspAsset(), [1, 2, 3]);
 
         // Act
