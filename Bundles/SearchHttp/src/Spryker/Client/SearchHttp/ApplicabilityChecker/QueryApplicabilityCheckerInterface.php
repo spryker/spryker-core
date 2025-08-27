@@ -7,10 +7,14 @@
 
 namespace Spryker\Client\SearchHttp\ApplicabilityChecker;
 
+use Generated\Shared\Transfer\SearchContextTransfer;
+
 interface QueryApplicabilityCheckerInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
      * @return bool
      */
-    public function isQueryApplicable(): bool;
+    public function isQueryApplicable(SearchContextTransfer $searchContextTransfer): bool;
 }

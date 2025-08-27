@@ -9,9 +9,6 @@ namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\SearchContextTransfer;
 
-/**
- * @deprecated This interface will be merged to {@link \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface}.
- */
 interface SearchContextAwareQueryInterface
 {
     /**
@@ -19,8 +16,6 @@ interface SearchContextAwareQueryInterface
      * - Returns SearchContextTransfer which contains context information to be used for a query.
      *
      * @api
-     *
-     * @deprecated This method will be moved to {@link \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface}.
      *
      * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
@@ -31,8 +26,6 @@ interface SearchContextAwareQueryInterface
      * - Sets SearchContextTransfer which contains context information to be used for a query.
      *
      * @api
-     *
-     * @deprecated This method will be moved to {@link \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface}.
      *
      * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *

@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\Cms\Business\Version;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Generated\Shared\Transfer\CmsVersionTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
@@ -86,6 +88,25 @@ class VersionFinder implements VersionFinderInterface
         $cmsVersionEntity = $this->queryContainer->queryCmsVersionByIdPageAndVersion($idCmsPage, $version)->findOne();
 
         return $this->getCmsVersionTransfer($cmsVersionEntity);
+    }
+
+    /**
+     * @param array<int> $cmsVersionIds
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CmsVersionTransfer>
+     */
+    public function findCmsVersionsByIds(array $cmsVersionIds): ArrayObject
+    {
+        $cmsVersionTransfers = new ArrayObject();
+        $cmsVersionCollection = $this->queryContainer->queryAllCmsVersions()
+            ->filterByIdCmsVersion($cmsVersionIds, Criteria::IN)
+            ->find();
+
+        foreach ($cmsVersionCollection as $cmsVersionEntity) {
+            $cmsVersionTransfers->append($this->getCmsVersionTransfer($cmsVersionEntity));
+        }
+
+        return $cmsVersionTransfers;
     }
 
     /**

@@ -507,6 +507,7 @@ class SearchHttpClientTester extends Actor
                 'hitsPerPage' => $searchQuery->getSearchQuery()->getPagination()->getItemsPerPage(),
             ],
             'store' => static::STORE_NAME,
+            'sourceIdentifier' => $searchQuery->getSearchContext()->getSourceIdentifier(),
         ];
 
         $kernelAppClientMock

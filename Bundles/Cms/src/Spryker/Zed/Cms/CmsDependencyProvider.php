@@ -8,8 +8,10 @@
 namespace Spryker\Zed\Cms;
 
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToEventFacadeBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeBridge;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToMessageBrokerFacadeBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeBridge;
 use Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingBridge;
@@ -40,6 +42,16 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+
+    /**
+     * @var string
+     */
+    public const FACADE_MESSAGE_BROKER = 'FACADE_MESSAGE_BROKER';
+
+    /**
+     * @var string
+     */
+    public const FACADE_EVENT = 'FACADE_EVENT';
 
     /**
      * @var string
@@ -122,6 +134,8 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
         $this->addUtilEncodingService($container);
         $this->addCmsPageDataExpanderPlugins($container);
         $this->addCmsPageBeforeDeletePlugins($container);
+        $this->addEventFacade($container);
+        $this->addMessageBrokerFacade($container);
 
         return $container;
     }
@@ -186,6 +200,18 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new CmsToTouchFacadeBridge($container->getLocator()->touch()->facade());
+        });
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addMessageBrokerFacade(Container $container): void
+    {
+        $container->set(static::FACADE_MESSAGE_BROKER, function (Container $container) {
+            return new CmsToMessageBrokerFacadeBridge($container->getLocator()->messageBroker()->facade());
         });
     }
 
@@ -350,6 +376,18 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::QUERY_CONTAINER_GLOSSARY, function (Container $container) {
             return $container->getLocator()->glossary()->queryContainer();
+        });
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addEventFacade(Container $container): void
+    {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
+            return new CmsToEventFacadeBridge($container->getLocator()->event()->facade());
         });
     }
 }

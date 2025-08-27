@@ -7,10 +7,12 @@
 
 namespace Spryker\Client\SearchHttp\Api\Builder;
 
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchQueryRangeFacetFilterTransfer;
 use Generated\Shared\Transfer\SearchQueryTransfer;
 use Generated\Shared\Transfer\SearchQueryValueFacetFilterTransfer;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface;
 
 class SearchQueryBuilder implements SearchQueryBuilderInterface
@@ -53,6 +55,10 @@ class SearchQueryBuilder implements SearchQueryBuilderInterface
         $query = $this->addFacets($query, $searchQueryTransfer);
         $query = $this->addSorting($query, $searchQueryTransfer);
         $query = $this->addPagination($query, $searchQueryTransfer);
+
+        if ($searchQuery instanceof SearchContextAwareQueryInterface) {
+            $query = $this->addSourceIdentifier($query, $searchQuery->getSearchContext());
+        }
 
         return $this->addUserToken($query, $searchQueryTransfer);
     }
@@ -200,5 +206,18 @@ class SearchQueryBuilder implements SearchQueryBuilderInterface
         }
 
         return $query;
+    }
+
+    /**
+     * @param array<string, mixed> $query
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return array<string, mixed>
+     */
+    protected function addSourceIdentifier(array $query, SearchContextTransfer $searchContextTransfer): array
+    {
+          $query['sourceIdentifier'] = $searchContextTransfer->getSourceIdentifier();
+
+          return $query;
     }
 }

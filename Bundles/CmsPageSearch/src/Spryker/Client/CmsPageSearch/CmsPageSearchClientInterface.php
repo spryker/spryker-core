@@ -11,9 +11,10 @@ interface CmsPageSearchClientInterface
 {
     /**
      * Specification:
-     * - A query based on the given search string and request parameters will be executed
-     * - The query will also create facet aggregations, pagination and sorting based on the request parameters
-     * - The result is a formatted associative array where the used result formatters' name are the keys and their results are the values
+     * - Resolves the query plugin for the given search based on plugins from {@link CmsPageSearchDependencyProvider::PLUGINS_SEARCH_QUERY}, fallbacks to the plugin from {@link CmsPageSearchDependencyProvider::PLUGIN_CMS_PAGE_SEARCH_QUERY}.
+     * - A query based on the given search string and request parameters will be executed.
+     * - The query will also create facet aggregations, pagination and sorting based on the request parameters.
+     * - The result is a formatted associative array where the used result formatters' name are the keys and their results are the values.
      *
      * @api
      *
@@ -26,8 +27,9 @@ interface CmsPageSearchClientInterface
 
     /**
      * Specification:
-     * - A query based on the given search string and request parameters will be executed
-     * - The result is a number of hits
+     * - Resolves the query plugin for the given search based on plugins from {@link CmsPageSearchDependencyProvider::PLUGINS_SEARCH_RESULT_COUNT}, fallbacks to the plugin from {@link CmsPageSearchDependencyProvider::PLUGIN_CMS_PAGE_SEARCH_QUERY}.
+     * - A query based on the given search string and request parameters will be executed.
+     * - The result is a number of hits.
      *
      * @api
      *

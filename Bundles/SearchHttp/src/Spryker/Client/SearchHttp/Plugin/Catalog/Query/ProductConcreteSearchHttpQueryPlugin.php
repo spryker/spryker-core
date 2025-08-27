@@ -10,12 +10,12 @@ namespace Spryker\Client\SearchHttp\Plugin\Catalog\Query;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchHttpSearchContextTransfer;
 use Generated\Shared\Transfer\SearchQueryTransfer;
-use Spryker\Client\CatalogExtension\Dependency\Plugin\QueryApplicabilityCheckerInterface;
-use Spryker\Client\CatalogExtension\Dependency\Plugin\SearchTypeIdentifierInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryApplicabilityCheckerInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringSetterInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchTypeIdentifierInterface;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
 
 /**
@@ -108,7 +108,7 @@ class ProductConcreteSearchHttpQueryPlugin extends AbstractPlugin implements Sea
      */
     public function isApplicable(): bool
     {
-        return $this->getFactory()->createQueryApplicabilityChecker()->isQueryApplicable();
+        return $this->getFactory()->createQueryApplicabilityChecker()->isQueryApplicable($this->searchContextTransfer);
     }
 
     /**

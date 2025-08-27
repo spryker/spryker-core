@@ -8,7 +8,7 @@
         "spryker/catalog-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0",
-        "spryker/search-extension": "^1.3.0",
+        "spryker/search-extension": "^1.4.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.27.0"
     },
@@ -21,7 +21,7 @@
         "spryker/config": "If you want to use Elastica plugins.",
         "spryker/elastica": "If you want to use Elastica plugins.",
         "spryker/product-page-search": "If you want to use ProductPageSearch plugins, minimum required version: 0.1.0.",
-        "spryker/search-http": "If you want to use SearchHttp plugins."
+        "spryker/search-http": "If you want to use SearchHttp plugins (for Algolia ACP app)."
     },
     "autoload": {
         "psr-4": {

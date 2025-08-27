@@ -63,4 +63,7 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="SuggestionsSearchHttpResponse" strict="true">
+    </transfer>
+
 </transfers>

@@ -63,7 +63,7 @@ class PaginationSearchHttpResultFormatterPluginTest extends Unit
         $this->assertEquals($searchResult->getPagination()->getNumFound(), $formattedResult->getNumFound());
         $this->assertEquals($searchResult->getPagination()->getCurrentItemsPerPage(), $formattedResult->getCurrentItemsPerPage());
         $this->assertEquals(
-            ((int)round($searchResult->getPagination()->getNumFound() / $searchResult->getPagination()->getCurrentItemsPerPage())),
+            ((int)ceil($searchResult->getPagination()->getNumFound() / $searchResult->getPagination()->getCurrentItemsPerPage())),
             $formattedResult->getMaxPage(),
         );
     }

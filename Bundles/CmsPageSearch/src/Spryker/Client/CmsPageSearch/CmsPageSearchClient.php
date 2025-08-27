@@ -5,9 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace Spryker\Client\CmsPageSearch;
 
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchTypeIdentifierInterface;
 
 /**
  * @method \Spryker\Client\CmsPageSearch\CmsPageSearchFactory getFactory()
@@ -26,14 +29,21 @@ class CmsPageSearchClient extends AbstractClient implements CmsPageSearchClientI
      */
     public function search(string $searchString, array $requestParameters = []): array
     {
-        $queryExpanderPlugins = $this->getFactory()->getCmsPageSearchQueryExpanderPlugins();
+        $searchStrategy = null;
 
-        $searchQuery = $this->getFactory()
-            ->createCmsPageSearchQuery($searchString, $requestParameters, $queryExpanderPlugins);
+        $searchQuery = $this->getFactory()->createCmsPageSearchQuery($searchString);
+        if ($searchQuery instanceof SearchTypeIdentifierInterface) {
+            $searchStrategy = $searchQuery->getSearchType();
+        }
+
+        $queryExpanderPlugins = $this->getFactory()->createCmsPageSearchQueryExpanderPluginsStrategyResolver()->get($searchStrategy);
+
+        $searchQuery = $this->getFactory()->getSearchClient()->expandQuery($searchQuery, $queryExpanderPlugins, $requestParameters);
 
         $resultFormatters = $this
             ->getFactory()
-            ->getCmsPageSearchResultFormatters();
+            ->createCmsPageSearchResultFormattersStrategyResolver()
+            ->get($searchStrategy);
 
         return $this
             ->getFactory()
@@ -53,15 +63,28 @@ class CmsPageSearchClient extends AbstractClient implements CmsPageSearchClientI
      */
     public function searchCount(string $searchString, array $requestParameters): int
     {
-        $queryExpanderPlugins = $this->getFactory()->getCmsPageSearchCountQueryExpanderPlugins();
+        $searchStrategy = null;
 
-        $searchQuery = $this->getFactory()
-            ->createCmsPageSearchQuery($searchString, $requestParameters, $queryExpanderPlugins);
+        $searchQuery = $this->getFactory()->createCmsPageSearchQuery($searchString);
+        if ($searchQuery instanceof SearchTypeIdentifierInterface) {
+            $searchStrategy = $searchQuery->getSearchType();
+        }
 
-        return $this
+        $queryExpanderPlugins = $this->getFactory()->createCmsPageSearchCountQueryExpanderPluginsStrategyResolver()->get($searchStrategy);
+
+        $searchQuery = $this->getFactory()->getSearchClient()->expandQuery($searchQuery, $queryExpanderPlugins, $requestParameters);
+
+        $searchResult = $this
             ->getFactory()
             ->getSearchClient()
-            ->search($searchQuery, [], $requestParameters)
-            ->getTotalHits();
+            ->search($searchQuery, [], $requestParameters);
+
+        $searchResultCountPlugin = $this->getFactory()->getSearchResultCountPlugins()[$searchStrategy] ?? null;
+
+        if ($searchResultCountPlugin === null) {
+            return $searchResult->getTotalHits();
+        }
+
+        return $searchResultCountPlugin->findTotalCount($searchResult) ?? 0;
     }
 }

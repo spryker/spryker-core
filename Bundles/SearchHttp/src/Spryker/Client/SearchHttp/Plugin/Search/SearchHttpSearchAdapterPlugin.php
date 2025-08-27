@@ -10,11 +10,11 @@ namespace Spryker\Client\SearchHttp\Plugin\Search;
 use Generated\Shared\Transfer\SearchConnectionResponseTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
-use Spryker\Client\CatalogExtension\Dependency\Plugin\SearchTypeIdentifierInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\ConnectionCheckerAdapterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchTypeIdentifierInterface;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
 
 /**

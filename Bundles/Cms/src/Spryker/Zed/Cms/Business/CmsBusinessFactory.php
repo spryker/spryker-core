@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Cms\Business;
 
+use Spryker\Zed\Cms\Business\Exporter\CmsExporterInterface;
+use Spryker\Zed\Cms\Business\Exporter\CmsPageEventExporter;
 use Spryker\Zed\Cms\Business\Extractor\DataExtractor;
 use Spryker\Zed\Cms\Business\Extractor\DataExtractorInterface;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGenerator;
@@ -17,6 +19,8 @@ use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
 use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
 use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManagerInterface;
+use Spryker\Zed\Cms\Business\MessageBroker\CmsPageMessageBrokerPublisher;
+use Spryker\Zed\Cms\Business\MessageBroker\CmsPageMessageBrokerPublisherInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageActivator;
 use Spryker\Zed\Cms\Business\Page\CmsPageActivatorInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageMapper;
@@ -62,8 +66,10 @@ use Spryker\Zed\Cms\Business\Version\VersionPublisherInterface;
 use Spryker\Zed\Cms\Business\Version\VersionRollback;
 use Spryker\Zed\Cms\Business\Version\VersionRollbackInterface;
 use Spryker\Zed\Cms\CmsDependencyProvider;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToEventFacadeInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToMessageBrokerFacadeInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface;
 use Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface;
@@ -471,5 +477,49 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     public function getCmsPageBeforeDeletePlugins(): array
     {
         return $this->getProvidedDependency(CmsDependencyProvider::PLUGINS_CMS_PAGE_BEFORE_DELETE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToMessageBrokerFacadeInterface
+     */
+    protected function getMessageBrokerFacade(): CmsToMessageBrokerFacadeInterface
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::FACADE_MESSAGE_BROKER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\MessageBroker\CmsPageMessageBrokerPublisherInterface
+     */
+    public function createCmsPageMessageBrokerPublisher(): CmsPageMessageBrokerPublisherInterface
+    {
+        return new CmsPageMessageBrokerPublisher(
+            $this->getMessageBrokerFacade(),
+            $this->createCmsPageReader(),
+            $this->getRepository(),
+            $this->createVersionFinder(),
+            $this->createDataExtractor(),
+            $this->createLocaleCmsPageDataExpander(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Exporter\CmsExporterInterface
+     */
+    public function createCmsPageEventExporter(): CmsExporterInterface
+    {
+        return new CmsPageEventExporter(
+            $this->getEventFacade(),
+            $this->getRepository(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToEventFacadeInterface
+     */
+    public function getEventFacade(): CmsToEventFacadeInterface
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::FACADE_EVENT);
     }
 }

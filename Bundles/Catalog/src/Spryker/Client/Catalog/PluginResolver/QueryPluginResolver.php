@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Catalog\PluginResolver;
 
-use Spryker\Client\CatalogExtension\Dependency\Plugin\QueryApplicabilityCheckerInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryApplicabilityCheckerInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 class QueryPluginResolver implements QueryPluginResolverInterface

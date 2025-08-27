@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cms\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -40,5 +41,20 @@ class CmsRepository extends AbstractRepository implements CmsRepositoryInterface
         }
 
         return $relatedStores;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return array<int>
+     */
+    public function getActiveSearchablePageIds(): array
+    {
+        return $this->getFactory()
+            ->createCmsPageQuery()
+            ->select([SpyCmsPageTableMap::COL_ID_CMS_PAGE])
+            ->distinct()
+            ->find()
+            ->getData();
     }
 }

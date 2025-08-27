@@ -7,11 +7,18 @@
 
 namespace Spryker\Client\SearchHttp\ApplicabilityChecker;
 
+use Generated\Shared\Transfer\SearchContextTransfer;
+use Generated\Shared\Transfer\SearchHttpConfigCriteriaTransfer;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface;
 use Spryker\Client\SearchHttp\Reader\ConfigReaderInterface;
 
 class QueryApplicabilityChecker implements QueryApplicabilityCheckerInterface
 {
+    /**
+     * @var string
+     */
+    protected const APP_CONFIG_SETTING_SOURCE_IDENTIFIERS = 'source_identifiers';
+
     /**
      * @var \Spryker\Client\SearchHttp\Reader\ConfigReaderInterface
      */
@@ -35,12 +42,30 @@ class QueryApplicabilityChecker implements QueryApplicabilityCheckerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
      * @return bool
      */
-    public function isQueryApplicable(): bool
+    public function isQueryApplicable(SearchContextTransfer $searchContextTransfer): bool
     {
-        return $this->storeClient->isCurrentStoreDefined()
-            && $this->configReader->getSearchHttpConfigCollectionForCurrentStore()
-                ->getSearchHttpConfigs()->count() > 0;
+        if (!$this->storeClient->isCurrentStoreDefined()) {
+            return false;
+        }
+
+        $searchHttpConfigTransfer = $this->configReader->findSearchConfig(new SearchHttpConfigCriteriaTransfer());
+        if (!$searchHttpConfigTransfer) {
+            return false;
+        }
+
+        if (!isset($searchHttpConfigTransfer->getSettings()[static::APP_CONFIG_SETTING_SOURCE_IDENTIFIERS])) {
+            return true;
+        }
+
+        return $searchContextTransfer->getSourceIdentifier() === '*'
+            || in_array(
+                $searchContextTransfer->getSourceIdentifier(),
+                $searchHttpConfigTransfer->getSettings()[static::APP_CONFIG_SETTING_SOURCE_IDENTIFIERS],
+                true,
+            );
     }
 }

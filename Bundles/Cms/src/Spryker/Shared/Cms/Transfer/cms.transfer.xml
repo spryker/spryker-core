@@ -181,4 +181,39 @@
         <property name="error" type="string"/>
     </transfer>
 
+    <transfer name="CmsPagePublished" strict="true">
+        <property name="id" type="int"/>
+        <property name="cmsPage" type="CmsPage"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+        <property name="flattenedLocaleCmsPageDatum" type="array" singular="flattenedLocaleCmsPageData"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="CmsPageUnpublished" strict="true">
+        <property name="id" type="int"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="InitializeCmsPageExport" strict="true">
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="CmsPageMessageBrokerRequest" strict="true">
+        <property name="cmsPageIds" type="int[]" singular="cmsPageId"/>
+        <property name="cmsVersionIds" type="int[]" singular="cmsVersionId"/>
+    </transfer>
+
+    <transfer name="EventEntity">
+        <property name="id" type="int"/>
+    </transfer>
+
+    <transfer name="MessageAttributes">
+        <property name="storeReference" type="string"/>
+        <property name="tenantIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="MessageResponse">
+    </transfer>
+
 </transfers>

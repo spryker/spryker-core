@@ -20,4 +20,13 @@ interface CmsRepositoryInterface
      * @return \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>
      */
     public function getRelatedStoresByIdCmsPage(int $idCmsPage): ArrayObject;
+
+    /**
+     * Specification:
+     * - Retrieves a list of active CMS page IDs
+     * - Pages are filtered by is_active = true and is_searchable = true
+     *
+     * @return array<int>
+     */
+    public function getActiveSearchablePageIds(): array;
 }
