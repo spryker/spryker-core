@@ -7,21 +7,11 @@
 
 namespace Spryker\Zed\Sales\Dependency\Plugin;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPreSavePluginInterface as SalesExtensionOrderExpanderPreSavePluginInterface;
 
-interface OrderExpanderPreSavePluginInterface
+/**
+ * @deprecated Use {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPreSavePluginInterface} instead.
+ */
+interface OrderExpanderPreSavePluginInterface extends SalesExtensionOrderExpanderPreSavePluginInterface
 {
-    /**
-     * Specification:
-     *   - Its a plugin which hydrates SpySalesOrderEntityTransfer before order created
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
-     */
-    public function expand(SpySalesOrderEntityTransfer $salesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer;
 }

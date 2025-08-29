@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/propel": "Provides DB schema management commands and Propel ORM integration.",
+        "spryker/transfer": "Provides transfer objects definition with strict types."
+    }
+}

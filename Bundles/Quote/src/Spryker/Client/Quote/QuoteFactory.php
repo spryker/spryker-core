@@ -144,9 +144,9 @@ class QuoteFactory extends AbstractFactory
     }
 
     /**
-     * @return array<\Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface>
+     * @return array<\Spryker\Client\QuoteExtension\Dependency\Plugin\QuoteTransferExpanderPluginInterface>
      */
-    public function getQuoteTransferExpanderPlugins()
+    public function getQuoteTransferExpanderPlugins(): array
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::QUOTE_TRANSFER_EXPANDER_PLUGINS);
     }

@@ -23,6 +23,7 @@
             },
         } only %}</div>
     <div id="customer">{% include '@Sales/Detail/boxes/customer.twig' %}</div>
+    <div id="agent">{% include '@AgentGui/Sales/order-agent.twig' ignore missing with { order }%}</div>
     <div id="items">{% include [
         '@ShipmentGui/Sales/boxes/items.twig',
         '@Sales/Detail/boxes/items.twig'

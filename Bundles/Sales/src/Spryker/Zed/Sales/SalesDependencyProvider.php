@@ -935,9 +935,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface>
+     * @return array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPreSavePluginInterface>
      */
-    protected function getOrderExpanderPreSavePlugins()
+    protected function getOrderExpanderPreSavePlugins(): array
     {
         return [];
     }

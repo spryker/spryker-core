@@ -9,6 +9,9 @@ namespace Spryker\Zed\Agent;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\Agent\AgentConfig getSharedConfig()
+ */
 class AgentConfig extends AbstractBundleConfig
 {
     /**
@@ -27,5 +30,18 @@ class AgentConfig extends AbstractBundleConfig
     public function getDefaultCustomerPaginationLimit(): int
     {
         return static::DEFAULT_CUSTOMER_PAGINATION_LIMIT;
+    }
+
+    /**
+     * Specification:
+     * - Enable or disable agent info capturing in the orders when agent assists with order placing.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isSalesOrderAgentEnabled(): bool
+    {
+        return $this->getSharedConfig()->isSalesOrderAgentEnabled();
     }
 }

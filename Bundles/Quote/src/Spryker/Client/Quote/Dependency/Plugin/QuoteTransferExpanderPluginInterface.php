@@ -7,19 +7,11 @@
 
 namespace Spryker\Client\Quote\Dependency\Plugin;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\QuoteExtension\Dependency\Plugin\QuoteTransferExpanderPluginInterface as QuoteExtensionQuoteTransferExpanderPluginInterface;
 
-interface QuoteTransferExpanderPluginInterface
+/**
+ * @deprecated Use {@link \Spryker\Client\QuoteExtension\Dependency\Plugin\QuoteTransferExpanderPluginInterface} instead.
+ */
+interface QuoteTransferExpanderPluginInterface extends QuoteExtensionQuoteTransferExpanderPluginInterface
 {
-    /**
-     * Specification:
-     * - Expands provided QuoteTransfer with additional data.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function expandQuote(QuoteTransfer $quoteTransfer);
 }
