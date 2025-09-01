@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\MerchantProductAbstractTransfer;
+use Generated\Shared\Transfer\MerchantProductCountsTransfer;
 use Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
@@ -17,10 +19,12 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
+use Generated\Shared\Transfer\ProductsDashboardCardCriteriaTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
+use Orm\Zed\MerchantStock\Persistence\Map\SpyMerchantStockTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractStoreTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -31,6 +35,7 @@ use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
 use Orm\Zed\ProductValidity\Persistence\Map\SpyProductValidityTableMap;
+use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Criterion\LikeCriterion;
@@ -807,5 +812,131 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         }
 
         return $productConcreteQuery;
+    }
+
+    /**
+     * @module MerchantProduct
+     * @module Product
+     * @module ProductValidity
+     * @module Stock
+     *
+     * @param \Generated\Shared\Transfer\ProductsDashboardCardCriteriaTransfer $merchantProductDashboardCardCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductCountsTransfer
+     */
+    public function getProductsDashboardCardCounts(
+        ProductsDashboardCardCriteriaTransfer $merchantProductDashboardCardCriteriaTransfer
+    ): MerchantProductCountsTransfer {
+        $currentDateTime = (new DateTime())->format('Y-m-d H:i:s');
+        $expiringProductsDateTime = (new DateTime(sprintf(
+            '+%s Days',
+            $merchantProductDashboardCardCriteriaTransfer->getExpiringProductsDaysThresholdOrFail(),
+        )))->format('Y-m-d H:i:s');
+
+        $merchantProductAbstractQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();
+
+        $merchantProductAbstractQuery
+            ->filterByFkMerchant($merchantProductDashboardCardCriteriaTransfer->getIdMerchantOrFail())
+            ->useMerchantQuery()
+                ->innerJoinSpyMerchantStock()
+            ->endUse();
+
+        $merchantProductAbstractQuery
+            ->useProductAbstractQuery()
+                ->useSpyProductQuery()
+                    ->leftJoinSpyProductValidity()
+                    ->addJoin(
+                        [SpyProductTableMap::COL_ID_PRODUCT, SpyMerchantStockTableMap::COL_FK_STOCK],
+                        [SpyStockProductTableMap::COL_FK_PRODUCT, SpyStockProductTableMap::COL_FK_STOCK],
+                        Criteria::LEFT_JOIN,
+                    )
+                ->endUse()
+            ->endUse();
+
+        $merchantProductAbstractQuery
+            ->addAsColumn(
+                MerchantProductCountsTransfer::TOTAL,
+                sprintf('COUNT(DISTINCT %s)', SpyProductTableMap::COL_ID_PRODUCT),
+            )
+            ->addAsColumn(
+                MerchantProductCountsTransfer::ACTIVE,
+                sprintf(
+                    'COUNT(DISTINCT CASE WHEN %1$s IS TRUE THEN %2$s END)',
+                    SpyProductTableMap::COL_IS_ACTIVE,
+                    SpyProductTableMap::COL_ID_PRODUCT,
+                ),
+            )
+            ->addAsColumn(
+                MerchantProductCountsTransfer::WITH_STOCK,
+                sprintf(
+                    'COUNT(DISTINCT CASE WHEN %1$s > 0 THEN %2$s END)',
+                    SpyStockProductTableMap::COL_QUANTITY,
+                    SpyProductTableMap::COL_ID_PRODUCT,
+                ),
+            )
+            ->addAsColumn(
+                MerchantProductCountsTransfer::LOW_IN_STOCK,
+                sprintf(
+                    'COUNT(DISTINCT CASE WHEN %1$s < %2$d THEN %3$s END)',
+                    SpyStockProductTableMap::COL_QUANTITY,
+                    $merchantProductDashboardCardCriteriaTransfer->getLowStockThresholdOrFail(),
+                    SpyProductTableMap::COL_ID_PRODUCT,
+                ),
+            )
+            ->addAsColumn(
+                MerchantProductCountsTransfer::WITH_VALID_DATES,
+                sprintf(
+                    'COUNT(DISTINCT CASE WHEN (%1$s <= \'%2$s\' OR %1$s IS NULL) AND (%3$s >= \'%2$s\' OR %3$s IS NULL) OR %4$s IS NULL THEN %5$s END)',
+                    SpyProductValidityTableMap::COL_VALID_FROM,
+                    $currentDateTime,
+                    SpyProductValidityTableMap::COL_VALID_TO,
+                    SpyProductValidityTableMap::COL_ID_PRODUCT_VALIDITY,
+                    SpyProductTableMap::COL_ID_PRODUCT,
+                ),
+            )
+            ->addAsColumn(
+                MerchantProductCountsTransfer::EXPIRING,
+                sprintf(
+                    'COUNT(DISTINCT CASE WHEN \'%1$s\' < %2$s AND \'%3$s\' > %2$s THEN %4$s END)',
+                    $currentDateTime,
+                    SpyProductValidityTableMap::COL_VALID_TO,
+                    $expiringProductsDateTime,
+                    SpyProductTableMap::COL_ID_PRODUCT,
+                ),
+            )
+            ->addAsColumn(
+                MerchantProductCountsTransfer::VISIBLE,
+                sprintf(
+                    'COUNT(DISTINCT CASE WHEN %1$s IS TRUE AND %2$s > 0 AND ((%3$s <= \'%4$s\' OR %3$s IS NULL) AND (%5$s >= \'%4$s\' OR %5$s IS NULL) OR %6$s IS NULL) THEN %7$s END)',
+                    SpyProductTableMap::COL_IS_ACTIVE,
+                    SpyStockProductTableMap::COL_QUANTITY,
+                    SpyProductValidityTableMap::COL_VALID_FROM,
+                    $currentDateTime,
+                    SpyProductValidityTableMap::COL_VALID_TO,
+                    SpyProductValidityTableMap::COL_ID_PRODUCT_VALIDITY,
+                    SpyProductTableMap::COL_ID_PRODUCT,
+                ),
+            )
+            ->select([
+                MerchantProductCountsTransfer::TOTAL,
+                MerchantProductCountsTransfer::ACTIVE,
+                MerchantProductCountsTransfer::WITH_STOCK,
+                MerchantProductCountsTransfer::LOW_IN_STOCK,
+                MerchantProductCountsTransfer::WITH_VALID_DATES,
+                MerchantProductCountsTransfer::EXPIRING,
+                MerchantProductCountsTransfer::VISIBLE,
+            ]);
+
+        /** @var array<string, int> $merchantProductCounts */
+        $merchantProductCounts = $merchantProductAbstractQuery->findOne();
+
+        $merchantProductCountsTransfer = (new MerchantProductCountsTransfer())
+            ->fromArray($merchantProductCounts, true);
+
+        $merchantProductCountsTransfer->setInactive(
+            $merchantProductCountsTransfer->getTotalOrFail() - $merchantProductCountsTransfer->getActiveOrFail(),
+        );
+
+        return $merchantProductCountsTransfer;
     }
 }

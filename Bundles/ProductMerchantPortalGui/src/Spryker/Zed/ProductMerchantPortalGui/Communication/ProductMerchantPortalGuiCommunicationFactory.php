@@ -21,6 +21,8 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\AttributesDa
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductsDashboardCardDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductsDashboardCardDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\SuperAttributesDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\SuperAttributesDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Deleter\PriceDeleter;
@@ -160,6 +162,7 @@ use Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiDependencyProvi
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraint;
+use Twig\Environment;
 
 /**
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
@@ -351,6 +354,19 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
             $this->createPriceProductTableViewSorter(),
             $this->getMerchantUserFacade(),
             $this->getMoneyFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductsDashboardCardDataProviderInterface
+     */
+    public function createProductsDashboardCardDataProvider(): ProductsDashboardCardDataProviderInterface
+    {
+        return new ProductsDashboardCardDataProvider(
+            $this->getConfig(),
+            $this->getRepository(),
+            $this->getMerchantUserFacade(),
+            $this->getTwigEnvironment(),
         );
     }
 
@@ -600,6 +616,14 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
             $this->getPriceProductVolumeFacade(),
             $this->getMoneyFacade(),
         );
+    }
+
+    /**
+     * @return \Twig\Environment
+     */
+    protected function getTwigEnvironment(): Environment
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::SERVICE_TWIG);
     }
 
     /**

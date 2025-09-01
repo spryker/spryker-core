@@ -35,6 +35,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductServiceBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductVolumeServiceBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceBridge;
+use Twig\Environment;
 
 /**
  * @method \Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiConfig getConfig()
@@ -163,6 +164,13 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     public const SERVICE_ZED_UI_FACTORY = 'SERVICE_ZED_UI_FACTORY';
 
     /**
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
+     * @var string
+     */
+    public const SERVICE_TWIG = 'twig';
+
+    /**
      * @var string
      */
     public const PROPEL_QUERY_MERCHANT_PRODUCT_ABSTRACT = 'PROPEL_QUERY_MERCHANT_PRODUCT_ABSTRACT';
@@ -236,6 +244,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addGuiTableHttpDataRequestHandler($container);
         $container = $this->addGuiTableFactory($container);
         $container = $this->addZedUiFactory($container);
+        $container = $this->addTwigEnvironment($container);
         $container = $this->addCategoryFacade($container);
         $container = $this->addMerchantProductFacade($container);
         $container = $this->addProductCategoryFacade($container);
@@ -633,6 +642,21 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container->set(static::SERVICE_ZED_UI_FACTORY, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_ZED_UI_FACTORY);
         });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTwigEnvironment(Container $container): Container
+    {
+        $container->set(
+            static::SERVICE_TWIG,
+            static fn (Container $container): Environment => $container->getApplicationService(static::SERVICE_TWIG),
+        );
 
         return $container;
     }

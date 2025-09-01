@@ -45,6 +45,16 @@ class ProductMerchantPortalGuiConfig extends AbstractBundleConfig
     protected const MAIN_CATEGORY_ID = 1;
 
     /**
+     * @var int
+     */
+    protected const DASHBOARD_EXPIRING_PRODUCTS_DAYS_THRESHOLD = 5;
+
+    /**
+     * @var int
+     */
+    protected const DASHBOARD_LOW_STOCK_THRESHOLD = 5;
+
+    /**
      * Specification:
      * - Defines main category ID which is used as a starting point for category tree building.
      *
@@ -78,5 +88,31 @@ class ProductMerchantPortalGuiConfig extends AbstractBundleConfig
                 static::STATUS_DRAFT,
             ],
         ];
+    }
+
+    /**
+     * Specification:
+     * - Returns the threshold in days for products to be considered as expiring on the dashboard.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getDashboardExpiringProductsDaysThreshold(): int
+    {
+        return static::DASHBOARD_EXPIRING_PRODUCTS_DAYS_THRESHOLD;
+    }
+
+    /**
+     * Specification:
+     * - Returns the threshold for products to be considered as low stock on the dashboard.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getDashboardLowStockThreshold(): int
+    {
+        return static::DASHBOARD_LOW_STOCK_THRESHOLD;
     }
 }
