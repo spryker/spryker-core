@@ -21,10 +21,11 @@ class PersistentQuoteHelper extends Module
 
     /**
      * @param array $seed
+     * @param bool|null $shouldReloadItems
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function havePersistentQuote(array $seed = []): QuoteTransfer
+    public function havePersistentQuote(array $seed = [], ?bool $shouldReloadItems = false): QuoteTransfer
     {
         $quoteTransfer = (new QuoteBuilder($seed))->build();
         $quoteTransfer->setIdQuote(null);
@@ -35,6 +36,12 @@ class PersistentQuoteHelper extends Module
         $this->assureStore($quoteTransfer);
 
         $quoteResponseTransfer = $this->getFacade()->createQuote($quoteTransfer);
+
+        if ($shouldReloadItems) {
+            $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+            $quoteTransfer = $this->getLocator()->cart()->facade()->reloadItems($quoteTransfer);
+            $quoteResponseTransfer = $this->getFacade()->updateQuote($quoteTransfer);
+        }
 
         return $quoteResponseTransfer->getQuoteTransfer();
     }

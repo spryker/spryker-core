@@ -14,10 +14,12 @@ use Generated\Shared\DataBuilder\DiscountGeneralBuilder;
 use Generated\Shared\DataBuilder\DiscountMoneyAmountBuilder;
 use Generated\Shared\DataBuilder\DiscountVoucherBuilder;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
+use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountAmount;
@@ -255,6 +257,37 @@ class DiscountDataHelper extends Module
         });
 
         return $salesDiscountEntity;
+    }
+
+    /**
+     * @param list<int> $storeIds
+     *
+     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer
+     */
+    public function havePercentageDiscountVoucher(array $storeIds): DiscountVoucherTransfer
+    {
+        $discountData = [
+            DiscountConfiguratorTransfer::DISCOUNT_GENERAL => [
+                DiscountTransfer::DISCOUNT_TYPE => 'voucher',
+                DiscountTransfer::AMOUNT => 1000,
+                DiscountTransfer::DISPLAY_NAME => (new DiscountBuilder())->build()->getDisplayName(),
+                DiscountGeneralTransfer::STORE_RELATION => [
+                    StoreRelationTransfer::ID_STORES => $storeIds,
+                ],
+            ],
+            DiscountConfiguratorTransfer::DISCOUNT_CALCULATOR => [
+                DiscountTransfer::DECISION_RULE_QUERY_STRING => "sub-total >= '0'",
+                DiscountTransfer::COLLECTOR_QUERY_STRING => "sku = '*'",
+                DiscountTransfer::AMOUNT => 1000,
+                DiscountTransfer::CALCULATOR_PLUGIN => 'PLUGIN_CALCULATOR_PERCENTAGE',
+            ],
+        ];
+
+        $discountGeneralTransfer = $this->haveDiscount($discountData);
+
+        return $this->haveGeneratedVoucherCodes([
+            DiscountVoucherTransfer::ID_DISCOUNT => $discountGeneralTransfer->getIdDiscount(),
+        ]);
     }
 
     /**
