@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Customer\Business\Facade;
 
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface;
 
@@ -337,5 +338,27 @@ class RegisterCustomerTest extends AbstractCustomerFacadeTest
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
         $this->assertNotNull($customerResponseTransfer->getCustomerTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRegisterCustomerAddsConfirmationLinkWithLocale(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->createTestCustomerTransfer();
+
+        $localeName = 'de_DE';
+
+        $customerTransfer->setLocale((new LocaleTransfer())->setLocaleName($localeName));
+
+        // Act
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->registerCustomer($customerTransfer);
+
+        // Assert
+        $this->assertStringContainsString(
+            '_locale=' . $localeName,
+            $customerResponseTransfer->getCustomerTransfer()->getConfirmationLink(),
+        );
     }
 }

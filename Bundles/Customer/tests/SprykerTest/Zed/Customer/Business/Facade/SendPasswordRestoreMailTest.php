@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Customer\Business\Facade;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 /**
  * Auto-generated group annotations
@@ -58,5 +59,30 @@ class SendPasswordRestoreMailTest extends AbstractCustomerFacadeTest
 
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSendPasswordRestoreMailAddsLocaleToRestoreLink(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->createTestCustomerTransfer();
+        $localeName = 'de_DE';
+        $customerTransfer->setLocale((new LocaleTransfer())->setLocaleName($localeName));
+
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->registerCustomer($customerTransfer);
+        $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
+        $this->tester->getCustomerFacade()->confirmRegistration($customerTransfer);
+
+        // Act
+        $this->tester->getCustomerFacade()->sendPasswordRestoreMail($customerTransfer);
+
+        // Assert
+        $this->assertStringContainsString(
+            '_locale=' . $localeName,
+            $customerTransfer->getRestorePasswordLink(),
+            'Restore password link should contain the correct locale parameter',
+        );
     }
 }
