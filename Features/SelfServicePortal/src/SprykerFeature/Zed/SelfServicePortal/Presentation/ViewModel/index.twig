@@ -1,0 +1,77 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'View Model: ' ~ sspModel.reference | trans %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url(listModelRoute), 'Back to Models' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with {
+        widget_title: 'general' | trans,
+        image: block('image'),
+    } %}
+        {% block widget_content %}
+            <div class="row">
+                {% if imageUrl %}
+                    <div class="col-sm-12 col-md-auto">
+                        {% include '@SelfServicePortal/_partials/list.twig' with {
+                                list: [
+                                    {
+                                    title: 'Image',
+                                    block: image,
+                                },
+                            ],
+                        } only %}
+                    </div>
+                {% endif %}
+
+                <div class="col-sm-12 col-md-auto">
+                    {% include '@SelfServicePortal/_partials/list.twig' with {
+                        list: [
+                            {
+                                title: 'Reference',
+                                value: sspModel.reference,
+                                qa: 'ssp-model-reference',
+                            },
+                            {
+                                title: 'Name',
+                                value: sspModel.name,
+                                qa: 'ssp-model-name',
+                            },
+                            {
+                                title: 'Code',
+                                value: sspModel.code | default('---'),
+                                qa: 'ssp-model-code',
+                            },
+                        ],
+                    } only %}
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Relations' | trans } %}
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12" data-qa="ssp-model-relations">
+                    <p>{{ 'Relations will be displayed here in future updates.' | trans }}</p>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block image %}
+    <span>
+        <img data-qa="ssp-model-image" width="300" class="img-thumbnail border border-secondary m-t-sm" src="{{ imageUrl }}">
+    </span>
+{% endblock %}

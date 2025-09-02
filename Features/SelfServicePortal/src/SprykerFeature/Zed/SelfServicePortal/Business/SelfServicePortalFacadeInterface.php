@@ -24,6 +24,7 @@ use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
+use Generated\Shared\Transfer\SspModelCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\SspModelCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspModelCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspModelCollectionTransfer;
@@ -277,4 +278,22 @@ interface SelfServicePortalFacadeInterface
      * @return \Generated\Shared\Transfer\SspModelCollectionTransfer
      */
     public function getSspModelCollection(SspModelCriteriaTransfer $sspModelCriteriaTransfer): SspModelCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Deletes a collection of SSP models based on provided criteria.
+     * - Requires `SspModelCollectionDeleteCriteriaTransfer.sspModelIds` to be provided.
+     * - Validates that the model IDs collection is not empty.
+     * - Retrieves existing models by the provided IDs from persistence.
+     * - Returns `SspModelCollectionResponseTransfer` with deleted models or empty collection if no models found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspModelCollectionDeleteCriteriaTransfer $sspModelCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspModelCollectionResponseTransfer
+     */
+    public function deleteSspModelCollection(
+        SspModelCollectionDeleteCriteriaTransfer $sspModelCollectionDeleteCriteriaTransfer
+    ): SspModelCollectionResponseTransfer;
 }

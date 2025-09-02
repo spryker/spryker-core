@@ -24,6 +24,7 @@ use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
+use Generated\Shared\Transfer\SspModelCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\SspModelCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspModelCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspModelCollectionTransfer;
@@ -279,7 +280,23 @@ class SelfServicePortalFacade extends AbstractFacade implements SelfServicePorta
      */
     public function getSspModelCollection(SspModelCriteriaTransfer $sspModelCriteriaTransfer): SspModelCollectionTransfer
     {
-        return $this->getRepository()
-            ->getSspModelCollection($sspModelCriteriaTransfer);
+        return $this->getFactory()->createSspModelReader()->getSspModelCollection($sspModelCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspModelCollectionDeleteCriteriaTransfer $sspModelCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspModelCollectionResponseTransfer
+     */
+    public function deleteSspModelCollection(
+        SspModelCollectionDeleteCriteriaTransfer $sspModelCollectionDeleteCriteriaTransfer
+    ): SspModelCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createSspModelDeleter()
+            ->deleteSspModelCollection($sspModelCollectionDeleteCriteriaTransfer);
     }
 }

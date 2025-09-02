@@ -31,6 +31,10 @@ class SspModelQueryBuilder
             $sspModelQuery->filterByIdSspModel_In($sspModelConditionsTransfer->getSspModelIds());
         }
 
+        if ($sspModelConditionsTransfer->getReferences() !== []) {
+            $sspModelQuery->filterByReference_In($sspModelConditionsTransfer->getReferences());
+        }
+
         return $sspModelQuery;
     }
 

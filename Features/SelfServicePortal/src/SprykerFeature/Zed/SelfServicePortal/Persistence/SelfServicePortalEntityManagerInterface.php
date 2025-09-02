@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer;
 use Generated\Shared\Transfer\SspAssetSearchTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
+use Generated\Shared\Transfer\SspModelCollectionTransfer;
 use Generated\Shared\Transfer\SspModelTransfer;
 
 interface SelfServicePortalEntityManagerInterface
@@ -115,4 +116,6 @@ interface SelfServicePortalEntityManagerInterface
      * @return void
      */
     public function deleteSspAssetSearchBySspAssetIds(array $sspAssetIds): void;
+
+    public function deleteSspModels(SspModelCollectionTransfer $sspModelCollectionTransfer): void;
 }

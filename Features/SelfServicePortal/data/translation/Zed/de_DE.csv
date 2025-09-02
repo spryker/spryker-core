@@ -153,6 +153,11 @@ Services,Dienstleistungen
 Submit,Absenden
 "Confirm delete","Löschen bestätigen"
 "Add Assets","Assets hinzufügen"
+Models,Modelle
+"List of Models","Liste der Modelle"
+"Add Models","Modelle hinzufügen"
+"Model Details",Modelldetails
+Code,Code
 "Customer portal",Kundenportal
 "Asset Details",Assetdetails
 Reference,Referenz
@@ -161,4 +166,13 @@ Reference,Referenz
 Note,Notiz
 "Asset created date","Erstellungsdatum des Assets"
 "Services are required when a service point is selected.","Dienstleistungen sind erforderlich, wenn eine Servicestelle ausgewählt ist."
-"Note: If no image is uploaded locally, the asset will use the image from the provided URL.","Hinweis: Wenn kein Bild lokal hochgeladen wird, verwendet das Asset standardmäßig das Bild von der angegebenen URL."
+"Note: If no image is uploaded locally, the asset will use the image from the provided URL.","Hinweis: Wenn kein Bild lokal hochgeladen wird, verwendet das Asset das Bild von der angegebenen URL."
+"Delete Model","Modell löschen"
+"Are you sure you want to delete this model?","Sind Sie sicher, dass Sie dieses Modell löschen möchten?"
+Delete,Löschen
+"View Model: ","Modell anzeigen: "
+"Back to Models","Zurück zu Modellen"
+Relations,Beziehungen
+"Relations will be displayed here in future updates.","Beziehungen werden hier in zukünftigen Updates angezeigt."
+"Model successfully deleted","Modell erfolgreich gelöscht"
+"Model cannot be deleted","Modell kann nicht gelöscht werden"

@@ -26,6 +26,7 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySspAssetQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Company\Business\CompanyFacadeInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
@@ -89,6 +90,7 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\Attache
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\FileTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\ViewFileDetailTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\FileAttachmentTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Form\DeleteSspModelForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\DataProvider\SspInquiryFilterFormDataProvider;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\DataProvider\SspInquiryFilterFormDataProviderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\DataProvider\TriggerEventFormDataProvider;
@@ -97,6 +99,8 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\SspInquiryFi
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\TriggerEventForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Table\OrderSspInquiryTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Table\SspInquiryTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Model\Provider\ModelImageUrlProvider;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Model\Table\SspModelTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductOfferTableActionExpander;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductOfferTableActionExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\CreateOfferForm;
@@ -885,5 +889,29 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     public function getSelfServicePortalService(): SelfServicePortalServiceInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_SELF_SERVICE_PORTAL);
+    }
+
+    public function createSspModelTable(): SspModelTable
+    {
+        return new SspModelTable(
+            $this->getSspModelQuery(),
+            $this->getUtilDateTimeService(),
+            $this->createModelImageUrlProvider(),
+        );
+    }
+
+    public function getSspModelQuery(): SpySspModelQuery
+    {
+        return SpySspModelQuery::create();
+    }
+
+    public function createDeleteSspModelForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteSspModelForm::class);
+    }
+
+    public function createModelImageUrlProvider(): ModelImageUrlProvider
+    {
+        return new ModelImageUrlProvider();
     }
 }

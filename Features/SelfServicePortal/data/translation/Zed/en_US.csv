@@ -153,6 +153,11 @@ Services,Services
 Submit,Submit
 "Confirm delete","Confirm delete"
 "Add Assets","Add Assets"
+Models,Models
+"List of Models","List of Models"
+"Add Models","Add Models"
+"Model Details","Model Details"
+Code,Code
 "Customer portal","Customer portal"
 "Asset Details","Asset Details"
 Reference,Reference
@@ -162,3 +167,12 @@ Note,Note
 "Asset created date","Asset created date"
 "Services are required when a service point is selected.","Services are required when a service point is selected."
 "Note: If no image is uploaded locally, the asset will use the image from the provided URL.","Note: If no image is uploaded locally, the asset will use the image from the provided URL."
+"Delete Model","Delete Model"
+"Are you sure you want to delete this model?","Are you sure you want to delete this model?"
+Delete,Delete
+"View Model: ","View Model: "
+"Back to Models","Back to Models"
+Relations,Relations
+"Relations will be displayed here in future updates.","Relations will be displayed here in future updates."
+"Model successfully deleted","Model successfully deleted"
+"Model cannot be deleted","Model cannot be deleted"

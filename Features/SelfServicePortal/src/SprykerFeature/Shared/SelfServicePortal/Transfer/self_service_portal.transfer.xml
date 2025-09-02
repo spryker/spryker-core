@@ -1080,6 +1080,7 @@
 
     <transfer name="SspModelCriteria" strict="true">
         <property name="sspModelConditions" type="SspModelConditions"/>
+        <property name="include" type="SspModelInclude"/>
         <property name="withSspAssets" type="bool"/>
         <property name="withProductLists" type="bool"/>
         <property name="pagination" type="Pagination"/>
@@ -1087,6 +1088,11 @@
 
     <transfer name="SspModelConditions" strict="true">
         <property name="sspModelIds" type="int[]" singular="sspModelId"/>
+        <property name="references" type="string[]" singular="reference"/>
+    </transfer>
+
+    <transfer name="SspModelInclude" strict="true">
+        <property name="withImageFile" type="bool"/>
     </transfer>
 
     <transfer name="SspModelCollection" strict="true">
@@ -1101,6 +1107,11 @@
     <transfer name="SspModelCollectionResponse" strict="true">
         <property name="errors" type="Error[]" singular="error"/>
         <property name="sspModels" type="SspModel[]" singular="sspModel"/>
+    </transfer>
+
+    <transfer name="SspModelCollectionDeleteCriteria" strict="true">
+        <property name="sspModelIds" type="int[]" singular="idSspModel"/>
+        <property name="isTransactional" type="bool"/>
     </transfer>
 
     <transfer name="ProductList">

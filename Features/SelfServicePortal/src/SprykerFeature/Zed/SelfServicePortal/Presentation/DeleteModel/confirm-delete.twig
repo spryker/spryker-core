@@ -1,0 +1,29 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Delete Model' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            <div class="alert alert-info">
+                {{ 'Are you sure you want to delete this model?' | trans }}
+            </div>
+
+            {{ form_start(deleteForm, {'action': url(deleteModelRoute, {'id-ssp-model': sspModel.idSspModel})}) }}
+                {{ form_widget(deleteForm) }}
+
+                <input type="submit" class="btn btn-danger safe-submit" value="{{ 'Delete' | trans }}" />
+                <a class="btn btn-outline-secondary" href="{{ backUrl }}">{{ 'Cancel' | trans }}</a>
+            {{ form_end(deleteForm) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer;
 use Generated\Shared\Transfer\SspAssetSearchTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
+use Generated\Shared\Transfer\SspModelCollectionTransfer;
 use Generated\Shared\Transfer\SspModelTransfer;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAsset;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAsset;
@@ -462,5 +463,20 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
             ->createSspAssetSearchPropelQuery()
             ->filterByFkSspAsset_In($sspAssetIds)
             ->delete();
+    }
+
+    public function deleteSspModels(SspModelCollectionTransfer $sspModelCollectionTransfer): void
+    {
+        $sspModelIds = [];
+        foreach ($sspModelCollectionTransfer->getSspModels() as $sspModelTransfer) {
+            $sspModelIds[] = $sspModelTransfer->getIdSspModelOrFail();
+        }
+
+        if ($sspModelIds) {
+            $this->getFactory()
+                ->createSspModelQuery()
+                ->filterByIdSspModel_In($sspModelIds)
+                ->delete();
+        }
     }
 }

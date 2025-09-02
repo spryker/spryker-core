@@ -127,6 +127,8 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Writer\SspInquiryState
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Writer\SspInquiryStateWriterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Writer\SspInquiryWriter;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Writer\SspInquiryWriterInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Model\Reader\SspModelReader;
+use SprykerFeature\Zed\SelfServicePortal\Business\Model\Reader\SspModelReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Canceler\OrderItemCanceler;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\Canceler\OrderItemCancelerInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Service\DashboardDataExpander\ServiceDashboardDataExpander;
@@ -195,6 +197,8 @@ use SprykerFeature\Zed\SelfServicePortal\Business\ServicePointSearch\ServicePoin
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\DataImport\Step\SspModelAssetWriterStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\DataImport\Step\SspModelProductListWriterStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\DataImport\Step\SspModelWriterStep;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Deleter\SspModelDeleter;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Deleter\SspModelDeleterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Storage\SspModelStorageWriter;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Storage\SspModelStorageWriterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Validator\SspModelValidator;
@@ -1252,6 +1256,22 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return new SspAssetSearchReader(
             $this->getRepository(),
             $this->createSspAssetSearchMapper(),
+        );
+    }
+
+    public function createSspModelReader(): SspModelReaderInterface
+    {
+        return new SspModelReader(
+            $this->getRepository(),
+            $this->getFileManagerFacade(),
+        );
+    }
+
+    public function createSspModelDeleter(): SspModelDeleterInterface
+    {
+        return new SspModelDeleter(
+            $this->getEntityManager(),
+            $this->getRepository(),
         );
     }
 
