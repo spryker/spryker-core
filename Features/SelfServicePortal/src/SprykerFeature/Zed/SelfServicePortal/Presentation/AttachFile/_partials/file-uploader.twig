@@ -1,0 +1,18 @@
+<div class="form-group js-form-file">
+    <div class="spacing-bottom">
+        <a href="{{ urlDownloadExample }}" class="btn btn-link" download>{{ 'Download example file' | trans }}</a>
+    </div>
+
+    <div class="form-group--flex">
+        <div class="spacing-right">
+            {{ form_label(form_part) }}
+        </div>
+
+        {{ form_widget(form_part, {
+            attr: { class: 'js-file-input' }}
+        ) }}
+        {{ form_errors(form_part) }}
+    </div>
+
+    <button type="button" class="btn btn-link btn-danger form-remove-file js-form-remove-file spacing-top">{{ 'Remove file' | trans }}</button>
+</div>

@@ -5,7 +5,7 @@
         <th id="{{ id }}" data-qa="{{ id }}"
             {% if config.headerAttributes is defined and id in config.headerAttributes %}
                 {% for attrName, attrValue in config.headerAttributes[id] %}
-                    {{- "#{attrName}=#{attrValue | json_encode()}" -}}
+                    {{- "#{attrName}=#{attrValue | json_encode()} " -}}
                 {% endfor %}
             {% endif %}
         >

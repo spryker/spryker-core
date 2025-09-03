@@ -7,6 +7,9 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 
+use Orm\Zed\Company\Persistence\SpyCompanyQuery;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
+use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery;
@@ -241,6 +244,21 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     public function createSspAssetToCompanyBusinessUnitQuery(): SpySspAssetToCompanyBusinessUnitQuery
     {
         return SpySspAssetToCompanyBusinessUnitQuery::create();
+    }
+
+    public function getCompanyQuery(): SpyCompanyQuery
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_COMPANY);
+    }
+
+    public function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_COMPANY_BUSINESS_UNIT);
+    }
+
+    public function getCompanyUserQuery(): SpyCompanyUserQuery
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_COMPANY_USER);
     }
 
     public function getUtilDateTimeService(): UtilDateTimeServiceInterface

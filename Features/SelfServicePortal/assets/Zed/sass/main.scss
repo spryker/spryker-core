@@ -1,0 +1,75 @@
+.nav-tabs-radio .nav-tabs:not(.tab-content .nav-tabs) {
+    border: none;
+    padding: 0 20px 10px;
+    border-bottom: 1px solid #e7eaec;
+
+    li.active > a,
+    li a {
+        border: none;
+        background: none;
+    }
+
+    li a {
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid #b2b2b2;
+        }
+    }
+
+    li.active > a {
+        &::before {
+            border-color: #11856e;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 4px;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #11856e;
+        }
+    }
+}
+
+.panel-body .panel-body {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.content-title {
+    padding: 10px 20px 10px;
+    background: #fff;
+    color: #121212;
+    font-weight: 600;
+    letter-spacing: 0.08px;
+    border-radius: 10px 10px 0 0;
+
+    h5 {
+        font-size: 16px;
+    }
+}
+
+.table-skeleton:not(:has(.has-selected)) {
+    .table-skeleton-fulfilled-visible {
+        display: none;
+    }
+}
+
+.form-group:not(:has(.has-file)) {
+    .form-remove-file {
+        display: none;
+    }
+}

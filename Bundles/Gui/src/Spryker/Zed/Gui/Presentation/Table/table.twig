@@ -3,7 +3,7 @@
     {% if id %} id="{{ id }}" {% endif %}
     {% if tableAttributes is defined and tableAttributes is iterable -%}
         {% for attrName, attrValue in tableAttributes %}
-            {{- "#{attrName}=#{attrValue | json_encode()}" -}}
+            {{- "#{attrName}=#{attrValue | json_encode()} " -}}
         {% endfor %}
     {% endif -%}
 >
@@ -13,7 +13,7 @@
                 <th
                     {% if headerAttributes is defined and id in headerAttributes %}
                         {% for attrName, attrValue in headerAttributes[id] %}
-                            {{- "#{attrName}=#{attrValue | json_encode()}" -}}
+                            {{- "#{attrName}=#{attrValue | json_encode()} " -}}
                         {% endfor %}
                     {% endif %}
                 >{{ title | trans }}</th>

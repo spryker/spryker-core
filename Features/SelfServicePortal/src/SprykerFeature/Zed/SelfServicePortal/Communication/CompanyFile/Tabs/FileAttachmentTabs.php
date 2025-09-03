@@ -16,8 +16,10 @@ class FileAttachmentTabs extends AbstractTabs
     protected function build(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
         $this
-            ->addBusinessAttachmentTab($tabsViewTransfer)
-            ->addSspAssetAttachmentTab($tabsViewTransfer);
+            ->addAttachAssetTab($tabsViewTransfer)
+            ->addAssetsToBeAttachedTab($tabsViewTransfer);
+
+        $tabsViewTransfer->setIsNavigable(false);
 
         return $tabsViewTransfer;
     }
@@ -27,26 +29,26 @@ class FileAttachmentTabs extends AbstractTabs
      *
      * @return $this
      */
-    protected function addBusinessAttachmentTab(TabsViewTransfer $tabsViewTransfer)
+    protected function addAttachAssetTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('business-attachment')
-            ->setTitle('Business Attachment')
-            ->setTemplate('@SelfServicePortal/AttachFile/_partials/business-attachment-tab.twig');
+            ->setName('attach-asset')
+            ->setTitle('Attach asset')
+            ->setTemplate('@SelfServicePortal/AttachFile/_partials/asset/attach-asset-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
         return $this;
     }
 
-    protected function addSspAssetAttachmentTab(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
+    protected function addAssetsToBeAttachedTab(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('asset-attachment')
-            ->setTitle('Asset Attachment')
-            ->setTemplate('@SelfServicePortal/AttachFile/_partials/asset-attachment-tab.twig');
+            ->setName('assets-to-be-attached')
+            ->setTitle('Assets to be attached')
+            ->setTemplate('@SelfServicePortal/AttachFile/_partials/asset/assets-to-be-attached-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

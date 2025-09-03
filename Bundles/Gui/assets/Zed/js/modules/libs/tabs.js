@@ -39,6 +39,24 @@ Tabs.prototype.checkErrors = function () {
 
 Tabs.prototype.setNavigation = function () {
     var self = this;
+    var eventDispatcher = function (element) {
+        document.dispatchEvent(
+            new CustomEvent('TABS-CHANGE-EVENT', {
+                detail: {
+                    id: element.target.getAttribute('href'),
+                },
+                bubbles: true,
+            }),
+        );
+    };
+
+    if (window.spryker?.isBootstrapVersionLatest) {
+        Array.from(self.tabUrls).forEach((tab) => {
+            tab.addEventListener('shown.bs.tab', eventDispatcher);
+        });
+    } else {
+        $(self.tabUrls).on('shown.bs.tab', eventDispatcher);
+    }
 
     if (self.tabsContainer.data('isNavigable') !== true) {
         return;
@@ -97,6 +115,7 @@ Tabs.prototype.checkActivatedTab = function () {
 
 Tabs.prototype.changeTabsOnClick = function () {
     var self = this;
+
     self.tabUrls.on('click', function (event) {
         event.preventDefault();
         var selectedElement = $(this);
@@ -132,15 +151,6 @@ Tabs.prototype.activateTab = function (element, hash) {
     }
 
     this.onTabChange(element.attr('href'));
-
-    document.dispatchEvent(
-        new CustomEvent('TABS-CHANGE-EVENT', {
-            detail: {
-                id: element.attr('href'),
-            },
-            bubbles: true,
-        }),
-    );
 };
 
 Tabs.prototype.showHideNavigationButtons = function () {

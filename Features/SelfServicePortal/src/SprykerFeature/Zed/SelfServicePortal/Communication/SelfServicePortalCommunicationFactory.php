@@ -8,6 +8,7 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Communication;
 
 use Generated\Shared\Transfer\FileAttachmentTableCriteriaTransfer;
+use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -17,6 +18,9 @@ use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryConditionsTransfer;
 use Generated\Shared\Transfer\SspModelTransfer;
+use Orm\Zed\Company\Persistence\SpyCompanyQuery;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
+use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
@@ -36,7 +40,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Merchant\Business\MerchantFacadeInterface;
 use Spryker\Zed\MerchantStock\Business\MerchantStockFacadeInterface;
-use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
@@ -68,7 +71,6 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\DataProv
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\DataProvider\ViewFileDetailTableFilterFormDataProvider;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\DeleteFileForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\FileTableFilterForm;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\SspAssetAttachmentForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\UnlinkFileForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\UploadFileForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\ViewFileDetailTableFilterForm;
@@ -76,20 +78,67 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatter\Fil
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatter\FileSizeFormatterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatter\TimeZoneFormatter;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatter\TimeZoneFormatterInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\FormDataNormalizer;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\FormDataNormalizerInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\AssetAssignmentImporter;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\AssetAssignmentImporterInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\BusinessUnitAssignmentImporter;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\BusinessUnitAssignmentImporterInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\CompanyAssignmentImporter;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\CompanyAssignmentImporterInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\CompanyUserAssignmentImporter;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\CompanyUserAssignmentImporterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Mapper\FileAttachmentMapper;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Mapper\FileAttachmentMapperInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Mapper\FileUploadMapper;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Mapper\FileUploadMapperInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\AssetAssignmentFileParser;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\AssetAssignmentFileParserInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\BusinessUnitAssignmentFileParser;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\BusinessUnitAssignmentFileParserInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\CompanyAssignmentFileParser;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\CompanyAssignmentFileParserInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\CompanyUserAssignmentFileParser;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\CompanyUserAssignmentFileParserInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\AttachmentProcessor;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\AttachmentProcessorInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\CsvImportProcessor;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\CsvImportProcessorInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\FormDataProcessor;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\FormDataProcessorInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\Strategy\AssetCsvImportStrategy;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\Strategy\BusinessUnitCsvImportStrategy;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\Strategy\CompanyCsvImportStrategy;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\Strategy\CompanyUserCsvImportStrategy;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Reader\FileReader;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Reader\FileReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\ReferenceGenerator\FileReferenceGenerator;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\ReferenceGenerator\FileReferenceGeneratorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Saver\FileSaver;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Saver\FileSaverInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AssignedBusinessUnitAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AssignedCompanyAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AssignedCompanyUserAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AssignedSspAssetAttachmentTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AttachedSspAssetFileTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AvailableBusinessUnitAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AvailableCompanyAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AvailableCompanyUserAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AvailableSspAssetAttachmentTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\FileTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\ViewFileDetailTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\AssetAttachmentTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\AttachedAssetsTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\AttachedBusinessUnitsTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\AttachedCompaniesTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\AttachedCompanyUsersTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\AttachmentScopeTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\BusinessUnitAttachmentTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\CompanyAttachmentTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\CompanyUserAttachmentTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\FileAttachmentTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Validator\FileSecurityValidator;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Validator\FileSecurityValidatorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Form\DeleteSspModelForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\DataProvider\SspInquiryFilterFormDataProvider;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\DataProvider\SspInquiryFilterFormDataProviderInterface;
@@ -138,6 +187,13 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Table\ServiceTabl
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form\SspModelForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Mapper\SspModelFormDataToTransferMapper;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Mapper\SspModelFormDataToTransferMapperInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\AssetAttachmentScopeStrategy;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\AttachmentScopeStrategyInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\AttachmentScopeStrategyResolver;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\AttachmentScopeStrategyResolverInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\BusinessUnitAttachmentScopeStrategy;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\CompanyAttachmentScopeStrategy;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\CompanyUserAttachmentScopeStrategy;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalDependencyProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -275,7 +331,7 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ServiceTable(
             $this->getSalesOrderItemPropelQuery(),
-            $this->getDateTimeService(),
+            $this->getUtilDateTimeService(),
             $this->getConfig(),
         );
     }
@@ -321,6 +377,16 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return new FileAttachmentTabs();
     }
 
+    public function createAttachmentScopeTabs(): AttachmentScopeTabs
+    {
+        return new AttachmentScopeTabs();
+    }
+
+    public function createAssetAttachmentTabs(): AssetAttachmentTabs
+    {
+        return new AssetAttachmentTabs();
+    }
+
     public function createAssetAttachmentFormDataProvider(): AssetAttachmentFormDataProvider
     {
         return new AssetAttachmentFormDataProvider($this->getFacade());
@@ -335,13 +401,72 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
+    public function createAttachedAssetsTabs(): AttachedAssetsTabs
+    {
+        return new AttachedAssetsTabs();
+    }
+
+    public function createBusinessUnitAttachmentTabs(): BusinessUnitAttachmentTabs
+    {
+        return new BusinessUnitAttachmentTabs();
+    }
+
+    public function createAttachedBusinessUnitsTabs(): AttachedBusinessUnitsTabs
+    {
+        return new AttachedBusinessUnitsTabs();
+    }
+
+    public function createCompanyUserAttachmentTabs(): CompanyUserAttachmentTabs
+    {
+        return new CompanyUserAttachmentTabs();
+    }
+
+    public function createAttachedCompanyUsersTabs(): AttachedCompanyUsersTabs
+    {
+        return new AttachedCompanyUsersTabs();
+    }
+
+    public function createAvailableCompanyUserAttachmentTable(int $idFile): AvailableCompanyUserAttachmentTable
+    {
+        return new AvailableCompanyUserAttachmentTable(
+            $idFile,
+            $this->getCompanyUserQuery(),
+        );
+    }
+
+    public function createAssignedCompanyUserAttachmentTable(int $idFile): AssignedCompanyUserAttachmentTable
+    {
+        return new AssignedCompanyUserAttachmentTable(
+            $idFile,
+            $this->getCompanyUserQuery(),
+        );
+    }
+
+    public function createAvailableSspAssetAttachmentTable(
+        int $idFile
+    ): AvailableSspAssetAttachmentTable {
+        return new AvailableSspAssetAttachmentTable(
+            $this->getSspAssetQuery(),
+            $idFile,
+        );
+    }
+
+    public function createAssignedSspAssetAttachmentTable(
+        int $idFile
+    ): AssignedSspAssetAttachmentTable {
+        return new AssignedSspAssetAttachmentTable(
+            $this->getSspAssetQuery(),
+            $idFile,
+        );
+    }
+
     public function createFileTable(
         FileAttachmentTableCriteriaTransfer $fileAttachmentTableCriteriaTransfer
     ): FileTable {
         return new FileTable(
             $this->getFilePropelQuery(),
             $this->createFileSizeFormatter(),
-            $this->getDateTimeService(),
+            $this->getUtilDateTimeService(),
             $this->createTimeZoneFormatter(),
             $fileAttachmentTableCriteriaTransfer,
         );
@@ -354,7 +479,7 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return new ViewFileDetailTable(
             $this->getFilePropelQuery(),
             $idFile,
-            $this->getDateTimeService(),
+            $this->getUtilDateTimeService(),
             $this->createTimeZoneFormatter(),
             $fileAttachmentViewDetailTableCriteriaTransfer,
         );
@@ -457,32 +582,72 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array<mixed>|null $data
-     * @param array<mixed> $options
+     * @param array<string, mixed> $formData
+     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
+     * @param int $idFile
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createAttachFileForm(?array $data = null, array $options = []): FormInterface
+    public function createAttachFileForm(array $formData, FileAttachmentTransfer $fileAttachmentTransfer, int $idFile): FormInterface
     {
-        return $this->getFormFactory()
-            ->create(AttachFileForm::class, $data, $options);
-    }
+        $formDataProvider = $this->createFileAttachFormDataProvider();
 
-    /**
-     * @param array<mixed>|null $data
-     * @param array<mixed> $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createSspAssetAttachmentForm(?array $data = null, array $options = []): FormInterface
-    {
-        return $this->getFormFactory()
-            ->create(SspAssetAttachmentForm::class, $data, $options);
+        return $this->getFormFactory()->create(
+            AttachFileForm::class,
+            $formDataProvider->getData($formData),
+            $formDataProvider->getOptions($fileAttachmentTransfer, $idFile),
+        );
     }
 
     public function createFileAttachmentMapper(): FileAttachmentMapperInterface
     {
         return new FileAttachmentMapper();
+    }
+
+    public function createAssetAssignmentFileParser(): AssetAssignmentFileParserInterface
+    {
+        return new AssetAssignmentFileParser();
+    }
+
+    public function createAssetAssignmentImporter(): AssetAssignmentImporterInterface
+    {
+        return new AssetAssignmentImporter(
+            $this->getRepository(),
+        );
+    }
+
+    public function createBusinessUnitAssignmentFileParser(): BusinessUnitAssignmentFileParserInterface
+    {
+        return new BusinessUnitAssignmentFileParser();
+    }
+
+    public function createBusinessUnitAssignmentImporter(): BusinessUnitAssignmentImporterInterface
+    {
+        return new BusinessUnitAssignmentImporter(
+            $this->getRepository(),
+        );
+    }
+
+    public function createCompanyUserAssignmentFileParser(): CompanyUserAssignmentFileParserInterface
+    {
+        return new CompanyUserAssignmentFileParser();
+    }
+
+    public function createCompanyUserAssignmentImporter(): CompanyUserAssignmentImporterInterface
+    {
+        return new CompanyUserAssignmentImporter(
+            $this->getRepository(),
+        );
+    }
+
+    public function createAvailableBusinessUnitAttachmentTable(int $idFile): AvailableBusinessUnitAttachmentTable
+    {
+        return new AvailableBusinessUnitAttachmentTable($this->getCompanyBusinessUnitQuery(), $idFile);
+    }
+
+    public function createAssignedBusinessUnitAttachmentTable(int $idFile): AssignedBusinessUnitAttachmentTable
+    {
+        return new AssignedBusinessUnitAttachmentTable($this->getCompanyBusinessUnitQuery(), $idFile);
     }
 
     public function createTriggerEventFormDataProvider(): TriggerEventFormDataProviderInterface
@@ -534,11 +699,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
             $this->getConfig(),
             $orderTransfer,
         );
-    }
-
-    public function getSspInquiryQuery(): SpySspInquiryQuery
-    {
-        return SpySspInquiryQuery::create();
     }
 
     public function createTimeZoneFormatter(): TimeZoneFormatterInterface
@@ -608,147 +768,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
             $this->createStockEditOfferFormEventSubscriber(),
             $this->createServicePointEditOfferFormEventSubscriber(),
         ];
-    }
-
-    /**
-     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface>
-     */
-    public function getStateMachineCommandPlugins(): array
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PLUGINS_STATE_MACHINE_COMMAND);
-    }
-
-    /**
-     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface>
-     */
-    public function getStateMachineConditionPlugins(): array
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PLUGINS_STATE_MACHINE_CONDITION);
-    }
-
-    public function getStateMachineFacade(): StateMachineFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_STATE_MACHINE);
-    }
-
-    public function getProductQuery(): SpyProductQuery
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_PRODUCT);
-    }
-
-    public function getProductImageQuery(): SpyProductImageQuery
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_PRODUCT_IMAGE);
-    }
-
-    public function getLocaleFacade(): LocaleFacade
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_LOCALE);
-    }
-
-    public function getStoreFacade(): StoreFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_STORE);
-    }
-
-    public function getServicePointFacade(): ServicePointFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SERVICE_POINT);
-    }
-
-    public function getSalesOrderItemPropelQuery(): SpySalesOrderItemQuery
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_SALES_ORDER_ITEM);
-    }
-
-    public function getShipmentTypeFacade(): ShipmentTypeFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SHIPMENT_TYPE);
-    }
-
-    public function getProductOfferFacade(): ProductOfferFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_PRODUCT_OFFER);
-    }
-
-    public function getProductFacade(): ProductFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_PRODUCT);
-    }
-
-    public function getMerchantFacade(): MerchantFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_MERCHANT);
-    }
-
-    public function getOmsFacade(): OmsFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_OMS);
-    }
-
-    public function getMerchantStockFacade(): MerchantStockFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_MERCHANT_STOCK);
-    }
-
-    public function getSalesFacade(): SalesFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SALES);
-    }
-
-    public function getUtilDateTimeService(): UtilDateTimeServiceInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_UTIL_DATE_TIME);
-    }
-
-    public function getFileManagerFacade(): FileManagerFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_FILE_MANAGER);
-    }
-
-    public function getSequenceNumberFacade(): SequenceNumberFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SEQUENCE_NUMBER);
-    }
-
-    public function getFileInfoPropelQuery(): SpyFileInfoQuery
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_FILE_INFO);
-    }
-
-    public function getFilePropelQuery(): SpyFileQuery
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_FILE);
-    }
-
-    public function getTranslatorFacade(): TranslatorFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_TRANSLATOR);
-    }
-
-    public function getCompanyFacade(): CompanyFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_COMPANY);
-    }
-
-    public function getCompanyUserFacade(): CompanyUserFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_COMPANY_USER);
-    }
-
-    public function getUserFacade(): UserFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_USER);
-    }
-
-    public function getCompanyBusinessUnitFacade(): CompanyBusinessUnitFacadeInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT);
-    }
-
-    public function getDateTimeService(): UtilDateTimeServiceInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
 
     /**
@@ -827,21 +846,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    public function getSspAssetToCompanyBusinessUnitQuery(): SpySspAssetToCompanyBusinessUnitQuery
-    {
-        return SpySspAssetToCompanyBusinessUnitQuery::create();
-    }
-
-    public function getSspInquirySspAssetQuery(): SpySspInquirySspAssetQuery
-    {
-        return SpySspInquirySspAssetQuery::create();
-    }
-
-    public function getSspAssetQuery(): SpySspAssetQuery
-    {
-        return SpySspAssetQuery::create();
-    }
-
     public function getSspAssetFilterForm(SspAssetConditionsTransfer $sspAssetConditionsTransfer): FormInterface
     {
         return $this->getFormFactory()->create(SspAssetFilterForm::class, $sspAssetConditionsTransfer, $this->createSspAssetFilterFormDataProvider()->getOptions());
@@ -913,5 +917,326 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     public function createModelImageUrlProvider(): ModelImageUrlProvider
     {
         return new ModelImageUrlProvider();
+    }
+
+    public function createAttachmentScopeStrategyResolver(): AttachmentScopeStrategyResolverInterface
+    {
+        return new AttachmentScopeStrategyResolver($this->getAttachmentScopeStrategies());
+    }
+
+    /**
+     * @return array<\SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\AttachmentScopeStrategyInterface>
+     */
+    protected function getAttachmentScopeStrategies(): array
+    {
+        return [
+            $this->createAssetAttachmentScopeStrategy(),
+            $this->createBusinessUnitAttachmentScopeStrategy(),
+            $this->createCompanyUserAttachmentScopeStrategy(),
+            $this->createCompanyAttachmentScopeStrategy(),
+        ];
+    }
+
+    protected function createAssetAttachmentScopeStrategy(): AttachmentScopeStrategyInterface
+    {
+        return new AssetAttachmentScopeStrategy($this->createFormDataNormalizer());
+    }
+
+    protected function createBusinessUnitAttachmentScopeStrategy(): AttachmentScopeStrategyInterface
+    {
+        return new BusinessUnitAttachmentScopeStrategy($this->createFormDataNormalizer());
+    }
+
+    protected function createCompanyUserAttachmentScopeStrategy(): AttachmentScopeStrategyInterface
+    {
+        return new CompanyUserAttachmentScopeStrategy($this->createFormDataNormalizer());
+    }
+
+    protected function createCompanyAttachmentScopeStrategy(): AttachmentScopeStrategyInterface
+    {
+        return new CompanyAttachmentScopeStrategy($this->createFormDataNormalizer());
+    }
+
+    public function createCompanyAssignmentFileParser(): CompanyAssignmentFileParserInterface
+    {
+        return new CompanyAssignmentFileParser();
+    }
+
+    public function createCompanyAssignmentImporter(): CompanyAssignmentImporterInterface
+    {
+        return new CompanyAssignmentImporter(
+            $this->getRepository(),
+        );
+    }
+
+    public function createAvailableCompanyAttachmentTable(int $idFile): AvailableCompanyAttachmentTable
+    {
+        return new AvailableCompanyAttachmentTable(
+            $idFile,
+            $this->getCompanyQuery(),
+        );
+    }
+
+    public function createAssignedCompanyAttachmentTable(int $idFile): AssignedCompanyAttachmentTable
+    {
+        return new AssignedCompanyAttachmentTable(
+            $idFile,
+            $this->getCompanyQuery(),
+        );
+    }
+
+    public function createCompanyAttachmentTabs(): CompanyAttachmentTabs
+    {
+        return new CompanyAttachmentTabs();
+    }
+
+    public function createAttachedCompaniesTabs(): AttachedCompaniesTabs
+    {
+        return new AttachedCompaniesTabs();
+    }
+
+    public function createCsvImportProcessor(): CsvImportProcessorInterface
+    {
+        return new CsvImportProcessor($this->getCsvImportStrategies());
+    }
+
+    /**
+     * @return array<\SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\Strategy\CsvImportStrategyInterface>
+     */
+    protected function getCsvImportStrategies(): array
+    {
+        return [
+            $this->createAssetCsvImportStrategy(),
+            $this->createBusinessUnitCsvImportStrategy(),
+            $this->createCompanyUserCsvImportStrategy(),
+            $this->createCompanyCsvImportStrategy(),
+        ];
+    }
+
+    public function createAssetCsvImportStrategy(): AssetCsvImportStrategy
+    {
+        return new AssetCsvImportStrategy(
+            $this->createAssetAssignmentFileParser(),
+            $this->createAssetAssignmentImporter(),
+        );
+    }
+
+    public function createBusinessUnitCsvImportStrategy(): BusinessUnitCsvImportStrategy
+    {
+        return new BusinessUnitCsvImportStrategy(
+            $this->createBusinessUnitAssignmentFileParser(),
+            $this->createBusinessUnitAssignmentImporter(),
+        );
+    }
+
+    public function createCompanyUserCsvImportStrategy(): CompanyUserCsvImportStrategy
+    {
+        return new CompanyUserCsvImportStrategy(
+            $this->createCompanyUserAssignmentFileParser(),
+            $this->createCompanyUserAssignmentImporter(),
+        );
+    }
+
+    public function createCompanyCsvImportStrategy(): CompanyCsvImportStrategy
+    {
+        return new CompanyCsvImportStrategy(
+            $this->createCompanyAssignmentFileParser(),
+            $this->createCompanyAssignmentImporter(),
+        );
+    }
+
+    public function createFormDataProcessor(): FormDataProcessorInterface
+    {
+        return new FormDataProcessor(
+            $this->createFormDataNormalizer(),
+        );
+    }
+
+    public function createFormDataNormalizer(): FormDataNormalizerInterface
+    {
+        return new FormDataNormalizer();
+    }
+
+    public function createAttachmentProcessor(): AttachmentProcessorInterface
+    {
+        return new AttachmentProcessor(
+            $this->getFacade(),
+            $this->getRepository(),
+            $this->createFormDataNormalizer(),
+            $this->createFileAttachmentMapper(),
+        );
+    }
+
+    public function createFileSecurityValidator(): FileSecurityValidatorInterface
+    {
+        return new FileSecurityValidator(
+            $this->getConfig(),
+        );
+    }
+
+    public function getSspAssetToCompanyBusinessUnitQuery(): SpySspAssetToCompanyBusinessUnitQuery
+    {
+        return SpySspAssetToCompanyBusinessUnitQuery::create();
+    }
+
+    public function getSspInquirySspAssetQuery(): SpySspInquirySspAssetQuery
+    {
+        return SpySspInquirySspAssetQuery::create();
+    }
+
+    public function getSspAssetQuery(): SpySspAssetQuery
+    {
+        return SpySspAssetQuery::create();
+    }
+
+    public function getSspInquiryQuery(): SpySspInquiryQuery
+    {
+        return SpySspInquiryQuery::create();
+    }
+
+    /**
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface>
+     */
+    public function getStateMachineCommandPlugins(): array
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PLUGINS_STATE_MACHINE_COMMAND);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface>
+     */
+    public function getStateMachineConditionPlugins(): array
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PLUGINS_STATE_MACHINE_CONDITION);
+    }
+
+    public function getStateMachineFacade(): StateMachineFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_STATE_MACHINE);
+    }
+
+    public function getProductQuery(): SpyProductQuery
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_PRODUCT);
+    }
+
+    public function getProductImageQuery(): SpyProductImageQuery
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_PRODUCT_IMAGE);
+    }
+
+    public function getLocaleFacade(): LocaleFacade
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_LOCALE);
+    }
+
+    public function getStoreFacade(): StoreFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_STORE);
+    }
+
+    public function getServicePointFacade(): ServicePointFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SERVICE_POINT);
+    }
+
+    public function getSalesOrderItemPropelQuery(): SpySalesOrderItemQuery
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_SALES_ORDER_ITEM);
+    }
+
+    public function getShipmentTypeFacade(): ShipmentTypeFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SHIPMENT_TYPE);
+    }
+
+    public function getProductOfferFacade(): ProductOfferFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_PRODUCT_OFFER);
+    }
+
+    public function getProductFacade(): ProductFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_PRODUCT);
+    }
+
+    public function getMerchantFacade(): MerchantFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_MERCHANT);
+    }
+
+    public function getMerchantStockFacade(): MerchantStockFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_MERCHANT_STOCK);
+    }
+
+    public function getSalesFacade(): SalesFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SALES);
+    }
+
+    public function getUtilDateTimeService(): UtilDateTimeServiceInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_UTIL_DATE_TIME);
+    }
+
+    public function getFileManagerFacade(): FileManagerFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_FILE_MANAGER);
+    }
+
+    public function getSequenceNumberFacade(): SequenceNumberFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SEQUENCE_NUMBER);
+    }
+
+    public function getFileInfoPropelQuery(): SpyFileInfoQuery
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_FILE_INFO);
+    }
+
+    public function getFilePropelQuery(): SpyFileQuery
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_FILE);
+    }
+
+    public function getTranslatorFacade(): TranslatorFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    public function getCompanyFacade(): CompanyFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_COMPANY);
+    }
+
+    public function getCompanyUserFacade(): CompanyUserFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_COMPANY_USER);
+    }
+
+    public function getCompanyBusinessUnitFacade(): CompanyBusinessUnitFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT);
+    }
+
+    public function getUserFacade(): UserFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_USER);
+    }
+
+    public function getCompanyUserQuery(): SpyCompanyUserQuery
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_COMPANY_USER);
+    }
+
+    public function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_COMPANY_BUSINESS_UNIT);
+    }
+
+    public function getCompanyQuery(): SpyCompanyQuery
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_COMPANY);
     }
 }

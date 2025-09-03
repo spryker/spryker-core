@@ -90,7 +90,68 @@ abstract class FileAbstractController extends SprykerAbstractController
      *
      * @var string
      */
+    /**
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\ListFileController::indexAction()
+     *
+     * @var string
+     */
     protected const URL_PATH_LIST_FILE = '/self-service-portal/list-file';
+
+    /**
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\DownloadFileAttachmentController::downloadExampleAction()
+     *
+     * @var string
+     */
+    public const URL_PATH_DOWNLOAD_EXAMPLE = '/self-service-portal/download-file-attachment/download-example';
+
+    /**
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\DownloadFileAttachmentController::downloadBusinessUnitExampleAction()
+     *
+     * @var string
+     */
+    public const URL_PATH_DOWNLOAD_BUSINESS_UNIT_EXAMPLE = '/self-service-portal/download-file-attachment/download-business-unit-example';
+
+    /**
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\DownloadFileAttachmentController::downloadCompanyUserExampleAction()
+     *
+     * @var string
+     */
+    public const URL_PATH_DOWNLOAD_COMPANY_USER_EXAMPLE = '/self-service-portal/download-file-attachment/download-company-user-example';
+
+    /**
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\DownloadFileAttachmentController::downloadCompanyExampleAction()
+     *
+     * @var string
+     */
+    public const URL_PATH_DOWNLOAD_COMPANY_EXAMPLE = '/self-service-portal/download-file-attachment/download-company-example';
+
+    /**
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\ImportFileAttachmentController::importAssetAssignmentsAction()
+     *
+     * @var string
+     */
+    public const URL_PATH_IMPORT_ASSET_ASSIGNMENTS = '/self-service-portal/import-file-attachment/import-asset-assignments';
+
+    /**
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\ImportFileAttachmentController::importBusinessUnitAssignmentsAction()
+     *
+     * @var string
+     */
+    public const URL_PATH_IMPORT_BUSINESS_UNIT_ASSIGNMENTS = '/self-service-portal/import-file-attachment/import-business-unit-assignments';
+
+    /**
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\ImportFileAttachmentController::importCompanyUserAssignmentsAction()
+     *
+     * @var string
+     */
+    public const URL_PATH_IMPORT_COMPANY_USER_ASSIGNMENTS = '/self-service-portal/import-file-attachment/import-company-user-assignments';
+
+    /**
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\ImportFileAttachmentController::importCompanyAssignmentsAction()
+     *
+     * @var string
+     */
+    public const URL_PATH_IMPORT_COMPANY_ASSIGNMENTS = '/self-service-portal/import-file-attachment/import-company-assignments';
 
     /**
      * @var string

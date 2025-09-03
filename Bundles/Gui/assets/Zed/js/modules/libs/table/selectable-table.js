@@ -1,20 +1,25 @@
+export const SELECTABLE_TABLE_REMOVE_ALL = 'SELECTABLE-TABLE-REMOVE-ALL';
+export const SELECTABLE_TABLE_CHANGED = 'SELECTABLE-TABLE-CHANGED';
+
 /**
  * @typedef {Object} config
- * @param {string} moveToSelector - Selector for the element to move selected products to (default: .js-selectable-table-selected-items).
- * @param {string} checkboxSelector - Selector for the checkbox element (default: .js-selectable-table-checkbox).
+ * @param {string} moveToSelector - Selector for the element to move selected products to.
+ * @param {string} checkboxSelector - (Optional) Selector for the checkbox element (default: .js-selectable-table-checkbox).
  * @param {string} inputSelector - Selector for the input element.
- * @param {string} counterHolderSelector - (Optional) Holder for the counter label.
+ * @param {string} counterHolderSelector - Holder for the counter label.
  * @param {string} colId - Column ID for comparison.
- * @param {string} colSelection - Column ID for the selection checkbox (default: action).
+ * @param {string} colSelection - (Optional) Column ID for the selection checkbox (default: action).
  */
 export class SelectableTable {
     selected = [];
     data = {};
     colIndexes = {};
+    skeletonTable = null;
 
     staticClasses = {
         remove: 'js-remove-item',
         counter: 'js-counter',
+        selected: 'has-selected',
     };
 
     constructor(data) {
@@ -30,6 +35,7 @@ export class SelectableTable {
         this.setupTable();
         this.removeRowAction();
         this.addCounter();
+        this.setRemoveAllAction();
     }
 
     setDefaults() {
@@ -38,11 +44,31 @@ export class SelectableTable {
     }
 
     setupTable() {
+        this.skeletonTable = document.querySelector(this.data.config.moveToSelector);
+
         this.data.api.on('draw', () => {
             this.updateCheckboxes();
             this.updateInput();
             this.updateCounter();
         });
+    }
+
+    setRemoveAllAction() {
+        document.addEventListener(SELECTABLE_TABLE_REMOVE_ALL, (event) => {
+            if ([this.data.tableId, this.skeletonTable?.id].includes(event.detail.id)) {
+                this.removeAll();
+            }
+        });
+    }
+
+    removeAll() {
+        this.selected = [];
+
+        for (const checkbox of this.data.table.querySelectorAll(this.data.config.checkboxSelector) ?? []) {
+            checkbox.checked = false;
+        }
+
+        this.tableActions();
     }
 
     setPredefinedData() {
@@ -69,8 +95,9 @@ export class SelectableTable {
     removeRowAction() {
         document.addEventListener('click', (event) => {
             const link = event.target.closest(`.${this.staticClasses.remove}`);
+            const isCurrentTable = link?.closest('table[id]')?.id === this.skeletonTable?.id;
 
-            if (!link?.dataset.id) return;
+            if (!link?.dataset.id || !isCurrentTable) return;
 
             event.preventDefault();
             this.removeRow(link.dataset.id);
@@ -100,13 +127,15 @@ export class SelectableTable {
 
     addRow(rowData, skip = false) {
         const item = [...rowData];
-        item[this.colIndexes.selection] = this.getRemoveButtonTemplate(rowData);
         !skip && this.selected.push(item);
         this.tableActions();
     }
 
     removeRow(id) {
         const idx = this.selected.findIndex((item) => String(item[this.colIndexes.id]) === String(id));
+
+        if (idx === -1) return;
+
         const rowIndex = this.data.api.rows((_, data) => String(data[this.colIndexes.id]) === String(id)).indexes()[0];
         this.data.api.row(rowIndex).node().querySelector(this.data.config.checkboxSelector).checked = false;
         this.selected.splice(idx, 1);
@@ -118,14 +147,41 @@ export class SelectableTable {
         this.renderSelectedItemsTable();
         this.updateInput();
         this.updateCounter();
+        this.skeletonModification();
+        this.dispatchTableActions();
+    }
+
+    dispatchTableActions() {
+        this.data.table.dispatchEvent(
+            new CustomEvent(SELECTABLE_TABLE_CHANGED, {
+                detail: {
+                    id: this.data.tableId,
+                    skeletonId: this.skeletonTable.id,
+                    selected: this.selected,
+                },
+                bubbles: true,
+            }),
+        );
+    }
+
+    skeletonModification() {
+        if (!this.selected.length) {
+            this.skeletonTable.classList.remove(this.staticClasses.selected);
+        } else {
+            this.skeletonTable.classList.add(this.staticClasses.selected);
+        }
     }
 
     renderSelectedItemsTable() {
-        $(document.querySelector(this.data.config.moveToSelector))
-            .DataTable({ retrieve: true })
-            .clear()
-            .rows.add(this.selected)
-            .draw();
+        const selected = this.selected.map((rowData) => {
+            const item = [...rowData];
+            item.splice(this.colIndexes.selection, 1);
+            item.push(this.getRemoveButtonTemplate(rowData));
+
+            return item;
+        });
+
+        $(this.skeletonTable).DataTable({ retrieve: true }).clear().rows.add(selected).draw();
     }
 
     updateInput() {

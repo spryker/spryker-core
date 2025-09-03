@@ -1158,4 +1158,36 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     {
         return null;
     }
+
+    /**
+     * Specification:
+     * - Returns the list of allowed MIME types for file uploads.
+     * - Used for security validation of uploaded files.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getAllowedUploadMimeTypes(): array
+    {
+        return [
+            'text/csv',
+            'text/plain',
+            'application/csv',
+        ];
+    }
+
+    /**
+     * Specification:
+     * - Returns the maximum allowed file size for uploads in bytes.
+     * - Used to restrict the size of uploaded files for performance and security reasons.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getMaxUploadFileSize(): int
+    {
+        return 1024 * 1024;
+    }
 }

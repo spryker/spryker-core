@@ -1,0 +1,17 @@
+{% include '@SelfServicePortal/AttachFile/_partials/file-uploader.twig' with {
+    form_part: fileAttachForm.asset_file_upload,
+    urlDownloadExample: urlDownloadExample,
+} %}
+
+{{ tabs(assetAttachmentTabsViewTransfer, {
+    'fileAttachForm': fileAttachForm,
+    'availableAssetTable': availableAssetTable,
+    'urlDownloadExample': urlDownloadExample,
+    'idFile': idFile,
+}) }}
+
+{{ tabs(attachedAssetsTabsViewTransfer, {
+    'fileAttachForm': fileAttachForm,
+    'assignedAssetTable': assignedAssetTable,
+    'idFile': idFile,
+}) }}

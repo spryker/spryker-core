@@ -44,15 +44,14 @@ class FileAttachFormDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentTransfer
+     * @param int $idFile
      *
-     * @return array<string, array<string, int>>
+     * @return array<string, int>
      */
-    public function getOptions(FileAttachmentTransfer $fileAttachmentTransfer): array
+    public function getOptions(FileAttachmentTransfer $fileAttachmentTransfer, int $idFile): array
     {
         return [
-            AttachFileForm::OPTION_COMPANY_CHOICES => $this->getCompanyChoices($fileAttachmentTransfer),
-            AttachFileForm::OPTION_COMPANY_USER_CHOICES => $this->getCompanyUserChoices($fileAttachmentTransfer),
-            AttachFileForm::OPTION_COMPANY_BUSINESS_UNIT_CHOICES => $this->getCompanyBusinessUnitChoices($fileAttachmentTransfer),
+            AttachFileForm::OPTION_ID_FILE => $idFile,
         ];
     }
 

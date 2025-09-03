@@ -754,6 +754,8 @@
 
     <transfer name="TabsView">
         <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="isNavigable" type="bool"/>
+        <property name="footerTemplate" type="string"/>
     </transfer>
 
     <transfer name="SspAsset" strict="true">
@@ -1214,5 +1216,44 @@
         <property name="name" type="string"/>
         <property name="fieldName" type="string"/>
     </transfer>
+
+
+
+    <transfer name="SspAssetAssignmentFileParserRequest">
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="SspAssetAssignmentFileParserResponse">
+        <property name="referencesToAssign" type="string[]" singular="referencesToAssign"/>
+        <property name="referencesToDeassign" type="string[]" singular="referencesToDeassign"/>
+    </transfer>
+
+    <transfer name="BusinessUnitAssignmentFileParserRequest">
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="BusinessUnitAssignmentFileParserResponse">
+        <property name="referencesToAssign" type="string[]" singular="referencesToAssign"/>
+        <property name="referencesToDeassign" type="string[]" singular="referencesToDeassign"/>
+    </transfer>
+
+    <transfer name="CompanyUserAssignmentFileParserRequest">
+        <property name="fileContent" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUserAssignmentFileParserResponse">
+        <property name="referencesToAssign" type="int[]" singular="referencesToAssign"/>
+        <property name="referencesToDeassign" type="int[]" singular="referencesToDeassign"/>
+    </transfer>
+
+    <transfer name="CompanyAssignmentFileParserRequest">
+        <property name="fileContent" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyAssignmentFileParserResponse">
+        <property name="referencesToAssign" type="int[]" singular="referencesToAssign"/>
+        <property name="referencesToDeassign" type="int[]" singular="referencesToDeassign"/>
+    </transfer>
+
 
 </transfers>

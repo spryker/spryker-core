@@ -1,0 +1,18 @@
+{% include '@SelfServicePortal/AttachFile/_partials/file-uploader.twig' with {
+    form_part: fileAttachForm.company_file_upload,
+    urlDownloadExample: urlDownloadCompanyExample,
+} %}
+
+{{ tabs(companyTabsViewTransfer, {
+    'availableCompanyTable': availableCompanyTable,
+    'availableCompanyTableId': 'available-company-table',
+    'companiesToBeAttachedTableId': 'companies-to-be-attached-table',
+    'idFile': idFile,
+}) }}
+
+{{ tabs(attachedCompaniesTabsViewTransfer, {
+    'assignedCompanyTable': assignedCompanyTable,
+    'attachedCompaniesTableId': 'attached-companies-table',
+    'companiesToBeDetachedTableId': 'companies-to-be-detached-table',
+    'idFile': idFile,
+}) }}

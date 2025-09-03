@@ -1,0 +1,18 @@
+{% include '@SelfServicePortal/AttachFile/_partials/file-uploader.twig' with {
+    form_part: fileAttachForm.business_unit_file_upload,
+    urlDownloadExample: urlDownloadBusinessUnitExample,
+} %}
+
+{{ tabs(businessUnitTabsViewTransfer, {
+    'fileAttachForm': fileAttachForm,
+    'availableBusinessUnitTable': availableBusinessUnitTable,
+    'idFile': idFile,
+    'urlImportBusinessUnitAssignments': urlImportBusinessUnitAssignments,
+    'urlDownloadBusinessUnitExample': urlDownloadBusinessUnitExample,
+}) }}
+
+{{ tabs(attachedBusinessUnitsTabsViewTransfer, {
+    'fileAttachForm': fileAttachForm,
+    'assignedBusinessUnitTable': assignedBusinessUnitTable,
+    'idFile': idFile,
+}) }}

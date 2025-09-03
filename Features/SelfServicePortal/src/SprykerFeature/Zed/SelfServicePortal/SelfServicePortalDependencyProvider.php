@@ -7,6 +7,8 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal;
 
+use Orm\Zed\Company\Persistence\SpyCompanyQuery;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Orm\Zed\CompanyUser\Persistence\Base\SpyCompanyUserQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
@@ -229,6 +231,16 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @var string
      */
+    public const PROPEL_QUERY_COMPANY = 'PROPEL_QUERY_COMPANY';
+
+    /**
+     * @var string
+     */
+    public const PROPEL_QUERY_COMPANY_BUSINESS_UNIT = 'PROPEL_QUERY_COMPANY_BUSINESS_UNIT';
+
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
 
     /**
@@ -299,6 +311,9 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addStateMachineCommandPlugins($container);
         $container = $this->addSalesOrderItemPropelQuery($container);
         $container = $this->addSelfServicePortalService($container);
+        $container = $this->addCompanyBusinessUnitQuery($container);
+        $container = $this->addCompanyUserQuery($container);
+        $container = $this->addCompanyQuery($container);
 
         return $container;
     }
@@ -319,7 +334,7 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addDashboardDataExpanderPlugins($container);
         $container = $this->addStateMachineFacade($container);
         $container = $this->addCommentFacade($container);
-        $container = $this->addCompanyUserPropelQuery($container);
+        $container = $this->addCompanyUserQuery($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addFileManagerFacade($container);
@@ -347,6 +362,9 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addFileInfoQuery($container);
         $container = $this->addStateMachineItemStateQuery($container);
         $container = $this->addUtilDateTimeService($container);
+        $container = $this->addCompanyQuery($container);
+        $container = $this->addCompanyBusinessUnitQuery($container);
+        $container = $this->addCompanyUserQuery($container);
 
         return $container;
     }
@@ -657,15 +675,6 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         return $container;
     }
 
-    protected function addCompanyUserPropelQuery(Container $container): Container
-    {
-        $container->set(static::PROPEL_QUERY_COMPANY_USER, $container->factory(function (): SpyCompanyUserQuery {
-            return SpyCompanyUserQuery::create();
-        }));
-
-        return $container;
-    }
-
     protected function addStateMachineItemStateQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_STATE_MACHINE_ITEM_STATE, $container->factory(function (): SpyStateMachineItemStateQuery {
@@ -775,6 +784,33 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container): UtilEncodingServiceInterface {
             return $container->getLocator()->utilEncoding()->service();
         });
+
+        return $container;
+    }
+
+    protected function addCompanyQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_COMPANY, $container->factory(function (): SpyCompanyQuery {
+            return SpyCompanyQuery::create();
+        }));
+
+        return $container;
+    }
+
+    protected function addCompanyBusinessUnitQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_COMPANY_BUSINESS_UNIT, $container->factory(function (): SpyCompanyBusinessUnitQuery {
+            return SpyCompanyBusinessUnitQuery::create();
+        }));
+
+        return $container;
+    }
+
+    protected function addCompanyUserQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_COMPANY_USER, $container->factory(function (): SpyCompanyUserQuery {
+            return SpyCompanyUserQuery::create();
+        }));
 
         return $container;
     }

@@ -116,9 +116,71 @@ interface SelfServicePortalRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param array<int> $sspAssetIds
+     * @param list<int> $sspAssetIds
      *
      * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SelfServicePortal\Persistence\SpySspAssetSearch>
      */
     public function getSspAssetSearchEntitiesByIds(FilterTransfer $filterTransfer, array $sspAssetIds = []): ObjectCollection;
+
+    /**
+     * @param list<string> $assetReferences
+     * @param int $idFile
+     *
+     * @return list<int>
+     */
+    public function getAssetIdsToAssignByReferences(array $assetReferences, int $idFile): array;
+
+    /**
+     * @param list<string> $assetReferences
+     * @param int $idFile
+     *
+     * @return list<int>
+     */
+    public function getAssetIdsToUnassignByReferences(array $assetReferences, int $idFile): array;
+
+    /**
+     * @param list<int> $businessUnitIds
+     * @param int $idFile
+     *
+     * @return list<int>
+     */
+    public function getBusinessUnitIdsToAssign(array $businessUnitIds, int $idFile): array;
+
+    /**
+     * @param list<int> $businessUnitIds
+     * @param int $idFile
+     *
+     * @return list<int>
+     */
+    public function getBusinessUnitIdsToUnassign(array $businessUnitIds, int $idFile): array;
+
+    /**
+     * @param list<int> $companyUserIds
+     * @param int $idFile
+     *
+     * @return list<int>
+     */
+    public function getCompanyUserIdsToAssign(array $companyUserIds, int $idFile): array;
+
+    /**
+     * @param list<int> $companyUserIds
+     * @param int $idFile
+     *
+     * @return list<int>
+     */
+    public function getCompanyUserIdsToUnassign(array $companyUserIds, int $idFile): array;
+
+    /**
+     * @param list<int> $companyIds
+     *
+     * @return list<int>
+     */
+    public function getBusinessUnitIdsForCompanies(array $companyIds): array;
+
+    /**
+     * @param list<int> $companyIds
+     *
+     * @return list<int>
+     */
+    public function getExistingCompanyIds(array $companyIds): array;
 }
