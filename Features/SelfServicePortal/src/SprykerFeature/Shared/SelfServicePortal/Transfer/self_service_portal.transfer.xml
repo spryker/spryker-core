@@ -1254,4 +1254,28 @@
     </transfer>
 
 
+    <transfer name="RestSspAssetsAttributes" strict="true">
+        <property name="reference" type="string"/>
+        <property name="name" type="string"/>
+        <property name="serialNumber" type="string"/>
+        <property name="note" type="string"/>
+        <property name="externalImageUrl" type="string"/>
+        <property name="businessUnitAssignments" type="RestSspAssetBusinessUnitAssignment[]" singular="businessUnitAssignment"/>
+    </transfer>
+
+    <transfer name="RestSspAssetBusinessUnitAssignment" strict="true">
+        <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
+        <property name="status" type="int" description="A HTTP status code."/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="idCompany" type="int"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
 </transfers>
