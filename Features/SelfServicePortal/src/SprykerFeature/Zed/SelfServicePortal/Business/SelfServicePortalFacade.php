@@ -299,4 +299,18 @@ class SelfServicePortalFacade extends AbstractFacade implements SelfServicePorta
             ->createSspModelDeleter()
             ->deleteSspModelCollection($sspModelCollectionDeleteCriteriaTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspModelCollectionResponseTransfer
+     */
+    public function updateSspModelCollection(SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): SspModelCollectionResponseTransfer
+    {
+        return $this->getFactory()->createSspModelWriter()->updateSspModelCollection($sspModelCollectionRequestTransfer);
+    }
 }

@@ -207,3 +207,31 @@ Asset,Asset
 "Attached Company Users","Angehängte Firmenkontonutzer"
 "Company Users to be detached","Firmenkontonutzer zu entfernen"
 "Import company user file","Firmenkontonutzer-Datei importieren"
+"Model has been successfully updated.","Modell wurde erfolgreich aktualisiert."
+"Something went wrong, please try again.","Etwas ist schief gelaufen, bitte versuchen Sie es erneut."
+"Model not found.","Modell nicht gefunden."
+"Model name is required.","Modellname ist erforderlich."
+"Model name cannot be longer than {{ limit }} characters.","Modellname darf nicht länger als {{ limit }} Zeichen sein."
+"Model code cannot be longer than {{ limit }} characters.","Modellcode darf nicht länger als {{ limit }} Zeichen sein."
+"Please enter a valid image URL.","Bitte geben Sie eine gültige Bild-URL ein."
+"Asset not found.","Asset nicht gefunden."
+"Asset has been successfully updated.","Asset wurde erfolgreich aktualisiert."
+"Asset has been successfully created.","Asset wurde erfolgreich erstellt."
+"File attachments have been created successfully.","Dateianhänge wurden erfolgreich erstellt."
+"Invalid entity type.","Ungültiger Entitätstyp."
+"Order item scheduled successfully.","Bestellposition erfolgreich geplant."
+"Ssp Inquiry not found","SSP-Anfrage nicht gefunden"
+"CSRF token is not valid.","CSRF-Token ist nicht gültig."
+"Model Name",Modellname
+"Model Code",Modellcode
+"Image URL",Bild-URL
+"Business unit owner",Geschäftseinheitsinhaber
+"Business Units",Geschäftseinheiten
+"Allowed shipment types","Erlaubte Lieferarten"
+"Date and time","Datum und Zeit"
+Event,Ereignis
+"Business entity type",Geschäftsentitätstyp
+Type,Typ
+"Edit Model: ","Modell bearbeiten: "
+"Model reference",Modellreferenz
+"Update Model","Modell aktualisieren"

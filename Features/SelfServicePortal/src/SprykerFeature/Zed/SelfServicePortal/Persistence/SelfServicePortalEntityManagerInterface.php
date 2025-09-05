@@ -62,6 +62,8 @@ interface SelfServicePortalEntityManagerInterface
 
     public function createSspModel(SspModelTransfer $sspModelTransfer): SspModelTransfer;
 
+    public function updateSspModel(SspModelTransfer $sspModelTransfer): ?SspModelTransfer;
+
     public function createSalesOrderItemSspAsset(SalesOrderItemSspAssetTransfer $salesOrderItemSspAssetTransfer): void;
 
     /**

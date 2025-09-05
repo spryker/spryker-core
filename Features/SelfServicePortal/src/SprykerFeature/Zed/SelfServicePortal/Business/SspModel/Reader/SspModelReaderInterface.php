@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerFeature\Zed\SelfServicePortal\Business\Model\Reader;
+namespace SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Reader;
 
 use Generated\Shared\Transfer\SspModelCollectionTransfer;
 use Generated\Shared\Transfer\SspModelCriteriaTransfer;
@@ -13,6 +13,4 @@ use Generated\Shared\Transfer\SspModelCriteriaTransfer;
 interface SspModelReaderInterface
 {
     public function getSspModelCollection(SspModelCriteriaTransfer $sspModelCriteriaTransfer): SspModelCollectionTransfer;
-
-    public function expandWithFile(SspModelCollectionTransfer $sspModelCollectionTransfer): SspModelCollectionTransfer;
 }

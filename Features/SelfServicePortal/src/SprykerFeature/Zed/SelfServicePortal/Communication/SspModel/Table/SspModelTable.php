@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerFeature\Zed\SelfServicePortal\Communication\Model\Table;
+namespace SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table;
 
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\SspModelTransfer;
@@ -15,7 +15,7 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Model\Provider\ModelImageUrlProvider;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Provider\ModelImageUrlProvider;
 
 class SspModelTable extends AbstractTable
 {

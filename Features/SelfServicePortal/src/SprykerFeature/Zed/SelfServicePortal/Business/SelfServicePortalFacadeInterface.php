@@ -296,4 +296,19 @@ interface SelfServicePortalFacadeInterface
     public function deleteSspModelCollection(
         SspModelCollectionDeleteCriteriaTransfer $sspModelCollectionDeleteCriteriaTransfer
     ): SspModelCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Updates a collection of SSP models.
+     * - Validates model data.
+     * - Updates models in database.
+     * - Returns response with updated models and validation messages.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspModelCollectionResponseTransfer
+     */
+    public function updateSspModelCollection(SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): SspModelCollectionResponseTransfer;
 }

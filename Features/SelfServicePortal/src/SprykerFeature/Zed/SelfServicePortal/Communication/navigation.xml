@@ -103,4 +103,37 @@
             </self-service-portal-asset-add>
         </pages>
     </self-service-portal-asset>
+    <self-service-portal-model>
+        <label>Models</label>
+        <title>Models</title>
+        <bundle>self-service-portal</bundle>
+        <controller>list-model</controller>
+        <action>index</action>
+        <pages>
+            <self-service-portal-model-view>
+                <label>Model Overview</label>
+                <title>Model Overview</title>
+                <bundle>self-service-portal</bundle>
+                <controller>view-model</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </self-service-portal-model-view>
+            <self-service-portal-model-add>
+                <label>Model Create</label>
+                <title>Model Create</title>
+                <bundle>self-service-portal</bundle>
+                <controller>add-model</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </self-service-portal-model-add>
+            <self-service-portal-model-edit>
+                <label>Model Edit</label>
+                <title>Model Edit</title>
+                <bundle>self-service-portal</bundle>
+                <controller>edit-model</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </self-service-portal-model-edit>
+        </pages>
+    </self-service-portal-model>
 </config>

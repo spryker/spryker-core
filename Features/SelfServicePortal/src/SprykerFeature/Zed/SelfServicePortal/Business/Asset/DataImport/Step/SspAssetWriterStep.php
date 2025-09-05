@@ -10,13 +10,16 @@ namespace SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\Step;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\DataImport\DataSet\SspAssetDataSetInterface;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class SspAssetWriterStep implements DataImportStepInterface
 {
-    public function __construct(protected SelfServicePortalConfig $config)
-    {
+    public function __construct(
+        protected SelfServicePortalConfig $config,
+        protected SequenceNumberFacadeInterface $sequenceNumberFacade
+    ) {
     }
 
     /**
@@ -32,6 +35,10 @@ class SspAssetWriterStep implements DataImportStepInterface
             ->findOneOrCreate();
 
         $assetData = $dataSet->getArrayCopy();
+
+        $this->sequenceNumberFacade->generate(
+            $this->config->getAssetSequenceNumberSettings(),
+        );
 
         if (!isset($assetData[SspAssetDataSetInterface::COLUMN_STATUS]) || empty($assetData[SspAssetDataSetInterface::COLUMN_STATUS])) {
             $assetData[SspAssetDataSetInterface::COLUMN_STATUS] = $this->config->getInitialAssetStatus();

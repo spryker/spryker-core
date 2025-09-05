@@ -139,7 +139,6 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\CompanyU
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\FileAttachmentTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Validator\FileSecurityValidator;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Validator\FileSecurityValidatorInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Form\DeleteSspModelForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\DataProvider\SspInquiryFilterFormDataProvider;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\DataProvider\SspInquiryFilterFormDataProviderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\DataProvider\TriggerEventFormDataProvider;
@@ -148,8 +147,6 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\SspInquiryFi
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\TriggerEventForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Table\OrderSspInquiryTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Table\SspInquiryTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Model\Provider\ModelImageUrlProvider;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Model\Table\SspModelTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductOfferTableActionExpander;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductOfferTableActionExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\CreateOfferForm;
@@ -184,9 +181,13 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Saver\SalesOrderI
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Saver\SalesOrderItemProductClassesSaverInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Table\ProductConcreteTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Table\ServiceTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form\DataProvider\SspModelFormDataProvider;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form\DeleteSspModelForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form\SspModelForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Mapper\SspModelFormDataToTransferMapper;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Mapper\SspModelFormDataToTransferMapperInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Provider\ModelImageUrlProvider;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\SspModelTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\AssetAttachmentScopeStrategy;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\AttachmentScopeStrategyInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\AttachmentScopeStrategyResolver;
@@ -917,6 +918,13 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     public function createModelImageUrlProvider(): ModelImageUrlProvider
     {
         return new ModelImageUrlProvider();
+    }
+
+    public function createSspModelFormDataProvider(): SspModelFormDataProvider
+    {
+        return new SspModelFormDataProvider(
+            $this->createModelImageUrlProvider(),
+        );
     }
 
     public function createAttachmentScopeStrategyResolver(): AttachmentScopeStrategyResolverInterface

@@ -10,7 +10,6 @@ namespace SprykerFeature\Zed\SelfServicePortal\Communication\Controller;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\SspModelConditionsTransfer;
 use Generated\Shared\Transfer\SspModelCriteriaTransfer;
-use Generated\Shared\Transfer\SspModelIncludeTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,10 +38,7 @@ class ModelImageController extends AbstractController
 
         $sspModelCollectionTransfer = $this->getFacade()->getSspModelCollection(
             (new SspModelCriteriaTransfer())
-                ->setInclude(
-                    (new SspModelIncludeTransfer())
-                        ->setWithImageFile(true),
-                )
+                ->setWithImageFile(true)
                 ->setSspModelConditions(
                     (new SspModelConditionsTransfer())
                         ->setReferences([$sspModelReference]),

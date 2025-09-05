@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerFeature\Zed\SelfServicePortal\Business\Model\Reader;
+namespace SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Reader;
 
 use Generated\Shared\Transfer\SspModelCollectionTransfer;
 use Generated\Shared\Transfer\SspModelCriteriaTransfer;
@@ -25,7 +25,7 @@ class SspModelReader implements SspModelReaderInterface
     {
         $sspModelCollectionTransfer = $this->selfServicePortalRepository->getSspModelCollection($sspModelCriteriaTransfer);
 
-        if ($sspModelCriteriaTransfer->getInclude() !== null && $sspModelCriteriaTransfer->getIncludeOrFail()->getWithImageFile()) {
+        if ($sspModelCriteriaTransfer->getWithImageFile()) {
             $sspModelCollectionTransfer = $this->expandWithFile($sspModelCollectionTransfer);
         }
 

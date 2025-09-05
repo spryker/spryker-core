@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerFeature\Zed\SelfServicePortal\Communication\Model\Provider;
+namespace SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Provider;
 
 use Generated\Shared\Transfer\SspModelTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;

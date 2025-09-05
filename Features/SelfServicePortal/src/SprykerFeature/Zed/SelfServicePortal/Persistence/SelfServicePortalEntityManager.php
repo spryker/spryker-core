@@ -307,6 +307,28 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
             ->mapSpySspModelEntityToSspModelTransfer($spySspModelEntity, $sspModelTransfer);
     }
 
+    public function updateSspModel(SspModelTransfer $sspModelTransfer): ?SspModelTransfer
+    {
+        $spySspModelEntity = $this->getFactory()
+            ->createSspModelQuery()
+            ->filterByIdSspModel($sspModelTransfer->getIdSspModelOrFail())
+            ->findOne();
+
+        if (!$spySspModelEntity) {
+            return null;
+        }
+
+        $spySspModelEntity = $this->getFactory()
+            ->createModelMapper()
+            ->mapSspModelTransferToSpySspModelEntity($sspModelTransfer, $spySspModelEntity);
+
+        $spySspModelEntity->save();
+
+        return $this->getFactory()
+            ->createModelMapper()
+            ->mapSpySspModelEntityToSspModelTransfer($spySspModelEntity, $sspModelTransfer);
+    }
+
     public function createSalesOrderItemSspAsset(SalesOrderItemSspAssetTransfer $salesOrderItemSspAssetTransfer): void
     {
         $salesOrderItemSspAssetEntity = new SpySalesOrderItemSspAsset();

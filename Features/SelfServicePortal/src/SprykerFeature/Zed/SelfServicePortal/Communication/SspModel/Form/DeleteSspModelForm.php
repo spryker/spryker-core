@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerFeature\Zed\SelfServicePortal\Communication\Form;
+namespace SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 
