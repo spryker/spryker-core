@@ -9,9 +9,12 @@ namespace SprykerFeature\Client\SelfServicePortal;
 
 use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Generated\Shared\Transfer\SortConfigTransfer;
-use Spryker\Shared\Kernel\AbstractSharedConfig;
+use Spryker\Client\Kernel\AbstractBundleConfig;
 
-class SelfServicePortalConfig extends AbstractSharedConfig
+/**
+ * @method \SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig getSharedConfig()
+ */
+class SelfServicePortalConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
@@ -39,26 +42,6 @@ class SelfServicePortalConfig extends AbstractSharedConfig
     /**
      * @var string
      */
-    protected const PAGINATION_PARAMETER_NAME_PAGE = 'page';
-
-    /**
-     * @var string
-     */
-    protected const PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME = 'ipp';
-
-    /**
-     * @var int
-     */
-    protected const PAGINATION_DEFAULT_ITEMS_PER_PAGE = 10;
-
-    /**
-     * @var int
-     */
-    protected const PAGINATION_MAX_ITEMS_PER_PAGE = 100;
-
-    /**
-     * @var string
-     */
     protected const SORT_NAME = 'name';
 
     /**
@@ -81,11 +64,7 @@ class SelfServicePortalConfig extends AbstractSharedConfig
      */
     public function getSspAssetSearchPaginationConfigTransfer(): PaginationConfigTransfer
     {
-        return (new PaginationConfigTransfer())
-            ->setParameterName(static::PAGINATION_PARAMETER_NAME_PAGE)
-            ->setItemsPerPageParameterName(static::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME)
-            ->setDefaultItemsPerPage(static::PAGINATION_DEFAULT_ITEMS_PER_PAGE)
-            ->setMaxItemsPerPage(static::PAGINATION_MAX_ITEMS_PER_PAGE);
+        return $this->getSharedConfig()->getSspAssetSearchPaginationConfigTransfer();
     }
 
     /**

@@ -32,12 +32,17 @@ class SspAssetSearchQueryExpanderPlugin extends AbstractPlugin implements QueryE
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
+        $sspAssetSearchPaginationConfigBuilder = $this->getFactory()->createSspAssetSearchPaginationConfigBuilder();
+        $sspAssetSearchPaginationConfigBuilder->setPaginationConfigTransfer(
+            $this->getFactory()->getConfig()->getSspAssetSearchPaginationConfigTransfer(),
+        );
+
         return $this->getFactory()
             ->createSspAssetSearchQueryExpander()
             ->expandQuery(
                 $searchQuery,
                 $requestParameters,
-                $this->getFactory()->createSspAssetSearchPaginationConfigBuilder(),
+                $sspAssetSearchPaginationConfigBuilder,
                 $this->getFactory()->createSspAssetSearchSortConfigBuilder(),
             );
     }

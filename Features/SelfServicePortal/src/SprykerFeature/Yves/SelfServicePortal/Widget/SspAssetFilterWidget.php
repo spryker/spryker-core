@@ -22,15 +22,22 @@ class SspAssetFilterWidget extends AbstractWidget
      */
     protected const PARAMETER_SSP_ASSET_REFERENCE = 'ssp-asset-reference';
 
+    /**
+     * @var string
+     */
+    protected const PARAMETER_ASSET = 'asset';
+
     public function __construct()
     {
         $companyUserTransfer = $this->getFactory()->getCompanyUserClient()->findCompanyUser();
         if (!$companyUserTransfer) {
+            $this->addIsDisabledParameter(true);
+
             return;
         }
 
-        $this->addSspAssetDataParameter($companyUserTransfer);
-        $this->addIsDisabledParameter();
+        $this->addAssetParameter($companyUserTransfer);
+        $this->addIsDisabledParameter(false);
     }
 
     public static function getName(): string
@@ -43,13 +50,11 @@ class SspAssetFilterWidget extends AbstractWidget
         return '@SelfServicePortal/views/asset-filter/asset-filter.twig';
     }
 
-    protected function addSspAssetDataParameter(CompanyUserTransfer $companyUserTransfer): void
+    protected function addAssetParameter(CompanyUserTransfer $companyUserTransfer): void
     {
         $request = $this->getFactory()->getRequestStack()->getCurrentRequest();
 
         if (!$request) {
-            $this->addParameter('sspAssetData', null);
-
             return;
         }
 
@@ -57,20 +62,24 @@ class SspAssetFilterWidget extends AbstractWidget
         $assetReference = $request->query->get(static::PARAMETER_SSP_ASSET_REFERENCE);
 
         if (!$assetReference) {
-            $this->addParameter('sspAssetData', null);
+            return;
+        }
+
+        $sspAssetStorageTransfer = $this->getFactory()->createSspAssetStorageReader()->findSspAssetStorageByReference($companyUserTransfer, $assetReference);
+
+        if (!$sspAssetStorageTransfer) {
+            $this->addParameter(static::PARAMETER_ASSET, null);
 
             return;
         }
 
-        $sspAssetData = $this->getFactory()
-            ->createSspAssetStorageReader()
-            ->getSspAssetDataByReference($companyUserTransfer, $assetReference);
+        $sspAssetStorageTransfer->setReference($assetReference);
 
-        $this->addParameter('sspAssetData', $sspAssetData);
+        $this->addParameter(static::PARAMETER_ASSET, $sspAssetStorageTransfer);
     }
 
-    protected function addIsDisabledParameter(): void
+    protected function addIsDisabledParameter(bool $isDisabled): void
     {
-        $this->addParameter('isDisabled', false);
+        $this->addParameter('isDisabled', $isDisabled);
     }
 }

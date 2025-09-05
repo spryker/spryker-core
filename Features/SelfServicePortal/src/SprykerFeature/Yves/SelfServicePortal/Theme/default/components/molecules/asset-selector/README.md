@@ -1,0 +1,1 @@
+Renders asset selector component.

@@ -9,9 +9,9 @@
 {% block body %}
     <div>
         {% if data.isCompatible %}
-            <span class="status status--approved">{{ 'self_service_portal.asset.compatibility.compatible' | trans }}</span>
+            <span class="status status--compatibility status--approved">{{ 'self_service_portal.asset.compatibility.compatible' | trans }}</span>
         {% else %}
-            <span class="status status--rejected">{{ 'self_service_portal.asset.compatibility.not_compatible' | trans }}</span>
+            <span class="status status--compatibility status--rejected">{{ 'self_service_portal.asset.compatibility.not_compatible' | trans }}</span>
         {% endif %}
     </div>
 {% endblock %}

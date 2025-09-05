@@ -152,6 +152,11 @@ class SelfServicePortalFactory extends AbstractFactory
         return new SspAssetSearchQuery($this->getConfig());
     }
 
+    public function createSspAssetSearchPaginationConfigBuilder(): PaginationConfigBuilderInterface
+    {
+        return new SspAssetSearchPaginationConfigBuilder();
+    }
+
     public function getSearchClient(): SearchClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_SEARCH);
@@ -216,16 +221,6 @@ class SelfServicePortalFactory extends AbstractFactory
     public function getSspAssetSearchResultFormatterPlugins(): array
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PLUGINS_SSP_ASSET_SEARCH_RESULT_FORMATTER);
-    }
-
-    public function createSspAssetSearchPaginationConfigBuilder(): PaginationConfigBuilderInterface
-    {
-        $sspAssetSearchPaginationConfigBuilder = new SspAssetSearchPaginationConfigBuilder();
-        $sspAssetSearchPaginationConfigBuilder->setPaginationConfigTransfer(
-            $this->getConfig()->getSspAssetSearchPaginationConfigTransfer(),
-        );
-
-        return $sspAssetSearchPaginationConfigBuilder;
     }
 
     public function createSspAssetSearchSortConfigBuilder(): SortConfigBuilderInterface

@@ -163,6 +163,7 @@
         <property name="sspAsset" type="SspAsset"/>
         <property name="groupKey" type="string"/>
         <property name="isSingleAddressPerShipmentType" type="bool"/>
+        <property name="orderItemReference" type="string" strict="true"/>
     </transfer>
 
     <transfer name="Service" strict="true">
@@ -1187,6 +1188,7 @@
 
     <transfer name="SspAssetSearchCollection" strict="true">
         <property name="sspAssets" type="SspAssetSearch[]" singular="sspAsset"/>
+        <property name="nbResults" type="int"/>
     </transfer>
 
     <transfer name="SspAssetSearchCriteria" strict="true">

@@ -7,6 +7,7 @@
 
 namespace SprykerFeature\Yves\SelfServicePortal\Widget;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -23,6 +24,11 @@ class SspItemAssetSelectorWidget extends AbstractWidget
     /**
      * @var string
      */
+    protected const PARAMETER_SSP_ASSET_REFERENCE = 'ssp-asset-reference';
+
+    /**
+     * @var string
+     */
     protected const PARAMETER_IS_DISABLED = 'isDisabled';
 
     /**
@@ -35,13 +41,27 @@ class SspItemAssetSelectorWidget extends AbstractWidget
      */
     protected const PARAMETER_PRODUCT = 'product';
 
+    /**
+     * @var string
+     */
+    protected const PARAMETER_ASSET = 'asset';
+
     public function __construct(
         ProductViewTransfer $productViewTransfer,
         bool $isDisabled = false
     ) {
-        $this->addProductParameter($productViewTransfer);
         $this->addIsDisabledParameter($isDisabled);
-        $this->addIsVisibleParameter();
+        $this->addProductParameter($productViewTransfer);
+
+        $companyUserTransfer = $this->getFactory()->getCompanyUserClient()->findCompanyUser();
+        if (!$companyUserTransfer) {
+            $this->addIsVisibleParameter(false);
+
+            return;
+        }
+
+        $this->addIsVisibleParameter(true);
+        $this->addAssetParameter($companyUserTransfer);
     }
 
     /**
@@ -78,10 +98,30 @@ class SspItemAssetSelectorWidget extends AbstractWidget
         $this->addParameter(static::PARAMETER_IS_DISABLED, $isDisabled);
     }
 
-    protected function addIsVisibleParameter(): void
+    protected function addAssetParameter(CompanyUserTransfer $companyUserTransfer): void
     {
-        $isVisible = $this->getFactory()->getCustomerClient()->isLoggedIn();
+        $request = $this->getFactory()->getRequestStack()->getCurrentRequest();
 
+        if (!$request) {
+            return;
+        }
+
+        /** @var string|null $assetReference */
+        $assetReference = $request->query->get(static::PARAMETER_SSP_ASSET_REFERENCE);
+
+        if (!$assetReference) {
+            $this->addParameter(static::PARAMETER_ASSET, null);
+
+            return;
+        }
+
+        $sspAssetStorageTransfer = $this->getFactory()->createSspAssetStorageReader()->findSspAssetStorageByReference($companyUserTransfer, $assetReference);
+
+        $this->addParameter(static::PARAMETER_ASSET, $sspAssetStorageTransfer);
+    }
+
+    protected function addIsVisibleParameter(bool $isVisible): void
+    {
         $this->addParameter(static::PARAMETER_IS_VISIBLE, $isVisible);
     }
 }

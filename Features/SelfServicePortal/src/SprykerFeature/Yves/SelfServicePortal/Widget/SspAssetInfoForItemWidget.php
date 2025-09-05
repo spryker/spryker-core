@@ -23,12 +23,18 @@ class SspAssetInfoForItemWidget extends AbstractWidget
     /**
      * @var string
      */
+    protected const PARAMETER_IS_COMPATIBILITY_VISIBLE = 'isCompatibilityVisible';
+
+    /**
+     * @var string
+     */
     protected const PARAMETER_ID_PRODUCT = 'idProduct';
 
     public function __construct(ItemTransfer $itemTransfer)
     {
         $this->addAssetParameter($itemTransfer);
         $this->addIdProductParameter($itemTransfer);
+        $this->addIsCompatibilityVisibleParameter($itemTransfer);
     }
 
     public static function getName(): string
@@ -49,5 +55,10 @@ class SspAssetInfoForItemWidget extends AbstractWidget
     protected function addIdProductParameter(ItemTransfer $itemTransfer): void
     {
         $this->addParameter(static::PARAMETER_ID_PRODUCT, $itemTransfer->getId());
+    }
+
+    protected function addIsCompatibilityVisibleParameter(ItemTransfer $itemTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_IS_COMPATIBILITY_VISIBLE, !$itemTransfer->getOrderItemReference());
     }
 }

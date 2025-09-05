@@ -1,36 +1,35 @@
 {% extends template('widget') %}
 
 {% define data = {
-    assetData: _widget.sspAssetData | default(null),
-    isDisabled: _widget.isDisabled ?? true,
+    asset: _widget.asset | default([]),
+    isDisabled: _widget.isDisabled | default(false),
 } %}
 
 {% block body %}
     {% if not data.isDisabled %}
-    <div class="filter-section box spacing-top--big">
-        {% block information %}
-            {% block title %}
-                <h3 class="title--h6">{{ 'self_service_portal.asset_filter.title' | trans }}</h3>
-            {% endblock %}
+        <div class="box filter-section spacing-bottom--big">
+            {% block information %}
+                {% block title %}
+                    <h3 class="title--h6 spacing-bottom">{{ 'self_service_portal.asset_filter.title' | trans }}</h3>
+                {% endblock %}
 
-            {% block description %}
-                <small>{{ 'self_service_portal.asset_filter.description' | trans }}</small>
+                {% block content %}
+                    {% include molecule('asset-selector', 'SelfServicePortal') with {
+                        modifiers: ['filter'],
+                        data: {
+                            selectedLabel: null,
+                            buttonLabel: 'self_service_portal.asset_filter.select_label',
+                            label: 'self_service_portal.asset_filter.description',
+                            formFieldName: 'ssp-asset-reference',
+                            asset: data.asset,
+                        },
+                        attributes: {
+                            'links-for-asset-reference': 'js-product-item__link-detail-page',
+                            'submit-closest-form': true,
+                        },
+                    } only %}
+                {% endblock %}
             {% endblock %}
-
-            {% block content %}
-                {% set selected = data.assetData is not empty ? data.assetData.serial_number ? "#{data.assetData.name}, #{data.assetData.serial_number}" : data.assetData.name %}
-
-                {% include molecule('asset-finder', 'SelfServicePortal') with {
-                    modifiers: ['catalog'],
-                    data: {
-                        label: 'self_service_portal.asset_filter.select_label',
-                        formFieldName: 'ssp-asset-reference',
-                        isDisabled: false,
-                        selected: selected,
-                    }
-                } only %}
-            {% endblock %}
-        {% endblock %}
-    </div>
+        </div>
     {% endif %}
 {% endblock %}

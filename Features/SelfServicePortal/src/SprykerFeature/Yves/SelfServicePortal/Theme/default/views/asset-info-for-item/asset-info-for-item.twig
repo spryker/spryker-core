@@ -2,7 +2,8 @@
 
 {% define data = {
     asset: _widget.asset,
-    idProduct: _widget.idProduct
+    idProduct: _widget.idProduct,
+    isCompatibilityVisible: _widget.isCompatibilityVisible
 } %}
 
 {% block body %}
@@ -23,9 +24,11 @@
                             {{ 'self_service_portal.asset.serial_number' | trans }}: {{ data.asset.serialNumber }}
                         </li>
                     {% endif %}
-                    <li class="list__item">
-                        {% widget 'AssetCompatibilityLabelWidget' args [data.asset.reference, data.idProduct] %}{% endwidget %}
-                    </li>
+                    {% if data.isCompatibilityVisible %}
+                        <li class="list__item">
+                            {% widget 'AssetCompatibilityLabelWidget' args [data.asset.reference, data.idProduct] %}{% endwidget %}
+                        </li>
+                    {% endif %}
                 </ul>
             {% endblock %}
         </div>

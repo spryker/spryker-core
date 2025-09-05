@@ -92,10 +92,10 @@ class SspAssetFilterNameWidget extends AbstractWidget
             return null;
         }
 
-        $sspAssetData = $this->getFactory()
+        $sspAssetStorageTransfer = $this->getFactory()
             ->createSspAssetStorageReader()
-            ->getSspAssetDataByReference($companyUserTransfer, $assetReference);
+            ->findSspAssetStorageByReference($companyUserTransfer, $assetReference);
 
-        return $sspAssetData['name'] ?? null;
+        return $sspAssetStorageTransfer?->getName();
     }
 }

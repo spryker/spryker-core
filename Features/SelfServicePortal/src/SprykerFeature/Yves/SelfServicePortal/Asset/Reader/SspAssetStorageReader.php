@@ -10,28 +10,18 @@ namespace SprykerFeature\Yves\SelfServicePortal\Asset\Reader;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\SspAssetStorageConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetStorageCriteriaTransfer;
+use Generated\Shared\Transfer\SspAssetStorageTransfer;
 use SprykerFeature\Client\SelfServicePortal\SelfServicePortalClientInterface;
 
 class SspAssetStorageReader implements SspAssetStorageReaderInterface
 {
-    /**
-     * @var string
-     */
-    protected const PARAMETER_ASSET_REFERENCE = 'reference';
-
     public function __construct(protected SelfServicePortalClientInterface $selfServicePortalClient)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     * @param string $assetReference
-     *
-     * @return array<string, mixed>|null
-     */
-    public function getSspAssetDataByReference(CompanyUserTransfer $companyUserTransfer, string $assetReference): ?array
+    public function findSspAssetStorageByReference(CompanyUserTransfer $companyUserTransfer, string $assetReference): ?SspAssetStorageTransfer
     {
-        $sspAssetCollection = $this->selfServicePortalClient->getSspAssetStorageCollection(
+        $sspAssetStorageCollectionTransfer = $this->selfServicePortalClient->getSspAssetStorageCollection(
             (new SspAssetStorageCriteriaTransfer())
                 ->setCompanyUser($companyUserTransfer)
                 ->setSspAssetStorageConditions(
@@ -40,19 +30,10 @@ class SspAssetStorageReader implements SspAssetStorageReaderInterface
                 ),
         );
 
-        if ($sspAssetCollection->getSspAssetStorages()->count() === 0) {
+        if ($sspAssetStorageCollectionTransfer->getSspAssetStorages()->count() === 0) {
             return null;
         }
 
-        $sspAssetStorage = $sspAssetCollection->getSspAssetStorages()->getIterator()->current();
-
-        if (!$sspAssetStorage) {
-            return null;
-        }
-
-        $sspAssetStorageData = $sspAssetStorage->toArray();
-        $sspAssetStorageData[static::PARAMETER_ASSET_REFERENCE] = $assetReference;
-
-        return $sspAssetStorageData;
+        return $sspAssetStorageCollectionTransfer->getSspAssetStorages()->getIterator()->current();
     }
 }

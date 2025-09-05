@@ -2,14 +2,69 @@
 
 {% define data = {
     assets: assets | default([]),
-    idProduct: idProduct
+    idProduct: idProduct | default(null),
+    offset: offset | default(0),
+    limit: limit | default(10),
+    results: nbResults | default(0),
+    searchRoute: searchRoute | default(''),
+    searchString: searchString | default(''),
+    assetReference: assetReference | default(''),
 } %}
 
 {% block body %}
-    {% include molecule('asset-list', 'SelfServicePortal') with {
-        data: {
-            assets: data.assets,
-            idProduct: idProduct
-        },
-    } only %}
+    {% if data.assets is not empty %}
+        {% set queryStringObject = {
+            idProduct: data.idProduct,
+            assetReference: data.assetReference,
+            searchString: data.searchString,
+            limit: data.limit,
+        } %}
+
+        {% block scroll %}
+            {% include molecule('endless-scroll') with {
+                data: {
+                    content: block('options'),
+                },
+                attributes: {
+                    url: path('customer/ssp-asset/widget-content'),
+                    'result-offset': data.offset + data.limit,
+                    'result-limit': data.limit,
+                    'result-total': data.results,
+                    'query-range': queryStringObject | url_encode ~ '&offset',
+                    'has-content-mount': true,
+                },
+            } only %}
+        {% endblock %}
+    {% else %}
+        {% block empty %}
+            {% include molecule('asset-option', 'SelfServicePortal') only %}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+
+{% block options %}
+    {% for asset in data.assets %}
+        {% set compatibilityLabel %}
+            {% if data.idProduct %}
+                {% widget 'AssetCompatibilityLabelWidget' args [asset.reference, data.idProduct] only %}
+                {% endwidget %}
+            {% endif %}
+        {% endset %}
+
+        {% block option %}
+            {% if data.assetReference != asset.reference %}
+                {% include molecule('asset-option', 'SelfServicePortal') with {
+                    data: {
+                        asset: {
+                            serial: asset.serialNumber,
+                            name: asset.name,
+                            reference: asset.reference,
+                            id: asset.idSspAsset,
+                            compatibilityLabel: compatibilityLabel,
+                        },
+                    },
+                } only %}
+            {% endif %}
+        {% endblock %}
+    {% endfor %}
 {% endblock %}

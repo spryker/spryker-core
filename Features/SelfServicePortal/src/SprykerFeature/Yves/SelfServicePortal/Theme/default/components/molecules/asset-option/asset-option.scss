@@ -1,0 +1,42 @@
+@mixin self-service-portal-asset-option($name: '.asset-option') {
+    #{$name} {
+        display: flex;
+        align-items: flex-start;
+        padding: 1rem 0;
+        font-size: 0.875rem;
+        gap: 1.25rem;
+        cursor: auto;
+
+        &:hover {
+            background: none;
+        }
+
+        &--empty {
+            justify-content: center;
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        &__content {
+            flex-grow: 1;
+        }
+
+        &__name {
+            display: block;
+            word-wrap: break-word;
+        }
+
+        &__data {
+            display: flex;
+            gap: 1.25rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        &__scroll {
+            height: 100%;
+        }
+
+        @content;
+    }
+}

@@ -1,21 +1,22 @@
 {% extends template('widget') %}
 
 {% define data = {
-    isDisabled: _widget.isDisabled,
-    isVisible: _widget.isVisible,
-    product: _widget.product
+    isDisabled: _widget.isDisabled | default(false),
+    isVisible: _widget.isVisible | default(true),
+    product: _widget.product | default(null),
+    asset: _widget.asset | default([]),
 } %}
 
 {% block body %}
     {% if data.isVisible %}
-        {% include molecule('asset-finder', 'SelfServicePortal') with {
-            class: 'spacing-bottom--big',
+        {% include molecule('asset-selector', 'SelfServicePortal') with {
             data: {
                 formFieldName: 'assetReference',
                 isDisabled: data.isDisabled,
                 placeholder: 'self_service_portal.asset.selector.search_placeholder' | trans,
-                product: data.product
-            }
+                product: data.product,
+                asset: data.asset,
+            },
         } only %}
     {% endif %}
 {% endblock %}

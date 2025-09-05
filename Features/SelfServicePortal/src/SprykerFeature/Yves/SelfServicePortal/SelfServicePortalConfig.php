@@ -7,6 +7,7 @@
 
 namespace SprykerFeature\Yves\SelfServicePortal;
 
+use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 
@@ -725,5 +726,18 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     public function getDeliveryLikeShipmentTypes(): array
     {
         return [];
+    }
+
+    /**
+     * Specification:
+     * - Returns pagination configuration for SSP asset search.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PaginationConfigTransfer
+     */
+    public function getSspAssetSearchPaginationConfigTransfer(): PaginationConfigTransfer
+    {
+        return $this->getSharedConfig()->getSspAssetSearchPaginationConfigTransfer();
     }
 }

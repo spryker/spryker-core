@@ -6,22 +6,16 @@
 } %}
 
 {% define data = {
-    label: 'self_service_portal.asset.selector.label',
-    formFieldName: required,
     isDisabled: false,
     placeholder: 'self_service_portal.asset.selector.search_placeholder' | trans,
-    selected: null,
-    product: null,
+    staticParams: null,
+    dynamicParams: null,
 } %}
 
 {% define attributes = {
-    'hidden-class': 'is-hidden',
-    'selected-class': 'is-selected',
     'debounce-delay': 500,
     'min-letters': 2,
 } %}
-
-{% block class %}{{ parent() }} {{ data.selected ? 'is-selected' }}{% endblock %}
 
 {% block body %}
     {% block ajax %}
@@ -29,19 +23,15 @@
             {% include molecule('ajax-provider') with {
                 class: "#{config.jsName}__ajax-provider",
                 attributes: {
-                    'fetch-on-load': false,
-                    url: path('customer/ssp-asset/widget-content'),
+                    'fetch-on-load': true,
+                    url: path('customer/ssp-asset/widget-content', data.staticParams | default({})),
                     method: 'GET',
                     'dynamic-params': {
-                        'searchString': {
+                        searchString: {
                             selector: ".#{config.jsName}__search-field",
                             attribute: 'value',
                         },
-                        'idProduct': {
-                            selector: ".#{config.jsName}__product-id",
-                            attribute: 'value',
-                        },
-                    } | json_encode,
+                    } | merge(data.dynamicParams | default()) | json_encode,
                 },
             } only %}
         {% endblock %}
@@ -58,7 +48,7 @@
             {% include molecule('ajax-renderer') with {
                 attributes: {
                     'provider-class-name': "#{config.jsName}__ajax-provider",
-                    'target-class-name': "#{config.jsName}__results-container",
+                    'target-class-name': "#{config.jsName}__results",
                     'mount-after-render': true,
                 },
             } only %}
@@ -66,43 +56,19 @@
     {% endblock %}
 
     {% block content %}
-        {% block separator %}
-            <hr>
-        {% endblock %}
-
-        {% block finder %}
-            <div class="{{ config.name }}__finder">
-                {% block label %}
-                    <div class="label">{{ data.label | trans }}</div>
-                {% endblock %}
-
-                {% block search %}
-                    <div class="{{ config.name }}__search">
-                        <input placeholder="{{ data.placeholder }}" class="input input--expand {{ config.jsName }}__search-field {{ config.name }}__search-field" {% if data.isDisabled %}disabled{% endif %}>
-                    </div>
-                {% endblock %}
-
-                {% block result %}
-                    <div class="{{ config.name }}__results">
-                        <input type="hidden" name="{{ data.formFieldName }}" class="{{ config.jsName }}__value">
-                        <input type="hidden" class="{{ config.jsName }}__product-id" value="{{ data.product ? data.product.idProductConcrete : '' }}">
-                        <div class="{{ config.name }}__results-container {{ config.jsName }}__results-container {{ attributes['hidden-class'] }}"></div>
-                    </div>
-                {% endblock %}
+        {% block search %}
+            <div class="{{ config.name }}__search">
+                <input
+                    placeholder="{{ data.placeholder }}"
+                    class="input input--expand {{ config.jsName }}__search-field {{ config.name }}__search-field"
+                    {% if data.isDisabled %}disabled{% endif %}
+                    {{ qa('asset-finder-input') }}
+                >
             </div>
         {% endblock %}
 
-        {% block selected %}
-            <div class="{{ config.name }}__selected">
-                <div class="{{ config.name }}__selected-data">
-                    <span class="{{ config.jsName }}__selected-text">{{ data.selected }}</span>
-                    <button type="button" class="button {{ config.jsName }}__change-button">
-                        {{ 'self_service_portal.asset.selector.change' | trans }}
-                    </button>
-                </div>
-
-                <button type="button" class="link {{ config.jsName }}__clear">{{ 'self_service_portal.asset_filter.clear' | trans }}</button>
-            </div>
+        {% block result %}
+            <div class="{{ config.name }}__results {{ config.jsName }}__results" {{ qa('asset-selector-results') }}></div>
         {% endblock %}
     {% endblock %}
 {% endblock %}

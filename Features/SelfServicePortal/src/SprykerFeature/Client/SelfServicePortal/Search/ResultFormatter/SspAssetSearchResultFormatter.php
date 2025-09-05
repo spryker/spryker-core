@@ -58,6 +58,7 @@ class SspAssetSearchResultFormatter implements SspAssetSearchResultFormatterInte
         }
 
         $collection->setSspAssets($sspAssetSearchTransfers);
+        $collection->setNbResults($searchResult->getTotalHits());
 
         return $collection;
     }

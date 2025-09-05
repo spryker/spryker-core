@@ -1,54 +1,24 @@
 @mixin self-service-portal-asset-finder($name: '.asset-finder') {
     #{$name} {
-        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 0 0.5rem;
+        width: 80vw;
 
-        &.is-selected {
-            #{$name}__selected {
-                display: block;
-            }
-
-            #{$name}__finder {
-                display: none;
-            }
+        @include helper-breakpoint-media-min(helper-breakpoint-edge-min(map-get($setting-breakpoints, lg))) {
+            width: 36.25rem;
         }
 
-        &__finder {
-            position: relative;
-        }
-
-        &__results-container {
-            position: absolute;
-            top: calc(100% + 0.3rem);
-            left: 0;
-            width: 100%;
-            background: $setting-color-white;
-            z-index: $setting-zi-popup;
-            border: 0.0625rem solid $setting-color-lighter;
-        }
-
-        &__selected {
-            display: none;
-            padding: 0.5rem;
-            border: 0.0625rem solid #d9d9d9;
-            border-radius: 4px;
-            margin-top: 0.5rem;
-        }
-
-        &__selected-data {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-bottom: 0.5rem;
-        }
-
-        &__change-button {
-            margin-left: 0.5rem;
-        }
-
-        &__selected-text {
+        &__results {
             overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            display: flex;
+            flex-direction: column;
+            max-height: 23rem;
+        }
+
+        &__search {
+            padding-bottom: 1.25rem;
         }
 
         @content;

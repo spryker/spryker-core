@@ -20,6 +20,11 @@ class SspAssetStorageEntityMapper implements SspAssetStorageEntityMapperInterfac
     /**
      * @var string
      */
+    protected const KEY_REFERENCE = 'reference';
+
+    /**
+     * @var string
+     */
     protected const KEY_BUSINESS_UNIT_IDS = 'business_unit_ids';
 
     /**
@@ -90,6 +95,7 @@ class SspAssetStorageEntityMapper implements SspAssetStorageEntityMapperInterfac
             static::KEY_COMPANY_IDS => $businessUnitData[static::BUSINESS_UNIT_DATA_KEY_COMPANY_IDS],
             static::KEY_SERIAL_NUMBER => $sspAssetTransfer->getSerialNumber(),
             static::KEY_MODEL_IDS => $modelIds,
+            static::KEY_REFERENCE => $sspAssetTransfer->getReferenceOrFail(),
             static::KEY_ID_OWNER_BUSINESS_UNIT => $sspAssetTransfer->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail(),
             static::KEY_ID_OWNER_COMPANY_ID => $sspAssetTransfer->getCompanyBusinessUnitOrFail()->getFkCompanyOrFail(),
         ];
