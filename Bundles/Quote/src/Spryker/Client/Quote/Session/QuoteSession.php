@@ -26,7 +26,7 @@ class QuoteSession implements QuoteSessionInterface
     protected $session;
 
     /**
-     * @var array<\Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface>
+     * @var array<\Spryker\Client\QuoteExtension\Dependency\Plugin\QuoteTransferExpanderPluginInterface>
      */
     protected $quoteTransferExpanderPlugins;
 
@@ -49,7 +49,7 @@ class QuoteSession implements QuoteSessionInterface
      * @param \Spryker\Client\Session\SessionClientInterface $session
      * @param \Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface $currencyClient
      * @param \Spryker\Client\Quote\Dependency\Client\QuoteToStoreClientInterface $storeClient
-     * @param array<\Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface> $quoteTransferExpanderPlugins
+     * @param array<\Spryker\Client\QuoteExtension\Dependency\Plugin\QuoteTransferExpanderPluginInterface> $quoteTransferExpanderPlugins
      */
     public function __construct(
         SessionClientInterface $session,

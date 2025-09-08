@@ -16,8 +16,10 @@ use Generated\Shared\Transfer\ProductClassCriteriaTransfer;
 use Generated\Shared\Transfer\ProductClassTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer;
+use Generated\Shared\Transfer\SspAssetSearchTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
+use Generated\Shared\Transfer\SspModelCollectionTransfer;
 use Generated\Shared\Transfer\SspModelTransfer;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAsset;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAsset;
@@ -305,6 +307,28 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
             ->mapSpySspModelEntityToSspModelTransfer($spySspModelEntity, $sspModelTransfer);
     }
 
+    public function updateSspModel(SspModelTransfer $sspModelTransfer): ?SspModelTransfer
+    {
+        $spySspModelEntity = $this->getFactory()
+            ->createSspModelQuery()
+            ->filterByIdSspModel($sspModelTransfer->getIdSspModelOrFail())
+            ->findOne();
+
+        if (!$spySspModelEntity) {
+            return null;
+        }
+
+        $spySspModelEntity = $this->getFactory()
+            ->createModelMapper()
+            ->mapSspModelTransferToSpySspModelEntity($sspModelTransfer, $spySspModelEntity);
+
+        $spySspModelEntity->save();
+
+        return $this->getFactory()
+            ->createModelMapper()
+            ->mapSpySspModelEntityToSspModelTransfer($spySspModelEntity, $sspModelTransfer);
+    }
+
     public function createSalesOrderItemSspAsset(SalesOrderItemSspAssetTransfer $salesOrderItemSspAssetTransfer): void
     {
         $salesOrderItemSspAssetEntity = new SpySalesOrderItemSspAsset();
@@ -435,5 +459,46 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
             ->find();
 
         $sspAssetStorageCollection->delete();
+    }
+
+    public function saveSspAssetSearch(SspAssetSearchTransfer $sspAssetSearchTransfer): SspAssetSearchTransfer
+    {
+        $sspAssetSearchEntity = $this->getFactory()
+            ->createSspAssetSearchPropelQuery()
+            ->filterByFkSspAsset($sspAssetSearchTransfer->getIdSspAssetOrFail())
+            ->findOneOrCreate();
+
+        $sspAssetSearchEntity->fromArray($sspAssetSearchTransfer->toArray());
+        $sspAssetSearchEntity->save();
+
+        return $sspAssetSearchTransfer;
+    }
+
+    /**
+     * @param array<int> $sspAssetIds
+     *
+     * @return void
+     */
+    public function deleteSspAssetSearchBySspAssetIds(array $sspAssetIds): void
+    {
+        $this->getFactory()
+            ->createSspAssetSearchPropelQuery()
+            ->filterByFkSspAsset_In($sspAssetIds)
+            ->delete();
+    }
+
+    public function deleteSspModels(SspModelCollectionTransfer $sspModelCollectionTransfer): void
+    {
+        $sspModelIds = [];
+        foreach ($sspModelCollectionTransfer->getSspModels() as $sspModelTransfer) {
+            $sspModelIds[] = $sspModelTransfer->getIdSspModelOrFail();
+        }
+
+        if ($sspModelIds) {
+            $this->getFactory()
+                ->createSspModelQuery()
+                ->filterByIdSspModel_In($sspModelIds)
+                ->delete();
+        }
     }
 }

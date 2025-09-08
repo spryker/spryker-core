@@ -615,7 +615,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface>
+     * @return array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPreSavePluginInterface>
      */
     public function getOrderExpanderPreSavePlugins(): array
     {

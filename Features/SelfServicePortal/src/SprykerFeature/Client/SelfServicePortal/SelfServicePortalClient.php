@@ -17,6 +17,8 @@ use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
+use Generated\Shared\Transfer\SspAssetSearchCollectionTransfer;
+use Generated\Shared\Transfer\SspAssetSearchCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetStorageCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetStorageCriteriaTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
@@ -203,6 +205,23 @@ class SelfServicePortalClient extends AbstractClient implements SelfServicePorta
         return $this->getFactory()
             ->createSelfServicePortalStub()
             ->updateSspAssetCollection($sspAssetCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspAssetSearchCriteriaTransfer $sspAssetSearchCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspAssetSearchCollectionTransfer
+     */
+    public function getSspAssetSearchCollection(
+        SspAssetSearchCriteriaTransfer $sspAssetSearchCriteriaTransfer
+    ): SspAssetSearchCollectionTransfer {
+        return $this->getFactory()
+            ->createSspAssetSearchReader()
+            ->getSspAssetSearchCollection($sspAssetSearchCriteriaTransfer);
     }
 
     /**

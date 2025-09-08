@@ -31,7 +31,7 @@ class SearchHttpSearchContextExpanderPlugin extends AbstractPlugin implements Se
     {
         if ($searchContextTransfer->getSearchHttpContext()) {
             $searchContextTransfer->getSearchHttpContext()->setIsApplicable(
-                $this->getFactory()->createQueryApplicabilityChecker()->isQueryApplicable(),
+                $this->getFactory()->createQueryApplicabilityChecker()->isQueryApplicable($searchContextTransfer),
             );
         }
 

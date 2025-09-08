@@ -7,6 +7,9 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 
+use Orm\Zed\Company\Persistence\SpyCompanyQuery;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
+use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery;
@@ -20,6 +23,7 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySalesOrderItemSspAssetQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySalesProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetSearchQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetStorageQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToSspModelQuery;
@@ -242,6 +246,21 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
         return SpySspAssetToCompanyBusinessUnitQuery::create();
     }
 
+    public function getCompanyQuery(): SpyCompanyQuery
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_COMPANY);
+    }
+
+    public function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_COMPANY_BUSINESS_UNIT);
+    }
+
+    public function getCompanyUserQuery(): SpyCompanyUserQuery
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_COMPANY_USER);
+    }
+
     public function getUtilDateTimeService(): UtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_UTIL_DATE_TIME);
@@ -255,5 +274,10 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesOrderItemMapper(): SalesOrderItemMapper
     {
         return new SalesOrderItemMapper();
+    }
+
+    public function createSspAssetSearchPropelQuery(): SpySspAssetSearchQuery
+    {
+        return new SpySspAssetSearchQuery();
     }
 }

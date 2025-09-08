@@ -164,9 +164,9 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return array<\Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface>
+     * @return array<\Spryker\Client\QuoteExtension\Dependency\Plugin\QuoteTransferExpanderPluginInterface>
      */
-    protected function getQuoteTransferExpanderPlugins(Container $container)
+    protected function getQuoteTransferExpanderPlugins(Container $container): array
     {
         return [];
     }

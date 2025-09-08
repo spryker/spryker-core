@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CmsPageSearch\Dependency\Client;
 
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 class CmsPageSearchToSearchBridge implements CmsPageSearchToSearchBridgeInterface
 {

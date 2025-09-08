@@ -1,0 +1,35 @@
+{% extends template('widget') %}
+
+{% define data = {
+    asset: _widget.asset | default([]),
+    isDisabled: _widget.isDisabled | default(false),
+} %}
+
+{% block body %}
+    {% if not data.isDisabled %}
+        <div class="box filter-section spacing-bottom--big">
+            {% block information %}
+                {% block title %}
+                    <h3 class="title--h6 spacing-bottom">{{ 'self_service_portal.asset_filter.title' | trans }}</h3>
+                {% endblock %}
+
+                {% block content %}
+                    {% include molecule('asset-selector', 'SelfServicePortal') with {
+                        modifiers: ['filter'],
+                        data: {
+                            selectedLabel: null,
+                            buttonLabel: 'self_service_portal.asset_filter.select_label',
+                            label: 'self_service_portal.asset_filter.description',
+                            formFieldName: 'ssp-asset-reference',
+                            asset: data.asset,
+                        },
+                        attributes: {
+                            'links-for-asset-reference': 'js-product-item__link-detail-page',
+                            'submit-closest-form': true,
+                        },
+                    } only %}
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endif %}
+{% endblock %}

@@ -10,10 +10,12 @@ namespace SprykerFeature\Client\SelfServicePortal\Storage\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\CompanyBusinessUnitStorageTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentStorageTransfer;
 use Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer;
 use Generated\Shared\Transfer\SspAssetStorageTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
+use Generated\Shared\Transfer\SspModelTransfer;
 
 class SspAssetStorageMapper implements SspAssetStorageMapperInterface
 {
@@ -38,6 +40,11 @@ class SspAssetStorageMapper implements SspAssetStorageMapperInterface
     protected const KEY_ID_OWNER_COMPANY_ID = 'id_owner_company_id';
 
     /**
+     * @var string
+     */
+    protected const KEY_MODEL_IDS = 'model_ids';
+
+    /**
      * @param array<string, mixed> $storageData
      *
      * @return \Generated\Shared\Transfer\SspAssetStorageTransfer
@@ -49,6 +56,7 @@ class SspAssetStorageMapper implements SspAssetStorageMapperInterface
 
         $sspAssetStorageTransfer = $this->mapBusinessUnitAssignmentsToAssetStorageTransfer($sspAssetStorageTransfer, $storageData);
         $sspAssetStorageTransfer = $this->mapCompanyBusinessUnitToAssetStorageTransfer($sspAssetStorageTransfer, $storageData);
+        $sspAssetStorageTransfer = $this->mapSspModelsToAssetStorageTransfer($sspAssetStorageTransfer, $storageData);
 
         return $sspAssetStorageTransfer;
     }
@@ -73,6 +81,7 @@ class SspAssetStorageMapper implements SspAssetStorageMapperInterface
         $businessUnitAssignmentTransfers = [];
         foreach ($storageData[static::KEY_COMPANY_IDS] as $companyId) {
             $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())
+                ->setCompany((new CompanyTransfer())->setIdCompany($companyId))
                 ->setFkCompany($companyId);
 
             $businessUnitAssignmentTransfer = (new SspAssetBusinessUnitAssignmentTransfer())
@@ -162,7 +171,8 @@ class SspAssetStorageMapper implements SspAssetStorageMapperInterface
         }
 
         $companyBusinessUnit = (new CompanyBusinessUnitStorageTransfer())
-            ->setIdCompanyBusinessUnit($storageData[static::KEY_ID_OWNER_BUSINESS_UNIT]);
+            ->setIdCompanyBusinessUnit($storageData[static::KEY_ID_OWNER_BUSINESS_UNIT])
+            ->setFkCompany($storageData[static::KEY_ID_OWNER_COMPANY_ID]);
 
         $sspAssetStorageTransfer->setCompanyBusinessUnit($companyBusinessUnit);
 
@@ -189,5 +199,30 @@ class SspAssetStorageMapper implements SspAssetStorageMapperInterface
         $sspAssetTransfer->setCompanyBusinessUnit($companyBusinessUnit);
 
         return $sspAssetTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SspAssetStorageTransfer $sspAssetStorageTransfer
+     * @param array<string, mixed> $storageData
+     *
+     * @return \Generated\Shared\Transfer\SspAssetStorageTransfer
+     */
+    protected function mapSspModelsToAssetStorageTransfer(
+        SspAssetStorageTransfer $sspAssetStorageTransfer,
+        array $storageData
+    ): SspAssetStorageTransfer {
+        if (!isset($storageData[static::KEY_MODEL_IDS]) || !is_array($storageData[static::KEY_MODEL_IDS])) {
+            return $sspAssetStorageTransfer;
+        }
+
+        $sspModelTransfers = [];
+        foreach ($storageData[static::KEY_MODEL_IDS] as $modelId) {
+            $sspModelTransfers[] = (new SspModelTransfer())
+                ->setIdSspModel($modelId);
+        }
+
+        $sspAssetStorageTransfer->setSspModels(new ArrayObject($sspModelTransfers));
+
+        return $sspAssetStorageTransfer;
     }
 }

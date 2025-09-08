@@ -7,8 +7,9 @@
 
 namespace SprykerFeature\Yves\SelfServicePortal\Controller;
 
-use Generated\Shared\Transfer\SspAssetConditionsTransfer;
-use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\SspAssetSearchCollectionTransfer;
+use Generated\Shared\Transfer\SspAssetSearchCriteriaTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +28,37 @@ class AssetWidgetContentController extends AbstractController
     /**
      * @var string
      */
+    protected const REQUEST_PARAM_ID_PRODUCT = 'idProduct';
+
+    /**
+     * @var string
+     */
+    protected const REQUEST_PARAM_OFFSET = 'offset';
+
+    /**
+     * @var string
+     */
+    protected const REQUEST_PARAM_LIMIT = 'limit';
+
+    /**
+     * @var string
+     */
+    protected const REQUEST_PARAM_ASSET_REFERENCE = 'sspAssetReference';
+
+    /**
+     * @var string
+     */
     protected const RESPONSE_KEY_CONTENT = 'content';
+
+    /**
+     * @var string
+     */
+    protected const ROUTE_NAME_SEARCH = 'self-service-portal/asset-widget-content';
+
+    /**
+     * @var int
+     */
+    protected const DEFAULT_OFFSET = 0;
 
     public function indexAction(Request $request): JsonResponse
     {
@@ -49,41 +80,51 @@ class AssetWidgetContentController extends AbstractController
     protected function getAssetWidgetContentViewData(Request $request): array
     {
         $customerClient = $this->getFactory()->getCustomerClient();
-        $assets = [];
+        $nbResults = 0;
 
-        if ($customerClient->isLoggedIn()) {
-            $customerTransfer = $customerClient->getCustomer();
-
-            if ($customerTransfer && $customerTransfer->getCompanyUserTransfer()) {
-                $searchString = $request->query->get(static::REQUEST_PARAM_SEARCH_STRING, '');
-                /**
-                 * @var \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-                 */
-                $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
-
-                $sspAssetCriteriaTransfer = $this->createSspAssetCriteriaTransfer((string)$searchString);
-                $sspAssetCollectionTransfer = $this->getFactory()
-                    ->createSspAssetReader()
-                    ->getSspAssetCollection($request, $sspAssetCriteriaTransfer, $companyUserTransfer);
-
-                $assets = $sspAssetCollectionTransfer->getSspAssets();
-            }
+        if (!$customerClient->isLoggedIn()) {
+            return [
+                'assets' => [],
+            ];
         }
 
+        $searchString = (string)$request->query->get(static::REQUEST_PARAM_SEARCH_STRING, '');
+        $offset = (int)$request->query->get(static::REQUEST_PARAM_OFFSET, static::DEFAULT_OFFSET);
+        $limit = (int)$request->query->get(static::REQUEST_PARAM_LIMIT, $this->getFactory()->getConfig()->getSspAssetSearchPaginationConfigTransfer()->getDefaultItemsPerPage());
+        $sspAssetSearchCollectionTransfer = $this->getSspAssets($searchString, $offset, $limit);
+        $sspAssets = $sspAssetSearchCollectionTransfer->getSspAssets()->getArrayCopy();
+        $nbResults = $sspAssetSearchCollectionTransfer->getNbResults() ?? count($sspAssets);
+
+        $sspAssetReference = $request->query->get(static::REQUEST_PARAM_ASSET_REFERENCE);
+
         return [
-            'assets' => $assets,
+            'assets' => $sspAssets,
+            'idProduct' => $request->query->get(static::REQUEST_PARAM_ID_PRODUCT),
+            'offset' => $offset,
+            'limit' => $limit,
+            'nbResults' => $nbResults,
+            'searchRoute' => static::ROUTE_NAME_SEARCH,
+            'searchString' => $searchString,
+            'assetReference' => $sspAssetReference,
         ];
     }
 
-    protected function createSspAssetCriteriaTransfer(string $searchString): SspAssetCriteriaTransfer
+    protected function getSspAssets(string $searchString, int $offset, int $limit): SspAssetSearchCollectionTransfer
     {
-        $sspAssetCriteriaTransfer = new SspAssetCriteriaTransfer();
-        $sspAssetConditionsTransfer = new SspAssetConditionsTransfer();
-
-        if ($searchString !== '') {
-            $sspAssetConditionsTransfer->setSearchText($searchString);
+        if (!$this->getFactory()->getCompanyUserClient()->findCompanyUser()) {
+            return new SspAssetSearchCollectionTransfer();
         }
 
-        return $sspAssetCriteriaTransfer->setSspAssetConditions($sspAssetConditionsTransfer);
+        return $this->getFactory()
+            ->getSelfServicePortalClient()
+            ->getSspAssetSearchCollection(
+                (new SspAssetSearchCriteriaTransfer())
+                    ->setSearchString($searchString)
+                    ->setPagination(
+                        (new PaginationTransfer())
+                            ->setOffset($offset)
+                            ->setLimit($limit),
+                    ),
+            );
     }
 }

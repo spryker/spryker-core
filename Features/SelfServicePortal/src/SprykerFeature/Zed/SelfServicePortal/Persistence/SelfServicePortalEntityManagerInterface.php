@@ -13,8 +13,10 @@ use Generated\Shared\Transfer\ProductClassCriteriaTransfer;
 use Generated\Shared\Transfer\ProductClassTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SalesOrderItemSspAssetTransfer;
+use Generated\Shared\Transfer\SspAssetSearchTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
+use Generated\Shared\Transfer\SspModelCollectionTransfer;
 use Generated\Shared\Transfer\SspModelTransfer;
 
 interface SelfServicePortalEntityManagerInterface
@@ -59,6 +61,8 @@ interface SelfServicePortalEntityManagerInterface
     public function updateSspAsset(SspAssetTransfer $sspAssetTransfer): SspAssetTransfer;
 
     public function createSspModel(SspModelTransfer $sspModelTransfer): SspModelTransfer;
+
+    public function updateSspModel(SspModelTransfer $sspModelTransfer): ?SspModelTransfer;
 
     public function createSalesOrderItemSspAsset(SalesOrderItemSspAssetTransfer $salesOrderItemSspAssetTransfer): void;
 
@@ -105,4 +109,15 @@ interface SelfServicePortalEntityManagerInterface
      * @return void
      */
     public function deleteSspAssetStorageBySspAssetIds(array $sspAssetIds): void;
+
+    public function saveSspAssetSearch(SspAssetSearchTransfer $sspAssetSearchTransfer): SspAssetSearchTransfer;
+
+    /**
+     * @param array<int> $sspAssetIds
+     *
+     * @return void
+     */
+    public function deleteSspAssetSearchBySspAssetIds(array $sspAssetIds): void;
+
+    public function deleteSspModels(SspModelCollectionTransfer $sspModelCollectionTransfer): void;
 }

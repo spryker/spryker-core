@@ -10,18 +10,18 @@ namespace Spryker\Client\SearchHttp\Plugin\Catalog\Query;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchHttpSearchContextTransfer;
 use Generated\Shared\Transfer\SearchQueryTransfer;
-use Spryker\Client\CatalogExtension\Dependency\Plugin\QueryApplicabilityCheckerInterface;
-use Spryker\Client\CatalogExtension\Dependency\Plugin\SearchTypeIdentifierInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryApplicabilityCheckerInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringSetterInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchTypeIdentifierInterface;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
 
 /**
  * @method \Spryker\Client\SearchHttp\SearchHttpFactory getFactory()
  */
-class SuggestionSearchHttpQueryPlugin extends AbstractPlugin implements SearchContextAwareQueryInterface, SearchStringSetterInterface, QueryInterface, QueryApplicabilityCheckerInterface, SearchTypeIdentifierInterface
+class SuggestionSearchHttpQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface, SearchStringSetterInterface, QueryApplicabilityCheckerInterface, SearchTypeIdentifierInterface
 {
     /**
      * @var \Generated\Shared\Transfer\SearchQueryTransfer;
@@ -36,7 +36,7 @@ class SuggestionSearchHttpQueryPlugin extends AbstractPlugin implements SearchCo
     public function __construct()
     {
         $this->searchContextTransfer = (new SearchContextTransfer())
-            ->setSourceIdentifier(SearchHttpConfig::SOURCE_IDENTIFIER_PRODUCT)
+            ->setSourceIdentifier('*')
             ->setSearchHttpContext(new SearchHttpSearchContextTransfer());
 
         $this->searchQueryTransfer = (new SearchQueryTransfer())
@@ -111,7 +111,7 @@ class SuggestionSearchHttpQueryPlugin extends AbstractPlugin implements SearchCo
      */
     public function isApplicable(): bool
     {
-        return $this->getFactory()->createQueryApplicabilityChecker()->isQueryApplicable();
+        return $this->getFactory()->createQueryApplicabilityChecker()->isQueryApplicable($this->searchContextTransfer);
     }
 
     /**

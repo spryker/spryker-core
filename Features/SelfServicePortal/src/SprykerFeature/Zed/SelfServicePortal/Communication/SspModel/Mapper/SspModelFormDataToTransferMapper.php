@@ -14,20 +14,26 @@ use Generated\Shared\Transfer\SspModelTransfer;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form\SspModelForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form\SspModelImageForm;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class SspModelFormDataToTransferMapper implements SspModelFormDataToTransferMapperInterface
 {
     public function mapFormDataToSspModelTransfer(FormInterface $form, SspModelTransfer $sspModelTransfer): SspModelTransfer
     {
-        $imageFile = $form->get(SspModelForm::FIELD_IMAGE)->get(SspModelImageForm::FIELD_FILE)->getData();
-        if ($imageFile instanceof UploadedFile) {
-            $sspModelTransfer->setImage(
-                (new FileTransfer())
-                    ->setFileUpload($this->createFileUploadTransfer($imageFile))
-                    ->setFileContent($this->getFileContent($imageFile)),
-            );
+        $uploadedFile = $form->get(SspModelForm::FIELD_IMAGE)->get(SspModelImageForm::FIELD_FILE)->getData();
+
+        if (!$sspModelTransfer->getImage()) {
+            $sspModelTransfer->setImage(new FileTransfer());
         }
+
+        if ($uploadedFile instanceof UploadedFile) {
+            $sspModelTransfer->getImageOrFail()
+                ->setFileUpload($this->createFileUploadTransfer($uploadedFile))
+                ->setFileContent($this->getFileContent($uploadedFile));
+        }
+
+        $sspModelTransfer->getImageOrFail()->setToDelete($this->shouldExistingModelImageBeDeleted($form));
 
         return $sspModelTransfer;
     }
@@ -36,6 +42,7 @@ class SspModelFormDataToTransferMapper implements SspModelFormDataToTransferMapp
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile
      *
      * @throws \Exception
+     * @throws \Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException
      *
      * @return string
      */
@@ -50,7 +57,7 @@ class SspModelFormDataToTransferMapper implements SspModelFormDataToTransferMapp
         $fileContent = file_get_contents($realPath);
 
         if ($fileContent === false) {
-            return '';
+            throw new FileNotFoundException($realPath);
         }
 
         return $fileContent;
@@ -64,5 +71,12 @@ class SspModelFormDataToTransferMapper implements SspModelFormDataToTransferMapp
             ->setMimeTypeName($uploadedFile->getMimeType())
             ->setClientOriginalExtension($uploadedFile->getClientOriginalExtension())
             ->setSize($uploadedFile->getSize());
+    }
+
+    protected function shouldExistingModelImageBeDeleted(FormInterface $sspModelForm): bool
+    {
+        $imageField = $sspModelForm->get(SspModelForm::FIELD_IMAGE);
+
+        return $imageField->get(SspModelImageForm::FIELD_FILE)->getData() instanceof UploadedFile || $imageField->get(SspModelImageForm::FIELD_DELETE)->getData();
     }
 }

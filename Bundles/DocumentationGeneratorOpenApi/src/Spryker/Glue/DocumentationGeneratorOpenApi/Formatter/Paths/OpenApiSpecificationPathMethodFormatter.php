@@ -195,6 +195,7 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
         $responseReference = $pathMethodComponentDataTransfer->getIsGetCollection()
             ? $this->getResponseCollectionName($annotationTransfer)
             : $this->getResponseName($annotationTransfer);
+
         $pathMethodData[static::KEY_RESPONSES] = $this->pathResponseSpecificationComponent->getSpecificationComponentData(
             array_merge($pathMethodData, [static::KEY_DEFAULT_RESPONSE_CODE => $pathMethodComponentDataTransfer->getDefaultResponseCode()]),
             $responseReference,

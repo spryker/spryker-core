@@ -36,15 +36,16 @@ class ShipmentTypeChecker implements ShipmentTypeCheckerInterface
      *
      * @return bool
      */
-    public function hasOnlyDeliveryShipmentType(array $shipmentTypes): bool
+    public function hasOnlyDeliveryLikeShipmentType(array $shipmentTypes): bool
     {
         if (count($shipmentTypes) !== 1) {
             return false;
         }
 
         $shipmentType = reset($shipmentTypes);
+        $deliveryLikeTypes = $this->selfServicePortalConfig->getDeliveryLikeShipmentTypes();
 
-        return $shipmentType->getKey() === $this->selfServicePortalConfig::SHIPMENT_TYPE_DELIVERY;
+        return in_array($shipmentType->getKey(), $deliveryLikeTypes, true);
     }
 
     /**

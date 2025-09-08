@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Generated\Shared\Transfer\ProductPayloadTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use ReflectionClass;
-use Spryker\Zed\ProductCategorySearch\Business\Expander\ProductPageDataExpander;
+use Spryker\Zed\ProductCategorySearch\Business\Builder\ProductCategoryTreeBuilder;
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\PageMapBuilder;
 
 /**
@@ -308,10 +308,10 @@ class ProductCategorySearchFacadeTest extends Unit
      */
     protected function cleanStaticProperty(): void
     {
-        $reflectedClass = new ReflectionClass(ProductPageDataExpander::class);
+        $reflectedClass = new ReflectionClass(ProductCategoryTreeBuilder::class);
 
         $propertyCategoryTree = $reflectedClass->getProperty('categoryTreeIds');
         $propertyCategoryTree->setAccessible(true);
-        $propertyCategoryTree->setValue(null);
+        $propertyCategoryTree->setValue([]);
     }
 }

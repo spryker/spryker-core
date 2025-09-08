@@ -1,0 +1,51 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'asset-option',
+    tag: 'asset-option',
+} %}
+
+{% define data = {
+    asset: null,
+    emptyText: 'self_service_portal.asset.selector.no_assets_available',
+} %}
+
+{% define attributes = {
+    asset: data.asset | json_encode,
+} %}
+
+{% block class %}{{ parent() }} {{ data.asset is null ? "#{config.name}--empty" }}{% endblock %}
+
+{% block body %}
+    {% if data.asset is null %}
+        {% block empty %}
+            {{ data.emptyText | trans }}
+        {% endblock %}
+    {% else %}
+        {% block option %}
+            {% block information %}
+                <span class="{{ config.name }}__content">
+                    {% block name %}
+                        <strong class="{{ config.name }}__name">{{ data.asset.name }}</strong>
+                    {% endblock %}
+
+                    {% block data %}
+                        <span class="{{ config.name }}__data">
+                            {% if data.asset.serial %}
+                                <span>{{ 'self_service_portal.asset.item.serial' | trans }}: {{ data.asset.serial }}</span>
+                            {% endif %}
+
+                            <span class="{{ config.name }}__status">{{ data.asset.compatibilityLabel | raw }}</span>
+                        </span>
+                    {% endblock %}
+                </span>
+            {% endblock %}
+
+            {% block button %}
+                <button class="button button--hollow {{ config.jsName }}__trigger" {{ qa('asset-option-trigger') }}>
+                    {{ 'self_service_portal.asset.item.button' | trans }}
+                </button>
+            {% endblock %}
+        {% endblock %}
+    {% endif %}
+{% endblock %}

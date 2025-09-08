@@ -20,17 +20,17 @@ use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig;
  */
 class SspAssetListSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
- /**
-  * {@inheritDoc}
-  *
-  * @api
-  *
-  * @param int $offset
-  * @param int $limit
-  * @param array<int> $ids
-  *
-  * @return list<\Generated\Shared\Transfer\SynchronizationDataTransfer>
-  */
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param array<int> $ids
+     *
+     * @return list<\Generated\Shared\Transfer\SynchronizationDataTransfer>
+     */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
         $filterTransfer = (new FilterTransfer())

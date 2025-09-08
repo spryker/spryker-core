@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\ProductSearch\Business\Transfer;
 
-use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute;
-
 interface ProductAttributeTransferMapperInterface
 {
     /**
-     * @param \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute $productAttributeEntity
+     * @param array<string, mixed> $productAttribute
      *
      * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer
      */
-    public function convertProductAttribute(SpyProductSearchAttribute $productAttributeEntity);
+    public function convertProductAttribute(array $productAttribute);
 }

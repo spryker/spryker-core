@@ -77,7 +77,7 @@ class SspAssetFormDataProvider
             SspAssetForm::OPTION_COMPANY_ASSIGMENT_OPTIONS => $assignedCompanies,
             SspAssetForm::OPTION_BUSINESS_UNIT_ASSIGMENT_OPTIONS => $assignedBusinessUnits,
             SspAssetForm::OPTION_STATUS_OPTIONS => array_flip($this->config->getAssetStatuses()),
-            SspAssetForm::OPTION_BUSINESS_UNIT_OWNER => $companyBusinessUnitOwnerTransfer ? [$companyBusinessUnitOwnerTransfer->getNameOrFail() => $companyBusinessUnitOwnerTransfer->getIdCompanyBusinessUnitOrFail()] : [],
+            SspAssetForm::OPTION_BUSINESS_UNIT_OWNER => $companyBusinessUnitOwnerTransfer ? [sprintf('%s - %s (ID: %s)', $companyBusinessUnitOwnerTransfer->getCompanyOrFail()->getNameOrFail(), $companyBusinessUnitOwnerTransfer->getNameOrFail(), $companyBusinessUnitOwnerTransfer->getIdCompanyBusinessUnitOrFail()) => $companyBusinessUnitOwnerTransfer->getIdCompanyBusinessUnitOrFail()] : [],
         ];
     }
 
@@ -89,15 +89,62 @@ class SspAssetFormDataProvider
      */
     public function expandOptionsWithSubmittedData(array $options, array $submittedFormData): array
     {
-        $assignedBusinessUnitIds = [];
-        if (isset($submittedFormData[SspAssetForm::FIELD_ASSIGNED_BUSINESS_UNITS])) {
-            $assignedBusinessUnitIds = array_map('intval', $submittedFormData[SspAssetForm::FIELD_ASSIGNED_BUSINESS_UNITS]);
+        $assignedBusinessUnitIds = $this->extractAssignedBusinessUnitIds($submittedFormData);
+        $businessUnitOwnerId = $this->extractAndValidateBusinessUnitOwnerId($submittedFormData, $assignedBusinessUnitIds);
+
+        $assignedBusinessUnitOptions = $this->buildBusinessUnitOptions($assignedBusinessUnitIds);
+        $assignedCompanyOptions = $this->buildCompanyOptions($submittedFormData);
+        $businessUnitOwnerOptions = $this->buildBusinessUnitOwnerOptions($businessUnitOwnerId, $assignedBusinessUnitIds);
+
+        $expandedFormOptions = [
+            SspAssetForm::OPTION_BUSINESS_UNIT_ASSIGMENT_OPTIONS => $assignedBusinessUnitOptions,
+            SspAssetForm::OPTION_BUSINESS_UNIT_OWNER => $businessUnitOwnerOptions,
+            SspAssetForm::OPTION_COMPANY_ASSIGMENT_OPTIONS => $assignedCompanyOptions,
+        ];
+
+        return array_merge($options, $expandedFormOptions);
+    }
+
+    /**
+     * @param array<string, mixed> $submittedFormData
+     *
+     * @return array<int>
+     */
+    protected function extractAssignedBusinessUnitIds(array $submittedFormData): array
+    {
+        if (!isset($submittedFormData[SspAssetForm::FIELD_ASSIGNED_BUSINESS_UNITS])) {
+            return [];
         }
 
-        $businessUnitOwnerId = null;
-        if (isset($submittedFormData[SspAssetForm::FIELD_BUSINESS_UNIT_OWNER])) {
-            $businessUnitOwnerId = $submittedFormData[SspAssetForm::FIELD_BUSINESS_UNIT_OWNER];
-            $businessUnitOwnerId = in_array($businessUnitOwnerId, $assignedBusinessUnitIds) ? $businessUnitOwnerId : null;
+        return array_map('intval', $submittedFormData[SspAssetForm::FIELD_ASSIGNED_BUSINESS_UNITS]);
+    }
+
+    /**
+     * @param array<string, mixed> $submittedFormData
+     * @param array<int> $assignedBusinessUnitIds
+     *
+     * @return int|null
+     */
+    protected function extractAndValidateBusinessUnitOwnerId(array $submittedFormData, array $assignedBusinessUnitIds): ?int
+    {
+        if (!isset($submittedFormData[SspAssetForm::FIELD_BUSINESS_UNIT_OWNER])) {
+            return null;
+        }
+
+        $businessUnitOwnerId = $submittedFormData[SspAssetForm::FIELD_BUSINESS_UNIT_OWNER];
+
+        return in_array($businessUnitOwnerId, $assignedBusinessUnitIds) ? $businessUnitOwnerId : null;
+    }
+
+    /**
+     * @param array<int> $assignedBusinessUnitIds
+     *
+     * @return array<string, int>
+     */
+    protected function buildBusinessUnitOptions(array $assignedBusinessUnitIds): array
+    {
+        if (!$assignedBusinessUnitIds) {
+            return [];
         }
 
         $companyBusinessUnitCollectionTransfer = $this->companyBusinessUnitFacade->getCompanyBusinessUnitCollection(
@@ -106,12 +153,31 @@ class SspAssetFormDataProvider
 
         $assignedBusinessUnitOptions = [];
         foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
-            $assignedBusinessUnitOptions[$companyBusinessUnitTransfer->getNameOrFail()] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail();
+            $assignedBusinessUnitOptions[sprintf(
+                '%s - %s (ID: %s)',
+                $companyBusinessUnitTransfer->getCompanyOrFail()->getNameOrFail(),
+                $companyBusinessUnitTransfer->getNameOrFail(),
+                $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
+            )] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail();
         }
 
+        return $assignedBusinessUnitOptions;
+    }
+
+    /**
+     * @param array<string, mixed> $submittedFormData
+     *
+     * @return array<string, int>
+     */
+    protected function buildCompanyOptions(array $submittedFormData): array
+    {
         $assignedCompanyIds = [];
         if (isset($submittedFormData[SspAssetForm::FIELD_ASSIGNED_COMPANIES])) {
             $assignedCompanyIds = array_map('intval', $submittedFormData[SspAssetForm::FIELD_ASSIGNED_COMPANIES]);
+        }
+
+        if (!$assignedCompanyIds) {
+            return [];
         }
 
         $companyCollectionTransfer = $this->companyFacade->getCompanyCollection(
@@ -120,16 +186,46 @@ class SspAssetFormDataProvider
 
         $assignedCompanyOptions = [];
         foreach ($companyCollectionTransfer->getCompanies() as $companyTransfer) {
-            $assignedCompanyOptions[$companyTransfer->getNameOrFail()] = $companyTransfer->getIdCompanyOrFail();
+            $assignedCompanyOptions[sprintf(
+                '%s (ID: %s)',
+                $companyTransfer->getNameOrFail(),
+                $companyTransfer->getIdCompanyOrFail(),
+            )] = $companyTransfer->getIdCompanyOrFail();
         }
 
-        $expandedFormOptions = [
-            SspAssetForm::OPTION_BUSINESS_UNIT_ASSIGMENT_OPTIONS => $assignedBusinessUnitOptions,
-            SspAssetForm::OPTION_BUSINESS_UNIT_OWNER => $businessUnitOwnerId ? [array_flip($assignedBusinessUnitOptions)[$businessUnitOwnerId] => $businessUnitOwnerId] : [],
-            SspAssetForm::OPTION_COMPANY_ASSIGMENT_OPTIONS => $assignedCompanyOptions,
-        ];
+        return $assignedCompanyOptions;
+    }
 
-        return array_merge($options, $expandedFormOptions);
+    /**
+     * @param int|null $businessUnitOwnerId
+     * @param array<int> $assignedBusinessUnitIds
+     *
+     * @return array<string, int>
+     */
+    protected function buildBusinessUnitOwnerOptions(?int $businessUnitOwnerId, array $assignedBusinessUnitIds): array
+    {
+        if (!$businessUnitOwnerId || !$assignedBusinessUnitIds) {
+            return [];
+        }
+
+        $companyBusinessUnitCollectionTransfer = $this->companyBusinessUnitFacade->getCompanyBusinessUnitCollection(
+            (new CompanyBusinessUnitCriteriaFilterTransfer())->setCompanyBusinessUnitIds($assignedBusinessUnitIds),
+        );
+
+        foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
+            if ($companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail() === $businessUnitOwnerId) {
+                $businessUnitOwnerKey = sprintf(
+                    '%s - %s (ID: %s)',
+                    $companyBusinessUnitTransfer->getCompanyOrFail()->getNameOrFail(),
+                    $companyBusinessUnitTransfer->getNameOrFail(),
+                    $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
+                );
+
+                return [$businessUnitOwnerKey => $businessUnitOwnerId];
+            }
+        }
+
+        return [];
     }
 
     public function getAssetImageUrl(SspAssetTransfer $sspAssetTransfer): ?string
@@ -157,7 +253,8 @@ class SspAssetFormDataProvider
             $companyBusinessUnitTransfer = $sspAssetAssignmentTransfer->getCompanyBusinessUnit();
             if ($companyBusinessUnitTransfer) {
                 $assignedBusinessUnits[sprintf(
-                    '%s (ID: %s)',
+                    '%s - %s (ID: %s)',
+                    $companyBusinessUnitTransfer->getCompanyOrFail()->getNameOrFail(),
                     $companyBusinessUnitTransfer->getNameOrFail(),
                     $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
                 )] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail();

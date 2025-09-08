@@ -26,7 +26,7 @@ class SalesOrderUpdater implements SalesOrderUpdaterInterface
      * @param \Spryker\Zed\Sales\Business\Mapper\SalesOrderMapperInterface $salesOrderMapper
      * @param \Spryker\Zed\Sales\Business\Updater\SalesOrderAddressUpdaterInterface $salesOrderAddressUpdater
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfig
-     * @param list<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface> $orderExpanderPreSavePlugins
+     * @param list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPreSavePluginInterface> $orderExpanderPreSavePlugins
      * @param \Spryker\Shared\Kernel\StrategyResolverInterface<list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>> $orderPostSavePluginStrategyResolver
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToLocaleInterface $localeFacade
      */

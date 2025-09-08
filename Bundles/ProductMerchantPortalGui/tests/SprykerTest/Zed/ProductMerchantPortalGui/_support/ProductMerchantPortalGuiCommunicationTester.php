@@ -62,6 +62,7 @@ use Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\PriceProduct
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
+ * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  *
  * @SuppressWarnings(PHPMD)
  */

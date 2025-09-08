@@ -1,0 +1,39 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Edit Model: ' | trans ~ sspModel.reference %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url('/self-service-portal/list-model'), 'Back to Models' | trans) }}
+    {{ viewActionButton(url('/self-service-portal/view-model', {'id-ssp-model': sspModel.idSspModel}), 'View' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'general' | trans } %}
+        {% block widget_content %}
+             {% include '@SelfServicePortal/_partials/list.twig' with {
+                    list: [
+                        {
+                           title: 'Model reference',
+                           value: sspModel.reference,
+                        }
+                    ],
+            } only %}
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Update Model' | trans } %}
+        {% block widget_content %}
+            {% include '@SelfServicePortal/_partials/model-form.twig' with {
+                sspModelForm: sspModelForm,
+            } only %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

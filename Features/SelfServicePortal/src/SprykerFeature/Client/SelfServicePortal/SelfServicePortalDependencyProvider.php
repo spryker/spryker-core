@@ -7,13 +7,19 @@
 
 namespace SprykerFeature\Client\SelfServicePortal;
 
+use Spryker\Client\CompanyUser\CompanyUserClientInterface;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Permission\PermissionClientInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageClientInterface;
 use Spryker\Client\Store\StoreClientInterface;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
+use SprykerFeature\Client\SelfServicePortal\Plugin\Elasticsearch\Query\SspAssetSearchQueryPlugin;
 
+/**
+ * @method \SprykerFeature\Client\SelfServicePortal\SelfServicePortalConfig getConfig()
+ */
 class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
 {
     /**
@@ -56,6 +62,31 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
      */
     public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
 
+    /**
+     * @var string
+     */
+    public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
+
+     /**
+      * @var string
+      */
+    public const CLIENT_SEARCH = 'CLIENT_SEARCH';
+
+    /**
+     * @var string
+     */
+    public const PLUGIN_SSP_ASSET_SEARCH_QUERY = 'PLUGIN_SSP_ASSET_SEARCH_QUERY';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_SSP_ASSET_SEARCH_RESULT_FORMATTER = 'PLUGINS_SSP_ASSET_SEARCH_RESULT_FORMATTER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_SSP_ASSET_SEARCH_QUERY_EXPANDER = 'PLUGINS_SSP_ASSET_SEARCH_QUERY_EXPANDER';
+
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addZedRequestClient($container);
@@ -66,6 +97,11 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
         $container = $this->addLocaleClient($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addPermissionClient($container);
+        $container = $this->addSearchClient($container);
+        $container = $this->addSspAssetSearchQueryPlugin($container);
+        $container = $this->addSspAssetSearchResultFormatterPlugins($container);
+        $container = $this->addSspAssetSearchQueryExpanderPlugins($container);
+        $container = $this->addCompanyUserClient($container);
 
         return $container;
     }
@@ -137,6 +173,73 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_PERMISSION, function (Container $container): PermissionClientInterface {
             return $container->getLocator()->permission()->client();
+        });
+
+        return $container;
+    }
+
+    protected function addCompanyUserClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_COMPANY_USER, function (Container $container): CompanyUserClientInterface {
+            return $container->getLocator()->companyUser()->client();
+        });
+
+        return $container;
+    }
+
+    protected function addSspAssetSearchQueryPlugin(Container $container): Container
+    {
+        $container->set(static::PLUGIN_SSP_ASSET_SEARCH_QUERY, function (): QueryInterface {
+            return $this->createSspAssetSearchQueryPlugin();
+        });
+
+        return $container;
+    }
+
+    protected function addSspAssetSearchResultFormatterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SSP_ASSET_SEARCH_RESULT_FORMATTER, function (): array {
+            return $this->getSspAssetSearchResultFormatterPlugins();
+        });
+
+        return $container;
+    }
+
+    protected function addSspAssetSearchQueryExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SSP_ASSET_SEARCH_QUERY_EXPANDER, function (): array {
+            return $this->getSspAssetSearchQueryExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    protected function createSspAssetSearchQueryPlugin(): QueryInterface
+    {
+        return new SspAssetSearchQueryPlugin();
+    }
+
+    /**
+     * @return list<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
+     */
+    protected function getSspAssetSearchResultFormatterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
+     */
+    protected function getSspAssetSearchQueryExpanderPlugins(): array
+    {
+        return [
+        ];
+    }
+
+    protected function addSearchClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SEARCH, function (Container $container) {
+            return $container->getLocator()->search()->client();
         });
 
         return $container;

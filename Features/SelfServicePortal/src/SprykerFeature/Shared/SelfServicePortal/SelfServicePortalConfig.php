@@ -7,6 +7,7 @@
 
 namespace SprykerFeature\Shared\SelfServicePortal;
 
+use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Spryker\Shared\Kernel\AbstractSharedConfig;
 use SprykerFeature\Shared\SelfServicePortal\Exception\SspInquiryCancelStatusNotFound;
 
@@ -31,6 +32,16 @@ class SelfServicePortalConfig extends AbstractSharedConfig
      * @var string
      */
     public const QUEUE_NAME_SYNC_STORAGE_SSP_ASSET = 'sync.storage.ssp_asset';
+
+    /**
+     * Specification:
+     * - Defines queue name as used for processing ssp asset search synchronization.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const QUEUE_NAME_SYNC_SEARCH_SSP_ASSET = 'sync.search.ssp_asset';
 
     /**
      * Specification:
@@ -354,6 +365,26 @@ class SelfServicePortalConfig extends AbstractSharedConfig
      * @var string
      */
     public const ENTITY_SPY_SSP_ASSET_TO_MODEL_DELETE = 'Entity.spy_ssp_asset_to_ssp_model.delete';
+
+     /**
+      * @var string
+      */
+    protected const PAGINATION_PARAMETER_NAME_PAGE = 'page';
+
+    /**
+     * @var string
+     */
+    protected const PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME = 'ipp';
+
+    /**
+     * @var int
+     */
+    protected const PAGINATION_DEFAULT_ITEMS_PER_PAGE = 10;
+
+    /**
+     * @var int
+     */
+    protected const PAGINATION_MAX_ITEMS_PER_PAGE = 100;
 
     /**
      * Specification:
@@ -736,5 +767,22 @@ class SelfServicePortalConfig extends AbstractSharedConfig
             ],
             static::STATUS_DEACTIVATED => [],
         ];
+    }
+
+    /**
+     * Specification:
+     * - Returns pagination configuration for SSP asset search.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PaginationConfigTransfer
+     */
+    public function getSspAssetSearchPaginationConfigTransfer(): PaginationConfigTransfer
+    {
+        return (new PaginationConfigTransfer())
+           ->setParameterName(static::PAGINATION_PARAMETER_NAME_PAGE)
+           ->setItemsPerPageParameterName(static::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME)
+           ->setDefaultItemsPerPage(static::PAGINATION_DEFAULT_ITEMS_PER_PAGE)
+           ->setMaxItemsPerPage(static::PAGINATION_MAX_ITEMS_PER_PAGE);
     }
 }

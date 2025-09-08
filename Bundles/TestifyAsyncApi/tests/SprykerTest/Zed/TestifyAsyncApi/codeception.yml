@@ -9,7 +9,7 @@ paths:
 coverage:
     enabled: true
     remote: false
-    whitelist: { include: ['../../../../src/Spryker/Zed/AsyncApi/*.php'] }
+    whitelist: { include: ['../../../../src/*'] }
 
 suites:
     Business:

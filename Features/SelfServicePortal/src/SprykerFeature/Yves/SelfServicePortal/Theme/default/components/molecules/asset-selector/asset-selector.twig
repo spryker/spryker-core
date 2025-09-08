@@ -1,0 +1,147 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'asset-selector',
+    tag: 'asset-selector',
+} %}
+
+{% define data = {
+    id: random(),
+    formFieldName: required,
+    isDisabled: false,
+    buttonLabel: 'self_service_portal.asset.selector.button',
+    placeholder: 'self_service_portal.asset.selector.search_placeholder' | trans,
+    label: 'self_service_portal.asset.selector.label',
+    selectedLabel: 'self_service_portal.asset.assigned_asset',
+    asset: null,
+    product: null,
+} %}
+
+{% define attributes = {
+    'selected-class': 'is-selected',
+    'disabled-class': 'is-disabled',
+    'submit-closest-form': false,
+    'links-for-asset-reference': false,
+    'asset-reference': data.asset ? data.asset.reference : false,
+    'query': 'ssp-asset-reference',
+    'finder-id': "js-#{config.name}-#{data.id}",
+} %}
+
+{% block class %}{{ parent() }} {{ data.asset ? 'is-selected' }}{% endblock %}
+
+{% set popupTriggerClass = "js-#{config.name}__trigger-#{data.id}" %}
+
+{% block body %}
+    {% block separator %}<hr>{% endblock %}
+
+    {% block unselected %}
+        <div class="{{ config.name }}__container {{ config.name }}__container--select {{ _self.renderClass(config.name ~ '__container', modifiers) }}">
+            {% block label %}
+                {% if data.label %}
+                    <strong class="{{ config.name }}__subtitle {{ _self.renderClass(config.name ~ '__subtitle', modifiers) }}">{{ data.label | trans }}</strong>
+                {% endif %}
+            {% endblock %}
+
+            {% block trigger %}
+                <button type="button" class="link link--additional {{ popupTriggerClass }}" {{ qa('asset-selector-trigger') }}>
+                    {{ data.buttonLabel | trans }}
+                </button>
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block inputs %}
+        <input type="hidden" name="{{ data.formFieldName }}" class="{{ config.jsName }}__input" {% if data.asset %}value="{{ data.asset.reference }}"{% endif %} {{ qa('asset-selector-reference') }}>
+    {% endblock %}
+
+    {% block selected %}
+        <div class="{{ config.name }}__container {{ config.name }}__container--selected {{ _self.renderClass(config.name ~ '__container', modifiers) }}">
+            {% block actions %}
+                <div class="{{ config.name }}__data {{ config.name }}__data--actions {{ _self.renderClass(config.name ~ '__data', modifiers) }}">
+                    {% block selectedLabel %}
+                        {% if data.selectedLabel %}
+                            <div class="{{ config.name }}__content">
+                                <strong class="{{ config.name }}__subtitle">{{ data.selectedLabel | trans }}</strong>
+                            </div>
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block change %}
+                        <button type="button" class="link link--additional {{ popupTriggerClass }}" {{ qa('asset-selector-change') }}>
+                            {{ 'self_service_portal.asset.selector.change' | trans }}
+                        </button>
+                    {% endblock %}
+
+                    {% block clear %}
+                        <button type="button" class="link link--additional  {{ config.jsName }}__clear" {{ qa('asset-selector-clear') }}>
+                            {{ 'self_service_portal.asset_filter.clear' | trans }}
+                        </button>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+            {% block asset %}
+                <div class="{{ config.name }}__content">
+                    {% block name %}
+                        <strong class="{{ config.name }}__subtitle {{ config.jsName }}__asset-name" {{ qa('asset-selector-name') }}>
+                            {{ data.asset is not empty ? data.asset.name }}
+                        </strong>
+                    {% endblock %}
+
+                    {% block data %}
+                        <span class="{{ config.name }}__data">
+                            <span class="{{ config.name }}__information">
+                                <span>{{ 'self_service_portal.asset.item.serial' | trans }}:</span>
+                                <span class="{{ config.name }}__asset-text {{ config.jsName }}__asset-serial" {{ qa('asset-selector-serial') }}>{{- data.asset is not empty ? data.asset.serialNumber -}}</span>
+                            </span>
+
+                            <span class="{{ config.name }}__status {{ config.jsName }}__asset-status" {{ qa('asset-selector-status') }}>
+                                {% if data.product and data.asset %}
+                                    {% widget 'AssetCompatibilityLabelWidget' args [data.asset.reference, data.product.idProductConcrete] only %}
+                                    {% endwidget %}
+                                {% endif %}
+                            </span>
+                        </span>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block popup %}
+        {% include molecule('main-popup') with {
+            modifiers: ['auto', 'scroll-inside-content'],
+            class: "#{config.jsName}__popup",
+            data: {
+                title: 'self_service_portal.asset.modal.header' | trans,
+                content: block('finder'),
+            },
+            attributes: {
+                'content-id': config.jsName ~ '__popup-content-' ~ data.id,
+                'trigger-class-name': popupTriggerClass,
+                'has-content-mount': true,
+            },
+        } only %}
+    {% endblock %}
+{% endblock %}
+
+{% block finder %}
+    {% include molecule('asset-finder', 'SelfServicePortal') with {
+        data: {
+            isDisabled: data.isDisabled,
+            placeholder: data.placeholder,
+            dynamicParams: {
+                sspAssetReference: {
+                    selector: ".#{config.jsName}__input",
+                    attribute: 'value',
+                },
+            },
+            staticParams: {
+                idProduct: data.product ? data.product.idProductConcrete,
+            },
+        },
+        attributes: {
+            id: attributes['finder-id'],
+        },
+    } only %}
+{% endblock %}

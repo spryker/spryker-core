@@ -116,7 +116,7 @@ class SspAssetToCompanyBusinessUnitWritePublisherPluginTest extends Unit
         });
 
         $this->tester->clearSspAssetStorageData();
-        $this->tester->clearSspAssetData();
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
     }
 
     public function testHandlesBulkPublishesStorageDataOnCreateEvent(): void
@@ -131,7 +131,7 @@ class SspAssetToCompanyBusinessUnitWritePublisherPluginTest extends Unit
             CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
 
-        $sspAssetTransfer = $this->tester->haveSspAsset([
+        $sspAssetTransfer = $this->tester->haveAsset([
             SspAssetTransfer::NAME => static::SSP_ASSET_NAME_1,
             SspAssetTransfer::SERIAL_NUMBER => static::SSP_ASSET_SERIAL_NUMBER_1,
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
@@ -176,7 +176,7 @@ class SspAssetToCompanyBusinessUnitWritePublisherPluginTest extends Unit
             CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
 
-        $sspAssetTransfer = $this->tester->haveSspAsset([
+        $sspAssetTransfer = $this->tester->haveAsset([
             SspAssetTransfer::NAME => static::SSP_ASSET_NAME_1,
             SspAssetTransfer::SERIAL_NUMBER => static::SSP_ASSET_SERIAL_NUMBER_1,
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
@@ -221,14 +221,14 @@ class SspAssetToCompanyBusinessUnitWritePublisherPluginTest extends Unit
             CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
 
-        $sspAssetTransfer = $this->tester->haveSspAsset([
+        $sspAssetTransfer = $this->tester->haveAsset([
             SspAssetTransfer::NAME => static::SSP_ASSET_NAME_1,
             SspAssetTransfer::SERIAL_NUMBER => static::SSP_ASSET_SERIAL_NUMBER_1,
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
         ]);
 
         $this->tester->haveSspAssetStorage($sspAssetTransfer->getIdSspAssetOrFail(), [$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()]);
-        $this->tester->clearSspAssetData();
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
 
         $eventEntityTransfers = [
             (new EventEntityTransfer())
@@ -264,7 +264,7 @@ class SspAssetToCompanyBusinessUnitWritePublisherPluginTest extends Unit
             CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
 
-        $sspAssetTransfer = $this->tester->haveSspAsset([
+        $sspAssetTransfer = $this->tester->haveAsset([
             SspAssetTransfer::NAME => static::SSP_ASSET_NAME_1,
             SspAssetTransfer::SERIAL_NUMBER => static::SSP_ASSET_SERIAL_NUMBER_1,
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer1,
@@ -333,7 +333,7 @@ class SspAssetToCompanyBusinessUnitWritePublisherPluginTest extends Unit
             SspModelTransfer::NAME => static::SSP_MODEL_NAME_1,
         ]);
 
-        $sspAssetTransfer = $this->tester->haveSspAsset([
+        $sspAssetTransfer = $this->tester->haveAsset([
             SspAssetTransfer::NAME => static::SSP_ASSET_NAME_1,
             SspAssetTransfer::SERIAL_NUMBER => static::SSP_ASSET_SERIAL_NUMBER_1,
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,

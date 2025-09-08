@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\CatalogExtension\Dependency\Plugin;
 
+/**
+ * @deprecated Use {@link \Spryker\Client\SearchExtension\Dependency\Plugin\QueryApplicabilityCheckerInterface} instead.
+ */
 interface QueryApplicabilityCheckerInterface
 {
     /**

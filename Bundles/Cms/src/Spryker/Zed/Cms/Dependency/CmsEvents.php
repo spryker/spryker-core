@@ -118,4 +118,14 @@ interface CmsEvents
      * @var string
      */
     public const ENTITY_SPY_CMS_STORE_DELETE = 'Entity.spy_cms_page_store.delete';
+
+    /**
+     * Specification:
+     * - This events will be used for spy_cms_page entity export.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_CMS_PAGE_EXPORT = 'Entity.spy_cms_page.export';
 }

@@ -20,6 +20,11 @@ use Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageConfig;
 class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterface
 {
     /**
+     * @var array<string, array<string>>
+     */
+    protected static array $storeNameToLocalesMap = [];
+
+    /**
      * @var \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface
      */
     protected $productCategoryStorageRepository;
@@ -132,6 +137,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
                 );
             }
         }
+        $this->productCategoryStorageEntityManager->commit();
 
         $this->removeProductAbstractCategoryStorages($productAbstractCategoryStorageTransfers);
     }
@@ -153,6 +159,9 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         string $localeName
     ): array {
         foreach ($productAbstractLocalizedAttributesTransfers as $productAbstractLocalizedAttributesTransfer) {
+            if ($productAbstractLocalizedAttributesTransfer->getLocaleOrFail()->getLocaleName() !== $localeName) {
+                continue;
+            }
             $productAbstractCategoryStorageTransfers = $this->saveProductAbstractCategoryStorage(
                 $productCategoryTransfers,
                 $productAbstractCategoryStorageTransfers,
@@ -285,14 +294,17 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      */
     protected function getLocaleNameMapByStoreName(): array
     {
-        $storeTransfers = $this->storeFacade->getAllStores();
-        $localeNameMapByStoreName = [];
-
-        foreach ($storeTransfers as $storeTransfer) {
-            $localeNameMapByStoreName[$storeTransfer->getName()] = $storeTransfer->getAvailableLocaleIsoCodes();
+        if (static::$storeNameToLocalesMap) {
+            return static::$storeNameToLocalesMap;
         }
 
-        return $localeNameMapByStoreName;
+        $storeTransfers = $this->storeFacade->getAllStores();
+
+        foreach ($storeTransfers as $storeTransfer) {
+            static::$storeNameToLocalesMap[$storeTransfer->getName()] = $storeTransfer->getAvailableLocaleIsoCodes();
+        }
+
+        return static::$storeNameToLocalesMap;
     }
 
     /**

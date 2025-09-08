@@ -20,6 +20,7 @@ use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -31,6 +32,36 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
      * @var string
      */
     protected const FK_PRODUCT_CONCRETE = 'fkProductConcrete';
+
+    /**
+     * @param int $idProduct
+     * @param array<int> $excludeIdProductImageSets
+     *
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
+     */
+    public function getProductImageSetsWithProductImagesAndLocale(
+        int $idProduct,
+        array $excludeIdProductImageSets = []
+    ): array {
+        $productImageSetDataCollection = $this->getFactory()
+            ->createProductImageSetQuery()
+                ->leftJoinWithSpyProductImageSetToProductImage()
+                ->leftJoinWithSpyLocale()
+                ->filterByFkProduct($idProduct)
+                ->filterByIdProductImageSet($excludeIdProductImageSets, Criteria::NOT_IN)
+                ->orderByIdProductImageSet()
+                ->useSpyProductImageSetToProductImageQuery()
+                    ->leftJoinWithSpyProductImage()
+                    ->orderBySortOrder()
+                    ->orderByIdProductImageSetToProductImage()
+                ->endUse()
+                ->setFormatter(ArrayFormatter::class)
+            ->find();
+
+        return $this->getFactory()
+            ->createProductImageMapper()
+            ->mapProductImageDataCollectionToProductImageTransfers($productImageSetDataCollection->getArrayCopy());
+    }
 
     /**
      * @param array<int> $productIds

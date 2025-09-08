@@ -40,7 +40,7 @@
                         { title: 'self_service_portal.asset.details.reference', value: data.asset.reference },
                         { title: 'self_service_portal.asset.details.status', value: block('status') },
                         { title: 'self_service_portal.asset.details.created_date', value: data.currentCompanyBusinessUnitAssigment ? data.currentCompanyBusinessUnitAssigment.assignedAt | formatDateTime : '---' },
-                        { title: 'self_service_portal.asset.details.owner', value: data.asset.companyBusinessUnit.name | default('self_service_portal.asset.details.owner.undefined' | trans) },
+                        { title: 'self_service_portal.asset.details.owner', value: data.asset.companyBusinessUnit.name is defined and data.asset.companyBusinessUnit.company.name is defined ? data.asset.companyBusinessUnit.name ~ ' (' ~ data.asset.companyBusinessUnit.company.name ~ ')' : data.asset.companyBusinessUnit.name | default('self_service_portal.asset.details.owner.undefined' | trans) },
                     ],
                 },
             } only %}

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductOfferStorage\Persistence\Propel;
 
 use Orm\Zed\ProductOfferStorage\Persistence\Base\SpyProductConcreteProductOffersStorage as BaseSpyProductConcreteProductOffersStorage;
-use Spryker\Zed\Propel\Persistence\BatchEntityHooksInterface;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_product_concrete_product_offers_storage' table.
@@ -19,31 +18,6 @@ use Spryker\Zed\Propel\Persistence\BatchEntityHooksInterface;
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class AbstractSpyProductConcreteProductOffersStorage extends BaseSpyProductConcreteProductOffersStorage implements BatchEntityHooksInterface
+class AbstractSpyProductConcreteProductOffersStorage extends BaseSpyProductConcreteProductOffersStorage
 {
-    /**
-     * @return void
-     */
-    public function batchPreSaveHook(): void
-    {
-        if (method_exists($this, 'isSynchronizationEnabled') && $this->isSynchronizationEnabled()) {
-            // synchronization behavior
-            $this->setGeneratedKey();
-            $this->setGeneratedKeyForMappingResource();
-            $this->setGeneratedAliasKeys();
-        }
-    }
-
-    /**
-     * @return void
-     */
-    public function batchPostSaveHook(): void
-    {
-        if (method_exists($this, 'isSynchronizationEnabled') && $this->isSynchronizationEnabled()) {
-            // synchronization behavior
-            $this->syncPublishedMessage();
-            $this->syncPublishedMessageForMappingResource();
-            $this->syncPublishedMessageForMappings();
-        }
-    }
 }

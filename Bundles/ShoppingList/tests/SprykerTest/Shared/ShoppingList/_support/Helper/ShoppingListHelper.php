@@ -11,8 +11,10 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\ShoppingListBuilder;
 use Generated\Shared\DataBuilder\ShoppingListItemBuilder;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
+use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
@@ -37,6 +39,23 @@ class ShoppingListHelper extends Module
         $shoppingListTransfer = $this->buildShoppingList($seed);
 
         return $this->getLocator()->shoppingList()->facade()->createShoppingList($shoppingListTransfer)->getShoppingList();
+    }
+
+    /**
+     * @param int $idQuote
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    public function haveShoppingListFromQuote(int $idQuote, CustomerTransfer $customerTransfer): ShoppingListTransfer
+    {
+        $shoppingListTransfer = (new ShoppingListBuilder())->build();
+        $shoppingListTransfer = (new ShoppingListFromCartRequestTransfer())
+            ->setIdQuote($idQuote)
+            ->setCustomer($customerTransfer)
+            ->setShoppingListName($shoppingListTransfer->getName());
+
+        return $this->getLocator()->shoppingList()->facade()->createShoppingListFromQuote($shoppingListTransfer);
     }
 
     /**

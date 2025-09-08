@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductSearch\Business\Transfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedProductSearchAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
-use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute;
+use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToGlossaryInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
@@ -48,16 +48,16 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     }
 
     /**
-     * @param \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute $productAttributeEntity
+     * @param array<string, mixed> $productAttribute
      *
      * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer
      */
-    public function convertProductAttribute(SpyProductSearchAttribute $productAttributeEntity)
+    public function convertProductAttribute(array $productAttribute)
     {
         $attributeTransfer = (new ProductSearchAttributeTransfer())
-            ->fromArray($productAttributeEntity->toArray(), true);
+            ->fromArray($productAttribute, true);
 
-        $attributeTransfer->setKey($productAttributeEntity->getSpyProductAttributeKey()->getKey());
+        $attributeTransfer->setKey($productAttribute[SpyProductAttributeKeyTableMap::TABLE_PHP_NAME][ProductSearchAttributeTransfer::KEY]);
 
         $attributeTransfer = $this->setLocalizedAttributeKeys($attributeTransfer);
 

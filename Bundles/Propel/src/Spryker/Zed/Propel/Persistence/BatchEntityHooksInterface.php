@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace Spryker\Zed\Propel\Persistence;
 
+/**
+ * @deprecated Will be removed in the next releases.
+ */
 interface BatchEntityHooksInterface
 {
     /**

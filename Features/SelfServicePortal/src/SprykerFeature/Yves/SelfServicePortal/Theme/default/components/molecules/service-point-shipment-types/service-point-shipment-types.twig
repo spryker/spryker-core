@@ -14,7 +14,7 @@
     formFieldServicePointUuid: null,
     formFieldProductOfferReference: null,
     formFieldItemMetadataScheduledAt: null,
-    hasOnlyDeliveryShipmentType: false,
+            hasOnlyDeliveryLikeShipmentType: false,
     isConcreteProduct: false,
     product: null,
 } %}
@@ -146,7 +146,7 @@
 
          <input data-product-offer-reference-input type="hidden" name="{{ data.formFieldProductOfferReference }}" value="{{ data.product.productOfferReference }}">
 
-        {% if data.hasOnlyDeliveryShipmentType %}
+        {% if data.hasOnlyDeliveryLikeShipmentType %}
             {% set shipmentType = data.shipmentTypes | first %}
 		    <input type="hidden" name="{{ data.formFieldShipmentTypeUuid }}" value="{{ shipmentType.value }}">
         {% endif %}

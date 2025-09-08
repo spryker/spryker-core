@@ -1,5 +1,10 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-self-service-portal.css') }}" />
+{% endblock %}
+
 {% block head_title %}
     {{ 'File Attachment' | trans }}
 {% endblock %}
@@ -13,13 +18,75 @@
 {% endblock %}
 
 {% block content %}
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'File Attachment' | trans } %}
-        {% block widget_content %}
-            {{ tabs(tabsViewTransfer, {
+    <div class="content-title">
+        <h5>{{ fileName }}</h5>
+    </div>
+
+    {{ form_start(fileAttachForm) }}
+        <div class="nav-tabs-radio js-guard-tabs" data-input-selector="#fileAttachment_attachmentScope">
+            {{ tabs(attachmentScopeTabsViewTransfer, {
                 'fileAttachForm': fileAttachForm,
-                'sspAssetFileAttachForm': sspAssetFileAttachForm,
+                'availableAssetTable': availableAssetTable,
+                'assignedAssetTable': assignedAssetTable,
                 'idFile': idFile,
+                'urlImportAssetAssignments': urlImportAssetAssignments,
+                'urlDownloadExample': urlDownloadExample,
+                'assetAttachmentTabsViewTransfer': assetAttachmentTabsViewTransfer,
+                'attachedAssetsTabsViewTransfer': attachedAssetsTabsViewTransfer,
+                'businessUnitTabsViewTransfer': businessUnitTabsViewTransfer,
+                'attachedBusinessUnitsTabsViewTransfer': attachedBusinessUnitsTabsViewTransfer,
+                'urlImportBusinessUnitAssignments': urlImportBusinessUnitAssignments,
+                'urlDownloadBusinessUnitExample': urlDownloadBusinessUnitExample,
+                'availableBusinessUnitTable': availableBusinessUnitTable,
+                'assignedBusinessUnitTable': assignedBusinessUnitTable,
+                'companyUserTabsViewTransfer': companyUserTabsViewTransfer,
+                'attachedCompanyUsersTabsViewTransfer': attachedCompanyUsersTabsViewTransfer,
+                'urlImportCompanyUserAssignments': urlImportCompanyUserAssignments,
+                'urlDownloadCompanyUserExample': urlDownloadCompanyUserExample,
+                'availableCompanyUserTable': availableCompanyUserTable,
+                'assignedCompanyUserTable': assignedCompanyUserTable,
+                'companyTabsViewTransfer': companyTabsViewTransfer,
+                'attachedCompaniesTabsViewTransfer': attachedCompaniesTabsViewTransfer,
+                'urlImportCompanyAssignments': urlImportCompanyAssignments,
+                'urlDownloadCompanyExample': urlDownloadCompanyExample,
+                'availableCompanyTable': availableCompanyTable,
+                'assignedCompanyTable': assignedCompanyTable
             }) }}
+        </div>
+    {{ form_end(fileAttachForm) }}
+
+    {% embed '@Gui/Modal/confirmation-modal-window.twig' with {
+        id: 'tabs-guard-popup',
+        confirmTitle: 'Change attachment type?',
+        message: 'You are about to leave current progression! Please confirm.',
+    } %}
+        {% block modal %}
+            {% set footer %}
+                <button
+                    type="button"
+                    class="btn btn-outline"
+                    data-dismiss="modal"
+                    data-bs-dismiss="modal"
+                >
+                    {{ 'Stay here' | trans }}
+                </button>
+
+                <button
+                    type="button"
+                    data-dismiss="modal"
+                    data-bs-dismiss="modal"
+                    class="btn btn-primary js-guard-tabs-accept"
+                >
+                    {{ 'Change' | trans }}
+                </button>
+            {% endset %}
+
+            {{ parent() }}
         {% endblock %}
     {% endembed %}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-self-service-portal.js') }}"></script>
 {% endblock %}

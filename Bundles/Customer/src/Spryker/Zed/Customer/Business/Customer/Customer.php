@@ -23,6 +23,7 @@ use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Customer\Code\Messages;
+use Spryker\Shared\Customer\CustomerConfig as SharedCustomerConfig;
 use Spryker\Zed\Customer\Business\Customer\Checker\PasswordResetExpirationCheckerInterface;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface;
@@ -283,6 +284,8 @@ class Customer implements CustomerInterface
                 $customerTransfer->getStoreName(),
             );
 
+        $restorePasswordLink = $this->appendCustomerLocaleToUrl($restorePasswordLink, $customerTransfer->getLocale());
+
         $customerTransfer->setRestorePasswordLink($restorePasswordLink);
 
         $mailTransfer = new MailTransfer();
@@ -292,6 +295,28 @@ class Customer implements CustomerInterface
         $mailTransfer->setStoreName($customerTransfer->getStoreName());
 
         $this->mailFacade->handleMail($mailTransfer);
+    }
+
+    /**
+     * @param string $url
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
+     *
+     * @return string
+     */
+    protected function appendCustomerLocaleToUrl(string $url, ?LocaleTransfer $locale)
+    {
+        if (!$locale) {
+            return $url;
+        }
+
+        $urlComponents = parse_url($url);
+
+        $url .= isset($urlComponents['query']) ? '&' : '?';
+        $url .= http_build_query([
+            SharedCustomerConfig::URL_PARAM_LOCALE => $locale->getLocaleName(),
+        ]);
+
+        return $url;
     }
 
     /**
@@ -306,6 +331,8 @@ class Customer implements CustomerInterface
                 $customerTransfer->getRegistrationKey(),
                 $customerTransfer->getStoreName(),
             );
+
+        $confirmationLink = $this->appendCustomerLocaleToUrl($confirmationLink, $customerTransfer->getLocale());
 
         $customerTransfer->setConfirmationLink($confirmationLink);
 

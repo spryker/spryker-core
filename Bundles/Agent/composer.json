@@ -9,17 +9,24 @@
         "spryker/customer": "^7.10.0",
         "spryker/customer-extension": "^1.2.0",
         "spryker/kernel": "^3.30.0",
+        "spryker/propel": "^3.46.0",
         "spryker/propel-orm": "^1.0.0",
+        "spryker/quote-extension": "^1.10.0",
+        "spryker/sales-extension": "^1.13.0",
         "spryker/session": "^3.2.0 || ^4.0.0",
+        "spryker/transfer": "^3.27.0",
         "spryker/user": "^3.2.0",
         "spryker/zed-request": "^3.4.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
-        "spryker/propel": "*",
         "spryker/store": "*",
         "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/quote": "For saving Agent info to orders.",
+        "spryker/sales": "For saving Agent info to orders."
     },
     "autoload": {
         "psr-4": {

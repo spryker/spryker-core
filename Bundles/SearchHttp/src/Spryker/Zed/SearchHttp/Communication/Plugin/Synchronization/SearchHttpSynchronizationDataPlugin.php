@@ -44,7 +44,7 @@ class SearchHttpSynchronizationDataPlugin extends AbstractPlugin implements Sync
      */
     public function hasStore(): bool
     {
-        return true;
+        return false;
     }
 
     /**

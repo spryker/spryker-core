@@ -1,0 +1,18 @@
+{% include '@SelfServicePortal/AttachFile/_partials/file-uploader.twig' with {
+    form_part: fileAttachForm.company_user_file_upload,
+    urlDownloadExample: urlDownloadCompanyUserExample,
+} %}
+
+{{ tabs(companyUserTabsViewTransfer, {
+    'availableCompanyUserTable': availableCompanyUserTable,
+    'availableCompanyUserTableId': 'available-company-user-table',
+    'companyUsersToBeAttachedTableId': 'company-users-to-be-attached-table',
+    'idFile': idFile,
+}) }}
+
+{{ tabs(attachedCompanyUsersTabsViewTransfer, {
+    'assignedCompanyUserTable': assignedCompanyUserTable,
+    'attachedCompanyUsersTableId': 'company-users-to-be-detached-table',
+    'companyUsersToBeDetachedTableId': 'company-users-to-be-detached-table',
+    'idFile': idFile,
+}) }}

@@ -72,6 +72,20 @@ class PropelPersistenceTester extends Actor
      *
      * @return array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
+    public function getEntityCollection(string $entityClassName, int $numberOfEntities = 2): array
+    {
+        /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $query */
+        $query = $entityClassName . 'Query';
+
+        return (new $query())->limit($numberOfEntities)->find()->getArrayCopy();
+    }
+
+    /**
+     * @param string $entityClassName
+     * @param int $numberOfEntities
+     *
+     * @return array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
+     */
     public function getEntityCollectionForInsert(string $entityClassName, int $numberOfEntities = 2): array
     {
         $entities = [];

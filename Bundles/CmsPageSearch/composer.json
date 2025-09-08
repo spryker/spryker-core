@@ -7,15 +7,15 @@
         "php": ">=8.3",
         "spryker/cms": "^7.0.0",
         "spryker/event-behavior": "^1.10.0",
-        "spryker/kernel": "^3.30.0",
+        "spryker/kernel": "^3.77.0",
         "spryker/locale": "^3.1.0 || ^4.0.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/search": "^7.0.0 || ^8.0.0",
-        "spryker/search-extension": "^1.0.0",
+        "spryker/search-extension": "^1.4.0",
         "spryker/store": "^1.4.0",
         "spryker/synchronization-behavior": "^1.0.0",
         "spryker/synchronization-extension": "^1.0.0",
-        "spryker/transfer": "^3.25.0",
+        "spryker/transfer": "^3.27.0",
         "spryker/util-encoding": "^2.0.0"
     },
     "require-dev": {
@@ -30,6 +30,7 @@
         "spryker/config": "If you want to use config.",
         "spryker/elastica": "If you want to use Elastica plugins.",
         "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+        "spryker/search-http": "If you want to use Search HTTP plugins (for Algolia ACP app).",
         "spryker/url": "If you want to use Url plugins, minimum required version: 3.3.0"
     },
     "autoload": {

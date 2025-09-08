@@ -59,13 +59,17 @@ class SearchRequestSender implements RequestSenderInterface
      */
     public function send(QueryInterface $searchQuery, SearchHttpConfigTransfer $searchHttpConfigTransfer): AcpHttpResponseTransfer
     {
-        return $this->kernelAppClient->request(
-            (new AcpHttpRequestTransfer())
-                ->setMethod(SearchHttpConfig::SEARCH_HTTP_METHOD)
-                ->setUri($searchHttpConfigTransfer->getUrlOrFail())
-                ->setHeaders($this->headerBuilder->build($searchQuery))
-                ->setQuery($this->queryBuilder->build($searchQuery)),
-        );
+        $acpHttpRequestTransfer = (new AcpHttpRequestTransfer())
+            ->setMethod(SearchHttpConfig::SEARCH_HTTP_METHOD)
+            ->setUri($searchHttpConfigTransfer->getUrlOrFail())
+            ->setHeaders($this->headerBuilder->build($searchQuery))
+            ->setQuery($this->queryBuilder->build($searchQuery));
+
+        $acpHttpResponseTransfer = $this->kernelAppClient->request($acpHttpRequestTransfer);
+
+        $this->logErrorForFailedResponse($acpHttpRequestTransfer, $acpHttpResponseTransfer);
+
+        return $acpHttpResponseTransfer;
     }
 
     /**
@@ -76,12 +80,36 @@ class SearchRequestSender implements RequestSenderInterface
      */
     public function sendSuggestionRequest(QueryInterface $searchQuery, SearchHttpConfigTransfer $searchHttpConfigTransfer): AcpHttpResponseTransfer
     {
-        return $this->kernelAppClient->request(
-            (new AcpHttpRequestTransfer())
-                ->setMethod(SearchHttpConfig::SEARCH_HTTP_METHOD)
-                ->setUri($searchHttpConfigTransfer->getSuggestionUrlOrFail())
-                ->setHeaders($this->headerBuilder->build($searchQuery))
-                ->setQuery($this->queryBuilder->build($searchQuery)),
-        );
+        $acpHttpRequestTransfer = (new AcpHttpRequestTransfer())
+            ->setMethod(SearchHttpConfig::SEARCH_HTTP_METHOD)
+            ->setUri($searchHttpConfigTransfer->getSuggestionUrlOrFail())
+            ->setHeaders($this->headerBuilder->build($searchQuery))
+            ->setQuery($this->queryBuilder->build($searchQuery));
+
+        $acpHttpResponseTransfer = $this->kernelAppClient->request($acpHttpRequestTransfer);
+
+        $this->logErrorForFailedResponse($acpHttpRequestTransfer, $acpHttpResponseTransfer);
+
+        return $acpHttpResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AcpHttpRequestTransfer $acpHttpRequestTransfer
+     * @param \Generated\Shared\Transfer\AcpHttpResponseTransfer $acpHttpResponseTransfer
+     *
+     * @return void
+     */
+    public function logErrorForFailedResponse(AcpHttpRequestTransfer $acpHttpRequestTransfer, AcpHttpResponseTransfer $acpHttpResponseTransfer): void
+    {
+        if ($acpHttpResponseTransfer->getHttpStatusCode() >= 400) {
+            $errorMessage = sprintf(
+                'Search request %s %s?%s has failed. Response: %s',
+                $acpHttpRequestTransfer->getMethod(),
+                $acpHttpRequestTransfer->getUri(),
+                http_build_query($acpHttpRequestTransfer->getQuery()),
+                $acpHttpResponseTransfer->getContent() ?? 'No response body',
+            );
+            $this->getLogger()->error($errorMessage);
+        }
     }
 }

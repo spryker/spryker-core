@@ -12,9 +12,12 @@ use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage;
 use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface;
 use Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface;
+use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 
 class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterface
 {
+    use ActiveRecordBatchProcessorTrait;
+
     /**
      * @var string
      */
@@ -130,6 +133,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         }
 
         $this->storeData($productConcreteLocalizedEntities, $productConcreteStorageEntities);
+        $this->commit();
     }
 
     /**
@@ -142,6 +146,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         $productConcreteStorageEntities = $this->findProductConcreteStorageEntities($productIds);
 
         $this->deleteProductConcreteStorageEntities($productConcreteStorageEntities);
+        $this->commit();
     }
 
     /**
@@ -152,7 +157,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     protected function deleteProductConcreteStorageEntities(array $productConcreteStorageEntities)
     {
         foreach ($productConcreteStorageEntities as $productConcreteStorageEntity) {
-            $productConcreteStorageEntity->delete();
+            $this->remove($productConcreteStorageEntity);
         }
     }
 
@@ -164,7 +169,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     protected function deletedProductConcreteSorageEntity(SpyProductConcreteStorage $productConcreteStorageEntity)
     {
         if (!$productConcreteStorageEntity->isNew()) {
-            $productConcreteStorageEntity->delete();
+            $this->remove($productConcreteStorageEntity);
         }
     }
 
@@ -325,8 +330,9 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
             ->setFkProduct($productConcreteStorageTransfer->getIdProductConcrete())
             ->setData($productConcreteStorageTransfer->toArray())
             ->setLocale($localeName)
-            ->setIsSendingToQueue($this->isSendingToQueue)
-            ->save();
+            ->setIsSendingToQueue($this->isSendingToQueue);
+
+        $this->persist($productConcreteStorageEntity);
     }
 
     /**

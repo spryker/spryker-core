@@ -45,4 +45,9 @@ interface ProductCategoryStorageEntityManagerInterface
         string $localeName,
         ProductAbstractCategoryStorageTransfer $productAbstractCategoryStorageTransfer
     ): void;
+
+    /**
+     * @return bool
+     */
+    public function commit(): bool;
 }

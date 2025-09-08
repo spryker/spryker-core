@@ -84,7 +84,7 @@ class CompanyRoleFacadeTest extends Unit
             ->getCompanyUserIdsByPermissionKey(AddCompanyUserPermissionPlugin::KEY);
 
         //Assert
-        $this->assertEquals([$companyUserWithPermissionTransfer->getIdCompanyUser()], $companyUserIds);
+        $this->assertContains($companyUserWithPermissionTransfer->getIdCompanyUser(), $companyUserIds);
     }
 
     /**

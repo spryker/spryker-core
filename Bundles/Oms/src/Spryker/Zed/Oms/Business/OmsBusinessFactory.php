@@ -67,6 +67,7 @@ use Spryker\Zed\Oms\Business\Util\TransitionLog;
 use Spryker\Zed\Oms\Business\Writer\ProcessCacheWriter;
 use Spryker\Zed\Oms\Business\Writer\ProcessCacheWriterInterface;
 use Spryker\Zed\Oms\OmsDependencyProvider;
+use Spryker\Zed\OmsExtension\Dependency\Plugin\OmsLockPluginInterface;
 
 /**
  * @method \Spryker\Zed\Oms\OmsConfig getConfig()
@@ -286,6 +287,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new TriggerLocker(
             $this->getQueryContainer(),
             $this->getConfig(),
+            $this->getLockPlugin(),
         );
     }
 
@@ -670,5 +672,13 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->createProcessCacheReader(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsLockPluginInterface|null
+     */
+    public function getLockPlugin(): ?OmsLockPluginInterface
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGIN_LOCK);
     }
 }

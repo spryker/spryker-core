@@ -91,11 +91,8 @@ class Reader implements ReaderInterface
      */
     public function getProductImagesSetCollectionByProductId($idProduct)
     {
-        $imageCollection = $this->productImageContainer
-            ->queryImageSetByProductId($idProduct)
-            ->find();
-
-        return $this->transferMapper->mapProductImageSetCollection($imageCollection);
+        return $this->productImageRepository
+            ->getProductImageSetsWithProductImagesAndLocale($idProduct);
     }
 
     /**

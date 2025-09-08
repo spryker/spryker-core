@@ -131,7 +131,7 @@ class SspAssetWritePublisherPluginTest extends Unit
         });
 
         $this->tester->clearSspAssetStorageData();
-        $this->tester->clearSspAssetData();
+        $this->tester->ensureSspAssetRelatedTablesAreEmpty();
     }
 
     public function testHandlesBulkPublishesStorageDataCorrectly(): void
@@ -149,13 +149,13 @@ class SspAssetWritePublisherPluginTest extends Unit
             SspModelTransfer::NAME => static::SSP_MODEL_NAME_1,
         ]);
 
-        $sspAssetTransfer1 = $this->tester->haveSspAsset([
+        $sspAssetTransfer1 = $this->tester->haveAsset([
             SspAssetTransfer::NAME => static::SSP_ASSET_NAME_1,
             SspAssetTransfer::SERIAL_NUMBER => static::SSP_ASSET_SERIAL_NUMBER_1,
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
         ]);
 
-        $sspAssetTransfer2 = $this->tester->haveSspAsset([
+        $sspAssetTransfer2 = $this->tester->haveAsset([
             SspAssetTransfer::NAME => static::SSP_ASSET_NAME_2,
             SspAssetTransfer::SERIAL_NUMBER => static::SSP_ASSET_SERIAL_NUMBER_2,
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
@@ -219,7 +219,7 @@ class SspAssetWritePublisherPluginTest extends Unit
             SspModelTransfer::NAME => 'Test Model 3',
         ]);
 
-        $sspAssetTransfer = $this->tester->haveSspAsset([
+        $sspAssetTransfer = $this->tester->haveAsset([
             SspAssetTransfer::NAME => static::SSP_ASSET_NAME_1,
             SspAssetTransfer::SERIAL_NUMBER => static::SSP_ASSET_SERIAL_NUMBER_1,
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
@@ -280,7 +280,7 @@ class SspAssetWritePublisherPluginTest extends Unit
             SspModelTransfer::NAME => 'Test Model 2',
         ]);
 
-        $sspAssetTransfer = $this->tester->haveSspAsset([
+        $sspAssetTransfer = $this->tester->haveAsset([
             SspAssetTransfer::NAME => static::SSP_ASSET_NAME_1,
             SspAssetTransfer::SERIAL_NUMBER => static::SSP_ASSET_SERIAL_NUMBER_1,
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,

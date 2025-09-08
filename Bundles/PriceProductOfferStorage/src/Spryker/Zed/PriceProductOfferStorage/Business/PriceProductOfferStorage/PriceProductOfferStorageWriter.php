@@ -20,6 +20,7 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventFacadeInterface;
@@ -41,11 +42,6 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
      * @var string
      */
     protected const COL_ID_PRODUCT_NAME = 'IdProduct';
-
-    /**
-     * @var string
-     */
-    protected const COL_SKU_NAME = 'Sku';
 
     /**
      * @var \Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventFacadeInterface
@@ -86,9 +82,8 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     {
         $productSkus = $this->getProductSkusByPriceProductOfferIds($priceProductOfferIds);
         $priceProductOffers = $this->getProductOfferDataByProductSkus($productSkus);
-        $productSkuToIdMap = $this->getActiveProductIdToSkuMapBySkus($productSkus);
 
-        $this->savePriceProductOfferStorage($priceProductOffers, $productSkuToIdMap);
+        $this->savePriceProductOfferStorage($priceProductOffers);
     }
 
     /**
@@ -143,7 +138,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
         }
         if ($publishData) {
             $priceProductOffers = $this->getProductOfferDataByProductSkus(array_keys($publishData));
-            $this->savePriceProductOfferStorage($priceProductOffers, $publishData);
+            $this->savePriceProductOfferStorage($priceProductOffers);
         }
     }
 
@@ -199,7 +194,17 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
                     ->endUse()
                 ->endUse()
             ->endUse()
+            ->addJoin(
+                SpyProductOfferTableMap::COL_CONCRETE_SKU,
+                SpyProductTableMap::COL_SKU,
+                Criteria::INNER_JOIN,
+            )
             ->filterByConcreteSku_In($productSkus)
+            ->addAnd(
+                SpyProductTableMap::COL_IS_ACTIVE,
+                1,
+                Criteria::EQUAL,
+            )
             ->select([
                 SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER,
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,
@@ -211,25 +216,10 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
                 SpyPriceProductStoreTableMap::COL_NET_PRICE,
                 SpyPriceProductStoreTableMap::COL_PRICE_DATA,
             ])
+            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, static::COL_ID_PRODUCT_NAME)
             ->find();
 
         return $productOfferData->toArray();
-    }
-
-    /**
-     * @param array<string> $productSkus
-     *
-     * @return array
-     */
-    protected function getActiveProductIdToSkuMapBySkus(array $productSkus): array
-    {
-        /** @var \Propel\Runtime\Collection\ObjectCollection $productCollection */
-        $productCollection = SpyProductQuery::create()
-            ->filterBySku_In($productSkus)
-            ->filterByIsActive(true)
-            ->find();
-
-        return $productCollection->toKeyValue(static::COL_SKU_NAME, static::COL_ID_PRODUCT_NAME);
     }
 
     /**
@@ -248,30 +238,30 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
 
     /**
      * @param array $priceProductOffers
-     * @param array $productSkuToIdMap
      *
      * @return void
      */
-    protected function savePriceProductOfferStorage(array $priceProductOffers, array $productSkuToIdMap): void
+    protected function savePriceProductOfferStorage(array $priceProductOffers): void
     {
         $groupedProductOffersByStoreAndProductSku = [];
+        $productSkuToIdMap = [];
         foreach ($priceProductOffers as $productOffer) {
+            $concreteSku = $productOffer[SpyProductOfferTableMap::COL_CONCRETE_SKU];
             $priceProductOfferStorageTransfer = $this->createPriceProductOfferStorageTransfer($productOffer);
-            $groupedProductOffersByStoreAndProductSku[$productOffer[SpyStoreTableMap::COL_NAME]][$productOffer[SpyProductOfferTableMap::COL_CONCRETE_SKU]][] = $priceProductOfferStorageTransfer->modifiedToArray();
+            $groupedProductOffersByStoreAndProductSku[$productOffer[SpyStoreTableMap::COL_NAME]][$concreteSku][] = $priceProductOfferStorageTransfer->modifiedToArray();
+            $productSkuToIdMap[$concreteSku] = $productOffer[static::COL_ID_PRODUCT_NAME];
         }
 
         /** @var string $storeName */
         foreach ($groupedProductOffersByStoreAndProductSku as $storeName => $groupedProductOffersByProductSku) {
             foreach ($groupedProductOffersByProductSku as $productSku => $priceProductOffers) {
-                if (isset($productSkuToIdMap[$productSku])) {
-                    $productConcreteProductOfferPriceStorageEntity = SpyProductConcreteProductOfferPriceStorageQuery::create()
-                        ->filterByFkProduct($productSkuToIdMap[$productSku])
-                        ->filterByStore($storeName)
-                        ->findOneOrCreate();
-                    $productConcreteProductOfferPriceStorageEntity->setData($priceProductOffers);
+                $productConcreteProductOfferPriceStorageEntity = SpyProductConcreteProductOfferPriceStorageQuery::create()
+                    ->filterByFkProduct($productSkuToIdMap[$productSku])
+                    ->filterByStore($storeName)
+                    ->findOneOrCreate();
+                $productConcreteProductOfferPriceStorageEntity->setData($priceProductOffers);
 
-                    $productConcreteProductOfferPriceStorageEntity->save();
-                }
+                $productConcreteProductOfferPriceStorageEntity->save();
             }
         }
     }

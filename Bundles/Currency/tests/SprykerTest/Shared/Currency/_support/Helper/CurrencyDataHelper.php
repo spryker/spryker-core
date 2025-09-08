@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\Currency\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CurrencyBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Orm\Zed\Currency\Persistence\SpyCurrencyQuery;
 use Orm\Zed\Currency\Persistence\SpyCurrencyStoreQuery;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -29,7 +30,16 @@ class CurrencyDataHelper extends Module
     {
         $currencyTransfer = (new CurrencyBuilder($override))->build();
 
-        return $this->getCurrencyFacade()->createCurrency($currencyTransfer);
+        $idCurrency = $this->getCurrencyFacade()->createCurrency($currencyTransfer);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($idCurrency): void {
+            $spyCurrencyEntity = SpyCurrencyQuery::create()->findOneByIdCurrency($idCurrency);
+            if ($spyCurrencyEntity) {
+                $spyCurrencyEntity->delete();
+            }
+        });
+
+        return $idCurrency;
     }
 
     /**
@@ -58,6 +68,13 @@ class CurrencyDataHelper extends Module
             ->findOneOrCreate();
 
         $currencyStoreEntity->save();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($currencyStoreEntity): void {
+            $spyCurrencyStoreEntity = $this->createCurrencyStorePropelQuery()->findOneByIdCurrencyStore($currencyStoreEntity->getIdCurrencyStore());
+            if ($spyCurrencyStoreEntity) {
+                $spyCurrencyStoreEntity->delete();
+            }
+        });
 
         return $currencyStoreEntity->getIdCurrencyStore();
     }

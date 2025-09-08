@@ -15,10 +15,11 @@ interface ProductCategoryTreeBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param bool $usesCache
      *
      * @return array<array<int>>
      */
-    public function buildProductCategoryTree(LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer): array;
+    public function buildProductCategoryTree(LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer, bool $usesCache = false): array;
 
     /**
      * @param array<int> $categoryNodeIds

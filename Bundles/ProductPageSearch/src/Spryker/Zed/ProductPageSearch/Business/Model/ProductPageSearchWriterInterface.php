@@ -13,6 +13,18 @@ use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch;
 interface ProductPageSearchWriterInterface
 {
     /**
+     * @return void
+     */
+    public function commitRemaining(): void;
+
+    /**
+     * @param array<\Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch> $productAbstractPageSearchEntities
+     *
+     * @return void
+     */
+    public function deleteProductAbstractPageSearchEntities(array $productAbstractPageSearchEntities);
+
+    /**
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer
      * @param array<string, mixed> $data
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productPageSearchEntity

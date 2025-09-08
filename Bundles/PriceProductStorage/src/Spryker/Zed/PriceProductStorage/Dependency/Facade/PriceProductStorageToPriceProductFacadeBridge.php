@@ -95,4 +95,14 @@ class PriceProductStorageToPriceProductFacadeBridge implements PriceProductStora
     ) {
         return $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria($productAbstractIds, $priceProductCriteriaTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\PriceProductTransfer>>
+     */
+    public function findProductConcretePricesWithoutPriceExtractionByConcreteAbstractMap(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
+    {
+        return $this->priceProductFacade->findProductConcretePricesWithoutPriceExtractionByConcreteAbstractMap($priceProductCriteriaTransfer);
+    }
 }

@@ -8,6 +8,7 @@
 namespace SprykerFeature\Client\SelfServicePortal\Storage\Reader;
 
 use Generated\Shared\Transfer\SspModelStorageCollectionTransfer;
+use Generated\Shared\Transfer\SspModelStorageConditionsTransfer;
 use Generated\Shared\Transfer\SspModelStorageCriteriaTransfer;
 use Generated\Shared\Transfer\SspModelStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
@@ -41,6 +42,28 @@ class SspModelStorageReader implements SspModelStorageReaderInterface
         }
 
         return $this->getSspModelStorageByModelIds($sspModelIds);
+    }
+
+     /**
+      * @param list<int> $modelIds
+      *
+      * @return list<\Generated\Shared\Transfer\SspModelStorageTransfer>
+      */
+    public function getSspModelStoragesByIds(array $modelIds): array
+    {
+        $sspModelStorageCriteriaTransfer = (new SspModelStorageCriteriaTransfer())
+            ->setSspModelStorageConditions(
+                (new SspModelStorageConditionsTransfer())
+                    ->setSspModelIds($modelIds),
+            );
+
+        $sspModelStorageCollectionTransfer = $this->getSspModelStorageCollection($sspModelStorageCriteriaTransfer);
+
+        if ($sspModelStorageCollectionTransfer->getSspModelStorages()->count() === 0) {
+            return [];
+        }
+
+        return $sspModelStorageCollectionTransfer->getSspModelStorages()->getArrayCopy();
     }
 
     /**

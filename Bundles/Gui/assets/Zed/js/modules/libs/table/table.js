@@ -51,7 +51,7 @@ export class Table {
 
     constructor(options = {}) {
         this.options = { ...Table.#defaultOptions, ...options };
-        this.options.debounce ??= 1000;
+        this.options.config.debounce ??= 1000;
         this.init();
     }
 
@@ -83,7 +83,7 @@ export class Table {
         for (const feature of Object.values(Table.FEATURES)) {
             const { attribute, class: FeatureClass } = feature;
 
-            if (!data.table.hasAttribute(attribute)) {
+            if (!data.table.hasAttribute(attribute) && attribute) {
                 continue;
             }
 

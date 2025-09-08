@@ -118,7 +118,7 @@
                         reference: sspAsset.reference,
                         image: sspAsset.image ? url('customer/ssp-asset/view-image', { 'ssp-asset-reference': sspAsset.reference }) : (sspAsset.externalImageUrl ?: null),
                         name: sspAsset.name,
-                        business_unit: sspAsset.companyBusinessUnit ? sspAsset.companyBusinessUnit.name : '',
+                        business_unit: sspAsset.companyBusinessUnit ? (sspAsset.companyBusinessUnit.name ~ (sspAsset.companyBusinessUnit.company.name is defined ? ' (' ~ sspAsset.companyBusinessUnit.company.name ~ ')' : '')) : '',
                         serial_number: sspAsset.serialNumber,
                         status: { label: "ssp_asset.status.#{sspAsset.status}", status: sspAsset.status },
                         actions: [{

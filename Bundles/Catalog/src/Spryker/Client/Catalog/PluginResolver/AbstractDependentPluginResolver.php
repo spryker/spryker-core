@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Catalog\PluginResolver;
 
-use Spryker\Client\CatalogExtension\Dependency\Plugin\SearchTypeIdentifierInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchTypeIdentifierInterface;
 
 abstract class AbstractDependentPluginResolver
 {

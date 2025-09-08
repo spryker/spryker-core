@@ -7,6 +7,7 @@
 
 namespace SprykerFeature\Yves\SelfServicePortal;
 
+use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 
@@ -710,5 +711,33 @@ class SelfServicePortalConfig extends AbstractBundleConfig
             static::SHIPMENT_TYPE_DELIVERY,
             static::SHIPMENT_TYPE_ON_SITE_SERVICE,
         ];
+    }
+
+    /**
+     * Specification:
+     * - Returns the shipment type keys that behave like delivery.
+     * - These shipment types will be treated the same as delivery in business logic.
+     * - Override this method in project-level configuration to define delivery-like shipment types.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getDeliveryLikeShipmentTypes(): array
+    {
+        return [];
+    }
+
+    /**
+     * Specification:
+     * - Returns pagination configuration for SSP asset search.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PaginationConfigTransfer
+     */
+    public function getSspAssetSearchPaginationConfigTransfer(): PaginationConfigTransfer
+    {
+        return $this->getSharedConfig()->getSspAssetSearchPaginationConfigTransfer();
     }
 }

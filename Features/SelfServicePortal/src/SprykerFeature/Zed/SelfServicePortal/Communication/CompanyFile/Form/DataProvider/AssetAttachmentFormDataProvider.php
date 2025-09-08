@@ -11,8 +11,7 @@ use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetIncludeTransfer;
 use SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacadeInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Form\AssetAttachmentForm;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\SspAssetAttachmentForm;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\AttachFileForm;
 
 class AssetAttachmentFormDataProvider
 {
@@ -44,8 +43,7 @@ class AssetAttachmentFormDataProvider
     public function getOptions(int $idFile, array $sspAssetIds): array
     {
         return [
-            SspAssetAttachmentForm::OPTION_SSP_ASSET_CHOICES => $this->getSspAssetChoices($sspAssetIds),
-            AssetAttachmentForm::OPTION_ID_FILE => $idFile,
+            AttachFileForm::OPTION_ID_FILE => $idFile,
         ];
     }
 

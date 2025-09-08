@@ -1,0 +1,5 @@
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence">
+    <table name="spy_sales_order">
+        <column name="agent_email" required="false" type="VARCHAR" size="255" description="The email of the agent associated with the sales order."/>
+    </table>
+</database>

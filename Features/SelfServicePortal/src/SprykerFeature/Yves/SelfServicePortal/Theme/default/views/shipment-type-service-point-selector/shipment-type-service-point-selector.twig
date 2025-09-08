@@ -3,7 +3,7 @@
 {% define data = {
     shipmentTypeOptions: _widget.shipmentTypeOptions,
     hasOnlyServiceShipmentType: _widget.hasOnlyServiceShipmentType,
-    hasOnlyDeliveryShipmentType: _widget.hasOnlyDeliveryShipmentType,
+    hasOnlyDeliveryLikeShipmentType: _widget.hasOnlyDeliveryLikeShipmentType,
     isSelectionDisabled: _widget.isDisabled,
     isServiceDateTimeFieldVisible: _widget.isServiceDateTimeFieldVisible,
     formFieldShipmentTypeUuid: _widget.formFieldShipmentTypeUuid,
@@ -30,7 +30,7 @@
             formFieldItemMetadataScheduledAt: data.formFieldItemMetadataScheduledAt,
             isServiceDateTimeFieldVisible: data.isServiceDateTimeFieldVisible,
             hasOnlyServiceShipmentType: data.hasOnlyServiceShipmentType,
-            hasOnlyDeliveryShipmentType: data.hasOnlyDeliveryShipmentType,
+            hasOnlyDeliveryLikeShipmentType: data.hasOnlyDeliveryLikeShipmentType,
             isConcreteProduct: data.product.idProductConcrete is not null,
             product: data.product,
         },

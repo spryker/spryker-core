@@ -66,4 +66,11 @@ interface PriceProductStorageToPriceProductFacadeInterface
         array $productAbstractIds,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     );
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\PriceProductTransfer>>
+     */
+    public function findProductConcretePricesWithoutPriceExtractionByConcreteAbstractMap(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
 }

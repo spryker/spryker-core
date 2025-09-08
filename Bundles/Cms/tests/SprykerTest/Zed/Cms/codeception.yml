@@ -41,6 +41,11 @@ suites:
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Client\Queue\Helper\QueueHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Zed\Cms\Helper\CmsPageDataHelper
 
     Communication:
         path: Communication

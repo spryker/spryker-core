@@ -1,0 +1,22 @@
+{% extends template('widget') %}
+
+{% define data = {
+    assetName: _widget.sspAssetName | default(null),
+    itemsFound: _widget.itemsFound | default(0),
+    isDisabled: _widget.isDisabled ?? true,
+} %}
+
+{% block body %}
+    {% set count = data.itemsFound | executeFilterIfExists('formatInt', app.locale)
+    %}
+
+    {% block content %}
+        {% if data.assetName is not empty %}
+            <strong>
+                {{ 'catalog.ssp.itemsFound' | trans( {'%num_found%': count, '%ssp_asset_name%': data.assetName}) }}
+            </strong>
+        {% else %}
+            <strong>{{ count }}</strong> {{ 'catalog.itemsFound' | trans }}
+        {% endif %}
+    {% endblock %}
+{% endblock %}

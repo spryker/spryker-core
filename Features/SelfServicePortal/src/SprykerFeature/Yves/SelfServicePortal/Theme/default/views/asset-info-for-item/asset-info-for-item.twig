@@ -1,7 +1,9 @@
 {% extends template('widget') %}
 
 {% define data = {
-    asset: _widget.asset
+    asset: _widget.asset,
+    idProduct: _widget.idProduct,
+    isCompatibilityVisible: _widget.isCompatibilityVisible
 } %}
 
 {% block body %}
@@ -20,6 +22,11 @@
                     {% if data.asset.serialNumber %}
                         <li class="list__item">
                             {{ 'self_service_portal.asset.serial_number' | trans }}: {{ data.asset.serialNumber }}
+                        </li>
+                    {% endif %}
+                    {% if data.isCompatibilityVisible %}
+                        <li class="list__item">
+                            {% widget 'AssetCompatibilityLabelWidget' args [data.asset.reference, data.idProduct] %}{% endwidget %}
                         </li>
                     {% endif %}
                 </ul>

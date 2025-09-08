@@ -163,6 +163,7 @@
         <property name="sspAsset" type="SspAsset"/>
         <property name="groupKey" type="string"/>
         <property name="isSingleAddressPerShipmentType" type="bool"/>
+        <property name="orderItemReference" type="string" strict="true"/>
     </transfer>
 
     <transfer name="Service" strict="true">
@@ -754,6 +755,8 @@
 
     <transfer name="TabsView">
         <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="isNavigable" type="bool"/>
+        <property name="footerTemplate" type="string"/>
     </transfer>
 
     <transfer name="SspAsset" strict="true">
@@ -772,7 +775,7 @@
         <property name="status" type="string"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
         <property name="sspServiceCollection" type="SspServiceCollection"/>
-        <property name="models" type="SspModel[]" singular="model"/>
+        <property name="sspModels" type="SspModel[]" singular="sspModel"/>
     </transfer>
 
     <transfer name="SspAssetConditions" strict="true">
@@ -850,6 +853,8 @@
         <property name="store" type="string"/>
         <property name="locale" type="string"/>
         <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="CmsBlockGlossaryPlaceholderTranslation">
@@ -1079,12 +1084,14 @@
     <transfer name="SspModelCriteria" strict="true">
         <property name="sspModelConditions" type="SspModelConditions"/>
         <property name="withSspAssets" type="bool"/>
+        <property name="withImageFile" type="bool"/>
         <property name="withProductLists" type="bool"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="SspModelConditions" strict="true">
         <property name="sspModelIds" type="int[]" singular="sspModelId"/>
+        <property name="references" type="string[]" singular="reference"/>
     </transfer>
 
     <transfer name="SspModelCollection" strict="true">
@@ -1099,6 +1106,11 @@
     <transfer name="SspModelCollectionResponse" strict="true">
         <property name="errors" type="Error[]" singular="error"/>
         <property name="sspModels" type="SspModel[]" singular="sspModel"/>
+    </transfer>
+
+    <transfer name="SspModelCollectionDeleteCriteria" strict="true">
+        <property name="sspModelIds" type="int[]" singular="idSspModel"/>
+        <property name="isTransactional" type="bool"/>
     </transfer>
 
     <transfer name="ProductList">
@@ -1132,6 +1144,7 @@
         <property name="name" type="string"/>
         <property name="serialNumber" type="string"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnitStorage"/>
+        <property name="sspModels" type="SspModel[]" singular="sspModel"/>
     </transfer>
 
     <transfer name="SspModelStorageCollection" strict="true">
@@ -1157,5 +1170,112 @@
 
     <transfer name="SspAssetStorageConditions" strict="true">
         <property name="references" type="string[]" singular="reference"/>
+    </transfer>
+
+    <transfer name="SspAssetSearch" strict="true">
+        <property name="idSspAsset" type="int"/>
+        <property name="reference" type="string"/>
+        <property name="serialNumber" type="string"/>
+        <property name="name" type="string"/>
+        <property name="data" type="array" singular="data"/>
+        <property name="structuredData" type="string"/>
+        <property name="store" type="string"/>
+    </transfer>
+
+    <transfer name="SspAssetSearchCollection" strict="true">
+        <property name="sspAssets" type="SspAssetSearch[]" singular="sspAsset"/>
+        <property name="nbResults" type="int"/>
+    </transfer>
+
+    <transfer name="SspAssetSearchCriteria" strict="true">
+        <property name="searchString" type="string"/>
+        <property name="sort" type="array" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="SearchContext">
+        <property name="sourceIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcreteProductListStorage">
+        <property name="idWhitelists" type="array" singular="idWhitelists"/>
+    </transfer>
+
+    <transfer name="PaginationConfig">
+        <property name="itemsPerPageParameterName" type="string"/>
+        <property name="maxItemsPerPage" type="int"/>
+        <property name="parameterName" type="string"/>
+        <property name="defaultItemsPerPage" type="int"/>
+    </transfer>
+
+    <transfer name="SortConfig">
+        <property name="parameterName" type="string"/>
+        <property name="isDescending" type="bool"/>
+        <property name="name" type="string"/>
+        <property name="fieldName" type="string"/>
+    </transfer>
+
+
+
+    <transfer name="SspAssetAssignmentFileParserRequest">
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="SspAssetAssignmentFileParserResponse">
+        <property name="referencesToAssign" type="string[]" singular="referencesToAssign"/>
+        <property name="referencesToDeassign" type="string[]" singular="referencesToDeassign"/>
+    </transfer>
+
+    <transfer name="BusinessUnitAssignmentFileParserRequest">
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="BusinessUnitAssignmentFileParserResponse">
+        <property name="referencesToAssign" type="string[]" singular="referencesToAssign"/>
+        <property name="referencesToDeassign" type="string[]" singular="referencesToDeassign"/>
+    </transfer>
+
+    <transfer name="CompanyUserAssignmentFileParserRequest">
+        <property name="fileContent" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUserAssignmentFileParserResponse">
+        <property name="referencesToAssign" type="int[]" singular="referencesToAssign"/>
+        <property name="referencesToDeassign" type="int[]" singular="referencesToDeassign"/>
+    </transfer>
+
+    <transfer name="CompanyAssignmentFileParserRequest">
+        <property name="fileContent" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyAssignmentFileParserResponse">
+        <property name="referencesToAssign" type="int[]" singular="referencesToAssign"/>
+        <property name="referencesToDeassign" type="int[]" singular="referencesToDeassign"/>
+    </transfer>
+
+
+    <transfer name="RestSspAssetsAttributes" strict="true">
+        <property name="reference" type="string"/>
+        <property name="name" type="string"/>
+        <property name="serialNumber" type="string"/>
+        <property name="note" type="string"/>
+        <property name="externalImageUrl" type="string"/>
+        <property name="businessUnitAssignments" type="RestSspAssetBusinessUnitAssignment[]" singular="businessUnitAssignment"/>
+    </transfer>
+
+    <transfer name="RestSspAssetBusinessUnitAssignment" strict="true">
+        <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
+        <property name="status" type="int" description="A HTTP status code."/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="idCompany" type="int"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 </transfers>

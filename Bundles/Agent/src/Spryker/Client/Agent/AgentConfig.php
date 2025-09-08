@@ -10,6 +10,9 @@ namespace Spryker\Client\Agent;
 use Spryker\Client\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Agent\AgentConstants;
 
+/**
+ * @method \Spryker\Shared\Agent\AgentConfig getSharedConfig()
+ */
 class AgentConfig extends AbstractBundleConfig
 {
     /**
@@ -31,5 +34,18 @@ class AgentConfig extends AbstractBundleConfig
             AgentConstants::AGENT_ALLOWED_SECURED_PATTERN_LIST,
             static::DEFAULT_AGENT_ALLOWED_SECURED_PATTERN_LIST,
         );
+    }
+
+    /**
+     * Specification:
+     * - Enable or disable agent info capturing in the orders when agent assists with order placing.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isSalesOrderAgentEnabled(): bool
+    {
+        return $this->getSharedConfig()->isSalesOrderAgentEnabled();
     }
 }

@@ -419,6 +419,7 @@
         "spryker/locale-data-import": "*",
         "spryker/locale-extension": "*",
         "spryker/locale-gui": "*",
+        "spryker/lock": "*",
         "spryker/log": "*",
         "spryker/log-extension": "*",
         "spryker/mail": "*",

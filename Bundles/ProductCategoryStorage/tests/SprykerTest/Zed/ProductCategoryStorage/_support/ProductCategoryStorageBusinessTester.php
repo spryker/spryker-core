@@ -16,6 +16,7 @@ use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage
 use Propel\Runtime\Collection\ObjectCollection;
 use ReflectionClass;
 use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReader;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\ProductCategoryStorageWriter;
 
 /**
  * @method void wantToTest($text)
@@ -103,6 +104,11 @@ class ProductCategoryStorageBusinessTester extends Actor
         $property = $reflectedClass->getProperty('categoryTree');
         $property->setAccessible(true);
         $property->setValue(null);
+
+        $reflection = new ReflectionClass(ProductCategoryStorageWriter::class);
+        $property = $reflection->getProperty('storeNameToLocalesMap');
+        $property->setAccessible(true);
+        $property->setValue([]);
     }
 
     /**

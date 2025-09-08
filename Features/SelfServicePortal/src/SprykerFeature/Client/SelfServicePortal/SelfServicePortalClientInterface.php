@@ -17,6 +17,8 @@ use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
+use Generated\Shared\Transfer\SspAssetSearchCollectionTransfer;
+use Generated\Shared\Transfer\SspAssetSearchCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetStorageCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetStorageCriteriaTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
@@ -34,7 +36,7 @@ interface SelfServicePortalClientInterface
      * Specification:
      * - Retrieves a collection of services based on criteria.
      * - Uses Zed facade to fetch the data.
-     * - Returns a SspServiceCollectionTransfer with the services and pagination information.
+     * - Returns a `SspServiceCollectionTransfer` with the services and pagination information.
      *
      * @api
      *
@@ -48,8 +50,8 @@ interface SelfServicePortalClientInterface
      * Specification:
      * - Makes Zed request.
      * - Gets files according to permissions.
-     * - Uses FileAttachmentCriteriaTransfer to filter files.
-     * - Returns a FileAttachmentCollectionTransfer with the files based on criteria includes.
+     * - Uses `FileAttachmentCriteriaTransfer` to filter files.
+     * - Returns a `FileAttachmentCollectionTransfer` with the files based on criteria includes.
      *
      * @api
      *
@@ -77,7 +79,7 @@ interface SelfServicePortalClientInterface
      * Specification:
      * - Updates sales order items collection.
      * - Uses Zed facade to perform the update.
-     * - Returns a SalesOrderItemCollectionResponseTransfer with the updated items and potential errors.
+     * - Returns a `SalesOrderItemCollectionResponseTransfer` with the updated items and potential errors.
      *
      * @api
      *
@@ -93,7 +95,7 @@ interface SelfServicePortalClientInterface
      * Specification:
      * - Cancels sales order items collection.
      * - Uses Zed facade to perform the cancellation.
-     * - Returns a SalesOrderItemCollectionResponseTransfer with potential errors.
+     * - Returns a `SalesOrderItemCollectionResponseTransfer` with potential errors.
      *
      * @api
      *
@@ -134,7 +136,7 @@ interface SelfServicePortalClientInterface
     /**
      * Specification:
      * - Cancels ssp inquiries from the provided collection.
-     * - Requires SspInquiryCollectionRequestTransfer.sspInquiries.reference to be provided.
+     * - Requires `SspInquiryCollectionRequestTransfer.sspInquiries.reference` to be provided.
      *
      * @api
      *
@@ -212,11 +214,27 @@ interface SelfServicePortalClientInterface
 
     /**
      * Specification:
+     * - Retrieves SSP asset search collection from search based on criteria.
+     * - Uses search engine to find assets matching the criteria.
+     * - Returns `SspAssetSearchCollectionTransfer` filled with found SSP assets.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspAssetSearchCriteriaTransfer $sspAssetSearchCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspAssetSearchCollectionTransfer
+     */
+    public function getSspAssetSearchCollection(
+        SspAssetSearchCriteriaTransfer $sspAssetSearchCriteriaTransfer
+    ): SspAssetSearchCollectionTransfer;
+
+    /**
+     * Specification:
      * - Retrieves SSP asset storage collection from storage based on criteria.
-     * - Requires SspAssetStorageCriteriaTransfer.sspAssetStorageConditions to be set.
-     * - Requires SspAssetStorageCriteriaTransfer.companyUser to be set.
+     * - Requires `SspAssetStorageCriteriaTransfer.sspAssetStorageConditions` to be set.
+     * - Requires `SspAssetStorageCriteriaTransfer.companyUser` to be set.
      * - Filters by SSP asset references provided in criteria conditions.
-     * - Filters out assets that company user does not have access to based on ViewBusinessUnitSspAssetPermissionPlugin and ViewCompanySspAssetPermissionPlugin permission.
+     * - Filters out assets that company user does not have access to based on `ViewBusinessUnitSspAssetPermissionPlugin` and `ViewCompanySspAssetPermissionPlugin` permission.
      * - Returns collection of SSP asset storage transfers.
      *
      * @api

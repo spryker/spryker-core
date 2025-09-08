@@ -42,4 +42,12 @@
         <property name="customerReference" type="string"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="agentEmail" type="string" strict="true" description="The email of the agent associated with the sales order."/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="agentEmail" type="string" strict="true" description="The email of the agent associated with the sales order."/>
+    </transfer>
+
 </transfers>

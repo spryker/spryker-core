@@ -42,4 +42,9 @@ interface CmsConstants
      * @var string
      */
     public const YVES_THEME = 'YVES_THEME';
+
+    /**
+     * @var string
+     */
+    public const TENANT_IDENTIFIER = 'CMS:TENANT_IDENTIFIER';
 }

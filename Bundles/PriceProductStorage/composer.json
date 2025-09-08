@@ -8,7 +8,7 @@
         "spryker/event-behavior": "^1.1.0",
         "spryker/kernel": "^3.30.0",
         "spryker/log": "^3.0.0",
-        "spryker/price-product": "^2.15.0 || ^4.46.0",
+        "spryker/price-product": "^2.15.0 || ^4.48.0",
         "spryker/price-product-storage-extension": "^1.3.0",
         "spryker/product": "^5.5.0 || ^6.0.0",
         "spryker/propel-orm": "^1.5.0",
@@ -16,8 +16,9 @@
         "spryker/storage": "^3.4.0",
         "spryker/store": "^1.7.0",
         "spryker/synchronization": "^0.2.0 || ^1.0.0",
-        "spryker/synchronization-behavior": "^1.0.0",
-        "spryker/synchronization-extension": "^1.0.0"
+        "spryker/synchronization-behavior": "^1.13.0",
+        "spryker/synchronization-extension": "^1.0.0",
+        "spryker/transfer": "^3.42.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

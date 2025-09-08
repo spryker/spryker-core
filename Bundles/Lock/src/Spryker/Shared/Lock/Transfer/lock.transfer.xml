@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="Lock" strict="true">
+        <property name="key" type="string"/>
+        <property name="entityName" type="string"/>
+        <property name="blocking" type="bool"/>
+        <property name="expiration" type="int"/>
+        <property name="result" type="bool"/>
+    </transfer>
+</transfers>

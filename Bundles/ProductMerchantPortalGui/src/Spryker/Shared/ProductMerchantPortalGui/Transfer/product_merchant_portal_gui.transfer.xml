@@ -468,4 +468,32 @@
         <property name="keyTranslation" type="string"/>
     </transfer>
 
+    <transfer name="MerchantProductCounts" strict="true">
+        <property name="total" type="int"/>
+        <property name="active" type="int"/>
+        <property name="inactive" type="int"/>
+        <property name="withStock" type="int"/>
+        <property name="lowInStock" type="int"/>
+        <property name="withValidDates" type="int"/>
+        <property name="expiring" type="int"/>
+        <property name="visible" type="int"/>
+    </transfer>
+
+    <transfer name="ProductsDashboardCardCriteria" strict="true">
+        <property name="idMerchant" type="int"/>
+        <property name="lowStockThreshold" type="int"/>
+        <property name="expiringProductsDaysThreshold" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantDashboardCard">
+        <property name="title" type="string" strict="true"/>
+        <property name="content" type="string" strict="true"/>
+        <property name="actionButtons" type="MerchantDashboardActionButton[]" singular="actionButton" strict="true"/>
+    </transfer>
+
+    <transfer name="MerchantDashboardActionButton" strict="true">
+        <property name="title" type="string"/>
+        <property name="url" type="string"/>
+    </transfer>
+
 </transfers>

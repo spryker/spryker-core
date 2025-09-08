@@ -64,7 +64,7 @@
                         reference: data.asset.reference,
                         information: [
                             { title: 'self_service_portal.asset.details_page.reference', value: data.asset.reference },
-                            { title: 'self_service_portal.asset.details_page.owner', value: data.asset.companyBusinessUnit.name | default('self_service_portal.asset.details_page.undefined' | trans) },
+                            { title: 'self_service_portal.asset.details_page.owner', value: data.asset.companyBusinessUnit.name is defined and data.asset.companyBusinessUnit.company.name is defined ? data.asset.companyBusinessUnit.name ~ ' (' ~ data.asset.companyBusinessUnit.company.name ~ ')' : data.asset.companyBusinessUnit.name | default('self_service_portal.asset.details_page.undefined' | trans) },
                             { title: 'self_service_portal.asset.details_page.status', value: block('status') },
                             { title: 'self_service_portal.asset.details_page.name', value: data.asset.name },
                             { title: 'self_service_portal.asset.details_page.serial_number', value: data.asset.serialNumber | default('---') },

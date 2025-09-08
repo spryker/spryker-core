@@ -146,7 +146,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
             }
         }
 
-        return $searchResult->getTotalHits();
+        return is_object($searchResult) && method_exists($searchResult, 'getTotalHits') ? $searchResult->getTotalHits() : 0;
     }
 
     /**

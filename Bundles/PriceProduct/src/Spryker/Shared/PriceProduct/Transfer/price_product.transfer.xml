@@ -91,6 +91,7 @@
         <property name="sku" type="string"/>
         <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
         <property name="onlyConcretePrices" type="bool"/>
+        <property name="productConcreteToAbstractIdMaps" type="array" associative="true" singular="productConcreteToAbstractIdMap"/>
     </transfer>
 
     <transfer name="CurrentProductPrice">

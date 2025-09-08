@@ -21,6 +21,7 @@ use Spryker\Zed\Oms\Dependency\QueryContainer\OmsToSalesBridge as PersistenceOms
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextBridge;
+use Spryker\Zed\OmsExtension\Dependency\Plugin\OmsLockPluginInterface;
 
 /**
  * @method \Spryker\Zed\Oms\OmsConfig getConfig()
@@ -105,6 +106,11 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGIN_LOCK = 'PLUGIN_LOCK';
+
+    /**
+     * @var string
+     */
     public const FACADE_MAIL = 'FACADE_MAIL';
 
     /**
@@ -121,6 +127,11 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
+
+    /**
+     * @var string
+     */
+    public const FACADE_LOCK = 'FACADE_LOCK';
 
     /**
      * @var string
@@ -179,6 +190,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTimeoutProcessorPlugins($container);
         $container = $this->addOmsEventTriggeredListenerPlugins($container);
         $container = $this->addMessageBrokerFacade($container);
+        $container = $this->addLockPlugin($container);
 
         return $container;
     }
@@ -677,5 +689,27 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLockPlugin(Container $container): Container
+    {
+        $container->set(static::PLUGIN_LOCK, function (Container $container) {
+            return $this->getLockPlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsLockPluginInterface|null
+     */
+    protected function getLockPlugin(): ?OmsLockPluginInterface
+    {
+        return null;
     }
 }

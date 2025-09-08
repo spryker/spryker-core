@@ -17,57 +17,14 @@ use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpanderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
+use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class Reader implements ReaderInterface
 {
-    /**
-     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface
-     */
-    protected $productFacade;
-
-    /**
-     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface
-     */
-    protected $priceFacade;
-
-    /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface
-     */
-    protected $priceProductTypeReader;
-
-    /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface
-     */
-    protected $priceProductConcreteReader;
-
-    /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReaderInterface
-     */
-    protected $priceProductAbstractReader;
-
-    /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface
-     */
-    protected $priceProductCriteriaBuilder;
-
-    /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface
-     */
-    protected $priceProductMapper;
-
-    /**
-     * @var \Spryker\Zed\PriceProduct\PriceProductConfig
-     */
-    protected $config;
-
-    /**
-     * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
-     */
-    protected $priceProductService;
-
     /**
      * @var string|null
      */
@@ -79,6 +36,16 @@ class Reader implements ReaderInterface
     protected static $resolvedPriceProductTransferCollection = [];
 
     /**
+     * @var string
+     */
+    protected const FIELD_PRICE_PAIR_ABSTRACTS = 'abstracts';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_PRICE_PAIR_CONCRETES = 'concretes';
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceProductTypeReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface $priceProductConcreteReader
@@ -87,25 +54,21 @@ class Reader implements ReaderInterface
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
      * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
+     * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface $priceProductRepository
+     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpanderInterface $priceProductExpander
      */
     public function __construct(
-        PriceProductToProductFacadeInterface $productFacade,
-        PriceProductTypeReaderInterface $priceProductTypeReader,
-        PriceProductConcreteReaderInterface $priceProductConcreteReader,
-        PriceProductAbstractReaderInterface $priceProductAbstractReader,
-        PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder,
-        PriceProductMapperInterface $priceProductMapper,
-        PriceProductConfig $config,
-        PriceProductServiceInterface $priceProductService
+        protected PriceProductToProductFacadeInterface $productFacade,
+        protected PriceProductTypeReaderInterface $priceProductTypeReader,
+        protected PriceProductConcreteReaderInterface $priceProductConcreteReader,
+        protected PriceProductAbstractReaderInterface $priceProductAbstractReader,
+        protected PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder,
+        protected PriceProductMapperInterface $priceProductMapper,
+        protected PriceProductConfig $config,
+        protected PriceProductServiceInterface $priceProductService,
+        protected PriceProductRepositoryInterface $priceProductRepository,
+        protected PriceProductExpanderInterface $priceProductExpander
     ) {
-        $this->productFacade = $productFacade;
-        $this->priceProductTypeReader = $priceProductTypeReader;
-        $this->priceProductConcreteReader = $priceProductConcreteReader;
-        $this->priceProductAbstractReader = $priceProductAbstractReader;
-        $this->priceProductCriteriaBuilder = $priceProductCriteriaBuilder;
-        $this->priceProductMapper = $priceProductMapper;
-        $this->config = $config;
-        $this->priceProductService = $priceProductService;
     }
 
     /**
@@ -824,5 +787,105 @@ class Reader implements ReaderInterface
         return $priceProductFilterTransfer->setIdentifier(
             $this->buildPriceProductFilterIdentifier($priceProductFilterTransfer),
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\PriceProductTransfer>>
+     */
+    public function findProductConcretePricesWithoutPriceExtractionByConcreteAbstractMap(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
+    {
+        $productConcreteToProductAbstractIdMap = $priceProductCriteriaTransfer->getProductConcreteToAbstractIdMaps();
+        $productAbstractToProductConcreteIdMap = $this->mapProductAbstractToProductConcreteId($productConcreteToProductAbstractIdMap);
+        $priceProductTransfers = $this->getProductPriceTransfers($productConcreteToProductAbstractIdMap, $priceProductCriteriaTransfer);
+        $priceProductConcreteProductAbstractPairs = $this->pairPriceProductsTransfersByConcreteToAbstractRelation(
+            $priceProductTransfers,
+            $productAbstractToProductConcreteIdMap,
+        );
+
+        $priceProductTransfersResult = [];
+        foreach ($priceProductConcreteProductAbstractPairs as $idProductConcrete => $priceProductPair) {
+            $priceProductTransfersResult[(int)$idProductConcrete] = $this->mergeConcreteAndAbstractPrices(
+                $priceProductPair[static::FIELD_PRICE_PAIR_ABSTRACTS],
+                $priceProductPair[static::FIELD_PRICE_PAIR_CONCRETES],
+            );
+        }
+
+        return $priceProductTransfersResult;
+    }
+
+    /**
+     * @param array<int, int> $productConcreteToProductAbstractIdMap
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    protected function getProductPriceTransfers(
+        array $productConcreteToProductAbstractIdMap,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): array {
+        $productAbstractIds = array_unique(array_values($productConcreteToProductAbstractIdMap));
+        $productConcreteIds = array_keys($productConcreteToProductAbstractIdMap);
+
+        $priceProductTransfers = $this->priceProductRepository->findProductPricesByConcreteIdsOrAbstractIds(
+            $productConcreteIds,
+            $productAbstractIds,
+            $priceProductCriteriaTransfer,
+        );
+
+        return $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
+    }
+
+    /**
+     * @param array<int, int> $productConcreteToProductAbstractIdMap
+     *
+     * @return array<int, array<int>>
+     */
+    protected function mapProductAbstractToProductConcreteId(array $productConcreteToProductAbstractIdMap): array
+    {
+        $productAbstractToProductConcreteIdMap = [];
+        foreach ($productConcreteToProductAbstractIdMap as $idProductConcrete => $idProductAbstract) {
+            $productAbstractToProductConcreteIdMap[$idProductAbstract] = $productAbstractToProductConcreteIdMap[$idProductAbstract] ?? [];
+            $productAbstractToProductConcreteIdMap[$idProductAbstract][] = $idProductConcrete;
+        }
+
+        return $productAbstractToProductConcreteIdMap;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<int, array<int>> $productAbstractToProductConcreteIdMap
+     *
+     * @return array<int|string, array<string, array<int, \Generated\Shared\Transfer\PriceProductTransfer>>>
+     */
+    protected function pairPriceProductsTransfersByConcreteToAbstractRelation(
+        array $priceProductTransfers,
+        array $productAbstractToProductConcreteIdMap
+    ): array {
+        $pairStructure = [
+            static::FIELD_PRICE_PAIR_ABSTRACTS => [],
+            static::FIELD_PRICE_PAIR_CONCRETES => [],
+        ];
+        $priceProductConcreteProductAbstractPairs = [];
+
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $idProductAbstract = $priceProductTransfer->getIdProductAbstract();
+            $idProductConcrete = $priceProductTransfer->getIdProduct();
+
+            if (!$idProductAbstract || empty($productAbstractToProductConcreteIdMap[$idProductAbstract])) {
+                $priceProductConcreteProductAbstractPairs[$idProductConcrete] ??= $pairStructure;
+                $priceProductConcreteProductAbstractPairs[$idProductConcrete][static::FIELD_PRICE_PAIR_CONCRETES][] = $priceProductTransfer;
+
+                continue;
+            }
+
+            foreach ($productAbstractToProductConcreteIdMap[$idProductAbstract] as $idProductConcreteRelated) {
+                $priceProductConcreteProductAbstractPairs[$idProductConcreteRelated] ??= $pairStructure;
+                $priceProductConcreteProductAbstractPairs[$idProductConcreteRelated][static::FIELD_PRICE_PAIR_ABSTRACTS][] = $priceProductTransfer;
+            }
+        }
+
+        return $priceProductConcreteProductAbstractPairs;
     }
 }

@@ -232,7 +232,7 @@ $(document).ready(function () {
 
     /* Init tabs */
     $('.tabs-container').each(function (index, item) {
-        new Tabs(item, dataTable.onTabChange);
+        item.tabsInstance = new Tabs(item, dataTable.onTabChange);
     });
 
     if (window.spryker?.isBootstrapVersionLatest) {

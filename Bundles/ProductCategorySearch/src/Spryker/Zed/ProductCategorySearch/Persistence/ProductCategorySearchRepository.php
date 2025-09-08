@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -144,13 +143,11 @@ class ProductCategorySearchRepository extends AbstractRepository implements Prod
             ->endUse();
 
         $categoryNodeQuery
-            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, static::COLUMN_FK_CATEGORY)
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::COLUMN_ID_CATEGORY_NODE)
             ->withColumn(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, static::COLUMN_FK_CATEGORY_NODE_DESCENDANT)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, static::COLUMN_NAME)
-            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, static::COLUMN_CATEGORY_KEY)
             ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, static::COLUMN_FK_LOCALE)
-            ->withColumn(SpyStoreTableMap::COL_NAME, static::COLUMN_STORE_NAME);
+            ->withColumn(SpyStoreTableMap::COL_NAME, static::COLUMN_STORE_NAME)
+            ->select([static::COLUMN_ID_CATEGORY_NODE, static::COLUMN_FK_CATEGORY_NODE_DESCENDANT, static::COLUMN_FK_LOCALE, static::COLUMN_STORE_NAME]);
 
         /** @var array $categoryNodes */
         $categoryNodes = $categoryNodeQuery

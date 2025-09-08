@@ -89,6 +89,7 @@
         <property name="matches" type="array" associative="true" singular="match"/>
         <property name="matchedItems" type="array" singular="matchedItem"/>
         <property name="categories" type="array" singular="category"/>
+        <property name="matchedItemsBySourceIdentifiers" type="array" singular="matchedItemsBySourceIdentifier"/>
     </transfer>
 
     <transfer name="SearchHttpResponsePagination">
@@ -210,5 +211,6 @@
 
     <transfer name="AcpHttpResponse" strict="true">
         <property name="content" type="string"/>
+        <property name="httpStatusCode" type="int"/>
     </transfer>
 </transfers>

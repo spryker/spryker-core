@@ -7,40 +7,46 @@
 
 namespace Spryker\Client\SearchHttp\ApplicabilityChecker;
 
-use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface;
+use Generated\Shared\Transfer\SearchContextTransfer;
+use Generated\Shared\Transfer\SearchHttpConfigCriteriaTransfer;
 use Spryker\Client\SearchHttp\Reader\ConfigReaderInterface;
 
 class QueryApplicabilityChecker implements QueryApplicabilityCheckerInterface
 {
     /**
-     * @var \Spryker\Client\SearchHttp\Reader\ConfigReaderInterface
+     * @var string
      */
-    protected ConfigReaderInterface $configReader;
-
-    /**
-     * @var \Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface
-     */
-    protected SearchHttpToStoreClientInterface $storeClient;
+    protected const APP_CONFIG_SETTING_SOURCE_IDENTIFIERS = 'source_identifiers';
 
     /**
      * @param \Spryker\Client\SearchHttp\Reader\ConfigReaderInterface $configReader
-     * @param \Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface $storeClient
      */
-    public function __construct(
-        ConfigReaderInterface $configReader,
-        SearchHttpToStoreClientInterface $storeClient
-    ) {
-        $this->configReader = $configReader;
-        $this->storeClient = $storeClient;
+    public function __construct(protected ConfigReaderInterface $configReader)
+    {
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
      * @return bool
      */
-    public function isQueryApplicable(): bool
+    public function isQueryApplicable(SearchContextTransfer $searchContextTransfer): bool
     {
-        return $this->storeClient->isCurrentStoreDefined()
-            && $this->configReader->getSearchHttpConfigCollectionForCurrentStore()
-                ->getSearchHttpConfigs()->count() > 0;
+        $searchHttpConfigTransfer = $this->configReader->findSearchConfig(new SearchHttpConfigCriteriaTransfer());
+
+        if (!$searchHttpConfigTransfer) {
+            return false;
+        }
+
+        if (!isset($searchHttpConfigTransfer->getSettings()[static::APP_CONFIG_SETTING_SOURCE_IDENTIFIERS])) {
+            return true;
+        }
+
+        return $searchContextTransfer->getSourceIdentifier() === '*'
+            || in_array(
+                $searchContextTransfer->getSourceIdentifier(),
+                $searchHttpConfigTransfer->getSettings()[static::APP_CONFIG_SETTING_SOURCE_IDENTIFIERS],
+                true,
+            );
     }
 }

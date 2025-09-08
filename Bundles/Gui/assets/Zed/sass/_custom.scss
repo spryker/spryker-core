@@ -1524,6 +1524,10 @@ a.label {
             box-shadow: none;
             color: #121212;
         }
+
+        &.btn-danger {
+            color: $red-default !important;
+        }
     }
 
     &.navbar-minimalize {

@@ -1,0 +1,1 @@
+Renders the asset option.

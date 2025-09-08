@@ -9,7 +9,9 @@ namespace SprykerFeature\Client\SelfServicePortal\Storage\Reader;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\SspAssetStorageCollectionTransfer;
+use Generated\Shared\Transfer\SspAssetStorageConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetStorageCriteriaTransfer;
+use Generated\Shared\Transfer\SspAssetStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Service\Synchronization\SynchronizationServiceInterface;
@@ -44,13 +46,31 @@ class SspAssetStorageReader implements SspAssetStorageReaderInterface
         return $this->getSspAssetStorageCollectionByReferences($references, $sspAssetStorageCriteriaTransfer->getCompanyUserOrFail());
     }
 
+    public function findSspAssetStorageByReference(string $assetReference, CompanyUserTransfer $companyUserTransfer): ?SspAssetStorageTransfer
+    {
+        $sspAssetStorageCollectionTransfer = $this->getSspAssetStorageCollection(
+            (new SspAssetStorageCriteriaTransfer())
+                ->setCompanyUser($companyUserTransfer)
+                ->setSspAssetStorageConditions(
+                    (new SspAssetStorageConditionsTransfer())
+                        ->setReferences([$assetReference]),
+                ),
+        );
+
+        if ($sspAssetStorageCollectionTransfer->getSspAssetStorages()->count() === 0) {
+            return null;
+        }
+
+        return $sspAssetStorageCollectionTransfer->getSspAssetStorages()->getIterator()->current();
+    }
+
     /**
      * @param list<string> $references
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUser
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\SspAssetStorageCollectionTransfer
      */
-    protected function getSspAssetStorageCollectionByReferences(array $references, CompanyUserTransfer $companyUser): SspAssetStorageCollectionTransfer
+    protected function getSspAssetStorageCollectionByReferences(array $references, CompanyUserTransfer $companyUserTransfer): SspAssetStorageCollectionTransfer
     {
         $sspAssetStorageCollectionTransfer = new SspAssetStorageCollectionTransfer();
         $storageKeys = $this->generateSspAssetStorageKeys($references);
@@ -62,7 +82,7 @@ class SspAssetStorageReader implements SspAssetStorageReaderInterface
 
         foreach ($storageDataCollection as $storageData) {
             $decodedStorageData = $this->utilEncodingService->decodeJson($storageData, true);
-            if (!is_array($decodedStorageData) || !$this->sspAssetPermissionChecker->canViewSspAsset($decodedStorageData, $companyUser)) {
+            if (!is_array($decodedStorageData) || !$this->sspAssetPermissionChecker->canViewSspAsset($decodedStorageData, $companyUserTransfer)) {
                 continue;
             }
 

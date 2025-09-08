@@ -12,9 +12,12 @@ use Spryker\Client\CmsPageSearch\Config\CmsPageSortConfigBuilder;
 use Spryker\Client\CmsPageSearch\Config\PaginationConfigBuilderInterface;
 use Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface;
 use Spryker\Client\CmsPageSearch\Dependency\Client\CmsPageSearchToSearchBridgeInterface;
+use Spryker\Client\CmsPageSearch\SearchQueryResolver\SearchQueryResolver;
+use Spryker\Client\CmsPageSearch\SearchQueryResolver\SearchQueryResolverInterface;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringSetterInterface;
+use Spryker\Shared\Kernel\StrategyResolver;
 
 /**
  * @method \Spryker\Client\CmsPageSearch\CmsPageSearchConfig getConfig()
@@ -23,23 +26,16 @@ class CmsPageSearchFactory extends AbstractFactory
 {
     /**
      * @param string $searchString
-     * @param array<string, mixed> $requestParameters
-     * @param array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface> $queryExpanderPlugins
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
-    public function createCmsPageSearchQuery(
-        string $searchString,
-        array $requestParameters,
-        array $queryExpanderPlugins
-    ): QueryInterface {
-        $searchQuery = $this->getCmsPageSearchQueryPlugin();
+    public function createCmsPageSearchQuery(string $searchString): QueryInterface
+    {
+        $searchQuery = $this->createSearchQueryResolver()->resolve();
 
         if ($searchQuery instanceof SearchStringSetterInterface) {
             $searchQuery->setSearchString($searchString);
         }
-
-        $searchQuery = $this->getSearchClient()->expandQuery($searchQuery, $queryExpanderPlugins, $requestParameters);
 
         return $searchQuery;
     }
@@ -53,7 +49,9 @@ class CmsPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @deprecated use {@link static::getCmsPageSearchQueryPlugins()} instead.
+     *
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function getCmsPageSearchQueryPlugin(): QueryInterface
     {
@@ -61,19 +59,49 @@ class CmsPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface>
      */
-    public function getCmsPageSearchQueryExpanderPlugins(): array
+    public function getCmsPageSearchQueryPlugins(): array
     {
-        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGINS_CMS_PAGE_SEARCH_QUERY_EXPANDER);
+        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGINS_SEARCH_QUERY);
     }
 
     /**
-     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
+     * @return \Spryker\Client\CmsPageSearch\SearchQueryResolver\SearchQueryResolverInterface
      */
-    public function getCmsPageSearchResultFormatters(): array
+    public function createSearchQueryResolver(): SearchQueryResolverInterface
     {
-        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGINS_CMS_PAGE_SEARCH_RESULT_FORMATTER);
+        return new SearchQueryResolver($this->getCmsPageSearchQueryPlugins(), $this->getCmsPageSearchQueryPlugin());
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\StrategyResolver<array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>>
+     */
+    public function createCmsPageSearchQueryExpanderPluginsStrategyResolver(): StrategyResolver
+    {
+        return new StrategyResolver([
+            CmsPageSearchConfig::SEARCH_STRATEGY_ELASTICSEARCH => function () {
+                return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGINS_CMS_PAGE_SEARCH_QUERY_EXPANDER);
+            },
+            CmsPageSearchConfig::SEARCH_STRATEGY_SEARCH_HTTP => function () {
+                return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGINS_SEARCH_HTTP_QUERY_EXPANDER);
+            },
+        ], CmsPageSearchConfig::SEARCH_STRATEGY_ELASTICSEARCH);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\StrategyResolver<array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>>
+     */
+    public function createCmsPageSearchResultFormattersStrategyResolver(): StrategyResolver
+    {
+        return new StrategyResolver([
+            CmsPageSearchConfig::SEARCH_STRATEGY_ELASTICSEARCH => function () {
+                return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGINS_CMS_PAGE_SEARCH_RESULT_FORMATTER);
+            },
+            CmsPageSearchConfig::SEARCH_STRATEGY_SEARCH_HTTP => function () {
+                return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGINS_SEARCH_HTTP_RESULT_FORMATTER);
+            },
+        ], CmsPageSearchConfig::SEARCH_STRATEGY_ELASTICSEARCH);
     }
 
     /**
@@ -100,10 +128,25 @@ class CmsPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
+     * @return \Spryker\Shared\Kernel\StrategyResolver<array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>>
      */
-    public function getCmsPageSearchCountQueryExpanderPlugins(): array
+    public function createCmsPageSearchCountQueryExpanderPluginsStrategyResolver(): StrategyResolver
     {
-        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGINS_CMS_PAGE_SEARCH_COUNT_QUERY_EXPANDER);
+        return new StrategyResolver([
+            CmsPageSearchConfig::SEARCH_STRATEGY_ELASTICSEARCH => function () {
+                return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGINS_CMS_PAGE_SEARCH_COUNT_QUERY_EXPANDER);
+            },
+            CmsPageSearchConfig::SEARCH_STRATEGY_SEARCH_HTTP => function () {
+                return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGINS_SEARCH_HTTP_COUNT_QUERY_EXPANDER);
+            },
+        ], CmsPageSearchConfig::SEARCH_STRATEGY_ELASTICSEARCH);
+    }
+
+    /**
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchResultCountPluginInterface>
+     */
+    public function getSearchResultCountPlugins(): array
+    {
+        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGINS_SEARCH_RESULT_COUNT);
     }
 }

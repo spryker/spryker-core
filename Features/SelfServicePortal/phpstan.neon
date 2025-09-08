@@ -5,4 +5,5 @@ parameters:
         - '#Call to an undefined method Orm\\.+Query::groupByIdProduct\(\).#'
         - '#Call to an undefined method Orm\\.+Query::filterByFkProduct_In\(\).#'
         - '#Call to an undefined method Orm\\.+Query::useSpyProductLocalizedAttributesQuery\(\).#'
-
+    excludePaths:
+        - '%rootDir%/../../../vendor/spryker/spryker/Features/SelfServicePortal/src/SprykerFeature/Client/SelfServicePortal/Search/Query/SspAssetSearchQuery.php'

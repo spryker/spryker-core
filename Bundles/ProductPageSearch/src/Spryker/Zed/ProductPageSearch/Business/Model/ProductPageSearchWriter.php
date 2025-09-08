@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductPageSearch\Business\Model;
 
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch;
-use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
-use Propel\Runtime\Exception\PropelException;
-use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface;
+use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 
 /**
  * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
@@ -20,6 +18,8 @@ use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEnco
  */
 class ProductPageSearchWriter implements ProductPageSearchWriterInterface
 {
+    use ActiveRecordBatchProcessorTrait;
+
     /**
      * @var \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface
      */
@@ -43,6 +43,26 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
     }
 
     /**
+     * @return void
+     */
+    public function commitRemaining(): void
+    {
+        $this->commit();
+    }
+
+    /**
+     * @param array<\Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch> $productAbstractPageSearchEntities
+     *
+     * @return void
+     */
+    public function deleteProductAbstractPageSearchEntities(array $productAbstractPageSearchEntities)
+    {
+        foreach ($productAbstractPageSearchEntities as $productAbstractPageSearchEntity) {
+            $this->remove($productAbstractPageSearchEntity);
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer
      * @param array<string, mixed> $data
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productPageSearchEntity
@@ -59,29 +79,13 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer
      * @param array<string, mixed> $data
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function saveEntity(SpyProductAbstractPageSearch $productPageSearchEntity, ProductPageSearchTransfer $productPageSearchTransfer, array $data)
     {
-        try {
-            $productPageSearchEntity->setFkProductAbstract($productPageSearchTransfer->getIdProductAbstract());
-            $this->applyChangesToEntity($productPageSearchEntity, $productPageSearchTransfer, $data);
-            $productPageSearchEntity->save();
-        } catch (PropelException $exception) {
-            ErrorLogger::getInstance()->log($exception);
-            $productPageSearchEntity = SpyProductAbstractPageSearchQuery::create()
-                ->filterByFkProductAbstract($productPageSearchTransfer->getIdProductAbstract())
-                ->filterByLocale($productPageSearchTransfer->getLocale())
-                ->filterByStore($productPageSearchTransfer->getStore())
-                ->findOne();
-            if ($productPageSearchEntity === null) {
-                throw $exception;
-            }
-            $this->applyChangesToEntity($productPageSearchEntity, $productPageSearchTransfer, $data);
-            $productPageSearchEntity->save();
-        }
+        $productPageSearchEntity->setFkProductAbstract($productPageSearchTransfer->getIdProductAbstract());
+        $this->applyChangesToEntity($productPageSearchEntity, $productPageSearchTransfer, $data);
+        $this->persist($productPageSearchEntity);
     }
 
     /**

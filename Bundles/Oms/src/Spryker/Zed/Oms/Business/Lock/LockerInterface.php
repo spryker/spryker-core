@@ -12,10 +12,11 @@ interface LockerInterface
     /**
      * @param array<string>|string $identifiers
      * @param string|null $details
+     * @param bool $blocking
      *
      * @return bool
      */
-    public function acquire($identifiers, $details = null);
+    public function acquire($identifiers, $details = null, bool $blocking = false);
 
     /**
      * @param array<string>|string $identifiers
@@ -28,4 +29,19 @@ interface LockerInterface
      * @return void
      */
     public function clearLocks();
+
+    /**
+     * @param array<string>|string $identifiers
+     * @param bool $blocking
+     *
+     * @return bool
+     */
+    public function acquireForOrder($identifiers, bool $blocking = false): bool;
+
+    /**
+     * @param array<string>|string $identifiers
+     *
+     * @return void
+     */
+    public function releaseForOrder($identifiers): void;
 }

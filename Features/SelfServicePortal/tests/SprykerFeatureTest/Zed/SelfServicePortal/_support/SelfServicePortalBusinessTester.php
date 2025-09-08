@@ -34,6 +34,7 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery;
 use Spryker\Shared\Price\PriceMode;
 
 /**
@@ -188,5 +189,18 @@ class SelfServicePortalBusinessTester extends Actor
             ->setStore($storeTransfer);
 
         return $quoteTransfer;
+    }
+
+    public function ensureSspModelDatabaseTableIsEmpty(): void
+    {
+        SpySspModelQuery::create()->deleteAll();
+    }
+
+    /**
+     * @return array<\Orm\Zed\SelfServicePortal\Persistence\SpySspModel>
+     */
+    public function getSspModelEntities(): array
+    {
+        return SpySspModelQuery::create()->find()->getData();
     }
 }

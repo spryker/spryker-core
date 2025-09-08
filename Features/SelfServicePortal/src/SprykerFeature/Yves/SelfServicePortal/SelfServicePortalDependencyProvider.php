@@ -97,6 +97,11 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
      */
     public const SERVICE_SELF_SERVICE_PORTAL = 'SERVICE_SELF_SERVICE_PORTAL';
 
+    /**
+     * @var string
+     */
+    public const CLIENT_PRODUCT_LIST_STORAGE = 'CLIENT_PRODUCT_LIST_STORAGE';
+
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
@@ -114,6 +119,7 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addRouterService($container);
         $container = $this->addRequestStackService($container);
         $container = $this->addSelfServicePortalService($container);
+        $container = $this->addProductListStorageClient($container);
 
         return $container;
     }
@@ -239,6 +245,15 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::SERVICE_SELF_SERVICE_PORTAL, function (Container $container) {
             return $container->getLocator()->selfServicePortal()->service();
+        });
+
+        return $container;
+    }
+
+    protected function addProductListStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT_LIST_STORAGE, function (Container $container) {
+            return $container->getLocator()->productListStorage()->client();
         });
 
         return $container;

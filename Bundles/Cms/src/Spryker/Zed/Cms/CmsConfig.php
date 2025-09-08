@@ -33,6 +33,23 @@ class CmsConfig extends AbstractBundleConfig
     protected const THEME_NAME_DEFAULT = 'default';
 
     /**
+     * @var int
+     */
+    protected const DEFAULT_CMS_PAGE_EXPORT_CHUNK_SIZE = 1000;
+
+    /**
+     * @var int
+     */
+    protected const DEFAULT_CMS_PAGE_MESSAGE_BROKER_CHUNK_SIZE = 200;
+
+    /**
+     * @uses \Spryker\Shared\KernelApp\KernelAppConstants::TENANT_IDENTIFIER
+     *
+     * @var string
+     */
+    protected const KERNEL_APP_TENANT_IDENTIFIER = 'KERNEL_APP:TENANT_IDENTIFIER';
+
+    /**
      * @api
      *
      * @return string
@@ -93,6 +110,36 @@ class CmsConfig extends AbstractBundleConfig
     public function appendPrefixToCmsPageUrl(): bool
     {
         return false;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getTenantIdentifier(): string
+    {
+        return $this->get(CmsConstants::TENANT_IDENTIFIER, $this->get(static::KERNEL_APP_TENANT_IDENTIFIER) ?? '');
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getCmsPageExportChunkSize(): int
+    {
+        return static::DEFAULT_CMS_PAGE_EXPORT_CHUNK_SIZE;
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getCmsPageMessageBrokerChunkSize(): int
+    {
+        return static::DEFAULT_CMS_PAGE_MESSAGE_BROKER_CHUNK_SIZE;
     }
 
     /**

@@ -39,6 +39,23 @@ class FileSspModelWriter implements FileSspModelWriterInterface
         return $sspModelTransfer->setImage($fileManagerDataTransfer->getFileOrFail()->setFileContent(null));
     }
 
+    public function updateFile(SspModelTransfer $sspModelTransfer): SspModelTransfer
+    {
+        $fileTransfer = $sspModelTransfer->getImage();
+
+        if (!$fileTransfer) {
+            return $sspModelTransfer;
+        }
+
+        if (!$fileTransfer->getFileUpload()) {
+            return $sspModelTransfer;
+        }
+
+        $fileManagerDataTransfer = $this->saveImageFile($fileTransfer);
+
+        return $sspModelTransfer->setImage($fileManagerDataTransfer->getFileOrFail()->setFileContent(null));
+    }
+
     protected function saveImageFile(FileTransfer $fileTransfer): FileManagerDataTransfer
     {
         $fileUploadTransfer = $fileTransfer->getFileUploadOrFail();

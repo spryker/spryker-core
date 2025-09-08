@@ -24,6 +24,7 @@ use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
+use Generated\Shared\Transfer\SspModelCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\SspModelCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspModelCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspModelCollectionTransfer;
@@ -37,7 +38,7 @@ interface SelfServicePortalFacadeInterface
      * Specification:
      * - Retrieves a collection of services.
      * - Uses the provided criteria to filter and sort the results.
-     * - Returns a SspServiceCollectionTransfer transfer object with the results and pagination information.
+     * - Returns a `SspServiceCollectionTransfer` transfer object with the results and pagination information.
      *
      * @api
      *
@@ -176,7 +177,7 @@ interface SelfServicePortalFacadeInterface
     /**
      * Specification:
      * - Cancels ssp inquiries from provided collection.
-     * - Requires SspInquiryCollectionRequestTransfer.sspInquiries.reference to be provided.
+     * - Requires `SspInquiryCollectionRequestTransfer.sspInquiries.reference` to be provided.
      *
      * @api
      *
@@ -277,4 +278,37 @@ interface SelfServicePortalFacadeInterface
      * @return \Generated\Shared\Transfer\SspModelCollectionTransfer
      */
     public function getSspModelCollection(SspModelCriteriaTransfer $sspModelCriteriaTransfer): SspModelCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Deletes a collection of SSP models based on provided criteria.
+     * - Requires `SspModelCollectionDeleteCriteriaTransfer.sspModelIds` to be provided.
+     * - Validates that the model IDs collection is not empty.
+     * - Retrieves existing models by the provided IDs from persistence.
+     * - Returns `SspModelCollectionResponseTransfer` with deleted models or empty collection if no models found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspModelCollectionDeleteCriteriaTransfer $sspModelCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspModelCollectionResponseTransfer
+     */
+    public function deleteSspModelCollection(
+        SspModelCollectionDeleteCriteriaTransfer $sspModelCollectionDeleteCriteriaTransfer
+    ): SspModelCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Updates a collection of SSP models.
+     * - Validates model data.
+     * - Updates models in database.
+     * - Returns response with updated models and validation messages.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SspModelCollectionResponseTransfer
+     */
+    public function updateSspModelCollection(SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): SspModelCollectionResponseTransfer;
 }

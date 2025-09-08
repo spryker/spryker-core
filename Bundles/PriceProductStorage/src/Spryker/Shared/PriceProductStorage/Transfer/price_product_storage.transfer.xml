@@ -80,5 +80,6 @@
 
     <transfer name="PriceProductCriteria">
         <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="productConcreteToAbstractIdMaps" type="array" associative="true" singular="productConcreteToAbstractIdMap"/>
     </transfer>
 </transfers>

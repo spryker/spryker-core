@@ -81,6 +81,7 @@ class PriceProductDataHelper extends Module
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($priceProductTransfer): void {
+            $this->cleanupPriceProductStore($priceProductTransfer->getIdPriceProduct());
             $this->cleanupPriceProduct($priceProductTransfer->getIdPriceProduct());
         });
 
@@ -168,6 +169,21 @@ class PriceProductDataHelper extends Module
             ->queryPriceProduct()
             ->findByIdPriceProduct($idPriceProduct)
             ->delete();
+    }
+
+    /**
+     * @param int $idPriceProduct
+     *
+     * @return void
+     */
+    private function cleanupPriceProductStore(int $idPriceProduct): void
+    {
+        $this->debug(sprintf('Deleting Price Product: %d', $idPriceProduct));
+
+        $spyPriceProductStoreEntity = $this->getPriceProductStoreQuery()->findOneByFkPriceProduct($idPriceProduct);
+        if ($spyPriceProductStoreEntity) {
+            $spyPriceProductStoreEntity->delete();
+        }
     }
 
     /**

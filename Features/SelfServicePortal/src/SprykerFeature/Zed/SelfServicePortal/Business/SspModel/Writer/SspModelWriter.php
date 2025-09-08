@@ -7,6 +7,7 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Writer;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\SspModelCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspModelCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspModelTransfer;
@@ -57,6 +58,43 @@ class SspModelWriter implements SspModelWriterInterface
             $sspModelTransfer = $this->fileSspModelWriter->createFile($sspModelTransfer);
 
             return $this->entityManager->createSspModel($sspModelTransfer);
+        });
+    }
+
+    public function updateSspModelCollection(
+        SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer
+    ): SspModelCollectionResponseTransfer {
+        $sspModelCollectionResponseTransfer = new SspModelCollectionResponseTransfer();
+
+        foreach ($sspModelCollectionRequestTransfer->getSspModels() as $sspModelTransfer) {
+            if (!$this->sspModelValidator->validateModelTransfer($sspModelTransfer, $sspModelCollectionResponseTransfer)) {
+                continue;
+            }
+
+            $sspModelTransfer = $this->executeModelUpdate($sspModelTransfer, $sspModelCollectionResponseTransfer);
+            if ($sspModelTransfer) {
+                $sspModelCollectionResponseTransfer->addSspModel($sspModelTransfer);
+            }
+        }
+
+        return $sspModelCollectionResponseTransfer;
+    }
+
+    protected function executeModelUpdate(
+        SspModelTransfer $sspModelTransfer,
+        SspModelCollectionResponseTransfer $sspModelCollectionResponseTransfer
+    ): ?SspModelTransfer {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($sspModelTransfer, $sspModelCollectionResponseTransfer) {
+            $sspModelTransfer = $this->fileSspModelWriter->updateFile($sspModelTransfer);
+
+            $sspModelTransfer = $this->entityManager->updateSspModel($sspModelTransfer);
+            if (!$sspModelTransfer) {
+                $sspModelCollectionResponseTransfer->addError(
+                    (new ErrorTransfer())->setMessage('SSP Model not found'),
+                );
+            }
+
+            return $sspModelTransfer;
         });
     }
 }

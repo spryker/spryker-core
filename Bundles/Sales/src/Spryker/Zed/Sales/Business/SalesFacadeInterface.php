@@ -552,8 +552,8 @@ interface SalesFacadeInterface
      * - Updates order billing address with billing address data from quote.
      * - BC: Updates order shipping address with shipping address data from quote.
      * - BC: Hydrates quote items with shipping address.
-     * - Resolves a stack of {@link \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface}.
-     * - Executes a stack of {@link \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface}.
+     * - Resolves a stack of {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPreSavePluginInterface}.
+     * - Executes a stack of {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPreSavePluginInterface}.
      * - Updates order data with data from quote.
      * - Sets the current locale ID to the order.
      * - Resolves a stack of {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface} according to the quote process flow.
