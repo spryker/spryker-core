@@ -38,7 +38,6 @@ class DocumentWriter implements DocumentWriterInterface
         );
         $document = new Document($searchDocumentTransfer->getId(), $searchDocumentTransfer->getData());
         $response = $index->addDocument($document);
-        $index->refresh();
 
         return $response->isOk();
     }
@@ -52,7 +51,6 @@ class DocumentWriter implements DocumentWriterInterface
     {
         $documents = $this->createElasticaDocuments($searchDocumentTransfers);
         $response = $this->elasticaClient->addDocuments($documents);
-        $this->elasticaClient->refreshAll();
 
         return $response->isOk();
     }
@@ -68,7 +66,6 @@ class DocumentWriter implements DocumentWriterInterface
             $this->getIndexName($searchDocumentTransfer),
         );
         $response = $index->deleteById($searchDocumentTransfer->getId());
-        $index->refresh();
 
         return $response->isOk();
     }
@@ -82,7 +79,6 @@ class DocumentWriter implements DocumentWriterInterface
     {
         $documents = $this->createElasticaDocuments($searchDocumentTransfers);
         $response = $this->elasticaClient->deleteDocuments($documents);
-        $this->elasticaClient->refreshAll();
 
         return $response->isOk();
     }
