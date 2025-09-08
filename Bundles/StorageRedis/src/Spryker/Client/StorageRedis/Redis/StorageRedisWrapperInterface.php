@@ -116,4 +116,13 @@ interface StorageRedisWrapperInterface
      * @return void
      */
     public function setDebug(bool $debug): void;
+
+    /**
+     * @param string $script
+     * @param int $numKeys
+     * @param mixed ...$keysOrArgs
+     *
+     * @return bool
+     */
+    public function evaluate(string $script, int $numKeys, ...$keysOrArgs): bool;
 }

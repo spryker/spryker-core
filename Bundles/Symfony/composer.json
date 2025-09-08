@@ -18,6 +18,7 @@
         "symfony/http-foundation": "^5.2.0 || ^6.4.3",
         "symfony/http-kernel": "^5.2.1 || ^6.4.0",
         "symfony/intl": "^5.0.9 || ^6.4.0",
+        "symfony/lock": "^5.4.0 || ^6.4.0",
         "symfony/messenger": "^5.3.0 || ^6.4.0",
         "symfony/mime": "^5.0.9 || ^6.4.0",
         "symfony/options-resolver": "^5.0.9 || ^6.4.0",

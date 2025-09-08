@@ -199,4 +199,18 @@ interface StorageRedisClientInterface
      * @return void
      */
     public function setDebug(bool $debug): void;
+
+    /**
+     * Specification:
+     * - Executes a Lua script on the StorageRedis server.
+     *
+     * @api
+     *
+     * @param string $script
+     * @param int $numKeys
+     * @param mixed ...$keysOrArgs
+     *
+     * @return bool
+     */
+    public function evaluate(string $script, int $numKeys, ...$keysOrArgs): bool;
 }

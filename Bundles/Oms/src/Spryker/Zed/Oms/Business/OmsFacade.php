@@ -964,4 +964,70 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
             ->createOrderStateMachinePersistenceManager()
             ->getOmsOrderItemState($stateName);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array|string $identifier
+     * @param bool $blocking
+     *
+     * @return bool
+     */
+    public function acquireOrderItemLock(array|string $identifier, bool $blocking): bool
+    {
+        return $this->getFactory()
+            ->createTriggerLocker()
+            ->acquire($identifier, null, $blocking);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array|string $identifier
+     *
+     * @return void
+     */
+    public function releaseOrderItemLock(array|string $identifier): void
+    {
+        $this->getFactory()
+            ->createTriggerLocker()
+            ->release($identifier);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array|string $identifier
+     * @param bool $blocking
+     *
+     * @return bool
+     */
+    public function acquireOrderLock(array|string $identifier, bool $blocking): bool
+    {
+        return $this->getFactory()
+            ->createTriggerLocker()
+            ->acquireForOrder($identifier, $blocking);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array|string $identifier
+     *
+     * @return void
+     */
+    public function releaseOrderLock(array|string $identifier): void
+    {
+        $this->getFactory()
+            ->createTriggerLocker()
+            ->releaseForOrder($identifier);
+    }
 }

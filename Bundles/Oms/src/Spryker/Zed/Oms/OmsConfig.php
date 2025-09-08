@@ -119,6 +119,16 @@ class OmsConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @return int
+     */
+    public function getStateMachineLockerTimeoutIntervalInSeconds()
+    {
+        return 60;
+    }
+
+    /**
+     * @api
+     *
      * @return string
      */
     public function getSubProcessPrefixDelimiter()

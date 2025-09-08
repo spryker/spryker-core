@@ -887,4 +887,58 @@ interface OmsFacadeInterface
      * @return \Generated\Shared\Transfer\OmsOrderItemStateTransfer
      */
     public function getOmsOrderItemState(string $stateName): OmsOrderItemStateTransfer;
+
+    /**
+     * Specification:
+     * - Acquires a lock for the order item based on the provided identifier.
+     * - If blocking is true, it will wait until the lock can be acquired.
+     * - If blocking is false, it will return false immediately if the lock cannot be acquired.
+     *
+     * @api
+     *
+     * @param array|string $identifier
+     * @param bool $blocking
+     *
+     * @return bool
+     */
+    public function acquireOrderItemLock(array|string $identifier, bool $blocking): bool;
+
+    /**
+     * Specification:
+     * - Release a lock for the order item based on the provided identifier.
+     *
+     * @api
+     *
+     * @param array|string $identifier
+     *
+     * @return void
+     */
+    public function releaseOrderItemLock(array|string $identifier): void;
+
+    /**
+     * Specification:
+     * - Acquires a lock for the order based on the provided identifier.
+     * - If blocking is true, it will wait until the lock can be acquired.
+     * - If blocking is false, it will return false immediately if the lock cannot be acquired.
+     *
+     * @api
+     *
+     * @param array|string $identifier
+     * @param bool $blocking
+     *
+     * @return bool
+     */
+    public function acquireOrderLock(array|string $identifier, bool $blocking): bool;
+
+    /**
+     * Specification:
+     * - Release a lock for the order based on the provided identifier.
+     *
+     * @api
+     *
+     * @param array|string $identifier
+     *
+     * @return void
+     */
+    public function releaseOrderLock(array|string $identifier): void;
 }

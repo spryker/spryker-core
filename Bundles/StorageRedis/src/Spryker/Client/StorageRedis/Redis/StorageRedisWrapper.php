@@ -359,6 +359,18 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
     }
 
     /**
+     * @param string $script
+     * @param int $numKeys
+     * @param mixed ...$keysOrArgs
+     *
+     * @return bool
+     */
+    public function evaluate(string $script, int $numKeys, ...$keysOrArgs): bool
+    {
+        return $this->redisClient->eval($this->connectionKey, $script, $numKeys, ...$keysOrArgs);
+    }
+
+    /**
      * @param string $key
      *
      * @return void

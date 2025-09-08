@@ -35,4 +35,7 @@
     <transfer name="OmsEventTriggered" strict="true">
     </transfer>
 
+    <transfer name="Lock" strict="true">
+    </transfer>
+
 </transfers>

@@ -352,4 +352,12 @@
         <property name="description" type="string"/>
     </transfer>
 
+    <transfer name="Lock" strict="true">
+        <property name="key" type="string"/>
+        <property name="entityName" type="string"/>
+        <property name="blocking" type="bool"/>
+        <property name="expiration" type="int"/>
+        <property name="result" type="bool"/>
+    </transfer>
+
 </transfers>

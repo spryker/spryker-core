@@ -236,6 +236,22 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $script
+     * @param int $numKeys
+     * @param mixed ...$keysOrArgs
+     *
+     * @return bool
+     */
+    public function evaluate(string $script, int $numKeys, ...$keysOrArgs): bool
+    {
+        return $this->getStorageRedisWrapper()->evaluate($script, $numKeys, ...$keysOrArgs);
+    }
+
+    /**
      * @return \Spryker\Client\StorageRedis\Redis\StorageRedisWrapperInterface
      */
     protected function getStorageRedisWrapper(): StorageRedisWrapperInterface
