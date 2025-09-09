@@ -34,7 +34,7 @@
                     spy-title="{{ 'Upload File' | trans }}"
                     class="{{ mainClass }}__card">
                     <div class="{{ mainClass }}__file-upload-container">
-                        <p class="{{ mainClass }}__file-upload-title">{{ 'Upload a file up to %maxFileSize%' | trans({'%maxFileSize%': maxFileSize | formatFileSize(0)}) }}</p>
+                        <p class="{{ mainClass }}__file-upload-title">{{ 'Upload a file up to %maxFileSize% MB' | trans({'%maxFileSize%': maxFileSize }) }}</p>
                         <p class="{{ mainClass }}__file-upload-subtitle">{{ 'Only CSV files are supported' | trans }}</p>
 
                         {% set showForceProceed = false %}

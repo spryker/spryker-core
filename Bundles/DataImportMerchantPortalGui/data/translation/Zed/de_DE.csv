@@ -35,3 +35,4 @@ message,Nachricht
 "Created At","Erstellt am"
 "File Name",Dateiname
 Status,Status
+"Upload a file up to %maxFileSize% MB","Laden Sie eine Datei mit bis zu %maxFileSize% MB hoch"

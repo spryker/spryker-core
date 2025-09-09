@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\DataImportMerchantPortalGui\Communication\Controller;
 
+use Spryker\Zed\DataImportMerchantPortalGui\DataImportMerchantPortalGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,7 +44,7 @@ class ImportController extends AbstractController
             static::TEMPLATE_FORM_START_IMPORT,
             [
                 'form' => $dataImportMerchantFileForm->createView(),
-                'maxFileSize' => $this->getFactory()->getConfig()->getMaxFileSizeInBytes(),
+                'maxFileSize' => DataImportMerchantPortalGuiConfig::MAX_FILE_SIZE_MB,
                 'dataImportTemplates' => $this->getFactory()->getConfig()->getDataImportTemplates(),
             ],
         );

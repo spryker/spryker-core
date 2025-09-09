@@ -14,9 +14,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class DataImportMerchantPortalGuiConfig extends AbstractBundleConfig
 {
     /**
+     * Specification:
+     * - Returns the maximum file size for file uploads in megabytes.
+     *
+     * @api
+     *
      * @var int
      */
-    protected const MAX_FILE_SIZE_MB = 10;
+    public const MAX_FILE_SIZE_MB = 10;
 
     /**
      * Specification:
