@@ -52,11 +52,22 @@ use Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step\
 use Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step\ProductMerchantOwnerCheckStep;
 use Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step\ProductWriterStep;
 use Spryker\Zed\MerchantProductDataImport\Business\DataReader\CsvAdapterReaderConfiguration;
+use Spryker\Zed\MerchantProductDataImport\Business\Expander\MerchantCombinedProductRequestExpander;
+use Spryker\Zed\MerchantProductDataImport\Business\Expander\MerchantCombinedProductRequestExpanderInterface;
+use Spryker\Zed\MerchantProductDataImport\Business\Expander\PossibleCsvHeaderExpander;
+use Spryker\Zed\MerchantProductDataImport\Business\Expander\PossibleCsvHeaderExpanderInterface;
 use Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\Step\MerchantProductAbstractWriterStep;
 use Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\Step\MerchantReferenceToIdMerchantStep;
 use Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\Step\ProductAbstractSkuToIdProductAbstractStep;
-use Spryker\Zed\MerchantProductDataImport\Business\Validator\MerchantFileValidatorInterface;
-use Spryker\Zed\MerchantProductDataImport\Business\Validator\ProductHeadersMerchantFileValidator;
+use Spryker\Zed\MerchantProductDataImport\Business\Validator\MerchantCombinedProductValidator;
+use Spryker\Zed\MerchantProductDataImport\Business\Validator\MerchantCombinedProductValidatorInterface;
+use Spryker\Zed\MerchantProductDataImport\Dependency\Facade\MerchantProductDataImportToCurrencyFacadeInterface;
+use Spryker\Zed\MerchantProductDataImport\Dependency\Facade\MerchantProductDataImportToLocaleFacadeInterface;
+use Spryker\Zed\MerchantProductDataImport\Dependency\Facade\MerchantProductDataImportToMerchantFacadeInterface;
+use Spryker\Zed\MerchantProductDataImport\Dependency\Facade\MerchantProductDataImportToMerchantStockFacadeInterface;
+use Spryker\Zed\MerchantProductDataImport\Dependency\Facade\MerchantProductDataImportToProductAttributeFacadeInterface;
+use Spryker\Zed\MerchantProductDataImport\Dependency\Facade\MerchantProductDataImportToStoreFacadeInterface;
+use Spryker\Zed\MerchantProductDataImport\MerchantProductDataImportDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantProductDataImport\MerchantProductDataImportConfig getConfig()
@@ -473,10 +484,84 @@ class MerchantProductDataImportBusinessFactory extends DataImportBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantProductDataImport\Business\Validator\MerchantFileValidatorInterface
+     * @return \Spryker\Zed\MerchantProductDataImport\Business\Validator\MerchantCombinedProductValidatorInterface
      */
-    public function createProductHeadersValidator(): MerchantFileValidatorInterface
+    public function createMerchantCombinedProductValidator(): MerchantCombinedProductValidatorInterface
     {
-        return new ProductHeadersMerchantFileValidator();
+        return new MerchantCombinedProductValidator();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductDataImport\Business\Expander\MerchantCombinedProductRequestExpanderInterface
+     */
+    public function createMerchantCombinedProductRequestExpander(): MerchantCombinedProductRequestExpanderInterface
+    {
+        return new MerchantCombinedProductRequestExpander(
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductDataImport\Business\Expander\PossibleCsvHeaderExpanderInterface
+     */
+    public function createPossibleCsvHeaderExpander(): PossibleCsvHeaderExpanderInterface
+    {
+        return new PossibleCsvHeaderExpander(
+            $this->getConfig(),
+            $this->getLocaleFacade(),
+            $this->getMerchantFacade(),
+            $this->getMerchantStockFacade(),
+            $this->getStoreFacade(),
+            $this->getCurrencyFacade(),
+            $this->getProductAttributeFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductDataImport\Dependency\Facade\MerchantProductDataImportToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): MerchantProductDataImportToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductDataImportDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductDataImport\Dependency\Facade\MerchantProductDataImportToMerchantFacadeInterface
+     */
+    public function getMerchantFacade(): MerchantProductDataImportToMerchantFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductDataImportDependencyProvider::FACADE_MERCHANT);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductDataImport\Dependency\Facade\MerchantProductDataImportToMerchantStockFacadeInterface
+     */
+    public function getMerchantStockFacade(): MerchantProductDataImportToMerchantStockFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductDataImportDependencyProvider::FACADE_MERCHANT_STOCK);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductDataImport\Dependency\Facade\MerchantProductDataImportToStoreFacadeInterface
+     */
+    public function getStoreFacade(): MerchantProductDataImportToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductDataImportDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductDataImport\Dependency\Facade\MerchantProductDataImportToCurrencyFacadeInterface
+     */
+    public function getCurrencyFacade(): MerchantProductDataImportToCurrencyFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductDataImportDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductDataImport\Dependency\Facade\MerchantProductDataImportToProductAttributeFacadeInterface
+     */
+    public function getProductAttributeFacade(): MerchantProductDataImportToProductAttributeFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductDataImportDependencyProvider::FACADE_PRODUCT_ATTRIBUTE);
     }
 }

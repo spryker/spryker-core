@@ -1,0 +1,186 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+@import '~@spryker/styles/src/lib/themes/default/mixins/index.less';
+
+@data-import-padding: var(--spy-data-import-padding, 30px);
+@data-import-card-margin-bottom: var(--spy-data-import-card-margin-bottom, 20px);
+@data-import-header-padding: var(--spy-data-import-header-padding, 15px 30px);
+@data-import-hint-margin-top: var(--spy-data-import-hint-margin-top, 10px);
+
+.@{ajax-form-prefix-cls}-container {
+    overflow-y: auto;
+
+    &--loading {
+        overflow: hidden;
+    }
+}
+
+.mp-data-import {
+    display: block;
+    height: 100%;
+    background-color: @gray-lighter;
+    font: @font-default;
+    letter-spacing: @letter-spacing-base;
+    color: @ink;
+
+    &__header {
+        padding: @data-import-header-padding;
+        background-color: @white;
+    }
+
+    &__content {
+        padding: @data-import-padding;
+    }
+
+    .ant-form-item-control-input {
+        min-height: 0;
+    }
+
+    &__card {
+        display: block;
+        margin-bottom: @data-import-card-margin-bottom;
+
+        .@{input-prefix-cls}-group {
+            max-width: 100%;
+        }
+    }
+
+    &__file-upload-title {
+        font-size: 18px;
+        font-weight: @font-weight-medium;
+        margin-bottom: 10px;
+    }
+
+    &__file-upload-subtitle {
+        color: @gray-dark;
+        font-size: @spy-font-size-sm;
+        margin-bottom: 20px;
+    }
+
+    &__file-input-container {
+        .ant-input {
+            height: auto;
+            padding: 12px;
+            border-color: @green;
+            background-color: @input-bg;
+            color: @ink;
+
+            &::file-selector-button {
+                .transition-mixin(all);
+                min-height: @btn-height-base;
+                font: @font-default;
+                text-align: center;
+                color: @btn-primary-color;
+                text-decoration: none;
+                box-shadow: @btn-shadow-default;
+                border: @btn-border;
+                border-radius: @btn-border-radius;
+                cursor: pointer;
+                background-color: @green;
+                font-weight: @font-weight-medium;
+                padding-left: @btn-horizontal-padding-base-md;
+                padding-right: @btn-horizontal-padding-base-md;
+                margin-right: 8px;
+
+                &:hover {
+                    box-shadow: @btn-shadow-hover;
+                }
+            }
+        }
+    }
+
+    &__file-upload-container {
+        border: 2px dashed @green-dark;
+        border-radius: @border-radius-base;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    &__upload-button {
+        .transition-mixin(all);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        box-shadow: @btn-shadow-default;
+        font: @font-default;
+        text-align: center;
+        border-radius: @btn-border-radius;
+        border: @btn-border;
+        text-decoration: none;
+        color: @btn-primary-color;
+        cursor: pointer;
+        position: relative;
+        background-color: @green;
+        font-weight: @font-weight-medium;
+        margin-bottom: 15px;
+        min-width: @btn-min-width-md;
+        min-height: @btn-height-md;
+        padding-left: @btn-horizontal-padding-base-md;
+        padding-right: @btn-horizontal-padding-base-md;
+
+        &:hover {
+            box-shadow: @btn-shadow-hover;
+        }
+
+        svg {
+            margin-right: 8px;
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    &__entity-type-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__entity-type-hint {
+        color: @gray-dark;
+        font-size: @spy-font-size-sm;
+        margin-top: @data-import-hint-margin-top;
+    }
+
+    &__options-card {
+        .@{form-item-prefix-cls} {
+            margin-bottom: 15px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__templates-list {
+        margin-top: 17px;
+    }
+
+    &__templates-list-icon {
+        margin-top: 2px;
+
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+
+    &__templates-list-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 7px;
+        color: var(--spy-green, #11856e);
+    }
+
+    &__templates-list-link {
+        color: currentColor;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

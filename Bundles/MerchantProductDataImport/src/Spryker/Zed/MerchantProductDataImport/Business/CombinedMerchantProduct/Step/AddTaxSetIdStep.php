@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -76,10 +77,11 @@ class AddTaxSetIdStep implements DataImportStepInterface
                 return;
             }
 
-            throw new MerchantCombinedProductException(sprintf(
-                'Required key "%s" is missing in data set.',
-                MerchantCombinedProductDataSetInterface::KEY_PRODUCT_ABSTRACT_TAX_SET_NAME,
-            ));
+            throw MerchantCombinedProductException::createWithError(
+                (new ErrorTransfer())
+                    ->setMessage('Required key "%s%" is missing in data set.')
+                    ->setParameters(['%s%' => MerchantCombinedProductDataSetInterface::KEY_PRODUCT_ABSTRACT_TAX_SET_NAME]),
+            );
         }
 
         /** @var string $taxSetName */
@@ -103,10 +105,11 @@ class AddTaxSetIdStep implements DataImportStepInterface
                 ->findOne();
 
             if (!$taxSetEntity) {
-                throw new MerchantCombinedProductException(sprintf(
-                    'Tax set with name "%s" not found.',
-                    $taxSetName,
-                ));
+                throw MerchantCombinedProductException::createWithError(
+                    (new ErrorTransfer())
+                        ->setMessage('Tax set with name "%s%" not found.')
+                        ->setParameters(['%s%' => $taxSetName]),
+                );
             }
 
             $this->resolved[$taxSetName] = $taxSetEntity->getIdTaxSet();

@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
@@ -267,7 +268,11 @@ class ProductImageHydratorStep implements DataImportStepInterface
 
         $localeId = $dataSet[AddLocalesStep::KEY_LOCALES][$localeName] ?? null;
         if ($localeId === null) {
-            throw new MerchantCombinedProductException(sprintf('Locale "%s" not supported!', $localeName));
+            throw MerchantCombinedProductException::createWithError(
+                (new ErrorTransfer())
+                    ->setMessage('Locale "%s%" not supported!')
+                    ->setParameters(['%s%' => $localeName]),
+            );
         }
 
         return $localeId;
@@ -286,7 +291,11 @@ class ProductImageHydratorStep implements DataImportStepInterface
         $value = $dataSet[$key] ?? null;
 
         if ($value === null || $value === '') {
-            throw new MerchantCombinedProductException(sprintf('Required column data "%s" is missing.', $key));
+            throw MerchantCombinedProductException::createWithError(
+                (new ErrorTransfer())
+                    ->setMessage('Required column data "%s%" is missing.')
+                    ->setParameters(['%s%' => $key]),
+            );
         }
 
         return $value;

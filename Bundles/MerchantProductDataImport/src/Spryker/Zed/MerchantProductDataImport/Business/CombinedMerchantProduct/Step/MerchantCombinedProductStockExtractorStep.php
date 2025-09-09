@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\DataSet\MerchantCombinedProductDataSetInterface;
@@ -35,16 +36,6 @@ class MerchantCombinedProductStockExtractorStep implements DataImportStepInterfa
      * @var string
      */
     public const KEY_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
-
-    /**
-     * @var string
-     */
-    protected const ERROR_MESSAGE_PRODUCT_STOCK_VALUE_NOT_NUMERIC = 'Product stock value for key "%s" must be numeric. Provided value: "%s".';
-
-    /**
-     * @var string
-     */
-    protected const ERROR_MESSAGE_WAREHOUSE_NOT_OWNED = 'Warehouses can only be accessed by the merchants who own them';
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -149,11 +140,11 @@ class MerchantCombinedProductStockExtractorStep implements DataImportStepInterfa
             return;
         }
 
-        throw new MerchantCombinedProductException(sprintf(
-            static::ERROR_MESSAGE_PRODUCT_STOCK_VALUE_NOT_NUMERIC,
-            $key,
-            $dataSet[$key],
-        ));
+        throw MerchantCombinedProductException::createWithError(
+            (new ErrorTransfer())
+                ->setMessage('Product stock value for key "%s1%" must be numeric. Provided value: "%s2%".')
+                ->setParameters(['%s1%' => $key, '%s2%' => $dataSet[$key]]),
+        );
     }
 
     /**
@@ -201,7 +192,9 @@ class MerchantCombinedProductStockExtractorStep implements DataImportStepInterfa
         $notOwnedWarehouseNames = array_diff($dataSetWarehouseNames, $merchantWarehouseNames);
 
         if ($notOwnedWarehouseNames) {
-            throw new MerchantCombinedProductException(static::ERROR_MESSAGE_WAREHOUSE_NOT_OWNED);
+            throw MerchantCombinedProductException::createWithError(
+                (new ErrorTransfer())->setMessage('Warehouses can only be accessed by the merchants who own them.'),
+            );
         }
     }
 

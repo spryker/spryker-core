@@ -1,0 +1,104 @@
+{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
+
+{% block body %}
+    {% set mainClass = 'mp-data-import' %}
+
+    {% block startImport %}
+        <web-mp-data-import cloak>
+            {{ form_start(form, { attr: { excludeFormTag: true } }) }}
+            {% block title %}
+                <span title>{{ 'Start Import' | trans }}</span>
+            {% endblock %}
+
+            {% block action %}
+                <web-spy-button size="lg" type="submit" action>
+                    {{ 'Import' | trans }}
+                </web-spy-button>
+            {% endblock %}
+
+            {% block importerType %}
+                <web-spy-card
+                    spy-title="{{ 'Import Configuration' | trans }}"
+                    class="{{ mainClass }}__card">
+                    <div class="{{ mainClass }}__entity-type-container">
+                        {{ form_row(form.importerType, { label: false, row_attr: { 'no-spaces': 'true' }, attr: { placeholder: form.importer_type.vars.placeholder|default('Select type')|trans } }) }}
+                        <p class="{{ mainClass }}__importer-type-hint">
+                            {{ 'Select the type of data you want to import' | trans }}
+                        </p>
+                    </div>
+                </web-spy-card>
+            {% endblock %}
+
+            {% block fileUpload %}
+                <web-spy-card
+                    spy-title="{{ 'Upload File' | trans }}"
+                    class="{{ mainClass }}__card">
+                    <div class="{{ mainClass }}__file-upload-container">
+                        <p class="{{ mainClass }}__file-upload-title">{{ 'Upload a file up to %maxFileSize%' | trans({'%maxFileSize%': maxFileSize | formatFileSize(0)}) }}</p>
+                        <p class="{{ mainClass }}__file-upload-subtitle">{{ 'Only CSV files are supported' | trans }}</p>
+
+                        {% set showForceProceed = false %}
+                        {% for error in form.fileInfo.file.vars.errors %}
+                            {% if error.cause is defined and error.cause.code is defined and error.cause.code == 'INVALID_CSV_HEADERS' %}
+                                {% set showForceProceed = true %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {{ form_row(form.fileInfo.file, { attr: { class: mainClass ~ '__file-input-container' } }) }}
+                        {{ form_errors(form.fileInfo.file) }}
+
+                        {% if showForceProceed %}
+                            {{ form_row(form.fileInfo.forceProceed) }}
+                        {% else %}
+                            {% do form.fileInfo.forceProceed.setRendered %}
+                        {% endif %}
+                    </div>
+                </web-spy-card>
+            {% endblock %}
+
+            {% if form.options is defined %}
+                {% block importOptions %}
+                    <web-spy-card
+                        spy-title="{{ 'Import Options' | trans }}"
+                        class="{{ mainClass }}__card {{ mainClass }}__options-card">
+                        {% for optionField in form.options %}
+                            {{ form_row(optionField) }}
+                        {% endfor %}
+                    </web-spy-card>
+                {% endblock %}
+            {% endif %}
+
+            {% if form.validationGroup is defined %}
+                {% block validationGroup %}
+                    <web-spy-card
+                        spy-title="{{ form.validationGroup.vars.label | trans ~ (form.validationGroup.vars.required ? ' *') }}"
+                        class="{{ mainClass }}__card">
+                        {{ form_row(form.validationGroup, { label: false, row_attr: { 'no-spaces': 'true' } }) }}
+                    </web-spy-card>
+                {% endblock %}
+            {% endif %}
+
+            {% block templates %}
+                <web-spy-card
+                    spy-title="{{ 'File Templates' | trans }}"
+                    class="{{ mainClass }}__card">
+                    {{ 'Use the file templates below to prepare your product data for import. Once ready, you can upload the files.' | trans }}
+
+                    <ul class="{{ mainClass }}__templates-list">
+                        {% for label, path in dataImportTemplates %}
+                        <li class="{{ mainClass }}__templates-list-item">
+                            <web-spy-icon class="{{ mainClass }}__templates-list-icon" name="download"></web-spy-icon>
+                            <a class="{{ mainClass }}__templates-list-link" href="{{ assetsPath(path) }}">{{ label | trans }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </web-spy-card>
+            {% endblock %}
+
+            {% block remainingFields %}
+                {{ form_rest(form) }}
+            {% endblock %}
+            {{ form_end(form) }}
+        </web-mp-data-import>
+    {% endblock %}
+{% endblock %}

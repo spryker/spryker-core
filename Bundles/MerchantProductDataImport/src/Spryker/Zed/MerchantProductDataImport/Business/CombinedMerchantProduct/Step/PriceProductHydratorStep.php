@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddStoresStep;
@@ -129,7 +130,11 @@ class PriceProductHydratorStep implements DataImportStepInterface
 
                 break;
             default:
-                throw new MerchantCombinedProductException(sprintf('Price mode "%s" not supported', $priceMode));
+                throw MerchantCombinedProductException::createWithError(
+                    (new ErrorTransfer())
+                        ->setMessage('Price mode "%s%" not supported.')
+                        ->setParameters(['%s%' => $priceMode]),
+                );
         }
     }
 
@@ -161,7 +166,11 @@ class PriceProductHydratorStep implements DataImportStepInterface
 
                 break;
             default:
-                throw new MerchantCombinedProductException(sprintf('Price type "%s" unrecognisable', $productType));
+                throw MerchantCombinedProductException::createWithError(
+                    (new ErrorTransfer())
+                        ->setMessage('Price type "%s%" unrecognisable.')
+                        ->setParameters(['%s%' => $productType]),
+                );
         }
     }
 
@@ -315,11 +324,11 @@ class PriceProductHydratorStep implements DataImportStepInterface
             return;
         }
 
-        throw new MerchantCombinedProductException(sprintf(
-            'Price value of "%s" must be numeric. Provided value: "%s"',
-            $key,
-            $dataSet[$key],
-        ));
+        throw MerchantCombinedProductException::createWithError(
+            (new ErrorTransfer())
+                ->setMessage('Price value of "%s1%" must be numeric. Provided value: "%s2%"')
+                ->setParameters(['%s1%' => $key, '%s2%' => $dataSet[$key]]),
+        );
     }
 
     /**

@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -75,10 +76,11 @@ class ProductMerchantOwnerCheckStep implements DataImportStepInterface
             ->exists();
 
         if (!$productOwnedByMerchant) {
-            throw new MerchantCombinedProductException(sprintf(
-                'Product with SKU "%s" can only be updated by the merchant who owns it.',
-                $sku,
-            ));
+            throw MerchantCombinedProductException::createWithError(
+                (new ErrorTransfer())
+                    ->setMessage('Product with SKU "%s%" can only be updated by the merchant who owns it.')
+                    ->setParameters(['%s%' => $sku]),
+            );
         }
     }
 

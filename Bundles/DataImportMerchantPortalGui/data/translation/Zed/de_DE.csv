@@ -1,0 +1,37 @@
+"Data Import",Datenimport
+Type,Typ
+"Download Errors","Fehler herunterladen"
+"Download Original File","Originaldatei herunterladen"
+pending,Ausstehend
+in_progress,"In Bearbeitung"
+successful,Erfolgreich
+failed,Fehlgeschlagen
+imported_with_errors,"Importiert mit Fehlern"
+"Imported By","Importiert von"
+"Start Import","Import starten"
+"Import Configuration","Konfiguration des Imports"
+"Select type","Typ auswählen"
+"Select the type of data you want to import","Wählen Sie den Datentyp, den Sie importieren möchten"
+merchant-combined-product,Produkt
+"Upload File","Datei hochladen"
+"Upload a file up to %maxFileSize%","Laden Sie eine Datei mit bis zu %maxFileSize% hoch"
+"Only CSV files are supported","Nur CSV-Dateien werden unterstützt"
+"File Templates",Dateivorlagen
+"Use the file templates below to prepare your product data for import. Once ready, you can upload the files.","Nutzen Sie die Vorlagen unten, um Produktdaten bereitzustellen. Danach können Sie die Dateien importieren."
+"CSV template Product","CSV-Vorlage Produkt"
+"File import has been started","Der Datei-Import wurde gestartet"
+"Invalid form data","Ungültige Formulardaten"
+"Internal error occurred during import processing.","Während der Importverarbeitung ist ein interner Fehler aufgetreten."
+row_number,Zeilennummer
+identifier,Identifier
+message,Nachricht
+"The following headers are not recognized and will be ignored during import: %headers%.","Die folgenden Header werden nicht erkannt und während des Imports ignoriert: %headers%."
+"Ignore warnings related to the uploaded file and proceed with import.","Warnungen im Zusammenhang mit der hochgeladenen Datei ignorieren und mit dem Import fortfahren."
+"Missing required parameter ""%s""","Fehlender erforderlicher Parameter ""%s"""
+"Source file not found","Quelldatei nicht gefunden"
+"File import has no errors","Der Datei-Import hat keine Fehler"
+"Cannot download the source file","Die Quelldatei kann nicht heruntergeladen werden"
+"File Type",Dateityp
+"Created At","Erstellt am"
+"File Name",Dateiname
+Status,Status

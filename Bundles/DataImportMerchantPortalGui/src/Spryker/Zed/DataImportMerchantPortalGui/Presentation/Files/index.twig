@@ -1,0 +1,35 @@
+{% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+{% import _self as view %}
+
+{% block headSubTitle %}
+    {{- 'Data Import' | trans -}}
+{% endblock %}
+
+{% block content %}
+    {% set actionConfig = '{
+        "type": "drawer",
+        "component": "ajax-form",
+        "options": {
+            "inputs": {
+                "action": "' ~ url(urlImport) ~ '"
+            }
+        }
+    }' %}
+
+    <web-mp-data-imports
+        cloak
+        table-id="data-import-merchant-file-table"
+        table-config='{{ guiTableConfiguration(dataImportMerchantFileTableConfiguration) }}'
+    >
+        <h1 title>{{ 'Data Import' | trans }}</h1>
+
+        <web-spy-button-action
+            button-action
+            type="button"
+            size="lg"
+            variant="primary"
+            action="{{ actionConfig }}">
+            {{ 'Start Import' | trans }}
+        </web-spy-button-action>
+    </web-mp-data-imports>
+{% endblock %}

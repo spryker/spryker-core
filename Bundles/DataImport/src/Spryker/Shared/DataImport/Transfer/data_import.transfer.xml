@@ -55,6 +55,12 @@
         <property name="message" type="string"/>
         <property name="dataSetNumber" type="int" strict="true"/>
         <property name="dataSetIdentifier" type="string" strict="true"/>
+        <property name="error" type="Error" strict="true"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
     </transfer>
 
     <transfer name="QueueDataImporterConfiguration">

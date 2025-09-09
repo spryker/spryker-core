@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="DataImportMerchantFile" strict="true">
+        <property name="idDataImportMerchantFile" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="idUser" type="int"/>
+        <property name="importerType" type="string"/>
+        <property name="status" type="string"/>
+        <property name="fileInfo" type="DataImportMerchantFileInfo"/>
+        <property name="importResult" type="DataImportMerchantFileResult"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileResult" strict="true">
+        <property name="processedEntitiesCount" type="int"/>
+        <property name="failedEntitiesCount" type="int"/>
+        <property name="errors" type="string"/>
+        <property name="startedAt" type="string"/>
+        <property name="finishedAt" type="string"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileInfo" strict="true">
+        <property name="uploadedUrl" type="string"/>
+        <property name="fileSystemName" type="string"/>
+        <property name="originalFileName" type="string"/>
+        <property name="contentType" type="string"/>
+        <property name="size" type="int"/>
+        <property name="realPath" type="string"/>
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileCollection" strict="true">
+        <property name="dataImportMerchantFiles" type="DataImportMerchantFile[]" singular="dataImportMerchantFile"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileCollectionRequest" strict="true">
+        <property name="dataImportMerchantFiles" type="DataImportMerchantFile[]" singular="dataImportMerchantFile"/>
+        <property name="isTransactional" type="bool"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileCollectionResponse" strict="true">
+        <property name="dataImportMerchantFiles" type="DataImportMerchantFile[]" singular="dataImportMerchantFile"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="entityIdentifier" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
+    </transfer>
+
+    <transfer name="User">
+        <property name="idUser" type="int"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileCriteria" strict="true">
+        <property name="dataImportMerchantFileConditions" type="DataImportMerchantFileConditions"/>
+        <property name="dataImportMerchantFileSearchConditions" type="DataImportMerchantFileSearchConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileConditions" strict="true">
+        <property name="dataImportMerchantFileIds" type="int[]" singular="idDataImportMerchantFile"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+        <property name="statuses" type="string[]" singular="status"/>
+        <property name="importerTypes" type="string[]" singular="importerType"/>
+        <property name="userIds" type="int[]" singular="idUser"/>
+        <property name="rangeCreatedAt" type="CriteriaRangeFilter"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileSearchConditions" strict="true">
+        <property name="originalFileName" type="string"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
+    </transfer>
+
+    <transfer name="CriteriaRangeFilter" strict="true">
+        <property name="from" type="string"/>
+        <property name="to" type="string"/>
+    </transfer>
+
+    <transfer name="DataImportConfigurationAction">
+        <property name="dataEntity" type="string"/>
+        <property name="source" type="string"/>
+        <property name="fileSystem" type="string" strict="true"/>
+        <property name="context" type="DataImporterConfigurationContext" strict="true"/>
+    </transfer>
+
+    <transfer name="DataImporterConfiguration">
+        <property name="importGroup" type="string"/>
+        <property name="importType" type="string"/>
+        <property name="readerConfiguration" type="DataImporterReaderConfiguration"/>
+        <property name="context" type="DataImporterConfigurationContext" strict="true"/>
+    </transfer>
+
+    <transfer name="DataImporterReaderConfiguration">
+        <property name="fileName" type="string"/>
+        <property name="fileSystem" type="string" strict="true"/>
+    </transfer>
+
+    <transfer name="DataImporterConfigurationContext" strict="true">
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="DataImporterReportMessage">
+        <property name="dataSetIdentifier" type="string" strict="true"/>
+        <property name="message" type="string"/>
+        <property name="dataSetNumber" type="int" strict="true"/>
+        <property name="error" type="Error" strict="true"/>
+    </transfer>
+
+    <transfer name="UserConditions" strict="true">
+        <property name="userIds" type="int[]" singular="idUser" description="A collection of user identifiers."/>
+    </transfer>
+
+    <transfer name="UserCriteria">
+        <property name="userConditions" type="UserConditions" strict="true" description="Conditions for filtering users."/>
+    </transfer>
+
+    <transfer name="MerchantCriteria">
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+    </transfer>
+
+    <transfer name="MerchantCollection">
+        <property name="merchants" type="Merchant[]" singular="merchants"/>
+    </transfer>
+
+    <transfer name="UserCollection" strict="true">
+        <property name="users" type="User[]" singular="user" description="A collection of users."/>
+    </transfer>
+
+    <transfer name="FileSystemContent">
+        <property name="path" type="string"/>
+        <property name="fileSystemName" type="string"/>
+        <property name="content" type="string"/>
+        <property name="config" type="array" singular="config"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataConfig">
+        <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadata">
+        <property name="entityName" type="string"/>
+        <property name="parent" type="AclEntityParentMetadata"/>
+        <property name="isSubEntity" type="bool"/>
+    </transfer>
+
+    <transfer name="AclEntityParentMetadata">
+        <property name="entityName" type="string"/>
+        <property name="connection" type="AclEntityParentConnectionMetadata"/>
+    </transfer>
+
+    <transfer name="AclEntityParentConnectionMetadata">
+        <property name="reference" type="string"/>
+        <property name="referencedColumn" type="string"/>
+    </transfer>
+
+    <transfer name="DataImporterReport">
+        <property name="importedDataSetCount" type="int"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="dataImporterReports" type="DataImporterReport[]" singular="dataImporterReport"/>
+        <property name="messages" type="DataImporterReportMessage[]" singular="message"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataCollection">
+        <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+</transfers>

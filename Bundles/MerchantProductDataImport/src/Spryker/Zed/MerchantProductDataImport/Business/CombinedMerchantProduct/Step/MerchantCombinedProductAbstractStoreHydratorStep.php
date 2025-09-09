@@ -9,8 +9,8 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\ProductAbstractStoreTransfer;
-use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddStoresStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -51,7 +51,7 @@ class MerchantCombinedProductAbstractStoreHydratorStep implements DataImportStep
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\DataImportException
+     * @throws \Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Exception\MerchantCombinedProductException
      *
      * @return void
      */
@@ -83,7 +83,11 @@ class MerchantCombinedProductAbstractStoreHydratorStep implements DataImportStep
             }
 
             if (!isset($stores[$storeName])) {
-                throw new DataImportException(sprintf('Store name "%s" is unknown.', $storeName));
+                throw MerchantCombinedProductException::createWithError(
+                    (new ErrorTransfer())
+                        ->setMessage('Store name "%s%" is unknown.')
+                        ->setParameters(['%s%' => $storeName]),
+                );
             }
 
             $productAbstractStoreTransfer = (new ProductAbstractStoreTransfer())
@@ -109,11 +113,11 @@ class MerchantCombinedProductAbstractStoreHydratorStep implements DataImportStep
             return;
         }
 
-        throw new MerchantCombinedProductException(sprintf(
-            'Store relations should be separated by "%s" delimiter, but "%s" found.',
-            static::DELIMITER,
-            $storeRelations,
-        ));
+        throw MerchantCombinedProductException::createWithError(
+            (new ErrorTransfer())
+                ->setMessage('Store relations should be separated by "%s1%" delimiter, but "%s2%" found.')
+                ->setParameters(['%s1%' => static::DELIMITER, '%s2%' => $storeRelations]),
+        );
     }
 
     /**

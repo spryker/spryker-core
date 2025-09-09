@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\DataImportMerchant\Persistence" package="src.Orm.Zed.DataImportMerchant.Persistence">
+
+    <table name="spy_data_import_merchant_file">
+        <column name="id_data_import_merchant_file" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36" description="A Universally Unique Identifier for an entity."/>
+        <column name="fk_user" type="INTEGER" required="true"/>
+        <column name="merchant_reference" type="VARCHAR" required="true" size="255" description="A unique reference identifier for a merchant."/>
+        <column name="importer_type" type="VARCHAR" size="255" required="true" description="The type of importer used for the data import (e.g., &quot;product&quot;, &quot;product-offer&quot;)."/>
+        <column name="status" type="VARCHAR" size="255" required="true" description="The current status of an entity (e.g., &quot;active&quot;, &quot;pending&quot;, &quot;approved&quot;)."/>
+        <column name="original_file_name" type="VARCHAR" size="255" required="true" description="The original name of the uploaded file for search and display purposes."/>
+        <column name="file_info" type="LONGVARCHAR" required="true" description="Json-encoded information about the file, including details like uploaded URL, file system name, original file name, content type, type, size, real path, and content."/>
+        <column name="import_result" type="CLOB" required="false" description="Json-encoded result of the import operation, containing details such as processed entities count, failed entities count, errors, started at, and finished at timestamps."/>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="id_data_import_merchant_file_pk_seq"/>
+
+        <foreign-key name="spy_data_import_merchant_file-fk_user" foreignTable="spy_user">
+            <reference local="fk_user" foreign="id_user"/>
+        </foreign-key>
+
+        <unique name="spy_data_import_merchant_file-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+
+        <index name="spy_data_import_merchant_file-merchant_reference">
+            <index-column name="merchant_reference"/>
+        </index>
+
+        <index name="spy_data_import_merchant_file-status">
+            <index-column name="status"/>
+        </index>
+
+        <index name="spy_data_import_merchant_file-importer_type">
+            <index-column name="importer_type"/>
+        </index>
+
+        <index name="spy_data_import_merchant_file-original_file_name">
+            <index-column name="original_file_name"/>
+        </index>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_data_import_merchant_file"/>
+        </behavior>
+    </table>
+
+</database>

@@ -73,4 +73,13 @@
         <property name="entityIdentifier" type="string"/>
     </transfer>
 
+    <transfer name="DataImportMerchantFileCollection" strict="true">
+        <property name="dataImportMerchantFiles" type="DataImportMerchantFile[]" singular="dataImportMerchantFile"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFile" strict="true">
+        <property name="idUser" type="int"/>
+        <property name="user" type="User"/>
+    </transfer>
+
 </transfers>

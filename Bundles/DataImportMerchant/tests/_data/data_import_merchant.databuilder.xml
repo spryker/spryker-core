@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
+
+    <transfer name="DataImportMerchantFile" strict="true">
+        <property name="merchantReference" dataBuilderRule="unique()->regexify('MER-[A-Z0-9]{6}')"/>
+        <property name="idUser" dataBuilderRule="numberBetween(1, 100)"/>
+        <property name="importerType" dataBuilderRule="randomElement(['merchant-product'])"/>
+        <property name="status" dataBuilderRule="randomElement(['pending', 'processing', 'completed', 'failed'])"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileInfo" strict="true">
+        <property name="uploadedUrl" dataBuilderRule="url()"/>
+        <property
+            name="fileSystemName"
+            dataBuilderRule="unique()->regexify('[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}\.csv')"
+        />
+        <property name="originalFileName" dataBuilderRule="regexify('[a-z-]{5,15}\.csv')"/>
+        <property name="contentType" dataBuilderRule="randomElement(['text/csv', 'application/csv', 'text/plain'])"/>
+        <property name="size" dataBuilderRule="numberBetween(1024, 1048576)"/>
+        <property name="realPath" dataBuilderRule="regexify('/tmp/[a-z0-9]{8}-[a-z0-9]{4}\.csv')"/>
+        <property name="content" dataBuilderRule="text(200)"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileResult" strict="true">
+        <property name="processedEntitiesCount" dataBuilderRule="numberBetween(0, 1000)"/>
+        <property name="failedEntitiesCount" dataBuilderRule="numberBetween(0, 50)"/>
+        <property name="errors" dataBuilderRule="text(100)"/>
+        <property name="startedAt" dataBuilderRule="dateTime()->format('Y-m-d H:i:s')"/>
+        <property name="finishedAt" dataBuilderRule="dateTime()->format('Y-m-d H:i:s')"/>
+    </transfer>
+
+</transfers>

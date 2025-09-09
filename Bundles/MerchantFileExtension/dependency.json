@@ -1,5 +1,0 @@
-{
-    "include": {
-        "spryker/transfer": "Provides transfer objects with strict functionality."
-    }
-}

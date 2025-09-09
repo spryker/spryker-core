@@ -58,12 +58,6 @@
         <property name="modifiedColumns" type="array" singular="modifiedColumns"/>
     </transfer>
 
-    <transfer name="MerchantFile" strict="true">
-        <property name="content" type="string"/>
-        <property name="type" type="string"/>
-        <property name="merchantFileImport" type="MerchantFileImport"/>
-    </transfer>
-
     <transfer name="MerchantFileResult" strict="true">
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
@@ -82,8 +76,65 @@
         <property name="grossAmount" type="int"/>
     </transfer>
 
-    <transfer name="MerchantFileImport" strict="true">
-        <property name="entityType" type="string"/>
+    <transfer name="DataImportMerchantFileCollectionResponse" strict="true">
+        <property name="dataImportMerchantFiles" type="DataImportMerchantFile[]" singular="dataImportMerchantFile"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFile" strict="true">
+        <property name="importerType" type="string"/>
+        <property name="fileInfo" type="DataImportMerchantFileInfo"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileInfo" strict="true">
+        <property name="content" type="string"/>
+        <property name="fileSystemName" type="string"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
+        <property name="entityIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileCollectionRequest" strict="true">
+        <property name="dataImportMerchantFiles" type="DataImportMerchantFile[]" singular="dataImportMerchantFile"/>
+    </transfer>
+
+    <transfer name="MerchantCriteria">
+        <property name="withExpanders" type="bool" strict="true"/>
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantCollection">
+        <property name="merchants" type="Merchant[]" singular="merchants"/>
+    </transfer>
+
+    <transfer name="StockCollection">
+        <property name="stocks" type="Stock[]" singular="stock"/>
+    </transfer>
+
+    <transfer name="MerchantStockCriteria">
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttribute">
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

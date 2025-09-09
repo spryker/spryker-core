@@ -1,0 +1,37 @@
+"Data Import","Data Import"
+Type,Type
+"Download Errors","Download Errors"
+"Download Original File","Download Original File"
+pending,Pending
+in_progress,"In Progress"
+successful,Successful
+failed,Failed
+imported_with_errors,"Imported with errors"
+"Imported By","Imported By"
+"Start Import","Start Import"
+"Import Configuration","Import Configuration"
+"Select type","Select type"
+"Select the type of data you want to import","Select the type of data you want to import"
+merchant-combined-product,Product
+"Upload File","Upload File"
+"Upload a file up to %maxFileSize%","Upload a file up to %maxFileSize%"
+"Only CSV files are supported","Only CSV files are supported"
+"File Templates","File Templates"
+"Use the file templates below to prepare your product data for import. Once ready, you can upload the files.","Use the file templates below to prepare your product data for import. Once ready, you can upload the files."
+"CSV template Product","CSV template Product"
+"File import has been started","File import has been started"
+"Invalid form data","Invalid form data"
+"Internal error occurred during import processing.","Internal error occurred during import processing."
+row_number,"Row number"
+identifier,Identifier
+message,Message
+"The following headers are not recognized and will be ignored during import: %headers%.","The following headers are not recognized and will be ignored during import: %headers%."
+"Ignore warnings related to the uploaded file and proceed with import.","Ignore warnings related to the uploaded file and proceed with import."
+"Missing required parameter ""%s""","Missing required parameter ""%s"""
+"Source file not found","Source file not found"
+"File import has no errors","File import has no errors"
+"Cannot download the source file","Cannot download the source file"
+"File Type","File Type"
+"Created At","Created At"
+"File Name","File Name"
+Status,Status

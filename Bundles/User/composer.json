@@ -5,8 +5,9 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.2",
+        "spryker/data-import-merchant-extension": "^1.0.0",
         "spryker/gui": "^3.33.0",
-        "spryker/kernel": "^3.30.0",
+        "spryker/kernel": "^3.76.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/security-extension": "^1.0.0",
         "spryker/session": "^3.3.0 || ^4.14.0",

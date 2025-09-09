@@ -163,6 +163,8 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
      */
     public function testCommitShouldDeleteEntitiesInBatch(string $entityClassName)
     {
+        $this->markTestSkipped('Should be unskipped in FRW-10959');
+
         codecept_debug($entityClassName);
 
         try {

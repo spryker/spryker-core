@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\DataSet\MerchantCombinedProductDataSetInterface;
@@ -31,10 +32,11 @@ class AssertRequiredProductAbstractDataStep implements DataImportStepInterface
         }
 
         if (!$this->getProductAbstractSku($dataSet)) {
-            throw new MerchantCombinedProductException(sprintf(
-                'SKU is required for product abstract import. "%s" is missing in the data set.',
-                MerchantCombinedProductDataSetInterface::KEY_ABSTRACT_SKU,
-            ));
+            throw MerchantCombinedProductException::createWithError(
+                (new ErrorTransfer())
+                    ->setMessage('SKU is required for product abstract import. "%s%" is missing in the data set.')
+                    ->setParameters(['%s%' => MerchantCombinedProductDataSetInterface::KEY_ABSTRACT_SKU]),
+            );
         }
     }
 

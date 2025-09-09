@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\DataSet\MerchantCombinedProductDataSetInterface;
@@ -59,11 +60,19 @@ class MerchantCombinedProductUniqueCheckStep implements DataImportStepInterface
         $sku = $dataSet[MerchantCombinedProductDataSetInterface::KEY_ABSTRACT_SKU];
 
         if (isset($this->skuProductConcreteList[$sku])) {
-            throw new MerchantCombinedProductException(sprintf('Concrete product with SKU "%s" already imported.', $sku));
+            throw MerchantCombinedProductException::createWithError(
+                (new ErrorTransfer())
+                    ->setMessage('Concrete product with SKU "%s%" already imported.')
+                    ->setParameters(['%s%' => $sku]),
+            );
         }
 
         if (isset($this->skuProductAbstractList[$sku])) {
-            throw new MerchantCombinedProductException(sprintf('Abstract product with SKU "%s" has been already imported.', $sku));
+            throw MerchantCombinedProductException::createWithError(
+                (new ErrorTransfer())
+                    ->setMessage('Abstract product with SKU "%s%" has been already imported.')
+                    ->setParameters(['%s%' => $sku]),
+            );
         }
 
         $this->skuProductAbstractList[$sku] = true;
