@@ -87,5 +87,7 @@
         &__asset-text {
             word-wrap: break-word;
         }
+
+        @content;
     }
 }

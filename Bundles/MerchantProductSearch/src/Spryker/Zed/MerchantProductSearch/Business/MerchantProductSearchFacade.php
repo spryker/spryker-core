@@ -23,6 +23,8 @@ class MerchantProductSearchFacade extends AbstractFacade implements MerchantProd
      *
      * @api
      *
+     * @deprecated Will be removed in the next major without replacement due to performance reasons and delegation of product rebuilding through product events.
+     *
      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void

@@ -70,6 +70,7 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $this->addProductPageProductPublishAbstractListener($eventCollection);
+        $this->addProductPageProductPublishAbstractSearchListener($eventCollection);
         $this->addProductPageProductUnpublishAbstractListener($eventCollection);
         $this->addProductPageProductAbstractCreateListener($eventCollection);
         $this->addProductPageProductAbstractUpdateListener($eventCollection);
@@ -421,6 +422,16 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
     protected function addProductPageProductPublishAbstractListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, new ProductPageProductAbstractPublishListener(), 0, null, $this->getConfig()->getProductPageEventQueueName());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductPageProductPublishAbstractSearchListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_SEARCH_PUBLISH, new ProductPageProductAbstractPublishListener(), 0, null, $this->getConfig()->getProductPageEventQueueName());
     }
 
     /**

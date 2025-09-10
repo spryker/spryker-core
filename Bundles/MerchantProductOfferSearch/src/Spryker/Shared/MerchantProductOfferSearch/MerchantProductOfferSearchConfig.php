@@ -99,4 +99,14 @@ class MerchantProductOfferSearchConfig extends AbstractBundleConfig
      * @var string
      */
     public const PRODUCT_OFFER_PUBLISH = 'ProductOffer.product_offer.publish';
+
+    /**
+     * Specification
+     * - This event triggers publishing of product abstracts solely for search purposes.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRODUCT_ABSTRACT_SEARCH_PUBLISH = 'Product.product_abstract_search.publish';
 }

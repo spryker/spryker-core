@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
+use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -150,6 +151,23 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
                 $merchantProductAbstractQuery->find(),
                 $merchantProductAbstractCollectionTransfer,
             );
+    }
+
+    /**
+     * @param array<int> $merchantIds
+     *
+     * @return array<int>
+     */
+    public function getProductAbstractIdsByMerchantIds(array $merchantIds): array
+    {
+        $merchantProductAbstractPropelQuery = $this->getFactory()
+            ->getMerchantProductAbstractPropelQuery()
+            ->filterByFkMerchant_In($merchantIds);
+
+        return $merchantProductAbstractPropelQuery
+            ->select([SpyMerchantProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->find()
+            ->getData();
     }
 
     /**

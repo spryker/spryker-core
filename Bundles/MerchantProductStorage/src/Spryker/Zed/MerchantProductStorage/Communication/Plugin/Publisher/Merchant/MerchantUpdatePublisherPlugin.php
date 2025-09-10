@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\MerchantProduct\Communication\Plugin\Publisher\MerchantProductPublisherPlugin} instead.
+ *
  * @method \Spryker\Zed\MerchantProductStorage\MerchantProductStorageConfig getConfig()
  * @method \Spryker\Zed\MerchantProductStorage\Business\MerchantProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductStorage\Communication\MerchantProductStorageCommunicationFactory getFactory()
@@ -44,6 +46,7 @@ class MerchantUpdatePublisherPlugin extends AbstractPlugin implements PublisherP
     {
         return [
             MerchantProductStorageConfig::ENTITY_SPY_MERCHANT_UPDATE,
+            MerchantProductStorageConfig::MERCHANT_PUBLISH,
         ];
     }
 }
