@@ -22,8 +22,8 @@ defaults:
         shell: bash
 
 jobs:
-    build:
-        name: Build Project
+    spryker-validation:
+        name: Spryker Validation
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
@@ -51,21 +51,13 @@ jobs:
                   composer install --no-interaction --prefer-dist --optimize-autoloader
                   composer require spryker/spryker-shop:dev-${GITHUB_HEAD_REF} --optimize-autoloader --no-interaction --prefer-dist || echo 'Failed to require module. Continuing execution...'
 
-    frontend-validation:
-        name: Frontend Validation
-        needs: build
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
-
             - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
                   node-version: '18'
                   cache: 'npm'
 
-            - name: Install dependencies
+            - name: Install frontend dependencies
               run: npm ci
 
             - name: Install frontend-sniffer
@@ -93,42 +85,11 @@ jobs:
               run: npm run mp:test --verbose
               timeout-minutes: 25
 
-    php-validation:
-        name: PHP Validation
-        needs: build
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
-
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: '8.2'
-                  tools: composer:v2
-
-            - name: Make scripts executable
+            - name: Make PHP scripts executable
               run: chmod +x *.sh
 
             - name: Check touched modules
               run: bash ci_check_touched_modules.sh
-
-    codeception-check:
-        name: Module Codeception Include Checker
-        needs: build
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
-
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: '8.2'
-                  tools: composer:v2
-
-            - name: Make scripts executable
-              run: chmod +x *.sh
 
             - name: Check module codeception
               run: |
