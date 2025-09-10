@@ -47,7 +47,7 @@ jobs:
 
             - name: Install dependencies
               run: |
-                  composer config github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+                  composer config github-oauth.github.com ${{ GITHUB_TOKEN }}
                   composer install --no-interaction --prefer-dist --optimize-autoloader
                   composer require spryker/spryker-shop:dev-${GITHUB_HEAD_REF} --optimize-autoloader --no-interaction --prefer-dist || echo 'Failed to require module. Continuing execution...'
 
