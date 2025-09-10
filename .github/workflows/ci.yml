@@ -2,7 +2,7 @@ name: SPRYKER-CI
 
 on:
     pull_request:
-        types: [ synchronize ]
+        types: [synchronize]
     push:
         branches:
             - master
@@ -135,4 +135,3 @@ jobs:
                   bash ci_check_module_codeception.sh Bundles SprykerTest
                   bash ci_check_module_codeception.sh Features SprykerFeatureTest
                   echo "Finished checking touched modules"
-
