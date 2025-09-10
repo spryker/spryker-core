@@ -40,4 +40,14 @@ class MerchantProductStorageConfig extends AbstractBundleConfig
      * @var string
      */
     public const MERCHANT_PRODUCT_RESOURCE_NAME = 'merchant_product';
+
+    /**
+     * Specification
+     * - This events will be used for spy_merchant publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const MERCHANT_PUBLISH = 'Merchant.merchant.publish';
 }

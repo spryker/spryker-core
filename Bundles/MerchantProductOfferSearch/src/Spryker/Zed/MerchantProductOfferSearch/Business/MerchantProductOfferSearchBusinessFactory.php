@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantProductOfferSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantProductOfferSearch\Business\Event\ProductEventTrigger;
+use Spryker\Zed\MerchantProductOfferSearch\Business\Event\ProductEventTriggerInterface;
 use Spryker\Zed\MerchantProductOfferSearch\Business\Expander\MerchantProductOfferSearchExpander;
 use Spryker\Zed\MerchantProductOfferSearch\Business\Expander\MerchantProductOfferSearchExpanderInterface;
 use Spryker\Zed\MerchantProductOfferSearch\Business\Reader\MerchantProductOfferSearchReader;
@@ -15,6 +17,7 @@ use Spryker\Zed\MerchantProductOfferSearch\Business\Reader\MerchantProductOfferS
 use Spryker\Zed\MerchantProductOfferSearch\Business\Writer\MerchantProductOfferSearchWriter;
 use Spryker\Zed\MerchantProductOfferSearch\Business\Writer\MerchantProductOfferSearchWriterInterface;
 use Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToEventBehaviorFacadeInterface;
+use Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToEventFacadeInterface;
 use Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToMerchantProductOfferFacadeInterface;
 use Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToProductPageSearchFacadeInterface;
 use Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToStoreFacadeInterface;
@@ -50,6 +53,18 @@ class MerchantProductOfferSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantProductOfferSearch\Business\Event\ProductEventTriggerInterface
+     */
+    public function createProductEventTrigger(): ProductEventTriggerInterface
+    {
+        return new ProductEventTrigger(
+            $this->getEventBehaviorFacade(),
+            $this->getRepository(),
+            $this->getEventFacade(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantProductOfferSearch\Business\Reader\MerchantProductOfferSearchReaderInterface
      */
     public function createMerchantProductOfferSearchReader(): MerchantProductOfferSearchReaderInterface
@@ -63,6 +78,14 @@ class MerchantProductOfferSearchBusinessFactory extends AbstractBusinessFactory
     public function getEventBehaviorFacade(): MerchantProductOfferSearchToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProductOfferSearchDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToEventFacadeInterface
+     */
+    public function getEventFacade(): MerchantProductOfferSearchToEventFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductOfferSearchDependencyProvider::FACADE_EVENT);
     }
 
     /**

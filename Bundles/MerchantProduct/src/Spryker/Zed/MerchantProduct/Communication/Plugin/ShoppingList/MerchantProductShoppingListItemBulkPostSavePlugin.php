@@ -14,6 +14,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPost
 /**
  * @method \Spryker\Zed\MerchantProduct\Business\MerchantProductFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProduct\MerchantProductConfig getConfig()
+ * @method \Spryker\Zed\MerchantProduct\Communication\MerchantProductCommunicationFactory getFactory()
  */
 class MerchantProductShoppingListItemBulkPostSavePlugin extends AbstractPlugin implements ShoppingListItemBulkPostSavePluginInterface
 {

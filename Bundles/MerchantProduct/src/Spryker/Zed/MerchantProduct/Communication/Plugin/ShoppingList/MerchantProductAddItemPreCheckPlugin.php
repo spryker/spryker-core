@@ -15,6 +15,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInt
 /**
  * @method \Spryker\Zed\MerchantProduct\Business\MerchantProductFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProduct\MerchantProductConfig getConfig()
+ * @method \Spryker\Zed\MerchantProduct\Communication\MerchantProductCommunicationFactory getFactory()
  */
 class MerchantProductAddItemPreCheckPlugin extends AbstractPlugin implements AddItemPreCheckPluginInterface
 {

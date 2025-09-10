@@ -12,6 +12,7 @@ use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToEventBehaviorFacadeBridge;
+use Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToEventFacadeBridge;
 use Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToMerchantProductOfferFacadeBridge;
 use Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToProductPageSearchFacadeBridge;
 use Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToStoreFacadeBridge;
@@ -25,6 +26,11 @@ class MerchantProductOfferSearchDependencyProvider extends AbstractBundleDepende
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
+    /**
+     * @var string
+     */
+    public const FACADE_EVENT = 'FACADE_EVENT';
 
     /**
      * @var string
@@ -60,6 +66,7 @@ class MerchantProductOfferSearchDependencyProvider extends AbstractBundleDepende
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addEventFacade($container);
         $container = $this->addProductPageSearchFacade($container);
         $container = $this->addMerchantProductOfferFacade($container);
         $container = $this->addStoreFacade($container);
@@ -105,6 +112,22 @@ class MerchantProductOfferSearchDependencyProvider extends AbstractBundleDepende
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new MerchantProductOfferSearchToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
+            return new MerchantProductOfferSearchToEventFacadeBridge(
+                $container->getLocator()->event()->facade(),
             );
         });
 

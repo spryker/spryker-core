@@ -176,7 +176,13 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
 
             $this->assertTrue($batchProcessor->commit());
         } catch (Throwable $throwable) {
-            if ($throwable->getPrevious() instanceof PDOException && strpos($throwable->getPrevious()->getMessage(), 'Cannot delete or update a parent row: a foreign key constraint fails') !== false) {
+            if (
+                $throwable->getPrevious() instanceof PDOException
+                && (
+                    str_contains($throwable->getPrevious()->getMessage(), 'Cannot delete or update a parent row: a foreign key constraint fails') // Mariadb
+                    || str_contains($throwable->getPrevious()->getMessage(), 'violates foreign key constraint') // PostgreSQL
+                )
+            ) {
                 codecept_debug($throwable->getMessage());
 
                 return;

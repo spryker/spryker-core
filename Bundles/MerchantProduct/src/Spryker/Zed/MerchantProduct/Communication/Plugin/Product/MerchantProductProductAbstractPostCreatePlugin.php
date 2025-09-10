@@ -15,6 +15,7 @@ use Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePlug
 /**
  * @method \Spryker\Zed\MerchantProduct\Business\MerchantProductFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProduct\MerchantProductConfig getConfig()
+ * @method \Spryker\Zed\MerchantProduct\Communication\MerchantProductCommunicationFactory getFactory()
  */
 class MerchantProductProductAbstractPostCreatePlugin extends AbstractPlugin implements ProductAbstractPostCreatePluginInterface
 {

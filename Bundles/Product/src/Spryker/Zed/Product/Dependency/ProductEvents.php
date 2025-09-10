@@ -81,6 +81,16 @@ interface ProductEvents
 
     /**
      * Specification
+     * - This event triggers publishing of product abstracts solely for search purposes.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRODUCT_ABSTRACT_SEARCH_PUBLISH = 'Product.product_abstract_search.publish';
+
+    /**
+     * Specification
      * - This event will be used for product abstract updates.
      *
      * @api

@@ -98,4 +98,7 @@
         <property name="productOfferApprovalStatuses" type="string[]" singular="productOfferApprovalStatus"/>
     </transfer>
 
+    <transfer name="EventEntity">
+    </transfer>
+
 </transfers>
