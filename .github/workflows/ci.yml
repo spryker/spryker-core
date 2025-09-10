@@ -49,7 +49,7 @@ jobs:
         run: |
           composer config github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
           composer install --no-interaction --prefer-dist --optimize-autoloader
-          composer require spryker/spryker-shop:dev-${{ github.ref_name }} --optimize-autoloader --no-interaction --prefer-dist || echo 'Failed to require module. Continuing execution...'
+          composer require spryker/spryker-shop:dev-${GITHUB_HEAD_REF} --optimize-autoloader --no-interaction --prefer-dist || echo 'Failed to require module. Continuing execution...'
 
   frontend-validation:
     name: Frontend Validation
