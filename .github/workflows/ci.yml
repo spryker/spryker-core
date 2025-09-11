@@ -16,10 +16,6 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
     cancel-in-progress: true
 
-defaults:
-    run:
-        shell: bash
-
 jobs:
     spryker-validation:
         name: Spryker Validation
@@ -83,9 +79,6 @@ jobs:
             - name: Run MP tests
               run: npm run mp:test --verbose
               timeout-minutes: 25
-
-            - name: Make PHP scripts executable
-              run: chmod +x *.sh
 
             - name: Check touched modules
               run: bash ci_check_touched_modules.sh
