@@ -9,14 +9,12 @@ namespace SprykerFeature\Zed\SelfServicePortal\Persistence\Saver;
 
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery;
 
 class FileAttachmentSaver
 {
     public function __construct(
-        protected SpyCompanyFileQuery $companyFileQuery,
         protected SpyCompanyBusinessUnitFileQuery $companyBusinessUnitFileQuery,
         protected SpyCompanyUserFileQuery $companyUserFileQuery,
         protected SpySspAssetFileQuery $sspAssetFileQuery
@@ -37,26 +35,6 @@ class FileAttachmentSaver
 
             if ($companyBusinessUnitFileEntity->isNew() || $companyBusinessUnitFileEntity->isModified()) {
                 $companyBusinessUnitFileEntity->save();
-            }
-        }
-
-        return $fileAttachmentTransfer;
-    }
-
-    public function saveCompanyFileAttachments(FileAttachmentTransfer $fileAttachmentTransfer): FileAttachmentTransfer
-    {
-        if (!$fileAttachmentTransfer->getCompanyCollection()?->getCompanies()) {
-            return $fileAttachmentTransfer;
-        }
-
-        foreach ($fileAttachmentTransfer->getCompanyCollection()->getCompanies() as $companyTransfer) {
-            $companyFileEntity = $this->companyFileQuery->clear()
-                ->filterByFkCompany($companyTransfer->getIdCompany())
-                ->filterByFkFile($fileAttachmentTransfer->getFileOrFail()->getIdFileOrFail())
-                ->findOneOrCreate();
-
-            if ($companyFileEntity->isNew() || $companyFileEntity->isModified()) {
-                $companyFileEntity->save();
             }
         }
 

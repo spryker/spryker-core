@@ -626,7 +626,6 @@
         <property name="companyUser" type="CompanyUser"/>
         <property name="user" type="User"/>
         <property name="withCompanyUserRelation" type="bool"/>
-        <property name="withCompanyRelation" type="bool"/>
         <property name="withBusinessUnitRelation" type="bool"/>
         <property name="withSspAssetRelation" type="bool"/>
     </transfer>

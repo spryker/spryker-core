@@ -59,8 +59,6 @@ class FileAttachmentCriteriaPermissionExpander implements FileAttachmentPermissi
             return $fileAttachmentCriteriaTransfer;
         }
 
-        $fileAttachmentCriteriaTransfer->setWithCompanyRelation(false);
-
         $fileAttachmentConditions->setBusinessUnitIds([]);
         if ($this->can(ViewCompanyBusinessUnitFilesPermissionPlugin::KEY, $idCompanyUser)) {
             $fileAttachmentConditions->addBusinessUnitId(

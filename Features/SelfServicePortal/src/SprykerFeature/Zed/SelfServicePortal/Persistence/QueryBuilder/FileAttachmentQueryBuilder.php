@@ -14,7 +14,6 @@ use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\FileManager\Persistence\Map\SpyFileInfoTableMap;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpyCompanyBusinessUnitFileTableMap;
-use Orm\Zed\SelfServicePortal\Persistence\Map\SpyCompanyFileTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpyCompanyUserFileTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspAssetFileTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspAssetTableMap;
@@ -63,7 +62,6 @@ class FileAttachmentQueryBuilder
     protected function addRelationsToAQuery(SpyFileQuery $fileQuery, FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): SpyFileQuery
     {
         if (
-            !$fileAttachmentCriteriaTransfer->getWithCompanyRelation() &&
             !$fileAttachmentCriteriaTransfer->getWithBusinessUnitRelation() &&
             !$fileAttachmentCriteriaTransfer->getWithCompanyUserRelation() &&
             !$fileAttachmentCriteriaTransfer->getWithSspAssetRelation()
@@ -74,18 +72,6 @@ class FileAttachmentQueryBuilder
         $fileAttachmentConditions = $fileAttachmentCriteriaTransfer->getFileAttachmentConditions() ?? new FileAttachmentConditionsTransfer();
 
         $fileAttachmentFilterCriteria = null;
-        if ($fileAttachmentCriteriaTransfer->getWithCompanyRelation()) {
-            $fileQuery
-                ->withColumn('GROUP_CONCAT(' . SpyCompanyFileTableMap::COL_FK_COMPANY . ')', static::COMPANY_IDS_COLUMN)
-                ->joinSpyCompanyFile(null, Criteria::LEFT_JOIN);
-
-            $companyFileCriteria = $this->getCompanyFileCriteria($fileQuery, $fileAttachmentConditions);
-
-            if ($companyFileCriteria) {
-                $fileAttachmentFilterCriteria = $companyFileCriteria;
-            }
-        }
-
         if ($fileAttachmentCriteriaTransfer->getWithBusinessUnitRelation()) {
             $fileQuery
                 ->withColumn('GROUP_CONCAT(' . SpyCompanyBusinessUnitFileTableMap::COL_FK_COMPANY_BUSINESS_UNIT . ')', static::BUSINESS_UNIT_IDS_COLUMN)
@@ -127,22 +113,6 @@ class FileAttachmentQueryBuilder
         $fileQuery->addAnd($fileAttachmentFilterCriteria);
 
         return $fileQuery;
-    }
-
-    protected function getCompanyFileCriteria(SpyFileQuery $fileQuery, FileAttachmentConditionsTransfer $fileAttachmentConditionsTransfer): ?AbstractCriterion
-    {
-        $companyFileQuery = $fileQuery
-            ->useSpyCompanyFileQuery(null, Criteria::LEFT_JOIN);
-
-        if (!$fileAttachmentConditionsTransfer->getCompanyIds()) {
-            return null;
-        }
-
-        return $companyFileQuery->getNewCriterion(
-            SpyCompanyFileTableMap::COL_FK_COMPANY,
-            $fileAttachmentConditionsTransfer->getCompanyIds(),
-            Criteria::IN,
-        );
     }
 
     protected function getBusinessUnitFileCriteria(

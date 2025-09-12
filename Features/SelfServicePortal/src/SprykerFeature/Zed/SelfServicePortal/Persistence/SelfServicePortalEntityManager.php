@@ -8,7 +8,6 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileCollectionTransfer;
@@ -129,16 +128,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
     ): void {
         $idFile = $fileAttachmentTransfer->getFileOrFail()->getIdFileOrFail();
 
-        $companyIds = array_map(
-            static fn (CompanyTransfer $companyTransfer): int => $companyTransfer->getIdCompanyOrFail(),
-            $fileAttachmentTransfer->getCompanyCollection()?->getCompanies()?->getArrayCopy() ?? [],
-        );
-
-        $this->getFactory()->createCompanyFileQuery()
-            ->filterByFkCompany_In($companyIds)
-            ->filterByFkFile($idFile)
-            ->delete();
-
         $businessUnitIds = array_map(
             static fn (CompanyBusinessUnitTransfer $businessUnitTransfer): int => $businessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
             $fileAttachmentTransfer->getBusinessUnitCollection()?->getCompanyBusinessUnits()?->getArrayCopy() ?? [],
@@ -175,7 +164,6 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         $fileAttachmentSaver = $this->getFactory()->createFileAttachmentSaver();
 
         $fileAttachmentSaver->saveBusinessUnitFileAttachment($fileAttachmentTransfer);
-        $fileAttachmentSaver->saveCompanyFileAttachments($fileAttachmentTransfer);
         $fileAttachmentSaver->saveCompanyUserAttachment($fileAttachmentTransfer);
         $fileAttachmentSaver->saveSspAssetFileAttachment($fileAttachmentTransfer);
 

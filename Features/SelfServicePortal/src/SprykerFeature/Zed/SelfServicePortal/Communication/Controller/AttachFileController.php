@@ -228,7 +228,6 @@ class AttachFileController extends FileAbstractController
                 ->setFileAttachmentConditions((new FileAttachmentConditionsTransfer())->addIdFile($idFile))
                 ->setUser($this->getFactory()->getUserFacade()->getCurrentUser())
                 ->setWithSspAssetRelation(true)
-                ->setWithCompanyRelation(true)
                 ->setWithBusinessUnitRelation(true)
                 ->setWithCompanyUserRelation(true));
 

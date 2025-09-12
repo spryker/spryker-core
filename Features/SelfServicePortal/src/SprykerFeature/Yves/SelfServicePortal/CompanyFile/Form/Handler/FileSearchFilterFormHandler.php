@@ -76,7 +76,6 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
 
         if (!$fileSearchFilterForm->isSubmitted() || !$fileSearchFilterForm->isValid()) {
             $fileAttachmentCriteriaTransfer
-                ->setWithCompanyRelation(true)
                 ->setWithBusinessUnitRelation(true)
                 ->setWithCompanyUserRelation(true)
                 ->setWithSspAssetRelation(true);
@@ -201,14 +200,12 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
         match ($businessUnitEntity) {
             FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_COMPANY_USER => $fileAttachmentCriteriaTransfer->setWithCompanyUserRelation(true),
             FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_COMPANY => $fileAttachmentCriteriaTransfer
-                ->setWithCompanyRelation(true)
                 ->setWithBusinessUnitRelation(true)
                 ->setWithCompanyUserRelation(true),
             FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_NONE => $fileAttachmentCriteriaTransfer,
             FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_ALL => $fileAttachmentCriteriaTransfer
                 ->setWithCompanyUserRelation(true)
-                ->setWithBusinessUnitRelation(true)
-                ->setWithCompanyRelation(true),
+                ->setWithBusinessUnitRelation(true),
             default =>
             $fileAttachmentCriteriaTransfer
                 ->setWithBusinessUnitRelation(true),

@@ -59,7 +59,6 @@ class FileDashboardDataExpander implements FileDashboardDataExpanderInterface
                     ->setField($this->config->getDefaultFileDashboardSortField())
                     ->setIsAscending(false),
             )
-            ->setWithCompanyRelation(true)
             ->setWithBusinessUnitRelation(true)
             ->setWithCompanyUserRelation(true)
             ->setWithSspAssetRelation(true);

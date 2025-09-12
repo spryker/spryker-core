@@ -8,13 +8,11 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table;
 
 use Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer;
-use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpyCompanyBusinessUnitFileTableMap;
-use Orm\Zed\SelfServicePortal\Persistence\Map\SpyCompanyFileTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpyCompanyUserFileTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspAssetFileTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspAssetTableMap;
@@ -227,49 +225,6 @@ class ViewFileDetailTable extends AbstractTable
         return implode(' ', $buttons);
     }
 
-    protected function prepareCompanyFileQuery(
-        FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
-    ): SpyFileQuery {
-        $companyFileQuery = $this->fileQuery::create()
-            ->filterByIdFile($this->idFile)
-            ->withColumn(SpyFileTableMap::COL_ID_FILE, static::COL_ID_FILE)
-            ->useSpyCompanyFileQuery(null, Criteria::LEFT_JOIN)
-                ->withColumn(SpyCompanyFileTableMap::COL_CREATED_AT, static::COL_ATTACHED_AT)
-                ->withColumn(SpyCompanyFileTableMap::COL_FK_COMPANY, static::COL_ENTITY_ID)
-                    ->useCompanyQuery()
-                        ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_ENTITY_NAME)
-                        ->withColumn(static::COL_ENTITY_TYPE_COMPANY, static::COL_ENTITY_TYPE)
-                        ->filterByName_Like($this->getSearchString())
-                    ->endUse()
-            ->endUse()
-            ->select([
-                static::COL_ID_FILE,
-                static::COL_ATTACHED_AT,
-                static::COL_ENTITY_ID,
-                static::COL_ENTITY_NAME,
-                static::COL_ENTITY_TYPE,
-            ]);
-
-        if ($fileAttachmentViewDetailTableCriteriaTransfer->getDateFrom()) {
-            // @phpstan-ignore-next-line
-            $companyFileQuery
-                ->useSpyCompanyFileQuery()
-                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentViewDetailTableCriteriaTransfer->getDateFrom()), Criteria::GREATER_EQUAL)
-                ->endUse();
-        }
-
-        if ($fileAttachmentViewDetailTableCriteriaTransfer->getDateTo()) {
-            // @phpstan-ignore-next-line
-            $companyFileQuery
-                ->useSpyCompanyFileQuery()
-                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentViewDetailTableCriteriaTransfer->getDateTo()), Criteria::LESS_THAN)
-                ->endUse();
-        }
-
-        // @phpstan-ignore-next-line
-        return $companyFileQuery;
-    }
-
     protected function prepareCompanyBusinessUnitFileQuery(
         FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
     ): SpyFileQuery {
@@ -402,11 +357,6 @@ class ViewFileDetailTable extends AbstractTable
         $companyUserFileParams = [];
         $assetFileParams = [];
         $unionParts = [];
-
-        if (!$fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() === SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY) {
-            $companyFileQuery = $this->prepareCompanyFileQuery($fileAttachmentViewDetailTableCriteriaTransfer);
-            $unionParts[] = $companyFileQuery->createSelectSql($companyFileParams);
-        }
 
         if (!$fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() === SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT) {
             $companyBusinessUnitFileQuery = $this->prepareCompanyBusinessUnitFileQuery($fileAttachmentViewDetailTableCriteriaTransfer);

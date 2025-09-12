@@ -35,7 +35,6 @@ use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\SelfServicePortal\Persistence\Base\SpySspAssetSearchQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentType;
@@ -359,25 +358,6 @@ class SelfServicePortalHelper extends Module
      *
      * @return void
      */
-    public function haveCompanyFileAttachment(array $data): void
-    {
-        $companyFileEntity = $this->createCompanyFileQuery()
-            ->filterByFkFile($data['idFile'])
-            ->filterByFkCompany($data['idCompany'])
-            ->findOneOrCreate();
-
-        $companyFileEntity->save();
-
-        $this->getDataCleanupHelper()->addCleanup(function () use ($companyFileEntity): void {
-            $companyFileEntity->delete();
-        });
-    }
-
-    /**
-     * @param array<string, int> $data
-     *
-     * @return void
-     */
     public function haveCompanyUserFileAttachment(array $data): void
     {
         $companyUserFileEntity = $this->createCompanyUserFileQuery()
@@ -456,7 +436,6 @@ class SelfServicePortalHelper extends Module
 
     public function ensureFileAttachmentTablesAreEmpty(): void
     {
-        $this->createCompanyFileQuery()->deleteAll();
         $this->createCompanyUserFileQuery()->deleteAll();
         $this->createCompanyBusinessUnitFileQuery()->deleteAll();
     }
@@ -840,11 +819,6 @@ class SelfServicePortalHelper extends Module
     protected function getSalesOrderItemSspAssetQuery(): SpySalesOrderItemSspAssetQuery
     {
         return SpySalesOrderItemSspAssetQuery::create();
-    }
-
-    public function createCompanyFileQuery(): SpyCompanyFileQuery
-    {
-        return SpyCompanyFileQuery::create();
     }
 
     public function createCompanyUserFileQuery(): SpyCompanyUserFileQuery

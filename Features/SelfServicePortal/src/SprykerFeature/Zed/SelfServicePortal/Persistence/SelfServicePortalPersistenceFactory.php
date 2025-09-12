@@ -13,7 +13,6 @@ use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery;
@@ -87,11 +86,6 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
         return SpySalesOrderItemProductClassQuery::create();
     }
 
-    public function createCompanyFileQuery(): SpyCompanyFileQuery
-    {
-        return SpyCompanyFileQuery::create();
-    }
-
     public function createCompanyUserFileQuery(): SpyCompanyUserFileQuery
     {
         return SpyCompanyUserFileQuery::create();
@@ -150,7 +144,6 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     public function createFileAttachmentSaver(): FileAttachmentSaver
     {
         return new FileAttachmentSaver(
-            $this->createCompanyFileQuery(),
             $this->createCompanyBusinessUnitFileQuery(),
             $this->createCompanyUserFileQuery(),
             $this->createSspAssetFileQuery(),
