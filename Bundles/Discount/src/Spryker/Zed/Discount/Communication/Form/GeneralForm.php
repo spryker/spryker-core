@@ -20,6 +20,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
 
@@ -282,6 +283,7 @@ class GeneralForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new DateTime(),
+                new LessThan($this->getConfig()->getMaxAllowedDatetime()),
             ],
         ]);
 
@@ -311,6 +313,7 @@ class GeneralForm extends AbstractType
                 new GreaterThan([
                     'propertyPath' => sprintf('parent.all[%s].data', static::FIELD_VALID_FROM),
                 ]),
+                new LessThan($this->getConfig()->getMaxAllowedDatetime()),
             ],
         ]);
 

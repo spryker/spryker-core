@@ -979,7 +979,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountConfiguratorPeriodConstraintProvider(): DiscountConfiguratorConstraintProviderInterface
     {
-        return new DiscountConfiguratorPeriodConstraintProvider();
+        return new DiscountConfiguratorPeriodConstraintProvider($this->getConfig());
     }
 
     /**

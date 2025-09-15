@@ -254,7 +254,7 @@ class UpdateDiscountWithValidationTest extends Unit
 
         // Assert
         $this->assertFalse($discountConfiguratorResponseTransfer->getIsSuccessful());
-        $this->assertCount(3, $discountConfiguratorResponseTransfer->getMessages());
+        $this->assertCount(4, $discountConfiguratorResponseTransfer->getMessages());
     }
 
     /**

@@ -67,6 +67,13 @@ class DiscountConfig extends AbstractBundleConfig
     protected const IS_MONEY_COLLECTION_FORM_TYPE_PLUGIN_ENABLED = false;
 
     /**
+     * @see https://en.wikipedia.org/wiki/Year_2038_problem
+     *
+     * @var string
+     */
+    protected const MAX_ALLOWED_DATETIME = '2038-01-19 03:14:07';
+
+    /**
      * @api
      *
      * @return int
@@ -196,5 +203,18 @@ class DiscountConfig extends AbstractBundleConfig
     public function isMoneyCollectionFormTypePluginEnabled(): bool
     {
         return static::IS_MONEY_COLLECTION_FORM_TYPE_PLUGIN_ENABLED;
+    }
+
+    /**
+     * Specification:
+     * - Defines the maximum datetime value that can be used for timestamps columns.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getMaxAllowedDatetime(): string
+    {
+        return static::MAX_ALLOWED_DATETIME;
     }
 }
