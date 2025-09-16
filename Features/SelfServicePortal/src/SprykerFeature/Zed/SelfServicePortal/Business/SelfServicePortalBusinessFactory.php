@@ -1238,6 +1238,7 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     {
         return new SspAssetSearchWriter(
             $this->createSspAssetReader(),
+            $this->createSspModelReader(),
             $this->getEventBehaviorFacade(),
             $this->createSspAssetSearchMapper(),
             $this->getEntityManager(),

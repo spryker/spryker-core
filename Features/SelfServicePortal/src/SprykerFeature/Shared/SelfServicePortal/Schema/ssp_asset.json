@@ -53,7 +53,7 @@
                     "type": "keyword"
                 },
                 "full-text-boosted": {
-                    "type": "text"
+                    "type": "keyword"
                 },
                 "completion-terms": {
                     "type": "keyword",

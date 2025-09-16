@@ -83,6 +83,7 @@ class SspAssetMapper
             if ($companyBusinessUnitEntity->getCompany() !== null) {
                 $companyTransfer = (new CompanyTransfer())->fromArray($companyBusinessUnitEntity->getCompany()->toArray(), true);
                 $companyBusinessUnitTransfer->setCompany($companyTransfer);
+                $companyBusinessUnitTransfer->setFkCompany($companyTransfer->getIdCompany());
             }
 
             $sspAssetTransfer->setCompanyBusinessUnit($companyBusinessUnitTransfer);

@@ -88,9 +88,12 @@ class UpdateModelController extends AbstractController
             return $this->handleFormSubmission($form, $sspModelTransfer);
         }
 
+        $deleteForm = $this->getFactory()->createDeleteSspModelForm()->createView();
+
         return [
             'sspModelForm' => $form->createView(),
             'sspModel' => $sspModelTransfer,
+            'deleteForm' => $deleteForm,
         ];
     }
 

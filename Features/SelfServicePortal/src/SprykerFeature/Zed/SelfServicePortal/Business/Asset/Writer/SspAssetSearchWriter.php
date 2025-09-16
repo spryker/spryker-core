@@ -13,9 +13,12 @@ use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetIncludeTransfer;
 use Generated\Shared\Transfer\SspAssetSearchCollectionTransfer;
+use Generated\Shared\Transfer\SspModelConditionsTransfer;
+use Generated\Shared\Transfer\SspModelCriteriaTransfer;
 use Spryker\Zed\EventBehavior\Business\EventBehaviorFacadeInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Mapper\SspAssetSearchMapperInterface as MapperSspAssetSearchMapperInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\SspModel\Reader\SspModelReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface;
 
 class SspAssetSearchWriter implements SspAssetSearchWriterInterface
@@ -34,8 +37,16 @@ class SspAssetSearchWriter implements SspAssetSearchWriterInterface
      */
     protected const COL_FK_SSP_ASSET_TO_MODEL = 'spy_ssp_asset_to_ssp_model.fk_ssp_asset';
 
+    /**
+     * @uses \Orm\Zed\SelfServicePortal\Persistence\Map\SpySspModelTableMap::COL_ID_SSP_MODEL
+     *
+     * @var string
+     */
+    protected const COL_ID_SSP_MODEL = 'spy_ssp_model.id_ssp_model';
+
     public function __construct(
         protected SspAssetReaderInterface $sspAssetReader,
+        protected SspModelReaderInterface $sspModelReader,
         protected EventBehaviorFacadeInterface $eventBehaviorFacade,
         protected MapperSspAssetSearchMapperInterface $sspAssetSearchMapper,
         protected SelfServicePortalEntityManagerInterface $selfServicePortalEntityManager
@@ -54,7 +65,7 @@ class SspAssetSearchWriter implements SspAssetSearchWriterInterface
     }
 
     /**
-     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -73,7 +84,7 @@ class SspAssetSearchWriter implements SspAssetSearchWriterInterface
     }
 
     /**
-     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -86,6 +97,34 @@ class SspAssetSearchWriter implements SspAssetSearchWriterInterface
 
         if ($sspAssetIds === []) {
             return;
+        }
+
+        $this->writeCollectionBySspAssetIds($sspAssetIds);
+    }
+
+     /**
+      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+      *
+      * @return void
+      */
+    public function writeCollectionBySspModelEvents(array $eventEntityTransfers): void
+    {
+        $sspModelIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
+            $eventEntityTransfers,
+            static::COL_ID_SSP_MODEL,
+        );
+
+        $sspModelCollection = $this->sspModelReader->getSspModelCollection(
+            (new SspModelCriteriaTransfer())
+                ->setWithSspAssets(true)
+                ->setSspModelConditions((new SspModelConditionsTransfer())->setSspModelIds($sspModelIds)),
+        );
+
+        $sspAssetIds = [];
+        foreach ($sspModelCollection->getSspModels() as $sspModelTransfer) {
+            foreach ($sspModelTransfer->getSspAssets() as $sspAssetTransfer) {
+                $sspAssetIds[] = $sspAssetTransfer->getIdSspAssetOrFail();
+            }
         }
 
         $this->writeCollectionBySspAssetIds($sspAssetIds);
@@ -127,7 +166,7 @@ class SspAssetSearchWriter implements SspAssetSearchWriterInterface
     }
 
     /**
-     * @param list<int> $sspAssetIds
+     * @param array<int> $sspAssetIds
      *
      * @return \Generated\Shared\Transfer\SspAssetCriteriaTransfer
      */

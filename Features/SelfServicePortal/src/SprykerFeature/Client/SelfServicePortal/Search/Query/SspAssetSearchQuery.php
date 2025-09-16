@@ -9,10 +9,12 @@ namespace SprykerFeature\Client\SelfServicePortal\Search\Query;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\MultiMatch;
+use Elastica\Query\MatchQuery;
+use Elastica\Query\Prefix;
 use Elastica\Query\Term;
-use Elastica\Query\Wildcard;
+use Elastica\Query\Terms;
 use Elastica\Suggest;
+use Elastica\Suggest\Term as SuggestTerm;
 use Generated\Shared\Search\SspAssetIndexMap;
 use SprykerFeature\Client\SelfServicePortal\SelfServicePortalConfig;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig as SharedSelfServicePortalConfig;
@@ -25,15 +27,19 @@ class SspAssetSearchQuery implements SspAssetSearchQueryInterface
 
     public function createQuery(?string $searchString): Query
     {
-        $query = new BoolQuery();
-        $query = $this->addTypeQuery($query);
-        $query = $this->addFullTextQuery($query, $searchString);
-        $suggest = (new Suggest())->setGlobalText((string)$searchString);
+        $boolQuery = new BoolQuery();
+        $boolQuery = $this->addTypeQuery($boolQuery);
+        $boolQuery = $this->addFullTextQuery($boolQuery, $searchString);
+        $suggest = $this->createSuggest((string)$searchString);
 
-        return (new Query())
-            ->setQuery($query)
-            ->setSuggest($suggest)
-            ->setSource(SspAssetIndexMap::SEARCH_RESULT_DATA);
+        $query = new Query();
+        $query->setQuery($boolQuery);
+        if ($suggest) {
+            $query->setSuggest($suggest);
+        }
+        $query->setSource(SspAssetIndexMap::SEARCH_RESULT_DATA);
+
+        return $query;
     }
 
     protected function addTypeQuery(BoolQuery $boolQuery): BoolQuery
@@ -53,49 +59,54 @@ class SspAssetSearchQuery implements SspAssetSearchQueryInterface
         }
 
         $fullTextQuery = (new BoolQuery())
-            ->addShould($this->createFullTextWildcard($searchString))
-            ->addShould($this->createFullTextBoostedWildcard($searchString))
-            ->addShould($this->createFulltextSearchQuery($searchString));
+            ->addShould($this->createTermMatchQuery($searchString))
+            ->addShould($this->createCompletionMatchQuery($searchString))
+            ->addShould($this->createCompletionPrefixQuery($searchString))
+            ->addShould($this->createSuggestionMatchQuery($searchString));
 
         return $boolQuery->addMust($fullTextQuery);
     }
 
-    protected function createFullTextWildcard(string $searchString): Wildcard
+    protected function createSuggest(string $searchString): ?Suggest
     {
-        return new Wildcard(
-            SspAssetIndexMap::FULL_TEXT_BOOSTED,
-            $this->createWildcardValue($searchString),
-        );
+        if (!$searchString) {
+            return null;
+        }
+
+        $suggest = new Suggest();
+        $termSuggest = new SuggestTerm('suggestion', SspAssetIndexMap::SUGGESTION_TERMS);
+        $termSuggest->setText($searchString);
+        $suggest->addSuggestion($termSuggest);
+
+        return $suggest;
     }
 
-    protected function createFullTextBoostedWildcard(string $searchString): Wildcard
+    protected function createTermMatchQuery(string $searchString): Terms
     {
-        return new Wildcard(
-            SspAssetIndexMap::FULL_TEXT_BOOSTED,
-            $this->createWildcardValue($searchString),
-            $this->config->getElasticsearchFullTextBoostedBoostingValue(),
-        );
+        return new Terms(SspAssetIndexMap::FULL_TEXT_BOOSTED, [$searchString]);
     }
 
-    protected function createFulltextSearchQuery(string $searchString): MultiMatch
+    protected function createCompletionMatchQuery(string $searchString): Terms
     {
-        $fields = [
-            SspAssetIndexMap::FULL_TEXT_BOOSTED,
-            sprintf(
-                '%s^%d',
-                SspAssetIndexMap::FULL_TEXT_BOOSTED,
-                $this->config->getElasticsearchFullTextBoostedBoostingValue(),
-            ),
-        ];
-
-        return (new MultiMatch())
-            ->setFields($fields)
-            ->setQuery($searchString)
-            ->setType(MultiMatch::TYPE_PHRASE_PREFIX);
+        return new Terms(SspAssetIndexMap::COMPLETION_TERMS, [$searchString]);
     }
 
-    protected function createWildcardValue(string $searchString): string
+    protected function createCompletionPrefixQuery(string $searchString): Prefix
     {
-        return sprintf('*%s*', $searchString);
+        return new Prefix([
+            SspAssetIndexMap::COMPLETION_TERMS => $searchString,
+        ]);
+    }
+
+    protected function createSuggestionMatchQuery(string $searchString): MatchQuery
+    {
+        $matchQuery = new MatchQuery();
+        $matchQuery->setField(SspAssetIndexMap::SUGGESTION_TERMS, [
+            'query' => $searchString,
+            'fuzziness' => 'AUTO',
+            'boost' => $this->config->getElasticsearchFullTextBoostedBoostingValue(),
+        ]);
+
+        return $matchQuery;
     }
 }
