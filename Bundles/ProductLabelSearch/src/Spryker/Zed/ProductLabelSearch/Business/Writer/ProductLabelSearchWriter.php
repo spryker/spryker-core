@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\ProductLabelSearch\Business\Writer;
 
-use Spryker\Shared\ProductLabelSearch\ProductLabelSearchConfig;
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductPageSearchInterface;
 use Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchRepositoryInterface;
@@ -59,64 +60,68 @@ class ProductLabelSearchWriter implements ProductLabelSearchWriterInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
-    public function writeCollectionByProductLabelEvents(array $eventTransfers): void
+    public function writeCollectionByProductLabelEvents(array $eventEntityTransfers): void
     {
-        $productLabelIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
-        $productAbstractIds = $this->productLabelSearchRepository
-            ->getProductAbstractIdsByProductLabelIds($productLabelIds);
-        $this->writeCollection($productAbstractIds);
+        $hydrateEventsResponseTransfer = $this->eventBehaviorFacade->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers)),
+        );
+        $productAbstractIdTimestampMap = $this->productLabelSearchRepository
+            ->getProductAbstractIdTimestampMap($hydrateEventsResponseTransfer->getIdTimestampMap());
+
+        $this->writeCollection($productAbstractIdTimestampMap);
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
-    public function writeCollectionByProductLabelProductAbstractEvents(array $eventTransfers): void
+    public function writeCollectionByProductLabelProductAbstractEvents(array $eventEntityTransfers): void
     {
-        $productAbstractIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
-            $eventTransfers,
-            static::COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT,
+        $hydrateEventsResponseTransfer = $this->eventBehaviorFacade->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers))
+                ->setForeignKeyName(static::COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT),
         );
 
-        $this->writeCollection($productAbstractIds);
+        $this->writeCollection($hydrateEventsResponseTransfer->getForeignKeyTimestampMap());
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
-    public function writeCollectionByProductLabelStoreEvents(array $eventTransfers): void
+    public function writeCollectionByProductLabelStoreEvents(array $eventEntityTransfers): void
     {
-        $productLabelIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
-            $eventTransfers,
-            static::COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL,
+        $hydrateEventsResponseTransfer = $this->eventBehaviorFacade->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers))
+                ->setForeignKeyName(static::COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL),
         );
-        $productAbstractIds = $this->productLabelSearchRepository
-            ->getProductAbstractIdsByProductLabelIds($productLabelIds);
 
-        $this->writeCollection($productAbstractIds);
+        $productAbstractIdTimestampMap = $this->productLabelSearchRepository
+            ->getProductAbstractIdTimestampMap($hydrateEventsResponseTransfer->getForeignKeyTimestampMap());
+
+        $this->writeCollection($productAbstractIdTimestampMap);
     }
 
     /**
-     * @param array<int> $productAbstractIds
+     * @param array<int, int> $productAbstractIdTimestampMap
      *
      * @return void
      */
-    protected function writeCollection(array $productAbstractIds): void
+    protected function writeCollection(array $productAbstractIdTimestampMap): void
     {
-        if (!$productAbstractIds) {
+        if (!$productAbstractIdTimestampMap) {
             return;
         }
 
-        $this->productPageSearchFacade->refresh(
-            $productAbstractIds,
-            [ProductLabelSearchConfig::PLUGIN_PRODUCT_LABEL_DATA],
-        );
+        $this->productPageSearchFacade->publishWithTimestamp($productAbstractIdTimestampMap);
     }
 }

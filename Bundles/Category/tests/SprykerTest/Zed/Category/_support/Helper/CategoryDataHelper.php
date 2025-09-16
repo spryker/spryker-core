@@ -295,10 +295,12 @@ class CategoryDataHelper extends Module
     public function haveLocalizedCategoryTransfer(array $seedData = []): CategoryTransfer
     {
         $categoryTransfer = $this->haveCategoryTransfer($seedData);
-        $categoryLocalizedAttributes = (new CategoryLocalizedAttributesBuilder($seedData))->withLocale()->build();
-        $locale = $this->getLocator()->locale()->facade()->getCurrentLocale();
-        $categoryLocalizedAttributes->setLocale($locale);
-        $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributes);
+        $localeTransfers = $this->getLocator()->locale()->facade()->getLocaleCollection();
+        foreach ($localeTransfers as $localeTransfer) {
+            $categoryLocalizedAttributes = (new CategoryLocalizedAttributesBuilder($seedData))->withLocale()->build();
+            $categoryLocalizedAttributes->setLocale($localeTransfer);
+            $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributes);
+        }
 
         return $categoryTransfer;
     }

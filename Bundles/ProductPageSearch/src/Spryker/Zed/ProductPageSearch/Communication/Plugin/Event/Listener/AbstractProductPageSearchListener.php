@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory getBusinessFactory()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  */
 abstract class AbstractProductPageSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
@@ -24,13 +25,6 @@ abstract class AbstractProductPageSearchListener extends AbstractPlugin implemen
     /**
      * @var array<int>
      */
-    protected static $publishedProductAbstractIds = [];
-
-    /**
-     * @var array<int>
-     */
-    protected static $unpublishedProductAbstractIds = [];
-
     /**
      * @var string
      */
@@ -43,17 +37,7 @@ abstract class AbstractProductPageSearchListener extends AbstractPlugin implemen
      */
     protected function publish(array $productAbstractIdTimestampMap)
     {
-        // Filters IDs if it had been processed in the current process
-        $productAbstractIds = array_values(array_unique(array_diff(array_keys($productAbstractIdTimestampMap), static::$publishedProductAbstractIds)));
-        // Exclude IDs if they were processed in current process
-        $productAbstractIdTimestampMap = array_intersect_key($productAbstractIdTimestampMap, array_flip($productAbstractIds));
-        // Filters IDs if it had been processed in parallel processes
-        $productAbstractIdsForUpdate = $this->getRepository()->getRelevantProductAbstractIdsToUpdate($productAbstractIdTimestampMap);
-
-        if ($productAbstractIdsForUpdate) {
-            $this->getFacade()->publish($productAbstractIdsForUpdate);
-        }
-        static::$publishedProductAbstractIds = array_merge(static::$publishedProductAbstractIds, $productAbstractIds);
+        $this->getBusinessFactory()->createProductAbstractPagePublisher()->publishWithTimestamps($productAbstractIdTimestampMap);
     }
 
     /**
@@ -63,11 +47,7 @@ abstract class AbstractProductPageSearchListener extends AbstractPlugin implemen
      */
     protected function unpublish(array $productAbstractIdTimestampMap)
     {
-        $productAbstractIds = array_values(array_unique(array_diff(array_keys($productAbstractIdTimestampMap), static::$unpublishedProductAbstractIds)));
-        if ($productAbstractIds) {
-            $this->getFacade()->unpublish($productAbstractIds);
-        }
-        static::$unpublishedProductAbstractIds = array_merge(static::$unpublishedProductAbstractIds, $productAbstractIds);
+        $this->getBusinessFactory()->createProductAbstractPagePublisher()->unpublishWithTimestamps($productAbstractIdTimestampMap);
     }
 
     /**

@@ -5,9 +5,9 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.2",
-        "spryker/event-behavior": "^1.1.0",
+        "spryker/event-behavior": "^1.32.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/product-page-search": "^0.1.0 || ^1.0.0 || ^2.2.0 || ^3.0.0",
+        "spryker/product-page-search": "^0.1.0 || ^1.0.0 || ^2.2.0 || ^3.42.0",
         "spryker/product-page-search-extension": "^1.0.0",
         "spryker/product-review": "^1.1.0 || ^2.0.0",
         "spryker/search-extension": "^1.0.0",

@@ -43,6 +43,22 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
+     * @param array<int, int> $productAbstractIdTimestampMap
+     *
+     * @return void
+     */
+    public function publishWithTimestamp(array $productAbstractIdTimestampMap): void
+    {
+        $this->getFactory()
+            ->createProductAbstractPagePublisher()
+            ->publishWithTimestamps($productAbstractIdTimestampMap);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param array<int> $productAbstractIds
      * @param array<string> $pageDataExpanderPluginNames
      *

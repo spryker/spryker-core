@@ -259,6 +259,8 @@ class ProductPageSearchListenerTest extends Unit
     }
 
     /**
+     * @group test1
+     *
      * @return void
      */
     public function testProductPageProductAbstractListenerStoreData(): void
@@ -433,7 +435,10 @@ class ProductPageSearchListenerTest extends Unit
         $eventTransfers = [];
 
         if ($productImageSetToProductImageEntity) {
-            $eventTransfers[] = (new EventEntityTransfer())->setId($productImageSetToProductImageEntity->getIdProductImageSetToProductImage());
+            $eventTransfers[] = (new EventEntityTransfer())
+                ->setForeignKeys([
+                    SpyProductImageSetToProductImageTableMap::COL_FK_PRODUCT_IMAGE_SET => $this->productImageSetTransfer->getIdProductImageSet(),
+                ]);
         }
 
         $productPageImageSetProductImageSearchListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE);

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductLabelSearch\Dependency\Facade;
 
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
+use Generated\Shared\Transfer\HydrateEventsResponseTransfer;
+
 interface ProductLabelSearchToEventBehaviorFacadeInterface
 {
     /**
@@ -23,4 +26,11 @@ interface ProductLabelSearchToEventBehaviorFacadeInterface
      * @return array
      */
     public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
+
+    /**
+     * @param \Generated\Shared\Transfer\HydrateEventsRequestTransfer $hydrateEventsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\HydrateEventsResponseTransfer
+     */
+    public function hydrateEventDataTransfer(HydrateEventsRequestTransfer $hydrateEventsRequestTransfer): HydrateEventsResponseTransfer;
 }

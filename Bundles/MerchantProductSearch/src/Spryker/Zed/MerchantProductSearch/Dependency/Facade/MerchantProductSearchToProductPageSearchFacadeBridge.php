@@ -32,4 +32,14 @@ class MerchantProductSearchToProductPageSearchFacadeBridge implements MerchantPr
     {
         $this->productPageSearchFacade->refresh($productAbstractIds, $pageDataExpanderPluginNames);
     }
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return void
+     */
+    public function publish(array $productAbstractIds)
+    {
+        $this->productPageSearchFacade->publish($productAbstractIds);
+    }
 }

@@ -174,14 +174,14 @@ interface ProductPageSearchRepositoryInterface
     /**
      * @param array<int, int> $productAbstractIdTimestampMap
      *
-     * @return array<int>
+     * @return array<int, int>
      */
     public function getRelevantProductAbstractIdsToUpdate(array $productAbstractIdTimestampMap): array;
 
     /**
      * @param array<int, int> $productIdTimestampMap
      *
-     * @return array<int>
+     * @return array<int, int>
      */
     public function getRelevantProductConcreteIdsToUpdate(array $productIdTimestampMap): array;
 }

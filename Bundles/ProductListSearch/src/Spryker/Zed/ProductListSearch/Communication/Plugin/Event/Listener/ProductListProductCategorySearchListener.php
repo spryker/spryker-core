@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListCategoryTableMap;
-use Spryker\Shared\ProductListSearch\ProductListSearchConfig;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -16,6 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductListSearch\Communication\ProductListSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepositoryInterface getRepository()
  */
 class ProductListProductCategorySearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
@@ -31,13 +33,14 @@ class ProductListProductCategorySearchListener extends AbstractPlugin implements
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $categoryIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventEntityTransfers, SpyProductListCategoryTableMap::COL_FK_CATEGORY);
+        $hydrateEventsResponseTransfer = $this->getFactory()->getEventBehaviorFacade()->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers))
+                ->setForeignKeyName(SpyProductListCategoryTableMap::COL_FK_CATEGORY),
+        );
 
-        $this->getFactory()->getProductPageSearchFacade()->refresh(
-            $this->getFacade()->getProductAbstractIdsByCategoryIds($categoryIds),
-            [ProductListSearchConfig::PLUGIN_PRODUCT_LIST_DATA],
+        $this->getFactory()->getProductPageSearchFacade()->publishWithTimestamp(
+            $this->getRepository()->getProductAbstractIdsTimestampMap($hydrateEventsResponseTransfer->getForeignKeyTimestampMap()),
         );
     }
 }

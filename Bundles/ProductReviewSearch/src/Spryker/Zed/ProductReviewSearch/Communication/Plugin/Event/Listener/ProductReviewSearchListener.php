@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\ProductReviewSearch\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
-use Spryker\Shared\ProductReviewSearch\ProductReviewSearchConfig;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -30,15 +31,16 @@ class ProductReviewSearchListener extends AbstractPlugin implements EventBulkHan
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $productReviewIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
-        $productAbstractIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventEntityTransfers, SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT);
+        $hydrateEventsResponseTransfer = $this->getFactory()->getEventBehaviorFacade()->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers))
+                ->setForeignKeyName(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT),
+        );
 
-        $this->getFacade()->publish($productReviewIds);
+        $this->getFacade()->publish(array_keys($hydrateEventsResponseTransfer->getIdTimestampMap()));
 
-        if ($productAbstractIds) {
-            $this->getFactory()->getProductPageSearchFacade()->refresh($productAbstractIds, [ProductReviewSearchConfig::PLUGIN_PRODUCT_PAGE_RATING_DATA]);
+        if ($hydrateEventsResponseTransfer->getForeignKeyTimestampMap()) {
+            $this->getFactory()->getProductPageSearchFacade()->publishWithTimestamp($hydrateEventsResponseTransfer->getForeignKeyTimestampMap());
         }
     }
 }

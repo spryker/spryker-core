@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
@@ -38,25 +40,31 @@ class ProductPageCategorySearchListener extends AbstractProductPageSearchListene
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_DELETE || $eventName === static::ENTITY_CATEGORY_PUBLISH) {
-            $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
+            $categoryIdTimestampMap = $this->hydrateEventDataTransfer(
+                (new HydrateEventsRequestTransfer())
+                    ->setEventEntities(new ArrayObject($eventEntityTransfers)),
+            )->getIdTimestampMap();
         } else {
-            $categoryIds = $this->getValidCategoryIds($eventEntityTransfers);
+            $categoryIdTimestampMap = $this->getValidCategoryIds($eventEntityTransfers);
         }
 
-        if (!$categoryIds) {
+        if (!$categoryIdTimestampMap) {
             return;
         }
 
-        $relatedCategoryIds = $this->getRelatedCategoryIds($categoryIds);
+        $relatedCategoryIds = $this->getRelatedCategoryIds(array_keys($categoryIdTimestampMap));
         $productAbstractIds = $this->getRepository()->getProductAbstractIdsByCategoryIds($relatedCategoryIds);
+        if (!$productAbstractIds) {
+            return;
+        }
 
-        $this->publish(array_fill_keys($productAbstractIds, null));
+        $this->publish(array_fill_keys($productAbstractIds, min($categoryIdTimestampMap)));
     }
 
     /**
      * @param array $eventTransfers
      *
-     * @return array
+     * @return array<int, int>
      */
     protected function getValidCategoryIds(array $eventTransfers)
     {
@@ -68,6 +76,11 @@ class ProductPageCategorySearchListener extends AbstractProductPageSearchListene
             ],
         );
 
-        return $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($validEventTransfers);
+        $categoryIdTimestampMap = $this->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($validEventTransfers)),
+        )->getIdTimestampMap();
+
+        return $categoryIdTimestampMap;
     }
 }

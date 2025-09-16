@@ -60,14 +60,15 @@ class GetCategoryNamesIndexedByCategoryKeyTest extends Unit
             CategoryTransfer::PARENT_CATEGORY_NODE => $firstCategory->getCategoryNode(),
             CategoryTransfer::CATEGORY_KEY => static::SECOND_CATEGORY_KEY,
         ]);
+        $currentLocaleTransfer = $this->tester->getLocator()->locale()->facade()->getCurrentLocale();
 
         // Act
         $indexedCategories = $this->tester->getFacade()->getCategoryNamesIndexedByCategoryKey();
 
         // Assert
-        $rootCategoryName = $rootCategory->getLocalizedAttributes()->offsetGet(0)->getName();
-        $firstCategoryName = $firstCategory->getLocalizedAttributes()->offsetGet(0)->getName();
-        $secondCategoryName = $secondCategory->getLocalizedAttributes()->offsetGet(0)->getName();
+        $rootCategoryName = $rootCategory->getLocalizedAttributes()->offsetGet(1)->getName();
+        $firstCategoryName = $firstCategory->getLocalizedAttributes()->offsetGet(1)->getName();
+        $secondCategoryName = $secondCategory->getLocalizedAttributes()->offsetGet(1)->getName();
 
         $this->assertContains($rootCategoryName, array_values($indexedCategories));
         $this->assertContains($firstCategoryName, array_values($indexedCategories));

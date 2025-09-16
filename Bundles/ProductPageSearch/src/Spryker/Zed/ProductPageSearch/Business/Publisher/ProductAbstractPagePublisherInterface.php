@@ -10,6 +10,13 @@ namespace Spryker\Zed\ProductPageSearch\Business\Publisher;
 interface ProductAbstractPagePublisherInterface
 {
     /**
+     * @param array<int, int> $productAbstractIdTimestampMap
+     *
+     * @return void
+     */
+    public function publishWithTimestamps(array $productAbstractIdTimestampMap): void;
+
+    /**
      * @param array<int> $productAbstractIds
      *
      * @return void
@@ -23,6 +30,13 @@ interface ProductAbstractPagePublisherInterface
      * @return void
      */
     public function refresh(array $productAbstractIds, array $pageDataExpanderPluginNames = []);
+
+    /**
+     * @param array<int, int> $productAbstractIdTimestampMap
+     *
+     * @return void
+     */
+    public function unpublishWithTimestamps(array $productAbstractIdTimestampMap);
 
     /**
      * @param array<int> $productAbstractIds

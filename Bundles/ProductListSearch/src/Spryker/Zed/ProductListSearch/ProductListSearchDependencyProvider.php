@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToEventBehaviorFacadeBridge;
 use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeBridge;
 use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeBridge;
-use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductPageSearchFacadeBridge;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductPageSearchFacadeAdapter;
 
 /**
  * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
@@ -130,7 +130,7 @@ class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvid
     protected function addProductPageSearchFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_PAGE_SEARCH, function (Container $container) {
-            return new ProductListSearchToProductPageSearchFacadeBridge($container->getLocator()->productPageSearch()->facade());
+            return new ProductListSearchToProductPageSearchFacadeAdapter($container->getLocator()->productPageSearch()->facade());
         });
 
         return $container;

@@ -15,8 +15,8 @@ use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
 use ReflectionClass;
 use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\AbstractProductConcretePageSearchListener;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\AbstractProductPageSearchListener;
+use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductAbstractPagePublisher;
+use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPublisher;
 
 /**
  * @method void wantToTest($text)
@@ -49,7 +49,7 @@ class ProductPageSearchCommunicationTester extends Actor
      */
     public function cleanUpProcessedAbstractProductIds()
     {
-        $refClass = new ReflectionClass(AbstractProductPageSearchListener::class);
+        $refClass = new ReflectionClass(ProductAbstractPagePublisher::class);
         $property = $refClass->getProperty('publishedProductAbstractIds');
         $property->setAccessible(true);
         $property->setValue([]);
@@ -64,7 +64,7 @@ class ProductPageSearchCommunicationTester extends Actor
      */
     public function cleanUpProcessedConcreteProductIds()
     {
-        $refClass = new ReflectionClass(AbstractProductConcretePageSearchListener::class);
+        $refClass = new ReflectionClass(ProductConcretePageSearchPublisher::class);
         $property = $refClass->getProperty('publishedProductConcreteIds');
         $property->setAccessible(true);
         $property->setValue([]);

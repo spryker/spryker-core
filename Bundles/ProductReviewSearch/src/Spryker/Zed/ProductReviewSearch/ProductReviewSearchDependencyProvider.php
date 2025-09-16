@@ -11,7 +11,7 @@ use Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToEventBehaviorFacadeBridge;
-use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToProductPageSearchFacadeBridge;
+use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToProductPageSearchFacadeAdapter;
 use Spryker\Zed\ProductReviewSearch\Dependency\QueryContainer\ProductReviewSearchToProductReviewQueryContainerBridge;
 use Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilEncodingBridge;
 
@@ -57,7 +57,7 @@ class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProv
         });
 
         $container->set(static::FACADE_PRODUCT_PAGE_SEARCH, function (Container $container) {
-            return new ProductReviewSearchToProductPageSearchFacadeBridge($container->getLocator()->productPageSearch()->facade());
+            return new ProductReviewSearchToProductPageSearchFacadeAdapter($container->getLocator()->productPageSearch()->facade());
         });
 
         return $container;

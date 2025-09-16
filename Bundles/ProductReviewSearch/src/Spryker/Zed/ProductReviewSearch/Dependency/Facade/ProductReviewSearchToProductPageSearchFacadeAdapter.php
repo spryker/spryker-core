@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductReviewSearch\Dependency\Facade;
 
-class ProductReviewSearchToProductPageSearchFacadeBridge implements ProductReviewSearchToProductPageSearchFacadeInterface
+class ProductReviewSearchToProductPageSearchFacadeAdapter implements ProductReviewSearchToProductPageSearchFacadeInterface
 {
     /**
      * @var \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface
@@ -23,13 +23,16 @@ class ProductReviewSearchToProductPageSearchFacadeBridge implements ProductRevie
     }
 
     /**
-     * @param array<int> $productAbstractIds
-     * @param array $pageDataExpanderPluginNames
+     * @param array<int, int> $productAbstractIdTimestampMap
      *
      * @return void
      */
-    public function refresh(array $productAbstractIds, $pageDataExpanderPluginNames = [])
+    public function publishWithTimestamp(array $productAbstractIdTimestampMap): void
     {
-        $this->productPageSearchFacade->refresh($productAbstractIds, $pageDataExpanderPluginNames);
+        if (!method_exists($this->productPageSearchFacade, 'publishWithTimestamp') === false) {
+            $this->productPageSearchFacade->refresh(array_keys($productAbstractIdTimestampMap));
+        }
+
+        $this->productPageSearchFacade->publishWithTimestamp($productAbstractIdTimestampMap);
     }
 }
