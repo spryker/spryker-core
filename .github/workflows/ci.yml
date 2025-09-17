@@ -2,7 +2,7 @@ name: SPRYKER-CI
 
 on:
     pull_request:
-        types: [synchronize]
+        types: [synchronize, opened]
     push:
         branches:
             - master
