@@ -43,6 +43,7 @@ use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspAssetFileTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspAssetTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspInquirySspAssetTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspInquiryTableMap;
+use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspModelToProductListTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -1194,5 +1195,19 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         $companyIds = $companyIdsCollection->toArray();
 
         return $companyIds;
+    }
+
+    public function getSspModelIdsByProductListId(int $idProductList): array
+    {
+        /** @var \Propel\Runtime\Collection\ObjectCollection<int> $sspModelIdsCollection */
+        $sspModelIdsCollection = $this->getFactory()->createSspModelToProductListQuery()
+            ->filterByFkProductList($idProductList)
+            ->select(SpySspModelToProductListTableMap::COL_FK_SSP_MODEL)
+            ->find();
+
+        /** @var list<int> $sspModelIds */
+        $sspModelIds = $sspModelIdsCollection->toArray();
+
+        return $sspModelIds;
     }
 }

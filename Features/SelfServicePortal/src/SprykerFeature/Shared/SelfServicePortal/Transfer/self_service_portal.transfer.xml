@@ -1345,4 +1345,25 @@
     <transfer name="CompanyBusinessUnitResponse">
         <property name="companyBusinessUnitTransfer" type="CompanyBusinessUnit"/>
     </transfer>
+
+    <transfer name="ProductListUsedByTable">
+        <property name="productList" type="ProductList"/>
+        <property name="rows" type="ProductListUsedByTableRow[]" singular="row"/>
+    </transfer>
+
+    <transfer name="ButtonCollection">
+        <property name="buttons" type="Button[]" singular="button"/>
+    </transfer>
+
+    <transfer name="Button">
+        <property name="title" type="string"/>
+        <property name="url" type="string"/>
+        <property name="defaultOptions" type="array" singular="defaultOptions"/>
+    </transfer>
+
+    <transfer name="ProductListUsedByTableRow">
+        <property name="title" type="string"/>
+        <property name="name" type="string"/>
+        <property name="actionButtons" type="ButtonCollection"/>
+    </transfer>
 </transfers>

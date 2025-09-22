@@ -195,6 +195,8 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\AttachmentScopeS
 use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\BusinessUnitAttachmentScopeStrategy;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\CompanyAttachmentScopeStrategy;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\CompanyUserAttachmentScopeStrategy;
+use SprykerFeature\Zed\SelfServicePortal\Communication\TableDataProvider\SspModelProductListUsedByTableExpander;
+use SprykerFeature\Zed\SelfServicePortal\Communication\TableDataProvider\SspModelProductListUsedByTableExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalDependencyProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -1246,5 +1248,12 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     public function getCompanyQuery(): SpyCompanyQuery
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_COMPANY);
+    }
+
+    public function createSspModelProductListUsedByTableExpander(): SspModelProductListUsedByTableExpanderInterface
+    {
+        return new SspModelProductListUsedByTableExpander(
+            $this->getRepository(),
+        );
     }
 }

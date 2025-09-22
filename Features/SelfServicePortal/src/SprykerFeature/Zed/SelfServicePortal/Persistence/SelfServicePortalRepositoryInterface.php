@@ -183,4 +183,11 @@ interface SelfServicePortalRepositoryInterface
      * @return list<int>
      */
     public function getExistingCompanyIds(array $companyIds): array;
+
+    /**
+     * @param int $idProductList
+     *
+     * @return list<int>
+     */
+    public function getSspModelIdsByProductListId(int $idProductList): array;
 }

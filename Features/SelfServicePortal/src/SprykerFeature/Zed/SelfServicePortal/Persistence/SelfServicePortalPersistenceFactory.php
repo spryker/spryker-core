@@ -32,6 +32,7 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySalesOrderQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySspAssetQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelStorageQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModelToProductListQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -272,5 +273,10 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     public function createSspAssetSearchPropelQuery(): SpySspAssetSearchQuery
     {
         return new SpySspAssetSearchQuery();
+    }
+
+    public function createSspModelToProductListQuery(): SpySspModelToProductListQuery
+    {
+        return SpySspModelToProductListQuery::create();
     }
 }
