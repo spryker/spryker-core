@@ -214,7 +214,8 @@ class SelfServicePortalHelper extends Module
         if ($sspInquiryTransfer->getSspAsset()) {
             (new SpySspInquirySspAsset())
                 ->setFkSspInquiry($sspInquiryTransfer->getIdSspInquiry())
-                ->setFkSspAsset($sspInquiryTransfer->getSspAsset()->getIdSspAsset());
+                ->setFkSspAsset($sspInquiryTransfer->getSspAsset()->getIdSspAsset())
+                ->save();
         }
 
         $this->generateAndSaveSspInquiryImages($seedData['fileAmount'] ?? 0, $sspInquiryTransfer);

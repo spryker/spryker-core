@@ -15,6 +15,8 @@ use Orm\Zed\SelfServicePortal\Persistence\SpyProductToProductClassQuery;
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery;
 use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\Comment\Business\CommentFacadeInterface;
+use Spryker\Zed\Company\Business\CompanyFacadeInterface;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\DataImport\Business\DataImportFactoryTrait;
@@ -325,7 +327,7 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
 
     public function createSspServiceCustomerPermissionExpander(): SspServiceCustomerPermissionExpanderInterface
     {
-        return new SspServiceCustomerPermissionExpander();
+        return new SspServiceCustomerPermissionExpander($this->getCompanyBusinessUnitFacade(), $this->getCompanyFacade());
     }
 
     public function createFileAttachmentPermissionExpander(): FileAttachmentPermissionExpanderInterface
@@ -873,6 +875,7 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
             $this->getSequenceNumberFacade(),
             $this->getConfig(),
             $this->createFileSspAssetWriter(),
+            $this->getCompanyBusinessUnitFacade(),
         );
     }
 
@@ -1005,6 +1008,11 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_PRODUCT_OFFER_SHIPMENT_TYPE);
     }
 
+    public function getCompanyFacade(): CompanyFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_COMPANY);
+    }
+
     public function getSalesFacade(): SalesFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_SALES);
@@ -1023,6 +1031,11 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     public function getMessengerFacade(): MessengerFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_MESSENGER);
+    }
+
+    public function getCompanyBusinessUnitFacade(): CompanyBusinessUnitFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT);
     }
 
     /**

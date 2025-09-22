@@ -1259,11 +1259,26 @@
         <property name="serialNumber" type="string"/>
         <property name="note" type="string"/>
         <property name="externalImageUrl" type="string"/>
-        <property name="businessUnitAssignments" type="RestSspAssetBusinessUnitAssignment[]" singular="businessUnitAssignment"/>
     </transfer>
 
-    <transfer name="RestSspAssetBusinessUnitAssignment" strict="true">
-        <property name="idCompanyBusinessUnit" type="int"/>
+    <transfer name="RestSspInquiriesAttributes" strict="true">
+        <property name="sspAssetReference" type="string"/>
+        <property name="orderReference" type="string"/>
+        <property name="type" type="string"/>
+        <property name="status" type="string"/>
+        <property name="subject" type="string"/>
+        <property name="description" type="string"/>
+        <property name="reference" type="string"/>
+        <property name="isCancellable" type="bool"/>
+    </transfer>
+
+    <transfer name="RestSspServiceAttributes" strict="true">
+        <property name="uuid" type="string"/>
+        <property name="productName" type="string"/>
+        <property name="scheduledAt" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="stateDisplayName" type="string"/>
+        <property name="stateName" type="string"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
@@ -1276,5 +1291,58 @@
         <property name="idCompany" type="int"/>
         <property name="idCompanyBusinessUnit" type="int"/>
         <property name="idCompanyUser" type="int"/>
+        <property name="surrogateIdentifier" type="int" description="A system-generated, non-human-readable unique identifier (like an auto-incrementing ID)."/>
+        <property name="naturalIdentifier" type="string" description="A human-readable unique identifier for a resource, such as a user's email."/>
+    </transfer>
+
+    <transfer name="SspAssetsBackendApiAttributes" strict="true">
+        <property name="reference" type="string"/>
+        <property name="name" type="string"/>
+        <property name="serialNumber" type="string"/>
+        <property name="status" type="string"/>
+        <property name="note" type="string"/>
+        <property name="createdDate" type="string"/>
+        <property name="externalImageUrl" type="string"/>
+        <property name="companyBusinessUnitOwnerUuid" type="string"/>
+    </transfer>
+
+    <transfer name="GlueResourceMethodCollection">
+        <property name="getCollection" type="GlueResourceMethodConfiguration" description="An annotation or configuration for the 'get collection' (list) action of a resource."/>
+        <property name="get" type="GlueResourceMethodConfiguration" description="An annotation or configuration for the 'get single item' action of a resource."/>
+        <property name="post" type="GlueResourceMethodConfiguration" description="An annotation or configuration for the 'create' (POST) action of a resource."/>
+        <property name="patch" type="GlueResourceMethodConfiguration" description="An annotation or configuration for the 'update' (PATCH) action of a resource."/>
+    </transfer>
+
+    <transfer name="GlueResourceMethodConfiguration">
+        <property name="attributes" type="string" description="A set of key-value pairs describing a product or entity."/>
+    </transfer>
+
+    <transfer name="GlueRequest">
+        <property name="locale" type="string" description="The locale context for a request or entity, affecting language and regional formats."/>
+        <property name="resource" type="GlueResource" description="A data entity in a REST API."/>
+        <property name="pagination" type="Pagination" description="An object containing all pagination-related data for a list of results."/>
+        <property name="sortings" type="Sort[]" singular="sorting" description="A collection of sorting criteria applied to a query."/>
+    </transfer>
+
+    <transfer name="GlueResponse">
+        <property name="httpStatus" type="int" description="The HTTP status code of a response."/>
+        <property name="resources" type="GlueResource[]" singular="resource" description="A collection of data entities in a REST API."/>
+        <property name="errors" type="GlueError[]" singular="error" description="A collection of error objects."/>
+    </transfer>
+
+    <transfer name="GlueError">
+        <property name="status" type="int" description="A HTTP status code."/>
+        <property name="code" type="string" description="A Spryker specific error code."/>
+        <property name="message" type="string" description="A message providing information, success, or error details."/>
+    </transfer>
+
+    <transfer name="GlueResource">
+        <property name="type" type="string" description="The type or category of an entity (e.g., 'allow', 'deny', 'page')."/>
+        <property name="id" type="string"/>
+        <property name="attributes" type="AbstractAttributes" description="A set of key-value pairs describing a product or entity."/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitResponse">
+        <property name="companyBusinessUnitTransfer" type="CompanyBusinessUnit"/>
     </transfer>
 </transfers>

@@ -347,6 +347,8 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addCustomerFacade($container);
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addCompanyBusinessUnitFacade($container);
+        $container = $this->addCompanyFacade($container);
 
         return $container;
     }

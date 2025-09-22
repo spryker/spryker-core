@@ -7,9 +7,7 @@
 
 namespace SprykerFeature\Glue\SelfServicePortal\Processor\StorefrontApi\RestApi\Builder;
 
-use ArrayObject;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestSspAssetBusinessUnitAssignmentTransfer;
 use Generated\Shared\Transfer\RestSspAssetsAttributesTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
@@ -143,13 +141,6 @@ class SspAssetsResponseBuilder implements SspAssetsResponseBuilderInterface
     {
         $restSspAssetsAttributesTransfer = new RestSspAssetsAttributesTransfer();
         $restSspAssetsAttributesTransfer->fromArray($sspAssetTransfer->toArray(), true);
-        $restSspAssetsAttributesTransfer->setBusinessUnitAssignments(new ArrayObject());
-
-        foreach ($sspAssetTransfer->getBusinessUnitAssignments() as $sspAssetBusinessUnitAssignmentTransfer) {
-            $restSspAssetsAttributesTransfer->addBusinessUnitAssignment(
-                (new RestSspAssetBusinessUnitAssignmentTransfer())->setIdCompanyBusinessUnit($sspAssetBusinessUnitAssignmentTransfer->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail()),
-            );
-        }
 
         return $restSspAssetsAttributesTransfer;
     }

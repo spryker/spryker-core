@@ -261,9 +261,21 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
 
     public function updateSspAsset(SspAssetTransfer $sspAssetTransfer): SspAssetTransfer
     {
-        $spySspAssetEntity = $this->getFactory()
-            ->createSspAssetQuery()
-            ->findOneByIdSspAsset($sspAssetTransfer->getIdSspAssetOrFail());
+        $spySspAssetEntity = null;
+
+        if ($sspAssetTransfer->getIdSspAsset()) {
+            $spySspAssetEntity = $this->getFactory()
+                ->createSspAssetQuery()
+                ->joinWithSpyCompanyBusinessUnit()
+                ->findOneByIdSspAsset($sspAssetTransfer->getIdSspAsset());
+        }
+
+        if ($sspAssetTransfer->getReference()) {
+            $spySspAssetEntity = $this->getFactory()
+                ->createSspAssetQuery()
+                ->joinWithSpyCompanyBusinessUnit()
+                ->findOneByReference($sspAssetTransfer->getReference());
+        }
 
         if (!$spySspAssetEntity) {
             throw new InvalidArgumentException('Ssp Asset not found');

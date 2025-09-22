@@ -61,14 +61,6 @@ class SspAssetsMapper implements SspAssetsMapperInterface
             (new SspAssetBusinessUnitAssignmentTransfer())->setCompanyBusinessUnit($restUserCompanyBusinessUnitTransfer),
         );
 
-        foreach ($restSspAssetsAttributesTransfer->getBusinessUnitAssignments() as $businessUnitAssignment) {
-            $sspAssetTransfer->addBusinessUnitAssignment(
-                (new SspAssetBusinessUnitAssignmentTransfer())->setCompanyBusinessUnit(
-                    (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($businessUnitAssignment->getIdCompanyBusinessUnitOrFail()),
-                ),
-            );
-        }
-
         $sspAssetCollectionRequestTransfer = (new SspAssetCollectionRequestTransfer())->addSspAsset($sspAssetTransfer);
 
         $sspAssetCollectionRequestTransfer->setCompanyUser(
