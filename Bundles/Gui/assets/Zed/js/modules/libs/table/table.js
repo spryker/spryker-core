@@ -1,5 +1,6 @@
 import { SelectableTable } from './selectable-table';
 import { FilterableTable } from './filterable-table';
+import { TableFileUploader } from './table-file-uploader';
 
 function getTranslations() {
     const localeEl = document.documentElement.dataset.applicationLocale;
@@ -25,6 +26,10 @@ export class Table {
             class: FilterableTable,
             attribute: 'data-filterable',
         },
+        uploader: {
+            attribute: 'data-uploader',
+            class: TableFileUploader,
+        },
     };
 
     static #defaultOptions = {
@@ -48,6 +53,8 @@ export class Table {
             },
         },
     };
+
+    tables = new Map();
 
     constructor(options = {}) {
         this.options = { ...Table.#defaultOptions, ...options };
@@ -80,25 +87,35 @@ export class Table {
     }
 
     initFeatures(data) {
-        for (const feature of Object.values(Table.FEATURES)) {
+        const features = {};
+
+        for (const [name, feature] of Object.entries(Table.FEATURES)) {
             const { attribute, class: FeatureClass } = feature;
 
             if (!data.table.hasAttribute(attribute) && attribute) {
                 continue;
             }
 
+            const params = {
+                ...data,
+                features,
+                config: JSON.parse(data.table.getAttribute(attribute) || '{}'),
+                tables: this.tables,
+            };
+
+            this.tables.set(data.tableId, params);
+
             /**
              * @param {Object} element - Table element.
              * @param {Object} api - Table API instance.
              * @param {Object} config - Config for feature.
+             * @param {Object} features - Instances of features on current table.
              * @param {string} tableId - Table ID.
              * @param {Object} options - Table options.
+             * @param {Object} tables - Map of initialized tables.
              * @param {Object} translations - List of translations for current locale.
              */
-            new FeatureClass({
-                ...data,
-                config: JSON.parse(data.table.getAttribute(attribute) || '{}'),
-            });
+            features[name] = new FeatureClass(params);
         }
     }
 

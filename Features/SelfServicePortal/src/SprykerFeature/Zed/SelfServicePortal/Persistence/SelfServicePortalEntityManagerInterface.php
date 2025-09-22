@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileCollectionTransfer;
+use Generated\Shared\Transfer\ModelProductListAssignmentTransfer;
 use Generated\Shared\Transfer\ProductClassCriteriaTransfer;
 use Generated\Shared\Transfer\ProductClassTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -101,7 +102,19 @@ interface SelfServicePortalEntityManagerInterface
      */
     public function deleteSspModelStorageBySspModelIds(array $sspModelIds): void;
 
+    public function createSspAssetToSspModelRelation(int $idSspAsset, int $idSspModel): void;
+
     public function saveSspAssetStorage(SspAssetTransfer $sspAssetTransfer): void;
+
+    public function deleteSspAssetToSspModelRelation(int $idSspAsset, int $idSspModel): void;
+
+    public function createSspModelToProductListAssignment(
+        ModelProductListAssignmentTransfer $modelProductListAssignmentTransfer
+    ): void;
+
+    public function deleteSspModelToProductListAssignment(
+        ModelProductListAssignmentTransfer $modelProductListAssignmentTransfer
+    ): void;
 
     /**
      * @param array<int> $sspAssetIds

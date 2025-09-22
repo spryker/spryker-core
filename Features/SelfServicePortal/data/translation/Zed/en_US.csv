@@ -74,6 +74,7 @@ company_user,"Company user"
 "Company Business Unit","Company Business Unit"
 company_business_unit,"Company business unit"
 ssp_asset,Asset
+ssp_model,Model
 "Upload Files","Upload Files"
 "Back to File Attachments","Back to File Attachments"
 Upload,Upload
@@ -161,7 +162,6 @@ Code,Code
 "Customer portal","Customer portal"
 "Asset Details","Asset Details"
 Reference,Reference
-"Asset Name","Asset Name"
 "Serial Number","Serial Number"
 Note,Note
 "Asset created date","Asset created date"
@@ -172,41 +172,41 @@ Note,Note
 Delete,Delete
 "View Model: ","View Model: "
 "Back to Models","Back to Models"
+"Back to Model View page","Back to Model View page"
 Relations,Relations
-"Relations will be displayed here in future updates.","Relations will be displayed here in future updates."
 "Model successfully deleted","Model successfully deleted"
 "Model cannot be deleted","Model cannot be deleted"
+"Attached Assets","Attached Assets"
+"Attached Product Lists","Attached Product Lists"
+"Asset Reference","Asset Reference"
+"Asset Name","Asset Name"
+"Asset Serial Number","Asset Serial Number"
+Title,Title
+Type,Type
 "Remove All","Remove All"
-"Please confirm to remove all entities","Please confirm to remove all entities"
 Keep,Keep
 Remove,Remove
 Selected,selected
-selected-entities-information,"You are about to attach <span class=""js-table-skeleton-dynamic-counter""></span> entities to the selected list. Please review your selection before confirming."
-"Save Progress?","Save Progress?"
 "Please confirm saving the selected entities.","Please confirm saving the selected entities."
-"Remove file","Remove file"
-Asset,Asset
-"Business Unit","Business Unit"
-"Attach asset","Attach Asset"
 "Assets to be attached","Assets to be attached"
-"Attached assets","Attached assets"
 "Assets to be detached","Assets to be detached"
-"Import asset file","Import asset file"
 "Attach Business Unit","Attach Business Unit"
 "Business Units to be attached","Business Units to be attached"
 "Attached Business Units","Attached Business Units"
 "Business Units to be detached","Business Units to be detached"
-"Import business unit file","Import business unit file"
 "Attach Company","Attach Company"
 "Companies to be attached","Companies to be attached"
 "Attached Companies","Attached Companies"
 "Companies to be detached","Companies to be detached"
-"Import company file","Import company file"
 "Attach Company User","Attach Company User"
 "Company Users to be attached","Company Users to be attached"
 "Attached Company Users","Attached Company Users"
 "Company Users to be detached","Company Users to be detached"
-"Import company user file","Import company user file"
+"Please confirm to remove all entities","Please confirm to remove all entities"
+"Save Progress?","Save Progress?"
+Asset,Asset
+"Business Unit","Business Unit"
+"Attach asset","Attach Asset"
 "Model has been successfully updated.","Model has been successfully updated."
 "Something went wrong, please try again.","Something went wrong, please try again."
 "Model not found.","Model not found."
@@ -231,7 +231,23 @@ Asset,Asset
 "Date and time","Date and time"
 Event,Event
 "Business entity type","Business entity type"
-Type,Type
 "Edit Model: ","Edit Model: "
 "Model reference","Model reference"
 "Update Model","Update Model"
+"Import Asset File","Import Asset File"
+"Upload Asset Assignment File","Upload Asset Assignment File"
+"Upload Product List Assignment File","Upload Product List Assignment File"
+"Download example file","Download example file"
+"Edit Relations","Edit Relations"
+"You are about to leave current progression! Please confirm.","You are about to leave current progression! Please confirm."
+Change,Change
+TITLE,TITLE
+"Select product lists to assign or unassign from this model using the tables below.","Select product lists to assign or unassign from this model using the tables below."
+NAME,NAME
+"ASSET REFERENCE","ASSET REFERENCE"
+"SERIAL NUMBER","SERIAL NUMBER"
+STATUS,STATUS
+"Select assets to assign or unassign from this model using the tables below.","Select assets to assign or unassign from this model using the tables below."
+"Manage Asset Relations","Manage Asset Relations"
+"Manage Product List Relations","Manage Product List Relations"
+"Model attachments have been created successfully.","Model attachments have been created successfully."

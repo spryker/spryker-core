@@ -65,7 +65,7 @@ class AttachFileForm extends AbstractType
     /**
      * @var string
      */
-    public const FIELD_COMPANY_USER_IDS_TO_BE_DEASSIGNED = 'companyUserIdsToBeDeassigned';
+    public const FIELD_COMPANY_USER_IDS_TO_BE_UNASSIGNED = 'companyUserIdsToBeUnassigned';
 
     /**
      * @var string
@@ -75,7 +75,7 @@ class AttachFileForm extends AbstractType
     /**
      * @var string
      */
-    public const FIELD_COMPANY_IDS_TO_BE_DEASSIGNED = 'companyIdsToBeDeassigned';
+    public const FIELD_COMPANY_IDS_TO_BE_UNASSIGNED = 'companyIdsToBeUnassigned';
 
     /**
      * @var string
@@ -85,7 +85,7 @@ class AttachFileForm extends AbstractType
     /**
      * @var string
      */
-    public const FIELD_BUSINESS_UNIT_IDS_TO_BE_DEASSIGNED = 'businessUnitIdsToBeDeassigned';
+    public const FIELD_BUSINESS_UNIT_IDS_TO_BE_UNASSIGNED = 'businessUnitIdsToBeUnassigned';
 
     /**
      * @var string
@@ -95,7 +95,22 @@ class AttachFileForm extends AbstractType
     /**
      * @var string
      */
-    public const FIELD_ASSET_IDS_TO_BE_DEASSIGNED = 'sspAssetIdsToBeDeassigned';
+    public const FIELD_ASSET_IDS_TO_BE_UNASSIGNED = 'sspAssetIdsToBeUnassigned';
+
+    /**
+     * @var string
+     */
+    public const FIELD_MODEL_IDS = 'sspModelIds';
+
+    /**
+     * @var string
+     */
+    public const FIELD_MODEL_IDS_TO_BE_ASSIGNED = 'sspModelIdsToBeAssigned';
+
+    /**
+     * @var string
+     */
+    public const FIELD_MODEL_IDS_TO_BE_UNASSIGNED = 'sspModelIdsToBeUnassigned';
 
     /**
      * @var string
@@ -121,6 +136,11 @@ class AttachFileForm extends AbstractType
      * @var string
      */
     public const FIELD_COMPANY_FILE_UPLOAD = 'company_file_upload';
+
+    /**
+     * @var string
+     */
+    public const FIELD_MODEL_FILE_UPLOAD = 'model_file_upload';
 
     /**
      * @var string
@@ -192,6 +212,14 @@ class AttachFileForm extends AbstractType
                 'attr' => [
                     'data-qa' => 'company-file-upload',
                 ],
+            ])
+            ->add(static::FIELD_MODEL_FILE_UPLOAD, FileType::class, [
+                'label' => 'Import Model File',
+                'required' => false,
+                'mapped' => false,
+                'attr' => [
+                    'data-qa' => 'model-file-upload',
+                ],
             ]);
 
         return $this;
@@ -208,7 +236,7 @@ class AttachFileForm extends AbstractType
             'mapped' => false,
         ]);
 
-        $builder->add(static::FIELD_COMPANY_USER_IDS_TO_BE_DEASSIGNED, HiddenType::class, [
+        $builder->add(static::FIELD_COMPANY_USER_IDS_TO_BE_UNASSIGNED, HiddenType::class, [
             'mapped' => false,
         ]);
 
@@ -216,7 +244,7 @@ class AttachFileForm extends AbstractType
             'mapped' => false,
         ]);
 
-        $builder->add(static::FIELD_COMPANY_IDS_TO_BE_DEASSIGNED, HiddenType::class, [
+        $builder->add(static::FIELD_COMPANY_IDS_TO_BE_UNASSIGNED, HiddenType::class, [
             'mapped' => false,
         ]);
 
@@ -224,7 +252,7 @@ class AttachFileForm extends AbstractType
             'mapped' => false,
         ]);
 
-        $builder->add(static::FIELD_BUSINESS_UNIT_IDS_TO_BE_DEASSIGNED, HiddenType::class, [
+        $builder->add(static::FIELD_BUSINESS_UNIT_IDS_TO_BE_UNASSIGNED, HiddenType::class, [
             'mapped' => false,
         ]);
 
@@ -232,7 +260,15 @@ class AttachFileForm extends AbstractType
             'mapped' => false,
         ]);
 
-        $builder->add(static::FIELD_ASSET_IDS_TO_BE_DEASSIGNED, HiddenType::class, [
+        $builder->add(static::FIELD_ASSET_IDS_TO_BE_UNASSIGNED, HiddenType::class, [
+            'mapped' => false,
+        ]);
+
+        $builder->add(static::FIELD_MODEL_IDS_TO_BE_ASSIGNED, HiddenType::class, [
+            'mapped' => false,
+        ]);
+
+        $builder->add(static::FIELD_MODEL_IDS_TO_BE_UNASSIGNED, HiddenType::class, [
             'mapped' => false,
         ]);
 

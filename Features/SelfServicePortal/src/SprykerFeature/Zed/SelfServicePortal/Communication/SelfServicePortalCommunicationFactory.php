@@ -25,12 +25,15 @@ use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
+use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToCompanyBusinessUnitQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySspAssetQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModelToProductListQuery;
+use Spryker\Service\UtilCsv\UtilCsvServiceInterface;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Company\Business\CompanyFacadeInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
@@ -80,36 +83,14 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatter\Tim
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatter\TimeZoneFormatterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\FormDataNormalizer;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\FormDataNormalizerInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\AssetAssignmentImporter;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\AssetAssignmentImporterInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\BusinessUnitAssignmentImporter;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\BusinessUnitAssignmentImporterInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\CompanyAssignmentImporter;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\CompanyAssignmentImporterInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\CompanyUserAssignmentImporter;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Importer\CompanyUserAssignmentImporterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Mapper\FileAttachmentMapper;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Mapper\FileAttachmentMapperInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Mapper\FileUploadMapper;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Mapper\FileUploadMapperInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\AssetAssignmentFileParser;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\AssetAssignmentFileParserInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\BusinessUnitAssignmentFileParser;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\BusinessUnitAssignmentFileParserInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\CompanyAssignmentFileParser;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\CompanyAssignmentFileParserInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\CompanyUserAssignmentFileParser;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Parser\CompanyUserAssignmentFileParserInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\AttachmentProcessor;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\AttachmentProcessorInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\CsvImportProcessor;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\CsvImportProcessorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\FormDataProcessor;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\FormDataProcessorInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\Strategy\AssetCsvImportStrategy;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\Strategy\BusinessUnitCsvImportStrategy;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\Strategy\CompanyCsvImportStrategy;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\Strategy\CompanyUserCsvImportStrategy;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Reader\FileReader;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Reader\FileReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\ReferenceGenerator\FileReferenceGenerator;
@@ -119,26 +100,28 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Saver\FileSav
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AssignedBusinessUnitAttachmentTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AssignedCompanyAttachmentTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AssignedCompanyUserAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AssignedModelAttachmentTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AssignedSspAssetAttachmentTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AttachedSspAssetFileTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AvailableBusinessUnitAttachmentTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AvailableCompanyAttachmentTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AvailableCompanyUserAttachmentTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AvailableSspAssetAttachmentTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\FileTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\UnassignedBusinessUnitAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\UnassignedCompanyAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\UnassignedCompanyUserAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\UnassignedModelAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\UnassignedSspAssetAttachmentTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\ViewFileDetailTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\AssetAttachmentTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\AttachedAssetsTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\AttachedBusinessUnitsTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\AttachedCompaniesTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\AttachedCompanyUsersTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\AttachedModelsTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\AttachmentScopeTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\BusinessUnitAttachmentTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\CompanyAttachmentTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\CompanyUserAttachmentTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\FileAttachmentTabs;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Validator\FileSecurityValidator;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Validator\FileSecurityValidatorInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\ModelAttachmentTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\DataProvider\SspInquiryFilterFormDataProvider;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\DataProvider\SspInquiryFilterFormDataProviderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\DataProvider\TriggerEventFormDataProvider;
@@ -147,6 +130,8 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\SspInquiryFi
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Form\TriggerEventForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Table\OrderSspInquiryTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Inquiry\Table\SspInquiryTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Reader\RelationCsvReader;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Reader\RelationCsvReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductOfferTableActionExpander;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Expander\ProductOfferTableActionExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Form\CreateOfferForm;
@@ -181,13 +166,29 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Saver\SalesOrderI
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Saver\SalesOrderItemProductClassesSaverInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Table\ProductConcreteTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Service\Table\ServiceTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form\AttachModelForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form\DataProvider\SspModelFormDataProvider;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form\DataTransformer\SspModelCollectionRequestTransformer;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form\DeleteSspModelForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form\SspModelForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Mapper\SspModelFormDataToTransferMapper;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Mapper\SspModelFormDataToTransferMapperInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Provider\AttachedAssetTableDataProvider;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Provider\AttachedAssetTableDataProviderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Provider\ModelImageUrlProvider;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\AssignedModelAssetAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\AssignedModelProductListAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\AttachedAssetsTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\AttachedProductListsTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\SspModelTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\UnassignedModelAssetAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\UnassignedModelProductListAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Tabs\AttachedModelAssetsTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Tabs\AttachedModelProductListsTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Tabs\ModelAssetRelationTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Tabs\ModelProductListRelationTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Tabs\ModelRelationScopeTabs;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Tabs\SspModelTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\AssetAttachmentScopeStrategy;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\AttachmentScopeStrategyInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\AttachmentScopeStrategyResolver;
@@ -195,6 +196,7 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\AttachmentScopeS
 use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\BusinessUnitAttachmentScopeStrategy;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\CompanyAttachmentScopeStrategy;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\CompanyUserAttachmentScopeStrategy;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Strategy\ModelAttachmentScopeStrategy;
 use SprykerFeature\Zed\SelfServicePortal\Communication\TableDataProvider\SspModelProductListUsedByTableExpander;
 use SprykerFeature\Zed\SelfServicePortal\Communication\TableDataProvider\SspModelProductListUsedByTableExpanderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
@@ -409,6 +411,16 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return new AttachedAssetsTabs();
     }
 
+    public function createModelAttachmentTabs(): ModelAttachmentTabs
+    {
+        return new ModelAttachmentTabs();
+    }
+
+    public function createAttachedModelsTabs(): AttachedModelsTabs
+    {
+        return new AttachedModelsTabs();
+    }
+
     public function createBusinessUnitAttachmentTabs(): BusinessUnitAttachmentTabs
     {
         return new BusinessUnitAttachmentTabs();
@@ -429,9 +441,9 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return new AttachedCompanyUsersTabs();
     }
 
-    public function createAvailableCompanyUserAttachmentTable(int $idFile): AvailableCompanyUserAttachmentTable
+    public function createUnassignedCompanyUserAttachmentTable(int $idFile): UnassignedCompanyUserAttachmentTable
     {
-        return new AvailableCompanyUserAttachmentTable(
+        return new UnassignedCompanyUserAttachmentTable(
             $idFile,
             $this->getCompanyUserQuery(),
         );
@@ -445,10 +457,10 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    public function createAvailableSspAssetAttachmentTable(
+    public function createUnassignedSspAssetAttachmentTable(
         int $idFile
-    ): AvailableSspAssetAttachmentTable {
-        return new AvailableSspAssetAttachmentTable(
+    ): UnassignedSspAssetAttachmentTable {
+        return new UnassignedSspAssetAttachmentTable(
             $this->getSspAssetQuery(),
             $idFile,
         );
@@ -459,6 +471,24 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     ): AssignedSspAssetAttachmentTable {
         return new AssignedSspAssetAttachmentTable(
             $this->getSspAssetQuery(),
+            $idFile,
+        );
+    }
+
+    public function createUnassignedModelAttachmentTable(
+        int $idFile
+    ): UnassignedModelAttachmentTable {
+        return new UnassignedModelAttachmentTable(
+            $this->getRepository()->getSspModelQuery(),
+            $idFile,
+        );
+    }
+
+    public function createAssignedModelAttachmentTable(
+        int $idFile
+    ): AssignedModelAttachmentTable {
+        return new AssignedModelAttachmentTable(
+            $this->getRepository()->getSspModelQuery(),
             $idFile,
         );
     }
@@ -607,45 +637,9 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return new FileAttachmentMapper();
     }
 
-    public function createAssetAssignmentFileParser(): AssetAssignmentFileParserInterface
+    public function createUnassignedBusinessUnitAttachmentTable(int $idFile): UnassignedBusinessUnitAttachmentTable
     {
-        return new AssetAssignmentFileParser();
-    }
-
-    public function createAssetAssignmentImporter(): AssetAssignmentImporterInterface
-    {
-        return new AssetAssignmentImporter(
-            $this->getRepository(),
-        );
-    }
-
-    public function createBusinessUnitAssignmentFileParser(): BusinessUnitAssignmentFileParserInterface
-    {
-        return new BusinessUnitAssignmentFileParser();
-    }
-
-    public function createBusinessUnitAssignmentImporter(): BusinessUnitAssignmentImporterInterface
-    {
-        return new BusinessUnitAssignmentImporter(
-            $this->getRepository(),
-        );
-    }
-
-    public function createCompanyUserAssignmentFileParser(): CompanyUserAssignmentFileParserInterface
-    {
-        return new CompanyUserAssignmentFileParser();
-    }
-
-    public function createCompanyUserAssignmentImporter(): CompanyUserAssignmentImporterInterface
-    {
-        return new CompanyUserAssignmentImporter(
-            $this->getRepository(),
-        );
-    }
-
-    public function createAvailableBusinessUnitAttachmentTable(int $idFile): AvailableBusinessUnitAttachmentTable
-    {
-        return new AvailableBusinessUnitAttachmentTable($this->getCompanyBusinessUnitQuery(), $idFile);
+        return new UnassignedBusinessUnitAttachmentTable($this->getCompanyBusinessUnitQuery(), $idFile);
     }
 
     public function createAssignedBusinessUnitAttachmentTable(int $idFile): AssignedBusinessUnitAttachmentTable
@@ -799,6 +793,11 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return new SspAssetFormDataToTransferMapper();
     }
 
+    public function createSspModelFormDataToTransferMapper(): SspModelFormDataToTransferMapperInterface
+    {
+        return new SspModelFormDataToTransferMapper();
+    }
+
     /**
      * @param \Generated\Shared\Transfer\SspModelTransfer|null $sspModelTransfer
      * @param array<string, mixed> $formOptions
@@ -808,11 +807,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     public function createSspModelForm(?SspModelTransfer $sspModelTransfer = null, array $formOptions = []): FormInterface
     {
         return $this->getFormFactory()->create(SspModelForm::class, $sspModelTransfer, $formOptions);
-    }
-
-    public function createSspModelFormDataToTransferMapper(): SspModelFormDataToTransferMapperInterface
-    {
-        return new SspModelFormDataToTransferMapper();
     }
 
     public function createSspAssetTabs(): SspAssetTabs
@@ -847,6 +841,31 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
             $this->createSspAssetFormDataProvider(),
             $this->getConfig(),
         );
+    }
+
+    public function getSspAssetToCompanyBusinessUnitQuery(): SpySspAssetToCompanyBusinessUnitQuery
+    {
+        return SpySspAssetToCompanyBusinessUnitQuery::create();
+    }
+
+    public function getSspInquirySspAssetQuery(): SpySspInquirySspAssetQuery
+    {
+        return SpySspInquirySspAssetQuery::create();
+    }
+
+    public function getSspAssetQuery(): SpySspAssetQuery
+    {
+        return SpySspAssetQuery::create();
+    }
+
+    public function getSspModelQuery(): SpySspModelQuery
+    {
+        return SpySspModelQuery::create();
+    }
+
+    public function getSspModelToProductListQuery(): SpySspModelToProductListQuery
+    {
+        return SpySspModelToProductListQuery::create();
     }
 
     public function getSspAssetFilterForm(SspAssetConditionsTransfer $sspAssetConditionsTransfer): FormInterface
@@ -907,11 +926,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    public function getSspModelQuery(): SpySspModelQuery
-    {
-        return SpySspModelQuery::create();
-    }
-
     public function createDeleteSspModelForm(): FormInterface
     {
         return $this->getFormFactory()->create(DeleteSspModelForm::class);
@@ -929,6 +943,43 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
+    public function createSspModelTabs(): SspModelTabs
+    {
+        return new SspModelTabs();
+    }
+
+    public function createAttachedAssetsTable(SspModelTransfer $sspModelTransfer): AttachedAssetsTable
+    {
+        return new AttachedAssetsTable(
+            $sspModelTransfer,
+            $this->getSspAssetQuery(),
+            $this->getUtilDateTimeService(),
+            $this->getConfig(),
+        );
+    }
+
+    public function createAttachedAssetTableDataProvider(): AttachedAssetTableDataProviderInterface
+    {
+        return new AttachedAssetTableDataProvider(
+            $this->getFacade(),
+            $this,
+        );
+    }
+
+    public function getUtilCsvService(): UtilCsvServiceInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_UTIL_CSV);
+    }
+
+    public function createAttachedProductListsTable(int $idSspModel): AttachedProductListsTable
+    {
+        return new AttachedProductListsTable(
+            $this->getSspModelToProductListQuery(),
+            $this->getConfig(),
+            $idSspModel,
+        );
+    }
+
     public function createAttachmentScopeStrategyResolver(): AttachmentScopeStrategyResolverInterface
     {
         return new AttachmentScopeStrategyResolver($this->getAttachmentScopeStrategies());
@@ -941,6 +992,7 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     {
         return [
             $this->createAssetAttachmentScopeStrategy(),
+            $this->createModelAttachmentScopeStrategy(),
             $this->createBusinessUnitAttachmentScopeStrategy(),
             $this->createCompanyUserAttachmentScopeStrategy(),
             $this->createCompanyAttachmentScopeStrategy(),
@@ -950,6 +1002,11 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     protected function createAssetAttachmentScopeStrategy(): AttachmentScopeStrategyInterface
     {
         return new AssetAttachmentScopeStrategy($this->createFormDataNormalizer());
+    }
+
+    protected function createModelAttachmentScopeStrategy(): AttachmentScopeStrategyInterface
+    {
+        return new ModelAttachmentScopeStrategy($this->createFormDataNormalizer());
     }
 
     protected function createBusinessUnitAttachmentScopeStrategy(): AttachmentScopeStrategyInterface
@@ -967,21 +1024,9 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return new CompanyAttachmentScopeStrategy($this->createFormDataNormalizer());
     }
 
-    public function createCompanyAssignmentFileParser(): CompanyAssignmentFileParserInterface
+    public function createUnassignedCompanyAttachmentTable(int $idFile): UnassignedCompanyAttachmentTable
     {
-        return new CompanyAssignmentFileParser();
-    }
-
-    public function createCompanyAssignmentImporter(): CompanyAssignmentImporterInterface
-    {
-        return new CompanyAssignmentImporter(
-            $this->getRepository(),
-        );
-    }
-
-    public function createAvailableCompanyAttachmentTable(int $idFile): AvailableCompanyAttachmentTable
-    {
-        return new AvailableCompanyAttachmentTable(
+        return new UnassignedCompanyAttachmentTable(
             $idFile,
             $this->getCompanyQuery(),
         );
@@ -1005,53 +1050,10 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return new AttachedCompaniesTabs();
     }
 
-    public function createCsvImportProcessor(): CsvImportProcessorInterface
+    public function createRelationCsvReader(): RelationCsvReaderInterface
     {
-        return new CsvImportProcessor($this->getCsvImportStrategies());
-    }
-
-    /**
-     * @return array<\SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Processor\Strategy\CsvImportStrategyInterface>
-     */
-    protected function getCsvImportStrategies(): array
-    {
-        return [
-            $this->createAssetCsvImportStrategy(),
-            $this->createBusinessUnitCsvImportStrategy(),
-            $this->createCompanyUserCsvImportStrategy(),
-            $this->createCompanyCsvImportStrategy(),
-        ];
-    }
-
-    public function createAssetCsvImportStrategy(): AssetCsvImportStrategy
-    {
-        return new AssetCsvImportStrategy(
-            $this->createAssetAssignmentFileParser(),
-            $this->createAssetAssignmentImporter(),
-        );
-    }
-
-    public function createBusinessUnitCsvImportStrategy(): BusinessUnitCsvImportStrategy
-    {
-        return new BusinessUnitCsvImportStrategy(
-            $this->createBusinessUnitAssignmentFileParser(),
-            $this->createBusinessUnitAssignmentImporter(),
-        );
-    }
-
-    public function createCompanyUserCsvImportStrategy(): CompanyUserCsvImportStrategy
-    {
-        return new CompanyUserCsvImportStrategy(
-            $this->createCompanyUserAssignmentFileParser(),
-            $this->createCompanyUserAssignmentImporter(),
-        );
-    }
-
-    public function createCompanyCsvImportStrategy(): CompanyCsvImportStrategy
-    {
-        return new CompanyCsvImportStrategy(
-            $this->createCompanyAssignmentFileParser(),
-            $this->createCompanyAssignmentImporter(),
+        return new RelationCsvReader(
+            $this->getUtilCsvService(),
         );
     }
 
@@ -1075,28 +1077,6 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
             $this->createFormDataNormalizer(),
             $this->createFileAttachmentMapper(),
         );
-    }
-
-    public function createFileSecurityValidator(): FileSecurityValidatorInterface
-    {
-        return new FileSecurityValidator(
-            $this->getConfig(),
-        );
-    }
-
-    public function getSspAssetToCompanyBusinessUnitQuery(): SpySspAssetToCompanyBusinessUnitQuery
-    {
-        return SpySspAssetToCompanyBusinessUnitQuery::create();
-    }
-
-    public function getSspInquirySspAssetQuery(): SpySspInquirySspAssetQuery
-    {
-        return SpySspInquirySspAssetQuery::create();
-    }
-
-    public function getSspAssetQuery(): SpySspAssetQuery
-    {
-        return SpySspAssetQuery::create();
     }
 
     public function getSspInquiryQuery(): SpySspInquiryQuery
@@ -1248,6 +1228,86 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     public function getCompanyQuery(): SpyCompanyQuery
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_COMPANY);
+    }
+
+    public function createAttachModelForm(SspModelTransfer $sspModelTransfer): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            AttachModelForm::class,
+            [],
+            [
+                AttachModelForm::OPTION_SSP_MODEL_TRANSFER => $sspModelTransfer,
+            ],
+        );
+    }
+
+    public function createSspModelCollectionRequestTransformer(SspModelTransfer $sspModelTransfer): SspModelCollectionRequestTransformer
+    {
+        return new SspModelCollectionRequestTransformer($sspModelTransfer);
+    }
+
+    public function createModelRelationScopeTabs(): ModelRelationScopeTabs
+    {
+        return new ModelRelationScopeTabs();
+    }
+
+    public function createModelAssetRelationTabs(): ModelAssetRelationTabs
+    {
+        return new ModelAssetRelationTabs();
+    }
+
+    public function createModelProductListRelationTabs(): ModelProductListRelationTabs
+    {
+        return new ModelProductListRelationTabs();
+    }
+
+    public function createAttachedModelAssetsTabs(): AttachedModelAssetsTabs
+    {
+        return new AttachedModelAssetsTabs();
+    }
+
+    public function createAttachedModelProductListsTabs(): AttachedModelProductListsTabs
+    {
+        return new AttachedModelProductListsTabs();
+    }
+
+    public function createUnassignedModelAssetAttachmentTable(int $idSspModel): UnassignedModelAssetAttachmentTable
+    {
+        return new UnassignedModelAssetAttachmentTable(
+            $this->getSspAssetQuery(),
+            $idSspModel,
+            $this->getConfig(),
+        );
+    }
+
+    public function createAssignedModelAssetAttachmentTable(int $idSspModel): AssignedModelAssetAttachmentTable
+    {
+        return new AssignedModelAssetAttachmentTable(
+            $this->getSspAssetQuery(),
+            $idSspModel,
+            $this->getConfig(),
+        );
+    }
+
+    public function createUnassignedModelProductListAttachmentTable(int $idSspModel): UnassignedModelProductListAttachmentTable
+    {
+        return new UnassignedModelProductListAttachmentTable(
+            $this->getProductListPropelQuery(),
+            $idSspModel,
+        );
+    }
+
+    public function createAssignedModelProductListAttachmentTable(int $idSspModel): AssignedModelProductListAttachmentTable
+    {
+        return new AssignedModelProductListAttachmentTable(
+            $this->getProductListPropelQuery(),
+            $idSspModel,
+        );
+    }
+
+    public function getProductListPropelQuery(): SpyProductListQuery
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PROPEL_QUERY_PRODUCT_LIST);
     }
 
     public function createSspModelProductListUsedByTableExpander(): SspModelProductListUsedByTableExpanderInterface

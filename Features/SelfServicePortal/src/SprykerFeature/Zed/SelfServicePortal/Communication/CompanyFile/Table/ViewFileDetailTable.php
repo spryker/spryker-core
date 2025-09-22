@@ -16,6 +16,8 @@ use Orm\Zed\SelfServicePortal\Persistence\Map\SpyCompanyBusinessUnitFileTableMap
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpyCompanyUserFileTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspAssetFileTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspAssetTableMap;
+use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspModelTableMap;
+use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspModelToFileTableMap;
 use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Adapter\Pdo\PdoAdapter;
@@ -27,10 +29,10 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig as SharedSelfServicePortalConfig;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\UnlinkFileForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Formatter\TimeZoneFormatterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Controller\FileAbstractController;
+use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 class ViewFileDetailTable extends AbstractTable
 {
@@ -102,6 +104,11 @@ class ViewFileDetailTable extends AbstractTable
     /**
      * @var string
      */
+    protected const COL_ENTITY_TYPE_MODEL = '\'ssp_model\'';
+
+    /**
+     * @var string
+     */
     protected const SORTABLE_COLUMN = 'column';
 
     /**
@@ -159,7 +166,7 @@ class ViewFileDetailTable extends AbstractTable
         $queryResults = $query->fetchAll(PDO::FETCH_ASSOC);
 
         $this->setTotal((int)$totalRows);
-        $this->setFiltered(count($queryResults));
+        $this->setFiltered((int)$totalRows);
 
         $results = [];
         foreach ($queryResults as $item) {
@@ -345,6 +352,49 @@ class ViewFileDetailTable extends AbstractTable
         return $fileQuery;
     }
 
+    protected function prepareModelFileQuery(
+        FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
+    ): SpyFileQuery {
+        $modelFileQuery = $this->fileQuery::create()
+            ->filterByIdFile($this->idFile)
+            ->withColumn(SpyFileTableMap::COL_ID_FILE, static::COL_ID_FILE)
+            ->useSpySspModelToFileQuery(null, Criteria::LEFT_JOIN)
+                ->withColumn(SpySspModelToFileTableMap::COL_CREATED_AT, static::COL_ATTACHED_AT)
+                ->withColumn(SpySspModelToFileTableMap::COL_FK_SSP_MODEL, static::COL_ENTITY_ID)
+                    ->useSspModelQuery()
+                        ->withColumn(SpySspModelTableMap::COL_NAME, static::COL_ENTITY_NAME)
+                        ->withColumn(static::COL_ENTITY_TYPE_MODEL, static::COL_ENTITY_TYPE)
+                        ->filterByName_Like($this->getSearchString())
+                    ->endUse()
+            ->endUse()
+            ->select([
+                static::COL_ID_FILE,
+                static::COL_ATTACHED_AT,
+                static::COL_ENTITY_ID,
+                static::COL_ENTITY_NAME,
+                static::COL_ENTITY_TYPE,
+            ]);
+
+        if ($fileAttachmentViewDetailTableCriteriaTransfer->getDateFrom()) {
+            // @phpstan-ignore-next-line
+            $modelFileQuery
+                ->useSpySspModelToFileQuery()
+                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentViewDetailTableCriteriaTransfer->getDateFrom()), Criteria::GREATER_EQUAL)
+                ->endUse();
+        }
+
+        if ($fileAttachmentViewDetailTableCriteriaTransfer->getDateTo()) {
+            // @phpstan-ignore-next-line
+            $modelFileQuery
+                ->useSpySspModelToFileQuery()
+                    ->filterByCreatedAt($this->timeZoneFormatter->formatToUTCFromLocalTimeZone($fileAttachmentViewDetailTableCriteriaTransfer->getDateTo()), Criteria::LESS_THAN)
+                ->endUse();
+        }
+
+        // @phpstan-ignore-next-line
+        return $modelFileQuery;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\FileAttachmentViewDetailTableCriteriaTransfer $fileAttachmentViewDetailTableCriteriaTransfer
      *
@@ -356,27 +406,33 @@ class ViewFileDetailTable extends AbstractTable
         $companyBusinessUnitFileParams = [];
         $companyUserFileParams = [];
         $assetFileParams = [];
+        $modelFileParams = [];
         $unionParts = [];
 
-        if (!$fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() === SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT) {
+        if (!$fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() === SelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT) {
             $companyBusinessUnitFileQuery = $this->prepareCompanyBusinessUnitFileQuery($fileAttachmentViewDetailTableCriteriaTransfer);
             $unionParts[] = $companyBusinessUnitFileQuery->createSelectSql($companyBusinessUnitFileParams);
         }
 
-        if (!$fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() === SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER) {
+        if (!$fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() === SelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER) {
             $companyUserFileQuery = $this->prepareCompanyUserFileQuery($fileAttachmentViewDetailTableCriteriaTransfer);
             $unionParts[] = $companyUserFileQuery->createSelectSql($companyUserFileParams);
         }
 
-        if (!$fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() === SharedSelfServicePortalConfig::ENTITY_TYPE_SSP_ASSET) {
+        if (!$fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() === SelfServicePortalConfig::ENTITY_TYPE_SSP_ASSET) {
             $assetFileQuery = $this->prepareAssetFileQuery($fileAttachmentViewDetailTableCriteriaTransfer);
             $unionParts[] = $assetFileQuery->createSelectSql($assetFileParams);
+        }
+
+        if (!$fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() || $fileAttachmentViewDetailTableCriteriaTransfer->getEntityType() === SelfServicePortalConfig::ENTITY_TYPE_SSP_MODEL) {
+            $modelFileQuery = $this->prepareModelFileQuery($fileAttachmentViewDetailTableCriteriaTransfer);
+            $unionParts[] = $modelFileQuery->createSelectSql($modelFileParams);
         }
 
         $unionSql = implode(' UNION ALL ', array_map(fn ($sql) => "($sql)", $unionParts));
 
         return [
-            $unionSql, [$companyFileParams, $companyBusinessUnitFileParams, $companyUserFileParams, $assetFileParams],
+            $unionSql, [$companyFileParams, $companyBusinessUnitFileParams, $companyUserFileParams, $assetFileParams, $modelFileParams],
         ];
     }
 

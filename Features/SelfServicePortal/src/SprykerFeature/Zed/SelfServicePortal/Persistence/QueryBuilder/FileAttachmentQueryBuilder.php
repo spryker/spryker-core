@@ -17,6 +17,7 @@ use Orm\Zed\SelfServicePortal\Persistence\Map\SpyCompanyBusinessUnitFileTableMap
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpyCompanyUserFileTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspAssetFileTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspAssetTableMap;
+use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspModelToFileTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -43,6 +44,11 @@ class FileAttachmentQueryBuilder
      */
     public const SSP_ASSET_IDS_COLUMN = 'sspAssetIds';
 
+    /**
+     * @var string
+     */
+    public const SSP_MODEL_IDS_COLUMN = 'sspModelIds';
+
     public function applyCriteria(SpyFileQuery $fileQuery, FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer): SpyFileQuery
     {
         $fileQuery = $this->applyFileIdFilter($fileQuery, $fileAttachmentCriteriaTransfer);
@@ -64,7 +70,8 @@ class FileAttachmentQueryBuilder
         if (
             !$fileAttachmentCriteriaTransfer->getWithBusinessUnitRelation() &&
             !$fileAttachmentCriteriaTransfer->getWithCompanyUserRelation() &&
-            !$fileAttachmentCriteriaTransfer->getWithSspAssetRelation()
+            !$fileAttachmentCriteriaTransfer->getWithSspAssetRelation() &&
+            !$fileAttachmentCriteriaTransfer->getWithSspModelRelation()
         ) {
             return $fileQuery;
         }
@@ -103,6 +110,18 @@ class FileAttachmentQueryBuilder
 
             if ($sspAssetFilterCriteria) {
                 $fileAttachmentFilterCriteria = $this->addSubCriteria($sspAssetFilterCriteria, $fileAttachmentFilterCriteria);
+            }
+        }
+
+        if ($fileAttachmentCriteriaTransfer->getWithSspModelRelation()) {
+            $fileQuery
+                ->withColumn('GROUP_CONCAT(' . SpySspModelToFileTableMap::COL_FK_SSP_MODEL . ')', static::SSP_MODEL_IDS_COLUMN)
+                ->joinSpySspModelToFile(null, Criteria::LEFT_JOIN);
+
+            $sspModelFilterCriteria = $this->getSspModelToFileCriteria($fileQuery, $fileAttachmentConditions);
+
+            if ($sspModelFilterCriteria) {
+                $fileAttachmentFilterCriteria = $this->addSubCriteria($sspModelFilterCriteria, $fileAttachmentFilterCriteria);
             }
         }
 
@@ -394,6 +413,24 @@ class FileAttachmentQueryBuilder
             'size' => SpyFileInfoTableMap::COL_SIZE,
             'createdAt' => SpyFileInfoTableMap::COL_CREATED_AT,
         ];
+    }
+
+    protected function getSspModelToFileCriteria(
+        SpyFileQuery $fileQuery,
+        FileAttachmentConditionsTransfer $fileAttachmentConditionsTransfer
+    ): ?AbstractCriterion {
+        $sspModelToFileQuery = $fileQuery
+            ->useSpySspModelToFileQuery(null, Criteria::LEFT_JOIN);
+
+        if (!$fileAttachmentConditionsTransfer->getSspModelIds()) {
+            return null;
+        }
+
+        return $sspModelToFileQuery->getNewCriterion(
+            SpySspModelToFileTableMap::COL_FK_SSP_MODEL,
+            $fileAttachmentConditionsTransfer->getSspModelIds(),
+            Criteria::IN,
+        );
     }
 
     protected function addSubCriteria(?AbstractCriterion $subCriteria, ?AbstractCriterion $criteria): ?AbstractCriterion

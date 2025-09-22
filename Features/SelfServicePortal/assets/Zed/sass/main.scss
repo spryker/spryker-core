@@ -68,8 +68,21 @@
     }
 }
 
-.form-group:not(:has(.has-file)) {
-    .form-remove-file {
+.form-group:not(:has(.is-loading)) {
+    .spinner-icon {
         display: none;
+    }
+}
+
+.form-group:has(.is-loading) {
+    opacity: 0.8;
+    position: relative;
+    pointer-events: none;
+
+    .spinner-icon {
+        position: absolute;
+        top: 50%;
+        translate: 0 -50%;
+        left: 100px;
     }
 }

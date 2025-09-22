@@ -74,6 +74,7 @@ company_user,Firmenkontonutzer
 "Company Business Unit",Geschäftseinheit
 company_business_unit,Geschäftseinheit
 ssp_asset,Asset
+ssp_model,Modell
 "Upload Files","Dateien hochladen"
 "Back to File Attachments","Zurück zu Dateianhängen"
 Upload,Hochladen
@@ -161,7 +162,6 @@ Code,Code
 "Customer portal",Kundenportal
 "Asset Details",Assetdetails
 Reference,Referenz
-"Asset Name",Assetname
 "Serial Number",Seriennummer
 Note,Notiz
 "Asset created date","Erstellungsdatum des Assets"
@@ -172,41 +172,41 @@ Note,Notiz
 Delete,Löschen
 "View Model: ","Modell anzeigen: "
 "Back to Models","Zurück zu Modellen"
+"Back to Model View page","Zurück zur Modellansicht"
 Relations,Beziehungen
-"Relations will be displayed here in future updates.","Beziehungen werden hier in zukünftigen Updates angezeigt."
 "Model successfully deleted","Modell erfolgreich gelöscht"
 "Model cannot be deleted","Modell kann nicht gelöscht werden"
+"Attached Assets","Zugeordnete Assets"
+"Attached Product Lists","Zugeordnete Produktlisten"
+"Asset Reference",Asset-Referenz
+"Asset Name",Asset-Name
+"Asset Serial Number",Asset-Seriennummer
+Title,Titel
+Type,Typ
 "Remove All","Alle entfernen"
-"Please confirm to remove all entities","Bitte bestätigen Sie, dass Sie alle Entitäten entfernen möchten"
 Keep,Beibehalten
 Remove,Entfernen
 Selected,Ausgewählt
-selected-entities-information,"Sie sind dabei, <span class=""js-table-skeleton-dynamic-counter""></span> Entitäten zur ausgewählten Liste hinzuzufügen. Bitte überprüfen Sie Ihre Auswahl, bevor Sie bestätigen."
-"Save Progress?","Fortschritt speichern?"
 "Please confirm saving the selected entities.","Bitte bestätigen Sie das Speichern der ausgewählten Entitäten."
-"Remove file","Datei entfernen"
-Asset,Asset
-"Business Unit",Geschäftseinheit
-"Attach asset","Asset anhängen"
 "Assets to be attached","Assets zu hinzufügen"
-"Attached assets","Angehängte Assets"
 "Assets to be detached","Assets zu entfernen"
-"Import asset file","Asset-Datei importieren"
 "Attach Business Unit","Geschäftseinheit anhängen"
 "Business Units to be attached","Geschäftseinheiten zu hinzufügen"
 "Attached Business Units","Angehängte Geschäftseinheiten"
 "Business Units to be detached","Geschäftseinheiten zu entfernen"
-"Import business unit file","Geschäftseinheit-Datei importieren"
 "Attach Company","Firma anhängen"
 "Companies to be attached","Firmen zu hinzufügen"
 "Attached Companies","Angehängte Firmen"
 "Companies to be detached","Firmen zu entfernen"
-"Import company file","Firmen-Datei importieren"
 "Attach Company User","Firmenkontonutzer anhängen"
 "Company Users to be attached","Firmenkontonutzer zu hinzufügen"
 "Attached Company Users","Angehängte Firmenkontonutzer"
 "Company Users to be detached","Firmenkontonutzer zu entfernen"
-"Import company user file","Firmenkontonutzer-Datei importieren"
+"Please confirm to remove all entities","Bitte bestätigen Sie, dass Sie alle Entitäten entfernen möchten"
+"Save Progress?","Fortschritt speichern?"
+Asset,Asset
+"Business Unit",Geschäftseinheit
+"Attach asset","Asset anhängen"
 "Model has been successfully updated.","Modell wurde erfolgreich aktualisiert."
 "Something went wrong, please try again.","Etwas ist schief gelaufen, bitte versuchen Sie es erneut."
 "Model not found.","Modell nicht gefunden."
@@ -231,7 +231,23 @@ Asset,Asset
 "Date and time","Datum und Zeit"
 Event,Ereignis
 "Business entity type",Geschäftsentitätstyp
-Type,Typ
 "Edit Model: ","Modell bearbeiten: "
 "Model reference",Modellreferenz
 "Update Model","Modell aktualisieren"
+"Import Asset File","Asset-Datei importieren"
+"Upload Asset Assignment File","Asset-Zuweisungsdatei hochladen"
+"Upload Product List Assignment File","Produktlisten-Zuweisungsdatei hochladen"
+"Download example file","Beispieldatei herunterladen"
+"Edit Relations","Beziehungen bearbeiten"
+"You are about to leave current progression! Please confirm.","Sie sind dabei, den aktuellen Fortschritt zu verlassen! Bitte bestätigen."
+Change,Ändern
+TITLE,TITEL
+"Select product lists to assign or unassign from this model using the tables below.","Wählen Sie Produktlisten aus, die diesem Modell über die unten stehenden Tabellen zugewiesen oder entfernt werden sollen."
+NAME,NAME
+"ASSET REFERENCE",ASSET-REFERENZ
+"SERIAL NUMBER",SERIENNUMMER
+STATUS,STATUS
+"Select assets to assign or unassign from this model using the tables below.","Wählen Sie Assets aus, die diesem Modell über die unten stehenden Tabellen zugewiesen oder entfernt werden sollen."
+"Manage Asset Relations","Asset-Beziehungen verwalten"
+"Manage Product List Relations","Produktlisten-Beziehungen verwalten"
+"Model attachments have been created successfully.","Modell-Anhänge wurden erfolgreich erstellt."

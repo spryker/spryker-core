@@ -42,6 +42,7 @@ suites:
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\ShipmentType\Helper\ShipmentTypeHelper
                 - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SelfServicePortalHelper
+                - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SspModelHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Zed\Sales\Helper\BusinessHelper
@@ -92,6 +93,7 @@ suites:
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - \SprykerTest\Service\Testify\Helper\ServiceHelper
                 - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SelfServicePortalHelper
+                - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SspModelHelper
                 - \SprykerTest\Zed\StateMachine\Helper\StateMachineHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\Permission\Helper\PermissionHelper
@@ -112,3 +114,4 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SelfServicePortalHelper
+                - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SspModelHelper

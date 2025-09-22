@@ -1,0 +1,12 @@
+{% embed '@Gui/Partials/widget.twig' %}
+    {% block widget_header_content %}
+        <a href="/self-service-portal/attach-model?id-ssp-model={{ sspModel.idSspModel }}" class="btn btn-outline">{{ 'Edit Relations' | trans }}</a>
+    {% endblock %}
+    {% block widget_content %}
+            {{ tabs(sspModelTabs, {
+                'sspModel': sspModel,
+                'attachedAssetsTable': attachedAssetsTable,
+                'attachedProductListsTable': attachedProductListsTable,
+            }) }}
+    {% endblock %}
+{% endembed %}

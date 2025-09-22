@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SelfServicePortal\Persistence" package="src.Orm.Zed.SelfServicePortal.Persistence">
+
+    <table name="spy_ssp_model_to_file" idMethod="native">
+        <column name="id_ssp_model_to_file" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_ssp_model" required="true" type="INTEGER"/>
+        <column name="fk_file" required="true" type="INTEGER"/>
+
+        <unique name="spy_ssp_model_to_file-fk_ssp_model-fk_file">
+            <unique-column name="fk_file"/>
+            <unique-column name="fk_ssp_model"/>
+        </unique>
+
+        <foreign-key foreignTable="spy_ssp_model" phpName="SspModel">
+            <reference local="fk_ssp_model" foreign="id_ssp_model"/>
+        </foreign-key>
+        <foreign-key foreignTable="spy_file" phpName="File" onDelete="CASCADE">
+            <reference local="fk_file" foreign="id_file"/>
+        </foreign-key>
+        <behavior name="timestampable"/>
+        <id-method-parameter value="id_ssp_model_to_file_pk_seq"/>
+    </table>
+
+</database>

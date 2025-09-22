@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\SspModelCriteriaTransfer;
 use Generated\Shared\Transfer\SspModelTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -88,12 +89,13 @@ class UpdateModelController extends AbstractController
             return $this->handleFormSubmission($form, $sspModelTransfer);
         }
 
-        $deleteForm = $this->getFactory()->createDeleteSspModelForm()->createView();
-
         return [
             'sspModelForm' => $form->createView(),
             'sspModel' => $sspModelTransfer,
-            'deleteForm' => $deleteForm,
+            'deleteForm' => $this->getFactory()->createDeleteSspModelForm()->createView(),
+            'sspModelTabs' => $this->getFactory()->createSspModelTabs()->createView(),
+            'attachedAssetsTable' => $this->getFactory()->createAttachedAssetsTable($sspModelTransfer)->render(),
+            'attachedProductListsTable' => $this->getFactory()->createAttachedProductListsTable($idSspModel)->render(),
         ];
     }
 
@@ -138,13 +140,39 @@ class UpdateModelController extends AbstractController
             }
 
             return [
+                'deleteForm' => $this->getFactory()->createDeleteSspModelForm()->createView(),
                 'sspModelForm' => $sspModelForm->createView(),
                 'sspModel' => $sspModelTransfer,
+                'sspModelTabs' => $this->getFactory()->createSspModelTabs()->createView(),
+                'attachedAssetsTable' => $this->getFactory()->createAttachedAssetsTable($sspModelTransfer)->render(),
+                'attachedProductListsTable' => $this->getFactory()->createAttachedProductListsTable($sspModelTransfer->getIdSspModelOrFail())->render(),
             ];
         }
 
         $this->addSuccessMessage(static::MESSAGE_SSP_MODEL_UPDATE_SUCCESS);
 
         return $this->redirectResponse(sprintf(static::ROUTE_SSP_MODEL_VIEW, $sspModelCollectionResponseTransfer->getSspModels()->getIterator()->current()->getIdSspModel()));
+    }
+
+    public function attachedAssetTableAction(Request $request): JsonResponse
+    {
+        $idSspModel = $request->query->getInt(static::PARAM_ID_SSP_MODEL);
+
+        $attachedAssetTableDataProvider = $this->getFactory()->createAttachedAssetTableDataProvider();
+
+        return $this->jsonResponse(
+            $attachedAssetTableDataProvider->getAttachedAssetTableData($idSspModel),
+        );
+    }
+
+    public function attachedProductListsTableAction(Request $request): JsonResponse
+    {
+        $idSspModel = $request->query->getInt(static::PARAM_ID_SSP_MODEL);
+
+        $attachedProductListsTable = $this->getFactory()->createAttachedProductListsTable($idSspModel);
+
+        return $this->jsonResponse(
+            $attachedProductListsTable->fetchData(),
+        );
     }
 }

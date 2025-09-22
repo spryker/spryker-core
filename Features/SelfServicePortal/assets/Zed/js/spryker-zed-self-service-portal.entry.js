@@ -6,6 +6,7 @@ import { InternalSkeletonTable } from './internal-api/internal-skeleton-table';
 Table.FEATURES = {
     ...Table.FEATURES,
     skeleton: {
+        attribute: 'data-skeleton',
         class: InternalSkeletonTable,
     },
 };

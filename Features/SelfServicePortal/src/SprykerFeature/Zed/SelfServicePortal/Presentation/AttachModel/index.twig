@@ -1,0 +1,46 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-self-service-portal.css') }}" />
+{% endblock %}
+
+{% block head_title %}
+    {{ 'SSP Model Relation Edit' | trans }}
+{% endblock %}
+
+{% block section_title %}
+    {{ 'SSP Model Relation Edit' | trans }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url('/self-service-portal/view-model', {'id-ssp-model': idSspModel}), 'Back to Model View page' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% include '@SelfServicePortal/_partials/guard/guard-tabs-form.twig' with {
+        title: 'Edit Model Relations' | trans,
+        form: attachModelForm,
+        transfer: attachmentScopeTabsViewTransfer,
+        tabs: {
+            attachModelForm: attachModelForm,
+            availableAssetTable: availableAssetTable,
+            assignedAssetTable: assignedAssetTable,
+            availableProductListTable: availableProductListTable,
+            assignedProductListTable: assignedProductListTable,
+            idSspModel: idSspModel,
+            urlDownloadAssetExample: urlDownloadAssetExample,
+            urlDownloadProductListExample: urlDownloadProductListExample,
+            assetAttachmentTabsViewTransfer: assetAttachmentTabsViewTransfer,
+            productListAttachmentTabsViewTransfer: productListAttachmentTabsViewTransfer,
+            attachedAssetsTabsViewTransfer: attachedAssetsTabsViewTransfer,
+            attachedProductListsTabsViewTransfer: attachedProductListsTabsViewTransfer,
+        },
+        confirmTitle: 'Change relation type?',
+    } %}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-self-service-portal.js') }}"></script>
+{% endblock %}

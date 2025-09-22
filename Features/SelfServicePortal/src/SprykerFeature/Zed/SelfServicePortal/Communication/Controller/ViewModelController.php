@@ -10,6 +10,7 @@ namespace SprykerFeature\Zed\SelfServicePortal\Communication\Controller;
 use Generated\Shared\Transfer\SspModelConditionsTransfer;
 use Generated\Shared\Transfer\SspModelCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -65,6 +66,31 @@ class ViewModelController extends AbstractController
             'sspModel' => $sspModelTransfer,
             'imageUrl' => $this->getFactory()->createModelImageUrlProvider()->getImageUrl($sspModelTransfer),
             'listModelRoute' => static::ROUTE_SSP_MODEL_LIST,
+            'sspModelTabs' => $this->getFactory()->createSspModelTabs()->createView(),
+            'attachedAssetsTable' => $this->getFactory()->createAttachedAssetsTable($sspModelTransfer)->render(),
+            'attachedProductListsTable' => $this->getFactory()->createAttachedProductListsTable($idSspModel)->render(),
         ];
+    }
+
+    public function attachedAssetTableAction(Request $request): JsonResponse
+    {
+        $idSspModel = $request->query->getInt(static::PARAM_ID_SSP_MODEL);
+
+        $attachedAssetTableDataProvider = $this->getFactory()->createAttachedAssetTableDataProvider();
+
+        return $this->jsonResponse(
+            $attachedAssetTableDataProvider->getAttachedAssetTableData($idSspModel),
+        );
+    }
+
+    public function attachedProductListsTableAction(Request $request): JsonResponse
+    {
+        $idSspModel = $request->query->getInt(static::PARAM_ID_SSP_MODEL);
+
+        $attachedProductListsTable = $this->getFactory()->createAttachedProductListsTable($idSspModel);
+
+        return $this->jsonResponse(
+            $attachedProductListsTable->fetchData(),
+        );
     }
 }

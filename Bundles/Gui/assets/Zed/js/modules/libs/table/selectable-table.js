@@ -20,6 +20,7 @@ export class SelectableTable {
         remove: 'js-remove-item',
         counter: 'js-counter',
         selected: 'has-selected',
+        checkboxInitialized: 'checkbox-initialized',
     };
 
     constructor(data) {
@@ -71,7 +72,13 @@ export class SelectableTable {
         this.tableActions();
     }
 
-    setPredefinedData() {
+    selectRowsByData(data) {
+        this.setPredefinedData(data);
+        this.tableActions();
+        this.updateCheckboxes();
+    }
+
+    setPredefinedData(_data) {
         const cols = this.data.api.columns().header().toArray();
 
         this.colIndexes = {
@@ -81,7 +88,16 @@ export class SelectableTable {
 
         const store = JSON.parse(localStorage.getItem(this.getStorageKey()) || '[]');
         const input = document.querySelector(this.data.config.inputSelector);
-        const data = JSON.parse((input.value || '[]').replace(/&quot;/g, '"').replace(/,/g, ''));
+        const data = (_data ?? JSON.parse((input.value || '[]').replace(/&quot;/g, '"').replace(/,/g, ''))).map(
+            (_item) => {
+                const item = [..._item];
+
+                item.splice(Math.min(this.colIndexes.selection, item.length), 0, '');
+
+                return item;
+            },
+        );
+
         const merged = [...store, ...data];
         const unique = merged.filter(
             (item, index, self) =>
@@ -118,6 +134,10 @@ export class SelectableTable {
                 checkbox.checked = true;
                 this.addRow(rowData, true);
             }
+
+            if (checkbox.hasAttribute(this.staticClasses.checkboxInitialized)) continue;
+
+            checkbox.setAttribute(this.staticClasses.checkboxInitialized, true);
 
             checkbox.addEventListener('change', () => {
                 checkbox.checked ? this.addRow(rowData) : this.removeRow(id);

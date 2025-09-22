@@ -1,0 +1,23 @@
+<div class="spacing-bottom">
+    <h4>{{ "Manage Asset Relations" | trans }}</h4>
+    <p class="help-block">{{ "Select assets to assign or unassign from this model using the tables below." | trans }}</p>
+</div>
+
+{% include '@SelfServicePortal/_partials/table-file-uploader.twig' with {
+    formPart: attachModelForm.asset_file_upload,
+    urlDownloadExample: urlDownloadAssetExample,
+} %}
+
+{{ tabs(assetAttachmentTabsViewTransfer, {
+    'attachModelForm': attachModelForm,
+    'availableAssetTable': availableAssetTable,
+    'assignedAssetTable': assignedAssetTable,
+    'idSspModel': idSspModel,
+    'urlDownloadAssetExample': urlDownloadAssetExample,
+}) }}
+
+{{ tabs(attachedAssetsTabsViewTransfer, {
+    'attachModelForm': attachModelForm,
+    'assignedAssetTable': assignedAssetTable,
+    'idSspModel': idSspModel,
+}) }}

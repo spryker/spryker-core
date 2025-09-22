@@ -34,7 +34,7 @@ class FileAttachmentTabs extends AbstractTabs
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
             ->setName('attach-asset')
-            ->setTitle('Attach asset')
+            ->setTitle('Attach Asset')
             ->setTemplate('@SelfServicePortal/AttachFile/_partials/asset/attach-asset-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);

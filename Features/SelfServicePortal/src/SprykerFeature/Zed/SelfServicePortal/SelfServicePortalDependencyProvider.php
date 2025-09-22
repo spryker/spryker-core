@@ -14,10 +14,12 @@ use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
+use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery;
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
+use Spryker\Service\UtilCsv\UtilCsvServiceInterface;
 use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\Comment\Business\CommentFacadeInterface;
 use Spryker\Zed\Company\Business\CompanyFacadeInterface;
@@ -231,6 +233,11 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @var string
      */
+    public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
+
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_COMPANY = 'PROPEL_QUERY_COMPANY';
 
     /**
@@ -241,12 +248,17 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @var string
      */
-    public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
+    public const PROPEL_QUERY_PRODUCT_LIST = 'PROPEL_QUERY_PRODUCT_LIST';
 
     /**
      * @var string
      */
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_CSV = 'SERVICE_UTIL_CSV';
 
     /**
      * @var string
@@ -314,6 +326,8 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addCompanyBusinessUnitQuery($container);
         $container = $this->addCompanyUserQuery($container);
         $container = $this->addCompanyQuery($container);
+        $container = $this->addProductListQuery($container);
+        $container = $this->addUtilCsvService($container);
 
         return $container;
     }
@@ -813,6 +827,24 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container->set(static::PROPEL_QUERY_COMPANY_USER, $container->factory(function (): SpyCompanyUserQuery {
             return SpyCompanyUserQuery::create();
         }));
+
+        return $container;
+    }
+
+    protected function addProductListQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT_LIST, $container->factory(function (): SpyProductListQuery {
+            return SpyProductListQuery::create();
+        }));
+
+        return $container;
+    }
+
+    protected function addUtilCsvService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_CSV, function (Container $container): UtilCsvServiceInterface {
+            return $container->getLocator()->utilCsv()->service();
+        });
 
         return $container;
     }

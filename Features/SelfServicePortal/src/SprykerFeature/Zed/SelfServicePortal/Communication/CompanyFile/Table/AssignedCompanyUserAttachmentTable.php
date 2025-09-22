@@ -16,6 +16,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Controller\FileAbstractController;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Reader\RelationCsvReaderInterface;
 
 class AssignedCompanyUserAttachmentTable extends AbstractTable
 {
@@ -84,10 +85,14 @@ class AssignedCompanyUserAttachmentTable extends AbstractTable
 
         $config->setTableAttributes([
             'data-selectable' => [
-                'moveToSelector' => '#companyUsersToBeDeassigned',
-                'inputSelector' => '#fileAttachment_companyUserIdsToBeDeassigned',
-                'counterHolderSelector' => 'a[href="#tab-content-company-users-to-be-detached"]',
+                'moveToSelector' => '#companyUsersToBeUnassigned',
+                'inputSelector' => '#fileAttachment_companyUserIdsToBeUnassigned',
+                'counterHolderSelector' => 'a[href="#tab-content-company-users-to-be-unassigned"]',
                 'colId' => 'id_company_user',
+            ],
+            'data-uploader' => [
+                'url' => sprintf('/self-service-portal/attach-file/get-company-user-attachments-from-csv?id-file=%d', $this->idFile),
+                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED,
             ],
         ]);
         $config->setFooter([]);
@@ -168,5 +173,32 @@ class AssignedCompanyUserAttachmentTable extends AbstractTable
         $companyUserName = htmlspecialchars($companyUserEntity[static::COLUMN_COMPANY_USER_NAME] ?? '');
 
         return '<input type="checkbox" name="companyUserIds[]" value="' . $companyUserId . '" class="js-selectable-table-checkbox" data-company-name="' . $companyName . '" data-business-unit-name="' . $businessUnitName . '" data-company-user-name="' . $companyUserName . '">';
+    }
+
+    /**
+     * @param array<mixed> $companyUserIds
+     *
+     * @return array<mixed>
+     */
+    public function fetchCompanyUsersByIds(array $companyUserIds): array
+    {
+        $this->init();
+
+        $this->companyUserQuery->filterByIdCompanyUser_In($companyUserIds);
+
+        /**
+         * @var array<string, mixed> $data
+         */
+        $data = $this->prepareData($this->config);
+
+        $this->loadData($data);
+
+        $dataWithoutCheckboxColumn = array_map(function ($companyUserRow) {
+             unset($companyUserRow[static::COLUMN_SELECTED]);
+
+             return array_values($companyUserRow);
+        }, $data);
+
+        return $dataWithoutCheckboxColumn;
     }
 }

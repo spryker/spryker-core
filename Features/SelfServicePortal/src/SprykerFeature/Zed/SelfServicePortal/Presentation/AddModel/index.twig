@@ -1,7 +1,7 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% if widget_title is not defined %}
-    {% set widget_title = 'Add SspModel' | trans %}
+    {% set widget_title = 'Add Model' | trans %}
 {% endif %}
 
 {% block head_title -%}
@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block content %}
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Add SspModel' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Add Model' | trans } %}
         {% block widget_content %}
             {% include '@SelfServicePortal/_partials/model-form.twig' with {
                 sspModelForm: sspModelForm,

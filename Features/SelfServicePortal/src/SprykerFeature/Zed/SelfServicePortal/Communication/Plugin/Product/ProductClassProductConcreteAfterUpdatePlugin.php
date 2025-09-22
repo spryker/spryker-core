@@ -13,6 +13,7 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
 
 /**
  * @method \SprykerFeature\Zed\SelfServicePortal\Communication\SelfServicePortalCommunicationFactory getFactory()
+ * @method \SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalBusinessFactory getBusinessFactory()()
  * @method \SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacadeInterface getFacade()
  * @method \SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig getConfig()
  * @method \SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface getRepository()
@@ -32,6 +33,8 @@ class ProductClassProductConcreteAfterUpdatePlugin extends AbstractPlugin implem
      */
     public function update(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        return $this->getFacade()->saveProductClassesForProductConcrete($productConcreteTransfer);
+        return $this->getBusinessFactory()
+            ->createProductClassSaver()
+            ->saveProductClassesForProductConcrete($productConcreteTransfer);
     }
 }

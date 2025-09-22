@@ -1,5 +1,5 @@
-{% include '@SelfServicePortal/AttachFile/_partials/file-uploader.twig' with {
-    form_part: fileAttachForm.business_unit_file_upload,
+{% include '@SelfServicePortal/_partials/table-file-uploader.twig' with {
+    formPart: fileAttachForm.business_unit_file_upload,
     urlDownloadExample: urlDownloadBusinessUnitExample,
 } %}
 
@@ -7,7 +7,6 @@
     'fileAttachForm': fileAttachForm,
     'availableBusinessUnitTable': availableBusinessUnitTable,
     'idFile': idFile,
-    'urlImportBusinessUnitAssignments': urlImportBusinessUnitAssignments,
     'urlDownloadBusinessUnitExample': urlDownloadBusinessUnitExample,
 }) }}
 

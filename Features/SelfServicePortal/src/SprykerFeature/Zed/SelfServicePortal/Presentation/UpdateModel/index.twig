@@ -42,4 +42,11 @@
             } only %}
         {% endblock %}
     {% endembed %}
+
+    {% include '@SelfServicePortal/_partials/model-relations.twig' with {
+        'sspModel': sspModel,
+        'sspModelTabs': sspModelTabs,
+        'attachedAssetsTable': attachedAssetsTable,
+        'attachedProductListsTable': attachedProductListsTable,
+    } only %}
 {% endblock %}

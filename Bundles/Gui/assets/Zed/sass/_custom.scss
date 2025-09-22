@@ -2082,6 +2082,10 @@ form .horizontal-form {
     }
 }
 
+.spinner-icon {
+    animation: spin-to 1s linear infinite;
+}
+
 // [START] Drop with bootstrap 4
 .d-inline {
     display: inline;

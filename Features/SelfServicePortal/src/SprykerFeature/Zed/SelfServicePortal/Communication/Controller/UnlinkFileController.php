@@ -20,8 +20,10 @@ use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
+use Generated\Shared\Transfer\SspModelCollectionTransfer;
+use Generated\Shared\Transfer\SspModelTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
-use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig as SharedSelfServicePortalConfig;
+use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -101,10 +103,11 @@ class UnlinkFileController extends FileAbstractController
         $fileAttachmentTransfer = (new FileAttachmentTransfer())->setFile((new FileTransfer())->setIdFile($idFile));
 
         $fileAttachmentTransfer = match ($request->query->get(static::REQUEST_PARAM_ENTITY_TYPE)) {
-            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY => $fileAttachmentTransfer->setCompanyCollection((new CompanyCollectionTransfer())->addCompany((new CompanyTransfer())->setIdCompany($entityId))),
-            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT => $fileAttachmentTransfer->setBusinessUnitCollection((new CompanyBusinessUnitCollectionTransfer())->addCompanyBusinessUnit((new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($entityId))),
-            SharedSelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER => $fileAttachmentTransfer->setCompanyUserCollection((new CompanyUserCollectionTransfer())->addCompanyUser((new CompanyUserTransfer())->setIdCompanyUser($entityId))),
-            SharedSelfServicePortalConfig::ENTITY_TYPE_SSP_ASSET => $fileAttachmentTransfer->setSspAssetCollection((new SspAssetCollectionTransfer())->addSspAsset((new SspAssetTransfer())->setIdSspAsset($entityId))),
+            SelfServicePortalConfig::ENTITY_TYPE_COMPANY => $fileAttachmentTransfer->setCompanyCollection((new CompanyCollectionTransfer())->addCompany((new CompanyTransfer())->setIdCompany($entityId))),
+            SelfServicePortalConfig::ENTITY_TYPE_COMPANY_BUSINESS_UNIT => $fileAttachmentTransfer->setBusinessUnitCollection((new CompanyBusinessUnitCollectionTransfer())->addCompanyBusinessUnit((new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($entityId))),
+            SelfServicePortalConfig::ENTITY_TYPE_COMPANY_USER => $fileAttachmentTransfer->setCompanyUserCollection((new CompanyUserCollectionTransfer())->addCompanyUser((new CompanyUserTransfer())->setIdCompanyUser($entityId))),
+            SelfServicePortalConfig::ENTITY_TYPE_SSP_ASSET => $fileAttachmentTransfer->setSspAssetCollection((new SspAssetCollectionTransfer())->addSspAsset((new SspAssetTransfer())->setIdSspAsset($entityId))),
+            SelfServicePortalConfig::ENTITY_TYPE_SSP_MODEL => $fileAttachmentTransfer->setSspModelCollection((new SspModelCollectionTransfer())->addSspModel((new SspModelTransfer())->setIdSspModel($entityId))),
             default => throw new Exception(static::ERROR_MESSAGE_INVALID_ENTITY_TYPE),
         };
 

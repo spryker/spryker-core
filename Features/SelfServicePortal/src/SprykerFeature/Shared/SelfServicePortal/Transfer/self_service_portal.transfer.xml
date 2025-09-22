@@ -575,6 +575,7 @@
     <transfer name="FileAttachment" strict="true">
         <property name="file" type="File"/>
         <property name="sspAssetCollection" type="SspAssetCollection"/>
+        <property name="sspModelCollection" type="SspModelCollection"/>
         <property name="companyUserCollection" type="CompanyUserCollection"/>
         <property name="businessUnitCollection" type="CompanyBusinessUnitCollection"/>
         <property name="companyCollection" type="CompanyCollection"/>
@@ -629,6 +630,7 @@
         <property name="withCompanyUserRelation" type="bool"/>
         <property name="withBusinessUnitRelation" type="bool"/>
         <property name="withSspAssetRelation" type="bool"/>
+        <property name="withSspModelRelation" type="bool"/>
     </transfer>
 
     <transfer name="User">
@@ -654,6 +656,7 @@
         <property name="companyUserIds" type="int[]" singular="companyUserId"/>
         <property name="sspAssetCompanyIds" type="int[]" singular="sspAssetCompanyId"/>
         <property name="sspAssetBusinessUnitIds" type="int[]" singular="sspAssetBusinessUnitId"/>
+        <property name="sspModelIds" type="int[]" singular="sspModelId"/>
     </transfer>
 
     <transfer name="FileAttachmentCollection" strict="true">
@@ -1090,7 +1093,7 @@
     </transfer>
 
     <transfer name="SspModelConditions" strict="true">
-        <property name="sspModelIds" type="int[]" singular="sspModelId"/>
+        <property name="sspModelIds" type="int[]" singular="idSspModel"/>
         <property name="references" type="string[]" singular="reference"/>
     </transfer>
 
@@ -1101,6 +1104,10 @@
 
     <transfer name="SspModelCollectionRequest" strict="true">
         <property name="sspModels" type="SspModel[]" singular="sspModel"/>
+        <property name="sspAssetsToBeAssigned" type="ModelSspAssetAssignment[]" singular="sspAssetToBeAssigned"/>
+        <property name="sspAssetsToBeUnassigned" type="ModelSspAssetAssignment[]" singular="sspAssetToBeUnassigned"/>
+        <property name="productListsToBeAssigned" type="ModelProductListAssignment[]" singular="productListToBeAssigned"/>
+        <property name="productListsToBeUnassigned" type="ModelProductListAssignment[]" singular="productListToBeUnassigned"/>
     </transfer>
 
     <transfer name="SspModelCollectionResponse" strict="true">
@@ -1135,6 +1142,16 @@
 
     <transfer name="SspAssetBusinessUnitAssignmentStorage" strict="true">
         <property name="companyBusinessUnit" type="CompanyBusinessUnitStorage"/>
+    </transfer>
+
+    <transfer name="ModelProductListAssignment" strict="true">
+        <property name="productList" type="ProductList"/>
+        <property name="sspModel" type="SspModel"/>
+    </transfer>
+
+    <transfer name="ModelSspAssetAssignment" strict="true">
+        <property name="sspAsset" type="SspAsset"/>
+        <property name="sspModel" type="SspModel"/>
     </transfer>
 
     <transfer name="SspAssetStorage" strict="true">

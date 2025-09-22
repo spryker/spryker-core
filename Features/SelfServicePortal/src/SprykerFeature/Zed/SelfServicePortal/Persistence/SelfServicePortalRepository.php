@@ -27,25 +27,21 @@ use Generated\Shared\Transfer\SspModelCriteriaTransfer;
 use Generated\Shared\Transfer\SspModelTransfer;
 use Generated\Shared\Transfer\SspServiceCollectionTransfer;
 use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
-use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
-use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemMetadataTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
-use Orm\Zed\SelfServicePortal\Persistence\Map\SpyCompanyBusinessUnitFileTableMap;
-use Orm\Zed\SelfServicePortal\Persistence\Map\SpyCompanyUserFileTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpyProductShipmentTypeTableMap;
-use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspAssetFileTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspAssetTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspInquirySspAssetTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspInquiryTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspModelToProductListTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiryQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\Collection;
@@ -943,6 +939,11 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
         return $sspModelCollectionTransfer;
     }
 
+    public function getSspModelQuery(): SpySspModelQuery
+    {
+        return $this->getFactory()->createSspModelQuery();
+    }
+
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param list<int> $sspModelIds
@@ -1010,159 +1011,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
     }
 
     /**
-     * @param list<string> $assetReferences
-     * @param int $idFile
-     *
-     * @return list<int>
-     */
-    public function getAssetIdsToAssignByReferences(array $assetReferences, int $idFile): array
-    {
-        /** @var \Propel\Runtime\Collection\ObjectCollection $assignedAssetCollection */
-        $assignedAssetCollection = $this->getFactory()->createSspAssetFileQuery()
-            ->filterByFkFile($idFile)
-            ->select(SpySspAssetFileTableMap::COL_FK_SSP_ASSET)
-            ->find();
-
-        $assignedAssetIds = array_map('intval', array_values($assignedAssetCollection->toArray()));
-
-        /** @var \Propel\Runtime\Collection\ObjectCollection $assetCollection */
-        $assetCollection = $this->getFactory()->createSspAssetQuery()
-            ->filterByReference_In($assetReferences)
-            ->filterByIdSspAsset($assignedAssetIds, Criteria::NOT_IN)
-            ->select(SpySspAssetTableMap::COL_ID_SSP_ASSET)
-            ->find();
-
-        return array_map('intval', array_values($assetCollection->toArray()));
-    }
-
-    /**
-     * @param list<string> $assetReferences
-     * @param int $idFile
-     *
-     * @return list<int>
-     */
-    public function getAssetIdsToUnassignByReferences(array $assetReferences, int $idFile): array
-    {
-        /**
-         * @var \Orm\Zed\SelfServicePortal\Persistence\SpySspAssetQuery $query
-         */
-        $query = $this->getFactory()->createSspAssetQuery()
-            ->useSpySspAssetFileQuery()
-                ->filterByFkFile($idFile)
-            ->endUse();
-
-        /** @var \Propel\Runtime\Collection\ObjectCollection $assetCollection */
-        $assetCollection = $query
-            ->filterByReference_In($assetReferences)
-            ->select(SpySspAssetTableMap::COL_ID_SSP_ASSET)
-            ->find();
-
-        return array_map('intval', array_values($assetCollection->toArray()));
-    }
-
-    /**
-     * @param list<int> $businessUnitIds
-     * @param int $idFile
-     *
-     * @return list<int>
-     */
-    public function getBusinessUnitIdsToAssign(array $businessUnitIds, int $idFile): array
-    {
-        /** @var \Propel\Runtime\Collection\ObjectCollection $assignedBusinessUnitCollection */
-        $assignedBusinessUnitCollection = $this->getFactory()->createCompanyBusinessUnitFileQuery()
-            ->filterByFkFile($idFile)
-            ->select(SpyCompanyBusinessUnitFileTableMap::COL_FK_COMPANY_BUSINESS_UNIT)
-            ->find();
-
-        $assignedBusinessUnitIds = array_map('intval', array_values($assignedBusinessUnitCollection->toArray()));
-
-        /** @var \Propel\Runtime\Collection\ObjectCollection $businessUnitCollection */
-        $businessUnitCollection = $this->getFactory()->getCompanyBusinessUnitQuery()
-            ->filterByIdCompanyBusinessUnit_In($businessUnitIds)
-            ->filterByIdCompanyBusinessUnit($assignedBusinessUnitIds, Criteria::NOT_IN)
-            ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
-            ->find();
-
-        return array_map('intval', array_values($businessUnitCollection->toArray()));
-    }
-
-    /**
-     * @param list<int> $businessUnitIds
-     * @param int $idFile
-     *
-     * @return list<int>
-     */
-    public function getBusinessUnitIdsToUnassign(array $businessUnitIds, int $idFile): array
-    {
-        /**
-         * @var \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery $query
-         */
-        $query = $this->getFactory()->getCompanyBusinessUnitQuery()
-            ->useSpyCompanyBusinessUnitFileQuery()
-                ->filterByFkFile($idFile)
-            ->endUse();
-
-        /** @var \Propel\Runtime\Collection\ObjectCollection $businessUnitCollection */
-        $businessUnitCollection = $query
-            ->filterByIdCompanyBusinessUnit_In($businessUnitIds)
-            ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
-            ->find();
-
-        return array_map('intval', array_values($businessUnitCollection->toArray()));
-    }
-
-    /**
-     * @param list<int> $companyUserIds
-     * @param int $idFile
-     *
-     * @return list<int>
-     */
-    public function getCompanyUserIdsToAssign(array $companyUserIds, int $idFile): array
-    {
-        /** @var \Propel\Runtime\Collection\ObjectCollection $assignedCompanyUserCollection */
-        $assignedCompanyUserCollection = $this->getFactory()->createCompanyUserFileQuery()
-            ->filterByFkFile($idFile)
-            ->select(SpyCompanyUserFileTableMap::COL_FK_COMPANY_USER)
-            ->find();
-
-        $assignedCompanyUserIds = array_map('intval', array_values($assignedCompanyUserCollection->toArray()));
-
-        /** @var \Propel\Runtime\Collection\ObjectCollection $companyUserCollection */
-        $companyUserCollection = $this->getFactory()->getCompanyUserQuery()
-            ->filterByIdCompanyUser_In($companyUserIds)
-            ->filterByIdCompanyUser($assignedCompanyUserIds, Criteria::NOT_IN)
-            ->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER)
-            ->find();
-
-        return array_map('intval', array_values($companyUserCollection->toArray()));
-    }
-
-    /**
-     * @param list<int> $companyUserIds
-     * @param int $idFile
-     *
-     * @return list<int>
-     */
-    public function getCompanyUserIdsToUnassign(array $companyUserIds, int $idFile): array
-    {
-        /**
-         * @var \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $query
-         */
-        $query = $this->getFactory()->getCompanyUserQuery()
-            ->useSpyCompanyUserFileQuery()
-                ->filterByFkFile($idFile)
-            ->endUse();
-
-        /** @var \Propel\Runtime\Collection\ObjectCollection $companyUserCollection */
-        $companyUserCollection = $query
-            ->filterByIdCompanyUser_In($companyUserIds)
-            ->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER)
-            ->find();
-
-        return array_map('intval', array_values($companyUserCollection->toArray()));
-    }
-
-    /**
      * @param list<int> $companyIds
      *
      * @return list<int>
@@ -1176,25 +1024,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
             ->find();
 
         return array_map('intval', array_values($businessUnitCollection->toArray()));
-    }
-
-    /**
-     * @param list<int> $companyIds
-     *
-     * @return list<int>
-     */
-    public function getExistingCompanyIds(array $companyIds): array
-    {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<int> $companyIdsCollection */
-        $companyIdsCollection = $this->getFactory()->getCompanyQuery()
-            ->filterByIdCompany_In($companyIds)
-            ->select(SpyCompanyTableMap::COL_ID_COMPANY)
-            ->find();
-
-        /** @var list<int> $companyIds */
-        $companyIds = $companyIdsCollection->toArray();
-
-        return $companyIds;
     }
 
     public function getSspModelIdsByProductListId(int $idProductList): array

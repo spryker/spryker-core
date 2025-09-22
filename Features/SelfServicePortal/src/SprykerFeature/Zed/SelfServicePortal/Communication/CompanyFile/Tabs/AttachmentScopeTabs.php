@@ -17,6 +17,7 @@ class AttachmentScopeTabs extends AbstractTabs
     {
         $this
             ->addAssetTab($tabsViewTransfer)
+            ->addModelTab($tabsViewTransfer)
             ->addBusinessUnitTab($tabsViewTransfer)
             ->addCompanyUserTab($tabsViewTransfer)
             ->addCompanyTab($tabsViewTransfer);
@@ -38,6 +39,24 @@ class AttachmentScopeTabs extends AbstractTabs
             ->setName('asset')
             ->setTitle('Asset')
             ->setTemplate('@SelfServicePortal/AttachFile/_partials/asset/asset-attachment-tab.twig');
+
+        $tabsViewTransfer->addTab($tabItemTransfer);
+
+        return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return $this
+     */
+    protected function addModelTab(TabsViewTransfer $tabsViewTransfer)
+    {
+        $tabItemTransfer = new TabItemTransfer();
+        $tabItemTransfer
+            ->setName('model')
+            ->setTitle('Model')
+            ->setTemplate('@SelfServicePortal/AttachFile/_partials/model/model-attachment-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

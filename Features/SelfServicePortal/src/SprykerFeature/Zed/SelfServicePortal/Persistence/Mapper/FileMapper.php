@@ -19,6 +19,8 @@ use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
+use Generated\Shared\Transfer\SspModelCollectionTransfer;
+use Generated\Shared\Transfer\SspModelTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Propel\Runtime\Collection\Collection;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\QueryBuilder\FileAttachmentQueryBuilder;
@@ -73,6 +75,14 @@ class FileMapper
                 }
             }
 
+            if ($fileEntity->hasVirtualColumn(FileAttachmentQueryBuilder::SSP_MODEL_IDS_COLUMN)) {
+                foreach ($this->extractRelationIds($fileEntity->getVirtualColumn(FileAttachmentQueryBuilder::SSP_MODEL_IDS_COLUMN)) as $modelId) {
+                    $fileAttachmentTransfer->getSspModelCollectionOrFail()->addSspModel(
+                        (new SspModelTransfer())->setIdSspModel((int)$modelId),
+                    );
+                }
+            }
+
             $fileCollectionTransfer->addFileAttachment($fileAttachmentTransfer);
         }
 
@@ -119,6 +129,7 @@ class FileMapper
             ->setSspAssetCollection(new SspAssetCollectionTransfer())
             ->setCompanyUserCollection(new CompanyUserCollectionTransfer())
             ->setBusinessUnitCollection(new CompanyBusinessUnitCollectionTransfer())
-            ->setCompanyCollection(new CompanyCollectionTransfer());
+            ->setCompanyCollection(new CompanyCollectionTransfer())
+            ->setSspModelCollection(new SspModelCollectionTransfer());
     }
 }

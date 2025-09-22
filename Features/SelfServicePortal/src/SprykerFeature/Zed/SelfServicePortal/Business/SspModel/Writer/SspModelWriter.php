@@ -49,6 +49,27 @@ class SspModelWriter implements SspModelWriterInterface
         return $sspModelCollectionResponseTransfer;
     }
 
+    public function updateSspModelCollection(
+        SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer
+    ): SspModelCollectionResponseTransfer {
+        $sspModelCollectionResponseTransfer = new SspModelCollectionResponseTransfer();
+
+        $this->getTransactionHandler()->handleTransaction(function () use ($sspModelCollectionRequestTransfer, $sspModelCollectionResponseTransfer): void {
+            foreach ($sspModelCollectionRequestTransfer->getSspModels() as $sspModelTransfer) {
+                if (!$this->sspModelValidator->validateModelTransfer($sspModelTransfer, $sspModelCollectionResponseTransfer)) {
+                    continue;
+                }
+
+                $sspModelCollectionResponseTransfer = $this->executeModelUpdate($sspModelTransfer, $sspModelCollectionResponseTransfer);
+            }
+
+            $this->updateAssetsRelations($sspModelCollectionRequestTransfer);
+            $this->updateProductListsRelations($sspModelCollectionRequestTransfer);
+        });
+
+        return $sspModelCollectionResponseTransfer;
+    }
+
     protected function executeModelCreation(SspModelTransfer $sspModelTransfer): SspModelTransfer
     {
         $sspModelTransfer
@@ -61,40 +82,52 @@ class SspModelWriter implements SspModelWriterInterface
         });
     }
 
-    public function updateSspModelCollection(
-        SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer
-    ): SspModelCollectionResponseTransfer {
-        $sspModelCollectionResponseTransfer = new SspModelCollectionResponseTransfer();
-
-        foreach ($sspModelCollectionRequestTransfer->getSspModels() as $sspModelTransfer) {
-            if (!$this->sspModelValidator->validateModelTransfer($sspModelTransfer, $sspModelCollectionResponseTransfer)) {
-                continue;
-            }
-
-            $sspModelTransfer = $this->executeModelUpdate($sspModelTransfer, $sspModelCollectionResponseTransfer);
-            if ($sspModelTransfer) {
-                $sspModelCollectionResponseTransfer->addSspModel($sspModelTransfer);
-            }
+    protected function updateAssetsRelations(SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): void
+    {
+        foreach ($sspModelCollectionRequestTransfer->getProductListsToBeAssigned() as $modelProductListAssignmentTransfer) {
+            $this->entityManager->createSspModelToProductListAssignment($modelProductListAssignmentTransfer);
         }
 
-        return $sspModelCollectionResponseTransfer;
+        foreach ($sspModelCollectionRequestTransfer->getProductListsToBeUnassigned() as $modelProductListAssignmentTransfer) {
+            $this->entityManager->deleteSspModelToProductListAssignment($modelProductListAssignmentTransfer);
+        }
+    }
+
+    protected function updateProductListsRelations(SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): void
+    {
+        foreach ($sspModelCollectionRequestTransfer->getSspAssetsToBeAssigned() as $sspAssetToBeAssigned) {
+            $this->entityManager->createSspAssetToSspModelRelation(
+                $sspAssetToBeAssigned->getSspAssetOrFail()->getIdSspAssetOrFail(),
+                $sspAssetToBeAssigned->getSspModelOrFail()->getIdSspModelOrFail(),
+            );
+        }
+
+        foreach ($sspModelCollectionRequestTransfer->getSspAssetsToBeUnassigned() as $sspAssetToBeUnassigned) {
+            $this->entityManager->deleteSspAssetToSspModelRelation(
+                $sspAssetToBeUnassigned->getSspAssetOrFail()->getIdSspAssetOrFail(),
+                $sspAssetToBeUnassigned->getSspModelOrFail()->getIdSspModelOrFail(),
+            );
+        }
     }
 
     protected function executeModelUpdate(
         SspModelTransfer $sspModelTransfer,
         SspModelCollectionResponseTransfer $sspModelCollectionResponseTransfer
-    ): ?SspModelTransfer {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($sspModelTransfer, $sspModelCollectionResponseTransfer) {
-            $sspModelTransfer = $this->fileSspModelWriter->updateFile($sspModelTransfer);
+    ): ?SspModelCollectionResponseTransfer {
+        $sspModelTransfer = $this->fileSspModelWriter->updateFile($sspModelTransfer);
 
-            $sspModelTransfer = $this->entityManager->updateSspModel($sspModelTransfer);
-            if (!$sspModelTransfer) {
-                $sspModelCollectionResponseTransfer->addError(
-                    (new ErrorTransfer())->setMessage('SSP Model not found'),
-                );
-            }
+        $updatedSspModelTransfer = $this->entityManager->updateSspModel($sspModelTransfer);
 
-            return $sspModelTransfer;
-        });
+        if (!$updatedSspModelTransfer) {
+            $sspModelCollectionResponseTransfer->addError(
+                (new ErrorTransfer())->setMessage('SSP Model %s not found'),
+            );
+
+            return $sspModelCollectionResponseTransfer;
+        }
+
+        $sspModelCollectionResponseTransfer->addSspModel($updatedSspModelTransfer);
+
+        return $sspModelCollectionResponseTransfer;
     }
 }

@@ -13,6 +13,13 @@ export class InternalGuardTabsState {
 
     init() {
         const tabs = document.querySelector(this.selector);
+
+        if (!tabs) {
+            document.querySelector('.js-guard-submit').disabled = false;
+
+            return;
+        }
+
         this.input = document.querySelector(tabs.getAttribute('data-input-selector'));
         this.tabUrls = document.querySelectorAll(
             `${this.selector} .nav-tabs:not(.tab-content .nav-tabs) a[data-toggle="tab"]`,
@@ -34,30 +41,6 @@ export class InternalGuardTabsState {
             }
 
             submitButton.disabled = !this.dirtyElements.length;
-        });
-
-        document.querySelectorAll('.js-form-file').forEach((holder) => {
-            const fileInput = holder.querySelector('.js-file-input');
-            const removeFile = holder.querySelector('.js-form-remove-file');
-
-            fileInput.addEventListener('change', (event) => {
-                if (event.target.value) {
-                    event.target.classList.add('has-file');
-                    this.dirtyElements.push(event.target.id);
-                } else {
-                    event.target.classList.remove('has-file');
-                    this.dirtyElements = this.dirtyElements.filter((id) => id !== event.target.id);
-                }
-
-                submitButton.disabled = !this.dirtyElements.length;
-            });
-
-            removeFile.addEventListener('click', (event) => {
-                event.preventDefault();
-                fileInput.value = '';
-                fileInput.classList.remove('has-file');
-                fileInput.dispatchEvent(new Event('change'));
-            });
         });
     }
 

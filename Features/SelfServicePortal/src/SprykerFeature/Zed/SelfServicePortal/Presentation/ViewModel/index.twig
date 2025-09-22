@@ -59,15 +59,12 @@
         {% endblock %}
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Relations' | trans } %}
-        {% block widget_content %}
-            <div class="row">
-                <div class="col-xs-12 col-md-12 col-lg-12" data-qa="ssp-model-relations">
-                    <p>{{ 'Relations will be displayed here in future updates.' | trans }}</p>
-                </div>
-            </div>
-        {% endblock %}
-    {% endembed %}
+    {% include '@SelfServicePortal/_partials/model-relations.twig' with {
+        'sspModel': sspModel,
+        'sspModelTabs': sspModelTabs,
+        'attachedAssetsTable': attachedAssetsTable,
+        'attachedProductListsTable': attachedProductListsTable,
+    } only %}
 {% endblock %}
 
 {% block image %}
