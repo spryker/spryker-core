@@ -451,6 +451,7 @@
 
     <transfer name="ProductOfferStorage">
         <property name="services" type="ServiceStorage[]" singular="service"/>
+        <property name="shipmentTypes" type="ShipmentTypeStorage[]" singular="shipmentType" strict="true"/>
         <property name="price" type="CurrentProductPrice"/>
         <property name="productOfferReference" type="string"/>
     </transfer>
@@ -1214,8 +1215,6 @@
         <property name="fieldName" type="string"/>
     </transfer>
 
-
-
     <transfer name="SspAssetAssignmentFileParserRequest">
         <property name="content" type="string"/>
     </transfer>
@@ -1366,4 +1365,9 @@
         <property name="name" type="string"/>
         <property name="actionButtons" type="ButtonCollection"/>
     </transfer>
+
+    <transfer name="ProductOfferAvailabilityStorage">
+        <property name="isAvailable" type="bool"/>
+    </transfer>
+    
 </transfers>

@@ -113,4 +113,31 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     {
         return $this->getAscendingNameSortConfigTransfer();
     }
+
+    /**
+     * Specification:
+     * - Returns a list of shipment type keys that are applicable for product offer service availability.
+     * - Products with offers associated to these shipment types will be considered for availability checks.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getProductOfferServiceAvailabilityShipmentTypeKeys(): array
+    {
+        return [];
+    }
+
+    /**
+     * Specification:
+     * - Returns the service product class name.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getServiceProductClassName(): string
+    {
+        return $this->getSharedConfig()->getServiceProductClassName();
+    }
 }

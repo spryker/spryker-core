@@ -11,6 +11,8 @@ use Spryker\Client\CompanyUser\CompanyUserClientInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Locale\LocaleClientInterface;
 use Spryker\Client\Permission\PermissionClientInterface;
+use Spryker\Client\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageClientInterface;
+use Spryker\Client\ProductOfferStorage\ProductOfferStorageClientInterface;
 use Spryker\Client\Search\SearchClientInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageClientInterface;
@@ -26,6 +28,10 @@ use SprykerFeature\Client\SelfServicePortal\Dashboard\Reader\CmsBlockCompanyBusi
 use SprykerFeature\Client\SelfServicePortal\Dashboard\Reader\CmsBlockCompanyBusinessUnitStorageReaderInterface;
 use SprykerFeature\Client\SelfServicePortal\Permission\SspAssetPermissionChecker;
 use SprykerFeature\Client\SelfServicePortal\Permission\SspAssetPermissionCheckerInterface;
+use SprykerFeature\Client\SelfServicePortal\ProductOffer\Checker\ProductServiceAvailabilityChecker;
+use SprykerFeature\Client\SelfServicePortal\ProductOffer\Checker\ProductServiceAvailabilityCheckerInterface;
+use SprykerFeature\Client\SelfServicePortal\ProductOffer\Reader\ProductOfferServiceReader;
+use SprykerFeature\Client\SelfServicePortal\ProductOffer\Reader\ProductOfferServiceReaderInterface;
 use SprykerFeature\Client\SelfServicePortal\Search\Expander\SspAssetQueryExpander;
 use SprykerFeature\Client\SelfServicePortal\Search\Expander\SspAssetQueryExpanderInterface;
 use SprykerFeature\Client\SelfServicePortal\Search\Expander\SspAssetSearchQueryExpander;
@@ -157,6 +163,40 @@ class SelfServicePortalFactory extends AbstractFactory
         return new SspAssetSearchPaginationConfigBuilder();
     }
 
+    public function createSspAssetSearchSortConfigBuilder(): SortConfigBuilderInterface
+    {
+        return (new SspAssetSearchSortConfigBuilder())
+            ->addSort($this->getConfig()->getAscendingNameSortConfigTransfer())
+            ->addSort($this->getConfig()->getDescendingNameSortConfigTransfer());
+    }
+
+    public function createSspAssetSearchQueryExpander(): SspAssetSearchQueryExpanderInterface
+    {
+        return new SspAssetSearchQueryExpander(
+            $this->getCompanyUserClient(),
+            $this->getPermissionClient(),
+            $this->getConfig(),
+        );
+    }
+
+    public function createProductServiceAvailabilityChecker(): ProductServiceAvailabilityCheckerInterface
+    {
+        return new ProductServiceAvailabilityChecker(
+            $this->createProductOfferServiceReader(),
+            $this->getProductOfferAvailabilityStorageClient(),
+            $this->getStoreClient(),
+            $this->getConfig(),
+        );
+    }
+
+    public function createProductOfferServiceReader(): ProductOfferServiceReaderInterface
+    {
+        return new ProductOfferServiceReader(
+            $this->getProductOfferStorageClient(),
+            $this->getConfig(),
+        );
+    }
+
     public function getSearchClient(): SearchClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_SEARCH);
@@ -223,19 +263,13 @@ class SelfServicePortalFactory extends AbstractFactory
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::PLUGINS_SSP_ASSET_SEARCH_RESULT_FORMATTER);
     }
 
-    public function createSspAssetSearchSortConfigBuilder(): SortConfigBuilderInterface
+    public function getProductOfferStorageClient(): ProductOfferStorageClientInterface
     {
-        return (new SspAssetSearchSortConfigBuilder())
-            ->addSort($this->getConfig()->getAscendingNameSortConfigTransfer())
-            ->addSort($this->getConfig()->getDescendingNameSortConfigTransfer());
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_PRODUCT_OFFER_STORAGE);
     }
 
-    public function createSspAssetSearchQueryExpander(): SspAssetSearchQueryExpanderInterface
+    public function getProductOfferAvailabilityStorageClient(): ProductOfferAvailabilityStorageClientInterface
     {
-        return new SspAssetSearchQueryExpander(
-            $this->getCompanyUserClient(),
-            $this->getPermissionClient(),
-            $this->getConfig(),
-        );
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_PRODUCT_OFFER_AVAILABILITY_STORAGE);
     }
 }

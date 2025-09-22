@@ -67,9 +67,19 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
      */
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
 
-     /**
-      * @var string
-      */
+    /**
+     * @var string
+     */
+    public const CLIENT_PRODUCT_OFFER_STORAGE = 'CLIENT_PRODUCT_OFFER_STORAGE';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_PRODUCT_OFFER_AVAILABILITY_STORAGE = 'CLIENT_PRODUCT_OFFER_AVAILABILITY_STORAGE';
+
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
 
     /**
@@ -102,6 +112,8 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
         $container = $this->addSspAssetSearchResultFormatterPlugins($container);
         $container = $this->addSspAssetSearchQueryExpanderPlugins($container);
         $container = $this->addCompanyUserClient($container);
+        $container = $this->addProductOfferStorageClient($container);
+        $container = $this->addProductOfferAvailabilityStorageClient($container);
 
         return $container;
     }
@@ -187,6 +199,33 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
         return $container;
     }
 
+    protected function addSearchClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SEARCH, function (Container $container) {
+            return $container->getLocator()->search()->client();
+        });
+
+        return $container;
+    }
+
+    protected function addProductOfferStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT_OFFER_STORAGE, function (Container $container) {
+            return $container->getLocator()->productOfferStorage()->client();
+        });
+
+        return $container;
+    }
+
+    protected function addProductOfferAvailabilityStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT_OFFER_AVAILABILITY_STORAGE, function (Container $container) {
+            return $container->getLocator()->productOfferAvailabilityStorage()->client();
+        });
+
+        return $container;
+    }
+
     protected function addSspAssetSearchQueryPlugin(Container $container): Container
     {
         $container->set(static::PLUGIN_SSP_ASSET_SEARCH_QUERY, function (): QueryInterface {
@@ -232,16 +271,6 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
      */
     protected function getSspAssetSearchQueryExpanderPlugins(): array
     {
-        return [
-        ];
-    }
-
-    protected function addSearchClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_SEARCH, function (Container $container) {
-            return $container->getLocator()->search()->client();
-        });
-
-        return $container;
+        return [];
     }
 }

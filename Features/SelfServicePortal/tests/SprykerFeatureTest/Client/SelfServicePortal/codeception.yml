@@ -38,3 +38,4 @@ suites:
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Client\Testify\Helper\FactoryHelper
