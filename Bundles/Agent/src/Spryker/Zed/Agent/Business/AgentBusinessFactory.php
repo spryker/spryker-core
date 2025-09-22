@@ -17,9 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class AgentBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\Agent\Business\Agent\AgentReaderInterface
-     */
     public function createAgentReader(): AgentReaderInterface
     {
         return new AgentReader($this->getRepository());

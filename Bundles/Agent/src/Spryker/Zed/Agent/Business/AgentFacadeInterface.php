@@ -19,10 +19,6 @@ interface AgentFacadeInterface
      * - If username is not exist, FindAgentResponseTransfer::isAgentFound will be false.
      *
      * @api
-     *
-     * @param string $username
-     *
-     * @return \Generated\Shared\Transfer\FindAgentResponseTransfer
      */
     public function findAgentByUsername(string $username): FindAgentResponseTransfer;
 
@@ -34,10 +30,6 @@ interface AgentFacadeInterface
      * - If customers by query are not exist, collection will be empty.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
      */
     public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer;
 }

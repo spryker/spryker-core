@@ -18,11 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class AgentRepository extends AbstractRepository implements AgentRepositoryInterface
 {
-    /**
-     * @param string $username
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
-     */
     public function findAgentByUsername(string $username): ?UserTransfer
     {
         $userEntity = $this->getFactory()
@@ -40,11 +35,6 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
         return $userTransfer->fromArray($userEntity->toArray(), true);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
-     */
     public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer
     {
         $query = $customerQueryTransfer->getQuery() ?? '';

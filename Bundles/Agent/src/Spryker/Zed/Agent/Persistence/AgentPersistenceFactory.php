@@ -19,25 +19,16 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class AgentPersistenceFactory extends AbstractPersistenceFactory
 {
-    /**
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
-     */
     public function getCustomerQuery(): SpyCustomerQuery
     {
         return $this->getProvidedDependency(AgentDependencyProvider::PROPEL_QUERY_CUSTOMER);
     }
 
-    /**
-     * @return \Orm\Zed\User\Persistence\SpyUserQuery
-     */
     public function getUserQuery(): SpyUserQuery
     {
         return $this->getProvidedDependency(AgentDependencyProvider::PROPEL_QUERY_USER);
     }
 
-    /**
-     * @return \Spryker\Zed\Agent\Persistence\Propel\Mapper\AgentMapper
-     */
     public function createAgentMapper(): AgentMapper
     {
         return new AgentMapper();

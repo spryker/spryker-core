@@ -25,9 +25,6 @@ use Spryker\Client\Kernel\AbstractFactory;
  */
 class AgentFactory extends AbstractFactory
 {
-    /**
-     * @return \Spryker\Client\Agent\Zed\AgentStubInterface
-     */
     public function createZedStub(): AgentStubInterface
     {
         return new AgentStub(
@@ -35,9 +32,6 @@ class AgentFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Client\Agent\Session\AgentSessionInterface
-     */
     public function createAgentSession(): AgentSessionInterface
     {
         return new AgentSession(
@@ -45,9 +39,6 @@ class AgentFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Client\Agent\Finisher\ImpersonationSessionFinisherInterface
-     */
     public function createImpersonationSessionFinisher(): ImpersonationSessionFinisherInterface
     {
         return new ImpersonationSessionFinisher(
@@ -56,33 +47,21 @@ class AgentFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Client\Agent\Configurator\AgentAccessConfiguratorInterface
-     */
     public function createAgentAccessConfigurator(): AgentAccessConfiguratorInterface
     {
         return new AgentAccessConfigurator($this->getConfig());
     }
 
-    /**
-     * @return \Spryker\Client\Agent\Dependency\Client\AgentToZedRequestClientInterface
-     */
     public function getZedRequestClient(): AgentToZedRequestClientInterface
     {
         return $this->getProvidedDependency(AgentDependencyProvider::CLIENT_ZED_REQUEST);
     }
 
-    /**
-     * @return \Spryker\Client\Agent\Dependency\Client\AgentToSessionClientInterface
-     */
     public function getSessionClient(): AgentToSessionClientInterface
     {
         return $this->getProvidedDependency(AgentDependencyProvider::CLIENT_SESSION);
     }
 
-    /**
-     * @return \Spryker\Client\Agent\Dependency\Client\AgentToCustomerClientInterface
-     */
     public function getCustomerClient(): AgentToCustomerClientInterface
     {
         return $this->getProvidedDependency(AgentDependencyProvider::CLIENT_CUSTOMER);

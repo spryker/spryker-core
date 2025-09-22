@@ -9,10 +9,5 @@ namespace Spryker\Client\Agent\Configurator;
 
 interface AgentAccessConfiguratorInterface
 {
-    /**
-     * @param string $securedPattern
-     *
-     * @return string
-     */
     public function applyAgentAccessOnSecuredPattern(string $securedPattern): string;
 }

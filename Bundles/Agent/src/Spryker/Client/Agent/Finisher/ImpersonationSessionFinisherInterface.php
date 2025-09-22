@@ -9,8 +9,5 @@ namespace Spryker\Client\Agent\Finisher;
 
 interface ImpersonationSessionFinisherInterface
 {
-    /**
-     * @return void
-     */
     public function finishImpersonationSession(): void;
 }

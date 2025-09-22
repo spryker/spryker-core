@@ -22,10 +22,6 @@ class AgentFacade extends AbstractFacade implements AgentFacadeInterface
      * {@inheritDoc}
      *
      * @api
-     *
-     * @param string $username
-     *
-     * @return \Generated\Shared\Transfer\FindAgentResponseTransfer
      */
     public function findAgentByUsername(string $username): FindAgentResponseTransfer
     {
@@ -38,10 +34,6 @@ class AgentFacade extends AbstractFacade implements AgentFacadeInterface
      * {@inheritDoc}
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
      */
     public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer
     {

@@ -16,7 +16,7 @@ use Spryker\Shared\Agent\AgentConstants;
 class AgentConfig extends AbstractBundleConfig
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected const DEFAULT_AGENT_ALLOWED_SECURED_PATTERN_LIST = [];
 
@@ -41,8 +41,6 @@ class AgentConfig extends AbstractBundleConfig
      * - Enable or disable agent info capturing in the orders when agent assists with order placing.
      *
      * @api
-     *
-     * @return bool
      */
     public function isSalesOrderAgentEnabled(): bool
     {

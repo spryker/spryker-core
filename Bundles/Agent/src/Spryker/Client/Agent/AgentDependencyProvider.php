@@ -40,11 +40,6 @@ class AgentDependencyProvider extends AbstractDependencyProvider
      */
     public const PLUGINS_IMPERSONATION_SESSION_FINISHER = 'PLUGINS_IMPERSONATION_SESSION_FINISHER';
 
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = parent::provideServiceLayerDependencies($container);
@@ -58,11 +53,6 @@ class AgentDependencyProvider extends AbstractDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
     protected function addZedRequestClient(Container $container): Container
     {
         $container->set(static::CLIENT_ZED_REQUEST, function (Container $container): AgentToZedRequestClientInterface {
@@ -74,11 +64,6 @@ class AgentDependencyProvider extends AbstractDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
     protected function addSessionClient(Container $container): Container
     {
         $container->set(static::CLIENT_SESSION, function (Container $container): AgentToSessionClientInterface {
@@ -90,11 +75,6 @@ class AgentDependencyProvider extends AbstractDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
     protected function addCustomerClient(Container $container): Container
     {
         $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
@@ -106,11 +86,6 @@ class AgentDependencyProvider extends AbstractDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
     protected function addImpersonationSessionFinisherPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_IMPERSONATION_SESSION_FINISHER, function () {

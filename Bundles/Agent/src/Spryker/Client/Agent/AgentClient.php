@@ -21,10 +21,6 @@ class AgentClient extends AbstractClient implements AgentClientInterface
      * {@inheritDoc}
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
      */
     public function findAgentByUsername(UserTransfer $userTransfer): ?UserTransfer
     {
@@ -38,8 +34,6 @@ class AgentClient extends AbstractClient implements AgentClientInterface
      * {@inheritDoc}
      *
      * @api
-     *
-     * @return bool
      */
     public function isLoggedIn(): bool
     {
@@ -52,8 +46,6 @@ class AgentClient extends AbstractClient implements AgentClientInterface
      * {@inheritDoc}
      *
      * @api
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getAgent(): UserTransfer
     {
@@ -66,10 +58,6 @@ class AgentClient extends AbstractClient implements AgentClientInterface
      * {@inheritDoc}
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return void
      */
     public function setAgent(UserTransfer $userTransfer): void
     {
@@ -82,8 +70,6 @@ class AgentClient extends AbstractClient implements AgentClientInterface
      * {@inheritDoc}
      *
      * @api
-     *
-     * @return void
      */
     public function invalidateAgentSession(): void
     {
@@ -96,10 +82,6 @@ class AgentClient extends AbstractClient implements AgentClientInterface
      * {@inheritDoc}
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
      */
     public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer
     {
@@ -112,8 +94,6 @@ class AgentClient extends AbstractClient implements AgentClientInterface
      * {@inheritDoc}
      *
      * @api
-     *
-     * @return void
      */
     public function finishImpersonationSession(): void
     {
@@ -126,10 +106,6 @@ class AgentClient extends AbstractClient implements AgentClientInterface
      * {@inheritDoc}
      *
      * @api
-     *
-     * @param string $securedPattern
-     *
-     * @return string
      */
     public function applyAgentAccessOnSecuredPattern(string $securedPattern): string
     {

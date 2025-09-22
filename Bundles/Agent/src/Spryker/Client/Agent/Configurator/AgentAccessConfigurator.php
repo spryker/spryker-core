@@ -16,24 +16,13 @@ class AgentAccessConfigurator implements AgentAccessConfiguratorInterface
      */
     protected const AGENT_ALLOWED_SECURED_PATTERN_REPLACEMENT = '';
 
-    /**
-     * @var \Spryker\Client\Agent\AgentConfig
-     */
-    protected $agentConfig;
+    protected AgentConfig $agentConfig;
 
-    /**
-     * @param \Spryker\Client\Agent\AgentConfig $agentConfig
-     */
     public function __construct(AgentConfig $agentConfig)
     {
         $this->agentConfig = $agentConfig;
     }
 
-    /**
-     * @param string $securedPattern
-     *
-     * @return string
-     */
     public function applyAgentAccessOnSecuredPattern(string $securedPattern): string
     {
         $agentAllowedSecuredPatternList = $this->agentConfig->getAgentAllowedSecuredPatternList();

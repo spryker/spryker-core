@@ -16,10 +16,7 @@ use Propel\Runtime\Util\PropelModelPager;
 class AgentMapper
 {
     /**
-     * @param array $customers
-     * @param \Propel\Runtime\Util\PropelModelPager $pager
-     *
-     * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
+     * @param array<int, array<string, mixed>> $customers
      */
     public function mapCustomerDataToCustomerAutocompleteResponseTransfer(array $customers, PropelModelPager $pager): CustomerAutocompleteResponseTransfer
     {
@@ -40,10 +37,7 @@ class AgentMapper
     }
 
     /**
-     * @param array $customer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @param array<string, mixed> $customer
      */
     protected function mapCustomerDataToCustomerTransfer(
         array $customer,
@@ -58,12 +52,6 @@ class AgentMapper
         return $customerTransfer;
     }
 
-    /**
-     * @param \Propel\Runtime\Util\PropelModelPager $pager
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
-     */
     protected function mapPropelModelPagerToPaginationTransfer(
         PropelModelPager $pager,
         PaginationTransfer $paginationTransfer

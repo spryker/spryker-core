@@ -35,7 +35,7 @@ runCommand() {
 
 validateModuleCodeSniffer() {
   local module_directory=$2
-  MODULES=$(git -C ./ diff --name-only --diff-filter=ACMRTUXB master... | grep "^$module_directory\/" | cut -d "/" -f2- | cut -d "/" -f1 | sort | uniq)
+  MODULES=$(git -C ./ diff --name-only --diff-filter=ACMRTUXB origin/master | grep "^$module_directory\/" | cut -d "/" -f2- | cut -d "/" -f1 | sort | uniq)
 
   echo "code sniffer check"
   for module in $MODULES

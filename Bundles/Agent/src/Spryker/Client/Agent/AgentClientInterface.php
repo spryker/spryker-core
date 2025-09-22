@@ -19,10 +19,6 @@ interface AgentClientInterface
      * - If username is not exist, null will be returned.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
      */
     public function findAgentByUsername(UserTransfer $userTransfer): ?UserTransfer;
 
@@ -31,8 +27,6 @@ interface AgentClientInterface
      * - Returns true if agent auth data exist in session storage.
      *
      * @api
-     *
-     * @return bool
      */
     public function isLoggedIn(): bool;
 
@@ -41,8 +35,6 @@ interface AgentClientInterface
      * - Returns UserTransfer of agent which logged in.
      *
      * @api
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getAgent(): UserTransfer;
 
@@ -51,10 +43,6 @@ interface AgentClientInterface
      * - Saves UserTransfer into agent's session storage.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return void
      */
     public function setAgent(UserTransfer $userTransfer): void;
 
@@ -63,8 +51,6 @@ interface AgentClientInterface
      * - Invalidates agent session.
      *
      * @api
-     *
-     * @return void
      */
     public function invalidateAgentSession(): void;
 
@@ -75,10 +61,6 @@ interface AgentClientInterface
      * - If customers by query are not exist, collection will be empty.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
      */
     public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer;
 
@@ -88,8 +70,6 @@ interface AgentClientInterface
      * - Removes customer information from session.
      *
      * @api
-     *
-     * @return void
      */
     public function finishImpersonationSession(): void;
 
@@ -99,10 +79,6 @@ interface AgentClientInterface
      * - Modifies secured pattern based on a list.
      *
      * @api
-     *
-     * @param string $securedPattern
-     *
-     * @return string
      */
     public function applyAgentAccessOnSecuredPattern(string $securedPattern): string;
 }
