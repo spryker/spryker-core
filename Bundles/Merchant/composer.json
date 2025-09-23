@@ -9,6 +9,7 @@
         "spryker/cart-extension": "^4.0.0",
         "spryker/checkout-extension": "^1.2.0",
         "spryker/event": "^2.3.0",
+        "spryker/event-behavior": "^1.32.0",
         "spryker/kernel": "^3.33.0",
         "spryker/log": "^3.0.0",
         "spryker/merchant-extension": "^1.2.0",

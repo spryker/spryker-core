@@ -32,4 +32,22 @@ interface ProductListSearchRepositoryInterface
      * @return array
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
+
+    /**
+     * @module ProductCategory
+     *
+     * @param array<int, int> $categoryIdsTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getProductAbstractIdsTimestampMap(array $categoryIdsTimestampMap): array;
+
+    /**
+     * @uses SpyProductQuery
+     *
+     * @param array<int, int> $concreteIdsTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getProductAbstractIdsTimestampMapByConcreteIds(array $concreteIdsTimestampMap = []): array;
 }

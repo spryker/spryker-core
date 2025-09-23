@@ -19,11 +19,22 @@ use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterfac
 use Spryker\Zed\ProductPageSearch\Business\Reader\AddToCartSkuReaderInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface;
+use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchConfig;
 
 class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterface
 {
     use InstancePoolingTrait;
+
+    /**
+     * @var array<int>
+     */
+    protected static array $publishedProductAbstractIds = [];
+
+    /**
+     * @var array<int>
+     */
+    protected static array $unpublishedProductAbstractIds = [];
 
     /**
      * @var string
@@ -51,51 +62,12 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     protected static $localesByIdStoreMap;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface
+     * @var array<int, int>
      */
-    protected $queryContainer;
+    protected array $productAbstractIdTimestampMapToSave = [];
 
     /**
-     * @var array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface>
-     */
-    protected $productPageDataLoaderPlugins = [];
-
-    /**
-     * @var array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface>
-     */
-    protected $pageDataExpanderPlugins = [];
-
-    /**
-     * @var array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageSearchCollectionFilterPluginInterface>
-     */
-    protected $productPageSearchCollectionFilterPlugins = [];
-
-    /**
-     * @var \Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface
-     */
-    protected $productPageSearchMapper;
-
-    /**
-     * @var \Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface
-     */
-    protected $productPageSearchWriter;
-
-    /**
-     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig
-     */
-    protected $productPageSearchConfig;
-
-    /**
-     * @var \Spryker\Zed\ProductPageSearch\Business\Reader\AddToCartSkuReaderInterface
-     */
-    protected $addToCartSkuReader;
-
-    /**
+     * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface $repository
      * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface $queryContainer
      * @param array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface> $pageDataExpanderPlugins
      * @param array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface> $productPageDataLoaderPlugins
@@ -107,25 +79,38 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * @param \Spryker\Zed\ProductPageSearch\Business\Reader\AddToCartSkuReaderInterface $addToCartSkuReader
      */
     public function __construct(
-        ProductPageSearchQueryContainerInterface $queryContainer,
-        array $pageDataExpanderPlugins,
-        array $productPageDataLoaderPlugins,
-        array $productPageSearchCollectionFilterPlugins,
-        ProductPageSearchMapperInterface $productPageSearchMapper,
-        ProductPageSearchWriterInterface $productPageSearchWriter,
-        ProductPageSearchConfig $productPageSearchConfig,
-        ProductPageSearchToStoreFacadeInterface $storeFacade,
-        AddToCartSkuReaderInterface $addToCartSkuReader
+        protected ProductPageSearchRepositoryInterface $repository,
+        protected ProductPageSearchQueryContainerInterface $queryContainer,
+        protected array $pageDataExpanderPlugins,
+        protected array $productPageDataLoaderPlugins,
+        protected array $productPageSearchCollectionFilterPlugins,
+        protected ProductPageSearchMapperInterface $productPageSearchMapper,
+        protected ProductPageSearchWriterInterface $productPageSearchWriter,
+        protected ProductPageSearchConfig $productPageSearchConfig,
+        protected ProductPageSearchToStoreFacadeInterface $storeFacade,
+        protected AddToCartSkuReaderInterface $addToCartSkuReader
     ) {
-        $this->queryContainer = $queryContainer;
-        $this->pageDataExpanderPlugins = $pageDataExpanderPlugins;
-        $this->productPageDataLoaderPlugins = $productPageDataLoaderPlugins;
-        $this->productPageSearchCollectionFilterPlugins = $productPageSearchCollectionFilterPlugins;
-        $this->productPageSearchMapper = $productPageSearchMapper;
-        $this->productPageSearchWriter = $productPageSearchWriter;
-        $this->productPageSearchConfig = $productPageSearchConfig;
-        $this->storeFacade = $storeFacade;
-        $this->addToCartSkuReader = $addToCartSkuReader;
+    }
+
+    /**
+     * @param array<int, int> $productAbstractIdTimestampMap
+     *
+     * @return void
+     */
+    public function publishWithTimestamps(array $productAbstractIdTimestampMap): void
+    {
+        // Filters IDs if it had been processed in the current process
+        $productAbstractIds = array_values(array_unique(array_diff(array_keys($productAbstractIdTimestampMap), static::$publishedProductAbstractIds)));
+        // Exclude IDs if they were processed in current process
+        $productAbstractIdTimestampMap = array_intersect_key($productAbstractIdTimestampMap, array_flip($productAbstractIds));
+        // Filters IDs if it had been processed in parallel processes
+        $this->productAbstractIdTimestampMapToSave = $this->repository->getRelevantProductAbstractIdsToUpdate($productAbstractIdTimestampMap);
+
+        if ($this->productAbstractIdTimestampMapToSave) {
+            $this->publish(array_keys($this->productAbstractIdTimestampMapToSave));
+        }
+
+        static::$publishedProductAbstractIds = array_merge(static::$publishedProductAbstractIds, $productAbstractIds);
     }
 
     /**
@@ -167,6 +152,20 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         if ($isPoolingStateChanged) {
             $this->enableInstancePooling();
         }
+    }
+
+    /**
+     * @param array<int, int> $productAbstractIdTimestampMap
+     *
+     * @return void
+     */
+    public function unpublishWithTimestamps(array $productAbstractIdTimestampMap)
+    {
+        $productAbstractIds = array_values(array_unique(array_diff(array_keys($productAbstractIdTimestampMap), static::$unpublishedProductAbstractIds)));
+        if ($productAbstractIds) {
+            $this->unpublish($productAbstractIds);
+        }
+        static::$unpublishedProductAbstractIds = array_merge(static::$unpublishedProductAbstractIds, $productAbstractIds);
     }
 
     /**
@@ -335,6 +334,9 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         string $localeName,
         array $pageDataExpanderPlugins
     ) {
+        if (!empty($this->productAbstractIdTimestampMapToSave[$productAbstractPageSearchEntity->getFkProductAbstract()])) {
+            $productPageSearchTransfer->setTimestamp($this->productAbstractIdTimestampMapToSave[$productAbstractPageSearchEntity->getFkProductAbstract()]);
+        }
         $productPageSearchTransfer->setStore($storeName);
         $productPageSearchTransfer->setLocale($localeName);
 

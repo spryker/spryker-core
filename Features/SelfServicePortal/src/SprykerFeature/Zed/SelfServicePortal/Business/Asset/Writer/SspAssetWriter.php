@@ -7,12 +7,15 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Exception\CompanyBusinessUnitIdOrUuidIsRequired;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Validator\SspAssetValidatorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalEntityManagerInterface;
 use SprykerFeature\Zed\SelfServicePortal\Persistence\SelfServicePortalRepositoryInterface;
@@ -42,13 +45,19 @@ class SspAssetWriter implements SspAssetWriterInterface
      */
     protected const MESSAGE_ASSET_BUSINESS_UNIT_ASSIGNMENT_DENIED = 'self_service_portal.asset.business_unit_assignment.denied';
 
+    /**
+     * @var array<string, \Generated\Shared\Transfer\CompanyBusinessUnitTransfer>
+     */
+    protected array $companyBusinessUnitTransferIndexedByUuid;
+
     public function __construct(
         protected SelfServicePortalEntityManagerInterface $entityManager,
         protected SelfServicePortalRepositoryInterface $repository,
         protected SspAssetValidatorInterface $sspAssetValidator,
         protected SequenceNumberFacadeInterface $sequenceNumberFacade,
         protected SelfServicePortalConfig $config,
-        protected FileSspAssetWriterInterface $fileSspAssetWriter
+        protected FileSspAssetWriterInterface $fileSspAssetWriter,
+        protected CompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
     ) {
     }
 
@@ -114,6 +123,8 @@ class SspAssetWriter implements SspAssetWriterInterface
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($sspAssetTransfer) {
             $sspAssetTransfer = $this->fileSspAssetWriter->createFile($sspAssetTransfer);
+            $sspAssetOwnerCompanyBusinessUnitTransfer = $this->resolveIdCompanyBusinessUnitForCompanyBusinessUnitTransfer($sspAssetTransfer->getCompanyBusinessUnitOrFail());
+            $sspAssetTransfer->setCompanyBusinessUnit($sspAssetOwnerCompanyBusinessUnitTransfer);
 
             $sspAssetTransfer = $this->entityManager->createSspAsset($sspAssetTransfer);
 
@@ -127,7 +138,9 @@ class SspAssetWriter implements SspAssetWriterInterface
                     continue;
                 }
 
-                $companyBusinessUnitIds[] = $sspAssetAssignmentTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnitOrFail();
+                $companyBusinessUnitIds[] = $this->resolveIdCompanyBusinessUnitForCompanyBusinessUnitTransfer(
+                    $sspAssetAssignmentTransfer->getCompanyBusinessUnit(),
+                )->getIdCompanyBusinessUnitOrFail();
             }
 
             $this->entityManager->createAssetToCompanyBusinessUnitRelation(
@@ -220,5 +233,30 @@ class SspAssetWriter implements SspAssetWriterInterface
         }
 
         return $sspAssetCollectionResponseTransfer;
+    }
+
+    protected function resolveIdCompanyBusinessUnitForCompanyBusinessUnitTransfer(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitTransfer {
+        if ($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()) {
+            return $companyBusinessUnitTransfer;
+        }
+
+        if (!$companyBusinessUnitTransfer->getUuid()) {
+            throw new CompanyBusinessUnitIdOrUuidIsRequired('CompanyBusinessUnitTransfer must have either idCompanyBusinessUnit or uuid set for asset creation');
+        }
+
+        if (isset($this->companyBusinessUnitTransferIndexedByUuid[$companyBusinessUnitTransfer->getUuid()])) {
+            return $this->companyBusinessUnitTransferIndexedByUuid[$companyBusinessUnitTransfer->getUuid()];
+        }
+
+        $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitFacade
+            ->findCompanyBusinessUnitByUuid(
+                (new CompanyBusinessUnitTransfer())->setUuid($companyBusinessUnitTransfer->getUuid()),
+            );
+
+        $this->companyBusinessUnitTransferIndexedByUuid[$companyBusinessUnitTransfer->getUuid()] = $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransferOrFail();
+
+        return $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransferOrFail();
     }
 }

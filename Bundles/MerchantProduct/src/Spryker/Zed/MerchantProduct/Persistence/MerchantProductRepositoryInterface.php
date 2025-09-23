@@ -54,4 +54,11 @@ interface MerchantProductRepositoryInterface
     public function getMerchantProductAbstractCollection(
         MerchantProductAbstractCriteriaTransfer $merchantProductAbstractCriteriaTransfer
     ): MerchantProductAbstractCollectionTransfer;
+
+    /**
+     * @param array<int> $merchantIds
+     *
+     * @return array<int>
+     */
+    public function getProductAbstractIdsByMerchantIds(array $merchantIds): array;
 }

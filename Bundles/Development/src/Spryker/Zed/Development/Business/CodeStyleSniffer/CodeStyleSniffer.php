@@ -144,7 +144,10 @@ class CodeStyleSniffer
             $processConfig .= ' -e';
         }
 
+        $processConfig .= ' -s';
+
         $optionSniffs = $codeStyleSnifferConfiguration->getSpecificSniffs();
+
         if ($optionSniffs) {
             $processConfig .= ' --sniffs=' . $optionSniffs;
         }
@@ -239,7 +242,7 @@ class CodeStyleSniffer
         );
 
         if ($process->getExitCode() !== static::CODE_SUCCESS && !$codeStyleSnifferConfiguration->isFixing()) {
-            $this->commandsToFix[] = sprintf('vendor/bin/console c:s:s -m %s.%s -f' . PHP_EOL, $codeStyleSnifferConfiguration->getNamespace(), basename($path));
+            $this->commandsToFix[] = sprintf('vendor/bin/console c:s:s -m %s.%s -s -f ' . PHP_EOL, $codeStyleSnifferConfiguration->getNamespace(), basename($path));
         }
 
         return $process->getExitCode();

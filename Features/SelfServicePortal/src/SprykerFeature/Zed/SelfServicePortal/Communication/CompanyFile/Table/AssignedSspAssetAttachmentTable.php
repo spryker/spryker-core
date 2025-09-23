@@ -13,6 +13,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Controller\FileAbstractController;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Reader\RelationCsvReaderInterface;
 
 class AssignedSspAssetAttachmentTable extends AbstractTable
 {
@@ -78,10 +79,14 @@ class AssignedSspAssetAttachmentTable extends AbstractTable
 
         $config->setTableAttributes([
             'data-selectable' => [
-                'moveToSelector' => '#assetsToBeDeassigned',
-                'inputSelector' => '#fileAttachment_sspAssetIdsToBeDeassigned',
-                'counterHolderSelector' => 'a[href="#tab-content-assets-to-be-detached"]',
+                'moveToSelector' => '#assetsToBeUnassigned',
+                'inputSelector' => '#fileAttachment_sspAssetIdsToBeUnassigned',
+                'counterHolderSelector' => 'a[href="#tab-content-assets-to-be-unassigned"]',
                 'colId' => static::COLUMN_ID,
+            ],
+            'data-uploader' => [
+                'url' => sprintf('/self-service-portal/attach-file/get-asset-attachments-from-csv?id-file=%d', $this->idFile),
+                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED,
             ],
         ]);
 
@@ -139,5 +144,32 @@ class AssignedSspAssetAttachmentTable extends AbstractTable
             static::COLUMN_SERIAL => (string)$row[SpySspAssetTableMap::COL_SERIAL_NUMBER],
             static::COLUMN_STATUS => (string)$row[SpySspAssetTableMap::COL_STATUS],
         ];
+    }
+
+    /**
+     * @param array<mixed> $sspAssetReferences
+     *
+     * @return array<mixed>
+     */
+    public function fetchAssetsByReferences(array $sspAssetReferences): array
+    {
+        $this->init();
+
+        $this->sspAssetQuery->filterByReference_In($sspAssetReferences);
+
+        /**
+         * @var array<string, mixed> $data
+         */
+        $data = $this->prepareData($this->config);
+
+        $this->loadData($data);
+
+        $dataWithoutCheckboxColumn = array_map(function ($assetRow) {
+             unset($assetRow[static::COLUMN_SELECTED]);
+
+             return array_values($assetRow);
+        }, $data);
+
+        return $dataWithoutCheckboxColumn;
     }
 }

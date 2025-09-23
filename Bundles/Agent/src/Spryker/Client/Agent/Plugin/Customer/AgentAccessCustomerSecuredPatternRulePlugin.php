@@ -20,8 +20,6 @@ class AgentAccessCustomerSecuredPatternRulePlugin extends AbstractPlugin impleme
      * - Returns `true` if an agent is logged in, otherwise - `false`.
      *
      * @api
-     *
-     * @return bool
      */
     public function isApplicable(): bool
     {
@@ -34,10 +32,6 @@ class AgentAccessCustomerSecuredPatternRulePlugin extends AbstractPlugin impleme
      * - Modifies secured pattern based on a list.
      *
      * @api
-     *
-     * @param string $securedPattern
-     *
-     * @return string
      */
     public function execute(string $securedPattern): string
     {

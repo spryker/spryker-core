@@ -86,7 +86,6 @@ class DownloadCompanyFileController extends AbstractController
             ->setFileAttachmentConditions(
                 (new FileAttachmentConditionsTransfer())->setUuids([$uuidFile]),
             )
-            ->setWithCompanyRelation(true)
             ->setWithBusinessUnitRelation(true)
             ->setWithCompanyUserRelation(true)
             ->setWithSspAssetRelation(true);

@@ -160,7 +160,31 @@ class CreateDiscountTest extends Unit
 
         // Assert
         $this->assertFalse($discountConfiguratorResponseTransfer->getIsSuccessful());
-        $this->assertCount(3, $discountConfiguratorResponseTransfer->getMessages());
+        $this->assertCount(4, $discountConfiguratorResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testWillValidateDatesMaxValue(): void
+    {
+        // Arrange
+        $discountConfiguratorTransfer = $this->tester->createDiscountConfiguratorTransfer();
+        $discountConfiguratorTransfer->getDiscountGeneral()
+            ->setValidFrom((new DateTime('+1 day'))->format(static::DATE_TIME_FORMAT))
+            ->setValidTo((new DateTime('2038-01-19 03:14:08'))->format(static::DATE_TIME_FORMAT));
+
+        // Act
+        $discountConfiguratorResponseTransfer = $this->tester->getFacade()->createDiscount($discountConfiguratorTransfer);
+
+        // Assert
+        $this->assertFalse($discountConfiguratorResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $discountConfiguratorResponseTransfer->getMessages());
+
+        /** @var \Generated\Shared\Transfer\MessageTransfer $messageTransfer */
+        $messageTransfer = $discountConfiguratorResponseTransfer->getMessages()->offsetGet(0);
+        $this->assertSame('Date cannot be later than {{ compared_value }}', $messageTransfer->getValue());
+        $this->assertArrayHasKey('{{ compared_value }}', $messageTransfer->getParameters());
     }
 
     /**

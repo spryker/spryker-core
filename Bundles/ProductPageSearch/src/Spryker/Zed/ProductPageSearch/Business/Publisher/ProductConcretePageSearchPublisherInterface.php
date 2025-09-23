@@ -10,11 +10,25 @@ namespace Spryker\Zed\ProductPageSearch\Business\Publisher;
 interface ProductConcretePageSearchPublisherInterface
 {
     /**
+     * @param array<int, int> $productIdTimestampMap
+     *
+     * @return void
+     */
+    public function publishWithTimestamp(array $productIdTimestampMap): void;
+
+    /**
      * @param array<int> $productIds
      *
      * @return void
      */
     public function publish(array $productIds): void;
+
+    /**
+     * @param array<int, int> $productIdTimestampMap
+     *
+     * @return void
+     */
+    public function unpublishWithTimestamp(array $productIdTimestampMap): void;
 
     /**
      * @param array<int> $productIds

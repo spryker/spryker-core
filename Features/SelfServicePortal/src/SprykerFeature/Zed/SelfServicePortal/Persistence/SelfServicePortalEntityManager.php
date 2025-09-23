@@ -8,10 +8,10 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Persistence;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileCollectionTransfer;
+use Generated\Shared\Transfer\ModelProductListAssignmentTransfer;
 use Generated\Shared\Transfer\ProductClassCriteriaTransfer;
 use Generated\Shared\Transfer\ProductClassTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -127,46 +127,77 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
     public function deleteFileAttachmentCollection(
         FileAttachmentTransfer $fileAttachmentTransfer
     ): void {
-        $idFile = $fileAttachmentTransfer->getFileOrFail()->getIdFileOrFail();
+        $this->deleteBusinessUnitFileAttachments($fileAttachmentTransfer);
+        $this->deleteCompanyUserFileAttachments($fileAttachmentTransfer);
+        $this->deleteSspAssetFileAttachments($fileAttachmentTransfer);
+        $this->deleteSspModelFileAttachments($fileAttachmentTransfer);
+    }
 
-        $companyIds = array_map(
-            static fn (CompanyTransfer $companyTransfer): int => $companyTransfer->getIdCompanyOrFail(),
-            $fileAttachmentTransfer->getCompanyCollection()?->getCompanies()?->getArrayCopy() ?? [],
-        );
-
-        $this->getFactory()->createCompanyFileQuery()
-            ->filterByFkCompany_In($companyIds)
-            ->filterByFkFile($idFile)
-            ->delete();
-
+    protected function deleteBusinessUnitFileAttachments(FileAttachmentTransfer $fileAttachmentTransfer): void
+    {
         $businessUnitIds = array_map(
             static fn (CompanyBusinessUnitTransfer $businessUnitTransfer): int => $businessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
             $fileAttachmentTransfer->getBusinessUnitCollection()?->getCompanyBusinessUnits()?->getArrayCopy() ?? [],
         );
 
+        if (!$businessUnitIds) {
+            return;
+        }
+
         $this->getFactory()->createCompanyBusinessUnitFileQuery()
             ->filterByFkCompanyBusinessUnit_In($businessUnitIds)
-            ->filterByFkFile($idFile)
+            ->filterByFkFile($fileAttachmentTransfer->getFileOrFail()->getIdFileOrFail())
             ->delete();
+    }
 
+    protected function deleteCompanyUserFileAttachments(FileAttachmentTransfer $fileAttachmentTransfer): void
+    {
         $companyUserIds = array_map(
             static fn (CompanyUserTransfer $companyUserTransfer): int => $companyUserTransfer->getIdCompanyUserOrFail(),
             $fileAttachmentTransfer->getCompanyUserCollection()?->getCompanyUsers()?->getArrayCopy() ?? [],
         );
 
+        if (!$companyUserIds) {
+            return;
+        }
+
         $this->getFactory()->createCompanyUserFileQuery()
             ->filterByFkCompanyUser_In($companyUserIds)
-            ->filterByFkFile($idFile)
+            ->filterByFkFile($fileAttachmentTransfer->getFileOrFail()->getIdFileOrFail())
             ->delete();
+    }
 
+    protected function deleteSspAssetFileAttachments(FileAttachmentTransfer $fileAttachmentTransfer): void
+    {
         $sspAssetIds = array_map(
             static fn (SspAssetTransfer $sspAssetTransfer): int => $sspAssetTransfer->getIdSspAssetOrFail(),
             $fileAttachmentTransfer->getSspAssetCollection()?->getSspAssets()?->getArrayCopy() ?? [],
         );
 
+        if (!$sspAssetIds) {
+            return;
+        }
+
         $this->getFactory()->createSspAssetFileQuery()
             ->filterByFkSspAsset_In($sspAssetIds)
-            ->filterByFkFile($idFile)
+            ->filterByFkFile($fileAttachmentTransfer->getFileOrFail()->getIdFileOrFail())
+            ->delete();
+    }
+
+    protected function deleteSspModelFileAttachments(FileAttachmentTransfer $fileAttachmentTransfer): void
+    {
+        $sspModelIds = array_map(
+            static fn (SspModelTransfer $sspModelTransfer): int => $sspModelTransfer->getIdSspModelOrFail(),
+            $fileAttachmentTransfer->getSspModelCollection()?->getSspModels()?->getArrayCopy() ?? [],
+        );
+
+        if (!$sspModelIds) {
+            return;
+        }
+
+        $this->getFactory()->createSspModelToFileQuery()
+            ->filterByFkSspModel_In($sspModelIds)
+            ->filterByFkFile($fileAttachmentTransfer->getFileOrFail()->getIdFileOrFail())
             ->delete();
     }
 
@@ -175,9 +206,9 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         $fileAttachmentSaver = $this->getFactory()->createFileAttachmentSaver();
 
         $fileAttachmentSaver->saveBusinessUnitFileAttachment($fileAttachmentTransfer);
-        $fileAttachmentSaver->saveCompanyFileAttachments($fileAttachmentTransfer);
         $fileAttachmentSaver->saveCompanyUserAttachment($fileAttachmentTransfer);
         $fileAttachmentSaver->saveSspAssetFileAttachment($fileAttachmentTransfer);
+        $fileAttachmentSaver->saveSspModelToFileAttachment($fileAttachmentTransfer);
 
         return $fileAttachmentTransfer;
     }
@@ -273,9 +304,21 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
 
     public function updateSspAsset(SspAssetTransfer $sspAssetTransfer): SspAssetTransfer
     {
-        $spySspAssetEntity = $this->getFactory()
-            ->createSspAssetQuery()
-            ->findOneByIdSspAsset($sspAssetTransfer->getIdSspAssetOrFail());
+        $spySspAssetEntity = null;
+
+        if ($sspAssetTransfer->getIdSspAsset()) {
+            $spySspAssetEntity = $this->getFactory()
+                ->createSspAssetQuery()
+                ->joinWithSpyCompanyBusinessUnit()
+                ->findOneByIdSspAsset($sspAssetTransfer->getIdSspAsset());
+        }
+
+        if ($sspAssetTransfer->getReference()) {
+            $spySspAssetEntity = $this->getFactory()
+                ->createSspAssetQuery()
+                ->joinWithSpyCompanyBusinessUnit()
+                ->findOneByReference($sspAssetTransfer->getReference());
+        }
 
         if (!$spySspAssetEntity) {
             throw new InvalidArgumentException('Ssp Asset not found');
@@ -401,6 +444,19 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         }
     }
 
+    public function createSspAssetToSspModelRelation(int $idSspAsset, int $idSspModel): void
+    {
+        $sspAssetToSspModelEntity = $this->getFactory()
+            ->createSspAssetToSspModelQuery()
+            ->filterByFkSspAsset($idSspAsset)
+            ->filterByFkSspModel($idSspModel)
+            ->findOneOrCreate();
+
+        if ($sspAssetToSspModelEntity->isNew()) {
+            $sspAssetToSspModelEntity->save();
+        }
+    }
+
     public function saveSspModelStorage(SspModelTransfer $sspModelTransfer): void
     {
         $sspModelStorageEntity = $this->getFactory()
@@ -413,6 +469,15 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
             ->mapSspModelTransferToSspModelStorageEntity($sspModelTransfer, $sspModelStorageEntity);
 
         $sspModelStorageEntity->save();
+    }
+
+    public function deleteSspAssetToSspModelRelation(int $idSspAsset, int $idSspModel): void
+    {
+        $this->getFactory()
+            ->createSspAssetToSspModelQuery()
+            ->filterByFkSspAsset($idSspAsset)
+            ->filterByFkSspModel($idSspModel)
+            ->delete();
     }
 
     /**
@@ -445,6 +510,19 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         $sspAssetStorageEntity->save();
     }
 
+    public function createSspModelToProductListAssignment(ModelProductListAssignmentTransfer $modelProductListAssignmentTransfer): void
+    {
+        $sspModelToProductListEntity = $this->getFactory()
+            ->createSspModelToProductListQuery()
+            ->filterByFkSspModel($modelProductListAssignmentTransfer->getSspModelOrFail()->getIdSspModel())
+            ->filterByFkProductList($modelProductListAssignmentTransfer->getProductListOrFail()->getIdProductList())
+            ->findOneOrCreate();
+
+        if ($sspModelToProductListEntity->isNew()) {
+            $sspModelToProductListEntity->save();
+        }
+    }
+
     /**
      * @param array<int> $sspAssetIds
      *
@@ -472,6 +550,15 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         $sspAssetSearchEntity->save();
 
         return $sspAssetSearchTransfer;
+    }
+
+    public function deleteSspModelToProductListAssignment(ModelProductListAssignmentTransfer $modelProductListAssignmentTransfer): void
+    {
+        $this->getFactory()
+            ->createSspModelToProductListQuery()
+            ->filterByFkSspModel($modelProductListAssignmentTransfer->getSspModelOrFail()->getIdSspModel())
+            ->filterByFkProductList($modelProductListAssignmentTransfer->getProductListOrFail()->getIdProductList())
+            ->delete();
     }
 
     /**

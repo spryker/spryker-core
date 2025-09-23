@@ -104,6 +104,61 @@ class SelfServicePortalConfig extends AbstractBundleConfig
     public const IMPORT_TYPE_SSP_MODEL_PRODUCT_LIST = 'ssp-model-product-list';
 
     /**
+     * Specification:
+     * - Entity type for company.
+     * - Used as entity type indentificator in attachment modification requests.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_TYPE_COMPANY = 'company';
+
+    /**
+     * Specification:
+     * - Entity type for company user.
+     * - Used to identify entity in attachment modification requests.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_TYPE_COMPANY_USER = 'company_user';
+
+    /**
+     * Specification:
+     * - Entity type for company business unit.
+     * - Used as entity type indentificator in attachment modification requests.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_TYPE_COMPANY_BUSINESS_UNIT = 'company_business_unit';
+
+    /**
+     * Specification:
+     * - Entity type for asset.
+     * - Used as entity type indentificator in attachment modification requests.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_TYPE_SSP_ASSET = 'ssp_asset';
+
+    /**
+     * Specification:
+     * - Entity type for model.
+     * - Used as entity type indentificator in attachment modification requests.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_TYPE_SSP_MODEL = 'ssp_model';
+
+    /**
      * @uses \Spryker\Shared\ShipmentType\ShipmentTypeConfig::SHIPMENT_TYPE_DELIVERY
      *
      * @var string
@@ -566,7 +621,12 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      */
     public function getEntityTypes(): array
     {
-        return $this->getSharedConfig()->getEntityTypes();
+        return [
+            static::ENTITY_TYPE_COMPANY_USER,
+            static::ENTITY_TYPE_COMPANY,
+            static::ENTITY_TYPE_COMPANY_BUSINESS_UNIT,
+            static::ENTITY_TYPE_SSP_ASSET,
+        ];
     }
 
     /**

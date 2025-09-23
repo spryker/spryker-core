@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
@@ -29,10 +31,18 @@ class ProductPageCategoryNodeSearchListener extends AbstractProductPageSearchLis
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyCategoryNodeTableMap::COL_FK_CATEGORY);
-        $relatedCategoryIds = $this->getRelatedCategoryIds($categoryIds);
-        $productAbstractIds = $this->getRepository()->getProductAbstractIdsByCategoryIds($relatedCategoryIds);
+        $categoryIdTimestampMap = $this->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers))
+                ->setForeignKeyName(SpyCategoryNodeTableMap::COL_FK_CATEGORY),
+        )->getForeignKeyTimestampMap();
 
-        $this->publish(array_fill_keys($productAbstractIds, null));
+        $relatedCategoryIds = $this->getRelatedCategoryIds(array_keys($categoryIdTimestampMap));
+        $productAbstractIds = $this->getRepository()->getProductAbstractIdsByCategoryIds($relatedCategoryIds);
+        if (!$productAbstractIds) {
+            return;
+        }
+
+        $this->publish(array_fill_keys($productAbstractIds, min($categoryIdTimestampMap)));
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\DataSet\MerchantCombinedProductDataSetInterface;
@@ -34,19 +35,23 @@ class AssertAssignedProductTypeStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         if (empty($dataSet[MerchantCombinedProductDataSetInterface::KEY_PRODUCT_ASSIGNED_PRODUCT_TYPE])) {
-            throw new MerchantCombinedProductException(sprintf(
-                '"%s" must be defined in the data set.',
-                MerchantCombinedProductDataSetInterface::KEY_PRODUCT_ASSIGNED_PRODUCT_TYPE,
-            ));
+            throw MerchantCombinedProductException::createWithError(
+                (new ErrorTransfer())
+                    ->setMessage('"%s%" must be defined in the data set.')
+                    ->setParameters(['%s%' => MerchantCombinedProductDataSetInterface::KEY_PRODUCT_ASSIGNED_PRODUCT_TYPE]),
+            );
         }
 
         if (!in_array($dataSet[MerchantCombinedProductDataSetInterface::KEY_PRODUCT_ASSIGNED_PRODUCT_TYPE], static::ASSIGNABLE_PRODUCT_TYPES, true)) {
-            throw new MerchantCombinedProductException(sprintf(
-                '"%s" must have one of the following values: %s. Given: "%s"',
-                MerchantCombinedProductDataSetInterface::KEY_PRODUCT_ASSIGNED_PRODUCT_TYPE,
-                implode(', ', static::ASSIGNABLE_PRODUCT_TYPES),
-                $dataSet[MerchantCombinedProductDataSetInterface::KEY_PRODUCT_ASSIGNED_PRODUCT_TYPE],
-            ));
+            throw MerchantCombinedProductException::createWithError(
+                (new ErrorTransfer())
+                    ->setMessage('"%s1%" must have one of the following values: "%s2%". Given: "%s3%"')
+                    ->setParameters([
+                        '%s1%' => MerchantCombinedProductDataSetInterface::KEY_PRODUCT_ASSIGNED_PRODUCT_TYPE,
+                        '%s2%' => implode(', ', static::ASSIGNABLE_PRODUCT_TYPES),
+                        '%s3%' => $dataSet[MerchantCombinedProductDataSetInterface::KEY_PRODUCT_ASSIGNED_PRODUCT_TYPE],
+                    ]),
+            );
         }
     }
 }

@@ -79,7 +79,7 @@ class GetCategoryNodeUrlsTest extends Unit
         $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
 
         // Assert
-        $this->assertCount(2, $urlTransfers);
+        $this->assertCount(4, $urlTransfers);
         $retrievedFkResourceCategoryNodes = array_map(function (UrlTransfer $urlTransfer) {
             return $urlTransfer->getFkResourceCategorynode();
         }, $urlTransfers);

@@ -10,10 +10,9 @@ namespace Spryker\Zed\ProductLabelSearch\Dependency\Facade;
 interface ProductLabelSearchToProductPageSearchInterface
 {
     /**
-     * @param array<int> $productAbstractIds
-     * @param array $pageDataExpanderPluginNames
+     * @param array<int, int> $productAbstractIdTimestampMap
      *
      * @return void
      */
-    public function refresh(array $productAbstractIds, $pageDataExpanderPluginNames = []);
+    public function publishWithTimestamp(array $productAbstractIdTimestampMap): void;
 }

@@ -9,17 +9,17 @@ namespace SprykerFeature\Zed\SelfServicePortal\Persistence\Saver;
 
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetFileQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModelToFileQuery;
 
 class FileAttachmentSaver
 {
     public function __construct(
-        protected SpyCompanyFileQuery $companyFileQuery,
         protected SpyCompanyBusinessUnitFileQuery $companyBusinessUnitFileQuery,
         protected SpyCompanyUserFileQuery $companyUserFileQuery,
-        protected SpySspAssetFileQuery $sspAssetFileQuery
+        protected SpySspAssetFileQuery $sspAssetFileQuery,
+        protected SpySspModelToFileQuery $sspModelToFileQuery
     ) {
     }
 
@@ -37,26 +37,6 @@ class FileAttachmentSaver
 
             if ($companyBusinessUnitFileEntity->isNew() || $companyBusinessUnitFileEntity->isModified()) {
                 $companyBusinessUnitFileEntity->save();
-            }
-        }
-
-        return $fileAttachmentTransfer;
-    }
-
-    public function saveCompanyFileAttachments(FileAttachmentTransfer $fileAttachmentTransfer): FileAttachmentTransfer
-    {
-        if (!$fileAttachmentTransfer->getCompanyCollection()?->getCompanies()) {
-            return $fileAttachmentTransfer;
-        }
-
-        foreach ($fileAttachmentTransfer->getCompanyCollection()->getCompanies() as $companyTransfer) {
-            $companyFileEntity = $this->companyFileQuery->clear()
-                ->filterByFkCompany($companyTransfer->getIdCompany())
-                ->filterByFkFile($fileAttachmentTransfer->getFileOrFail()->getIdFileOrFail())
-                ->findOneOrCreate();
-
-            if ($companyFileEntity->isNew() || $companyFileEntity->isModified()) {
-                $companyFileEntity->save();
             }
         }
 
@@ -97,6 +77,26 @@ class FileAttachmentSaver
 
             if ($sspAssetFileEntity->isNew() || $sspAssetFileEntity->isModified()) {
                 $sspAssetFileEntity->save();
+            }
+        }
+
+        return $fileAttachmentTransfer;
+    }
+
+    public function saveSspModelToFileAttachment(FileAttachmentTransfer $fileAttachmentTransfer): FileAttachmentTransfer
+    {
+        if (!$fileAttachmentTransfer->getSspModelCollection()?->getSspModels()) {
+            return $fileAttachmentTransfer;
+        }
+
+        foreach ($fileAttachmentTransfer->getSspModelCollection()->getSspModels() as $sspModelTransfer) {
+            $sspModelToFileEntity = $this->sspModelToFileQuery->clear()
+                ->filterByFkSspModel($sspModelTransfer->getIdSspModelOrFail())
+                ->filterByFkFile($fileAttachmentTransfer->getFileOrFail()->getIdFileOrFail())
+                ->findOneOrCreate();
+
+            if ($sspModelToFileEntity->isNew() || $sspModelToFileEntity->isModified()) {
+                $sspModelToFileEntity->save();
             }
         }
 

@@ -32,6 +32,8 @@ interface MerchantProductStorageFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed in the next major without replacement.
+     *
      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void

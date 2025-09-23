@@ -27,10 +27,6 @@ class FileAttachmentPermissionChecker implements FileAttachmentPermissionChecker
 
         $companyUserId = $fileAttachmentCriteriaTransfer->getCompanyUserOrFail()->getIdCompanyUserOrFail();
 
-        if ($fileAttachmentCriteriaTransfer->getWithCompanyRelation() && $this->can(ViewCompanyFilesPermissionPlugin::KEY, $companyUserId)) {
-            return true;
-        }
-
         if (
             $fileAttachmentCriteriaTransfer->getWithBusinessUnitRelation() &&
             (

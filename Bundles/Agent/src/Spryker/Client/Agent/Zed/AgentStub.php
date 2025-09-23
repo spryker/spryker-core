@@ -15,24 +15,10 @@ use Spryker\Client\Agent\Dependency\Client\AgentToZedRequestClientInterface;
 
 class AgentStub implements AgentStubInterface
 {
-    /**
-     * @var \Spryker\Client\Agent\Dependency\Client\AgentToZedRequestClientInterface
-     */
-    protected $zedRequestClient;
-
-    /**
-     * @param \Spryker\Client\Agent\Dependency\Client\AgentToZedRequestClientInterface $zedRequestClient
-     */
-    public function __construct(AgentToZedRequestClientInterface $zedRequestClient)
+    public function __construct(protected AgentToZedRequestClientInterface $zedRequestClient)
     {
-        $this->zedRequestClient = $zedRequestClient;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return \Generated\Shared\Transfer\FindAgentResponseTransfer
-     */
     public function findAgentByUsername(UserTransfer $userTransfer): FindAgentResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\FindAgentResponseTransfer $findAgentResponseTransfer */
@@ -43,10 +29,6 @@ class AgentStub implements AgentStubInterface
 
     /**
      * @uses \Spryker\Zed\Agent\Communication\Controller\GatewayController::findCustomersByQueryAction()
-     *
-     * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
      */
     public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer
     {

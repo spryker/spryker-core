@@ -43,6 +43,9 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         $productConcretePageSearchEntity->fromArray(
             $productConcretePageSearchTransfer->toArray(),
         );
+        if ($productConcretePageSearchTransfer->getTimestamp() !== null) {
+            $productConcretePageSearchEntity->setUpdatedAt($productConcretePageSearchTransfer->getTimestamp());
+        }
 
         return $productConcretePageSearchEntity;
     }

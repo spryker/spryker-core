@@ -14,7 +14,7 @@ use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToEventBe
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductLabelBridge;
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductLabelInterface;
-use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductPageSearchBridge;
+use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductPageSearchAdapter;
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductPageSearchInterface;
 use Spryker\Zed\ProductLabelSearch\Dependency\Service\ProductLabelSearchToUtilSanitizeServiceBridge;
 use Spryker\Zed\ProductLabelSearch\Dependency\Service\ProductLabelSearchToUtilSanitizeServiceInterface;
@@ -163,7 +163,7 @@ class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvi
     protected function addProductPageSearchFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_PAGE_SEARCH, function (Container $container): ProductLabelSearchToProductPageSearchInterface {
-            return new ProductLabelSearchToProductPageSearchBridge(
+            return new ProductLabelSearchToProductPageSearchAdapter(
                 $container->getLocator()->productPageSearch()->facade(),
             );
         });

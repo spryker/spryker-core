@@ -1,0 +1,23 @@
+<div class="spacing-bottom">
+    <h4>{{ "Manage Product List Relations" | trans }}</h4>
+    <p class="help-block">{{ "Select product lists to assign or unassign from this model using the tables below." | trans }}</p>
+</div>
+
+{% include '@SelfServicePortal/_partials/table-file-uploader.twig' with {
+    formPart: attachModelForm.product_list_file_upload,
+    urlDownloadExample: urlDownloadProductListExample,
+} %}
+
+{{ tabs(productListAttachmentTabsViewTransfer, {
+    'attachModelForm': attachModelForm,
+    'availableProductListTable': availableProductListTable,
+    'assignedProductListTable': assignedProductListTable,
+    'idSspModel': idSspModel,
+    'urlDownloadProductListExample': urlDownloadProductListExample,
+}) }}
+
+{{ tabs(attachedProductListsTabsViewTransfer, {
+    'attachModelForm': attachModelForm,
+    'assignedProductListTable': assignedProductListTable,
+    'idSspModel': idSspModel,
+}) }}

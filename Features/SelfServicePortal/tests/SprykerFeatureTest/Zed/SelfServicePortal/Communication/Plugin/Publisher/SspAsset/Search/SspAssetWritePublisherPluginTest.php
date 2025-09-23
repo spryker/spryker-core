@@ -199,25 +199,36 @@ class SspAssetWritePublisherPluginTest extends Unit
         $this->assertSame($sspAssetTransfer->getCompanyBusinessUnit()?->getIdCompanyBusinessUnitOrFail(), $data[SspAssetIndexMap::ID_OWNER_BUSINESS_UNIT]);
         $this->assertSame($sspAssetTransfer->getCompanyBusinessUnit()?->getFkCompany(), $data[SspAssetIndexMap::ID_OWNER_COMPANY_ID]);
 
-        $sspModelNames = array_map(fn (SspModelTransfer $sspModel) => $sspModel->getName(), $sspAssetTransfer->getSspModels()->getArrayCopy());
+        $sspModelFullTextBoostedData = [];
+        $sspModelSuggestionTermsData = [];
+        $sspModelCompletionTermsData = [];
+
+        /** @var \Generated\Shared\Transfer\SspModelTransfer $sspModelTransfer */
+        foreach ($sspAssetTransfer->getSspModels()->getArrayCopy() as $sspModelTransfer) {
+            $sspModelFullTextBoostedData[] = $sspModelTransfer->getNameOrFail();
+            $sspModelFullTextBoostedData[] = $sspModelTransfer->getCodeOrFail();
+            $sspModelSuggestionTermsData[] = $sspModelTransfer->getNameOrFail();
+            $sspModelSuggestionTermsData[] = $sspModelTransfer->getReferenceOrFail();
+            $sspModelCompletionTermsData[] = $sspModelTransfer->getNameOrFail();
+        }
 
         $this->assertSame(array_filter([
             $sspAssetTransfer->getName(),
             $sspAssetTransfer->getReference(),
-            ...$sspModelNames,
+            ...$sspModelFullTextBoostedData,
             $sspAssetTransfer->getSerialNumber(),
         ]), $data[SspAssetIndexMap::FULL_TEXT_BOOSTED]);
 
         $this->assertSame(array_filter([
             $sspAssetTransfer->getName(),
             $sspAssetTransfer->getReference(),
-            ...$sspModelNames,
+            ...$sspModelSuggestionTermsData,
         ]), $data[SspAssetIndexMap::SUGGESTION_TERMS]);
 
         $this->assertSame(array_filter([
             $sspAssetTransfer->getName(),
             $sspAssetTransfer->getReference(),
-            ...$sspModelNames,
+            ...$sspModelCompletionTermsData,
         ]), $data[SspAssetIndexMap::COMPLETION_TERMS]);
 
         $this->assertSame($assignedBusinessUnitIds, $data[SspAssetIndexMap::BUSINESS_UNIT_IDS]);

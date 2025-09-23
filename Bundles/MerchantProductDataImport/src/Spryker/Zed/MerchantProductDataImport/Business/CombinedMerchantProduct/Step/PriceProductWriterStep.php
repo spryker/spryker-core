@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
@@ -131,8 +132,8 @@ class PriceProductWriterStep extends PublishAwareStep implements DataImportStepI
     protected function assertNewProductAbstractHasPrice(DataSetInterface $dataSet, array $priceProductTransfers): void
     {
         if ($this->isNewProductAbstract($dataSet) && !count($priceProductTransfers)) {
-            throw new MerchantCombinedProductException(
-                'New product abstract must have at least one price defined.',
+            throw MerchantCombinedProductException::createWithError(
+                (new ErrorTransfer())->setMessage('New product abstract must have at least one price defined.'),
             );
         }
     }

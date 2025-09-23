@@ -62,6 +62,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractPagePublisher()
     {
         return new ProductAbstractPagePublisher(
+            $this->getRepository(),
             $this->getQueryContainer(),
             $this->getProductPageDataExpanderPlugins(),
             $this->getProductPageDataLoaderPlugins(),
@@ -80,6 +81,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductConcretePageSearchPublisher(): ProductConcretePageSearchPublisherInterface
     {
         return new ProductConcretePageSearchPublisher(
+            $this->getRepository(),
             $this->createProductConcretePageSearchReader(),
             $this->createProductConcretePageSearchWriter(),
             $this->getProductFacade(),

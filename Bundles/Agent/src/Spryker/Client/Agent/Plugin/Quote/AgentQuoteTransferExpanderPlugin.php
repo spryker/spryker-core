@@ -23,8 +23,6 @@ class AgentQuoteTransferExpanderPlugin extends AbstractPlugin implements QuoteTr
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function expandQuote(QuoteTransfer $quoteTransfer)

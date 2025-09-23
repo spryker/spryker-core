@@ -1,0 +1,50 @@
+{% set guardInputSelector = inputSelector | default(null) %}
+
+{% block title %}
+    <div class="content-title">
+        <h5>{{ title }}</h5>
+    </div>
+{% endblock %}
+
+{% block form %}
+    {{ form_start(form) }}
+        <div
+            class="nav-tabs-radio js-guard-tabs"
+            {% if guardInputSelector %} data-input-selector="{{ inputSelector }}"{% endif %}
+        >
+            {{ tabs(transfer, tabs) }}
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block confirmation %}
+    {% embed '@Gui/Modal/confirmation-modal-window.twig' with {
+        id: 'tabs-guard-popup',
+        confirmTitle: confirmTitle,
+        message: 'You are about to leave current progression! Please confirm.',
+    } %}
+        {% block modal %}
+            {% set footer %}
+                <button
+                    type="button"
+                    class="btn btn-outline"
+                    data-dismiss="modal"
+                    data-bs-dismiss="modal"
+                >
+                    {{ 'Stay here' | trans }}
+                </button>
+
+                <button
+                    type="button"
+                    data-dismiss="modal"
+                    data-bs-dismiss="modal"
+                    class="btn btn-primary js-guard-tabs-accept"
+                >
+                    {{ 'Change' | trans }}
+                </button>
+            {% endset %}
+
+            {{ parent() }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

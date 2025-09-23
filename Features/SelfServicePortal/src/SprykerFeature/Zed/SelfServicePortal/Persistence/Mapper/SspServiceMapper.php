@@ -34,6 +34,7 @@ class SspServiceMapper
         $serviceTransfer = (new SspServiceTransfer())->setOrder((new OrderTransfer()));
 
         $serviceTransfer->setProductName($salesOrderItemEntity->getName());
+        $serviceTransfer->setUuid($salesOrderItemEntity->getUuid());
 
         if ($salesOrderItemEntity->getCreatedAt()) {
             $serviceTransfer->setCreatedAt($salesOrderItemEntity->getCreatedAt()->format(static::DATE_TIME_FORMAT));

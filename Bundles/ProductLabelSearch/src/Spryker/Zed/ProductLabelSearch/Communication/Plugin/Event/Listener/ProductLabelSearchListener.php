@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\ProductLabelSearch\Communication\Plugin\Event\Listener;
 
-use Spryker\Shared\ProductLabelSearch\ProductLabelSearchConfig;
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -18,6 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductLabelSearch\ProductLabelSearchConfig getConfig()
  * @method \Spryker\Zed\ProductLabelSearch\Business\ProductLabelSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchRepositoryInterface getRepository()
  */
 class ProductLabelSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
@@ -31,9 +33,14 @@ class ProductLabelSearchListener extends AbstractPlugin implements EventBulkHand
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $productLabelIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
-        $productAbstractIds = $this->getQueryContainer()->queryProductLabelByProductLabelIds($productLabelIds)->find()->getData();
+        $hydrateEventsResponseTransfer = $this->getFactory()->getEventBehaviorFacade()->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers)),
+        );
+        $productAbstractIdsTimestampMap = $this->getRepository()->getProductAbstractIdTimestampMap(
+            $hydrateEventsResponseTransfer->getIdTimestampMap(),
+        );
 
-        $this->getFactory()->getProductPageSearchFacade()->refresh($productAbstractIds, [ProductLabelSearchConfig::PLUGIN_PRODUCT_LABEL_DATA]);
+        $this->getFactory()->getProductPageSearchFacade()->publishWithTimestamp($productAbstractIdsTimestampMap);
     }
 }

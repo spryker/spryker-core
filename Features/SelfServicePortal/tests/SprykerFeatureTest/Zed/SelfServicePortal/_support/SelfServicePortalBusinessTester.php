@@ -28,12 +28,15 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\SspModelTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToSspModel;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToSspModelQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery;
 use Spryker\Shared\Price\PriceMode;
 
@@ -202,5 +205,32 @@ class SelfServicePortalBusinessTester extends Actor
     public function getSspModelEntities(): array
     {
         return SpySspModelQuery::create()->find()->getData();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SspModelTransfer $sspModelTransfer
+     * @param array<\Generated\Shared\Transfer\SspAssetTransfer> $sspAssetTransfers
+     *
+     * @return \Generated\Shared\Transfer\SspModelTransfer
+     */
+    public function assignSspAssetsToSspModel(SspModelTransfer $sspModelTransfer, array $sspAssetTransfers): SspModelTransfer
+    {
+        foreach ($sspAssetTransfers as $sspAssetTransfer) {
+            $relationEntity = (new SpySspAssetToSspModel())
+            ->setFkSspModel($sspModelTransfer->getIdSspModel())
+            ->setFkSspAsset($sspAssetTransfer->getIdSspAsset());
+
+            $relationEntity->save();
+        }
+
+        return $sspModelTransfer;
+    }
+
+    public function hasSspModelAssetRelation(int $modelId, int $assetId): bool
+    {
+        return SpySspAssetToSspModelQuery::create()
+            ->filterByFkSspModel($modelId)
+            ->filterByFkSspAsset($assetId)
+            ->exists();
     }
 }

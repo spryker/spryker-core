@@ -33,6 +33,11 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     /**
      * @var string
      */
+    protected const COL_LAST_UPDATE_TIME = 'lastUpdateAt';
+
+    /**
+     * @var string
+     */
     protected const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
 
     /**
@@ -635,14 +640,16 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     /**
      * @param array<int, int> $productAbstractIdTimestampMap
      *
-     * @return array<int>
+     * @return array<int, int>
      */
     public function getRelevantProductAbstractIdsToUpdate(array $productAbstractIdTimestampMap): array
     {
         $productAbstractData = $this->getFactory()
             ->createProductAbstractPageSearch()
-            ->select([SpyProductAbstractPageSearchTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductAbstractPageSearchTableMap::COL_UPDATED_AT])
+            ->select([SpyProductAbstractPageSearchTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->withColumn('MIN(' . SpyProductAbstractPageSearchTableMap::COL_UPDATED_AT . ')', static::COL_LAST_UPDATE_TIME)
             ->filterByFkProductAbstract_In(array_keys($productAbstractIdTimestampMap))
+            ->groupBy(SpyProductAbstractPageSearchTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->find()
             ->getData();
 
@@ -650,39 +657,40 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             $idProductAbstract = $productAbstract[SpyProductAbstractPageSearchTableMap::COL_FK_PRODUCT_ABSTRACT];
             if (
                 !empty($productAbstractIdTimestampMap[$idProductAbstract])
-                && $productAbstractIdTimestampMap[$idProductAbstract] <= strtotime($productAbstract[SpyProductAbstractPageSearchTableMap::COL_UPDATED_AT])
+                && $productAbstractIdTimestampMap[$idProductAbstract] <= strtotime($productAbstract[static::COL_LAST_UPDATE_TIME])
             ) {
                 unset($productAbstractIdTimestampMap[$idProductAbstract]);
             }
         }
 
-        return array_keys($productAbstractIdTimestampMap);
+        return $productAbstractIdTimestampMap;
     }
 
     /**
      * @param array<int, int> $productIdTimestampMap
      *
-     * @return array<int>
+     * @return array<int, int>
      */
     public function getRelevantProductConcreteIdsToUpdate(array $productIdTimestampMap): array
     {
         $productData = $this->getFactory()
             ->createProductConcretePageSearchQuery()
-            ->select([SpyProductConcretePageSearchTableMap::COL_FK_PRODUCT, SpyProductConcretePageSearchTableMap::COL_UPDATED_AT])
+            ->select([
+                SpyProductConcretePageSearchTableMap::COL_FK_PRODUCT,
+            ])
+            ->withColumn('MIN(' . SpyProductConcretePageSearchTableMap::COL_UPDATED_AT . ')', static::COL_LAST_UPDATE_TIME)
             ->filterByFkProduct_In(array_keys($productIdTimestampMap))
+            ->groupBy(SpyProductConcretePageSearchTableMap::COL_FK_PRODUCT)
             ->find()
             ->getData();
 
         foreach ($productData as $product) {
             $idProduct = $product[SpyProductConcretePageSearchTableMap::COL_FK_PRODUCT];
-            if (
-                !empty($productIdTimestampMap[$idProduct])
-                && $productIdTimestampMap[$idProduct] <= strtotime($product[SpyProductConcretePageSearchTableMap::COL_UPDATED_AT])
-            ) {
+            if ($productIdTimestampMap[$idProduct] <= strtotime($product[static::COL_LAST_UPDATE_TIME])) {
                 unset($productIdTimestampMap[$idProduct]);
             }
         }
 
-        return array_keys($productIdTimestampMap);
+        return $productIdTimestampMap;
     }
 }

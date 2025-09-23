@@ -22,4 +22,11 @@ interface ProductLabelSearchRepositoryInterface
      * @return array<int>
      */
     public function getProductAbstractIdsByProductLabelIds(array $productLabelIds): array;
+
+    /**
+     * @param array<int, int> $productLabelIdsTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getProductAbstractIdTimestampMap(array $productLabelIdsTimestampMap): array;
 }

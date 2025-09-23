@@ -28,8 +28,6 @@ class AgentDependencyProvider extends AbstractBundleDependencyProvider
     public const PROPEL_QUERY_CUSTOMER = 'PROPEL_QUERY_CUSTOMER';
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return \Spryker\Zed\Kernel\Container
      */
     public function providePersistenceLayerDependencies(Container $container)
@@ -40,11 +38,6 @@ class AgentDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addUserPropelQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_USER, $container->factory(function (): SpyUserQuery {
@@ -54,11 +47,6 @@ class AgentDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCustomerPropelQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_CUSTOMER, $container->factory(function (): SpyCustomerQuery {

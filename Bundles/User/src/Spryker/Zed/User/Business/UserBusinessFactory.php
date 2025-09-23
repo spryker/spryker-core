@@ -11,6 +11,8 @@ use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\User\Business\Expander\MailExpander;
 use Spryker\Zed\User\Business\Expander\MailExpanderInterface;
+use Spryker\Zed\User\Business\Expander\UserDataImportMerchantFileExpander;
+use Spryker\Zed\User\Business\Expander\UserDataImportMerchantFileExpanderInterface;
 use Spryker\Zed\User\Business\Model\Installer;
 use Spryker\Zed\User\Business\Model\User;
 use Spryker\Zed\User\Business\Reader\UserReader;
@@ -105,6 +107,16 @@ class UserBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createUserModel(),
             $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\User\Business\Expander\UserDataImportMerchantFileExpanderInterface
+     */
+    public function createUserDataImportMerchantFileExpander(): UserDataImportMerchantFileExpanderInterface
+    {
+        return new UserDataImportMerchantFileExpander(
+            $this->createUserReader(),
         );
     }
 

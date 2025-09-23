@@ -33,6 +33,11 @@ use Spryker\Zed\ProductLabelSearch\ProductLabelSearchDependencyProvider;
 class ProductLabelSearchFacadeTest extends Unit
 {
     /**
+     * @var int
+     */
+    protected const TIMESTAMP = 123;
+
+    /**
      * @var \SprykerTest\Zed\ProductLabelSearch\ProductLabelSearchBusinessTester
      */
     protected $tester;
@@ -59,7 +64,7 @@ class ProductLabelSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCollectionByProductLabelEventsRefreshesProductPageSearchWithCorrectData(): void
+    public function testWriteCollectionByProductLabelEventspublishWithTimestampsProductPageSearchWithCorrectData(): void
     {
         // Arrange
         $productPageSearchFacadeMock = $this->getProductPageSearchFacadeMock();
@@ -79,15 +84,16 @@ class ProductLabelSearchFacadeTest extends Unit
         $eventTransfers = [
             $this->getEventEntityTransfer([
                 EventEntityTransfer::ID => $productLabelTransfer->getIdProductLabel(),
+                EventEntityTransfer::TIMESTAMP => static::TIMESTAMP,
             ]),
         ];
 
         // Assert
         $productPageSearchFacadeMock->expects($this->once())
-            ->method('refresh')
+            ->method('publishWithTimestamp')
             ->with([
-                $productTransfer1->getFkProductAbstract(),
-                $productTransfer2->getFkProductAbstract(),
+                $productTransfer1->getFkProductAbstract() => static::TIMESTAMP,
+                $productTransfer2->getFkProductAbstract() => static::TIMESTAMP,
             ]);
 
         // Act
@@ -119,7 +125,7 @@ class ProductLabelSearchFacadeTest extends Unit
 
         // Assert
         $productPageSearchFacadeMock->expects($this->never())
-            ->method('refresh');
+            ->method('publishWithTimestamp');
 
         // Act
         $this->tester->getFacade()->writeCollectionByProductLabelEvents($eventTransfers);
@@ -128,7 +134,7 @@ class ProductLabelSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCollectionByProductLabelProductAbstractEventsRefreshesProductPageSearchWithCorrectData(): void
+    public function testWriteCollectionByProductLabelProductAbstractEventspublishWithTimestampsProductPageSearchWithCorrectData(): void
     {
         // Arrange
         $productPageSearchFacadeMock = $this->getProductPageSearchFacadeMock();
@@ -141,20 +147,22 @@ class ProductLabelSearchFacadeTest extends Unit
                 EventEntityTransfer::FOREIGN_KEYS => [
                     static::COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT => $productTransfer1->getFkProductAbstract(),
                 ],
+                EventEntityTransfer::TIMESTAMP => static::TIMESTAMP,
             ]),
             $this->getEventEntityTransfer([
                 EventEntityTransfer::FOREIGN_KEYS => [
                     static::COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT => $productTransfer2->getFkProductAbstract(),
                 ],
+                EventEntityTransfer::TIMESTAMP => static::TIMESTAMP,
             ]),
         ];
 
         // Assert
         $productPageSearchFacadeMock->expects($this->once())
-            ->method('refresh')
+            ->method('publishWithTimestamp')
             ->with([
-                $productTransfer1->getFkProductAbstract(),
-                $productTransfer2->getFkProductAbstract(),
+                $productTransfer1->getFkProductAbstract() => static::TIMESTAMP,
+                $productTransfer2->getFkProductAbstract() => static::TIMESTAMP,
             ]);
 
         // Act
@@ -179,7 +187,7 @@ class ProductLabelSearchFacadeTest extends Unit
 
         // Assert
         $productPageSearchFacadeMock->expects($this->never())
-            ->method('refresh');
+            ->method('publishWithTimestamp');
 
         // Act
         $this->tester->getFacade()->writeCollectionByProductLabelProductAbstractEvents($eventTransfers);
@@ -188,7 +196,7 @@ class ProductLabelSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCollectionByProductLabelStoreEventsRefreshesProductPageSearchWithCorrectData(): void
+    public function testWriteCollectionByProductLabelStoreEventspublishWithTimestampsProductPageSearchWithCorrectData(): void
     {
         // Arrange
         $productPageSearchFacadeMock = $this->getProductPageSearchFacadeMock();
@@ -212,20 +220,22 @@ class ProductLabelSearchFacadeTest extends Unit
                 EventEntityTransfer::FOREIGN_KEYS => [
                     static::COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL => $productLabelTransfer1->getIdProductLabel(),
                 ],
+                EventEntityTransfer::TIMESTAMP => static::TIMESTAMP,
             ]),
             $this->getEventEntityTransfer([
                 EventEntityTransfer::FOREIGN_KEYS => [
                     static::COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL => $productLabelTransfer2->getIdProductLabel(),
                 ],
+                EventEntityTransfer::TIMESTAMP => static::TIMESTAMP,
             ]),
         ];
 
         // Assert
         $productPageSearchFacadeMock->expects($this->once())
-            ->method('refresh')
+            ->method('publishWithTimestamp')
             ->with([
-                $productTransfer1->getFkProductAbstract(),
-                $productTransfer2->getFkProductAbstract(),
+                $productTransfer1->getFkProductAbstract() => static::TIMESTAMP,
+                $productTransfer2->getFkProductAbstract() => static::TIMESTAMP,
             ]);
 
         // Act
@@ -250,7 +260,7 @@ class ProductLabelSearchFacadeTest extends Unit
 
         // Assert
         $productPageSearchFacadeMock->expects($this->never())
-            ->method('refresh');
+            ->method('publishWithTimestamp');
 
         // Act
         $this->tester->getFacade()->writeCollectionByProductLabelStoreEvents($eventTransfers);

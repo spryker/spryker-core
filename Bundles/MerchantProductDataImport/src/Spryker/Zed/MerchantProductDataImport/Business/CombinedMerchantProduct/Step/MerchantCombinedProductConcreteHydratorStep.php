@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Generated\Shared\Transfer\SpyProductLocalizedAttributesEntityTransfer;
 use Generated\Shared\Transfer\SpyProductSearchEntityTransfer;
@@ -134,11 +135,14 @@ class MerchantCombinedProductConcreteHydratorStep implements DataImportStepInter
             $idProduct = $this->productRepository->findIdProductBySku($sku);
 
             if (!$idProduct && !$productLocalizedAttributes[ProductLocalizedAttributeExtractorStep::KEY_NAME]) {
-                throw new MerchantCombinedProductException(sprintf(
-                    'Product name is required for creating a product "%s" with locale "%s".',
-                    $sku,
-                    $localeName,
-                ));
+                throw MerchantCombinedProductException::createWithError(
+                    (new ErrorTransfer())
+                        ->setMessage('Product name is required for creating a product "%s1%" with locale "%s2%".')
+                        ->setParameters([
+                            '%s1%' => $sku,
+                            '%s2%' => $localeName,
+                        ]),
+                );
             }
 
             $productLocalizedAttributesEntityTransfer = (new SpyProductLocalizedAttributesEntityTransfer())
@@ -234,9 +238,10 @@ class MerchantCombinedProductConcreteHydratorStep implements DataImportStepInter
             return;
         }
 
-        throw new MerchantCombinedProductException(sprintf(
-            'Expected a key "%s" in current data set.',
-            MerchantCombinedProductDataSetInterface::KEY_IS_ACTIVE,
-        ));
+        throw MerchantCombinedProductException::createWithError(
+            (new ErrorTransfer())
+                ->setMessage('Expected a key "%s%" in current data set.')
+                ->setParameters(['%s%' => MerchantCombinedProductDataSetInterface::KEY_IS_ACTIVE]),
+        );
     }
 }

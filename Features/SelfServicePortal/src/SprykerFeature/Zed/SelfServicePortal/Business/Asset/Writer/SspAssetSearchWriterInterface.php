@@ -19,16 +19,23 @@ interface SspAssetSearchWriterInterface
     public function writeCollectionBySspAssetEvents(array $eventTransfers): void;
 
     /**
-     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
     public function writeCollectionBySspAssetToCompanyBusinessUnitEvents(array $eventEntityTransfers): void;
 
     /**
-     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
     public function writeCollectionBySspAssetToModelEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionBySspModelEvents(array $eventEntityTransfers): void;
 }

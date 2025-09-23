@@ -11,8 +11,13 @@
                 {{ form_errors(child) }}
             {% endfor %}
 
+            {% set currentImage = fileInput.attr['original-image-url'] | default(null) %}
+            {% if not currentImage and sspModelForm.image_url.vars.value %}
+                {% set currentImage = sspModelForm.image_url.vars.value %}
+            {% endif %}
+
             {% include '@Gui/Form/Type/image-uploader.twig' with {
-                image: fileInput.attr['original-image-url'] | default(null),
+                image: currentImage,
                 inputAttrs: fileInput.attr | merge({
                     id: fileInput.id,
                     name: fileInput.full_name,
@@ -24,10 +29,17 @@
             } only %}
 
             {% do sspModelImage.setRendered() %}
+
+            <div class="form-group">
+                {{ form_label(sspModelForm.image_url) }}
+                {{ form_widget(sspModelForm.image_url) }}
+                {{ form_errors(sspModelForm.image_url) }}
+                <p class="help-block" style="font-style: italic; margin-top: 5px;">{{ "Note: If no image is uploaded locally, the asset will use the image from the provided URL." | trans }}</p>
+            </div>
         </div>
 
         <div class="col-xs-12 col-md-8">
-            {{ form_widget(sspModelForm) }}
+            {{ form_widget(sspModelForm, {'exclude_children': ['externalImageUrl']}) }}
 
             <div class="form-group">
                 <button data-qa="submit" class="btn btn-primary">{{ 'Save' | trans }}</button>

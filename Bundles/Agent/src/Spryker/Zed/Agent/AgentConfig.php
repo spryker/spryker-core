@@ -24,8 +24,6 @@ class AgentConfig extends AbstractBundleConfig
      * - Defines default limit for fetching customers.
      *
      * @api
-     *
-     * @return int
      */
     public function getDefaultCustomerPaginationLimit(): int
     {
@@ -37,8 +35,6 @@ class AgentConfig extends AbstractBundleConfig
      * - Enable or disable agent info capturing in the orders when agent assists with order placing.
      *
      * @api
-     *
-     * @return bool
      */
     public function isSalesOrderAgentEnabled(): bool
     {

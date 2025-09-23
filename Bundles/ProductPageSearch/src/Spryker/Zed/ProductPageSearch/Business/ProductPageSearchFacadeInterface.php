@@ -33,8 +33,28 @@ interface ProductPageSearchFacadeInterface
 
     /**
      * Specification:
+     * - $productAbstractIdTimestampMap format is:
+     *      [
+     *          <productAbstractId> => <timestamp>,
+     *          <productAbstractId> => <timestamp>,
+     *          ...
+     *      ]
+     * - Checks and filters productAbstractIds if it's already published in current process.
+     * - Checks and filters productAbstractIds if timestamp is outdated for DB.
+     * - Publishes productAbstractIds with timestamp to use ProductPageSearchFacadeInterface::publish() logic.
+     *
+     * @api
+     *
+     * @param array<int, int> $productAbstractIdTimestampMap
+     *
+     * @return void
+     */
+    public function publishWithTimestamp(array $productAbstractIdTimestampMap): void;
+
+    /**
+     * Specification:
      * - Queries all productAbstract with the given productAbstractIds
-     * - Stores and update data partially as json encoded to storage table
+     * - Stores and updates existing search data partially as JSON code in a storage table.
      * - Sends a copy of data to queue based on module config
      * - $pageDataExpanderPluginNames param is optional and if it's empty
      *      it will call all provided plugins, otherwise only update necessary part

@@ -63,18 +63,18 @@ class ProductCategoryStorageRepositoryTest extends Unit
         $idCategoryNodeLevelThree = $categoryTransferLevelThree->getCategoryNode()->getIdCategoryNode();
 
         $this->assertArrayHasKey($idCategoryNodeLevelThree, $groupedCategoryNodeAggregationTransfers);
-        $this->assertCount(3, $groupedCategoryNodeAggregationTransfers[$idCategoryNodeLevelThree]);
+        $this->assertCount(6, $groupedCategoryNodeAggregationTransfers[$idCategoryNodeLevelThree]);
         $this->assertSame(
             $idCategoryNodeLevelThree,
             (int)$groupedCategoryNodeAggregationTransfers[$idCategoryNodeLevelThree][0]->getIdCategoryNode(),
         );
         $this->assertSame(
             $categoryTransferLevelTwo->getCategoryNode()->getIdCategoryNode(),
-            (int)$groupedCategoryNodeAggregationTransfers[$idCategoryNodeLevelThree][1]->getIdCategoryNode(),
+            (int)$groupedCategoryNodeAggregationTransfers[$idCategoryNodeLevelThree][3]->getIdCategoryNode(),
         );
         $this->assertSame(
             $categoryTransferLevelOne->getCategoryNode()->getIdCategoryNode(),
-            (int)$groupedCategoryNodeAggregationTransfers[$idCategoryNodeLevelThree][2]->getIdCategoryNode(),
+            (int)$groupedCategoryNodeAggregationTransfers[$idCategoryNodeLevelThree][5]->getIdCategoryNode(),
         );
     }
 

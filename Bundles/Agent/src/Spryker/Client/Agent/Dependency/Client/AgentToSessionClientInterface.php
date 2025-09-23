@@ -32,10 +32,5 @@ interface AgentToSessionClientInterface
      */
     public function set($name, $value);
 
-    /**
-     * @param int|null $lifetime
-     *
-     * @return void
-     */
     public function invalidate(?int $lifetime = null): void;
 }

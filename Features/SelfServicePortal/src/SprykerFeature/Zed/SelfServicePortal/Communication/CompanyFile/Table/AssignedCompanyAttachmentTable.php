@@ -15,6 +15,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Controller\FileAbstractController;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Reader\RelationCsvReaderInterface;
 
 class AssignedCompanyAttachmentTable extends AbstractTable
 {
@@ -66,10 +67,14 @@ class AssignedCompanyAttachmentTable extends AbstractTable
         $config->addRawColumn(static::COLUMN_SELECTED);
         $config->setTableAttributes([
             'data-selectable' => [
-                'moveToSelector' => '#companiesToBeDeassigned',
-                'inputSelector' => '#fileAttachment_companyIdsToBeDeassigned',
-                'counterHolderSelector' => 'a[href="#tab-content-companies-to-be-detached"]',
+                'moveToSelector' => '#companiesToBeUnassigned',
+                'inputSelector' => '#fileAttachment_companyIdsToBeUnassigned',
+                'counterHolderSelector' => 'a[href="#tab-content-companies-to-be-unassigned"]',
                 'colId' => static::COLUMN_ID,
+            ],
+            'data-uploader' => [
+                'url' => sprintf('/self-service-portal/attach-file/get-company-attachments-from-csv?id-file=%d', $this->idFile),
+                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED,
             ],
         ]);
         $config->setFooter([]);
@@ -126,5 +131,32 @@ class AssignedCompanyAttachmentTable extends AbstractTable
             static::COLUMN_ID => $id,
             static::COLUMN_COMPANY_NAME => htmlspecialchars($row[SpyCompanyTableMap::COL_NAME] ?? ''),
         ];
+    }
+
+    /**
+     * @param array<mixed> $companyIds
+     *
+     * @return array<mixed>
+     */
+    public function fetchCompaniesByIds(array $companyIds): array
+    {
+        $this->init();
+
+        $this->companyQuery->filterByIdCompany_In($companyIds);
+
+        /**
+         * @var array<string, mixed> $data
+         */
+        $data = $this->prepareData($this->config);
+
+        $this->loadData($data);
+
+        $dataWithoutCheckboxColumn = array_map(function ($companyRow) {
+             unset($companyRow[static::COLUMN_SELECTED]);
+
+             return array_values($companyRow);
+        }, $data);
+
+        return $dataWithoutCheckboxColumn;
     }
 }

@@ -253,7 +253,25 @@ class SspAssetSearchQueryPluginTest extends Unit
         // Assert
         $this->assertInstanceOf(Query::class, $query);
         $this->assertInstanceOf(BoolQuery::class, $query->getQuery());
-        $this->assertArrayHasKey('suggest', $queryArray);
+
+        $this->assertArrayHasKey('query', $queryArray);
+        $this->assertArrayHasKey('bool', $queryArray['query']);
+        $this->assertArrayHasKey('must', $queryArray['query']['bool']);
+        $this->assertArrayHasKey('_source', $queryArray);
+
+        $mustClauses = $queryArray['query']['bool']['must'];
+        $this->assertCount(1, $mustClauses);
+
+        $typeClause = $mustClauses[0];
+        $this->assertArrayHasKey('term', $typeClause);
+        $this->assertArrayHasKey('type', $typeClause['term']);
+
+        $typeFilter = $typeClause['term']['type'];
+        $this->assertArrayHasKey('value', $typeFilter);
+        $this->assertArrayHasKey('boost', $typeFilter);
+        $this->assertSame('ssp_asset', $typeFilter['value']);
+
+        $this->assertSame('search-result-data', $queryArray['_source']);
     }
 
     public function testGetSearchQueryWithSearchStringCreatesFullTextQuery(): void
@@ -372,8 +390,19 @@ class SspAssetSearchQueryPluginTest extends Unit
 
         // Assert
         $this->assertArrayHasKey('suggest', $queryArray);
-        $this->assertArrayHasKey('text', $queryArray['suggest']);
-        $this->assertSame(static::TEST_SEARCH_STRING, $queryArray['suggest']['text']);
+
+        $suggest = $queryArray['suggest'];
+        $this->assertArrayHasKey('suggestion', $suggest);
+
+        $suggestion = $suggest['suggestion'];
+        $this->assertArrayHasKey('term', $suggestion);
+        $this->assertArrayHasKey('text', $suggestion);
+
+        $termSuggester = $suggestion['term'];
+        $this->assertArrayHasKey('field', $termSuggester);
+        $this->assertSame('suggestion-terms', $termSuggester['field']);
+
+        $this->assertSame(static::TEST_SEARCH_STRING, $suggestion['text']);
     }
 
     public function testGetSearchQueryWithNullSearchStringHasEmptySuggest(): void
@@ -383,9 +412,7 @@ class SspAssetSearchQueryPluginTest extends Unit
         $queryArray = $query->toArray();
 
         // Assert
-        $this->assertArrayHasKey('suggest', $queryArray);
-        $this->assertArrayHasKey('text', $queryArray['suggest']);
-        $this->assertSame('', $queryArray['suggest']['text']);
+        $this->assertArrayNotHasKey('suggest', $queryArray);
     }
 
     public function testGetSearchQueryIncludesSourceFieldsConfiguration(): void

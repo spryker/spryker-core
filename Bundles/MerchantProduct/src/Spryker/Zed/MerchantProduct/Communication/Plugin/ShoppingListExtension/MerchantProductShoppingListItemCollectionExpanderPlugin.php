@@ -14,6 +14,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollecti
 /**
  * @method \Spryker\Zed\MerchantProduct\Business\MerchantProductFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProduct\MerchantProductConfig getConfig()
+ * @method \Spryker\Zed\MerchantProduct\Communication\MerchantProductCommunicationFactory getFactory()
  */
 class MerchantProductShoppingListItemCollectionExpanderPlugin extends AbstractPlugin implements ShoppingListItemCollectionExpanderPluginInterface
 {

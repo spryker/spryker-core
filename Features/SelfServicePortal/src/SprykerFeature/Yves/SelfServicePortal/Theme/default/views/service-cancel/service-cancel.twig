@@ -4,6 +4,7 @@
     orderItem: _widget.orderItem,
     isVisible: _widget.isVisible,
     form: _widget.form,
+    id: random(),
 } %}
 
 {% block body %}
@@ -18,7 +19,7 @@
                 }
             },
             attributes: {
-                'form-name': data.form.vars.id,
+                'form-name': "#{data.form.vars.id}-#{data.id}",
                 'form-action': path('customer/ssp-service/cancel-service')
             },
             embed: {

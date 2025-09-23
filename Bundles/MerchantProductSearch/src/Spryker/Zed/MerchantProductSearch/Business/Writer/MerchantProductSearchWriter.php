@@ -54,7 +54,7 @@ class MerchantProductSearchWriter implements MerchantProductSearchWriterInterfac
 
         $productAbstractIds = $this->merchantProductSearchRepository->getProductAbstractIdsByMerchantIds($merchantIds);
 
-        $this->productPageSearchFacade->refresh($productAbstractIds);
+        $this->productPageSearchFacade->publish($productAbstractIds);
     }
 
     /**
@@ -68,6 +68,6 @@ class MerchantProductSearchWriter implements MerchantProductSearchWriterInterfac
 
         $productAbstractIds = $this->merchantProductSearchRepository->getProductAbstractIdsByMerchantProductAbstractIds($merchantProductAbstractIds);
 
-        $this->productPageSearchFacade->refresh($productAbstractIds);
+        $this->productPageSearchFacade->publish($productAbstractIds);
     }
 }

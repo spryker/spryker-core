@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\SpyProductAbstractEntityTransfer;
 use Generated\Shared\Transfer\SpyProductAbstractLocalizedAttributesEntityTransfer;
 use Generated\Shared\Transfer\SpyProductCategoryEntityTransfer;
@@ -125,10 +126,11 @@ class MerchantCombinedProductAbstractHydratorStep implements DataImportStepInter
             $idProductAbstract = $this->productRepository->findIdProductAbstractByAbstractSku($abstractSku);
 
             if (!$idProductAbstract && !$productLocalizedAttributes[ProductLocalizedAttributeExtractorStep::KEY_NAME]) {
-                throw new MerchantCombinedProductException(sprintf(
-                    'The product abstract cannot be created without a name. Required column "%s" is missing',
-                    MerchantCombinedProductDataSetInterface::KEY_PRODUCT_ABSTRACT_NAME_LOCALIZED,
-                ));
+                throw MerchantCombinedProductException::createWithError(
+                    (new ErrorTransfer())
+                        ->setMessage('The product abstract cannot be created without a name. Required column "%s%" is missing.')
+                        ->setParameters(['%s%' => MerchantCombinedProductDataSetInterface::KEY_PRODUCT_ABSTRACT_NAME_LOCALIZED]),
+                );
             }
 
             $productAbstractLocalizedAttributesEntityTransfer = (new SpyProductAbstractLocalizedAttributesEntityTransfer())
@@ -186,10 +188,11 @@ class MerchantCombinedProductAbstractHydratorStep implements DataImportStepInter
 
         foreach ($categoryToIndexMap as $categoryKey => $index) {
             if (!isset($categories[$categoryKey])) {
-                throw new MerchantCombinedProductException(sprintf(
-                    'The category with key "%s" was not found in existing categories list.',
-                    $categoryKey,
-                ));
+                throw MerchantCombinedProductException::createWithError(
+                    (new ErrorTransfer())
+                        ->setMessage('The category with key "%s%" was not found in existing categories list.')
+                        ->setParameters(['%s%' => $categoryKey]),
+                );
             }
 
             $productCategoryEntityTransfer = (new SpyProductCategoryEntityTransfer())
@@ -230,10 +233,11 @@ class MerchantCombinedProductAbstractHydratorStep implements DataImportStepInter
                     ],
                 );
 
-                throw new MerchantCombinedProductException(sprintf(
-                    'The product abstract cannot be created without a URL. Required column "%s" is missing',
-                    $dataSetKey,
-                ));
+                throw MerchantCombinedProductException::createWithError(
+                    (new ErrorTransfer())
+                        ->setMessage('The product abstract cannot be created without a URL. Required column "%s%" is missing.')
+                        ->setParameters(['%s%' => $dataSetKey]),
+                );
             }
 
             $urlEntityTransfer = (new SpyUrlEntityTransfer())

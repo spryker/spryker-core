@@ -13,17 +13,7 @@ use Generated\Shared\Transfer\UserTransfer;
 
 interface AgentRepositoryInterface
 {
-    /**
-     * @param string $username
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
-     */
     public function findAgentByUsername(string $username): ?UserTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
-     */
     public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer;
 }

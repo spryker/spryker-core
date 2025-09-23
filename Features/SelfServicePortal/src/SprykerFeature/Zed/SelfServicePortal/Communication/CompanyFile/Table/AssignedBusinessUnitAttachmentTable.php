@@ -14,6 +14,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Controller\FileAbstractController;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Reader\RelationCsvReaderInterface;
 
 class AssignedBusinessUnitAttachmentTable extends AbstractTable
 {
@@ -64,10 +65,14 @@ class AssignedBusinessUnitAttachmentTable extends AbstractTable
         $config->addRawColumn(static::COLUMN_SELECTED);
         $config->setTableAttributes([
             'data-selectable' => [
-                'moveToSelector' => '#businessUnitsToBeDeassigned',
-                'inputSelector' => '#fileAttachment_businessUnitIdsToBeDeassigned',
-                'counterHolderSelector' => 'a[href="#tab-content-business-units-to-be-detached"]',
+                'moveToSelector' => '#businessUnitsToBeUnassigned',
+                'inputSelector' => '#fileAttachment_businessUnitIdsToBeUnassigned',
+                'counterHolderSelector' => 'a[href="#tab-content-business-units-to-be-unassigned"]',
                 'colId' => static::COLUMN_ID_BUSINESS_UNIT,
+            ],
+            'data-uploader' => [
+                'url' => sprintf('/self-service-portal/attach-file/get-business-unit-attachments-from-csv?id-file=%d', $this->idFile),
+                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED,
             ],
         ]);
         $config->setUrl(Url::generate('/assigned-business-unit-table', [
@@ -126,5 +131,32 @@ class AssignedBusinessUnitAttachmentTable extends AbstractTable
             static::COLUMN_COMPANY_NAME => (string)$row[SpyCompanyTableMap::COL_NAME],
             static::COLUMN_BUSINESS_UNIT_NAME => (string)$row[SpyCompanyBusinessUnitTableMap::COL_NAME],
         ];
+    }
+
+    /**
+     * @param array<mixed> $businessUnitIds
+     *
+     * @return array<mixed>
+     */
+    public function fetchBusinessUnitsByIds(array $businessUnitIds): array
+    {
+        $this->init();
+
+        $this->companyBusinessUnitQuery->filterByIdCompanyBusinessUnit_In($businessUnitIds);
+
+        /**
+         * @var array<string, mixed> $data
+         */
+        $data = $this->prepareData($this->config);
+
+        $this->loadData($data);
+
+        $dataWithoutCheckboxColumn = array_map(function ($businessUnitRow) {
+             unset($businessUnitRow[static::COLUMN_SELECTED]);
+
+             return array_values($businessUnitRow);
+        }, $data);
+
+        return $dataWithoutCheckboxColumn;
     }
 }

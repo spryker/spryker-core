@@ -11,6 +11,7 @@ use ArrayObject;
 use Codeception\Actor;
 use Codeception\Stub;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -19,6 +20,7 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
+use PHPUnit\Framework\MockObject\Rule\InvokedCount;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Client\Store\StoreDependencyProvider as ClientStoreDependencyProvider;
@@ -27,6 +29,8 @@ use Spryker\Shared\MerchantProductOfferSearch\MerchantProductOfferSearchConfig;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\ProductPageSearch\MerchantNamesProductAbstractMapExpanderPlugin;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\ProductPageSearch\MerchantProductPageDataExpanderPlugin;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\ProductPageSearch\MerchantProductPageDataLoaderPlugin;
+use Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToEventFacadeInterface;
+use Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchDependencyProvider;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
@@ -133,6 +137,22 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
         foreach ($productConcreteTransfer->getStores() as $storeTransfer) {
             $this->assertContains($merchantTransfer->getName(), $decodedData['merchant_names'][$storeTransfer->getName()]);
         }
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function setDependencyWithExpectedCall(int $idProductAbstract): void
+    {
+        $eventFacadeMock = Stub::makeEmpty(MerchantProductOfferSearchToEventFacadeInterface::class);
+        $eventFacadeMock->expects(new InvokedCount(1))->method('triggerBulk')->with(MerchantProductOfferSearchConfig::PRODUCT_ABSTRACT_SEARCH_PUBLISH, [
+            (new EventEntityTransfer())
+                ->setId($idProductAbstract),
+        ]);
+
+        $this->setDependency(MerchantProductOfferSearchDependencyProvider::FACADE_EVENT, $eventFacadeMock);
     }
 
     /**

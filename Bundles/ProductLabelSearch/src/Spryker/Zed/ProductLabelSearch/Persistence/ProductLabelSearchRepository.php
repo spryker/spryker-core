@@ -49,4 +49,28 @@ class ProductLabelSearchRepository extends AbstractRepository implements Product
 
         return array_unique($productAbstractIds);
     }
+
+    /**
+     * @param array<int, int> $productLabelIdsTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getProductAbstractIdTimestampMap(array $productLabelIdsTimestampMap): array
+    {
+        $productAbstractIdTimestampMap = [];
+
+        $productLabelData = $this->getFactory()
+            ->createSpyProductLabelProductAbstractQuery()
+            ->filterByFkProductLabel_In(array_keys($productLabelIdsTimestampMap))
+            ->select([SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL])
+            ->find()
+            ->getData();
+
+        foreach ($productLabelData as $productLabel) {
+            $productAbstractIdTimestampMap[(int)$productLabel[SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT]] =
+                $productLabelIdsTimestampMap[$productLabel[SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL]];
+        }
+
+        return $productAbstractIdTimestampMap;
+    }
 }

@@ -56,7 +56,8 @@ class GetProductCategoryCollectionTest extends Unit
         $this->tester->assignProductToCategory($categoryTransfer->getIdCategory(), $productTransfer->getFkProductAbstract());
 
         $productCategoryConditionsTransfer = (new ProductCategoryConditionsTransfer())
-            ->addIdProductAbstract($productTransfer->getFkProductAbstract());
+            ->addIdProductAbstract($productTransfer->getFkProductAbstract())
+            ->addIdLocale($categoryTransfer->getLocalizedAttributes()->offsetGet(0)->getLocale()->getIdLocale());
 
         $productCategoryCriteriaTransfer = (new ProductCategoryCriteriaTransfer())
             ->setProductCategoryConditions($productCategoryConditionsTransfer);
@@ -208,7 +209,8 @@ class GetProductCategoryCollectionTest extends Unit
         $this->tester->assignProductToCategory($categoryTransfer->getIdCategory(), $productTransfer->getFkProductAbstract());
 
         $productCategoryConditionsTransfer = (new ProductCategoryConditionsTransfer())
-            ->addIdProductAbstract(static::FAKE_ID_PRODUCT_ABSTRACT);
+            ->addIdProductAbstract(static::FAKE_ID_PRODUCT_ABSTRACT)
+            ->addIdLocale($categoryTransfer->getLocalizedAttributes()->offsetGet(0)->getLocale()->getIdLocale());
 
         $productCategoryCriteriaTransfer = (new ProductCategoryCriteriaTransfer())
             ->setProductCategoryConditions($productCategoryConditionsTransfer);
@@ -234,7 +236,8 @@ class GetProductCategoryCollectionTest extends Unit
         $this->tester->assignProductToCategory($categoryTransfer->getIdCategory(), $productTransfer->getFkProductAbstract());
 
         $productCategoryConditionsTransfer = (new ProductCategoryConditionsTransfer())
-            ->addIdProductAbstract($productTransfer->getFkProductAbstract());
+            ->addIdProductAbstract($productTransfer->getFkProductAbstract())
+            ->addIdLocale($categoryTransfer->getLocalizedAttributes()->offsetGet(0)->getLocale()->getIdLocale());
 
         $productCategoryCriteriaTransfer = (new ProductCategoryCriteriaTransfer())
             ->setProductCategoryConditions($productCategoryConditionsTransfer);
@@ -279,9 +282,15 @@ class GetProductCategoryCollectionTest extends Unit
         $expandedCategory = $productCategoryTransfers->offsetGet(0)->getCategory();
 
         $this->assertCount($categoryTransfer->getLocalizedAttributes()->count(), $expandedCategory->getLocalizedAttributes());
-        $this->assertSame(
-            $categoryTransfer->getLocalizedAttributes()->offsetGet(0)->getName(),
-            $expandedCategory->getLocalizedAttributes()->offsetGet(0)->getName(),
+        $this->assertEqualsCanonicalizing(
+            [
+                $categoryTransfer->getLocalizedAttributes()->offsetGet(0)->getName(),
+                $categoryTransfer->getLocalizedAttributes()->offsetGet(1)->getName(),
+            ],
+            [
+                $expandedCategory->getLocalizedAttributes()->offsetGet(0)->getName(),
+                $expandedCategory->getLocalizedAttributes()->offsetGet(1)->getName(),
+            ],
         );
     }
 
@@ -297,7 +306,8 @@ class GetProductCategoryCollectionTest extends Unit
         $this->tester->assignProductToCategory($categoryTransfer->getIdCategory(), $productTransfer->getFkProductAbstract());
 
         $productCategoryConditionsTransfer = (new ProductCategoryConditionsTransfer())
-            ->addIdProductAbstract($productTransfer->getFkProductAbstract());
+            ->addIdProductAbstract($productTransfer->getFkProductAbstract())
+            ->addIdLocale($categoryTransfer->getLocalizedAttributes()->offsetGet(0)->getLocale()->getIdLocale());
 
         $productCategoryCriteriaTransfer = (new ProductCategoryCriteriaTransfer())
             ->setProductCategoryConditions($productCategoryConditionsTransfer);

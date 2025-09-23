@@ -20,4 +20,24 @@ class SelfServicePortalConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_SSP_ASSETS = 'ssp-assets';
+
+    /**
+     * Specification
+     * - Defines the inquiries resource name
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const RESOURCE_SSP_INQUIRIES = 'ssp-inquiries';
+
+    /**
+     * Specification
+     * - Defines the services resource name
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const RESOURCE_SSP_SERVICES = 'booked-services';
 }

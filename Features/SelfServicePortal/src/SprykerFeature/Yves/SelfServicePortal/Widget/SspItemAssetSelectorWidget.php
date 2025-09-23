@@ -117,6 +117,10 @@ class SspItemAssetSelectorWidget extends AbstractWidget
 
         $sspAssetStorageTransfer = $this->getFactory()->createSspAssetStorageReader()->findSspAssetStorageByReference($companyUserTransfer, $assetReference);
 
+        if ($sspAssetStorageTransfer) {
+            $sspAssetStorageTransfer->setReference($assetReference);
+        }
+
         $this->addParameter(static::PARAMETER_ASSET, $sspAssetStorageTransfer);
     }
 

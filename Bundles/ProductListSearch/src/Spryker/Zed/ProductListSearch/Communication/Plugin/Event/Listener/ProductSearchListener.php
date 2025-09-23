@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\HydrateEventsRequestTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Spryker\Shared\ProductListSearch\ProductListSearchConfig;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -31,10 +32,12 @@ class ProductSearchListener extends AbstractPlugin implements EventBulkHandlerIn
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $productAbstractIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventEntityTransfers, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
+        $hydrateEventsResponseTransfer = $this->getFactory()->getEventBehaviorFacade()->hydrateEventDataTransfer(
+            (new HydrateEventsRequestTransfer())
+                ->setEventEntities(new ArrayObject($eventEntityTransfers))
+                ->setForeignKeyName(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT),
+        );
 
-        $this->getFactory()->getProductPageSearchFacade()->refresh($productAbstractIds, [ProductListSearchConfig::PLUGIN_PRODUCT_LIST_DATA]);
+        $this->getFactory()->getProductPageSearchFacade()->publishWithTimestamp($hydrateEventsResponseTransfer->getForeignKeyTimestampMap());
     }
 }

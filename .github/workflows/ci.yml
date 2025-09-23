@@ -1,0 +1,92 @@
+name: SPRYKER-CI
+
+on:
+    pull_request:
+        types: [synchronize, opened]
+    push:
+        branches:
+            - master
+    workflow_dispatch:
+
+env:
+    COMPOSER_MEMORY_LIMIT: -1
+    NODE_OPTIONS: --max-old-space-size=8192
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    spryker-validation:
+        name: Spryker Validation
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.3'
+                  tools: composer:v2
+                  coverage: none
+
+            - name: Cache Composer packages
+              id: composer-cache
+              uses: actions/cache@v3
+              with:
+                  path: vendor
+                  key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-php-
+
+            - name: Install dependencies
+              run: |
+                  composer config github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+                  composer install --no-interaction --prefer-dist --optimize-autoloader
+                  composer require spryker/spryker-shop:dev-${GITHUB_HEAD_REF} --optimize-autoloader --no-interaction --prefer-dist || echo 'Failed to require module. Continuing execution...'
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '18'
+                  cache: 'npm'
+
+            - name: Install frontend dependencies
+              run: npm ci
+
+            - name: Install frontend-sniffer
+              run: npm i git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.2.8
+
+            - name: Run frontend sniffer
+              run: node --max-old-space-size=8192 ./node_modules/@spryker/frontend-sniffer --config ./ --path ../ --level-restriction core
+
+            - name: Run formatter
+              run: npm run formatter
+
+            - name: Run lint
+              run: npm run lint
+
+            - name: Run stylelint
+              run: npm run stylelint
+
+            - name: Run MP stylelint
+              run: npm run mp:stylelint
+
+            - name: Run MP lint
+              run: npm run mp:lint
+
+            - name: Run MP tests
+              run: npm run mp:test --verbose
+              timeout-minutes: 25
+
+            - name: Check touched modules
+              run: bash ci_check_touched_modules.sh
+
+            - name: Check module codeception
+              run: |
+                  bash ci_check_module_codeception.sh Bundles SprykerTest
+                  bash ci_check_module_codeception.sh Features SprykerFeatureTest
+                  echo "Finished checking touched modules"

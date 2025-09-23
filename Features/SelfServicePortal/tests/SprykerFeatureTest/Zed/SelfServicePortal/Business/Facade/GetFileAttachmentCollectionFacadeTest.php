@@ -129,47 +129,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         );
     }
 
-    public function testGetFilesAttachmentsForCompanyWithPermissions(): void
-    {
-        // Arrange
-        $companyTransfer = $this->tester->haveCompany();
-        $fileTransfer = $this->tester->haveFile();
-
-        $companyUserTransfer = $this->tester->createCompanyUser($companyTransfer);
-
-        $this->tester->haveCompanyFileAttachment([
-            'idFile' => $fileTransfer->getIdFileOrFail(),
-            'idCompany' => $companyTransfer->getIdCompanyOrFail(),
-        ]);
-
-        $this->mockPermissions([
-            ViewCompanyFilesPermissionPlugin::KEY => true,
-        ]);
-
-        $fileAttachmentCriteriaTransfer = (new FileAttachmentCriteriaTransfer())
-            ->setCompanyUser($companyUserTransfer)
-            ->setFileAttachmentSearchConditions(new FileAttachmentSearchConditionsTransfer())
-            ->setWithCompanyRelation(true);
-
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
-            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            CompanyBusinessUnitTransfer::COMPANY => $companyTransfer,
-        ]);
-        $companyUserTransfer
-            ->setCompany($companyTransfer)
-            ->setCompanyBusinessUnit($businessUnitTransfer);
-
-        // Act
-        $fileAttachmentCollectionTransfer = $this->facade->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
-
-        // Assert
-        $this->assertCount(1, $fileAttachmentCollectionTransfer->getFileAttachments());
-        $this->assertSame(
-            $fileTransfer->getIdFile(),
-            $fileAttachmentCollectionTransfer->getFileAttachments()->offsetGet(0)->getFile()->getIdFile(),
-        );
-    }
-
     public function testGetFileAttachmentsForSspAssetWithPermissions(): void
     {
         // Arrange
@@ -188,13 +147,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
             SspAssetTransfer::BUSINESS_UNIT_ASSIGNMENTS =>
             [[SspAssetBusinessUnitAssignmentTransfer::COMPANY_BUSINESS_UNIT => $businessUnitTransfer]],
         ]);
-
-        $this->tester->haveCompanyFileAttachment(
-            [
-                'idFile' => $fileTransfer->getIdFileOrFail(),
-                'idCompany' => $companyTransfer->getIdCompanyOrFail(),
-            ],
-        );
 
         $this->tester->haveSspAssetFileAttachment([
             'idFile' => $fileTransfer->getIdFileOrFail(),
@@ -231,15 +183,9 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
 
         $companyUserTransfer->setCompany($companyTransfer);
 
-        $this->tester->haveCompanyFileAttachment([
-            'idFile' => $fileTransfer->getIdFileOrFail(),
-            'idCompany' => $companyTransfer->getIdCompanyOrFail(),
-        ]);
-
         $fileAttachmentCriteriaTransfer = (new FileAttachmentCriteriaTransfer())
             ->setCompanyUser($companyUserTransfer)
             ->setFileAttachmentSearchConditions(new FileAttachmentSearchConditionsTransfer())
-            ->setWithCompanyRelation(false)
             ->setWithBusinessUnitRelation(false)
             ->setWithCompanyUserRelation(false)
             ->setWithSspAssetRelation(false);
@@ -340,12 +286,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         $businessUnitFileTransfer = $this->tester->haveFile();
         $userFileTransfer = $this->tester->haveFile();
 
-        // Create attachments at different levels
-        $this->tester->haveCompanyFileAttachment([
-            'idFile' => $companyFileTransfer->getIdFileOrFail(),
-            'idCompany' => $companyTransfer->getIdCompanyOrFail(),
-        ]);
-
         $this->tester->haveCompanyBusinessUnitFileAttachment([
             'idFile' => $businessUnitFileTransfer->getIdFileOrFail(),
             'idCompanyBusinessUnit' => $businessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
@@ -359,21 +299,19 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         $fileAttachmentCriteriaTransfer = (new FileAttachmentCriteriaTransfer())
             ->setCompanyUser($companyUserTransfer)
             ->setFileAttachmentSearchConditions(new FileAttachmentSearchConditionsTransfer())
-            ->setWithCompanyRelation(true)
             ->setWithBusinessUnitRelation(true)
             ->setWithCompanyUserRelation(true);
 
         // Act
         $fileAttachmentCollectionTransfer = $this->facade->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
 
-        $this->assertCount(3, $fileAttachmentCollectionTransfer->getFileAttachments());
+        $this->assertCount(2, $fileAttachmentCollectionTransfer->getFileAttachments());
 
         $returnedFileIds = [];
         foreach ($fileAttachmentCollectionTransfer->getFileAttachments() as $fileAttachment) {
             $returnedFileIds[] = $fileAttachment->getFile()->getIdFile();
         }
 
-        $this->assertContains($companyFileTransfer->getIdFile(), $returnedFileIds);
         $this->assertContains($businessUnitFileTransfer->getIdFile(), $returnedFileIds);
         $this->assertContains($userFileTransfer->getIdFile(), $returnedFileIds);
     }
@@ -397,15 +335,15 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         $companyFileTransfer = $this->tester->haveFile();
         $sspAssetFileTransfer = $this->tester->haveFile();
 
-        $this->tester->haveCompanyFileAttachment([
-            'idFile' => $companyFileTransfer->getIdFileOrFail(),
-            'idCompany' => $companyTransfer->getIdCompanyOrFail(),
-        ]);
-
         $sspAssetTransfer = $this->tester->haveAsset([
             SspAssetTransfer::BUSINESS_UNIT_ASSIGNMENTS => [
                 [SspAssetBusinessUnitAssignmentTransfer::COMPANY_BUSINESS_UNIT => $businessUnitTransfer],
             ],
+        ]);
+
+        $this->tester->haveCompanyBusinessUnitFileAttachment([
+            'idFile' => $companyFileTransfer->getIdFileOrFail(),
+            'idCompanyBusinessUnit' => $businessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
         ]);
 
         $this->tester->haveSspAssetFileAttachment([
@@ -416,8 +354,8 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         $fileAttachmentCriteriaTransfer = (new FileAttachmentCriteriaTransfer())
             ->setCompanyUser($companyUserTransfer)
             ->setFileAttachmentSearchConditions(new FileAttachmentSearchConditionsTransfer())
-            ->setWithCompanyRelation(true)
-            ->setWithSspAssetRelation(true);
+            ->setWithSspAssetRelation(true)
+            ->setWithBusinessUnitRelation(true);
 
         // Act
         $fileAttachmentCollectionTransfer = $this->facade->getFileAttachmentCollection($fileAttachmentCriteriaTransfer);
@@ -452,11 +390,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         $businessUnitFileTransfer = $this->tester->haveFile();
         $userFileTransfer = $this->tester->haveFile();
 
-        $this->tester->haveCompanyFileAttachment([
-            'idFile' => $companyFileTransfer->getIdFileOrFail(),
-            'idCompany' => $companyTransfer->getIdCompanyOrFail(),
-        ]);
-
         $this->tester->haveCompanyBusinessUnitFileAttachment([
             'idFile' => $businessUnitFileTransfer->getIdFileOrFail(),
             'idCompanyBusinessUnit' => $businessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
@@ -470,7 +403,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
         $fileAttachmentCriteriaTransfer = (new FileAttachmentCriteriaTransfer())
             ->setCompanyUser($companyUserTransfer)
             ->setFileAttachmentSearchConditions(new FileAttachmentSearchConditionsTransfer())
-            ->setWithCompanyRelation(false)
             ->setWithBusinessUnitRelation(true)
             ->setWithCompanyUserRelation(false)
             ->setWithSspAssetRelation(false);
@@ -522,7 +454,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
             ->setCompanyUser($companyUserTransfer)
             ->setFileAttachmentConditions(new FileAttachmentConditionsTransfer())
             ->setFileAttachmentSearchConditions(new FileAttachmentSearchConditionsTransfer())
-            ->setWithCompanyRelation(true)
             ->setWithBusinessUnitRelation(true)
             ->setWithCompanyUserRelation(true);
 
@@ -550,12 +481,12 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
 
         $companyUserTransfer->setCompanyBusinessUnit($businessUnitTransfer);
 
-        $currentTime = time();
-
-        $this->tester->haveCompanyFileAttachment([
+        $this->tester->haveCompanyBusinessUnitFileAttachment([
             'idFile' => $fileTransfer->getIdFileOrFail(),
-            'idCompany' => $companyTransfer->getIdCompanyOrFail(),
+            'idCompanyBusinessUnit' => $businessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
         ]);
+
+        $currentTime = time();
 
         $rangeTransfer = (new CriteriaRangeFilterTransfer())
             ->setFrom($currentTime - 3600)
@@ -568,7 +499,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
             ->setFileAttachmentConditions($fileAttachmentConditionsTransfer)
             ->setCompanyUser($companyUserTransfer)
             ->setFileAttachmentSearchConditions(new FileAttachmentSearchConditionsTransfer())
-            ->setWithCompanyRelation(true)
             ->setWithBusinessUnitRelation(true)
             ->setWithCompanyUserRelation(true);
 
@@ -601,19 +531,18 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
 
         $companyUserTransfer->setCompanyBusinessUnit($businessUnitTransfer);
 
-        $this->tester->haveCompanyFileAttachment([
-            'idFile' => $fileTransfer->getIdFileOrFail(),
-            'idCompany' => $companyTransfer->getIdCompanyOrFail(),
-        ]);
-
         $fileAttachmentConditionsTransfer = (new FileAttachmentConditionsTransfer())
             ->setFileTypes([static::EXTENSION_PDF]);
+
+        $this->tester->haveCompanyBusinessUnitFileAttachment([
+            'idFile' => $fileTransfer->getIdFileOrFail(),
+            'idCompanyBusinessUnit' => $businessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
+        ]);
 
         $fileAttachmentCriteriaTransfer = (new FileAttachmentCriteriaTransfer())
             ->setFileAttachmentConditions($fileAttachmentConditionsTransfer)
             ->setCompanyUser($companyUserTransfer)
             ->setFileAttachmentSearchConditions(new FileAttachmentSearchConditionsTransfer())
-            ->setWithCompanyRelation(true)
             ->setWithBusinessUnitRelation(true)
             ->setWithCompanyUserRelation(true);
 
@@ -652,17 +581,17 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
 
         $companyUserTransfer->setCompanyBusinessUnit($businessUnitTransfer);
 
-        $this->tester->haveCompanyFileAttachment([
+        $this->tester->haveCompanyBusinessUnitFileAttachment([
             'idFile' => $fileByNameTransfer->getIdFileOrFail(),
-            'idCompany' => $companyTransfer->getIdCompanyOrFail(),
+            'idCompanyBusinessUnit' => $businessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
         ]);
-        $this->tester->haveCompanyFileAttachment([
+        $this->tester->haveCompanyBusinessUnitFileAttachment([
             'idFile' => $fileByReferenceTransfer->getIdFileOrFail(),
-            'idCompany' => $companyTransfer->getIdCompanyOrFail(),
+            'idCompanyBusinessUnit' => $businessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
         ]);
-        $this->tester->haveCompanyFileAttachment([
+        $this->tester->haveCompanyBusinessUnitFileAttachment([
             'idFile' => $fileNotMatchingTransfer->getIdFileOrFail(),
-            'idCompany' => $companyTransfer->getIdCompanyOrFail(),
+            'idCompanyBusinessUnit' => $businessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
         ]);
 
         $fileAttachmentSearchConditionsTransfer = (new FileAttachmentSearchConditionsTransfer())
@@ -672,7 +601,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
             ->setCompanyUser($companyUserTransfer)
             ->setFileAttachmentConditions(new FileAttachmentConditionsTransfer())
             ->setFileAttachmentSearchConditions($fileAttachmentSearchConditionsTransfer)
-            ->setWithCompanyRelation(true)
             ->setWithBusinessUnitRelation(true)
             ->setWithCompanyUserRelation(true);
 
@@ -730,7 +658,6 @@ class GetFileAttachmentCollectionFacadeTest extends Unit
             ->setCompanyUser($companyUserTransfer)
             ->setFileAttachmentConditions($fileAttachmentConditionsTransfer)
             ->setFileAttachmentSearchConditions(new FileAttachmentSearchConditionsTransfer())
-            ->setWithCompanyRelation(true)
             ->setWithBusinessUnitRelation(true);
 
         // Act

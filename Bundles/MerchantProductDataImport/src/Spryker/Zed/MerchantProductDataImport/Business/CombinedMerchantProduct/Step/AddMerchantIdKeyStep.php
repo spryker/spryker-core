@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
 use Generated\Shared\Transfer\DataImporterConfigurationContextTransfer;
+use Generated\Shared\Transfer\ErrorTransfer;
 use Spryker\Zed\DataImport\Business\Model\DataImporter;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -23,16 +24,6 @@ class AddMerchantIdKeyStep implements DataImportStepInterface
     public const KEY_ID_MERCHANT = 'DATA_ID_MERCHANT';
 
     /**
-     * @var string
-     */
-    protected const ERROR_MISSING_CONTEXT = 'Dataset is missing context transfer.';
-
-    /**
-     * @var string
-     */
-    protected const ERROR_MISSING_MERCHANT_ID = 'Dataset context transfer is missing merchant ID.';
-
-    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Exception\MerchantCombinedProductException
@@ -44,11 +35,15 @@ class AddMerchantIdKeyStep implements DataImportStepInterface
         $contextTransfer = $this->getContextTransfer($dataSet);
 
         if (!$contextTransfer) {
-            throw new MerchantCombinedProductException(static::ERROR_MISSING_CONTEXT);
+            throw MerchantCombinedProductException::createWithError(
+                (new ErrorTransfer())->setMessage('Dataset is missing context transfer.'),
+            );
         }
 
         if (!$contextTransfer->getIdMerchant()) {
-            throw new MerchantCombinedProductException(static::ERROR_MISSING_MERCHANT_ID);
+            throw MerchantCombinedProductException::createWithError(
+                (new ErrorTransfer())->setMessage('Dataset context transfer is missing merchant ID.'),
+            );
         }
 
         $dataSet[static::KEY_ID_MERCHANT] = $contextTransfer->getIdMerchant();

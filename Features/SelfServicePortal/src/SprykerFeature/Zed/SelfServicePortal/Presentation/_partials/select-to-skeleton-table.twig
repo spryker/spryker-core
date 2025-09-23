@@ -1,0 +1,71 @@
+{% set popupId = "#{id}-popup" %}
+
+<div class="table-skeleton js-table-skeleton" data-table-id="{{ id }}">
+    <div class="alert alert-success table-skeleton-fulfilled-visible">
+        <p>
+            <i class="fa fa-exclamation-triangle text-navy" aria-hidden="true"></i>
+            {{ 'selected-entities-information' | trans | raw }}
+        </p>
+    </div>
+
+    <table
+        data-skeleton
+        class="js-selectable-table-skeleton table table-striped table-bordered table-hover gui-table-data"
+        id="{{ id }}"
+        data-paging="false"
+        data-column-defs='[{"orderable": false, "targets": -1}]'
+    >
+        <thead>
+            <tr>
+                {% for col in cols %}
+                    <th>{{ col | trans }}</th>
+                {% endfor %}
+
+                <th>{{ 'Selected' | trans }}</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <div class="text-right table-skeleton-fulfilled-visible">
+        <button
+            data-toggle="modal"
+            data-target="#{{ popupId }}"
+            data-bs-toggle="modal"
+            data-bs-target="#{{ popupId }}"
+            type="button"
+            class="btn btn-outline btn-remove"
+        >
+            {{ 'Remove All' | trans }}
+        </button>
+    </div>
+
+    {% embed '@Gui/Modal/confirmation-modal-window.twig' with {
+        id: popupId,
+        message: 'Please confirm to remove all entities',
+    } %}
+        {% block modal %}
+            {% set footer %}
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-dismiss="modal"
+                    data-bs-dismiss="modal"
+                >
+                    {{ 'Keep' | trans }}
+                </button>
+
+                <button
+                    type="button"
+                    data-dismiss="modal"
+                    data-bs-dismiss="modal"
+                    class="js-table-skeleton-remove-all btn btn-outline btn-danger"
+                >
+                    {{ 'Remove' | trans }}
+                </button>
+            {% endset %}
+
+            {{ parent() }}
+        {% endblock %}
+    {% endembed %}
+</div>

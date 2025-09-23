@@ -244,6 +244,10 @@ class DataImporter implements
                 ->setMessage($exception->getMessage())
                 ->setDataSetNumber($dataReader->key());
 
+            if ($exception->findError()) {
+                $dataImporterReportMessageTransfer->setError($exception->findError());
+            }
+
             $dataImporterReportTransfer
                 ->setIsSuccess(false)
                 ->addMessage($dataImporterReportMessageTransfer);
@@ -421,9 +425,16 @@ class DataImporter implements
     ): DataImporterReportMessageTransfer {
         $dataSetIdentifier = $dataSet[$this->dataSetIdentifierKey] ?? null;
 
-        return (new DataImporterReportMessageTransfer())
+        $dataImporterReportMessageTransfer = (new DataImporterReportMessageTransfer())
             ->setMessage($dataImportException->getMessage())
             ->setDataSetNumber($dataReader->key())
             ->setDataSetIdentifier($dataSetIdentifier);
+
+        $previousException = $dataImportException->getPrevious();
+        if ($previousException instanceof DataImportException && $previousException->findError()) {
+            $dataImporterReportMessageTransfer->setError($previousException->findError());
+        }
+
+        return $dataImporterReportMessageTransfer;
     }
 }

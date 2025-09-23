@@ -177,11 +177,6 @@ class ProvideDashboardDataFacadeTest extends Unit
 
         $companyUserTransfer->setCompanyBusinessUnit($businessUnitTransfer);
 
-        $this->tester->haveCompanyFileAttachment([
-            'idFile' => $fileTransfer->getIdFileOrFail(),
-            'idCompany' => $companyTransfer->getIdCompanyOrFail(),
-        ]);
-
         $dashboardRequestTransfer = (new DashboardRequestTransfer())
             ->setCompanyUser($companyUserTransfer)
             ->setCustomer($companyUserTransfer->getCustomer());

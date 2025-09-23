@@ -13,7 +13,6 @@ use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyBusinessUnitFileQuery;
-use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyCompanyUserFileQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductShipmentTypeQuery;
@@ -33,6 +32,8 @@ use Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySalesOrderQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquirySspAssetQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelStorageQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModelToFileQuery;
+use Orm\Zed\SelfServicePortal\Persistence\SpySspModelToProductListQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -85,11 +86,6 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesOrderItemProductClassQuery(): SpySalesOrderItemProductClassQuery
     {
         return SpySalesOrderItemProductClassQuery::create();
-    }
-
-    public function createCompanyFileQuery(): SpyCompanyFileQuery
-    {
-        return SpyCompanyFileQuery::create();
     }
 
     public function createCompanyUserFileQuery(): SpyCompanyUserFileQuery
@@ -150,10 +146,10 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     public function createFileAttachmentSaver(): FileAttachmentSaver
     {
         return new FileAttachmentSaver(
-            $this->createCompanyFileQuery(),
             $this->createCompanyBusinessUnitFileQuery(),
             $this->createCompanyUserFileQuery(),
             $this->createSspAssetFileQuery(),
+            $this->createSspModelToFileQuery(),
         );
     }
 
@@ -204,6 +200,11 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     public function createSspModelQuery(): SpySspModelQuery
     {
         return SpySspModelQuery::create();
+    }
+
+    public function createSspModelToFileQuery(): SpySspModelToFileQuery
+    {
+        return SpySspModelToFileQuery::create();
     }
 
     public function createSspModelStorageQuery(): SpySspModelStorageQuery
@@ -279,5 +280,10 @@ class SelfServicePortalPersistenceFactory extends AbstractPersistenceFactory
     public function createSspAssetSearchPropelQuery(): SpySspAssetSearchQuery
     {
         return new SpySspAssetSearchQuery();
+    }
+
+    public function createSspModelToProductListQuery(): SpySspModelToProductListQuery
+    {
+        return SpySspModelToProductListQuery::create();
     }
 }

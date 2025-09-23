@@ -99,7 +99,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $fileAttachmentCriteriaTransfer = (new FileAttachmentCriteriaTransfer())
             ->setCompanyUser($companyUserTransfer)
             ->setFileAttachmentConditions(new FileAttachmentConditionsTransfer())
-            ->setWithCompanyRelation(true)
             ->setWithBusinessUnitRelation(true)
             ->setWithSspAssetRelation(true);
 
@@ -112,7 +111,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
 
         // Assert
         $this->assertSame([static::ID_COMPANY], $result->getFileAttachmentConditions()->getCompanyIds());
-        $this->assertTrue($result->getWithCompanyRelation());
         $this->assertTrue($result->getWithBusinessUnitRelation());
         $this->assertFalse($result->getWithSspAssetRelation());
     }
@@ -124,7 +122,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $fileAttachmentCriteriaTransfer = (new FileAttachmentCriteriaTransfer())
             ->setCompanyUser($companyUserTransfer)
             ->setFileAttachmentConditions(new FileAttachmentConditionsTransfer())
-            ->setWithCompanyRelation(true)
             ->setWithSspAssetRelation(true);
 
         $this->mockPermissions([
@@ -137,7 +134,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
 
         // Assert
         $this->assertSame([static::ID_COMPANY_BUSINESS_UNIT], $result->getFileAttachmentConditions()->getBusinessUnitIds());
-        $this->assertFalse($result->getWithCompanyRelation());
         $this->assertNull($result->getWithBusinessUnitRelation());
         $this->assertFalse($result->getWithSspAssetRelation());
     }
@@ -149,7 +145,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $fileAttachmentCriteriaTransfer = (new FileAttachmentCriteriaTransfer())
             ->setCompanyUser($companyUserTransfer)
             ->setFileAttachmentConditions(new FileAttachmentConditionsTransfer())
-            ->setWithCompanyRelation(true)
             ->setWithBusinessUnitRelation(true)
             ->setWithSspAssetRelation(true);
 
@@ -164,7 +159,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
 
         // Assert
         $this->assertSame([static::ID_COMPANY_USER], $result->getFileAttachmentConditions()->getCompanyUserIds());
-        $this->assertFalse($result->getWithCompanyRelation());
         $this->assertFalse($result->getWithBusinessUnitRelation());
         $this->assertFalse($result->getWithSspAssetRelation());
         $this->assertNull($result->getWithCompanyUserRelation());
@@ -177,7 +171,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $fileAttachmentCriteriaTransfer = (new FileAttachmentCriteriaTransfer())
             ->setCompanyUser($companyUserTransfer)
             ->setFileAttachmentConditions(new FileAttachmentConditionsTransfer())
-            ->setWithCompanyRelation(true)
             ->setWithBusinessUnitRelation(true);
 
         $this->mockPermissions([
@@ -193,7 +186,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         // Assert
         $this->assertSame([static::ID_COMPANY], $result->getFileAttachmentConditions()->getSspAssetCompanyIds());
         $this->assertNull($result->getWithSspAssetRelation());
-        $this->assertFalse($result->getWithCompanyRelation());
         $this->assertFalse($result->getWithBusinessUnitRelation());
         $this->assertFalse($result->getWithCompanyUserRelation());
     }
@@ -242,7 +234,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $result = $this->fileAttachmentPermissionExpanderMock->expand($fileAttachmentCriteriaTransfer);
 
         // Assert
-        $this->assertFalse($result->getWithCompanyRelation());
         $this->assertFalse($result->getWithBusinessUnitRelation());
         $this->assertFalse($result->getWithSspAssetRelation());
         $this->assertEmpty($result->getFileAttachmentConditions()->getCompanyIds());
@@ -302,8 +293,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertEmpty($result->getFileAttachmentConditions()->getCompanyIds());
         $this->assertEmpty($result->getFileAttachmentConditions()->getCompanyUserIds());
 
-        $this->assertFalse($result->getWithCompanyRelation());
-
         $this->assertFalse($result->getWithSspAssetRelation());
     }
 
@@ -331,7 +320,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertEmpty($result->getFileAttachmentConditions()->getCompanyIds());
         $this->assertEmpty($result->getFileAttachmentConditions()->getBusinessUnitIds());
 
-        $this->assertFalse($result->getWithCompanyRelation());
         $this->assertFalse($result->getWithBusinessUnitRelation());
 
         $this->assertFalse($result->getWithSspAssetRelation());
@@ -363,7 +351,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertEmpty($result->getFileAttachmentConditions()->getBusinessUnitIds());
         $this->assertEmpty($result->getFileAttachmentConditions()->getCompanyUserIds());
 
-        $this->assertFalse($result->getWithCompanyRelation());
         $this->assertFalse($result->getWithBusinessUnitRelation());
     }
 
@@ -397,7 +384,6 @@ class FileAttachmentPermissionExpanderTest extends Unit
         $this->assertEmpty($result->getFileAttachmentConditions()->getSspAssetCompanyIds());
         $this->assertNotEmpty($result->getFileAttachmentConditions()->getSspAssetBusinessUnitIds());
 
-        $this->assertFalse($result->getWithCompanyRelation());
         $this->assertTrue($result->getWithCompanyUserRelation());
         $this->assertNull($result->getWithBusinessUnitRelation());
         $this->assertTrue($result->getWithSspAssetRelation());

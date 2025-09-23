@@ -17,17 +17,16 @@ interface ProductListSearchToProductPageSearchFacadeInterface
     public function publish(array $productAbstractIds): void;
 
     /**
-     * @param array<int> $productAbstractIds
-     * @param array<string> $pageDataExpanderPluginNames
+     * @param array<int, int> $productAbstractIdTimestampMap
      *
      * @return void
      */
-    public function refresh(array $productAbstractIds, array $pageDataExpanderPluginNames = []): void;
+    public function publishProductConcretes(array $productAbstractIdTimestampMap): void;
 
     /**
-     * @param array<int> $productConcreteIds
+     * @param array<int, int> $productAbstractIdTimestampMap
      *
      * @return void
      */
-    public function publishProductConcretes(array $productConcreteIds): void;
+    public function publishWithTimestamp(array $productAbstractIdTimestampMap): void;
 }

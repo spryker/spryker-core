@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantErrorTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Spryker\Zed\EventBehavior\EventBehaviorConfig;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException;
 use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface;
@@ -157,8 +158,10 @@ class MerchantUpdater implements MerchantUpdaterInterface
     protected function executeUpdateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         $merchantTransfer = $this->merchantUrlSaver->saveMerchantUrls($merchantTransfer);
+        EventBehaviorConfig::disableEvent(); // Merchant event will be triggered once after all merchant changes to avoid event duplication.
         $merchantTransfer = $this->updateMerchantStores($merchantTransfer);
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
+        EventBehaviorConfig::enableEvent();
         $merchantTransfer = $this->executeMerchantPostUpdatePlugins($merchantTransfer);
 
         $this->merchantEventTrigger->triggerMerchantUpdatedEvent($merchantTransfer);

@@ -28,7 +28,9 @@ class SspAssetMapper
     ): SpySspAsset {
         $sspAssetEntity->fromArray($sspAssetTransfer->modifiedToArray());
 
-        $sspAssetEntity->setFkCompanyBusinessUnit($sspAssetTransfer->getCompanyBusinessUnit()?->getIdCompanyBusinessUnit());
+        if ($sspAssetTransfer->getCompanyBusinessUnit()?->getIdCompanyBusinessUnit()) {
+            $sspAssetEntity->setFkCompanyBusinessUnit($sspAssetTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit());
+        }
 
         $sspAssetEntity->setFkImageFile($sspAssetTransfer->getImage()?->getIdFile());
 
@@ -54,13 +56,16 @@ class SspAssetMapper
             );
         }
 
-        if ($spySspAssetEntity->getFkCompanyBusinessUnit()) {
+        $companyBusinessUnitOwnerEntity = $spySspAssetEntity->getSpyCompanyBusinessUnit();
+
+        if ($companyBusinessUnitOwnerEntity) {
             $sspAssetTransfer->setCompanyBusinessUnit(
                 (new CompanyBusinessUnitTransfer())
                     ->setIdCompanyBusinessUnit(
-                        $spySspAssetEntity->getFkCompanyBusinessUnit(),
+                        $companyBusinessUnitOwnerEntity->getIdCompanyBusinessUnit(),
                     )
-                    ->setFkCompany($spySspAssetEntity->getSpyCompanyBusinessUnit()?->getFkCompany()),
+                    ->setUuid($companyBusinessUnitOwnerEntity->getUuid())
+                    ->setFkCompany($companyBusinessUnitOwnerEntity->getFkCompany()),
             );
         }
 
@@ -83,6 +88,7 @@ class SspAssetMapper
             if ($companyBusinessUnitEntity->getCompany() !== null) {
                 $companyTransfer = (new CompanyTransfer())->fromArray($companyBusinessUnitEntity->getCompany()->toArray(), true);
                 $companyBusinessUnitTransfer->setCompany($companyTransfer);
+                $companyBusinessUnitTransfer->setFkCompany($companyTransfer->getIdCompany());
             }
 
             $sspAssetTransfer->setCompanyBusinessUnit($companyBusinessUnitTransfer);

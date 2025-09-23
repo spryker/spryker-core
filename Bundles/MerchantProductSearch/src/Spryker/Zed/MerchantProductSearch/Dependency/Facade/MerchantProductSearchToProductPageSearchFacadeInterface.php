@@ -16,4 +16,11 @@ interface MerchantProductSearchToProductPageSearchFacadeInterface
      * @return void
      */
     public function refresh(array $productAbstractIds, $pageDataExpanderPluginNames = []);
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return void
+     */
+    public function publish(array $productAbstractIds);
 }

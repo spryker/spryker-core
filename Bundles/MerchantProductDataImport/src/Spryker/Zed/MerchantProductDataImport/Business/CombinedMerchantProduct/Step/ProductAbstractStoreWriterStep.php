@@ -9,11 +9,12 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery;
-use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddStoresStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Exception\MerchantCombinedProductException;
 use Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Repository\MerchantCombinedProductRepositoryInterface;
 use Spryker\Zed\MerchantProductDataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\MerchantProductDataImport\MerchantProductDataImportConfig;
@@ -79,7 +80,7 @@ class ProductAbstractStoreWriterStep implements DataImportStepInterface
     /**
      * @param string $sku
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\DataImportException
+     * @throws \Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Exception\MerchantCombinedProductException
      *
      * @return int
      */
@@ -88,10 +89,11 @@ class ProductAbstractStoreWriterStep implements DataImportStepInterface
         try {
             return $this->merchantCombinedProductRepository->getIdProductAbstractByAbstractSku($sku);
         } catch (EntityNotFoundException $e) {
-            throw new DataImportException(sprintf(
-                'Cannot import product store relation for product abstract with SKU "%s". Product abstract not found.',
-                $sku,
-            ), 0, $e);
+            throw MerchantCombinedProductException::createWithError(
+                (new ErrorTransfer())
+                    ->setMessage('Cannot import product store relation for product abstract with SKU "%s%". Product abstract not found.')
+                    ->setParameters(['%s%' => $sku]),
+            );
         }
     }
 

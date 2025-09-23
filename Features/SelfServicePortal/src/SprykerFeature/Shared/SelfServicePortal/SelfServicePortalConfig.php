@@ -74,46 +74,6 @@ class SelfServicePortalConfig extends AbstractSharedConfig
     public const PLUGIN_PRODUCT_ABSTRACT_CLASS_DATA = 'PLUGIN_PRODUCT_ABSTRACT_CLASS_DATA';
 
     /**
-     * Specification:
-     * - Entity type for company.
-     *
-     * @api
-     *
-     * @var string
-     */
-    public const ENTITY_TYPE_COMPANY = 'company';
-
-    /**
-     * Specification:
-     * - Entity type for company user.
-     *
-     * @api
-     *
-     * @var string
-     */
-    public const ENTITY_TYPE_COMPANY_USER = 'company_user';
-
-    /**
-     * Specification:
-     * - Entity type for company business unit.
-     *
-     * @api
-     *
-     * @var string
-     */
-    public const ENTITY_TYPE_COMPANY_BUSINESS_UNIT = 'company_business_unit';
-
-    /**
-     * Specification:
-     * - Entity type for asset.
-     *
-     * @api
-     *
-     * @var string
-     */
-    public const ENTITY_TYPE_SSP_ASSET = 'ssp_asset';
-
-    /**
      * @uses \Spryker\Shared\UtilDateTime\UtilDateTimeConstants::DATE_TIME_ZONE
      *
      * @var string
@@ -423,25 +383,6 @@ class SelfServicePortalConfig extends AbstractSharedConfig
     public function getScheduledProductClassName(): string
     {
         return 'Scheduled';
-    }
-
-    /**
-     * Specification:
-     * - Returns a list of entity types.
-     * - These entity types are used to build the file attachment entity type filter in the self-service portal.
-     *
-     * @api
-     *
-     * @return list<string>
-     */
-    public function getEntityTypes(): array
-    {
-        return [
-            static::ENTITY_TYPE_COMPANY_USER,
-            static::ENTITY_TYPE_COMPANY,
-            static::ENTITY_TYPE_COMPANY_BUSINESS_UNIT,
-            static::ENTITY_TYPE_SSP_ASSET,
-        ];
     }
 
     /**

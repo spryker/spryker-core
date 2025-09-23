@@ -18,6 +18,8 @@ use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
+use Generated\Shared\Transfer\SspModelCollectionTransfer;
+use Generated\Shared\Transfer\SspModelTransfer;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Form\AttachFileForm;
 
 class FileAttachmentMapper implements FileAttachmentMapperInterface
@@ -42,6 +44,7 @@ class FileAttachmentMapper implements FileAttachmentMapperInterface
         $this->setCompanyUserFileAttachments($formData, $fileAttachmentToAdd, $fileAttachmentToDelete);
         $this->setBusinessUnitFileAttachments($formData, $fileAttachmentToAdd, $fileAttachmentToDelete);
         $this->setSspAssetFileAttachments($formData, $fileAttachmentToAdd, $fileAttachmentToDelete);
+        $this->setSspModelToFileAttachments($formData, $fileAttachmentToAdd, $fileAttachmentToDelete);
 
         return (new FileAttachmentCollectionRequestTransfer())
             ->addFileAttachmentToAdd($fileAttachmentToAdd)
@@ -71,9 +74,9 @@ class FileAttachmentMapper implements FileAttachmentMapperInterface
             }
         }
 
-        if (isset($formData[AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_DEASSIGNED]) && !empty($formData[AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_DEASSIGNED])) {
+        if (isset($formData[AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_UNASSIGNED]) && !empty($formData[AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_UNASSIGNED])) {
             $fileAttachmentToDelete->setBusinessUnitCollection(new CompanyBusinessUnitCollectionTransfer());
-            foreach ($formData[AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_DEASSIGNED] as $idCompanyBusinessUnit) {
+            foreach ($formData[AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_UNASSIGNED] as $idCompanyBusinessUnit) {
                 if ($idCompanyBusinessUnit) {
                     $fileAttachmentToDelete->getBusinessUnitCollectionOrFail()->addCompanyBusinessUnit(
                         (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit((int)$idCompanyBusinessUnit),
@@ -106,9 +109,9 @@ class FileAttachmentMapper implements FileAttachmentMapperInterface
             }
         }
 
-        if (isset($formData[AttachFileForm::FIELD_COMPANY_IDS_TO_BE_DEASSIGNED]) && !empty($formData[AttachFileForm::FIELD_COMPANY_IDS_TO_BE_DEASSIGNED])) {
+        if (isset($formData[AttachFileForm::FIELD_COMPANY_IDS_TO_BE_UNASSIGNED]) && !empty($formData[AttachFileForm::FIELD_COMPANY_IDS_TO_BE_UNASSIGNED])) {
             $fileAttachmentToDelete->setCompanyCollection(new CompanyCollectionTransfer());
-            foreach ($formData[AttachFileForm::FIELD_COMPANY_IDS_TO_BE_DEASSIGNED] as $idCompany) {
+            foreach ($formData[AttachFileForm::FIELD_COMPANY_IDS_TO_BE_UNASSIGNED] as $idCompany) {
                 if ($idCompany) {
                     $fileAttachmentToDelete->getCompanyCollectionOrFail()->addCompany(
                         (new CompanyTransfer())->setIdCompany((int)$idCompany),
@@ -141,9 +144,9 @@ class FileAttachmentMapper implements FileAttachmentMapperInterface
             }
         }
 
-        if (isset($formData[AttachFileForm::FIELD_COMPANY_USER_IDS_TO_BE_DEASSIGNED]) && !empty($formData[AttachFileForm::FIELD_COMPANY_USER_IDS_TO_BE_DEASSIGNED])) {
+        if (isset($formData[AttachFileForm::FIELD_COMPANY_USER_IDS_TO_BE_UNASSIGNED]) && !empty($formData[AttachFileForm::FIELD_COMPANY_USER_IDS_TO_BE_UNASSIGNED])) {
             $fileAttachmentToDelete->setCompanyUserCollection(new CompanyUserCollectionTransfer());
-            foreach ($formData[AttachFileForm::FIELD_COMPANY_USER_IDS_TO_BE_DEASSIGNED] as $idCompanyUser) {
+            foreach ($formData[AttachFileForm::FIELD_COMPANY_USER_IDS_TO_BE_UNASSIGNED] as $idCompanyUser) {
                 if ($idCompanyUser) {
                     $fileAttachmentToDelete->getCompanyUserCollectionOrFail()->addCompanyUser(
                         (new CompanyUserTransfer())->setIdCompanyUser((int)$idCompanyUser),
@@ -175,12 +178,45 @@ class FileAttachmentMapper implements FileAttachmentMapperInterface
             }
         }
 
-        if (isset($formData[AttachFileForm::FIELD_ASSET_IDS_TO_BE_DEASSIGNED]) && !empty($formData[AttachFileForm::FIELD_ASSET_IDS_TO_BE_DEASSIGNED])) {
+        if (isset($formData[AttachFileForm::FIELD_ASSET_IDS_TO_BE_UNASSIGNED]) && !empty($formData[AttachFileForm::FIELD_ASSET_IDS_TO_BE_UNASSIGNED])) {
             $fileAttachmentToDelete->setSspAssetCollection(new SspAssetCollectionTransfer());
-            foreach ($formData[AttachFileForm::FIELD_ASSET_IDS_TO_BE_DEASSIGNED] as $idSspAsset) {
+            foreach ($formData[AttachFileForm::FIELD_ASSET_IDS_TO_BE_UNASSIGNED] as $idSspAsset) {
                 if ($idSspAsset) {
                     $fileAttachmentToDelete->getSspAssetCollectionOrFail()
                         ->addSspAsset((new SspAssetTransfer())->setIdSspAsset((int)$idSspAsset));
+                }
+            }
+        }
+    }
+
+    /**
+     * @param array<mixed> $formData
+     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentToAdd
+     * @param \Generated\Shared\Transfer\FileAttachmentTransfer $fileAttachmentToDelete
+     *
+     * @return void
+     */
+    protected function setSspModelToFileAttachments(
+        array $formData,
+        FileAttachmentTransfer $fileAttachmentToAdd,
+        FileAttachmentTransfer $fileAttachmentToDelete
+    ): void {
+        if (isset($formData[AttachFileForm::FIELD_MODEL_IDS_TO_BE_ASSIGNED]) && !empty($formData[AttachFileForm::FIELD_MODEL_IDS_TO_BE_ASSIGNED])) {
+            $fileAttachmentToAdd->setSspModelCollection(new SspModelCollectionTransfer());
+            foreach ($formData[AttachFileForm::FIELD_MODEL_IDS_TO_BE_ASSIGNED] as $idSspModel) {
+                if ($idSspModel) {
+                    $fileAttachmentToAdd->getSspModelCollectionOrFail()
+                        ->addSspModel((new SspModelTransfer())->setIdSspModel((int)$idSspModel));
+                }
+            }
+        }
+
+        if (isset($formData[AttachFileForm::FIELD_MODEL_IDS_TO_BE_UNASSIGNED]) && !empty($formData[AttachFileForm::FIELD_MODEL_IDS_TO_BE_UNASSIGNED])) {
+            $fileAttachmentToDelete->setSspModelCollection(new SspModelCollectionTransfer());
+            foreach ($formData[AttachFileForm::FIELD_MODEL_IDS_TO_BE_UNASSIGNED] as $idSspModel) {
+                if ($idSspModel) {
+                    $fileAttachmentToDelete->getSspModelCollectionOrFail()
+                        ->addSspModel((new SspModelTransfer())->setIdSspModel((int)$idSspModel));
                 }
             }
         }
@@ -198,6 +234,7 @@ class FileAttachmentMapper implements FileAttachmentMapperInterface
             AttachFileForm::FIELD_COMPANY_USER_IDS => [],
             AttachFileForm::FIELD_COMPANY_BUSINESS_UNIT_IDS => [],
             AttachFileForm::FIELD_ASSET_IDS => [],
+            AttachFileForm::FIELD_MODEL_IDS => [],
         ];
 
         foreach ($fileAttachmentTransfer->getSspAssetCollectionOrFail()->getSspAssets() as $sspAssetTransfer) {
@@ -211,6 +248,10 @@ class FileAttachmentMapper implements FileAttachmentMapperInterface
         }
         foreach ($fileAttachmentTransfer->getCompanyUserCollectionOrFail()->getCompanyUsers() as $companyUserTransfer) {
             $formData[AttachFileForm::FIELD_COMPANY_USER_IDS][] = $companyUserTransfer->getIdCompanyUserOrFail();
+        }
+
+        foreach ($fileAttachmentTransfer->getSspModelCollectionOrFail()->getSspModels() as $sspModelTransfer) {
+            $formData[AttachFileForm::FIELD_MODEL_IDS][] = $sspModelTransfer->getIdSspModelOrFail();
         }
 
         return $formData;

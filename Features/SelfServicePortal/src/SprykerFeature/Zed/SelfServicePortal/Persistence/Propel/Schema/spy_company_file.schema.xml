@@ -1,30 +1,6 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SelfServicePortal\Persistence" package="src.Orm.Zed.SelfServicePortal.Persistence">
 
-    <table name="spy_company_file" idMethod="native">
-        <column name="id_company_file" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_company" required="true" type="INTEGER"/>
-        <column name="fk_file" required="true" type="INTEGER"/>
-
-        <unique name="spy_company_file-fk_company-fk_file">
-            <unique-column name="fk_file"/>
-            <unique-column name="fk_company"/>
-        </unique>
-
-        <foreign-key foreignTable="spy_company" phpName="Company">
-            <reference local="fk_company" foreign="id_company"/>
-        </foreign-key>
-        <foreign-key foreignTable="spy_file" phpName="File" onDelete="CASCADE">
-            <reference local="fk_file" foreign="id_file"/>
-        </foreign-key>
-
-        <behavior name="uuid">
-            <parameter name="key_columns" value="id_company_file"/>
-        </behavior>
-        <behavior name="timestampable"/>
-        <id-method-parameter value="id_company_file_pk_seq"/>
-    </table>
-
     <table name="spy_company_user_file" idMethod="native">
         <column name="id_company_user_file" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_company_user" required="true" type="INTEGER"/>

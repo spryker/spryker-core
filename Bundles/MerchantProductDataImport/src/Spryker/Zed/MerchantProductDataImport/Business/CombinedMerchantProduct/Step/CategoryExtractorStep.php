@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\DataSet\MerchantCombinedProductDataSetInterface;
@@ -99,9 +100,10 @@ class CategoryExtractorStep implements DataImportStepInterface
             return;
         }
 
-        throw new MerchantCombinedProductException(sprintf(
-            'Product abstract categories must be delimited by "%s" instead of ",".',
-            static::DELIMITER_CATEGORIES,
-        ));
+        throw MerchantCombinedProductException::createWithError(
+            (new ErrorTransfer())
+                ->setMessage('Product abstract categories must be delimited by "%s%" instead of "","".')
+                ->setParameters(['%s%' => static::DELIMITER_CATEGORIES]),
+        );
     }
 }

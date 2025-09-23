@@ -23,11 +23,6 @@ class AgentOrderExpanderPreSavePlugin extends AbstractPlugin implements OrderExp
      * - Adds agent email to the sales order before save if isSalesOrderAgentEnabled feature flag is enabled.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
     public function expand(SpySalesOrderEntityTransfer $salesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer
     {

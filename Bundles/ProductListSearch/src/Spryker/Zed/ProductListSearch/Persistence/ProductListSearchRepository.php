@@ -111,4 +111,65 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
 
         return $productAbstractIds->toArray();
     }
+
+    /**
+     * @module ProductCategory
+     *
+     * @param array<int, int> $categoryIdsTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getProductAbstractIdsTimestampMap(array $categoryIdsTimestampMap): array
+    {
+        $productAbstractIdTimestampMap = [];
+
+        /** @var \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery $productCategoryQuery */
+        $productCategoryQuery = $this->getFactory()
+            ->getProductCategoryPropelQuery()
+            ->select([SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductCategoryTableMap::COL_FK_CATEGORY]);
+
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractData */
+        $productAbstractData = $productCategoryQuery
+            ->filterByFkCategory_In(array_keys($categoryIdsTimestampMap))
+            ->distinct()
+            ->find()
+            ->getData();
+
+        foreach ($productAbstractData as $productAbstract) {
+            $productAbstractIdTimestampMap[(int)$productAbstractData[SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT]] =
+                $categoryIdsTimestampMap[$productAbstractData[SpyProductCategoryTableMap::COL_FK_CATEGORY]];
+        }
+
+        return $productAbstractIdTimestampMap;
+    }
+
+    /**
+     * @uses SpyProductQuery
+     *
+     * @param array<int, int> $concreteIdsTimestampMap
+     *
+     * @return array<int, int>
+     */
+    public function getProductAbstractIdsTimestampMapByConcreteIds(array $concreteIdsTimestampMap = []): array
+    {
+        $productAbstractIdTimestampMap = [];
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
+        $productQuery = $this->getFactory()
+            ->getProductQuery()
+            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_ID_PRODUCT]);
+
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractData */
+        $productAbstractData = $productQuery
+            ->filterByIdProduct_In(array_keys($concreteIdsTimestampMap))
+            ->find()
+            ->getData();
+
+        foreach ($productAbstractData as $productAbstract) {
+            $productAbstractIdTimestampMap[(int)$productAbstract[SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT]] =
+                $concreteIdsTimestampMap[$productAbstract[SpyProductTableMap::COL_ID_PRODUCT]];
+        }
+
+        return $productAbstractIdTimestampMap;
+    }
 }

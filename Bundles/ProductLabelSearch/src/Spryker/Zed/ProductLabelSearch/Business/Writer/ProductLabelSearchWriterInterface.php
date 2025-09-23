@@ -10,23 +10,23 @@ namespace Spryker\Zed\ProductLabelSearch\Business\Writer;
 interface ProductLabelSearchWriterInterface
 {
     /**
-     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
-    public function writeCollectionByProductLabelEvents(array $eventTransfers): void;
+    public function writeCollectionByProductLabelEvents(array $eventEntityTransfers): void;
 
     /**
-     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
-    public function writeCollectionByProductLabelProductAbstractEvents(array $eventTransfers): void;
+    public function writeCollectionByProductLabelProductAbstractEvents(array $eventEntityTransfers): void;
 
     /**
-     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
-    public function writeCollectionByProductLabelStoreEvents(array $eventTransfers): void;
+    public function writeCollectionByProductLabelStoreEvents(array $eventEntityTransfers): void;
 }

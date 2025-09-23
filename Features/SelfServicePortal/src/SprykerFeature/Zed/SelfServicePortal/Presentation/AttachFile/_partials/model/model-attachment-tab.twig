@@ -1,0 +1,17 @@
+{% include '@SelfServicePortal/_partials/table-file-uploader.twig' with {
+    formPart: fileAttachForm.model_file_upload,
+    urlDownloadExample: urlDownloadModelExample,
+} %}
+
+{{ tabs(modelAttachmentTabsViewTransfer, {
+    'fileAttachForm': fileAttachForm,
+    'availableModelTable': availableModelTable,
+    'urlDownloadExample': urlDownloadModelExample,
+    'idFile': idFile,
+}) }}
+
+{{ tabs(attachedModelsTabsViewTransfer, {
+    'fileAttachForm': fileAttachForm,
+    'assignedModelTable': assignedModelTable,
+    'idFile': idFile,
+}) }}

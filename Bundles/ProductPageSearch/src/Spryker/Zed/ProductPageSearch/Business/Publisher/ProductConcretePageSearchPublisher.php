@@ -23,12 +23,23 @@ use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductIn
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface;
+use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchConfig;
 
 class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPublisherInterface
 {
     use TransactionTrait;
     use InstancePoolingTrait;
+
+    /**
+     * @var array<int>
+     */
+    protected static array $publishedProductConcreteIds = [];
+
+    /**
+     * @var array<int>
+     */
+    protected static array $unpublishedProductConcreteIds = [];
 
     /**
      * @var string
@@ -41,56 +52,12 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     protected const IDENTIFIER_STRUCTURED_DATA = 'structured_data';
 
     /**
-     * @var \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface
+     * @var array<int, int>
      */
-    protected $productConcretePageSearchReader;
+    protected array $productIdTimestampMapToSave = [];
 
     /**
-     * @var \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\ProductConcretePageSearchWriterInterface
-     */
-    protected $productConcretePageSearchWriter;
-
-    /**
-     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface
-     */
-    protected $productFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface
-     */
-    protected $utilEncoding;
-
-    /**
-     * @var \Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper
-     */
-    protected $productConcreteSearchDataMapper;
-
-    /**
-     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface
-     */
-    protected ProductPageSearchToProductSearchInterface $productSearchFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig
-     */
-    protected $productPageSearchConfig;
-
-    /**
-     * @var array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface>
-     */
-    protected $pageDataExpanderPlugins;
-
-    /**
-     * @var array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcreteCollectionFilterPluginInterface>
-     */
-    protected array $productConcreteCollectionFilterPlugins;
-
-    /**
+     * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface $repository
      * @param \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface $productConcretePageSearchReader
      * @param \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\ProductConcretePageSearchWriterInterface $productConcretePageSearchWriter
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface $productFacade
@@ -103,27 +70,38 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      * @param array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcreteCollectionFilterPluginInterface> $productConcreteCollectionFilterPlugins
      */
     public function __construct(
-        ProductConcretePageSearchReaderInterface $productConcretePageSearchReader,
-        ProductConcretePageSearchWriterInterface $productConcretePageSearchWriter,
-        ProductPageSearchToProductInterface $productFacade,
-        ProductPageSearchToUtilEncodingInterface $utilEncoding,
-        AbstractProductSearchDataMapper $productConcreteSearchDataMapper,
-        ProductPageSearchToStoreFacadeInterface $storeFacade,
-        ProductPageSearchToProductSearchInterface $productPageSearchFacade,
-        ProductPageSearchConfig $productPageSearchConfig,
-        array $pageDataExpanderPlugins,
-        array $productConcreteCollectionFilterPlugins
+        protected ProductPageSearchRepositoryInterface $repository,
+        protected ProductConcretePageSearchReaderInterface $productConcretePageSearchReader,
+        protected ProductConcretePageSearchWriterInterface $productConcretePageSearchWriter,
+        protected ProductPageSearchToProductInterface $productFacade,
+        protected ProductPageSearchToUtilEncodingInterface $utilEncoding,
+        protected AbstractProductSearchDataMapper $productConcreteSearchDataMapper,
+        protected ProductPageSearchToStoreFacadeInterface $storeFacade,
+        protected ProductPageSearchToProductSearchInterface $productPageSearchFacade,
+        protected ProductPageSearchConfig $productPageSearchConfig,
+        protected array $pageDataExpanderPlugins,
+        protected array $productConcreteCollectionFilterPlugins
     ) {
-        $this->productConcretePageSearchReader = $productConcretePageSearchReader;
-        $this->productConcretePageSearchWriter = $productConcretePageSearchWriter;
-        $this->productFacade = $productFacade;
-        $this->productPageSearchConfig = $productPageSearchConfig;
-        $this->pageDataExpanderPlugins = $pageDataExpanderPlugins;
-        $this->productConcreteSearchDataMapper = $productConcreteSearchDataMapper;
-        $this->utilEncoding = $utilEncoding;
-        $this->storeFacade = $storeFacade;
-        $this->productSearchFacade = $productPageSearchFacade;
-        $this->productConcreteCollectionFilterPlugins = $productConcreteCollectionFilterPlugins;
+    }
+
+    /**
+     * @param array<int, int> $productIdTimestampMap
+     *
+     * @return void
+     */
+    public function publishWithTimestamp(array $productIdTimestampMap): void
+    {
+        // Filters IDs if it had been processed in the current process
+        $productIds = array_values(array_unique(array_diff(array_keys($productIdTimestampMap), static::$publishedProductConcreteIds)));
+        // Exclude IDs if they were processed in current process
+        $productIdTimestampMap = array_intersect_key($productIdTimestampMap, array_flip($productIds));
+        // Filters IDs if it had been processed in parallel processes
+        $this->productIdTimestampMapToSave = $this->repository->getRelevantProductConcreteIdsToUpdate($productIdTimestampMap);
+
+        if ($this->productIdTimestampMapToSave) {
+            $this->publish(array_keys($this->productIdTimestampMapToSave));
+        }
+        static::$publishedProductConcreteIds = array_merge(static::$publishedProductConcreteIds, $productIds);
     }
 
     /**
@@ -178,6 +156,21 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     }
 
     /**
+     * @param array<int, int> $productIdTimestampMap
+     *
+     * @return void
+     */
+    public function unpublishWithTimestamp(array $productIdTimestampMap): void
+    {
+        $productIds = array_values(array_unique(array_diff(array_keys($productIdTimestampMap), static::$unpublishedProductConcreteIds)));
+        if ($productIds) {
+            $this->unpublish($productIds);
+        }
+
+        static::$unpublishedProductConcreteIds = array_merge(static::$unpublishedProductConcreteIds, $productIds);
+    }
+
+    /**
      * @param array<int> $productIds
      *
      * @return void
@@ -216,7 +209,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     {
         $filteredProductConcreteTransfers = $this->executeProductConcreteCollectionFilterPlugins($productConcreteTransfers);
         $filteredProductIds = $this->getProductIdsListFromProductConcreteTransfers($filteredProductConcreteTransfers);
-        $productConcreteTransfers = $this->productSearchFacade->expandProductConcreteTransfersWithIsSearchable(
+        $productConcreteTransfers = $this->productPageSearchFacade->expandProductConcreteTransfersWithIsSearchable(
             $productConcreteTransfers,
         );
 
@@ -345,6 +338,10 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
             $storeTransfer,
             $localizedAttributesTransfer,
         );
+
+        if (!empty($this->productIdTimestampMapToSave[$productConcreteTransfer->getIdProductConcrete()])) {
+            $productConcretePageSearchTransfer->setTimestamp($this->productIdTimestampMapToSave[$productConcreteTransfer->getIdProductConcrete()]);
+        }
 
         $productConcretePageSearchTransfer = $this->expandProductConcretePageSearchTransferWithPlugins($productConcreteTransfer, $productConcretePageSearchTransfer);
 

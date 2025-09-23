@@ -14,21 +14,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory getBusinessFactory()
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  */
 abstract class AbstractProductConcretePageSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    /**
-     * @var array<int>
-     */
-    protected static $publishedProductConcreteIds = [];
-
-    /**
-     * @var array<int>
-     */
-    protected static $unpublishedProductConcreteIds = [];
-
     /**
      * @param array<int, int> $productIdTimestampMap
      *
@@ -36,17 +27,7 @@ abstract class AbstractProductConcretePageSearchListener extends AbstractPlugin 
      */
     protected function publish(array $productIdTimestampMap): void
     {
-        // Filters IDs if it had been processed in the current process
-        $productIds = array_values(array_unique(array_diff(array_keys($productIdTimestampMap), static::$publishedProductConcreteIds)));
-        // Exclude IDs if they were processed in current process
-        $productIdTimestampMap = array_intersect_key($productIdTimestampMap, array_flip($productIds));
-        // Filters IDs if it had been processed in parallel processes
-        $productIdsForUpdate = $this->getRepository()->getRelevantProductConcreteIdsToUpdate($productIdTimestampMap);
-
-        if ($productIdsForUpdate) {
-            $this->getFacade()->publishProductConcretes($productIdsForUpdate);
-        }
-        static::$publishedProductConcreteIds = array_merge(static::$publishedProductConcreteIds, $productIds);
+        $this->getFacade()->publishWithTimestamp($productIdTimestampMap);
     }
 
     /**
@@ -56,12 +37,7 @@ abstract class AbstractProductConcretePageSearchListener extends AbstractPlugin 
      */
     protected function unpublish(array $productIdTimestampMap): void
     {
-        $productIds = array_values(array_unique(array_diff(array_keys($productIdTimestampMap), static::$unpublishedProductConcreteIds)));
-        if ($productIds) {
-            $this->getFacade()->unpublishProductConcretes($productIds);
-        }
-
-        static::$unpublishedProductConcreteIds = array_merge(static::$unpublishedProductConcreteIds, $productIds);
+        $this->getBusinessFactory()->createProductConcretePageSearchPublisher()->unpublishWithTimestamp($productIdTimestampMap);
     }
 
     /**

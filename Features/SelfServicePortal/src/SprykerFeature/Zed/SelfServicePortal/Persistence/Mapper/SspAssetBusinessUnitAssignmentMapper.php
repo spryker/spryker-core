@@ -53,7 +53,8 @@ class SspAssetBusinessUnitAssignmentMapper
                 (new CompanyTransfer())
                     ->setIdCompany($sspAssetToCompanyBusinessUnitEntity->getSpyCompanyBusinessUnit()->getFkCompany())
                     ->setName($sspAssetToCompanyBusinessUnitEntity->getSpyCompanyBusinessUnit()->getCompany()->getName()),
-            );
+            )
+            ->setFkCompany($sspAssetToCompanyBusinessUnitEntity->getSpyCompanyBusinessUnit()->getFkCompany());
 
         return $sspAssetBusinessUnitAssignmentTransfer
             ->setCompanyBusinessUnit($companyBusinessUnitTransfer)

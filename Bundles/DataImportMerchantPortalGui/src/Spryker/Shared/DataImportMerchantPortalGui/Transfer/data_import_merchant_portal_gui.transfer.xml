@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="DataImportMerchantFile" strict="true">
+        <property name="idDataImportMerchantFile" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="idUser" type="int"/>
+        <property name="importerType" type="string"/>
+        <property name="status" type="string"/>
+        <property name="fileInfo" type="DataImportMerchantFileInfo"/>
+        <property name="importResult" type="DataImportMerchantFileResult"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+        <property name="user" type="User"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileResult" strict="true">
+        <property name="processedEntitiesCount" type="int"/>
+        <property name="failedEntitiesCount" type="int"/>
+        <property name="errors" type="string"/>
+        <property name="startedAt" type="string"/>
+        <property name="finishedAt" type="string"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileInfo" strict="true">
+        <property name="uploadedUrl" type="string"/>
+        <property name="fileSystemName" type="string"/>
+        <property name="originalFileName" type="string"/>
+        <property name="contentType" type="string"/>
+        <property name="size" type="int"/>
+        <property name="realPath" type="string"/>
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileCollection" strict="true">
+        <property name="dataImportMerchantFiles" type="DataImportMerchantFile[]" singular="dataImportMerchantFile"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileCollectionRequest" strict="true">
+        <property name="dataImportMerchantFiles" type="DataImportMerchantFile[]" singular="dataImportMerchantFile"/>
+        <property name="isTransactional" type="bool"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileCollectionResponse" strict="true">
+        <property name="dataImportMerchantFiles" type="DataImportMerchantFile[]" singular="dataImportMerchantFile"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="entityIdentifier" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileTableCriteria" strict="true">
+        <property name="filterCreatedAt" type="CriteriaRangeFilter"/>
+        <property name="filterImporterTypes" type="string[]" singular="filterImporterType"/>
+        <property name="filterStatuses" type="string[]" singular="filterStatus"/>
+        <property name="filterImportedBy" type="int[]" singular="filterImportedBy"/>
+        <property name="searchTerm" type="string"/>
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+    </transfer>
+
+    <transfer name="CriteriaRangeFilter" strict="true">
+        <property name="from" type="string"/>
+        <property name="to" type="string"/>
+    </transfer>
+
+    <transfer name="ZedUiFormResponse" strict="true">
+    </transfer>
+
+    <transfer name="MerchantUser">
+        <property name="idUser" type="int"/>
+        <property name="merchant" type="Merchant"/>
+    </transfer>
+
+    <transfer name="GuiTableDataResponse">
+        <property name="rows" type="GuiTableRowDataResponse[]" singular="row"/>
+        <property name="page" type="int" strict="true"/>
+        <property name="pageSize" type="int" strict="true"/>
+        <property name="total" type="int" strict="true"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileCriteria" strict="true">
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="dataImportMerchantFileConditions" type="DataImportMerchantFileConditions"/>
+        <property name="dataImportMerchantFileSearchConditions" type="DataImportMerchantFileSearchConditions"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="GuiTableRowDataResponse">
+        <property name="responseData" type="array" singular="responseData"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="Rule">
+        <property name="bundle" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="action" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="DataImportMerchantFileConditions" strict="true">
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+        <property name="statuses" type="string[]" singular="status"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="importerTypes" type="string[]" singular="importerType"/>
+        <property name="userIds" type="int[]" singular="idUser"/>
+        <property name="rangeCreatedAt" type="CriteriaRangeFilter"/>
+    </transfer>
+
+    <transfer name="FileSystemStream">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="GuiTableConfiguration">
+    </transfer>
+
+    <transfer name="DataImportMerchantFileSearchConditions" strict="true">
+        <property name="originalFileName" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTableDataRequest" strict="true">
+    </transfer>
+
+    <transfer name="User">
+        <property name="lastName" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="idUser" type="int"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+</transfers>

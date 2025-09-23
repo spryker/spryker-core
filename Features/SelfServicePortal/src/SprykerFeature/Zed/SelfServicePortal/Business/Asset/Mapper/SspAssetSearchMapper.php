@@ -191,6 +191,7 @@ class SspAssetSearchMapper implements SspAssetSearchMapperInterface
         if (isset($data[SspAssetTransfer::SSP_MODELS])) {
             foreach ($data[SspAssetTransfer::SSP_MODELS] as $model) {
                 $fullTextBoosted[] = $model[SspModelTransfer::NAME];
+                $fullTextBoosted[] = $model[SspModelTransfer::CODE];
             }
         }
 
@@ -221,6 +222,7 @@ class SspAssetSearchMapper implements SspAssetSearchMapperInterface
         if (isset($data[SspAssetTransfer::SSP_MODELS])) {
             foreach ($data[SspAssetTransfer::SSP_MODELS] as $model) {
                 $suggestionTerms[] = $model[SspModelTransfer::NAME];
+                $suggestionTerms[] = $model[SspModelTransfer::REFERENCE];
             }
         }
 

@@ -31,8 +31,10 @@ class SspAssetSearchFormHandler implements SspAssetSearchFormHandlerInterface
 
         $isAscending = ($sspAssetSearchFormData[SspAssetSearchForm::FIELD_ORDER_DIRECTION] ?? 'DESC') === 'ASC';
 
+        $fieldOrderBy = $sspAssetSearchFormData[SspAssetSearchForm::FIELD_ORDER_BY] ?? SspAssetTransfer::ID_SSP_ASSET;
+
         $sortTransfer = (new SortTransfer())
-            ->setField($sspAssetSearchFormData[SspAssetSearchForm::FIELD_ORDER_BY] ?? SspAssetTransfer::ID_SSP_ASSET)
+            ->setField($fieldOrderBy === SspAssetTransfer::REFERENCE ? SspAssetTransfer::ID_SSP_ASSET : $fieldOrderBy)
             ->setIsAscending($isAscending);
 
         $sortCollection = new ArrayObject();

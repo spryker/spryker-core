@@ -27,7 +27,7 @@ class AgentToZedRequestClientBridge implements AgentToZedRequestClientInterface
     /**
      * @param string $url
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
-     * @param array|null $requestOptions
+     * @param array<mixed, mixed>|null $requestOptions
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Merchant\Business\Creator;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Spryker\Zed\EventBehavior\EventBehaviorConfig;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException;
 use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface;
@@ -119,9 +120,10 @@ class MerchantCreator implements MerchantCreatorInterface
     {
         $storeRelationTransfer = $merchantTransfer->getStoreRelation();
         $urlTransfers = $merchantTransfer->getUrlCollection();
-
+        EventBehaviorConfig::disableEvent(); // Merchant event will be triggered once after all merchant changes to avoid event duplication.
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
         $merchantTransfer = $this->createMerchantStores($merchantTransfer->setStoreRelation($storeRelationTransfer));
+        EventBehaviorConfig::enableEvent();
         $merchantTransfer = $this->merchantUrlSaver->saveMerchantUrls($merchantTransfer->setUrlCollection($urlTransfers));
         $merchantTransfer = $this->executeMerchantPostCreatePlugins($merchantTransfer);
 

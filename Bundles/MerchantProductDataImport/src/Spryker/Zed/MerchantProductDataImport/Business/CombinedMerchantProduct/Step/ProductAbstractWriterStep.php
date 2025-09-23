@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\CombinedMerchantProduct\Step;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\SpyProductAbstractEntityTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -217,7 +218,11 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
         $isProductUrlAvailable = $this->merchantCombinedProductRepository->isProductUrlAvailable($productUrl);
 
         if (!$isProductUrlAvailable) {
-            throw new MerchantCombinedProductException(sprintf('Product URL "%s" is already taken.', $productUrl));
+            throw MerchantCombinedProductException::createWithError(
+                (new ErrorTransfer())
+                    ->setMessage('Product URL "%s%" is already taken.')
+                    ->setParameters(['%s%' => $productUrl]),
+            );
         }
     }
 

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProductDataImport;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Spryker\Shared\MerchantProductDataImport\MerchantProductDataImportConstants;
 use Spryker\Zed\DataImport\DataImportConfig;
 
 class MerchantProductDataImportConfig extends DataImportConfig
@@ -43,6 +44,36 @@ class MerchantProductDataImportConfig extends DataImportConfig
     public const ASSIGNABLE_PRODUCT_TYPE_BOTH = 'both';
 
     /**
+     * @var list<string>
+     */
+    protected const POSSIBLE_CSV_HEADERS = [];
+
+    /**
+     * @var list<string>
+     */
+    protected const POSSIBLE_CSV_LOCALE_HEADERS = [];
+
+    /**
+     * @var list<string>
+     */
+    protected const POSSIBLE_CSV_ATTRIBUTE_HEADERS = [];
+
+    /**
+     * @var list<string>
+     */
+    protected const POSSIBLE_CSV_STOCK_HEADERS = [];
+
+    /**
+     * @var list<string>
+     */
+    protected const POSSIBLE_CSV_PRICE_HEADERS = [];
+
+    /**
+     * @var list<string>
+     */
+    protected const POSSIBLE_CSV_IMAGE_HEADERS = [];
+
+    /**
      * @api
      *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
@@ -65,6 +96,94 @@ class MerchantProductDataImportConfig extends DataImportConfig
     public function getCombinedMerchantProductRowIdentifier(): string
     {
         return static::COMBINED_MERCHANT_PRODUCT_ROW_IDENTIFIER;
+    }
+
+    /**
+     * Specification:
+     * - Returns the filesystem name used for storing data import merchant uploaded files.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getFileSystemName(): string
+    {
+        return $this->get(MerchantProductDataImportConstants::FILE_SYSTEM_NAME);
+    }
+
+    /**
+     * Specification:
+     * - Returns the list of possible CSV headers.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getPossibleCsvHeaders(): array
+    {
+        return static::POSSIBLE_CSV_HEADERS;
+    }
+
+    /**
+     * Specification:
+     * - Returns the list of possible CSV locale headers.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getPossibleCsvLocaleHeaders(): array
+    {
+        return static::POSSIBLE_CSV_LOCALE_HEADERS;
+    }
+
+    /**
+     * Specification:
+     * - Returns the list of possible CSV attribute headers.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getPossibleCsvAttributeHeaders(): array
+    {
+        return static::POSSIBLE_CSV_ATTRIBUTE_HEADERS;
+    }
+
+    /**
+     * Specification:
+     * - Returns the list of possible CSV stock headers.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getPossibleCsvStockHeaders(): array
+    {
+        return static::POSSIBLE_CSV_STOCK_HEADERS;
+    }
+
+    /**
+     * Specification:
+     * - Returns the list of possible CSV price headers.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getPossibleCsvPriceHeaders(): array
+    {
+        return static::POSSIBLE_CSV_PRICE_HEADERS;
+    }
+
+    /**
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getPossibleCsvImageHeaders(): array
+    {
+        return static::POSSIBLE_CSV_IMAGE_HEADERS;
     }
 
     /**

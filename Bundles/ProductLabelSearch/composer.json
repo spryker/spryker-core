@@ -5,10 +5,10 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.3",
-        "spryker/event-behavior": "^1.1.0",
+        "spryker/event-behavior": "^1.32.0",
         "spryker/kernel": "^3.30.0",
         "spryker/product-label": "^3.7.0",
-        "spryker/product-page-search": "^0.1.0 || ^1.0.0 || ^2.2.0 || ^3.0.0",
+        "spryker/product-page-search": "^0.1.0 || ^1.0.0 || ^2.2.0 || ^3.42.0",
         "spryker/product-page-search-extension": "^1.0.0",
         "spryker/publisher-extension": "^1.0.0",
         "spryker/transfer": "^3.27.0",

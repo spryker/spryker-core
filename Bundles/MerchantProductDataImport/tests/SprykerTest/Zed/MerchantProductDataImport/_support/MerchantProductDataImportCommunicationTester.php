@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\MerchantProductDataImport;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\DataImportMerchantFileInfoTransfer;
+use Generated\Shared\Transfer\DataImportMerchantFileTransfer;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 
 /**
@@ -34,6 +36,21 @@ class MerchantProductDataImportCommunicationTester extends Actor
     public function ensureMerchantProductAbstractTablesIsEmpty(): void
     {
         $this->createMerchantProductAbstractPropelQuery()->deleteAll();
+    }
+
+    /**
+     * @param string|null $importerType
+     * @param string|null $csvHeaders
+     *
+     * @return \Generated\Shared\Transfer\DataImportMerchantFileTransfer
+     */
+    public function createDataImportMerchantFileTransfer(
+        ?string $importerType = 'merchant-combined-product',
+        ?string $csvHeaders = 'abstract_sku,product.assigned_product_type,product_abstract_name,product_abstract_price'
+    ): DataImportMerchantFileTransfer {
+        return (new DataImportMerchantFileTransfer())
+            ->setImporterType($importerType)
+            ->setFileInfo((new DataImportMerchantFileInfoTransfer())->setContent(implode(PHP_EOL, [$csvHeaders])));
     }
 
     /**

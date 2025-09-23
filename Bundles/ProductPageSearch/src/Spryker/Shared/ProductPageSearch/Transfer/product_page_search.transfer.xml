@@ -26,6 +26,7 @@
         <property name="sortedCategories" type="array" singular="sortedCategories"/>
         <property name="productImages" type="array" singular="productImages"/>
         <property name="addToCartSku" type="string"/>
+        <property name="timestamp" type="int"/>
     </transfer>
 
     <transfer name="ProductPageLoad">
@@ -64,6 +65,7 @@
         <property name="structuredData" type="string"/>
         <property name="key" type="string"/>
         <property name="images" type="array" singular="image"/>
+        <property name="timestamp" type="int"/>
     </transfer>
 
     <transfer name="ProductConcreteCriteriaFilter">
@@ -211,5 +213,5 @@
         <property name="foreignKeyTimestampMap" type="array" associative="true" singular="foreignKey" description="Map of foreign key values to their corresponding timestamps"/>
         <property name="additionalValueTimestampMap" type="array" associative="true" singular="additionalValue" description="Map of additional values to their corresponding timestamps"/>
     </transfer>
-    
+
 </transfers>

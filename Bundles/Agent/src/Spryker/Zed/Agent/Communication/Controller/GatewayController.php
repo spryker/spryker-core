@@ -19,22 +19,12 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  */
 class GatewayController extends AbstractGatewayController
 {
-    /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return \Generated\Shared\Transfer\FindAgentResponseTransfer
-     */
     public function findAgentByUsernameAction(UserTransfer $userTransfer): FindAgentResponseTransfer
     {
         return $this->getFacade()
             ->findAgentByUsername($userTransfer->getUsername());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
-     */
     public function findCustomersByQueryAction(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer
     {
         return $this->getFacade()

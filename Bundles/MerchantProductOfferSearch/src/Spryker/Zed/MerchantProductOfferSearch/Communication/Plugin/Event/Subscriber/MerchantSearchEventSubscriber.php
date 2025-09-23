@@ -14,6 +14,12 @@ use Spryker\Zed\Merchant\Dependency\MerchantEvents;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Listener\MerchantSearchEventListener;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Publisher\Product\MerchantSearchPublisherPlugin} instead.
+ *
+ * This plugin subscribes to merchant-related events to trigger the search index updates.
+ * It listens to events such as `MerchantEvents::MERCHANT_PUBLISH` and `MerchantEvents::ENTITY_SPY_MERCHANT_UPDATE`.
+ * Registers in the DependencyProvider only if the Spryker\Zed\MerchantProductSearch\Communication\Plugin\Publisher\Merchant\MerchantProductSearchWritePublisherPlugin is not enabled.
+ *
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
  * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferSearch\Communication\MerchantProductOfferSearchCommunicationFactory getFactory()

@@ -83,6 +83,10 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
      */
     protected function saveEntity(SpyProductAbstractPageSearch $productPageSearchEntity, ProductPageSearchTransfer $productPageSearchTransfer, array $data)
     {
+        if ($productPageSearchTransfer->getTimestamp() !== null) {
+            $productPageSearchEntity->setUpdatedAt($productPageSearchTransfer->getTimestamp());
+        }
+
         $productPageSearchEntity->setFkProductAbstract($productPageSearchTransfer->getIdProductAbstract());
         $this->applyChangesToEntity($productPageSearchEntity, $productPageSearchTransfer, $data);
         $this->persist($productPageSearchEntity);
