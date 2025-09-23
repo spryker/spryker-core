@@ -9,6 +9,7 @@ namespace Spryker\Client\OauthPermission;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\OauthPermission\Dependency\Client\OauthPermissionToStorageRedisClientBridge;
 use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServiceBridge;
 use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncodingServiceBridge;
 
@@ -28,6 +29,11 @@ class OauthPermissionDependencyProvider extends AbstractDependencyProvider
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
+     * @var string
+     */
+    public const CLIENT_STORAGE_REDIS = 'CLIENT_STORAGE_REDIS';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -38,6 +44,7 @@ class OauthPermissionDependencyProvider extends AbstractDependencyProvider
 
         $container = $this->addUtilEncodingService($container);
         $container = $this->addOauthService($container);
+        $container = $this->addStorageRedisClient($container);
 
         return $container;
     }
@@ -65,6 +72,22 @@ class OauthPermissionDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new OauthPermissionToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStorageRedisClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORAGE_REDIS, function (Container $container) {
+            return new OauthPermissionToStorageRedisClientBridge(
+                $container->getLocator()->storageRedis()->client(),
+            );
         });
 
         return $container;

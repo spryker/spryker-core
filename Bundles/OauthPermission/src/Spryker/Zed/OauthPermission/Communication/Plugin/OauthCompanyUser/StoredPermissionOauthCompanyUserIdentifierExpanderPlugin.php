@@ -13,13 +13,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\OauthPermission\Communication\Plugin\OauthCompanyUser\StoredPermissionOauthCompanyUserIdentifierExpanderPlugin} instead.
- *
  * @method \Spryker\Zed\OauthPermission\Business\OauthPermissionFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthPermission\OauthPermissionConfig getConfig()
  * @method \Spryker\Zed\OauthPermission\Communication\OauthPermissionCommunicationFactory getFactory()
+ * @method \Spryker\Zed\OauthPermission\Business\OauthPermissionBusinessFactory getBusinessFactory()
  */
-class PermissionOauthCompanyUserIdentifierExpanderPlugin extends AbstractPlugin implements OauthCompanyUserIdentifierExpanderPluginInterface
+class StoredPermissionOauthCompanyUserIdentifierExpanderPlugin extends AbstractPlugin implements OauthCompanyUserIdentifierExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -36,7 +35,8 @@ class PermissionOauthCompanyUserIdentifierExpanderPlugin extends AbstractPlugin 
         CompanyUserIdentifierTransfer $companyUserIdentifierTransfer,
         CompanyUserTransfer $companyUserTransfer
     ): CompanyUserIdentifierTransfer {
-        return $this->getFacade()
-            ->expandCompanyUserIdentifierWithPermissions($companyUserIdentifierTransfer, $companyUserTransfer);
+        return $this->getBusinessFactory()
+            ->createCompanyUserPermissionStorage()
+            ->storePermissions($companyUserIdentifierTransfer, $companyUserTransfer);
     }
 }

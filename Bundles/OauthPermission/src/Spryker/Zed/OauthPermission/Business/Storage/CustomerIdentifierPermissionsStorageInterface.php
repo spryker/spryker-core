@@ -5,15 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OauthPermission\Business\Expander;
+namespace Spryker\Zed\OauthPermission\Business\Storage;
 
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
-/**
- * @deprecated Use {@link \Spryker\Zed\OauthPermission\Business\Storage\CustomerIdentifierPermissionsStorageInterface} instead.
- */
-interface CustomerIdentifierExpanderInterface
+interface CustomerIdentifierPermissionsStorageInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerIdentifierTransfer $customerIdentifierTransfer
@@ -21,7 +18,7 @@ interface CustomerIdentifierExpanderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerIdentifierTransfer
      */
-    public function expandCustomerIdentifierWithPermissions(
+    public function storePermissions(
         CustomerIdentifierTransfer $customerIdentifierTransfer,
         CustomerTransfer $customerTransfer
     ): CustomerIdentifierTransfer;

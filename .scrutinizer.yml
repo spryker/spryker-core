@@ -22,6 +22,7 @@ filter:
         - Bundles/*/src/Spryker/Client/*/*Factory.php
         - Bundles/*/src/Spryker/*/*/*DependencyProvider.php
         - Bundles/Transfer/tests/_data/test_files/*
+        - Bundles/*/tests/SprykerTest/*/*/_support/*Tester.php
         - Bundles/Development/*
         - Features/*/src/SprykerFeature/Zed/*/*/*Factory.php
         - Features/*/src/SprykerFeature/*/*/*DependencyProvider.php
@@ -30,6 +31,7 @@ filter:
         - Features/*/src/SprykerFeature/*/*/*Config.php
         - Features/*/src/SprykerFeature/Yves/*/*Factory.php
         - Features/*/tests/SprykerFeatureTest/Shared/*/*/*/*Helper.php
+        - Features/*/tests/SprykerFeatureTest/*/*/_support/*Tester.php
 
 build_failure_conditions:
     - 'project.metric("scrutinizer.quality", < 9.80)'

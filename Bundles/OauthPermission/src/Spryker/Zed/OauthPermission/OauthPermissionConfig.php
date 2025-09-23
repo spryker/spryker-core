@@ -20,4 +20,18 @@ class OauthPermissionConfig extends AbstractBundleConfig
     {
         return [];
     }
+
+    /**
+     * Specification:
+     * - Defines the time to live for stored permissions in seconds.
+     * - Must be the same or bigger as a TTL for token. {@see \Spryker\Shared\Oauth\OauthConfig::getAccessTokenTTL()}
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getStoredPermissionTTL(): int
+    {
+        return 28800;
+    }
 }

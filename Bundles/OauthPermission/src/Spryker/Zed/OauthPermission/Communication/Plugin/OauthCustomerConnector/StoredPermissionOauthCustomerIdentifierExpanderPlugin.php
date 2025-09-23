@@ -13,19 +13,15 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\OauthPermission\Communication\Plugin\OauthCustomerConnector\StoredPermissionOauthCustomerIdentifierExpanderPlugin} instead to store permissions outside of the token.
- *
  * @method \Spryker\Zed\OauthPermission\Business\OauthPermissionFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthPermission\OauthPermissionConfig getConfig()
  * @method \Spryker\Zed\OauthPermission\Communication\OauthPermissionCommunicationFactory getFactory()
  * @method \Spryker\Zed\OauthPermission\Business\OauthPermissionBusinessFactory getBusinessFactory()
  */
-class PermissionOauthCustomerIdentifierExpanderPlugin extends AbstractPlugin implements OauthCustomerIdentifierExpanderPluginInterface
+class StoredPermissionOauthCustomerIdentifierExpanderPlugin extends AbstractPlugin implements OauthCustomerIdentifierExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * Specification:
-     *  - Expands the CustomerIdentifierTransfer with permissions collection if idCompanyUser is set up in CustomerIdentifierTransfer.
      *
      * @api
      *
@@ -38,7 +34,9 @@ class PermissionOauthCustomerIdentifierExpanderPlugin extends AbstractPlugin imp
         CustomerIdentifierTransfer $customerIdentifierTransfer,
         CustomerTransfer $customerTransfer
     ): CustomerIdentifierTransfer {
-        return $this->getFacade()
-            ->expandCustomerIdentifierWithPermissions($customerIdentifierTransfer, $customerTransfer);
+        return $this
+            ->getBusinessFactory()
+            ->createCustomerIdentifierPermissionStorage()
+            ->storePermissions($customerIdentifierTransfer, $customerTransfer);
     }
 }

@@ -19,6 +19,8 @@ interface OauthPermissionClientInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Client\OauthPermission\OauthPermission\StoragePermissionReader} instead to get permissions from storage.
+     *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function getPermissionCollectionFromAuthorizationHeader(): PermissionCollectionTransfer;

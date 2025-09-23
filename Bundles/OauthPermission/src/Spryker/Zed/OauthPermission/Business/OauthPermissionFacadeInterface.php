@@ -20,6 +20,8 @@ interface OauthPermissionFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\OauthPermission\Business\Storage\CustomerIdentifierPermissionsStorageInterface} instead.
+     *
      * @param \Generated\Shared\Transfer\CustomerIdentifierTransfer $customerIdentifierTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
@@ -35,6 +37,8 @@ interface OauthPermissionFacadeInterface
      *  - Expands the CompanyUserIdentifierTransfer with permissions collection.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\OauthPermission\Business\Storage\CompanyUserPermissionsStorageInterface} instead.
      *
      * @param \Generated\Shared\Transfer\CompanyUserIdentifierTransfer $companyUserIdentifierTransfer
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer

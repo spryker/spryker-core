@@ -3,12 +3,12 @@
 
     <transfer name="CustomerIdentifier">
         <property name="idCompanyUser" type="string"/>
-        <property name="permissions" type="PermissionCollection"/>
+        <property name="permissions" type="PermissionCollection" deprecated="true"/>
     </transfer>
 
     <transfer name="CompanyUserIdentifier">
         <property name="idCompanyUser" type="string"/>
-        <property name="permissions" type="PermissionCollection"/>
+        <property name="permissions" type="PermissionCollection" deprecated="true"/>
     </transfer>
 
     <transfer name="PermissionCollection">
@@ -32,4 +32,7 @@
     <transfer name="Customer">
     </transfer>
 
+    <transfer name="OauthPermissionStorageKey" strict="true">
+        <property name="idCompanyUser" type="string"/>
+    </transfer>
 </transfers>

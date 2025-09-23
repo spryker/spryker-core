@@ -9,13 +9,10 @@ namespace Spryker\Client\OauthPermission\OauthPermission;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 
-/**
- * @deprecated Use {@link \Spryker\Client\OauthPermission\OauthPermission\PermissionReaderInterface} instead.
- */
-interface OauthPermissionReaderInterface
+interface PermissionReaderInterface
 {
     /**
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getPermissionsFromOauthToken(): PermissionCollectionTransfer;
+    public function getPermissions(): PermissionCollectionTransfer;
 }
