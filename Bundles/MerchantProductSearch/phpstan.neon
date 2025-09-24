@@ -2,7 +2,7 @@ parameters:
     level: 7
     ignoreErrors:
         - '#Call to an undefined method .+SpyMerchantQuery\|.+SpyStoreQuery::filterByIsActive\(\).#'
-        - '#Cannot access offset mixed on non-empty-array<int\|string, non-empty-array<int<0, max>, mixed>>\|int.#'
+        - '#Cannot access offset mixed on non-empty-array<non-empty-array<int<0, max>, mixed>>\|int\.#'
         -
             identifier: missingType.iterableValue
     excludePaths:
