@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\CompanyUserIdentifierTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToPermissionFacadeInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\OauthPermission\Business\Storage\CompanyUserPermissionsStorageInterface} instead.
+ */
 class CompanyUserIdentifierExpander implements CompanyUserIdentifierExpanderInterface
 {
     /**

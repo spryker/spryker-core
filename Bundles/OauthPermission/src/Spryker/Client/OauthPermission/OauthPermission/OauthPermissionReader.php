@@ -15,6 +15,9 @@ use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncod
 use Spryker\Client\OauthPermission\OauthPermissionConfig;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Use {@link \Spryker\Client\OauthPermission\OauthPermission\StoragePermissionReader} instead.
+ */
 class OauthPermissionReader implements OauthPermissionReaderInterface
 {
     /**

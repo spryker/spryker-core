@@ -12,15 +12,14 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Client\OauthPermission\Plugin\Permission\StoredOauthPermissionStoragePlugin} instead to get permissions from storage.
- *
  * @method \Spryker\Client\OauthPermission\OauthPermissionClientInterface getClient()
+ * @method \Spryker\Client\OauthPermission\OauthPermissionFactory getFactory()
  */
-class OauthPermissionStoragePlugin extends AbstractPlugin implements PermissionStoragePluginInterface
+class StoredOauthPermissionStoragePlugin extends AbstractPlugin implements PermissionStoragePluginInterface
 {
     /**
      * {@inheritDoc}
-     *  - Reads permission collection from the authorization header.
+     *  - Reads permission collection from the storage using ids from token.
      *
      * @api
      *
@@ -28,6 +27,6 @@ class OauthPermissionStoragePlugin extends AbstractPlugin implements PermissionS
      */
     public function getPermissionCollection(): PermissionCollectionTransfer
     {
-        return $this->getClient()->getPermissionCollectionFromAuthorizationHeader();
+        return $this->getFactory()->createPermissionReader()->getPermissions();
     }
 }
