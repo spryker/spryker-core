@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
 use Generated\Shared\Transfer\SspAssetsBackendApiAttributesTransfer;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\Backend\AbstractResourcePlugin;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
-use SprykerFeature\Glue\SelfServicePortal\Controller\BackendApi\SspAssetsResourceController;
+use SprykerFeature\Glue\SelfServicePortal\Controller\BackendApi\SspAssetsBackendApiResourceController;
 use SprykerFeature\Glue\SelfServicePortal\SelfServicePortalConfig;
 
 class SspAssetsBackendResourcePlugin extends AbstractResourcePlugin implements JsonApiResourceInterface
@@ -40,7 +40,7 @@ class SspAssetsBackendResourcePlugin extends AbstractResourcePlugin implements J
      */
     public function getController(): string
     {
-        return SspAssetsResourceController::class;
+        return SspAssetsBackendApiResourceController::class;
     }
 
     /**
