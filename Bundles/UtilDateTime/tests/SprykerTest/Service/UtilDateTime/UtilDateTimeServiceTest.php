@@ -38,6 +38,14 @@ class UtilDateTimeServiceTest extends Unit
     protected $tester;
 
     /**
+     * @return void
+     */
+    protected function _before(): void
+    {
+        $this->tester->setTimezoneService();
+    }
+
+    /**
      * @dataProvider dateFormatDataProvider
      *
      * @param \DateTime|string $date
@@ -98,6 +106,40 @@ class UtilDateTimeServiceTest extends Unit
             ['1980-12-06 08:00:00', 'Y/m/d H:i', '1980/12/06 08:00'],
             ['1980-12-06 08:00:00', 'd.m.Y H:i', '06.12.1980 08:00'],
             [new DateTime('1980-12-06 08:00:00', new DateTimeZone('UTC')), 'd.m.Y H:i', '06.12.1980 08:00'],
+        ];
+    }
+
+    /**
+     * @dataProvider dateFormatWithTimeZoneDataProvider
+     *
+     * @param \DateTime|string $date
+     * @param string $format
+     * @param string $expectedFormattedDate
+     *
+     * @return void
+     */
+    public function testFormatDateReturnsFormattedDateForServiceTimezone($date, string $format, string $expectedFormattedDate): void
+    {
+        $this->tester->setTimezoneService(UtilDateTimeServiceTester::TEST_DATE_TIME_ZONE);
+
+        $utilDateTimeService = $this->getService([
+            UtilDateTimeConstants::DATE_TIME_FORMAT_DATE => $format,
+            UtilDateTimeConstants::DATE_TIME_ZONE => 'UTC',
+        ]);
+
+        $this->assertSame($expectedFormattedDate, $utilDateTimeService->formatDate($date));
+    }
+
+    /**
+     * @return array
+     */
+    public function dateFormatWithTimeZoneDataProvider(): array
+    {
+        return [
+            ['1980-12-06 08:00:00', 'M. d, Y H:i', 'Dec. 06, 1980 11:00'],
+            ['1980-12-06 23:00:00', 'Y/m/d H:i', '1980/12/07 02:00'],
+            ['1980-12-06 08:00:00', 'd.m.Y H:i', '06.12.1980 11:00'],
+            [new DateTime('1980-12-06 08:00:00', new DateTimeZone('UTC')), 'd.m.Y H:i', '06.12.1980 11:00'],
         ];
     }
 

@@ -9,7 +9,12 @@ namespace Spryker\Service\UtilDateTime;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\UtilDateTime\Model\DateTimeFormatter;
+use Spryker\Service\UtilDateTime\Model\TimezoneReader;
+use Spryker\Service\UtilDateTime\Model\TimezoneReaderInterface;
 
+/**
+ * @method \Spryker\Service\UtilDateTime\UtilDateTimeConfig getConfig()
+ */
 class UtilDateTimeServiceFactory extends AbstractServiceFactory
 {
     /**
@@ -19,7 +24,27 @@ class UtilDateTimeServiceFactory extends AbstractServiceFactory
     {
         return new DateTimeFormatter(
             $this->getModuleConfig(),
+            $this->createTimezoneReader(),
         );
+    }
+
+    /**
+     * @return \Spryker\Service\UtilDateTime\Model\TimezoneReaderInterface
+     */
+    public function createTimezoneReader(): TimezoneReaderInterface
+    {
+        return new TimezoneReader(
+            $this->getConfig(),
+            $this->getCurrentTimezone(),
+        );
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCurrentTimezone(): ?string
+    {
+        return $this->getProvidedDependency(UtilDateTimeDependencyProvider::SERVICE_TIMEZONE);
     }
 
     /**

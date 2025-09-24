@@ -26,4 +26,25 @@ use Codeception\Actor;
 class UtilDateTimeServiceTester extends Actor
 {
     use _generated\UtilDateTimeServiceTesterActions;
+
+    /**
+     * @var string
+     */
+    public const TEST_DATE_TIME_ZONE = 'Europe/Vilnius';
+
+    /**
+     * @var string
+     */
+    protected const SERVICE_TIMEZONE = 'SERVICE_TIMEZONE';
+
+    /**
+     * @param string|null $timezone
+     *
+     * @return void
+     */
+    public function setTimezoneService(?string $timezone = null): void
+    {
+        $this->getContainer()
+            ->set(static::SERVICE_TIMEZONE, $timezone);
+    }
 }

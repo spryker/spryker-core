@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Communication;
 
 use ArrayObject;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
 use Spryker\Zed\Sales\Communication\Form\CommentForm;
@@ -153,7 +154,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
             $this->createOrdersTableQueryBuilder(),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_MONEY),
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_SANITIZE),
-            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER),
+            $this->getUtilDateTimeService(),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER),
             $this->getSalesTablePlugins(),
         );
@@ -170,7 +171,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
             $this->createOrdersTableQueryBuilder(),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_MONEY),
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_SANITIZE),
-            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER),
+            $this->getUtilDateTimeService(),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER),
             $customerReference,
             $this->getQueryContainer(),
@@ -286,6 +287,14 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
+     */
+    public function getUtilDateTimeService(): UtilDateTimeServiceInterface
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER);
+    }
+
+    /**
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createTableFilterForm(): FormInterface
@@ -308,6 +317,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getStoreFacade(),
             $this->getRepository(),
+            $this->getUtilDateTimeService(),
         );
     }
 }

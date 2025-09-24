@@ -92,4 +92,16 @@ interface UtilDateTimeServiceInterface
      * @return string
      */
     public function formatDateTimeToCustomFormat($dateTime, string $format): string;
+
+    /**
+     * Specification:
+     * - Returns application timezone.
+     * - One of these values in order by priority: SERVICE_TIMEZONE application service value,
+     * configured value in application config or fallsback to default value defined in module config.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getTimezone(): string;
 }

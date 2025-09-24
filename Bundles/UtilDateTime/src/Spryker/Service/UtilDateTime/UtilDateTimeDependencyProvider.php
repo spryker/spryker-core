@@ -11,12 +11,20 @@ use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 use Spryker\Shared\Config\Config;
 
+/**
+ * @method \Spryker\Service\UtilDateTime\UtilDateTimeConfig getConfig()
+ */
 class UtilDateTimeDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
      * @var string
      */
     public const CONFIG = 'config';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_TIMEZONE = 'SERVICE_TIMEZONE';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container
@@ -26,6 +34,7 @@ class UtilDateTimeDependencyProvider extends AbstractBundleDependencyProvider
     public function provideServiceDependencies(Container $container)
     {
         $container = $this->addConfig($container);
+        $container = $this->addTimezoneFromApplicationContainer($container);
 
         return $container;
     }
@@ -39,6 +48,24 @@ class UtilDateTimeDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CONFIG, function () {
             return Config::getInstance();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Kernel\Container $container
+     *
+     * @return \Spryker\Service\Kernel\Container
+     */
+    protected function addTimezoneFromApplicationContainer(Container $container): Container
+    {
+        $container->set(static::SERVICE_TIMEZONE, function (Container $container) {
+            if (!$container->hasApplicationService(static::SERVICE_TIMEZONE)) {
+                return null;
+            }
+
+            return $container->getApplicationService(static::SERVICE_TIMEZONE);
         });
 
         return $container;

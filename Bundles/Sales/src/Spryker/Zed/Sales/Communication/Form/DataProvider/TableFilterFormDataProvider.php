@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\OrderTableCriteriaTransfer;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
@@ -33,11 +34,13 @@ class TableFilterFormDataProvider
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface $storeFacade
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
+     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      */
     public function __construct(
         protected SalesQueryContainerInterface $queryContainer,
         protected SalesToStoreInterface $storeFacade,
-        protected SalesRepositoryInterface $salesRepository
+        protected SalesRepositoryInterface $salesRepository,
+        protected UtilDateTimeServiceInterface $utilDateTimeService
     ) {
     }
 
@@ -57,7 +60,7 @@ class TableFilterFormDataProvider
         return [
             static::OPTION_STATUSES => $this->getStatusChoices(),
             static::OPTION_STORES => $this->getStoreChoices(),
-            static::OPTION_CURRENT_TIMEZONE => $this->storeFacade->getCurrentStore(true)->getTimezone(),
+            static::OPTION_CURRENT_TIMEZONE => $this->utilDateTimeService->getTimezone(),
         ];
     }
 

@@ -102,4 +102,18 @@ class UtilDateTimeService extends AbstractService implements UtilDateTimeService
             ->createDateFormatter()
             ->formatDateTimeToCustomFormat($dateTime, $format);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getTimezone(): string
+    {
+        return $this->getFactory()
+            ->createTimezoneReader()
+            ->getTimezone();
+    }
 }

@@ -23,6 +23,19 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceFactory;
 class UtilDateTimeServiceFactoryTest extends Unit
 {
     /**
+     * @var \SprykerTest\Service\UtilDateTime\UtilDateTimeServiceTester
+     */
+    protected UtilDateTimeServiceTester $tester;
+
+    /**
+     * @return void
+     */
+    protected function _before(): void
+    {
+        $this->tester->setTimezoneService();
+    }
+
+    /**
      * @return void
      */
     public function testCreateDateFormatterShouldReturnDateFormatter(): void
