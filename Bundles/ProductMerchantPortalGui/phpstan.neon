@@ -6,3 +6,4 @@ parameters:
         - message: '#PHPDoc tag @return contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
         - message: '#PHPDoc tag @implements contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
         - '#Call to an undefined method .+SpyUrlQuery::useSpyProductLocalizedAttributesQuery\(\).#'
+        - identifier: missingType.generics
