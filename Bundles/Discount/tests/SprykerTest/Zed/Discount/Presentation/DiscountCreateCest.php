@@ -56,8 +56,6 @@ class DiscountCreateCest
      */
     public function createInvalidDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage): void
     {
-        $i->amZed();
-        $i->amLoggedInUser();
         $createPage->createDiscount(DiscountCreatePage::EMPTY_DISCOUNT, ['name' => null]);
         $i->dontSee($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
         $i->seeInCurrentUrl($createPage::URL);
