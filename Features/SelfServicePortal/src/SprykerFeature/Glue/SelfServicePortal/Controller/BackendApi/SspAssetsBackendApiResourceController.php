@@ -14,7 +14,7 @@ use Spryker\Glue\Kernel\Backend\Controller\AbstractController;
 /**
  * @method \SprykerFeature\Glue\SelfServicePortal\SelfServicePortalFactory getFactory()
  */
-class SspAssetsResourceController extends AbstractController
+class SspAssetsBackendApiResourceController extends AbstractController
 {
     /**
      * @Glue({

@@ -45,11 +45,18 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     protected $config;
 
     /**
-     * @param \Spryker\Shared\Config\Config $config
+     * @var \Spryker\Service\UtilDateTime\Model\TimezoneReaderInterface
      */
-    public function __construct(Config $config)
+    protected TimezoneReaderInterface $timezoneReader;
+
+    /**
+     * @param \Spryker\Shared\Config\Config $config
+     * @param \Spryker\Service\UtilDateTime\Model\TimezoneReaderInterface $timezoneReader
+     */
+    public function __construct(Config $config, TimezoneReaderInterface $timezoneReader)
     {
         $this->config = $config;
+        $this->timezoneReader = $timezoneReader;
     }
 
     /**
@@ -69,7 +76,11 @@ class DateTimeFormatter implements DateTimeFormatterInterface
      */
     public function formatDateTime($dateTime)
     {
-        return $this->format($dateTime, UtilDateTimeConstants::DATE_TIME_FORMAT_DATE_TIME, static::DEFAULT_FORMAT_DATE_TIME);
+        return $this->format(
+            $dateTime,
+            UtilDateTimeConstants::DATE_TIME_FORMAT_DATE_TIME,
+            static::DEFAULT_FORMAT_DATE_TIME,
+        );
     }
 
     /**
@@ -126,7 +137,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     protected function format($dateTime, $formatConfigConstant, $defaultFormat, ?string $timezone = null)
     {
         if (!$timezone) {
-            $timezone = $this->config->get(UtilDateTimeConstants::DATE_TIME_ZONE, static::DEFAULT_TIME_ZONE);
+            $timezone = $this->timezoneReader->getTimezone();
         }
 
         $dateTimeZone = new DateTimeZone($timezone);
