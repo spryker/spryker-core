@@ -5,6 +5,7 @@ import debounce from 'lodash-es/debounce';
 export default class AssetFinder extends Component {
     protected controller = new AbortController();
     protected searchInput: HTMLInputElement;
+    protected results: HTMLElement;
     protected ajaxProvider: AjaxProvider;
     protected currentSearchValue = '';
 
@@ -12,6 +13,7 @@ export default class AssetFinder extends Component {
     protected init(): void {
         this.searchInput = this.querySelector(`.${this.jsName}__search-field`);
         this.ajaxProvider = this.querySelector(`.${this.jsName}__ajax-provider`);
+        this.results = this.querySelector(`.${this.jsName}__results`);
 
         this.mapEvents();
     }
@@ -34,7 +36,7 @@ export default class AssetFinder extends Component {
         );
     }
 
-    protected async search(force = false): Promise<void> {
+    public async search(force = false): Promise<void> {
         const value = this.searchInput.value.trim();
         const isSearchLengthValid = value.length >= Number(this.getAttribute('min-letters')) || value.length === 0;
 
@@ -47,6 +49,9 @@ export default class AssetFinder extends Component {
     public clear(): void {
         this.searchInput.value = '';
         this.currentSearchValue = '';
-        this.search(true);
+    }
+
+    public clearResults(): void {
+        this.results.innerHTML = '';
     }
 }

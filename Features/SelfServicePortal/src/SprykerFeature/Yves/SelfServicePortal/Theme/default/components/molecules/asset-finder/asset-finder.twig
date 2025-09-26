@@ -10,6 +10,7 @@
     placeholder: 'self_service_portal.asset.selector.search_placeholder' | trans,
     staticParams: null,
     dynamicParams: null,
+    id: random(),
 } %}
 
 {% define attributes = {
@@ -23,15 +24,16 @@
             {% include molecule('ajax-provider') with {
                 class: "#{config.jsName}__ajax-provider",
                 attributes: {
-                    'fetch-on-load': true,
+                    'fetch-on-load': false,
                     url: path('customer/ssp-asset/widget-content', data.staticParams | default({})),
                     method: 'GET',
                     'dynamic-params': {
                         searchString: {
-                            selector: ".#{config.jsName}__search-field",
+                            selector: ".#{config.jsName}__search-field-#{data.id}",
                             attribute: 'value',
                         },
                     } | merge(data.dynamicParams | default()) | json_encode,
+                    'parent-class-name': config.name,
                 },
             } only %}
         {% endblock %}
@@ -40,6 +42,7 @@
             {% include molecule('ajax-loader') with {
                 attributes: {
                     'provider-class-name': "#{config.jsName}__ajax-provider",
+                    'parent-class-name': config.name,
                 },
             } only %}
         {% endblock %}
@@ -50,6 +53,7 @@
                     'provider-class-name': "#{config.jsName}__ajax-provider",
                     'target-class-name': "#{config.jsName}__results",
                     'mount-after-render': true,
+                    'parent-class-name': config.name,
                 },
             } only %}
         {% endblock %}
@@ -60,7 +64,7 @@
             <div class="{{ config.name }}__search">
                 <input
                     placeholder="{{ data.placeholder }}"
-                    class="input input--expand {{ config.jsName }}__search-field {{ config.name }}__search-field"
+                    class="input input--expand {{ config.jsName }}__search-field {{ config.jsName }}__search-field-{{ data.id }} {{ config.name }}__search-field"
                     {% if data.isDisabled %}disabled{% endif %}
                     {{ qa('asset-finder-input') }}
                 >

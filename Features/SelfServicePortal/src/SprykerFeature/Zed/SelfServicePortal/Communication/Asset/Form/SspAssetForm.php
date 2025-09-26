@@ -206,7 +206,7 @@ class SspAssetForm extends AbstractType
             'choices' => $options[static::OPTION_BUSINESS_UNIT_OWNER],
             'multiple' => false,
             'mapped' => true,
-            'required' => false,
+            'required' => true,
             'attr' => [
                 'data-autocomplete-url' => static::ROUTE_BUSINESS_UNIT_SUGGEST,
                 'data-clear-initial' => false,
@@ -384,7 +384,7 @@ class SspAssetForm extends AbstractType
             'label' => static::LABEL_BUSINESS_UNIT,
             'choices' => $options[static::OPTION_BUSINESS_UNIT_ASSIGMENT_OPTIONS],
             'multiple' => true,
-            'required' => false,
+            'required' => true,
             'mapped' => false,
             'attr' => [
                 'data-autocomplete-url' => static::ROUTE_BUSINESS_UNIT_SUGGEST,

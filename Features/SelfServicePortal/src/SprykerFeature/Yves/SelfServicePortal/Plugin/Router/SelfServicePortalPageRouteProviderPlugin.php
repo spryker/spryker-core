@@ -125,6 +125,11 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
     /**
      * @var string
      */
+    protected const ROUTE_NAME_SSP_ASSET_ATTACH_TO_CART_ITEM = '/customer/ssp-asset/attach-to-cart-item';
+
+    /**
+     * @var string
+     */
     protected const PATTERN_SSP_COMPANY_FILE_DOWNLOAD = '/customer/ssp-file/download';
 
     /**
@@ -195,6 +200,7 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
         $routeCollection = $this->addAssetListRoute($routeCollection);
         $routeCollection = $this->addUnassignBusinessUnitRoute($routeCollection);
         $routeCollection = $this->addAssetSearchRoute($routeCollection);
+        $routeCollection = $this->addAssetAttachToCartItemRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -541,6 +547,14 @@ class SelfServicePortalPageRouteProviderPlugin extends AbstractRouteProviderPlug
     {
         $route = $this->buildRoute('customer/ssp-asset/search', 'SelfServicePortal', 'Asset', 'searchAction');
         $routeCollection->add(static::ROUTE_NAME_ASSET_SEARCH, $route);
+
+        return $routeCollection;
+    }
+
+    protected function addAssetAttachToCartItemRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildPostRoute('customer/ssp-asset/attach-to-cart-item', 'SelfServicePortal', 'Asset', 'attachToCartItemAction');
+        $routeCollection->add(static::ROUTE_NAME_SSP_ASSET_ATTACH_TO_CART_ITEM, $route);
 
         return $routeCollection;
     }

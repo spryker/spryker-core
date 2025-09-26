@@ -97,6 +97,11 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
      */
     public const PLUGINS_SSP_ASSET_SEARCH_QUERY_EXPANDER = 'PLUGINS_SSP_ASSET_SEARCH_QUERY_EXPANDER';
 
+    /**
+     * @var string
+     */
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addZedRequestClient($container);
@@ -112,6 +117,7 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
         $container = $this->addSspAssetSearchResultFormatterPlugins($container);
         $container = $this->addSspAssetSearchQueryExpanderPlugins($container);
         $container = $this->addCompanyUserClient($container);
+        $container = $this->addQuoteClient($container);
         $container = $this->addProductOfferStorageClient($container);
         $container = $this->addProductOfferAvailabilityStorageClient($container);
 
@@ -272,5 +278,14 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
     protected function getSspAssetSearchQueryExpanderPlugins(): array
     {
         return [];
+    }
+
+    protected function addQuoteClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
+            return $container->getLocator()->quote()->client();
+        });
+
+        return $container;
     }
 }

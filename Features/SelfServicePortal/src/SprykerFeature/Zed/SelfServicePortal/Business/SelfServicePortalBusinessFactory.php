@@ -33,6 +33,7 @@ use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 use Spryker\Zed\ProductOfferShipmentType\Business\ProductOfferShipmentTypeFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface;
 use Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface;
+use Spryker\Zed\Quote\Business\QuoteFacadeInterface;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface;
 use Spryker\Zed\ServicePoint\Business\ServicePointFacadeInterface;
@@ -59,6 +60,10 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Mapper\SspAssetSearchMap
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Mapper\SspAssetSearchMapperInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Permission\SspAssetCustomerPermissionExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Permission\SspAssetCustomerPermissionExpanderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Quote\QuoteItemFinder;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Quote\QuoteItemFinderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Quote\SspAssetQuoteItemSetter;
+use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Quote\SspAssetQuoteItemSetterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReader;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Reader\SspAssetSearchReader;
@@ -1290,8 +1295,26 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    public function createSspAssetQuoteItemSetter(): SspAssetQuoteItemSetterInterface
+    {
+        return new SspAssetQuoteItemSetter(
+            $this->getQuoteFacade(),
+            $this->createQuoteItemFinder(),
+        );
+    }
+
+    public function createQuoteItemFinder(): QuoteItemFinderInterface
+    {
+        return new QuoteItemFinder();
+    }
+
     public function getUtilEncodingService(): UtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    public function getQuoteFacade(): QuoteFacadeInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_QUOTE);
     }
 }

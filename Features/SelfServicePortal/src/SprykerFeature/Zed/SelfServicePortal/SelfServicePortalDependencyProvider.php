@@ -42,6 +42,7 @@ use Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface;
 use Spryker\Zed\ProductOfferShipmentType\Business\ProductOfferShipmentTypeFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface;
 use Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface;
+use Spryker\Zed\Quote\Business\QuoteFacadeInterface;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface;
 use Spryker\Zed\ServicePoint\Business\ServicePointFacadeInterface;
@@ -74,6 +75,11 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_SHIPMENT_TYPE = 'FACADE_SHIPMENT_TYPE';
+
+    /**
+     * @var string
+     */
+    public const FACADE_QUOTE = 'FACADE_QUOTE';
 
     /**
      * @var string
@@ -361,6 +367,7 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addCustomerFacade($container);
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addQuoteFacade($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addCompanyFacade($container);
 
@@ -827,6 +834,15 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
         $container->set(static::PROPEL_QUERY_COMPANY_USER, $container->factory(function (): SpyCompanyUserQuery {
             return SpyCompanyUserQuery::create();
         }));
+
+        return $container;
+    }
+
+    protected function addQuoteFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_QUOTE, function (Container $container): QuoteFacadeInterface {
+            return $container->getLocator()->quote()->facade();
+        });
 
         return $container;
     }

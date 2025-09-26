@@ -11,12 +11,14 @@ use Generated\Shared\Transfer\DashboardRequestTransfer;
 use Generated\Shared\Transfer\DashboardResponseTransfer;
 use Generated\Shared\Transfer\FileAttachmentCollectionTransfer;
 use Generated\Shared\Transfer\FileAttachmentCriteriaTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
+use Generated\Shared\Transfer\SspAssetQuoteItemAttachmentRequestTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionResponseTransfer;
 use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
@@ -209,5 +211,23 @@ class SelfServicePortalStub implements SelfServicePortalStubInterface
         $sspAssetCollectionResponseTransfer = $this->zedRequestClient->call('/self-service-portal/gateway/update-ssp-asset-collection', $sspAssetCollectionRequestTransfer);
 
         return $sspAssetCollectionResponseTransfer;
+    }
+
+    /**
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\GatewayController::attachSspAssetToQuoteItemAction()
+     *
+     * @param \Generated\Shared\Transfer\SspAssetQuoteItemAttachmentRequestTransfer $sspAssetQuoteItemAttachmentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function attachSspAssetToQuoteItem(SspAssetQuoteItemAttachmentRequestTransfer $sspAssetQuoteItemAttachmentRequestTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call(
+            '/self-service-portal/gateway/attach-ssp-asset-to-quote-item',
+            $sspAssetQuoteItemAttachmentRequestTransfer,
+        );
+
+        return $quoteResponseTransfer;
     }
 }

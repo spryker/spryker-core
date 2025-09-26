@@ -73,6 +73,14 @@ class SspAssetValidator implements SspAssetValidatorInterface
             return false;
         }
 
+        if (!$sspAssetTransfer->getCompanyBusinessUnit()) {
+            $sspAssetCollectionResponseTransfer->addError(
+                (new ErrorTransfer())->setMessage('self_service_portal.asset.validation.business_unit.not_set'),
+            );
+
+            return false;
+        }
+
         return true;
     }
 

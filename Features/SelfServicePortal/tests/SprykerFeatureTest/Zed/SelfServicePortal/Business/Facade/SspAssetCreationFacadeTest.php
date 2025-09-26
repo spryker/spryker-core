@@ -153,6 +153,7 @@ class SspAssetCreationFacadeTest extends Unit
     ): void {
         // Arrange
         $originalData['generateImage'] = $updateData['generateImage'] ?? false;
+        $originalData['companyBusinessUnit'] = $this->companyBusinessUnit;
         $sspAssetTransfer = $this->tester->haveAsset($originalData);
         $originalImageId = $sspAssetTransfer->getImage() ? $sspAssetTransfer->getImage()->getIdFile() : null;
 
@@ -160,7 +161,8 @@ class SspAssetCreationFacadeTest extends Unit
             ->setIdSspAsset($sspAssetTransfer->getIdSspAsset())
             ->setName($updateData['name'] ?? $sspAssetTransfer->getName())
             ->setSerialNumber($sspAssetTransfer->getSerialNumber())
-            ->setNote($updateData['note'] ?? $sspAssetTransfer->getNote());
+            ->setNote($updateData['note'] ?? $sspAssetTransfer->getNote())
+            ->setCompanyBusinessUnit($sspAssetTransfer->getCompanyBusinessUnit());
 
         if (isset($updateData['generateImage'])) {
             if ($updateData['generateImage']) {
@@ -405,9 +407,11 @@ class SspAssetCreationFacadeTest extends Unit
                     'note' => 'Test Note',
                     'companyBusinessUnitNotSet' => true,
                 ],
-                'expectedAssetCount' => 1,
+                'expectedAssetCount' => 0,
                 'expectedName' => 'Test Asset',
-                'expectedValidationErrors' => [],
+                'expectedValidationErrors' => [
+                    'self_service_portal.asset.validation.business_unit.not_set',
+                ],
             ],
         ];
     }

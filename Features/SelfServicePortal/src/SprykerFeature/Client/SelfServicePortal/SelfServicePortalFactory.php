@@ -13,6 +13,7 @@ use Spryker\Client\Locale\LocaleClientInterface;
 use Spryker\Client\Permission\PermissionClientInterface;
 use Spryker\Client\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageClientInterface;
 use Spryker\Client\ProductOfferStorage\ProductOfferStorageClientInterface;
+use Spryker\Client\Quote\QuoteClientInterface;
 use Spryker\Client\Search\SearchClientInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageClientInterface;
@@ -20,6 +21,13 @@ use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Client\Store\StoreClientInterface;
 use Spryker\Service\Synchronization\SynchronizationServiceInterface;
 use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
+use SprykerFeature\Client\SelfServicePortal\Asset\Quote\DatabaseQuoteStorageStrategy;
+use SprykerFeature\Client\SelfServicePortal\Asset\Quote\QuoteItemFinder;
+use SprykerFeature\Client\SelfServicePortal\Asset\Quote\QuoteItemFinderInterface;
+use SprykerFeature\Client\SelfServicePortal\Asset\Quote\QuoteStorageStrategyInterface;
+use SprykerFeature\Client\SelfServicePortal\Asset\Quote\QuoteStorageStrategyProvider;
+use SprykerFeature\Client\SelfServicePortal\Asset\Quote\QuoteStorageStrategyProviderInterface;
+use SprykerFeature\Client\SelfServicePortal\Asset\Quote\SessionQuoteStorageStrategy;
 use SprykerFeature\Client\SelfServicePortal\Builder\PaginationConfigBuilderInterface;
 use SprykerFeature\Client\SelfServicePortal\Builder\SortConfigBuilderInterface;
 use SprykerFeature\Client\SelfServicePortal\Builder\SspAssetSearchPaginationConfigBuilder;
@@ -163,6 +171,32 @@ class SelfServicePortalFactory extends AbstractFactory
         return new SspAssetSearchPaginationConfigBuilder();
     }
 
+    public function getQuoteStorageStrategy(): QuoteStorageStrategyInterface
+    {
+        return $this->createQuoteStorageStrategyProvider()->provideStorage();
+    }
+
+    public function createQuoteStorageStrategyProvider(): QuoteStorageStrategyProviderInterface
+    {
+        return new QuoteStorageStrategyProvider(
+            $this->getQuoteClient(),
+            $this->getQuoteStorageStrategyProviders(),
+        );
+    }
+
+    public function createSessionQuoteStorageStrategy(): QuoteStorageStrategyInterface
+    {
+        return new SessionQuoteStorageStrategy($this->getQuoteClient(), $this->createQuoteItemFinder());
+    }
+
+    public function createDatabaseQuoteStorageStrategy(): QuoteStorageStrategyInterface
+    {
+        return new DatabaseQuoteStorageStrategy(
+            $this->getQuoteClient(),
+            $this->createSelfServicePortalStub(),
+        );
+    }
+
     public function createSspAssetSearchSortConfigBuilder(): SortConfigBuilderInterface
     {
         return (new SspAssetSearchSortConfigBuilder())
@@ -195,6 +229,11 @@ class SelfServicePortalFactory extends AbstractFactory
             $this->getProductOfferStorageClient(),
             $this->getConfig(),
         );
+    }
+
+    public function createQuoteItemFinder(): QuoteItemFinderInterface
+    {
+        return new QuoteItemFinder();
     }
 
     public function getSearchClient(): SearchClientInterface
@@ -248,7 +287,7 @@ class SelfServicePortalFactory extends AbstractFactory
     }
 
     /**
-     * @return list<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     public function getSspAssetSearchQueryExpanderPlugins(): array
     {
@@ -256,7 +295,7 @@ class SelfServicePortalFactory extends AbstractFactory
     }
 
     /**
-     * @return list<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     public function getSspAssetSearchResultFormatterPlugins(): array
     {
@@ -271,5 +310,21 @@ class SelfServicePortalFactory extends AbstractFactory
     public function getProductOfferAvailabilityStorageClient(): ProductOfferAvailabilityStorageClientInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_PRODUCT_OFFER_AVAILABILITY_STORAGE);
+    }
+
+    public function getQuoteClient(): QuoteClientInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return array<\SprykerFeature\Client\SelfServicePortal\Asset\Quote\QuoteStorageStrategyInterface>
+     */
+    public function getQuoteStorageStrategyProviders(): array
+    {
+        return [
+            $this->createSessionQuoteStorageStrategy(),
+            $this->createDatabaseQuoteStorageStrategy(),
+        ];
     }
 }
