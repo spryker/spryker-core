@@ -82,6 +82,7 @@ class DiscountDataHelper extends Module
         $cleanupModule = $this->getDataCleanupHelper();
         $cleanupModule->_addCleanup(function () use ($idDiscount): void {
             $this->debug('Deleting Discount: ' . $idDiscount);
+            SpyDiscountAmountQuery::create()->findByFkDiscount($idDiscount)->delete();
             $this->getDiscountQuery()->queryDiscount()->findByIdDiscount($idDiscount)->delete();
         });
 

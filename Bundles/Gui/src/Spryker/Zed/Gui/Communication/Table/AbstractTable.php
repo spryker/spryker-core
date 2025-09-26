@@ -1186,7 +1186,11 @@ abstract class AbstractTable
         $gluedCondition = '(' . $gluedCondition . ')';
 
         if ($config->getHasSearchableFieldsWithAggregateFunctions()) {
-            return $query->having($gluedCondition);
+            $tablePrimaryKey = array_key_first($query->getTableMap()->getPrimaryKeys());
+
+            return $query
+                ->having($gluedCondition)
+                ->groupBy($tablePrimaryKey);
         }
 
         return $query->where($gluedCondition);
