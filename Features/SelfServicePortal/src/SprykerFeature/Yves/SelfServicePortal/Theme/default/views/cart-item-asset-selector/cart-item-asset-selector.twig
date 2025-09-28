@@ -1,0 +1,38 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isDisabled: false,
+    isVisible: _widget.isVisible | default(true),
+    productItem: _widget.productItem | default(null),
+    asset: _widget.asset | default([]),
+    form: _widget.form | default(null),
+    ajaxTriggerAttribute: ajaxTriggerAttribute | default(null),
+} %}
+
+{% block body %}
+    {% if data.isVisible %}
+        {% include molecule('asset-selector', 'SelfServicePortal') with {
+            modifiers: ['cart'],
+            data: {
+                formFieldName: 'quoteItemSspAsset[sspAssetReference]',
+                isDisabled: data.isDisabled,
+                placeholder: 'self_service_portal.asset.selector.search_placeholder' | trans,
+                productItem: data.productItem,
+                asset: data.asset,
+                ajax: {
+                    action: path('/customer/ssp-asset/attach-to-cart-item'),
+                    trigger: data.ajaxTriggerAttribute,
+                    fields: {
+                        'quoteItemSspAsset[_token]': data.form._token.vars.value,
+                        'quoteItemSspAsset[sku]': data.productItem.sku,
+                        'quoteItemSspAsset[groupKey]': data.productItem.groupKey,
+                    },
+                },
+            },
+            attributes: {
+                'disable-history-url': true,
+                'asset-link-base': path('customer/ssp-asset/details', { 'reference': '' })
+            },
+        } only %}
+    {% endif %}
+{% endblock %}

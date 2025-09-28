@@ -262,6 +262,9 @@
         <property name="store" type="Store"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+        <property name="customer" type="Customer"/>
+        <property name="idQuote" type="int"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="SalesOrderItemCollectionRequest" strict="true">
@@ -1381,6 +1384,17 @@
         <property name="title" type="string"/>
         <property name="name" type="string"/>
         <property name="actionButtons" type="ButtonCollection"/>
+    </transfer>
+
+    <transfer name="SspAssetQuoteItemAttachmentRequest">
+        <property name="idQuote" type="int"/>
+        <property name="sspAssetReference" type="string"/>
+        <property name="item" type="Item"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="quoteTransfer" type="Quote"/>
     </transfer>
 
     <transfer name="ProductOfferAvailabilityStorage">

@@ -31,6 +31,7 @@ use SprykerFeature\Yves\SelfServicePortal\Asset\Expander\SspAssetExpander;
 use SprykerFeature\Yves\SelfServicePortal\Asset\Expander\SspAssetExpanderInterface;
 use SprykerFeature\Yves\SelfServicePortal\Asset\Form\DataProvider\SspAssetFormDataProvider;
 use SprykerFeature\Yves\SelfServicePortal\Asset\Form\DataProvider\SspAssetSearchFormDataProvider;
+use SprykerFeature\Yves\SelfServicePortal\Asset\Form\QuoteItemSspAssetForm;
 use SprykerFeature\Yves\SelfServicePortal\Asset\Form\SspAssetBusinessUnitRelationsForm;
 use SprykerFeature\Yves\SelfServicePortal\Asset\Form\SspAssetForm;
 use SprykerFeature\Yves\SelfServicePortal\Asset\Form\SspAssetSearchForm;
@@ -471,6 +472,11 @@ class SelfServicePortalFactory extends AbstractFactory
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 
+    public function getGlossaryClient(): GlossaryStorageClientInterface
+    {
+        return $this->getGlossaryStorageClient();
+    }
+
     public function getLocale(): string
     {
         return $this->getTwigEnvironment()->getGlobals()['app']['locale'];
@@ -530,6 +536,17 @@ class SelfServicePortalFactory extends AbstractFactory
     public function createSspAssetBusinessUnitRelationsForm(array $formData = []): FormInterface
     {
         return $this->getFormFactory()->create(SspAssetBusinessUnitRelationsForm::class, $formData);
+    }
+
+    /**
+     * @param array<mixed> $formData
+     * @param array<mixed> $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createQuoteItemSspAssetForm(array $formData = [], array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(QuoteItemSspAssetForm::class, $formData, $options);
     }
 
     public function createSspAssetFormDataProvider(): SspAssetFormDataProvider

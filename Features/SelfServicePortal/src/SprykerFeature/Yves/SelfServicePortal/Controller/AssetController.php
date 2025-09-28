@@ -8,20 +8,24 @@
 namespace SprykerFeature\Yves\SelfServicePortal\Controller;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspAssetConditionsTransfer;
 use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetIncludeTransfer;
+use Generated\Shared\Transfer\SspAssetQuoteItemAttachmentRequestTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\View\View;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\CreateSspAssetPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\UnassignSspAssetPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\UpdateSspAssetPermissionPlugin;
+use SprykerFeature\Yves\SelfServicePortal\Asset\Form\QuoteItemSspAssetForm;
 use SprykerFeature\Yves\SelfServicePortal\Asset\Form\SspAssetBusinessUnitRelationsForm;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\Router\SelfServicePortalPageRouteProviderPlugin;
 use SprykerFeature\Yves\SelfServicePortal\SelfServicePortalConfig;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -62,11 +66,26 @@ class AssetController extends AbstractController
     protected const GLOSSARY_KEY_BUSINESS_UNIT_RELATION_UPDATED = 'self_service_portal.asset.success.business_unit_relation_updated';
 
     /**
+     * @var string
+     */
+    protected const MESSAGE_CART_SSP_ASSET_CHANGED_SUCCESS = 'self_service_portal.ssp_asset.success.attached_to_cart';
+
+    /**
      * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_CUSTOMER_OVERVIEW
      *
      * @var string
      */
     protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
+
+     /**
+      * @var string
+      */
+    protected const FLASH_MESSAGE_LIST_TEMPLATE_PATH = '@ShopUi/components/organisms/flash-message-list/flash-message-list.twig';
+
+    /**
+     * @var string
+     */
+    protected const KEY_MESSAGES = 'messages';
 
     /**
      * The number of services to be included in the SspAssetTransfer.
@@ -75,6 +94,18 @@ class AssetController extends AbstractController
      * @var int
      */
     protected const SERVICE_COUNT = 4;
+
+    /**
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageAsyncRouteProviderPlugin::ROUTE_NAME_CART_ASYNC_VIEW
+     *
+     * @var string
+     */
+    protected const ROUTE_NAME_CART_ASYNC_VIEW = 'cart/async/view';
+
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_ASSET_ATTACH_TO_CART_ITEM_ERROR = 'self_service_portal.asset.error.attach_to_cart_item';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -413,6 +444,60 @@ class AssetController extends AbstractController
         }
 
         return $this->redirectResponseInternal(SelfServicePortalPageRouteProviderPlugin::ROUTE_NAME_ASSET_LIST);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function attachToCartItemAction(Request $request): RedirectResponse|JsonResponse
+    {
+        $companyUserTransfer = $this->getFactory()->getCompanyUserClient()->findCompanyUser();
+
+        if (!$companyUserTransfer) {
+            $this->addErrorMessage('company.error.company_user_not_found');
+
+            return $this->redirectResponseInternal(static::ROUTE_CUSTOMER_OVERVIEW);
+        }
+
+        if (!$this->getFactory()->createSspAssetCustomerPermissionChecker()->canViewAsset()) {
+            throw new AccessDeniedHttpException('self_service_portal.asset.access.denied');
+        }
+
+        $form = $this->getFactory()->createQuoteItemSspAssetForm();
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage($this->getFactory()->getGlossaryClient()->translate(
+                static::GLOSSARY_KEY_ASSET_ATTACH_TO_CART_ITEM_ERROR,
+                $this->getLocale(),
+            ));
+
+            return $this->jsonResponse([
+                static::KEY_MESSAGES => $this->renderView(static::FLASH_MESSAGE_LIST_TEMPLATE_PATH)->getContent(),
+            ]);
+        }
+
+        $quoteResponseTransfer = $this->getFactory()->getSelfServicePortalClient()->attachSspAssetToQuoteItem(
+            (new SspAssetQuoteItemAttachmentRequestTransfer())
+                ->setSspAssetReference($form->get(QuoteItemSspAssetForm::FIELD_SSP_ASSET_REFERENCE)->getData())
+                ->setItem(
+                    (new ItemTransfer())
+                        ->setSku($form->get(QuoteItemSspAssetForm::FIELD_SKU)->getData())
+                        ->setGroupKey($form->get(QuoteItemSspAssetForm::FIELD_GROUP_KEY)->getData()),
+                ),
+        );
+
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage($this->getFactory()
+                ->getGlossaryClient()
+                ->translate(static::MESSAGE_CART_SSP_ASSET_CHANGED_SUCCESS, $this->getLocale(), ['%sku%' => $form->get(QuoteItemSspAssetForm::FIELD_SKU)->getData()]));
+        }
+
+        return $this->redirectResponseInternal(static::ROUTE_NAME_CART_ASYNC_VIEW);
     }
 
     /**

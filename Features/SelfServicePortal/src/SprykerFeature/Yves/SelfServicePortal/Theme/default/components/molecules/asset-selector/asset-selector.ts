@@ -1,6 +1,11 @@
 import Component from 'ShopUi/models/component';
 import { AssetEventDetail, EVENT_SELECT_ASSET } from '../asset-option/asset-option';
-import MainPopup from 'ShopUi/components/molecules/main-popup/main-popup';
+import MainPopup, {
+    EVENT_POPUP_CONTENT_MOUNTED,
+    EVENT_POPUP_OPENED,
+    EVENT_POPUP_CLOSED,
+    EVENT_CLOSE_POPUP,
+} from 'ShopUi/components/molecules/main-popup/main-popup';
 import AssetFinder from '../asset-finder/asset-finder';
 
 export default class AssetSelector extends Component {
@@ -11,6 +16,7 @@ export default class AssetSelector extends Component {
     protected selectedSerial: HTMLElement;
     protected selectedName: HTMLElement;
     protected selectedStatus: HTMLElement;
+    protected mountedPopup = false;
 
     protected readyCallback(): void {}
     protected init(): void {
@@ -35,10 +41,19 @@ export default class AssetSelector extends Component {
     }
 
     protected mapPopupEvents(): void {
-        this.popup?.addEventListener('popupOpened', (event) => {
+        this.popup?.addEventListener(EVENT_POPUP_CONTENT_MOUNTED, () => {
+            this.finder.search(true);
+            this.mountedPopup = true;
+        });
+
+        this.popup?.addEventListener(EVENT_POPUP_OPENED, (event) => {
+            if (this.mountedPopup) {
+                this.finder.search(true);
+            }
+
             this.controller = new AbortController();
 
-            const id = (event.currentTarget as HTMLElement).getAttribute('content-id');
+            const id = (event.target as HTMLElement).getAttribute('content-id');
             const element = document.getElementById(id);
 
             element.addEventListener(EVENT_SELECT_ASSET, (event: CustomEvent) => this.selectAsset(event.detail), {
@@ -46,8 +61,9 @@ export default class AssetSelector extends Component {
             });
         });
 
-        this.popup?.addEventListener('popupClosed', () => {
+        this.popup?.addEventListener(EVENT_POPUP_CLOSED, () => {
             this.controller.abort();
+            this.finder.clearResults();
         });
     }
 
@@ -82,29 +98,49 @@ export default class AssetSelector extends Component {
     }
 
     protected selectAsset(data: AssetEventDetail): void {
-        this.hiddenInput.value = data.reference;
-        this.selectedName.textContent = data.name;
-        this.selectedSerial.textContent = data.serial || '';
-        this.selectedStatus.innerHTML = data.compatibilityLabel.trim() || '';
-        this.classList.add(this.selectedClass);
-        this.popup.dispatchEvent(new CustomEvent('closePopup'));
+        this.fillComponent(data);
+        this.popup.dispatchEvent(new CustomEvent(EVENT_CLOSE_POPUP));
         this.submitForm();
-        this.clearFinder();
-        window.history.replaceState(null, '', this.getReferenceUrl(data.reference));
+        this.finder.clear();
+        this.updateHistoryUrl(data.reference);
+        this.processAjaxForm();
     }
 
     protected clearState(event?: Event): void {
         event?.preventDefault();
-        this.classList.remove(this.selectedClass);
-        this.hiddenInput.removeAttribute('value');
+        this.clearComponent();
         this.submitForm();
-        this.clearFinder();
-        window.history.replaceState(null, '', this.getReferenceUrl(null));
+        this.finder.clear();
+        this.updateHistoryUrl(null);
+        this.processAjaxForm();
     }
 
-    protected clearFinder(): void {
-        const finderId = this.getAttribute('finder-id');
-        (document.getElementById(finderId) as AssetFinder)?.clear();
+    protected fillComponent(data: AssetEventDetail): void {
+        const linkBase = this.getAttribute('asset-link-base');
+
+        this.hiddenInput.value = data.reference;
+        this.selectedName.textContent = data.name;
+        this.selectedSerial.textContent = data.serial || '';
+        this.selectedStatus.innerHTML = data.compatibilityLabel.trim() || '';
+
+        if (linkBase) {
+            (this.selectedName as HTMLLinkElement).href = linkBase + data.reference;
+        }
+
+        this.classList.add(this.selectedClass);
+    }
+
+    protected clearComponent(): void {
+        this.classList.remove(this.selectedClass);
+        this.hiddenInput.removeAttribute('value');
+    }
+
+    protected updateHistoryUrl(reference: string | null): void {
+        if (this.hasAttribute('disable-history-url')) {
+            return;
+        }
+
+        window.history.replaceState(null, '', this.getReferenceUrl(reference));
     }
 
     protected submitForm(): void {
@@ -118,6 +154,18 @@ export default class AssetSelector extends Component {
 
         this.classList.add(this.getAttribute('disabled-class'));
         this.closest('form').submit();
+    }
+
+    protected processAjaxForm(): void {
+        if (!this.hasAttribute('ajax-form')) {
+            return;
+        }
+
+        this.querySelector<HTMLButtonElement>(`.${this.jsName}__ajax-trigger`)?.click();
+    }
+
+    protected get finder(): AssetFinder {
+        return document.getElementById(this.getAttribute('finder-id')) as AssetFinder;
     }
 
     protected get selectedClass(): string {

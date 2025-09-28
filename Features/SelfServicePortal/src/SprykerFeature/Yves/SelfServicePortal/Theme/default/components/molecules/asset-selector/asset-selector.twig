@@ -15,6 +15,7 @@
     selectedLabel: 'self_service_portal.asset.assigned_asset',
     asset: null,
     product: null,
+    ajax: null,
 } %}
 
 {% define attributes = {
@@ -25,6 +26,9 @@
     'asset-reference': data.asset ? data.asset.reference : false,
     'query': 'ssp-asset-reference',
     'finder-id': "js-#{config.name}-#{data.id}",
+    'disable-history-url': false,
+    'ajax-form': data.ajax ? true : false,
+    'asset-link-base': false,
 } %}
 
 {% block class %}{{ parent() }} {{ data.asset ? 'is-selected' }}{% endblock %}
@@ -32,7 +36,7 @@
 {% set popupTriggerClass = "js-#{config.name}__trigger-#{data.id}" %}
 
 {% block body %}
-    {% block separator %}<hr>{% endblock %}
+    {% block separator %}<hr class="{{ config.name }}__separator {{ _self.renderClass(config.name ~ '__separator', modifiers) }}">{% endblock %}
 
     {% block unselected %}
         <div class="{{ config.name }}__container {{ config.name }}__container--select {{ _self.renderClass(config.name ~ '__container', modifiers) }}">
@@ -51,7 +55,25 @@
     {% endblock %}
 
     {% block inputs %}
-        <input type="hidden" name="{{ data.formFieldName }}" class="{{ config.jsName }}__input" {% if data.asset %}value="{{ data.asset.reference }}"{% endif %} {{ qa('asset-selector-reference') }}>
+        {% set inputAssetRef %}
+            <input type="hidden" name="{{ data.formFieldName }}" class="{{ config.jsName }}__input {{ config.jsName }}__input-{{ data.id }}" {% if data.asset %}value="{{ data.asset.reference }}"{% endif %} {{ qa('asset-selector-reference') }}>
+        {% endset %}
+
+        {% if data.ajax %}
+            <form action="{{ data.ajax.action }}" method="post">
+                {% block ajax %}
+                    {{ inputAssetRef | raw }}
+
+                    {% for key, value in data.ajax.fields %}
+                        <input type="hidden" name="{{ key }}" value="{{ value }}">
+                    {% endfor %}
+
+                    <button {{ data.ajax.trigger }} class="is-hidden {{ config.jsName }}__ajax-trigger"></button>
+                {% endblock %}
+            </form>
+        {% else %}
+            {{ inputAssetRef | raw }}
+        {% endif %}
     {% endblock %}
 
     {% block selected %}
@@ -83,24 +105,37 @@
             {% block asset %}
                 <div class="{{ config.name }}__content">
                     {% block name %}
-                        <strong class="{{ config.name }}__subtitle {{ config.jsName }}__asset-name" {{ qa('asset-selector-name') }}>
+                        {% set tag = attributes['asset-link-base'] ? 'a' : 'strong' %}
+                        {% set reference =  data.asset is not empty ? data.asset.reference %}
+
+                        <{{ tag }}
+                            {% if attributes['asset-link-base'] %}
+                                href="{{ "#{attributes['asset-link-base']}#{reference}" }}"
+                            {% endif %}
+                            class="{{ config.name }}__subtitle {{ config.jsName }}__asset-name"
+                            {{ qa('asset-selector-name') }}
+                        >
                             {{ data.asset is not empty ? data.asset.name }}
-                        </strong>
+                        </{{ tag }}>
                     {% endblock %}
 
                     {% block data %}
                         <span class="{{ config.name }}__data">
-                            <span class="{{ config.name }}__information">
-                                <span>{{ 'self_service_portal.asset.item.serial' | trans }}:</span>
-                                <span class="{{ config.name }}__asset-text {{ config.jsName }}__asset-serial" {{ qa('asset-selector-serial') }}>{{- data.asset is not empty ? data.asset.serialNumber -}}</span>
-                            </span>
+                            {% block information %}
+                                <span class="{{ config.name }}__information">
+                                    <span>{{ 'self_service_portal.asset.item.serial' | trans }}:</span>
+                                    <span class="{{ config.name }}__asset-text {{ config.jsName }}__asset-serial" {{ qa('asset-selector-serial') }}>{{- data.asset is not empty ? data.asset.serialNumber -}}</span>
+                                </span>
+                            {% endblock %}
 
-                            <span class="{{ config.name }}__status {{ config.jsName }}__asset-status" {{ qa('asset-selector-status') }}>
-                                {% if data.product and data.asset %}
-                                    {% widget 'AssetCompatibilityLabelWidget' args [data.asset.reference, data.product.idProductConcrete] only %}
-                                    {% endwidget %}
-                                {% endif %}
-                            </span>
+                            {% block status %}
+                                <span class="{{ config.name }}__asset-status {{ config.jsName }}__asset-status" {{ qa('asset-selector-status') }}>
+                                    {% if data.product and data.asset %}
+                                        {% widget 'AssetCompatibilityLabelWidget' args [data.asset.reference, data.product.idProductConcrete] only %}
+                                        {% endwidget %}
+                                    {% endif %}
+                                </span>
+                            {% endblock %}
                         </span>
                     {% endblock %}
                 </div>
@@ -132,7 +167,7 @@
             placeholder: data.placeholder,
             dynamicParams: {
                 sspAssetReference: {
-                    selector: ".#{config.jsName}__input",
+                    selector: ".#{config.jsName}__input-#{data.id}",
                     attribute: 'value',
                 },
             },
