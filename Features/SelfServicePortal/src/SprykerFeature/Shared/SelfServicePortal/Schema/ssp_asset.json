@@ -49,9 +49,6 @@
                 "type": {
                     "type": "keyword"
                 },
-                "store": {
-                    "type": "keyword"
-                },
                 "full-text-boosted": {
                     "type": "keyword"
                 },

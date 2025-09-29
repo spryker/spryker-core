@@ -1267,7 +1267,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     {
         return new SspAssetSearchMapper(
             $this->getUtilEncodingService(),
-            $this->getStoreFacade(),
         );
     }
 

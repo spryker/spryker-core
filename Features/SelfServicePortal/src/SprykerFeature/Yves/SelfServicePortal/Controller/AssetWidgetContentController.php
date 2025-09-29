@@ -28,7 +28,7 @@ class AssetWidgetContentController extends AbstractController
     /**
      * @var string
      */
-    protected const REQUEST_PARAM_ID_PRODUCT = 'idProduct';
+    protected const REQUEST_PARAM_SKU = 'sku';
 
     /**
      * @var string
@@ -99,7 +99,7 @@ class AssetWidgetContentController extends AbstractController
 
         return [
             'assets' => $sspAssets,
-            'idProduct' => $request->query->get(static::REQUEST_PARAM_ID_PRODUCT),
+            'sku' => $request->query->get(static::REQUEST_PARAM_SKU),
             'offset' => $offset,
             'limit' => $limit,
             'nbResults' => $nbResults,

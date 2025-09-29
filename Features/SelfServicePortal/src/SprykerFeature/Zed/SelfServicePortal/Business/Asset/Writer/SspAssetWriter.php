@@ -101,7 +101,7 @@ class SspAssetWriter implements SspAssetWriterInterface
                 continue;
             }
 
-            if (!$this->sspAssetValidator->validateAssetTransfer($sspAssetTransfer, $sspAssetCollectionResponseTransfer)) {
+            if (!$this->sspAssetValidator->validateAssetUpdateTransfer($sspAssetTransfer, $sspAssetCollectionResponseTransfer)) {
                 continue;
             }
 

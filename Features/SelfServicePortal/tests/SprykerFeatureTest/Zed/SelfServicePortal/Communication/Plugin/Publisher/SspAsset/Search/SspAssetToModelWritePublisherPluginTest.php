@@ -354,13 +354,11 @@ class SspAssetToModelWritePublisherPluginTest extends Unit
         $this->assertArrayHasKey(SspAssetIndexMap::FULL_TEXT_BOOSTED, $data);
         $this->assertArrayHasKey(SspAssetIndexMap::SUGGESTION_TERMS, $data);
         $this->assertArrayHasKey(SspAssetIndexMap::COMPLETION_TERMS, $data);
-        $this->assertArrayHasKey(SspAssetIndexMap::STORE, $data);
         $this->assertArrayHasKey(SspAssetIndexMap::BUSINESS_UNIT_IDS, $data);
         $this->assertArrayHasKey(SspAssetIndexMap::COMPANY_IDS, $data);
         $this->assertArrayHasKey(SspAssetIndexMap::ID_OWNER_BUSINESS_UNIT, $data);
         $this->assertArrayHasKey(SspAssetIndexMap::ID_OWNER_COMPANY_ID, $data);
 
         $this->assertSame(SelfServicePortalConfig::SSP_ASSET_RESOURCE_NAME, $data[SspAssetIndexMap::TYPE]);
-        $this->assertSame([static::STORE_NAME_AT, static::STORE_NAME_DE], $data[SspAssetIndexMap::STORE]);
     }
 }

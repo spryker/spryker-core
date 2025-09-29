@@ -24,8 +24,8 @@ class SspAssetQueryExpanderPlugin extends AbstractPlugin implements QueryExpande
      * - Expands search query with asset-specific product filtering based on SSP asset reference.
      * - Requires 'ssp-asset-reference' parameter in request parameters.
      * - Validates current company user exists.
-     * - Retrieves SSP asset storage by reference and company user.
-     * - Retrieves SSP model storage transfers by model IDs.
+     * - Retrieves SSP asset from the storage by reference and company user.
+     * - Retrieves SSP models from the storage by model IDs.
      * - Extracts product whitelist IDs from the models.
      * - Applies whitelist filter to restrict search results to products in those whitelists.
      * - Applies no-results filter if any validation step fails or no whitelists are found.

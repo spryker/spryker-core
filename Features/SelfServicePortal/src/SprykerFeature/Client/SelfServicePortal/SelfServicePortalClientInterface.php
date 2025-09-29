@@ -260,4 +260,21 @@ interface SelfServicePortalClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function attachSspAssetToQuoteItem(SspAssetQuoteItemAttachmentRequestTransfer $sspAssetQuoteItemAttachmentRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks asset compatibility with products by SKUs in bulk.
+     * - Returns an array indexed by asset reference and SKU combinations.
+     * - Each result indicates whether the asset is compatible with the product.
+     * - Uses ProductStorageClient to resolve SKUs to product IDs.
+     * - Uses current locale for product data retrieval.
+     *
+     * @api
+     *
+     * @param array<string> $assetReferences
+     * @param array<string> $skus
+     *
+     * @return array<string, array<string, bool>> Indexed by [assetReference][sku] => bool
+     */
+    public function getAssetProductCompatibilityMatrix(array $assetReferences, array $skus): array;
 }

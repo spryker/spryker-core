@@ -163,7 +163,6 @@ class SspAssetWritePublisherPluginTest extends Unit
         $this->assertArrayHasKey(SspAssetIndexMap::FULL_TEXT_BOOSTED, $data);
         $this->assertArrayHasKey(SspAssetIndexMap::SUGGESTION_TERMS, $data);
         $this->assertArrayHasKey(SspAssetIndexMap::COMPLETION_TERMS, $data);
-        $this->assertArrayHasKey(SspAssetIndexMap::STORE, $data);
         $this->assertArrayHasKey(SspAssetIndexMap::BUSINESS_UNIT_IDS, $data);
         $this->assertArrayHasKey(SspAssetIndexMap::COMPANY_IDS, $data);
         $this->assertArrayHasKey(SspAssetIndexMap::ID_OWNER_BUSINESS_UNIT, $data);
@@ -181,8 +180,6 @@ class SspAssetWritePublisherPluginTest extends Unit
             'id_owner_business_unit' => $sspAssetTransfer->getCompanyBusinessUnit()?->getIdCompanyBusinessUnitOrFail(),
             'id_owner_company_id' => $sspAssetTransfer->getCompanyBusinessUnit()?->getFkCompany(),
         ], $data[SspAssetIndexMap::SEARCH_RESULT_DATA]);
-
-        $this->assertSame([static::STORE_NAME_AT, static::STORE_NAME_DE], $data[SspAssetIndexMap::STORE]);
 
         $assignedBusinessUnitIds = array_map(
             fn (SspAssetBusinessUnitAssignmentTransfer $businessUnitAssignment) => $businessUnitAssignment->getCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail(),

@@ -157,8 +157,9 @@ class SspAssetCreationFacadeTest extends Unit
         $sspAssetTransfer = $this->tester->haveAsset($originalData);
         $originalImageId = $sspAssetTransfer->getImage() ? $sspAssetTransfer->getImage()->getIdFile() : null;
 
-        $sspAssetTransfer = (new SspAssetTransfer())
+        $sspAssetUpdateTransfer = (new SspAssetTransfer())
             ->setIdSspAsset($sspAssetTransfer->getIdSspAsset())
+            ->setReference($sspAssetTransfer->getReference())
             ->setName($updateData['name'] ?? $sspAssetTransfer->getName())
             ->setSerialNumber($sspAssetTransfer->getSerialNumber())
             ->setNote($updateData['note'] ?? $sspAssetTransfer->getNote())
@@ -167,17 +168,17 @@ class SspAssetCreationFacadeTest extends Unit
         if (isset($updateData['generateImage'])) {
             if ($updateData['generateImage']) {
                 $imageData = $this->tester->generateSmallFile();
-                $this->tester->attachImageToAsset($sspAssetTransfer, $imageData);
+                $this->tester->attachImageToAsset($sspAssetUpdateTransfer, $imageData);
             } else {
-                if ($sspAssetTransfer->getImage() && $sspAssetTransfer->getImage()->getIdFile()) {
-                    $sspAssetTransfer->getImage()->setToDelete(true);
+                if ($sspAssetUpdateTransfer->getImage() && $sspAssetUpdateTransfer->getImage()->getIdFile()) {
+                    $sspAssetUpdateTransfer->getImage()->setToDelete(true);
                 }
             }
         }
 
         // Act
         $updateResponseTransfer = $this->selfServicePortalFacade->updateSspAssetCollection(
-            (new SspAssetCollectionRequestTransfer())->addSspAsset($sspAssetTransfer),
+            (new SspAssetCollectionRequestTransfer())->addSspAsset($sspAssetUpdateTransfer),
         );
 
         // Assert
@@ -410,7 +411,7 @@ class SspAssetCreationFacadeTest extends Unit
                 'expectedAssetCount' => 0,
                 'expectedName' => 'Test Asset',
                 'expectedValidationErrors' => [
-                    'self_service_portal.asset.validation.business_unit.not_set',
+                    'self_service_portal.asset.validation.company_business_unit.not_set',
                 ],
             ],
         ];

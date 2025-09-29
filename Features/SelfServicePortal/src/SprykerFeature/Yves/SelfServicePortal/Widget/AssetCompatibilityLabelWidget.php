@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \SprykerFeature\Yves\SelfServicePortal\SelfServicePortalFactory getFactory()
+ * @method \SprykerFeature\Client\SelfServicePortal\SelfServicePortalClientInterface getClient()
  */
 class AssetCompatibilityLabelWidget extends AbstractWidget
 {
@@ -27,20 +28,21 @@ class AssetCompatibilityLabelWidget extends AbstractWidget
     /**
      * @var string
      */
-    protected const PARAMETER_ID_PRODUCT = 'idProduct';
+    protected const PARAMETER_SKU = 'sku';
 
-    public function __construct(string $assetReference, int $idProduct)
+    public function __construct(string $assetReference, string $sku)
     {
-        $this->addIsCompatibleParameter($assetReference, $idProduct);
+        $this->addIsCompatibleParameter($assetReference, $sku);
         $this->addAssetReferenceParameter($assetReference);
-        $this->addIdProductParameter($idProduct);
+        $this->addSkuParameter($sku);
     }
 
-    protected function addIsCompatibleParameter(string $assetReference, int $idProduct): void
+    protected function addIsCompatibleParameter(string $assetReference, string $sku): void
     {
-        $isCompatible = $this->getFactory()
-            ->createAssetProductCompatibilityChecker()
-            ->isAssetCompatibleToProduct($assetReference, $idProduct);
+        $compatibilityMatrix = $this->getClient()
+            ->getAssetProductCompatibilityMatrix([$assetReference], [$sku]);
+
+        $isCompatible = $compatibilityMatrix[$assetReference][$sku] ?? false;
 
         $this->addParameter(static::PARAMETER_IS_COMPATIBLE, $isCompatible);
     }
@@ -60,8 +62,8 @@ class AssetCompatibilityLabelWidget extends AbstractWidget
         $this->addParameter(static::PARAMETER_ASSET_REFERENCE, $assetReference);
     }
 
-    protected function addIdProductParameter(int $idProduct): void
+    protected function addSkuParameter(string $sku): void
     {
-        $this->addParameter(static::PARAMETER_ID_PRODUCT, $idProduct);
+        $this->addParameter(static::PARAMETER_SKU, $sku);
     }
 }

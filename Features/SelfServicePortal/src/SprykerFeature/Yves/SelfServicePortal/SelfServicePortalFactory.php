@@ -14,7 +14,6 @@ use Spryker\Client\CompanyUser\CompanyUserClientInterface;
 use Spryker\Client\Customer\CustomerClientInterface;
 use Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface;
 use Spryker\Client\Permission\PermissionClientInterface;
-use Spryker\Client\ProductListStorage\ProductListStorageClientInterface;
 use Spryker\Client\ProductOfferStorage\ProductOfferStorageClientInterface;
 use Spryker\Client\Sales\SalesClientInterface;
 use Spryker\Client\ServicePointSearch\ServicePointSearchClientInterface;
@@ -25,8 +24,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Router\Router\RouterInterface;
 use SprykerFeature\Client\SelfServicePortal\SelfServicePortalClientInterface;
 use SprykerFeature\Service\SelfServicePortal\SelfServicePortalServiceInterface;
-use SprykerFeature\Yves\SelfServicePortal\Asset\Compatibility\AssetProductCompatibilityChecker;
-use SprykerFeature\Yves\SelfServicePortal\Asset\Compatibility\AssetProductCompatibilityCheckerInterface;
 use SprykerFeature\Yves\SelfServicePortal\Asset\Expander\SspAssetExpander;
 use SprykerFeature\Yves\SelfServicePortal\Asset\Expander\SspAssetExpanderInterface;
 use SprykerFeature\Yves\SelfServicePortal\Asset\Form\DataProvider\SspAssetFormDataProvider;
@@ -636,19 +633,5 @@ class SelfServicePortalFactory extends AbstractFactory
     public function getSelfServicePortalClient(): SelfServicePortalClientInterface
     {
         return $this->getClient();
-    }
-
-    public function getProductListStorageClient(): ProductListStorageClientInterface
-    {
-        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_PRODUCT_LIST_STORAGE);
-    }
-
-    public function createAssetProductCompatibilityChecker(): AssetProductCompatibilityCheckerInterface
-    {
-        return new AssetProductCompatibilityChecker(
-            $this->getSelfServicePortalClient(),
-            $this->getProductListStorageClient(),
-            $this->getCompanyUserClient(),
-        );
     }
 }
