@@ -78,6 +78,8 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\SspAssetSearchWri
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\SspAssetSearchWriterInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\SspAssetWriter;
 use SprykerFeature\Zed\SelfServicePortal\Business\Asset\Writer\SspAssetWriterInterface;
+use SprykerFeature\Zed\SelfServicePortal\Business\Company\Validator\CompanyBusinessUnitValidator;
+use SprykerFeature\Zed\SelfServicePortal\Business\Company\Validator\CompanyBusinessUnitValidatorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Creator\FileAttachmentCreator;
 use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\Creator\FileAttachmentCreatorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\CompanyFile\DashboardDataExpander\FileDashboardDataExpander;
@@ -332,7 +334,11 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
 
     public function createSspServiceCustomerPermissionExpander(): SspServiceCustomerPermissionExpanderInterface
     {
-        return new SspServiceCustomerPermissionExpander($this->getCompanyBusinessUnitFacade(), $this->getCompanyFacade());
+        return new SspServiceCustomerPermissionExpander(
+            $this->getCompanyBusinessUnitFacade(),
+            $this->getCompanyFacade(),
+            $this->createCompanyBusinessUnitValidator(),
+        );
     }
 
     public function createFileAttachmentPermissionExpander(): FileAttachmentPermissionExpanderInterface
@@ -834,7 +840,9 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
 
     public function createSspInquiryConditionExpander(): SspInquiryCriteriaExpanderInterface
     {
-        return new SspInquiryCriteriaExpander();
+        return new SspInquiryCriteriaExpander(
+            $this->createCompanyBusinessUnitValidator(),
+        );
     }
 
     public function createSspInquirySspAssetExpander(): SspInquirySspAssetExpanderInterface
@@ -1315,5 +1323,12 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     public function getQuoteFacade(): QuoteFacadeInterface
     {
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_QUOTE);
+    }
+
+    public function createCompanyBusinessUnitValidator(): CompanyBusinessUnitValidatorInterface
+    {
+        return new CompanyBusinessUnitValidator(
+            $this->getCompanyBusinessUnitFacade(),
+        );
     }
 }

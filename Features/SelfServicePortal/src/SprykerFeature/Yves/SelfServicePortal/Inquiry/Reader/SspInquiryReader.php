@@ -39,7 +39,7 @@ class SspInquiryReader implements SspInquiryReaderInterface
         $sspInquiryCriteriaTransfer->setPagination($this->createPaginationTransfer($request));
 
         if (!$sspInquiryCriteriaTransfer->getSspInquiryConditions()) {
-              $sspInquiryCriteriaTransfer->setSspInquiryConditions(new SspInquiryConditionsTransfer());
+            $sspInquiryCriteriaTransfer->setSspInquiryConditions(new SspInquiryConditionsTransfer());
         }
 
         return $this->selfServicePortalClient->getSspInquiryCollection($sspInquiryCriteriaTransfer);
@@ -47,16 +47,16 @@ class SspInquiryReader implements SspInquiryReaderInterface
 
     public function getSspInquiry(string $reference, CompanyUserTransfer $companyUserTransfer): ?SspInquiryTransfer
     {
-          $sspInquiryCollectionResponseTransfer = $this->selfServicePortalClient->getSspInquiryCollection(
-              (new SspInquiryCriteriaTransfer())->setSspInquiryConditions(
-                  (new SspInquiryConditionsTransfer())
+        $sspInquiryCollectionResponseTransfer = $this->selfServicePortalClient->getSspInquiryCollection(
+            (new SspInquiryCriteriaTransfer())->setSspInquiryConditions(
+                (new SspInquiryConditionsTransfer())
                     ->addReference($reference)
                     ->setSspInquiryOwnerConditionGroup(
                         (new SspInquiryOwnerConditionGroupTransfer())
                             ->setIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit())
                             ->setIdCompany($companyUserTransfer->getFkCompany()),
                     ),
-              )
+            )
                 ->setInclude(
                     (new SspInquiryIncludeTransfer())
                         ->setWithCompanyUser(true)
@@ -65,7 +65,7 @@ class SspInquiryReader implements SspInquiryReaderInterface
                         ->setWithManualEvents(true)
                         ->setWithSspAsset(true),
                 ),
-          );
+        );
 
         if ($sspInquiryCollectionResponseTransfer->getSspInquiries()->count() === 0) {
             return null;

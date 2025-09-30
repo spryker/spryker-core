@@ -84,15 +84,40 @@ class FileSearchFilterFormDataProvider
     }
 
     /**
-     * @return array<string, array<string, string>>
+     * @return array<string, array<string, mixed>|string>
      */
     public function getOptions(): array
     {
+        $businessEntities = $this->getBusinessEntityChoices();
+
         return [
             FileSearchFilterForm::OPTION_FILE_TYPES => $this->getFileTypesChoices(),
-            FileSearchFilterForm::OPTION_BUSINESS_ENTITIES => $this->getBusinessEntityChoices(),
+            FileSearchFilterForm::OPTION_BUSINESS_ENTITIES => $businessEntities,
             FileSearchFilterForm::OPTION_SSP_ASSET_ENTITIES => $this->getSspAssetEntityChoices(),
+            FileSearchFilterForm::OPTION_DEFAULT_BUSINESS_ENTITY => $this->getDefaultBusinessEntityValue($businessEntities),
         ];
+    }
+
+    /**
+     * @param array<string, mixed> $businessEntities
+     *
+     * @return string
+     */
+    public function getDefaultBusinessEntityValue(array $businessEntities): string
+    {
+        $companyUserTransfer = $this->companyUserClient->findCompanyUser();
+
+        if (!$companyUserTransfer || !$companyUserTransfer->getCompanyBusinessUnit()) {
+            return static::FILE_ATTACHMENT_TYPE_ALL;
+        }
+
+        $activeBusinessUnitUuid = $companyUserTransfer->getCompanyBusinessUnit()->getUuid();
+
+        if (!$activeBusinessUnitUuid || !array_key_exists($activeBusinessUnitUuid, $businessEntities)) {
+            return static::FILE_ATTACHMENT_TYPE_ALL;
+        }
+
+        return $activeBusinessUnitUuid;
     }
 
     /**

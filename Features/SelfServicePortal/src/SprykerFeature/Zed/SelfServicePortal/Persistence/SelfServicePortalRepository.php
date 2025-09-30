@@ -568,6 +568,14 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
                 ->endUse();
         }
 
+        if ($sspInquiryConditions->getSearchString()) {
+            $searchText = '%' . $sspInquiryConditions->getSearchStringOrFail() . '%';
+            $sspInquiryQuery
+                ->filterBySubject_Like($searchText)
+                    ->_or()
+                ->filterByReference_Like($searchText);
+        }
+
         return $sspInquiryQuery;
     }
 

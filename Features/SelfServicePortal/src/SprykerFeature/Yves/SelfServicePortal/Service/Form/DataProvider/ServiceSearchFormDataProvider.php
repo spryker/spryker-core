@@ -105,9 +105,12 @@ class ServiceSearchFormDataProvider
      */
     public function getOptions(): array
     {
+        $companyBusinessUnitChoices = $this->getCompanyBusinessUnitChoices();
+
         return [
             ServiceSearchForm::OPTION_SERVICE_SEARCH_TYPES => $this->getServiceSearchTypes(),
-            ServiceSearchForm::OPTION_COMPANY_BUSINESS_UNIT_CHOICES => $this->getCompanyBusinessUnitChoices(),
+            ServiceSearchForm::OPTION_COMPANY_BUSINESS_UNIT_CHOICES => $companyBusinessUnitChoices,
+            ServiceSearchForm::OPTION_DEFAULT_BUSINESS_UNIT => $this->getDefaultBusinessUnitValue($companyBusinessUnitChoices),
         ];
     }
 
@@ -117,6 +120,34 @@ class ServiceSearchFormDataProvider
     public function getData(): array
     {
         return [];
+    }
+
+    /**
+     * @param array<string, string> $companyBusinessUnitChoices
+     *
+     * @return string|null
+     */
+    public function getDefaultBusinessUnitValue(array $companyBusinessUnitChoices): ?string
+    {
+        $customerTransfer = $this->customerClient->getCustomer();
+
+        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
+            return null;
+        }
+
+        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
+
+        if (!$companyUserTransfer->getCompanyBusinessUnit()) {
+            return null;
+        }
+
+        $activeBusinessUnitUuid = $companyUserTransfer->getCompanyBusinessUnit()->getUuid();
+
+        if (!$activeBusinessUnitUuid || !array_key_exists($activeBusinessUnitUuid, array_flip($companyBusinessUnitChoices))) {
+            return null;
+        }
+
+        return $activeBusinessUnitUuid;
     }
 
     /**
@@ -145,7 +176,7 @@ class ServiceSearchFormDataProvider
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
         $idCompanyUser = $companyUserTransfer->getIdCompanyUserOrFail();
 
-        if ($this->can(static::PERMISSION_SEE_COMPANY_ORDERS, $idCompanyUser)) { // THIS IS Ok (fail fast) ZED mirror created
+        if ($this->can(static::PERMISSION_SEE_COMPANY_ORDERS, $idCompanyUser)) {
             $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
                 ->setIdCompany($companyUserTransfer->getFkCompany())
                 ->setWithoutExpanders(true);
@@ -157,7 +188,7 @@ class ServiceSearchFormDataProvider
 
         $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
 
-        if ($this->can(static::PERMISSION_SEE_BUSINESS_UNIT_ORDERS, $idCompanyUser)) { // THIS IS Ok (fail fast) ZED mirror created
+        if ($this->can(static::PERMISSION_SEE_BUSINESS_UNIT_ORDERS, $idCompanyUser)) {
             $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit(
                 $companyUserTransfer->getCompanyBusinessUnitOrFail(),
             );
@@ -168,7 +199,7 @@ class ServiceSearchFormDataProvider
 
     protected function can(string $permissionKey, int $idCompanyUser): bool
     {
-        return $this->permissionClient->can($permissionKey, $idCompanyUser); // THIS IS Ok (fail fast) ZED mirror created
+        return $this->permissionClient->can($permissionKey, $idCompanyUser);
     }
 
     /**

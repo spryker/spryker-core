@@ -8,6 +8,7 @@
 namespace SprykerFeatureTest\Zed\SelfServicePortal\Business\Facade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
@@ -437,6 +438,70 @@ class GetSspServiceCollectionTest extends Unit
         $this->assertSame(2, $responsePaginationTransfer->getPage());
         $this->assertSame(1, $responsePaginationTransfer->getMaxPerPage());
         $this->assertSame(3, $responsePaginationTransfer->getLastPage());
+    }
+
+    public function testGetSspServiceCollectionReturnsFilteredServicesByCompanyBusinessUnitUuid(): void
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany();
+        $seeCompanyOrdersPermissionTransfer = $this->tester->havePermission(new SeeCompanyOrdersPermissionPlugin());
+
+        $permissionCollectionTransfer = (new PermissionCollectionTransfer())
+            ->addPermission($seeCompanyOrdersPermissionTransfer);
+
+        $companyUserTransfer = $this->tester->haveCompanyUserWithPermissions(
+            $companyTransfer,
+            $permissionCollectionTransfer,
+        );
+
+        $targetBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+           CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyBusinessUnitTransfer::NAME => 'Target Business Unit',
+        ]);
+
+        $anotherBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyBusinessUnitTransfer::NAME => 'Another Business Unit',
+        ]);
+
+        $targetCompanyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $targetBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+            CompanyUserTransfer::CUSTOMER => $this->tester->haveCustomer(),
+        ]);
+        $targetCompanyUserTransfer->setCompany($companyTransfer);
+        $targetCompanyUserTransfer->setCompanyBusinessUnit($targetBusinessUnitTransfer);
+
+        $anotherCompanyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $anotherBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+            CompanyUserTransfer::CUSTOMER => $this->tester->haveCustomer(),
+        ]);
+        $anotherCompanyUserTransfer->setCompany($companyTransfer);
+        $anotherCompanyUserTransfer->setCompanyBusinessUnit($anotherBusinessUnitTransfer);
+
+        $targetSaveOrderTransfer = $this->haveCompanyUserOrder($targetCompanyUserTransfer);
+        $anotherSaveOrderTransfer = $this->haveCompanyUserOrder($anotherCompanyUserTransfer);
+
+        $salesProductClassTransfer = $this->tester->haveSalesProductClass([
+            SalesProductClassTransfer::NAME => static::DEFAULT_PRODUCT_CLASS_NAME,
+        ]);
+
+        $targetSalesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($targetSaveOrderTransfer->getIdSalesOrderOrFail(), ['process' => static::DEFAULT_OMS_PROCESS_NAME]);
+        $this->tester->haveSalesOrderItemToProductClass($targetSalesOrderItemEntity->getIdSalesOrderItem(), $salesProductClassTransfer->getIdSalesProductClassOrFail());
+
+        $anotherSalesOrderItemEntity = $this->tester->createSalesOrderItemForOrder($anotherSaveOrderTransfer->getIdSalesOrderOrFail(), ['process' => static::DEFAULT_OMS_PROCESS_NAME]);
+        $this->tester->haveSalesOrderItemToProductClass($anotherSalesOrderItemEntity->getIdSalesOrderItem(), $salesProductClassTransfer->getIdSalesProductClassOrFail());
+
+        $sspServiceCriteriaTransfer = $this->createSspServiceCriteriaTransfer($companyUserTransfer);
+        $sspServiceCriteriaTransfer->getServiceConditionsOrFail()->setCompanyBusinessUnitUuid($targetBusinessUnitTransfer->getUuidOrFail());
+
+        // Act
+        $sspServiceCollectionTransfer = $this->tester->getFacade()->getSspServiceCollection($sspServiceCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $sspServiceCollectionTransfer->getServices());
+        $this->assertSame($targetSaveOrderTransfer->getOrderReference(), $sspServiceCollectionTransfer->getServices()->getIterator()->current()->getOrder()->getOrderReference());
     }
 
     protected function createSspServiceCriteriaTransfer(CompanyUserTransfer $companyUserTransfer): SspServiceCriteriaTransfer

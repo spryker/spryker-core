@@ -27,12 +27,21 @@ class SspAssetSearchFiltersForm extends AbstractType
      */
     public const SCOPE_OPTIONS = 'scope_options';
 
+    /**
+     * @var string
+     */
+    public const SCOPE_DEFAULT_OPTION = 'scope_default_option';
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
         $resolver->setRequired([
             static::SCOPE_OPTIONS,
+        ]);
+
+        $resolver->setDefined([
+            static::SCOPE_DEFAULT_OPTION,
         ]);
     }
 
@@ -55,9 +64,12 @@ class SspAssetSearchFiltersForm extends AbstractType
      */
     protected function addScopeField(FormBuilderInterface $builder, array $options)
     {
+        $defaultValue = $options[static::SCOPE_DEFAULT_OPTION] ?? null;
+
         $builder->add(static::FIELD_SCOPE, ChoiceType::class, [
             'required' => false,
             'choices' => $options[static::SCOPE_OPTIONS],
+            'data' => $defaultValue,
             'label' => 'customer.ssp_asset.filter.scope',
             'placeholder' => 'customer.ssp_asset.filter.scope.placeholder',
             'attr' => [

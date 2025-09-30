@@ -67,6 +67,10 @@ class FileSearchFilterSubForm extends AbstractType
             FileSearchFilterForm::OPTION_BUSINESS_ENTITIES,
             FileSearchFilterForm::OPTION_SSP_ASSET_ENTITIES,
         ]);
+
+        $resolver->setDefined([
+            FileSearchFilterForm::OPTION_DEFAULT_BUSINESS_ENTITY,
+        ]);
     }
 
     /**
@@ -153,12 +157,14 @@ class FileSearchFilterSubForm extends AbstractType
      */
     protected function addBusinessEntityField(FormBuilderInterface $builder, array $options)
     {
+        $defaultValue = $options[FileSearchFilterForm::OPTION_DEFAULT_BUSINESS_ENTITY] ?? FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_ALL;
+
         $builder->add(static::FIELD_BUSINESS_ENTITY, ChoiceType::class, [
             'choices' => array_flip($options[FileSearchFilterForm::OPTION_BUSINESS_ENTITIES]),
             'required' => false,
             'placeholder' => false,
             'label' => 'self_service_portal.company_file.file_search_filter_form.field.business_entity.label',
-            'data' => FileSearchFilterFormDataProvider::FILE_ATTACHMENT_TYPE_ALL,
+            'data' => $defaultValue,
             'attr' => [
                 'data-qa' => 'filter-business-entity',
             ],

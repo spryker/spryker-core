@@ -208,7 +208,7 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
                 ->setWithBusinessUnitRelation(true),
             default =>
             $fileAttachmentCriteriaTransfer
-                ->setWithBusinessUnitRelation(true),
+                ->setWithBusinessUnitRelation(true)
         };
 
         if (
@@ -220,6 +220,7 @@ class FileSearchFilterFormHandler implements FileSearchFilterFormHandlerInterfac
             ])
         ) {
             $fileAttachmentCriteriaTransfer
+                ->setWithCompanyUserRelation(true)
                 ->getFileAttachmentConditionsOrFail()
                 ->addBusinessUnitUuid($businessUnitEntity);
         }

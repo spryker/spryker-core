@@ -431,7 +431,12 @@ class SelfServicePortalFactory extends AbstractFactory
 
     public function getSspInquirySearchFormDataProvider(): SspInquirySearchFormDataProvider
     {
-        return new SspInquirySearchFormDataProvider($this->getConfig(), $this->getStoreClient()->getCurrentStore()->getTimezone());
+        return new SspInquirySearchFormDataProvider(
+            $this->getConfig(),
+            $this->getStoreClient()->getCurrentStore()->getTimezone(),
+            $this->getCompanyUserClient(),
+            $this->getCompanyBusinessUnitClient(),
+        );
     }
 
     public function getRequestStack(): RequestStack
@@ -573,7 +578,10 @@ class SelfServicePortalFactory extends AbstractFactory
 
     public function createSspAssetSearchFormDataProvider(): SspAssetSearchFormDataProvider
     {
-        return new SspAssetSearchFormDataProvider();
+        return new SspAssetSearchFormDataProvider(
+            $this->getCompanyUserClient(),
+            $this->getCompanyBusinessUnitClient(),
+        );
     }
 
     public function createSspAssetSearchFormHandler(): SspAssetSearchFormHandlerInterface

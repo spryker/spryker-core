@@ -55,6 +55,7 @@ class SspAssetSearchForm extends AbstractType
 
         $resolver->setRequired([
             SspAssetSearchFiltersForm::SCOPE_OPTIONS,
+            SspAssetSearchFiltersForm::SCOPE_DEFAULT_OPTION,
         ]);
     }
 

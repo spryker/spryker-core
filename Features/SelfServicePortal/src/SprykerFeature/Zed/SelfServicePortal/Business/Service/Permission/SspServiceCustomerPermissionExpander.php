@@ -13,14 +13,30 @@ use Generated\Shared\Transfer\SspServiceCriteriaTransfer;
 use Spryker\Zed\Company\Business\CompanyFacadeInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
+use SprykerFeature\Zed\SelfServicePortal\Business\Company\Validator\CompanyBusinessUnitValidatorInterface;
 
 class SspServiceCustomerPermissionExpander implements SspServiceCustomerPermissionExpanderInterface
 {
     use PermissionAwareTrait;
 
+    /**
+     * @uses \Spryker\Zed\CompanySalesConnector\Communication\Plugin\Permission\SeeCompanyOrdersPermissionPlugin
+     *
+     * @var string
+     */
+    protected const PERMISSION_SEE_COMPANY_ORDERS = 'SeeCompanyOrdersPermissionPlugin';
+
+    /**
+     * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Plugin\Permission\SeeBusinessUnitOrdersPermissionPlugin
+     *
+     * @var string
+     */
+    protected const PERMISSION_SEE_BUSINESS_UNIT_ORDERS = 'SeeBusinessUnitOrdersPermissionPlugin';
+
     public function __construct(
         protected CompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
-        protected CompanyFacadeInterface $companyFacade
+        protected CompanyFacadeInterface $companyFacade,
+        protected CompanyBusinessUnitValidatorInterface $companyBusinessUnitValidator
     ) {
     }
 
@@ -34,17 +50,23 @@ class SspServiceCustomerPermissionExpander implements SspServiceCustomerPermissi
 
         $serviceConditionsTransfer = $sspServiceCriteriaTransfer->getServiceConditionsOrFail();
         $idCompanyUser = $companyUserTransfer->getIdCompanyUserOrFail();
+        $companyBusinessUnitUuid = $serviceConditionsTransfer->getCompanyBusinessUnitUuid();
 
         $serviceConditionsTransfer->setCompanyUuid(null);
-        $serviceConditionsTransfer->setCompanyBusinessUnitUuid(null);
 
-        if ($this->can('SeeCompanyOrdersPermissionPlugin', $idCompanyUser)) {
+        if ($companyBusinessUnitUuid && $this->companyBusinessUnitValidator->isCompanyBusinessUnitUuidBelongsToCompany($companyUserTransfer, $companyBusinessUnitUuid)) {
+            $serviceConditionsTransfer->setCompanyBusinessUnitUuid($companyBusinessUnitUuid);
+
+            return $sspServiceCriteriaTransfer;
+        }
+
+        if ($this->can(static::PERMISSION_SEE_COMPANY_ORDERS, $idCompanyUser)) {
             $serviceConditionsTransfer->setCompanyUuid($this->getCompanyUuid($companyUserTransfer));
 
             return $sspServiceCriteriaTransfer;
         }
 
-        if ($this->can('SeeBusinessUnitOrdersPermissionPlugin', $idCompanyUser)) {
+        if ($this->can(static::PERMISSION_SEE_BUSINESS_UNIT_ORDERS, $idCompanyUser)) {
             $serviceConditionsTransfer->setCompanyBusinessUnitUuid($this->getCompanyBusinessUnitUuid($companyUserTransfer));
 
             return $sspServiceCriteriaTransfer;
