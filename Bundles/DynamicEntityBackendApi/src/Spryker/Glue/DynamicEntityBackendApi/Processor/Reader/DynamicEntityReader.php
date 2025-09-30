@@ -200,7 +200,9 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
             if (array_key_exists($dynamicEntityConfigurationRelationTransfer->getChildDynamicEntityConfigurationOrFail()->getIdDynamicEntityConfigurationOrFail(), $dynamicEntityConfigurationTransfers) === false) {
                 continue;
             }
-            $dynamicEntityConfigurationRelationTransfer->setChildDynamicEntityConfiguration($dynamicEntityConfiguration);
+            $childConfigurationId = $dynamicEntityConfigurationRelationTransfer->getChildDynamicEntityConfigurationOrFail()->getIdDynamicEntityConfigurationOrFail();
+            $childConfiguration = $dynamicEntityConfigurationTransfers[$childConfigurationId];
+            $dynamicEntityConfigurationRelationTransfer->setChildDynamicEntityConfiguration($childConfiguration);
             $newRelations[] = $dynamicEntityConfigurationRelationTransfer;
         }
 
