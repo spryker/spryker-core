@@ -39,4 +39,15 @@ interface MerchantProductOfferDataImportFacadeInterface
     public function importMerchantProductOfferStoreData(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer;
+
+    /**
+     * Specification:
+     * - Imports data from a specified file.
+     * - Iterates over the data sets and imports the combined merchant product offer data into the database.
+     *
+     * @api
+     */
+    public function importMerchantCombinedMerchantProductOffer(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer;
 }

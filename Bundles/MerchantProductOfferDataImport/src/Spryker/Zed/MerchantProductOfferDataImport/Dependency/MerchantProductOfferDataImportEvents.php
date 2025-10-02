@@ -15,4 +15,32 @@ interface MerchantProductOfferDataImportEvents
      * @var string
      */
     public const PRODUCT_CONCRETE_UPDATE = 'Product.product_concrete.update';
+
+    /**
+     * @uses \Spryker\Zed\PriceProductOffer\Dependency\PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH = 'Entity.spy_price_product_offer.publish';
+
+    /**
+     * @uses \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::PRODUCT_OFFER_PUBLISH
+     *
+     * @var string
+     */
+    public const PRODUCT_OFFER_PUBLISH = 'ProductOffer.product_offer.publish';
+
+    /**
+     * @uses \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::PRODUCT_OFFER_STORE_PUBLISH
+     *
+     * @var string
+     */
+    public const PRODUCT_OFFER_STORE_PUBLISH = 'ProductOfferStore.publish';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferStock\Dependency\ProductOfferStockEvents::ENTITY_SPY_PRODUCT_OFFER_STOCK_PUBLISH
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_PRODUCT_OFFER_STOCK_PUBLISH = 'ProductOffer.spy_product_offer_stock.publish';
 }

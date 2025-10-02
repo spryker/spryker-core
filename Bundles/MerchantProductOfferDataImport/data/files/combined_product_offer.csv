@@ -1,0 +1,1 @@
+offer_reference,concrete_sku,merchant_sku,is_active,store_relations,stock.%WAREHOUSE_NAME%.quantity,stock.%WAREHOUSE_NAME%.is_never_out_of_stock,price.%STORE%.%PRICE_TYPE%.%CURRENCY%.value_net,price.%STORE%.%PRICE_TYPE%.%CURRENCY%.value_gross

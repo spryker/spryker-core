@@ -6,7 +6,7 @@
 >
 
     <transfer name="Merchant">
-        <property name="merchantReference" dataBuilderRule="unique()->sentence()"/>
+        <property name="merchantReference" dataBuilderRule="unique()->regexify('MER-[A-Z0-9]{6}')"/>
     </transfer>
 
     <transfer name="MerchantOrder">
