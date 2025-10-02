@@ -4,7 +4,7 @@
     "description": "SessionFile module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker-shop/session-agent-validation-extension": "^1.0.0",
         "spryker-shop/session-customer-validation-page-extension": "^1.0.0",
         "spryker/kernel": "^3.33.0",

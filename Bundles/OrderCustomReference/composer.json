@@ -4,7 +4,7 @@
     "description": "OrderCustomReference module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/cart-reorder-extension": "^1.0.0",
         "spryker/kernel": "^3.33.0",
         "spryker/persistent-cart": "^3.0.0",

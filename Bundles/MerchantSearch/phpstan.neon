@@ -1,5 +1,7 @@
 parameters:
+    ignoreErrors:
+        -
+            identifier: missingType.iterableValue
     level: 8
-    checkMissingIterableValueType: false
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/MerchantSearch/src/Spryker/Client/MerchantSearch/Plugin/Elasticsearch/Query/MerchantSearchQueryPlugin.php'

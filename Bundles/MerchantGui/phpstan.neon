@@ -1,4 +1,9 @@
 parameters:
     level: 7
-    checkGenericClassInNonGenericObjectType: false
-    checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+#        For compatibility with Symfony 5.4+
+        - message: '#PHPDoc tag @implements contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
+        -
+            identifier: missingType.iterableValue
+

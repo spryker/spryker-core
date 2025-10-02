@@ -4,7 +4,7 @@
     "description": "MerchantProductOfferSearch module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/event": "^2.6.0",
         "spryker/event-behavior": "^1.8.0",
         "spryker/kernel": "^3.76.0",

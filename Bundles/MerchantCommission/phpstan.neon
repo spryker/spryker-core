@@ -1,2 +1,4 @@
 parameters:
     level: 8
+    ignoreErrors:
+        - '#Parameter \#3 \$data_compare_func of function array_uintersect expects callable\(.+\): int, .+ given\.#'

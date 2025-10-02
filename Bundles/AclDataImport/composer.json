@@ -4,7 +4,7 @@
     "description": "AclDataImport module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/acl": "^3.8.0",
         "spryker/data-import": "^1.14.0",
         "spryker/kernel": "^3.30.0"

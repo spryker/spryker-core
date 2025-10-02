@@ -1,7 +1,8 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Method Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\.+BatchIterator::valid\(\) should return bool but returns int<0, max>.#'
         - '#Method Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\.+BatchIterator::count\(\) should return int<0, max> but returns int.#'
+        -
+            identifier: missingType.iterableValue

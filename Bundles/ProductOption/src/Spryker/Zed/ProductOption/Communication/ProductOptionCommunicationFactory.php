@@ -162,7 +162,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<array-key, mixed>|null, array<array-key, mixed>>
      */
     public function createArrayToArrayObjectTransformer()
     {
@@ -170,7 +170,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<list<string>|null, string>
      */
     public function createStringToArrayTransformer()
     {
@@ -180,7 +180,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use {@link createPriceTransformer()} instead.
      *
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<int|null, string|null>
      */
     public function createPriceTranformer()
     {
@@ -188,7 +188,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<int|null, string|null>
      */
     public function createPriceTransformer()
     {

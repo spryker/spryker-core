@@ -1,9 +1,10 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Instantiated class .+NativePasswordEncoder not found.#'
         - '#Method .+PasswordEncoderAdapter::getPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+NativePasswordEncoder.#'
         - '#Call to method isPasswordValid\(\) on an unknown class Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface.#'
         - '#Method .+PasswordEncoderAdapter::getPasswordEncoder\(\) has invalid return type Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface.#'
+        -
+            identifier: missingType.iterableValue

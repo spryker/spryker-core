@@ -1,6 +1,6 @@
 # Discount Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/discount/v/stable.svg)](https://packagist.org/packages/spryker/discount)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.3-8892BF.svg)](https://php.net/)
 
 Discount module allows to create dynamic rules with which discounts can be applied to cart items.
 Discounts can be exclusive or nonexclusive. Exclusive discounts cannot be combined with other discounts. In case if multiple exclusive discounts are applicable, only the one with the highest discounted value will be applied.

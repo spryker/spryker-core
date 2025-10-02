@@ -4,7 +4,7 @@
     "description": "CommentUserConnector module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/comment": "^1.4.0",
         "spryker/comment-extension": "^1.1.0",
         "spryker/kernel": "^3.30.0",

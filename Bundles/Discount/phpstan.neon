@@ -1,11 +1,15 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
+#        For compatibility with Symfony 5.4+
+        - message: '#PHPDoc tag @return contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
+        - message: '#PHPDoc tag @implements contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
         - '#Parameter \#1 \$value of method .+ClauseTransfer::setValue\(\) expects string\|null, int given.#'
         - '#Parameter \#1 \$grossAmount of method .+MoneyValueTransfer::setGrossAmount\(\) expects int\|null, string given.#'
         - '#Parameter \#1 \$amount of method .+DiscountCalculatorTransfer::setAmount\(\) expects string\|null, .+ given.#'
         - '#Parameter \#1 \$v of method .+SpyDiscount::setAmount\(\) expects int, string\|null given.#'
         - '#PHPDoc tag @throws with type UnexpectedTypeException is not subtype of Throwable#'
         - '#Call to an undefined method Orm\\.+Query::useSpyDiscountStoreQuery\(\).#'
+        -
+            identifier: missingType.iterableValue

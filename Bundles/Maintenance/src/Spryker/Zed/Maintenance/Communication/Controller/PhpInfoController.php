@@ -44,7 +44,7 @@ class PhpInfoController extends AbstractController
 
         preg_match("/<body[^>]*>(.*?)<\/body>/is", (string)$phpInfo, $matches);
 
-        $phpInfoContent = $matches[1];
+        $phpInfoContent = $matches[1] ?? '';
         $phpInfoContent = str_replace('div class="center"', 'div class="phpinfo-content"', $phpInfoContent);
 
         return $this->removePhpLicenseInfo($phpInfoContent);

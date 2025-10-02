@@ -4,7 +4,7 @@
     "description": "AnalyticsGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/analytics-gui-extension": "^1.0.0",
         "spryker/gui": "^3.55.0",
         "spryker/kernel": "^3.30.0",

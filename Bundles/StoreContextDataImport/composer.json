@@ -4,7 +4,7 @@
     "description": "StoreContextDataImport module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/data-import": "^1.0.0",
         "spryker/kernel": "^3.33.0",
         "spryker/store": "^1.19.0",

@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "league/csv": "^9.2",
-        "php": ">=8.2"
+        "php": ">=8.3"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

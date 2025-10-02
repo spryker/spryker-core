@@ -1,6 +1,7 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Cannot access offset .+ on .+array.#'
+        -
+            identifier: missingType.iterableValue

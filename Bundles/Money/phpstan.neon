@@ -1,7 +1,8 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Parameter \#1 \$left_operand of function bcdiv expects string, int given.#'
         - '#Parameter \#1 \$num1 of function bcdiv expects string, int given.#'
+        -
+            identifier: missingType.iterableValue

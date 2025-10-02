@@ -4,7 +4,7 @@
     "description": "CompaniesRestApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/company": "^1.4.0",
         "spryker/glue-application": "^1.15.0",
         "spryker/glue-application-extension": "^1.0.0",

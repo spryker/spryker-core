@@ -4,7 +4,7 @@
     "description": "Quote module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/agent-extension": "^1.0.0",
         "spryker/cart-reorder-extension": "^1.3.0",
         "spryker/comment-extension": "^1.0.0",

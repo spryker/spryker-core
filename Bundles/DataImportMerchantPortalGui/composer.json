@@ -4,7 +4,7 @@
     "description": "DataImportMerchantPortalGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/data-import-merchant": "^1.0.0",
         "spryker/file-system": "^2.0.0",

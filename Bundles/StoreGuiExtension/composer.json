@@ -4,7 +4,7 @@
     "description": "StoreGuiExtension module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/transfer": "^3.0.0"
     },
     "require-dev": {

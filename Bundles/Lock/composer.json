@@ -4,7 +4,7 @@
     "description": "Lock module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/kernel": "^3.30.0",
         "spryker/oms-extension": "^1.6.0",
         "spryker/storage-redis": "^1.8.0",

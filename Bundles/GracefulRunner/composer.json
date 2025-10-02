@@ -4,7 +4,7 @@
     "description": "GracefulRunner module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "seld/signal-handler": "^1.2.0 || ^2.0.0",
         "spryker/kernel": "^3.30.0"
     },

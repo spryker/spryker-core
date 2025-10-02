@@ -4,7 +4,7 @@
     "description": "DataImport module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/config": "^3.0.0",
         "spryker/data-import-extension": "^1.2.0",
         "spryker/error-handler": "^2.1.0",

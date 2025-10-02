@@ -4,7 +4,7 @@
     "description": "ProductOfferStockGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/kernel": "^3.30.0",
         "spryker/product-offer-gui-extension": "^1.0.0",
         "spryker/product-offer-stock": "^1.0.0",

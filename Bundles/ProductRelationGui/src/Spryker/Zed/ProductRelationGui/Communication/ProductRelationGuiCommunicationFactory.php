@@ -49,7 +49,7 @@ use Symfony\Component\Validator\Constraint;
 class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer|null, string|null>
      */
     public function createRuleSetTransformer(): DataTransformerInterface
     {

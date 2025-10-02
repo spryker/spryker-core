@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Strict comparison using === between '''' and ''GLUE'' will always evaluate to false.#'
         - '#Strict comparison using === between '''' and ''YVES'' will always evaluate to false.#'
@@ -15,5 +14,6 @@ parameters:
         - '#Parameter \#1 \$record of method .+ProcessorInterface::__invoke\(\) expects .+, array given.#'
         - '#Parameter \#1 \$record of method .+PsrLogMessageProcessor::__invoke\(\) expects .+, array given.#'
         - '#Parameter \#3 \$level of class .+BufferHandler constructor expects .+, int\|string given.#'
-
+        -
+            identifier: missingType.iterableValue
     reportUnmatchedIgnoredErrors: false

@@ -1,6 +1,8 @@
 parameters:
     level: 7
-    checkGenericClassInNonGenericObjectType: false
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method .+SpyConfigurableBundleTemplateQuery\|.+SpyProductAbstractQuery\|.+SpyProductImageSetToProductImageQuery\|.+SpyProductSetQuery::orderBySortOrder\(\).#'
+        -
+            identifier: missingType.iterableValue
+        -
+            identifier: missingType.generics

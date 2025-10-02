@@ -4,7 +4,7 @@
     "description": "MerchantProductOfferDataImport module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/currency": "^4.6.0",
         "spryker/data-import": "^1.30.0",
         "spryker/data-import-merchant-extension": "^1.0.0",

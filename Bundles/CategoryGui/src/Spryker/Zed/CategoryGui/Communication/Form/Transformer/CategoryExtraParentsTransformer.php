@@ -10,6 +10,9 @@ namespace Spryker\Zed\CategoryGui\Communication\Form\Transformer;
 use ArrayObject;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\NodeTransfer>, array<\Generated\Shared\Transfer\NodeTransfer>>
+ */
 class CategoryExtraParentsTransformer implements DataTransformerInterface
 {
     /**
@@ -25,7 +28,7 @@ class CategoryExtraParentsTransformer implements DataTransformerInterface
     /**
      * @param array<\Generated\Shared\Transfer\NodeTransfer> $value
      *
-     * @return \ArrayObject<int|string, \Generated\Shared\Transfer\NodeTransfer>
+     * @return \ArrayObject<int|string, \Generated\Shared\Transfer\NodeTransfer>|null
      */
     public function reverseTransform($value)
     {

@@ -1,6 +1,8 @@
 parameters:
+    ignoreErrors:
+        -
+            identifier: missingType.iterableValue
     level: 8
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     dynamicConstantNames:
         - APPLICATION

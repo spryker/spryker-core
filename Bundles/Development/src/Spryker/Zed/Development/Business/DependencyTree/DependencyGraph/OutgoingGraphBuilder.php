@@ -72,6 +72,7 @@ class OutgoingGraphBuilder
     {
         $this->graph->init('Outgoing dependencies', ['bgcolor' => '#f3f3f4']);
 
+        /** @phpstan-var \ArrayObject<string, array> $allDependencies */
         $allDependencies = new ArrayObject();
         $this->buildGraph($this->bundleName, $allDependencies);
 

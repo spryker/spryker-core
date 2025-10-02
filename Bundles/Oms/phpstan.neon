@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     ignoreErrors:
         - { message: '#Result of && is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Plugin/Oms/Command/CommandCollection.php' }
         - { message: '#Result of && is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Plugin/Oms/Condition/ConditionCollection.php' }
@@ -9,3 +8,5 @@ parameters:
         - '#Parameter \#1 \$string of method .+ConnectionInterface::quote\(\) expects string, int given.#'
         - '#SimpleXMLElement.+does not accept string.#'
         - '#Argument of an invalid type array\|.+CommandCollectionInterface supplied for foreach, only iterables are supported.#'
+        -
+            identifier: missingType.iterableValue

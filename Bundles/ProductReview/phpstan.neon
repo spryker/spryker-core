@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/ProductReview/src/Spryker/Client/ProductReview/Plugin/Elasticsearch/Query/ProductReviewsQueryPlugin.php'
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/ProductReview/src/Spryker/Client/ProductReview/Plugin/Elasticsearch/QueryExpander/PaginatedProductReviewsQueryExpanderPlugin.php'
@@ -14,4 +13,6 @@ parameters:
         - { message: '#Instantiated class Elastica\\Query\\Type not found.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/ProductReview/src/Spryker/Client/ProductReview/Plugin/Elasticsearch/Query/ProductReviewsQueryPlugin.php' }
         - { message: '#Call to method setType\(\) on an unknown class Elastica\\Query\\Type.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/ProductReview/src/Spryker/Client/ProductReview/Plugin/Elasticsearch/Query/ProductReviewsQueryPlugin.php' }
         - { message: '#Call to method setType\(\) on an unknown class Elastica\\Query\\Type.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/ProductReview/src/Spryker/Client/ProductReview/Plugin/Elasticsearch/Query/ProductReviewsQueryPlugin.php' }
+        -
+            identifier: missingType.iterableValue
     reportUnmatchedIgnoredErrors: false

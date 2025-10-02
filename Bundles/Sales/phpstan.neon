@@ -1,10 +1,14 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
+#        For compatibility with Symfony 5.4+
+        - message: '#PHPDoc tag @implements contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
+        - message: '#PHPDoc tag @return contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::getFkCustomer\(\)\.#'
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrderQuery::filterByFkCustomer\(\)\.#'
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::getCustomer\(\)\.#'
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::setCustomer\(\)\.#'
         - '#Call to an undefined method Orm\\.+Query::groupByIdSalesOrder\(\).#'
+        -
+            identifier: missingType.iterableValue

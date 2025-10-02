@@ -1,5 +1,6 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method Orm\\Zed#'
+        -
+            identifier: missingType.iterableValue

@@ -170,7 +170,8 @@ class ApiControllerEventListener implements ApiControllerEventListenerInterface
             }
 
             try {
-                $data = $this->utilEncodingService->decodeJson($content, true, 512, JSON_THROW_ON_ERROR);
+                $stringContent = (string)$content;
+                $data = $this->utilEncodingService->decodeJson($stringContent, true, 512, JSON_THROW_ON_ERROR);
             } catch (JsonException $exception) {
                 $this->logRequest($requestTransfer);
 

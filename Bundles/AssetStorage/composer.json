@@ -4,7 +4,7 @@
     "description": "AssetStorage module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/asset": "^1.4.0",
         "spryker/kernel": "^3.30.0",
         "spryker/propel-orm": "^1.3.0",

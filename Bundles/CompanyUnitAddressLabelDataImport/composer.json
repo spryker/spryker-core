@@ -4,7 +4,7 @@
     "description": "CompanyUnitAddressLabelDataImport module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/company-unit-address": "^1.0.0",
         "spryker/company-unit-address-label": "^1.0.0",
         "spryker/data-import": "^1.2.0",

@@ -4,7 +4,7 @@
     "description": "Store module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/application-extension": "^1.0.0",
         "spryker/cart-reorder-extension": "^1.0.0",

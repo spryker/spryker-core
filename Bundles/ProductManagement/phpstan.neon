@@ -1,8 +1,10 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Strict comparison using !== between null and null will always evaluate to false.#'
         - '#Call to an undefined method Orm\\.+\\SpyProductGroupQuery::useSpyProductAbstractLocalizedAttributesQuery\(\)#'
         - '#Call to an undefined method Orm\\.+\\SpyProductQuery::filterByFkProductAbstract\(\)#'
+        - '#Strict comparison using === between lowercase-string and .+ will always evaluate to false\.#'
+        -
+            identifier: missingType.iterableValue

@@ -1,6 +1,7 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method Orm\\.+Query::useSpyTaxSetTaxQuery\(\).#'
         - '#Call to an undefined method Orm\\.+Query::filterByName\(\).#'
+        -
+            identifier: missingType.iterableValue

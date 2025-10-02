@@ -1,3 +1,9 @@
 parameters:
     level: 8
-    checkGenericClassInNonGenericObjectType: false
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+#        For compatibility with Symfony 5.4+
+        - message: '#PHPDoc tag @return contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
+        - message: '#PHPDoc tag @implements contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
+        - message: '#PHPDoc tag @var for property .+::.+ contains generic type .+DataTransformerInterface<ArrayObject<.+> but interface .+DataTransformerInterface is not generic#'
+        - message: '#PHPDoc tag @param for parameter .+ contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic.#'

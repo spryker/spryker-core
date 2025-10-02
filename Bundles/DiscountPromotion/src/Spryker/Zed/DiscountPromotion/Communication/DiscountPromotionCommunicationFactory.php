@@ -40,7 +40,7 @@ class DiscountPromotionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<array<string>|null, string>
      */
     public function createAbstractSkusTransformer(): DataTransformerInterface
     {

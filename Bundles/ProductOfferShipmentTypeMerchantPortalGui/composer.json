@@ -4,7 +4,7 @@
     "description": "ProductOfferShipmentTypeMerchantPortalGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/kernel": "^3.30.0",
         "spryker/product-offer-merchant-portal-gui-extension": "^1.1.0",
         "spryker/product-offer-shipment-type": "^1.0.0",

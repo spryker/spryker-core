@@ -1,7 +1,6 @@
 parameters:
     level: 8
     reportUnmatchedIgnoredErrors: false
-    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Parameter \#3 \$firewallName of class Symfony\\Component\\Security\\Core\\Authentication\\Token\\UsernamePasswordToken constructor expects string, array\<int, string\> given.#'
         - '#Instantiated class .+UsernameNotFoundException not found.#'
@@ -9,3 +8,5 @@ parameters:
         - '#Throwing object of an unknown class .+UsernameNotFoundException.#'
         - '#PHPDoc tag @throws with type .+UsernameNotFoundException\|.+UserNotFoundException is not subtype of Throwable#'
         - '#Call to an undefined method .+AuthenticationSuccessHandlerInterface::executeOnAuthenticationSuccess\(\).#'
+        -
+            identifier: missingType.generics

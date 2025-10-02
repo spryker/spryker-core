@@ -4,7 +4,7 @@
     "description": "CategoryGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/category": "^5.15.0",
         "spryker/category-gui-extension": "^1.0.0",
         "spryker/gui": "^3.54.0",

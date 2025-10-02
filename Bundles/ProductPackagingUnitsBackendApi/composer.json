@@ -4,7 +4,7 @@
     "description": "ProductPackagingUnitsBackendApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/kernel": "^3.66.0",
         "spryker/picking-lists-backend-api-extension": "^1.0.0",
         "spryker/product-packaging-unit": "^4.8.0",

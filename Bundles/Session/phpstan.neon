@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method Symfony\\Component\\HttpKernel\\Event\\KernelEvent\:\:isMainRequest\(\).#'
         - '#Property .+SessionHandlerCouchbase::\$connection has unknown class Couchbase as its type.#'
@@ -12,4 +11,6 @@ parameters:
         - { message: '#Ternary operator condition is always true.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Session/src/Spryker/Shared/Session/Business/Handler/SessionHandlerRedis.php' }
         - { message: '#Instanceof between int and Predis\\Response\\Status will always evaluate to false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Session/src/Spryker/Shared/Session/Business/Handler/SessionHandlerRedisLocking.php' }
         - { message: '#Unreachable statement - code above always terminates.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Session/src/Spryker/Shared/Session/Business/Handler/SessionHandlerRedisLocking.php' }
+        -
+            identifier: missingType.iterableValue
     reportUnmatchedIgnoredErrors: false

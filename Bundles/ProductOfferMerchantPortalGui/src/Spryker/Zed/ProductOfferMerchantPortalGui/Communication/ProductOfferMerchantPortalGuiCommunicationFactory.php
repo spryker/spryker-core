@@ -247,7 +247,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>|null, array<int>|null>
      */
     public function createStoresTransformer(): DataTransformerInterface
     {
@@ -255,7 +255,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\Spryker\DecimalObject\Decimal|null, float|null>
      */
     public function createQuantityTransformer(): DataTransformerInterface
     {
@@ -263,7 +263,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>, \Generated\Shared\Transfer\ProductOfferStockTransfer>
      */
     public function createProductOfferStockTransformer(): DataTransformerInterface
     {
@@ -273,7 +273,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     /**
      * @param int|null $idProductOffer
      *
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>, string>
      */
     public function createPriceProductOfferTransformer(?int $idProductOffer = null): DataTransformerInterface
     {

@@ -1,7 +1,8 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Call to an undefined method .+ActiveRecordInterface::toArray\(\).#'
         - '#Cannot access offset .+ on DOMNamedNodeMap\.#'
+        -
+            identifier: missingType.iterableValue

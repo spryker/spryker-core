@@ -4,7 +4,7 @@
     "description": "ConfigurableBundlePageSearch module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/configurable-bundle": "^2.1.0",
         "spryker/configurable-bundle-page-search-extension": "^1.1.0",
         "spryker/event-behavior": "^1.0.0",

@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Twig/src/Spryker/Shared/Twig/TwigFilesystemLoader.php'
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Twig/src/Spryker/Shared/Twig/TwigFilter.php'
@@ -13,5 +12,7 @@ parameters:
         - '#Else branch is unreachable because previous condition is always true#'
         - '#Call to function method_exists\(\) with .Twig\\\\Extension.* and .* will always evaluate to false.#'
         - '#Call to an undefined static method Twig\\Extension\\CoreExtension\:\:.+\(\).#'
+        -
+            identifier: missingType.iterableValue
     reportUnmatchedIgnoredErrors: false
     treatPhpDocTypesAsCertain: false

@@ -53,7 +53,7 @@ class StoreGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<array<int, int>|null, string|null>
      */
     public function createIdStoresDataTransformer(): DataTransformerInterface
     {

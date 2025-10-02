@@ -11,6 +11,9 @@ use ArrayObject;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\CompanyBusinessUnitTransfer>, list<int>>
+ */
 class AssigneeCompanyBusinessUnitsDataTransformer implements DataTransformerInterface
 {
     /**

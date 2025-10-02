@@ -1,5 +1,6 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method .+SpyCompanyStoreQuery\|.+SpyCompanyBusinessUnitQuery\|.+SpyCompanyRoleQuery\|.+SpyCompanySupplierToProductQuery|.+SpyCompanyUserQuery\|.+SpyPriceProductQuery::orderByIdCompanyUser\(\)#'
+        -
+            identifier: missingType.iterableValue

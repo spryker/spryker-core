@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Spryker\Zed\ProductRelationGui\Dependency\Service\ProductRelationGuiToUtilEncodingServiceInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<\Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer|null, string|null>
+ */
 class RuleQuerySetTransformer implements DataTransformerInterface
 {
     /**

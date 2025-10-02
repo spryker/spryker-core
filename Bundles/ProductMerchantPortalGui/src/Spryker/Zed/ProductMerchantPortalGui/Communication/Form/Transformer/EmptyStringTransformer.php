@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<mixed, mixed>
+ */
 class EmptyStringTransformer implements DataTransformerInterface
 {
     /**

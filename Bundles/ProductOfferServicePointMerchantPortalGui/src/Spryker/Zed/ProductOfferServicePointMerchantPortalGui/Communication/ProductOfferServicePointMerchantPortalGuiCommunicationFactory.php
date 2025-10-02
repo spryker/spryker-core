@@ -75,7 +75,7 @@ class ProductOfferServicePointMerchantPortalGuiCommunicationFactory extends Abst
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\ServiceTransfer>|null, array<int, string>|null>
      */
     public function createServiceDataTransformer(): DataTransformerInterface
     {

@@ -1,6 +1,6 @@
 # OrderAmendmentExample Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/order-amendment-example/v/stable.svg)](https://packagist.org/packages/spryker/order-amendment-example)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.3-8892BF.svg)](https://php.net/)
 
 Provides plugins to handle async sales order amendment checkout process.
 

@@ -1,6 +1,7 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Method .+ProductLabelByProductConcreteSkuExpander::addProductLabelsResourceRelationships\(\) should return array<.+RestResourceInterface> but returns array<void>.#'
+        -
+            identifier: missingType.iterableValue

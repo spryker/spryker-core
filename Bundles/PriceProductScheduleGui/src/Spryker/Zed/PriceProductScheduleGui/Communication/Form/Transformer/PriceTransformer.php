@@ -10,6 +10,9 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form\Transformer;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<int|null, float|null>
+ */
 class PriceTransformer implements DataTransformerInterface
 {
     /**

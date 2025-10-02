@@ -1,7 +1,8 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Method .+ConcreteProductsReader::findProductConcreteBySku\(\) should return .+RestResourceInterface\|null but returns .+RestResourceInterface\|false#'
         - '#Method .+ConcreteProductsReader::findProductConcreteById\(\) should return .+RestResourceInterface\|null but returns .+RestResourceInterface\|false#'
+        -
+            identifier: missingType.iterableValue

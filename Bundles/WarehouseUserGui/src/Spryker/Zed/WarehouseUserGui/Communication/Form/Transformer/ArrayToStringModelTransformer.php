@@ -9,6 +9,9 @@ namespace Spryker\Zed\WarehouseUserGui\Communication\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<list<string>|null, string>
+ */
 class ArrayToStringModelTransformer implements DataTransformerInterface
 {
     /**

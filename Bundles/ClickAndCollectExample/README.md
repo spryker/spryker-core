@@ -1,6 +1,6 @@
 # ClickAndCollectExample Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/click-and-collect-example/v/stable.svg)](https://packagist.org/packages/spryker/click-and-collect-example)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.3-8892BF.svg)](https://php.net/)
 
 This module provides example functionalities for Click&Collect feature set.
 

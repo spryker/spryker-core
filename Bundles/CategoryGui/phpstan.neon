@@ -1,6 +1,11 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        -
+            identifier: missingType.iterableValue
+#        For compatibility with Symfony 5.4+
+        - message: '#PHPDoc tag @return contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
+        - message: '#PHPDoc tag @implements contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/CategoryGui/src/Spryker/Zed/CategoryGui/Communication/Table/CategoryTable.php'

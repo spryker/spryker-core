@@ -400,7 +400,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<mixed, array<mixed>|null>
      */
     public function createAttributeProductTransformer(): DataTransformerInterface
     {
@@ -410,7 +410,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\StockProductTransfer>, \Generated\Shared\Transfer\StockProductTransfer>
      */
     public function createStockTransformer(): DataTransformerInterface
     {
@@ -418,7 +418,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\Spryker\DecimalObject\Decimal|null, float|null>
      */
     public function createQuantityTransformer(): DataTransformerInterface
     {
@@ -426,7 +426,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<mixed, mixed>
      */
     public function createEmptyStringTransformer(): DataTransformerInterface
     {
@@ -442,7 +442,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<array<mixed>, array<mixed>>
      */
     public function createProductConcreteEditFormDataTransformer(): DataTransformerInterface
     {
@@ -1235,7 +1235,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\Generated\Shared\Transfer\LocaleTransfer|null, int|null>
      */
     public function createLocaleTransformer(): DataTransformerInterface
     {

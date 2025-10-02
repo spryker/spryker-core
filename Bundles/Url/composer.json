@@ -4,7 +4,7 @@
     "description": "Url module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/key-builder": "^1.0.0",

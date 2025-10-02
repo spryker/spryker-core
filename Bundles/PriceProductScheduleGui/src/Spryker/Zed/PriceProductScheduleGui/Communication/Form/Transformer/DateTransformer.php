@@ -10,6 +10,9 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form\Transformer;
 use DateTime;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<string|null, \DateTime|null>
+ */
 class DateTransformer implements DataTransformerInterface
 {
     /**

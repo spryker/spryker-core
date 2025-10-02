@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "laminas/laminas-barcode": "^2.9.0",
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker/barcode-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/transfer": "^3.25.0"

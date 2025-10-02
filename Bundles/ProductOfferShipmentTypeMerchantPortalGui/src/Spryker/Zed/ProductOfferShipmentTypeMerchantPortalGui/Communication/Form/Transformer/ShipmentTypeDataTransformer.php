@@ -11,6 +11,9 @@ use ArrayObject;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\ShipmentTypeTransfer>|null, list<string>|null>
+ */
 class ShipmentTypeDataTransformer implements DataTransformerInterface
 {
     /**

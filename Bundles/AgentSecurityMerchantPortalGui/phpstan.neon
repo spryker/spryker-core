@@ -1,10 +1,11 @@
 parameters:
     level: 8
     reportUnmatchedIgnoredErrors: false
-    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Instantiated class .+UsernameNotFoundException not found.#'
         - '#Parameter \#1 \$passport of method .+AgentMerchantLoginFormAuthenticator::createToken\(\) expects .+Passport, .+PassportInterface given.#'
         - '#Throwing object of an unknown class .+UsernameNotFoundException.#'
         - '#PHPDoc tag @throws with type .+UsernameNotFoundException\|.+UserNotFoundException is not subtype of Throwable#'
         - '#Call to an undefined method .+AuthenticationSuccessHandlerInterface::executeOnAuthenticationSuccess\(\).#'
+        -
+            identifier: missingType.generics
