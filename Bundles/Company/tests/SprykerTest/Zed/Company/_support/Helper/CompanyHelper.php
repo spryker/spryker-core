@@ -10,11 +10,21 @@ namespace SprykerTest\Zed\Company\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use SprykerTest\Shared\Customer\Helper\CustomerDataHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CompanyHelper extends Module
 {
     use LocatorHelperTrait;
+    use CustomerDataHelperTrait;
+
+    /**
+     * @var string
+     *
+     * @see \Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap::COL_STATUS_APPROVED
+     */
+    protected const STATUS_APPROVED = 'approved';
 
     /**
      * @param array $seedData
@@ -25,6 +35,30 @@ class CompanyHelper extends Module
     {
         $companyTransfer = (new CompanyBuilder($seedData))->build();
         $companyTransfer->setIdCompany(null);
+
+        return $this->getLocator()->company()->facade()->create($companyTransfer)->getCompanyTransfer();
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function haveActiveCompanyWithUser(array $seedData = []): CompanyTransfer
+    {
+        $seedData[CompanyTransfer::IS_ACTIVE] = true;
+        $seedData[CompanyTransfer::STATUS] = static::STATUS_APPROVED;
+
+        $companyTransfer = (new CompanyBuilder($seedData))->build();
+        $companyTransfer->setIdCompany(null);
+
+        if (!$companyTransfer->getInitialUserTransfer()?->getFkCustomer()) {
+            $customerTransfer = $this->getCustomerDataHelper()->haveConfirmedCustomerWithAddress($seedData);
+            $companyUserTransfer = (new CompanyUserTransfer())
+                ->setCustomer($customerTransfer)
+                ->setFkCustomer($customerTransfer->getIdCustomer());
+            $companyTransfer->setInitialUserTransfer($companyUserTransfer);
+        }
 
         return $this->getLocator()->company()->facade()->create($companyTransfer)->getCompanyTransfer();
     }

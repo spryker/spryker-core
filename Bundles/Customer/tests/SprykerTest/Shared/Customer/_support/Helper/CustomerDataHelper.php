@@ -11,8 +11,11 @@ use Codeception\Exception\TestRuntimeException;
 use Codeception\Module;
 use Codeception\Stub;
 use Generated\Shared\DataBuilder\AddressBuilder;
+use Generated\Shared\DataBuilder\CountryBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
@@ -59,7 +62,7 @@ class CustomerDataHelper extends Module
         $customerTransfer = (new CustomerBuilder($override))
             ->withBillingAddress()
             ->withShippingAddress()
-            ->withLocale()
+            ->withLocale($override)
             ->build();
 
         $this->ensureCustomerWithReferenceDoesNotExist($customerTransfer);
@@ -87,6 +90,41 @@ class CustomerDataHelper extends Module
         });
 
         return $customerResponseTransfer->getCustomerTransfer();
+    }
+
+    /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function haveConfirmedCustomer(array $override = []): CustomerTransfer
+    {
+        $customerTransfer = $this->haveCustomer($override);
+
+        return $this->confirmCustomer($customerTransfer);
+    }
+
+    /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function haveConfirmedCustomerWithAddress(array $override = []): CustomerTransfer
+    {
+        $customerTransfer = $this->haveConfirmedCustomer($override);
+        $countryTransfer = $this->haveCountry($override);
+        $addressTransfer = $this->haveCustomerAddress(
+            array_merge(
+                [
+                    AddressTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
+                    AddressTransfer::FK_COUNTRY => $countryTransfer->getIdCountry(),
+                ],
+                $override,
+            ),
+        );
+        $addressesTransfer = (new AddressesTransfer())->addAddress($addressTransfer);
+
+        return $customerTransfer->setAddresses($addressesTransfer);
     }
 
     /**
@@ -218,6 +256,20 @@ class CustomerDataHelper extends Module
         $mailFacadeMock = Stub::makeEmpty(MailFacadeInterface::class);
 
         return $mailFacadeMock;
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    protected function haveCountry(array $seed = []): CountryTransfer
+    {
+        $countryTransferBuilder = new CountryBuilder($seed);
+        $countryTransfer = $countryTransferBuilder->build();
+
+        return $this->getLocator()->country()->facade()
+            ->getCountryByIso2Code($countryTransfer->getIso2Code());
     }
 
     /**
