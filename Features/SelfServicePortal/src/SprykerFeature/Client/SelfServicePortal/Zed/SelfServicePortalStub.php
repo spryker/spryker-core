@@ -90,7 +90,7 @@ class SelfServicePortalStub implements SelfServicePortalStubInterface
     }
 
     /**
-     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\GatewayController::getFileAttachmentCollectionAccordingToPermissionsAction()
+     * @uses \SprykerFeature\Zed\SelfServicePortal\Communication\Controller\GatewayController::getFileAttachmentCollectionAction()
      *
      * @param \Generated\Shared\Transfer\FileAttachmentCriteriaTransfer $fileAttachmentCriteriaTransfer
      *

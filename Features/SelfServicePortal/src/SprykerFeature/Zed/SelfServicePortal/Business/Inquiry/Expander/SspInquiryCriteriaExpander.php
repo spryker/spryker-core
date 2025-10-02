@@ -11,10 +11,15 @@ use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewBusinessUnitSspInquiryPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewCompanySspInquiryPermissionPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Business\Company\Validator\CompanyBusinessUnitValidatorInterface;
 
 class SspInquiryCriteriaExpander implements SspInquiryCriteriaExpanderInterface
 {
     use PermissionAwareTrait;
+
+    public function __construct(protected CompanyBusinessUnitValidatorInterface $companyBusinessUnitValidator)
+    {
+    }
 
     public function expandCriteriaBasedOnCompanyUserPermissions(
         SspInquiryCriteriaTransfer $sspInquiryCriteriaTransfer
@@ -27,15 +32,21 @@ class SspInquiryCriteriaExpander implements SspInquiryCriteriaExpanderInterface
             return $sspInquiryCriteriaTransfer;
         }
 
-        $sspInquiryConditionsTransfer->getSspInquiryOwnerConditionGroupOrFail()->setIdCompany(null);
-
-        if ($this->can(ViewCompanySspInquiryPermissionPlugin::KEY, $companyUserTransfer->getIdCompanyUserOrFail())) {
-            $sspInquiryConditionsTransfer->getSspInquiryOwnerConditionGroupOrFail()->setIdCompany($companyUserTransfer->getFkCompany());
+        $idCompanyBusinessUnit = $sspInquiryConditionsTransfer->getSspInquiryOwnerConditionGroupOrFail()->getIdCompanyBusinessUnit();
+        if ($idCompanyBusinessUnit && $this->companyBusinessUnitValidator->isCompanyBusinessUnitBelongsToCompany($companyUserTransfer, $idCompanyBusinessUnit)) {
+            $sspInquiryConditionsTransfer->getSspInquiryOwnerConditionGroupOrFail()
+                ->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
+                ->setCompanyUser(null);
 
             return $sspInquiryCriteriaTransfer->setSspInquiryConditions($sspInquiryConditionsTransfer);
         }
 
-        $sspInquiryConditionsTransfer->getSspInquiryOwnerConditionGroupOrFail()->setIdCompanyBusinessUnit(null);
+        $idCompany = $sspInquiryConditionsTransfer->getSspInquiryOwnerConditionGroupOrFail()->getIdCompany();
+        if ($idCompany && $this->can(ViewCompanySspInquiryPermissionPlugin::KEY, $companyUserTransfer->getIdCompanyUserOrFail())) {
+            $sspInquiryConditionsTransfer->getSspInquiryOwnerConditionGroupOrFail()->setIdCompany($companyUserTransfer->getFkCompany());
+
+            return $sspInquiryCriteriaTransfer->setSspInquiryConditions($sspInquiryConditionsTransfer);
+        }
 
         if ($this->can(ViewBusinessUnitSspInquiryPermissionPlugin::KEY, $companyUserTransfer->getIdCompanyUserOrFail())) {
             $sspInquiryConditionsTransfer->getSspInquiryOwnerConditionGroupOrFail()->setIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnitOrFail());

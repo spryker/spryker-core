@@ -73,6 +73,11 @@ class SspInquirySearchForm extends AbstractType
             static::OPTION_CURRENT_TIMEZONE,
             static::OPTION_SSP_INQUIRY_STATUSES,
         ]);
+
+        $resolver->setDefined([
+            SspInquirySearchFiltersForm::OPTION_ACCESS_LEVELS,
+            SspInquirySearchFiltersForm::OPTION_DEFAULT_ACCESS_LEVEL,
+        ]);
     }
 
     public function getBlockPrefix(): string
@@ -171,14 +176,16 @@ class SspInquirySearchForm extends AbstractType
      */
     protected function addFiltersForm(FormBuilderInterface $builder, array $options)
     {
-        $options = [
+        $filtersOptions = [
             static::OPTION_CURRENT_TIMEZONE => $options[static::OPTION_CURRENT_TIMEZONE],
+            SspInquirySearchFiltersForm::OPTION_ACCESS_LEVELS => $options[SspInquirySearchFiltersForm::OPTION_ACCESS_LEVELS] ?? [],
+            SspInquirySearchFiltersForm::OPTION_DEFAULT_ACCESS_LEVEL => $options[SspInquirySearchFiltersForm::OPTION_DEFAULT_ACCESS_LEVEL] ?? null,
         ];
 
         $builder->add(
             static::FIELD_FILTERS,
             SspInquirySearchFiltersForm::class,
-            $options,
+            $filtersOptions,
         );
 
         return $this;

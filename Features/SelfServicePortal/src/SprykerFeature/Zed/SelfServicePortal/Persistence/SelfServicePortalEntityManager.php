@@ -313,7 +313,7 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
                 ->findOneByIdSspAsset($sspAssetTransfer->getIdSspAsset());
         }
 
-        if ($sspAssetTransfer->getReference()) {
+        if (!$spySspAssetEntity && $sspAssetTransfer->getReference()) {
             $spySspAssetEntity = $this->getFactory()
                 ->createSspAssetQuery()
                 ->joinWithSpyCompanyBusinessUnit()

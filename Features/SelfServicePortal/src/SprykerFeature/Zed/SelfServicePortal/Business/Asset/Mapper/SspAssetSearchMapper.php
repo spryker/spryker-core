@@ -18,11 +18,9 @@ use Generated\Shared\Transfer\SspAssetSearchCollectionTransfer;
 use Generated\Shared\Transfer\SspAssetSearchTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspModelTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
-use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig;
 
 class SspAssetSearchMapper implements SspAssetSearchMapperInterface
@@ -68,8 +66,7 @@ class SspAssetSearchMapper implements SspAssetSearchMapperInterface
     protected const SEARCH_DATA_KEY_ID_OWNER_COMPANY_ID = 'id_owner_company_id';
 
     public function __construct(
-        protected UtilEncodingServiceInterface $utilEncodingService,
-        protected StoreFacadeInterface $storeFacade
+        protected UtilEncodingServiceInterface $utilEncodingService
     ) {
     }
 
@@ -77,12 +74,10 @@ class SspAssetSearchMapper implements SspAssetSearchMapperInterface
         SspAssetCollectionTransfer $sspAssetCollectionTransfer,
         SspAssetSearchCollectionTransfer $sspAssetSearchCollectionTransfer
     ): SspAssetSearchCollectionTransfer {
-        $storeTransfers = $this->storeFacade->getAllStores();
         foreach ($sspAssetCollectionTransfer->getSspAssets() as $sspAssetTransfer) {
             $sspAssetSearchTransfer = $this->mapSspAssetTransferToSspAssetSearchTransfer(
                 $sspAssetTransfer,
                 new SspAssetSearchTransfer(),
-                $storeTransfers,
             );
 
             $sspAssetSearchCollectionTransfer->addSspAsset($sspAssetSearchTransfer);
@@ -109,22 +104,14 @@ class SspAssetSearchMapper implements SspAssetSearchMapperInterface
         return $synchronizationDataTransfers;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SspAssetTransfer $sspAssetTransfer
-     * @param \Generated\Shared\Transfer\SspAssetSearchTransfer $sspAssetSearchTransfer
-     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
-     *
-     * @return \Generated\Shared\Transfer\SspAssetSearchTransfer
-     */
     protected function mapSspAssetTransferToSspAssetSearchTransfer(
         SspAssetTransfer $sspAssetTransfer,
-        SspAssetSearchTransfer $sspAssetSearchTransfer,
-        array $storeTransfers
+        SspAssetSearchTransfer $sspAssetSearchTransfer
     ): SspAssetSearchTransfer {
         $sspAssetSearchTransfer->setIdSspAsset($sspAssetTransfer->getIdSspAsset());
         $sspAssetSearchData = $sspAssetTransfer->toArray(true, true);
         $sspAssetSearchTransfer->setData(
-            $this->mapSspAssetDataToSearchData($sspAssetSearchData, $storeTransfers),
+            $this->mapSspAssetDataToSearchData($sspAssetSearchData),
         );
         $sspAssetSearchTransfer->setStructuredData(
             $this->utilEncodingService->encodeJson($sspAssetSearchData),
@@ -135,11 +122,10 @@ class SspAssetSearchMapper implements SspAssetSearchMapperInterface
 
     /**
      * @param array<string, mixed> $data
-     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
      * @return array<string, mixed>
      */
-    protected function mapSspAssetDataToSearchData(array $data, array $storeTransfers): array
+    protected function mapSspAssetDataToSearchData(array $data): array
     {
         $searchResultData = [
             static::SEARCH_DATA_KEY_NAME => $data[SspAssetTransfer::NAME] ?? null,
@@ -162,7 +148,6 @@ class SspAssetSearchMapper implements SspAssetSearchMapperInterface
             SspAssetIndexMap::FULL_TEXT_BOOSTED => $fullTextBoosted,
             SspAssetIndexMap::SUGGESTION_TERMS => $suggestionTerms,
             SspAssetIndexMap::COMPLETION_TERMS => $completionTerms,
-            SspAssetIndexMap::STORE => array_map(fn (StoreTransfer $storeTransfer) => $storeTransfer->getName(), $storeTransfers),
             SspAssetIndexMap::REFERENCE => $data[SspAssetTransfer::REFERENCE] ?? null,
             SspAssetIndexMap::ID_OWNER_BUSINESS_UNIT => $data[SspAssetTransfer::COMPANY_BUSINESS_UNIT][CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT] ?? null,
             SspAssetIndexMap::ID_OWNER_COMPANY_ID => $data[SspAssetTransfer::COMPANY_BUSINESS_UNIT][CompanyBusinessUnitTransfer::FK_COMPANY] ?? null,

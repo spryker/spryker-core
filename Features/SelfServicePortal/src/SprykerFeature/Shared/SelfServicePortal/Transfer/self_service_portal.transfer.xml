@@ -915,6 +915,7 @@
         <property name="createdDateTo" type="string"/>
         <property name="sspAssetIds" type="int[]" singular="idSspAsset"/>
         <property name="sspAssetReferences" type="string[]" singular="sspAssetReference"/>
+        <property name="searchString" type="string"/>
     </transfer>
 
     <transfer name="StateMachineItem">

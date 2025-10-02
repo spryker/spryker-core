@@ -5,14 +5,22 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.3",
-        "spryker/data-import": "^1.0.0",
+        "spryker/currency": "^4.6.0",
+        "spryker/data-import": "^1.30.0",
+        "spryker/data-import-merchant-extension": "^1.0.0",
         "spryker/kernel": "^3.33.0",
         "spryker/merchant": "^3.0.0",
-        "spryker/merchant-product-offer": "^1.0.0",
+        "spryker/merchant-product-offer": "^1.10.0",
+        "spryker/merchant-stock": "^1.4.0",
+        "spryker/price-product": "^4.48.0",
+        "spryker/price-product-offer": "^1.7.1",
         "spryker/product": "^6.0.0",
         "spryker/product-offer": "^1.0.0",
+        "spryker/product-offer-stock": "^1.6.0",
+        "spryker/product-offer-validity": "^1.4.0",
         "spryker/propel-orm": "^1.0.0",
-        "spryker/store": "^1.0.0"
+        "spryker/store": "^1.0.0",
+        "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

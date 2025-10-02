@@ -131,7 +131,7 @@
                             {% block status %}
                                 <span class="{{ config.name }}__asset-status {{ config.jsName }}__asset-status" {{ qa('asset-selector-status') }}>
                                     {% if data.product and data.asset %}
-                                        {% widget 'AssetCompatibilityLabelWidget' args [data.asset.reference, data.product.idProductConcrete] only %}
+                                        {% widget 'AssetCompatibilityLabelWidget' args [data.asset.reference, data.product.sku] only %}
                                         {% endwidget %}
                                     {% endif %}
                                 </span>
@@ -172,7 +172,7 @@
                 },
             },
             staticParams: {
-                idProduct: data.product ? data.product.idProductConcrete,
+                sku: data.product ? data.product.sku,
             },
         },
         attributes: {

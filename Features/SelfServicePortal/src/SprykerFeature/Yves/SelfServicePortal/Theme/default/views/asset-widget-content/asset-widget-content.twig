@@ -2,7 +2,7 @@
 
 {% define data = {
     assets: assets | default([]),
-    idProduct: idProduct | default(null),
+    sku: sku | default(null),
     offset: offset | default(0),
     limit: limit | default(10),
     results: nbResults | default(0),
@@ -14,7 +14,7 @@
 {% block body %}
     {% if data.assets is not empty %}
         {% set queryStringObject = {
-            idProduct: data.idProduct,
+            sku: data.sku,
             assetReference: data.assetReference,
             searchString: data.searchString,
             limit: data.limit,
@@ -45,8 +45,8 @@
 {% block options %}
     {% for asset in data.assets %}
         {% set compatibilityLabel %}
-            {% if data.idProduct %}
-                {% widget 'AssetCompatibilityLabelWidget' args [asset.reference, data.idProduct] only %}
+            {% if data.sku %}
+                {% widget 'AssetCompatibilityLabelWidget' args [asset.reference, data.sku] only %}
                 {% endwidget %}
             {% endif %}
         {% endset %}

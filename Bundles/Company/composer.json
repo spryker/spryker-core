@@ -14,6 +14,7 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
+        "spryker/customer": "^7.71.1",
         "spryker/propel": "*",
         "spryker/testify": "*"
     },

@@ -65,12 +65,39 @@ class SspAssetValidator implements SspAssetValidatorInterface
         SspAssetTransfer $sspAssetTransfer,
         SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
     ): bool {
+        $isValid = true;
+
         if (!$sspAssetTransfer->getName()) {
             $sspAssetCollectionResponseTransfer->addError(
                 (new ErrorTransfer())->setMessage('self_service_portal.asset.validation.name.not_set'),
             );
 
-            return false;
+            $isValid = false;
+        }
+
+        if (!$sspAssetTransfer->getCompanyBusinessUnit()) {
+            $sspAssetCollectionResponseTransfer->addError(
+                (new ErrorTransfer())->setMessage('self_service_portal.asset.validation.company_business_unit.not_set'),
+            );
+
+            $isValid = false;
+        }
+
+        return $isValid;
+    }
+
+    public function validateAssetUpdateTransfer(
+        SspAssetTransfer $sspAssetTransfer,
+        SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
+    ): bool {
+        $isValid = true;
+
+        if (!$sspAssetTransfer->getName()) {
+            $sspAssetCollectionResponseTransfer->addError(
+                (new ErrorTransfer())->setMessage('self_service_portal.asset.validation.name.not_set'),
+            );
+
+            $isValid = false;
         }
 
         if (!$sspAssetTransfer->getCompanyBusinessUnit()) {
@@ -81,7 +108,7 @@ class SspAssetValidator implements SspAssetValidatorInterface
             return false;
         }
 
-        return true;
+        return $isValid;
     }
 
     public function isAssetUpdateGranted(

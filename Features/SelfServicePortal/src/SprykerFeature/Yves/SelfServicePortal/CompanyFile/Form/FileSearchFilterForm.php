@@ -37,6 +37,11 @@ class FileSearchFilterForm extends AbstractType
     /**
      * @var string
      */
+    public const OPTION_DEFAULT_BUSINESS_ENTITY = 'option_default_business_entity';
+
+    /**
+     * @var string
+     */
     public const FIELD_RESET = 'reset';
 
     /**
@@ -67,6 +72,7 @@ class FileSearchFilterForm extends AbstractType
             static::OPTION_FILE_TYPES,
             static::OPTION_BUSINESS_ENTITIES,
             static::OPTION_SSP_ASSET_ENTITIES,
+            static::OPTION_DEFAULT_BUSINESS_ENTITY,
         ]);
     }
 
@@ -151,6 +157,7 @@ class FileSearchFilterForm extends AbstractType
                 static::OPTION_FILE_TYPES => $options[static::OPTION_FILE_TYPES],
                 static::OPTION_BUSINESS_ENTITIES => $options[static::OPTION_BUSINESS_ENTITIES],
                 static::OPTION_SSP_ASSET_ENTITIES => $options[static::OPTION_SSP_ASSET_ENTITIES],
+                static::OPTION_DEFAULT_BUSINESS_ENTITY => $options[static::OPTION_DEFAULT_BUSINESS_ENTITY],
             ],
         );
 

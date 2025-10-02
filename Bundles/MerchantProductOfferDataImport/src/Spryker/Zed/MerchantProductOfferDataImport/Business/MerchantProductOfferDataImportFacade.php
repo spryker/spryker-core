@@ -44,4 +44,17 @@ class MerchantProductOfferDataImportFacade extends AbstractFacade implements Mer
     ): DataImporterReportTransfer {
         return $this->getFactory()->getMerchantProductOfferStoreDataImport()->import($dataImporterConfigurationTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function importMerchantCombinedMerchantProductOffer(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer {
+        return $this->getFactory()
+            ->createMerchantCombinedMerchantProductOfferDataImport($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
+    }
 }

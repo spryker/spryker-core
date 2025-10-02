@@ -102,6 +102,16 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
+    /**
+     * @var string
+     */
+    public const CLIENT_PRODUCT_LIST_STORAGE = 'CLIENT_PRODUCT_LIST_STORAGE';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addZedRequestClient($container);
@@ -120,6 +130,8 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
         $container = $this->addQuoteClient($container);
         $container = $this->addProductOfferStorageClient($container);
         $container = $this->addProductOfferAvailabilityStorageClient($container);
+        $container = $this->addProductListStorageClient($container);
+        $container = $this->addProductStorageClient($container);
 
         return $container;
     }
@@ -284,6 +296,24 @@ class SelfServicePortalDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return $container->getLocator()->quote()->client();
+        });
+
+        return $container;
+    }
+
+    protected function addProductListStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT_LIST_STORAGE, function (Container $container) {
+            return $container->getLocator()->productListStorage()->client();
+        });
+
+        return $container;
+    }
+
+    protected function addProductStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
+            return $container->getLocator()->productStorage()->client();
         });
 
         return $container;

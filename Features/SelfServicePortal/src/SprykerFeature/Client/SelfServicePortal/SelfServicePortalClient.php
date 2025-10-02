@@ -264,4 +264,21 @@ class SelfServicePortalClient extends AbstractClient implements SelfServicePorta
     {
         return $this->getFactory()->getQuoteStorageStrategy()->attachSspAssetToQuoteItem($sspAssetQuoteItemAttachmentRequestTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<string> $assetReferences
+     * @param array<string> $skus
+     *
+     * @return array<string, array<string, bool>>
+     */
+    public function getAssetProductCompatibilityMatrix(array $assetReferences, array $skus): array
+    {
+        return $this->getFactory()
+            ->createAssetProductCompatibilityChecker()
+            ->getAssetProductCompatibilityMatrix($assetReferences, $skus);
+    }
 }

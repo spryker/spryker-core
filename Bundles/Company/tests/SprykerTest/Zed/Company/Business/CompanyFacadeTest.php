@@ -51,7 +51,7 @@ class CompanyFacadeTest extends Unit
     /**
      * @var string
      */
-    protected const TEST_FAKE_ID = '777';
+    protected const TEST_FAKE_ID = '77777777';
 
     /**
      * @var string

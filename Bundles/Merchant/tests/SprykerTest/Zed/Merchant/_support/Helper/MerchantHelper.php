@@ -9,7 +9,9 @@ namespace SprykerTest\Zed\Merchant\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantBuilder;
+use Generated\Shared\DataBuilder\MerchantProfileBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -24,6 +26,13 @@ class MerchantHelper extends Module
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
     use StoreDataHelperTrait;
+
+    /**
+     * @var string
+     *
+     * @see \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     */
+    public const STATUS_APPROVED = 'approved';
 
     /**
      * @param array $seedData
@@ -61,6 +70,23 @@ class MerchantHelper extends Module
         });
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    public function haveActiveMerchantWithStore(array $seedData = []): MerchantTransfer
+    {
+        $seedData = array_merge([
+            MerchantTransfer::STATUS => static::STATUS_APPROVED,
+            MerchantTransfer::IS_ACTIVE => true,
+            MerchantTransfer::STORE_RELATION => $this->getStoreRelationTransfer()->toArray(),
+            MerchantTransfer::MERCHANT_PROFILE => $this->buildMerchantProfileTransfer()->toArray(),
+        ], $seedData);
+
+        return $this->haveMerchant($seedData);
     }
 
     /**
@@ -154,5 +180,15 @@ class MerchantHelper extends Module
         $merchantTransfer = $this->addStoreRelation($merchantTransfer, $seedData);
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     */
+    protected function buildMerchantProfileTransfer(array $seed = []): MerchantProfileTransfer
+    {
+        return (new MerchantProfileBuilder($seed))->build();
     }
 }

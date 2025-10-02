@@ -281,7 +281,14 @@ class SelfServicePortalHelper extends Module
             $sspAssetEntity->setFkImageFile($sspAssetTransfer->getImageOrFail()->getIdFileOrFail());
         }
 
+        if (!$sspAssetTransfer->getReference()) {
+            $reference = 'SSP-ASSET-' . $sspAssetEntity->getIdSspAsset() . '-' . time();
+            $sspAssetEntity->setReference($reference);
+            $sspAssetTransfer->setReference($reference);
+        }
+
         $sspAssetEntity->save();
+
         foreach ($sspAssetTransfer->getBusinessUnitAssignments() as $assignment) {
             (new SpySspAssetToCompanyBusinessUnit())
                 ->setFkSspAsset($sspAssetEntity->getIdSspAsset())

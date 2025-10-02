@@ -24,6 +24,11 @@ interface SspAssetValidatorInterface
         SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
     ): bool;
 
+    public function validateAssetUpdateTransfer(
+        SspAssetTransfer $sspAssetTransfer,
+        SspAssetCollectionResponseTransfer $sspAssetCollectionResponseTransfer
+    ): bool;
+
     public function isAssetUpdateGranted(
         SspAssetTransfer $sspAssetTransfer,
         ?CompanyUserTransfer $companyUserTransfer

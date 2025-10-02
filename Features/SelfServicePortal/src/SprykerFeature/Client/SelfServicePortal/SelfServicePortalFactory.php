@@ -11,8 +11,10 @@ use Spryker\Client\CompanyUser\CompanyUserClientInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Locale\LocaleClientInterface;
 use Spryker\Client\Permission\PermissionClientInterface;
+use Spryker\Client\ProductListStorage\ProductListStorageClientInterface;
 use Spryker\Client\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageClientInterface;
 use Spryker\Client\ProductOfferStorage\ProductOfferStorageClientInterface;
+use Spryker\Client\ProductStorage\ProductStorageClientInterface;
 use Spryker\Client\Quote\QuoteClientInterface;
 use Spryker\Client\Search\SearchClientInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
@@ -21,6 +23,8 @@ use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Client\Store\StoreClientInterface;
 use Spryker\Service\Synchronization\SynchronizationServiceInterface;
 use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
+use SprykerFeature\Client\SelfServicePortal\Asset\Compatibility\AssetProductCompatibilityChecker;
+use SprykerFeature\Client\SelfServicePortal\Asset\Compatibility\AssetProductCompatibilityCheckerInterface;
 use SprykerFeature\Client\SelfServicePortal\Asset\Quote\DatabaseQuoteStorageStrategy;
 use SprykerFeature\Client\SelfServicePortal\Asset\Quote\QuoteItemFinder;
 use SprykerFeature\Client\SelfServicePortal\Asset\Quote\QuoteItemFinderInterface;
@@ -326,5 +330,27 @@ class SelfServicePortalFactory extends AbstractFactory
             $this->createSessionQuoteStorageStrategy(),
             $this->createDatabaseQuoteStorageStrategy(),
         ];
+    }
+
+    public function createAssetProductCompatibilityChecker(): AssetProductCompatibilityCheckerInterface
+    {
+        return new AssetProductCompatibilityChecker(
+            $this->createSspAssetStorageReader(),
+            $this->createSspModelStorageReader(),
+            $this->getProductListStorageClient(),
+            $this->getCompanyUserClient(),
+            $this->getProductStorageClient(),
+            $this->getLocaleClient(),
+        );
+    }
+
+    public function getProductListStorageClient(): ProductListStorageClientInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_PRODUCT_LIST_STORAGE);
+    }
+
+    public function getProductStorageClient(): ProductStorageClientInterface
+    {
+        return $this->getProvidedDependency(SelfServicePortalDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 }

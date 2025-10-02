@@ -54,6 +54,11 @@ class ServiceSearchForm extends AbstractType
     /**
      * @var string
      */
+    public const OPTION_DEFAULT_BUSINESS_UNIT = 'OPTION_DEFAULT_BUSINESS_UNIT';
+
+    /**
+     * @var string
+     */
     public const FORM_NAME = 'serviceSearchForm';
 
     /**
@@ -76,6 +81,10 @@ class ServiceSearchForm extends AbstractType
 
         $resolver->setDefaults([
             static::OPTION_COMPANY_BUSINESS_UNIT_CHOICES => [],
+        ]);
+
+        $resolver->setDefined([
+            static::OPTION_DEFAULT_BUSINESS_UNIT,
         ]);
     }
 
@@ -177,6 +186,8 @@ class ServiceSearchForm extends AbstractType
      */
     protected function addBusinessUnitField(FormBuilderInterface $builder, array $options)
     {
+        $defaultValue = $options[static::OPTION_DEFAULT_BUSINESS_UNIT] ?? null;
+
         $builder->add(
             static::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT,
             ChoiceType::class,
@@ -185,6 +196,7 @@ class ServiceSearchForm extends AbstractType
                     'required' => false,
                     'placeholder' => 'self_service_portal.service.list.my_services',
                     'label' => 'self_service_portal.service.list.field.business_unit',
+                    'data' => $defaultValue,
                 ],
         );
 
