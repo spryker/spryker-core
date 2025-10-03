@@ -489,6 +489,7 @@
         "spryker/merchant-profile-gui": "*",
         "spryker/merchant-profile-merchant-portal-gui": "*",
         "spryker/merchant-profile-merchant-portal-gui-extension": "*",
+        "spryker/merchant-registration-request": "*",
         "spryker/merchant-relation-request": "*",
         "spryker/merchant-relation-request-extension": "*",
         "spryker/merchant-relation-request-gui": "*",

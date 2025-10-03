@@ -1,0 +1,139 @@
+{#
+@var merchantRegistrationRequest \Generated\Shared\Transfer\MerchantRegistrationRequestTransfer
+@var merchantRegistrationRequest.country \Generated\Shared\Transfer\CountryTransfer
+@var merchantRegistrationRequest.store \Generated\Shared\Transfer\StoreTransfer
+@var merchantRegistrationRequest.commentThread \Generated\Shared\Transfer\CommentThreadTransfer
+#}
+
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set page_title = 'View Merchant Registration Request' | trans ~ ': ' ~ merchantRegistrationRequest.idMerchantRegistrationRequest %}
+
+{% block head_title page_title %}
+
+{% block section_title %}
+    {{ page_title }}
+{% endblock %}
+
+{% block action %}
+    {% if isMerchantRegistrationRequestAcceptable %}
+        <a href="{{ url('accept-merchant-registration-request', {'id-merchant-registration-request': merchantRegistrationRequest.idMerchantRegistrationRequest}) }}" class="btn btn-success">
+            {{ 'Create Merchant' | trans }}
+        </a>
+    {% endif %}
+
+    {% if isMerchantRegistrationRequestRejectable %}
+        <a href="{{ url('reject-merchant-registration-request', {'id-merchant-registration-request': merchantRegistrationRequest.idMerchantRegistrationRequest}) }}" class="btn btn-danger">
+            {{ 'Decline Merchant' | trans }}
+        </a>
+    {% endif %}
+
+    {{ backActionButton(url(urlMerchantRegistrationRequestList), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General' | trans } %}
+        {% block widget_content %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Created date' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRegistrationRequest.createdAt | formatDateTime }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Status' | trans }}</b></div>
+                <div class="col-xs-10">
+                    <span class="label {{ statusClassLabelMapping[merchantRegistrationRequest.status] | default }}">
+                        {{ merchantRegistrationRequest.status | trans }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Store' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRegistrationRequest.store.name }}</div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Company Information' | trans } %}
+        {% block widget_content %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Company name' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRegistrationRequest.companyName }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Registration number' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRegistrationRequest.registrationNumber }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Street' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRegistrationRequest.address1 }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'House number' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRegistrationRequest.address2 }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'ZIP code' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRegistrationRequest.zipCode }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'City' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRegistrationRequest.city }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Country' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRegistrationRequest.country.name }}</div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Contact Person' | trans } %}
+        {% block widget_content %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Title' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRegistrationRequest.contactPersonTitle }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'First name' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRegistrationRequest.contactPersonFirstName }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Last name' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRegistrationRequest.contactPersonLastName }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Phone' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRegistrationRequest.contactPersonPhone }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Email' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRegistrationRequest.email }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Role' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRegistrationRequest.contactPersonRole }}</div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% include '@CommentGui/Comment/comment-thread.twig' ignore missing with {
+        title: 'Internal Comments' | trans,
+        commentThread: merchantRegistrationRequest.commentThread,
+        returnUrl: app.request.requestUri,
+        ownerId: merchantRegistrationRequest.idMerchantRegistrationRequest,
+        ownerType: commentThreadOwnerType,
+    } %}
+
+{% endblock %}

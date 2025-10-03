@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Business\Creator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -144,7 +145,23 @@ class MerchantCreator implements MerchantCreatorInterface
         /** @var \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer */
         $storeRelationTransfer = $merchantTransfer->getStoreRelation();
 
-        foreach ($storeRelationTransfer->getIdStores() as $idStore) {
+        $storeTransfers = $storeRelationTransfer->getStores();
+        $storeIds = $storeRelationTransfer->getIdStores();
+
+        if ($storeTransfers->count()) {
+            $merchantStoreTransfers = new ArrayObject();
+            $storeIds = array_combine($storeIds, $storeIds);
+
+            foreach ($storeTransfers as $storeTransfer) {
+                $merchantStoreTransfer = $this->merchantEntityManager->createMerchantStore($merchantTransfer, $storeTransfer->getIdStoreOrFail());
+                $merchantStoreTransfers->append($merchantStoreTransfer);
+                unset($storeIds[$storeTransfer->getIdStore()]);
+            }
+
+            $storeRelationTransfer->setStores($merchantStoreTransfers);
+        }
+
+        foreach ($storeIds as $idStore) {
             $storeTransfer = $this->merchantEntityManager->createMerchantStore($merchantTransfer, $idStore);
             $storeRelationTransfer->addStores($storeTransfer);
         }

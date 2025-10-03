@@ -49,6 +49,7 @@ class CommentThreadReader implements CommentThreadReaderInterface
         }
 
         $commentTransfers = $this->commentRepository->findCommentsByCommentThread($commentThreadTransfer);
+        $commentTransfers = $this->executeCommentExpanderPlugins($commentTransfers);
         $commentThreadTransfer->setComments(new ArrayObject($commentTransfers));
 
         return $commentThreadTransfer;

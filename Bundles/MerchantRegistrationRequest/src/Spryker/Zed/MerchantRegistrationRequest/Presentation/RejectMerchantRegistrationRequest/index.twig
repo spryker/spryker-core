@@ -1,0 +1,29 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Reject Request' %}
+
+{% block head_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+
+{% block section_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton(app.request.headers.get('referer'), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            <p class="spacing-bottom">{{ 'Reject this request if you do not want to create a merchant account.' | trans }}</p>
+            <div>
+                {{ form_start(rejectMerchantRegistrationRequestForm) }}
+                    <a href="{{ viewMerchantRegistrationRequestUrl }}" class="btn btn-view btn-outline">{{ 'Cancel' | trans }}</a>
+                    {{ form_widget(rejectMerchantRegistrationRequestForm.children.reject, { 'attr' : { 'class': 'btn btn-danger safe-submit' }}) }}
+                {{ form_end(rejectMerchantRegistrationRequestForm) }}
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

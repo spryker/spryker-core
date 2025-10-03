@@ -1,0 +1,9 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Merchant Registration Requests' } %}
+        {% block widget_content %}
+            {{ merchantRegistrationRequestTable | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

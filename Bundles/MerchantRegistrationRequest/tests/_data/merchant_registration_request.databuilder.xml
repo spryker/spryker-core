@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
+
+    <transfer name="MerchantRegistrationRequest" strict="true">
+        <property name="companyName" dataBuilderRule="company()"/>
+        <property name="address1" dataBuilderRule="address()"/>
+        <property name="address2" dataBuilderRule="address()"/>
+        <property name="zipCode" dataBuilderRule="postcode()"/>
+        <property name="city" dataBuilderRule="city()"/>
+        <property name="iso2Code" dataBuilderRule="=DE"/>
+        <property name="registrationNumber" dataBuilderRule="unique()->word(5)"/>
+        <property name="contactPersonTitle" dataBuilderRule="randomElement(['Mr', 'Mrs'])"/>
+        <property name="contactPersonFirstName" dataBuilderRule="firstName()"/>
+        <property name="contactPersonLastName" dataBuilderRule="lastName()"/>
+        <property name="contactPersonRole" dataBuilderRule="=Manager"/>
+        <property name="contactPersonPhone" dataBuilderRule="e164PhoneNumber()"/>
+        <property name="email" dataBuilderRule="email()"/>
+    </transfer>
+
+</transfers>

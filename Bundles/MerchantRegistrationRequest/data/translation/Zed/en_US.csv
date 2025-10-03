@@ -1,0 +1,44 @@
+"Merchant Registration Requests","Merchant Registration Requests"
+navigation.merchant_registration_requests,"Merchant Registration Requests"
+Created,Created
+Merchant,Merchant
+"Full Name","Full Name"
+Email,Email
+Status,Status
+Actions,Actions
+"View Merchant Registration Request","View Merchant Registration Request"
+"Merchant Registrations","Merchant Registrations"
+Back,Back
+General,General
+"Created date","Created date"
+Store,Store
+"Company Information","Company Information"
+"Company name","Company name"
+"Registration number","Registration number"
+Street,Street
+"House number","House number"
+"Postal code","Postal code"
+City,City
+Country,Country
+"ZIP code","ZIP code"
+"Contact Person","Contact Person"
+Title,Title
+"First Name","First Name"
+"Last Name","Last Name"
+Phone,Phone
+Role,Role
+approved,Approved
+rejected,Rejected
+pending,Pending
+"Internal Comments","Internal Comments"
+merchant_registration_request.error.merchant_cannot_be_accepted,"Merchant registration request cannot be accepted."
+merchant_registration_request.error.merchant_cannot_be_rejected,"Merchant registration request cannot be rejected."
+"Merchant has been created.","Merchant has been created."
+"Merchant registration request not found.","Merchant registration request not found."
+"CSRF token is not valid.","CSRF token is not valid."
+"Merchant Registration Request from %s was rejected.","Merchant Registration Request from %s was rejected."
+"Create Merchant","Create Merchant"
+"Reject Request","Reject Request"
+"Approving this request will create a merchant account.","Approving this request will create a merchant account."
+Cancel,Cancel
+"Reject this request if you do not want to create a merchant account.","Reject this request if you do not want to create a merchant account."

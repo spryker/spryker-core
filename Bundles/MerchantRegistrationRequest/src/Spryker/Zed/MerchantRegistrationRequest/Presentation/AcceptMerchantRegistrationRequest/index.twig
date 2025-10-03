@@ -1,0 +1,29 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Approve Request' %}
+
+{% block head_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+{% block section_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton(app.request.headers.get('referer'), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            <p class="spacing-bottom">{{ 'Approving this request will create a merchant account.' | trans }}</p>
+            <div>
+                {{ form_start(acceptMerchantRegistrationRequestForm) }}
+                    <a href="{{ viewMerchantRegistrationRequestUrl }}" class="btn btn-view btn-outline">{{ 'Cancel' | trans }}</a>
+                    {{ form_widget(acceptMerchantRegistrationRequestForm.children.accept, { 'attr' : { 'class': 'btn btn-success safe-submit' }}) }}
+                {{ form_end(acceptMerchantRegistrationRequestForm) }}
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+

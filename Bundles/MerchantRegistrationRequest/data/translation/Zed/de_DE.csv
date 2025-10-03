@@ -1,0 +1,44 @@
+"Merchant Registration Requests","Anfragen zur Händlerregistrierung"
+navigation.merchant_registration_requests,"Anfragen zur Händlerregistrierung"
+Created,Erstellt
+Merchant,Händler
+"Full Name","Vollständiger Name"
+Email,E-Mail
+Status,Status
+Actions,Aktionen
+"View Merchant Registration Request","Händlerregistrierungsanfrage anzeigen"
+"Merchant Registrations",Händlerregistrierungen
+Back,Zurück
+General,Allgemein
+"Created date",Erstellungsdatum
+Store,Shop
+"Company Information",Firmeninformationen
+"Company name",Firmenname
+"Registration number",Handelsregisternummer
+Street,Straße
+"House number",Hausnummer
+"Postal code",Postleitzahl
+City,Stadt
+Country,Land
+"ZIP code",Postleitzahl
+"Contact Person",Ansprechpartner
+Title,Titel
+"First Name",Vorname
+"Last Name",Nachname
+Phone,Telefon
+Role,Rolle
+approved,Genehmigt
+rejected,Abgelehnt
+pending,Ausstehend
+"Internal Comments","Interne Kommentare"
+merchant_registration_request.error.merchant_cannot_be_accepted,"Die Anfrage zur Händlerregistrierung kann nicht akzeptiert werden."
+merchant_registration_request.error.merchant_cannot_be_rejected,"Die Anfrage zur Händlerregistrierung kann nicht abgelehnt werden."
+"Merchant has been created.","Händler wurde erstellt."
+"Merchant registration request not found.","Anfrage zur Händlerregistrierung nicht gefunden."
+"CSRF token is not valid.","CSRF-Token ist ungültig."
+"Merchant Registration Request from %s was rejected.","Die Anfrage zur Händlerregistrierung von %s wurde abgelehnt."
+"Create Merchant","Händler erstellen"
+"Reject Request","Anfrage ablehnen"
+"Approving this request will create a merchant account.","Durch die Genehmigung dieser Anfrage wird ein Händlerkonto erstellt."
+Cancel,Abbrechen
+"Reject this request if you do not want to create a merchant account.","Lehnen Sie diese Anfrage ab, um kein Händlerkonto zu erstellen."

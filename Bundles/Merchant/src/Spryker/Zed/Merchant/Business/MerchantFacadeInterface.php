@@ -30,6 +30,7 @@ interface MerchantFacadeInterface
      *   - storeRelation
      * - Persists the entity to DB.
      * - Sets ID to the returning transfer.
+     * - Creates merchant to store relations based on `MerchantTransfer.storeRelation.stores` and `MerchantTransfer.storeRelation.idStores`.
      * - Calls a stack of `MerchantPostCreatePluginInterface` after merchant is created.
      * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant status transition is not valid.
      * - Returns MerchantResponseTransfer.isSuccessful=true and MerchantResponseTransfer.merchant.idMerchant is set from newly created entity.

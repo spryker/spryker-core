@@ -1,0 +1,37 @@
+[
+    {
+        "fileName": "src/Spryker/Zed/MerchantRegistrationRequest/Dependency/Facade/MerchantRegistrationRequestToCommentFacadeBridge.php",
+        "description": "Bridges: Method `findCommentThreadByOwner()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRegistrationRequest/Dependency/Facade/MerchantRegistrationRequestToCountryFacadeBridge.php",
+        "description": "Bridges: Method `getCountryByIso2Code()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRegistrationRequest/Dependency/Facade/MerchantRegistrationRequestToLocaleFacadeBridge.php",
+        "description": "Bridges: Method `getLocaleCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRegistrationRequest/Dependency/Facade/MerchantRegistrationRequestToMerchantFacadeBridge.php",
+        "description": "Bridges: Method `createMerchant()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRegistrationRequest/Dependency/Facade/MerchantRegistrationRequestToMerchantUserFacadeBridge.php",
+        "description": "Bridges: Method `createMerchantUser()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]
