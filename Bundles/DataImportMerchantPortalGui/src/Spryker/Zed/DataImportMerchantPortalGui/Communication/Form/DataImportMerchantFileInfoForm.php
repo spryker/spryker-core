@@ -118,6 +118,7 @@ class DataImportMerchantFileInfoForm extends AbstractType
     protected function getFileConstraintConfiguration(): array
     {
         return [
+            'extensions' => $this->getConfig()->getSupportedFileExtensions(),
             'maxSize' => $this->getConfig()->getMaxFileSizeInBytes(),
         ];
     }

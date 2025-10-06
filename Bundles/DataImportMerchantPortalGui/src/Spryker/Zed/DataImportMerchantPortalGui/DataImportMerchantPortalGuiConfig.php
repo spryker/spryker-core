@@ -76,4 +76,28 @@ class DataImportMerchantPortalGuiConfig extends AbstractBundleConfig
     {
         return [];
     }
+
+    /**
+     * Specification:
+     * - Returns a list of supported file extensions for file uploads.
+     * - Entry can be a name of the extension.
+     * - Entry can also be an associative array where key is the name of the extension and value is a list of MIME types.
+     * - Example: ['csv', 'txt' => ['text/csv', 'text/plain']].
+     *
+     * @api
+     *
+     * @return list<string>|array<string, list<string>>
+     */
+    public function getSupportedFileExtensions(): array
+    {
+        return [
+            'csv' => [
+                'text/plain',
+                'text/csv',
+                'application/csv',
+                'text/x-comma-separated-values',
+                'text/x-csv',
+            ],
+        ];
+    }
 }
