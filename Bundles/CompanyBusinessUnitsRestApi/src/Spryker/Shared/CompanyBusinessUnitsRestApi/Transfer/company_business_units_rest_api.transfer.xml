@@ -25,6 +25,7 @@
     <transfer name="CompanyUser">
         <property name="companyBusinessUnit" type="CompanyBusinessUnit" description="A business unit within a company."/>
         <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="Customer">
@@ -53,6 +54,10 @@
 
     <transfer name="QuoteRequest">
         <property name="companyUser" type="CompanyUser" description="A user associated with a company."/>
+    </transfer>
+
+    <transfer name="CartReorderRequest" strict="true">
+        <property name="companyUserTransfer" type="CompanyUser"/>
     </transfer>
 
 </transfers>

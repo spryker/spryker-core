@@ -14,6 +14,8 @@
 
     <transfer name="CompanyUser">
         <property name="company" type="Company" description="A company entity."/>
+        <property name="idCompanyUser" type="int"/>
+        <property name="fkCompany" type="int"/>
     </transfer>
 
     <transfer name="CompanyRole">
@@ -31,6 +33,7 @@
 
     <transfer name="RestUser">
         <property name="idCompany" type="int"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
@@ -41,5 +44,9 @@
 
     <transfer name="QuoteRequest">
         <property name="companyUser" type="CompanyUser" description="A user associated with a company."/>
+    </transfer>
+
+    <transfer name="CartReorderRequest" strict="true">
+        <property name="companyUserTransfer" type="CompanyUser"/>
     </transfer>
 </transfers>

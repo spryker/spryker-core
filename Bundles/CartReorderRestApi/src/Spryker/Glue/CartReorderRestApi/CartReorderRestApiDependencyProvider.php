@@ -44,6 +44,11 @@ class CartReorderRestApiDependencyProvider extends AbstractBundleDependencyProvi
     public const PLUGINS_REST_CART_REORDER_ATTRIBUTES_VALIDATOR = 'PLUGINS_REST_CART_REORDER_ATTRIBUTES_VALIDATOR';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_CART_REORDER_REQUEST_EXPANDER = 'PLUGINS_CART_REORDER_REQUEST_EXPANDER';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -56,6 +61,7 @@ class CartReorderRestApiDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addCartsRestApiResource($container);
         $container = $this->addRestCartReorderAttributesMapperPlugins($container);
         $container = $this->addRestCartReorderAttributesValidatorPlugins($container);
+        $container = $this->addCartReorderRequestExpanderPlugins($container);
 
         return $container;
     }
@@ -148,6 +154,28 @@ class CartReorderRestApiDependencyProvider extends AbstractBundleDependencyProvi
      * @return list<\Spryker\Glue\CartReorderRestApiExtension\Dependency\Plugin\RestCartReorderAttributesValidatorPluginInterface>
      */
     protected function getRestCartReorderAttributesValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCartReorderRequestExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CART_REORDER_REQUEST_EXPANDER, function () {
+            return $this->getCartReorderRequestExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Glue\CartReorderRestApiExtension\Dependency\Plugin\CartReorderRequestExpanderPluginInterface>
+     */
+    protected function getCartReorderRequestExpanderPlugins(): array
     {
         return [];
     }

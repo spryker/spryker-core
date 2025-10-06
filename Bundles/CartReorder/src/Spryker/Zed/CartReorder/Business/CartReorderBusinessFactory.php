@@ -87,6 +87,7 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderReader(
             $this->getSalesFacade(),
+            $this->getCartReorderOrderProviderPlugins(),
         );
     }
 
@@ -182,5 +183,13 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
     public function getCartPostReorderPlugins(): array
     {
         return $this->getProvidedDependency(CartReorderDependencyProvider::PLUGINS_CART_POST_REORDER);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderOrderProviderPluginInterface>
+     */
+    public function getCartReorderOrderProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(CartReorderDependencyProvider::PLUGINS_CART_REORDER_ORDER_PROVIDER);
     }
 }

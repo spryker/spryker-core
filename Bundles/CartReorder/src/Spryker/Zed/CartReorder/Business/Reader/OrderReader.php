@@ -16,9 +16,12 @@ class OrderReader implements OrderReaderInterface
 {
     /**
      * @param \Spryker\Zed\CartReorder\Dependency\Facade\CartReorderToSalesFacadeInterface $salesFacade
+     * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderOrderProviderPluginInterface> $cartReorderOrderProviderPlugins
      */
-    public function __construct(protected CartReorderToSalesFacadeInterface $salesFacade)
-    {
+    public function __construct(
+        protected CartReorderToSalesFacadeInterface $salesFacade,
+        protected array $cartReorderOrderProviderPlugins
+    ) {
     }
 
     /**
@@ -32,10 +35,35 @@ class OrderReader implements OrderReaderInterface
             ->setCustomerReference($cartReorderRequestTransfer->getCustomerReferenceOrFail())
             ->addOrderReference($cartReorderRequestTransfer->getOrderReferenceOrFail());
 
-        return $this->salesFacade
+        $orderTransfer = $this->salesFacade
             ->getOffsetPaginatedCustomerOrderList($orderListRequestTransfer)
             ->getOrders()
             ->getIterator()
             ->current();
+
+        if ($orderTransfer) {
+            return $orderTransfer;
+        }
+
+        return $this->executeCartReorderOrderProviderPlugins($cartReorderRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    protected function executeCartReorderOrderProviderPlugins(
+        CartReorderRequestTransfer $cartReorderRequestTransfer
+    ): ?OrderTransfer {
+        foreach ($this->cartReorderOrderProviderPlugins as $cartReorderOrderProviderPlugin) {
+            $orderTransfer = $cartReorderOrderProviderPlugin->findOrder($cartReorderRequestTransfer);
+
+            if ($orderTransfer) {
+                return $orderTransfer;
+            }
+        }
+
+        return null;
     }
 }

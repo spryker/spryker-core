@@ -13,8 +13,11 @@ use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 
 /**
  * @method void wantToTest($text)
@@ -34,6 +37,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 class CompanyBusinessUnitSalesConnectorBusinessTester extends Actor
 {
     use _generated\CompanyBusinessUnitSalesConnectorBusinessTesterActions;
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
 
     /**
      * @param string $permissionKey
@@ -85,5 +93,45 @@ class CompanyBusinessUnitSalesConnectorBusinessTester extends Actor
         $customerTransfer = (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer);
 
         return (new QuoteTransfer())->setCustomer($customerTransfer);
+    }
+
+    /**
+     * @param string $orderReference
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    public function createOrderWithCompanyBusinessUnitUuid(
+        string $orderReference,
+        CompanyUserTransfer $companyUserTransfer
+    ): SaveOrderTransfer {
+        $saveOrderTransfer = $this->haveOrder([
+            OrderTransfer::ORDER_REFERENCE => $orderReference,
+            OrderTransfer::CUSTOMER => $companyUserTransfer->getCustomer()->toArray(),
+        ], static::DEFAULT_OMS_PROCESS_NAME);
+        $this->updateOrderCompanyBusinessUnitUuid($orderReference, $companyUserTransfer->getCompanyBusinessUnit()->getUuid());
+
+        return $saveOrderTransfer;
+    }
+
+    /**
+     * @param string $orderReference
+     * @param string $companyBusinessUnitUuid
+     *
+     * @return void
+     */
+    protected function updateOrderCompanyBusinessUnitUuid(string $orderReference, string $companyBusinessUnitUuid): void
+    {
+        $salesOrderEntity = $this->getSalesOrderQuery()->filterByOrderReference($orderReference)->findOne();
+        $salesOrderEntity->setCompanyBusinessUnitUuid($companyBusinessUnitUuid);
+        $salesOrderEntity->save();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function getSalesOrderQuery(): SpySalesOrderQuery
+    {
+        return SpySalesOrderQuery::create();
     }
 }

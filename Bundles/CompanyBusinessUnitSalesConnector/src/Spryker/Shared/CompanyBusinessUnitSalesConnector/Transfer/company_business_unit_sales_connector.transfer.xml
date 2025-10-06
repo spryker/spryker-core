@@ -8,12 +8,14 @@
     <transfer name="Order">
         <property name="companyBusinessUnitUuid" type="string"/>
         <property name="idSalesOrder" type="int"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
         <property name="fkCompany" type="int"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitCriteriaFilter">
@@ -30,6 +32,8 @@
 
     <transfer name="Quote">
         <property name="customer" type="Customer"/>
+        <property name="originalOrder" type="Order" strict="true"/>
+        <property name="amendmentOrderReference" type="string" strict="true"/>
     </transfer>
 
     <transfer name="Customer">
@@ -57,6 +61,38 @@
         <property name="withColumns" type="string[]" singular="withColumn"/>
         <property name="orderBy" type="string"/>
         <property name="orderDirection" type="string"/>
+    </transfer>
+
+    <transfer name="CartReorderRequest" strict="true">
+        <property name="isAmendment" type="bool"/>
+        <property name="orderReference" type="string"/>
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="OrderListRequest">
+        <property name="customerReference" type="string"/>
+        <property name="orderReferences" type="string[]" singular="orderReference"/>
+    </transfer>
+
+    <transfer name="OrderList">
+        <property name="orders" type="Order[]" singular="order"/>
+    </transfer>
+
+    <transfer name="OrderCriteria" strict="true">
+        <property name="orderConditions" type="OrderConditions"/>
+    </transfer>
+
+    <transfer name="OrderConditions" strict="true">
+        <property name="orderReferences" type="string[]" singular="orderReference"/>
+    </transfer>
+
+    <transfer name="OrderCollection">
+        <property name="orders" type="Order[]" singular="order"/>
+    </transfer>
+
+    <transfer name="OrderFilter">
+        <property name="orderReference" type="string" strict="true"/>
+        <property name="withUniqueProductCount" type="bool" strict="true"/>
     </transfer>
 
 </transfers>

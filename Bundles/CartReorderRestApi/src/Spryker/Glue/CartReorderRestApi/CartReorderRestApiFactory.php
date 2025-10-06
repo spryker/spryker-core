@@ -37,6 +37,7 @@ class CartReorderRestApiFactory extends AbstractFactory
             $this->createCartReorderRestResponseBuilder(),
             $this->createCartReorderRestRequestValidator(),
             $this->createCartReorderRestRequestMapper(),
+            $this->getCartReorderRequestExpanderPlugins(),
         );
     }
 
@@ -121,5 +122,13 @@ class CartReorderRestApiFactory extends AbstractFactory
     public function getRestCartReorderAttributesValidatorPlugins(): array
     {
         return $this->getProvidedDependency(CartReorderRestApiDependencyProvider::PLUGINS_REST_CART_REORDER_ATTRIBUTES_VALIDATOR);
+    }
+
+    /**
+     * @return list<\Spryker\Glue\CartReorderRestApiExtension\Dependency\Plugin\CartReorderRequestExpanderPluginInterface>
+     */
+    protected function getCartReorderRequestExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CartReorderRestApiDependencyProvider::PLUGINS_CART_REORDER_REQUEST_EXPANDER);
     }
 }

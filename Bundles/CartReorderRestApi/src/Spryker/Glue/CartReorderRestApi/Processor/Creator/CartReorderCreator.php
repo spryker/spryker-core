@@ -9,6 +9,7 @@ namespace Spryker\Glue\CartReorderRestApi\Processor\Creator;
 
 use Generated\Shared\Transfer\CartReorderRequestTransfer;
 use Generated\Shared\Transfer\RestCartReorderRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\CartReorderRestApi\Dependency\Client\CartReorderRestApiToCartReorderClientInterface;
 use Spryker\Glue\CartReorderRestApi\Processor\Mapper\CartReorderRestRequestMapperInterface;
 use Spryker\Glue\CartReorderRestApi\Processor\ResponseBuilder\CartReorderRestResponseBuilderInterface;
@@ -23,12 +24,14 @@ class CartReorderCreator implements CartReorderCreatorInterface
      * @param \Spryker\Glue\CartReorderRestApi\Processor\ResponseBuilder\CartReorderRestResponseBuilderInterface $cartReorderRestResponseBuilder
      * @param \Spryker\Glue\CartReorderRestApi\Processor\Validator\CartReorderRestRequestValidatorInterface $cartReorderRestRequestValidator
      * @param \Spryker\Glue\CartReorderRestApi\Processor\Mapper\CartReorderRestRequestMapperInterface $cartReorderRestRequestMapper
+     * @param list<\Spryker\Glue\CartReorderRestApiExtension\Dependency\Plugin\CartReorderRequestExpanderPluginInterface> $cartReorderRequestExpanderPlugins
      */
     public function __construct(
         protected CartReorderRestApiToCartReorderClientInterface $cartReorderClient,
         protected CartReorderRestResponseBuilderInterface $cartReorderRestResponseBuilder,
         protected CartReorderRestRequestValidatorInterface $cartReorderRestRequestValidator,
-        protected CartReorderRestRequestMapperInterface $cartReorderRestRequestMapper
+        protected CartReorderRestRequestMapperInterface $cartReorderRestRequestMapper,
+        protected array $cartReorderRequestExpanderPlugins
     ) {
     }
 
@@ -53,11 +56,32 @@ class CartReorderCreator implements CartReorderCreatorInterface
             $restCartReorderRequestAttributesTransfer,
             (new CartReorderRequestTransfer())->setCustomerReference($restUserTransfer->getNaturalIdentifierOrFail()),
         );
+        $cartReorderRequestTransfer = $this->executeCartReorderRequestExpanderPlugins(
+            $cartReorderRequestTransfer,
+            $restUserTransfer,
+        );
 
         $cartReorderResponseTransfer = $this->cartReorderClient->reorder($cartReorderRequestTransfer);
 
         return $cartReorderResponseTransfer->getErrors()->count()
             ? $this->cartReorderRestResponseBuilder->buildErrorResponse($cartReorderResponseTransfer, $restRequest->getMetadata()->getLocale())
             : $this->cartReorderRestResponseBuilder->buildSuccessfulResponse($cartReorderResponseTransfer, $restRequest);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
+     * @param \Generated\Shared\Transfer\RestUserTransfer $restUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderRequestTransfer
+     */
+    protected function executeCartReorderRequestExpanderPlugins(
+        CartReorderRequestTransfer $cartReorderRequestTransfer,
+        RestUserTransfer $restUserTransfer
+    ): CartReorderRequestTransfer {
+        foreach ($this->cartReorderRequestExpanderPlugins as $cartReorderRequestExpanderPlugin) {
+            $cartReorderRequestTransfer = $cartReorderRequestExpanderPlugin->expand($cartReorderRequestTransfer, $restUserTransfer);
+        }
+
+        return $cartReorderRequestTransfer;
     }
 }

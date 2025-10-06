@@ -17,6 +17,7 @@ interface CartReorderFacadeInterface
      * - Requires `CartReorderRequestTransfer.customerReference` to be set.
      * - Requires `CartReorderRequestTransfer.orderReference` to be set.
      * - Retrieves the customer order from the persistence layer using the provided order and customer references.
+     * - Executes {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderOrderProviderPluginInterface} plugins to find an order when it is not found by order and customer references.
      * - Validates the reorder request by executing {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderRequestValidatorPluginInterface} plugins.
      * - Determines the `QuoteTransfer` to use by executing {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderStrategyPluginInterface} plugins.
      *   If no plugins provide a `QuoteTransfer`, it will use the `CartReorderRequestTransfer.quote`.

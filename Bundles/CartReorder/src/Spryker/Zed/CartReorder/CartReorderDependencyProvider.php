@@ -88,6 +88,11 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CART_POST_REORDER = 'PLUGINS_CART_POST_REORDER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_CART_REORDER_ORDER_PROVIDER = 'PLUGINS_CART_REORDER_ORDER_PROVIDER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -109,6 +114,7 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartReorderPreAddToCartPluginsForOrderAmendment($container);
         $container = $this->addCartReorderPreAddToCartPluginsForOrderAmendmentAsync($container);
         $container = $this->addCartPostReorderPlugins($container);
+        $container = $this->addCartReorderOrderProviderPlugins($container);
 
         return $container;
     }
@@ -310,6 +316,20 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCartReorderOrderProviderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CART_REORDER_ORDER_PROVIDER, function () {
+            return $this->getCartReorderOrderProviderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderRequestValidatorPluginInterface>
      */
     protected function getCartReorderRequestValidatorPlugins(): array
@@ -401,6 +421,14 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
      * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface>
      */
     protected function getCartPostReorderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderOrderProviderPluginInterface>
+     */
+    protected function getCartReorderOrderProviderPlugins(): array
     {
         return [];
     }

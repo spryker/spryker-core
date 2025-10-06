@@ -1,5 +1,5 @@
 {
     "include": {
-        "spryker/company-business-unit": "Defined for forward-compatibility reasons."
+        "spryker/transfer": "Provides transfer objects definition with strict types."
     }
 }
