@@ -13,25 +13,9 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface UrlRepositoryInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer|null
-     */
     public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     * @param bool $ignoreRedirects
-     *
-     * @return bool
-     */
     public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer, bool $ignoreRedirects): bool;
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlCriteriaTransfer $urlCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlCollectionTransfer
-     */
     public function getUrlCollection(UrlCriteriaTransfer $urlCriteriaTransfer): UrlCollectionTransfer;
 }

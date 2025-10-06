@@ -11,6 +11,7 @@ use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Url\Dependency\UrlToLocaleBridge;
+use Spryker\Zed\Url\Dependency\UrlToPropelBridge;
 use Spryker\Zed\Url\Dependency\UrlToTouchBridge;
 
 /**
@@ -27,6 +28,11 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_TOUCH = 'touch facade';
+
+    /**
+     * @var string
+     */
+    public const FACADE_PROPEL = 'FACADE_PROPEL';
 
     /**
      * @var string
@@ -106,6 +112,22 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
 
         $container->set(static::PLUGINS_URL_AFTER_DELETE, function () {
             return $this->getUrlAfterDeletePlugins();
+        });
+
+        return $container;
+    }
+
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = $this->addPropelFacade($container);
+
+        return $container;
+    }
+
+    protected function addPropelFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PROPEL, function (Container $container) {
+            return new UrlToPropelBridge($container->getLocator()->propel()->facade());
         });
 
         return $container;

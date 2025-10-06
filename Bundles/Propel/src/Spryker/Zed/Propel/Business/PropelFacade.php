@@ -316,4 +316,14 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     {
         return $this->getFactory()->createPropelTableMapLoader()->loadTableMap();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function isCollationCaseSensitive(): bool
+    {
+        return $this->getFactory()->createPropelConfigReader()->isCollationCaseSensitive();
+    }
 }

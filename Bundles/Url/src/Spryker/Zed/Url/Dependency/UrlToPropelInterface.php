@@ -5,11 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\ConfigReader;
+namespace Spryker\Zed\Url\Dependency;
 
-interface PropelConfigReaderInterface
+interface UrlToPropelInterface
 {
-    public function getSchemaDirectory(): string;
-
     public function isCollationCaseSensitive(): bool;
 }

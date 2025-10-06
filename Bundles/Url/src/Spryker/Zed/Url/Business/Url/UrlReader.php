@@ -14,24 +14,10 @@ use Spryker\Zed\Url\Persistence\UrlRepositoryInterface;
 
 class UrlReader implements UrlReaderInterface
 {
-    /**
-     * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
-     */
-    protected $urlQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\Url\Persistence\UrlRepositoryInterface
-     */
-    protected $urlRepository;
-
-    /**
-     * @param \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface $urlQueryContainer
-     * @param \Spryker\Zed\Url\Persistence\UrlRepositoryInterface $urlRepository
-     */
-    public function __construct(UrlQueryContainerInterface $urlQueryContainer, UrlRepositoryInterface $urlRepository)
-    {
-        $this->urlQueryContainer = $urlQueryContainer;
-        $this->urlRepository = $urlRepository;
+    public function __construct(
+        protected UrlQueryContainerInterface $urlQueryContainer,
+        protected UrlRepositoryInterface $urlRepository
+    ) {
     }
 
     /**
@@ -53,11 +39,6 @@ class UrlReader implements UrlReaderInterface
         return $urlTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer|null
-     */
     public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer
     {
         $this->assertUrlSearchableParameters($urlTransfer);
@@ -79,16 +60,11 @@ class UrlReader implements UrlReaderInterface
         return $urlCount > 0;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return bool
-     */
     public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool
     {
         $this->assertUrlSearchableParameters($urlTransfer);
 
-        $ignoreUrlRedirects = ($urlTransfer->getFkResourceRedirect() === null);
+        $ignoreUrlRedirects = $urlTransfer->getFkResourceRedirect() === null;
 
         return $this->urlRepository->hasUrlCaseInsensitive(
             $urlTransfer,
@@ -108,11 +84,6 @@ class UrlReader implements UrlReaderInterface
         return $urlCount > 0;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return bool
-     */
     public function hasUrlOrRedirectedUrlCaseInsensitive(UrlTransfer $urlTransfer): bool
     {
         $this->assertUrlSearchableParameters($urlTransfer);

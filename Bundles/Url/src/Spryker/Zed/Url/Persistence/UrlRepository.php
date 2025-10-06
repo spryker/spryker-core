@@ -21,11 +21,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer|null
-     */
     public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer
     {
         $urlEntity = $this->prepareUrlCaseInsensitiveQuery($urlTransfer)->findOne();
@@ -37,12 +32,6 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
         return (new UrlTransfer())->fromArray($urlEntity->toArray());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     * @param bool $ignoreRedirects
-     *
-     * @return bool
-     */
     public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer, bool $ignoreRedirects): bool
     {
         $urlQuery = $this->prepareUrlCaseInsensitiveQuery($urlTransfer);
@@ -54,29 +43,6 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
         return $urlQuery->exists();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
-    protected function prepareUrlCaseInsensitiveQuery(UrlTransfer $urlTransfer): SpyUrlQuery
-    {
-        $urlQuery = $this->getFactory()
-            ->createUrlQuery()
-            ->setIgnoreCase(true);
-
-        if ($urlTransfer->getUrl() !== null) {
-            return $urlQuery->filterByUrl($urlTransfer->getUrl());
-        }
-
-        return $urlQuery->filterByIdUrl($urlTransfer->getIdUrl());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UrlCriteriaTransfer $urlCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlCollectionTransfer
-     */
     public function getUrlCollection(UrlCriteriaTransfer $urlCriteriaTransfer): UrlCollectionTransfer
     {
         $urlQuery = $this->getFactory()->createUrlQuery()->setIgnoreCase(true);
@@ -95,12 +61,6 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
             ->mapUrlEntitiesToUrlCollectionTransfer($urlEntities, $urlCollectionTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlCriteriaTransfer $urlCriteriaTransfer
-     * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlQuery
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
     public function applyUrlPagination(UrlCriteriaTransfer $urlCriteriaTransfer, SpyUrlQuery $urlQuery): SpyUrlQuery
     {
         if ($urlCriteriaTransfer->getPagination()) {
@@ -112,12 +72,6 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
         return $urlQuery;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlCriteriaTransfer $urlCriteriaTransfer
-     * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlQuery
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
     public function applyUrlSortings(UrlCriteriaTransfer $urlCriteriaTransfer, SpyUrlQuery $urlQuery): SpyUrlQuery
     {
         foreach ($urlCriteriaTransfer->getSortCollection() as $sortTransfer) {
@@ -127,12 +81,6 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
         return $urlQuery;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlCriteriaTransfer $urlCriteriaTransfer
-     * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlQuery
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
     public function applyUrlCriteria(UrlCriteriaTransfer $urlCriteriaTransfer, SpyUrlQuery $urlQuery): SpyUrlQuery
     {
         if (!$urlCriteriaTransfer->getUrlConditions()) {
@@ -160,5 +108,25 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
         }
 
         return $urlQuery;
+    }
+
+    protected function prepareUrlCaseInsensitiveQuery(UrlTransfer $urlTransfer): SpyUrlQuery
+    {
+        $urlQuery = $this->getFactory()
+            ->createUrlQuery()
+            ->setIgnoreCase($this->isIgnoreCaseApplicable());
+
+        if ($urlTransfer->getUrl() !== null) {
+            return $urlQuery->filterByUrl($urlTransfer->getUrl());
+        }
+
+        return $urlQuery->filterByIdUrl($urlTransfer->getIdUrl());
+    }
+
+    protected function isIgnoreCaseApplicable(): bool
+    {
+        return $this->getFactory()
+            ->getPropelFacade()
+            ->isCollationCaseSensitive();
     }
 }

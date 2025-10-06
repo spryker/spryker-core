@@ -263,4 +263,14 @@ interface PropelFacadeInterface
      * @return bool
      */
     public function loadPropelTableMap(): bool;
+
+    /**
+     * Specification:
+     * - Determines if the current database collation is case-sensitive.
+     * - Returns `true` if the database collation is case-sensitive, `false` otherwise.
+     * - For PostgreSQL always returns `true`.
+     *
+     * @api
+     */
+    public function isCollationCaseSensitive(): bool;
 }

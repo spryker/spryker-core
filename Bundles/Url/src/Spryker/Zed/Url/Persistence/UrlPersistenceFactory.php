@@ -11,7 +11,9 @@ use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Orm\Zed\Url\Persistence\SpyUrlRedirectQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Url\Dependency\UrlToPropelInterface;
 use Spryker\Zed\Url\Persistence\Propel\Mapper\UrlMapper;
+use Spryker\Zed\Url\UrlDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Url\UrlConfig getConfig()
@@ -51,5 +53,10 @@ class UrlPersistenceFactory extends AbstractPersistenceFactory
     public function createSpyUrlEntity(): SpyUrl
     {
         return new SpyUrl();
+    }
+
+    public function getPropelFacade(): UrlToPropelInterface
+    {
+        return $this->getProvidedDependency(UrlDependencyProvider::FACADE_PROPEL);
     }
 }

@@ -11,24 +11,54 @@ use Spryker\Zed\Propel\PropelConfig;
 
 class PropelConfigReader implements PropelConfigReaderInterface
 {
-    /**
-     * @var \Spryker\Zed\Propel\PropelConfig
-     */
-    protected $propelConfig;
-
-    /**
-     * @param \Spryker\Zed\Propel\PropelConfig $propelConfig
-     */
-    public function __construct(PropelConfig $propelConfig)
+    public function __construct(protected PropelConfig $propelConfig)
     {
-        $this->propelConfig = $propelConfig;
     }
 
-    /**
-     * @return string
-     */
     public function getSchemaDirectory(): string
     {
         return $this->propelConfig->getSchemaDirectory();
+    }
+
+    public function isCollationCaseSensitive(): bool
+    {
+        /** @var bool|null $isCollationCaseSensitive */
+        static $isCollationCaseSensitive = null;
+        if ($isCollationCaseSensitive !== null) {
+            return $isCollationCaseSensitive;
+        }
+
+        if ($this->propelConfig->getCurrentDatabaseEngine() === PropelConfig::DB_ENGINE_PGSQL) {
+            $isCollationCaseSensitive = true;
+
+            return $isCollationCaseSensitive;
+        }
+
+        $connectionSettingsQueriesParam = $this->propelConfig->getPropelConfig()['database']['connections']['default']['settings']['queries'] ?? null;
+        if ($connectionSettingsQueriesParam === null || !is_string($connectionSettingsQueriesParam)) {
+            $isCollationCaseSensitive = false;
+
+            return $isCollationCaseSensitive;
+        }
+
+        /** @var list<string> $connectionSettingsQueries */
+        $connectionSettingsQueries = explode(', ', $connectionSettingsQueriesParam);
+        if (count($connectionSettingsQueries) === 0) {
+            $isCollationCaseSensitive = false;
+
+            return $isCollationCaseSensitive;
+        }
+
+        foreach ($connectionSettingsQueries as $connectionSettingsQuery) {
+            if (str_starts_with($connectionSettingsQuery, 'COLLATION_CONNECTION') && str_ends_with($connectionSettingsQuery, '_ci')) {
+                $isCollationCaseSensitive = false;
+
+                return $isCollationCaseSensitive;
+            }
+        }
+
+        $isCollationCaseSensitive = true;
+
+        return $isCollationCaseSensitive;
     }
 }
