@@ -106,11 +106,9 @@ class AssignedCompanyAttachmentTable extends AbstractTable
     {
         return $this->companyQuery
             ->join('CompanyBusinessUnit')
-            ->withColumn('COUNT(DISTINCT ' . SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT . ')', 'total_business_units')
-            ->withColumn('COUNT(DISTINCT CASE WHEN ' . SpyCompanyBusinessUnitFileTableMap::COL_FK_FILE . ' = ' . $this->idFile . ' THEN ' . SpyCompanyBusinessUnitFileTableMap::COL_FK_COMPANY_BUSINESS_UNIT . ' END)', 'attached_business_units')
             ->leftJoin('CompanyBusinessUnit.SpyCompanyBusinessUnitFile')
             ->groupByIdCompany()
-            ->having('total_business_units = attached_business_units AND total_business_units > 0')
+            ->having('COUNT(DISTINCT ' . SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT . ') = COUNT(DISTINCT CASE WHEN ' . SpyCompanyBusinessUnitFileTableMap::COL_FK_FILE . ' = ' . $this->idFile . ' THEN ' . SpyCompanyBusinessUnitFileTableMap::COL_FK_COMPANY_BUSINESS_UNIT . ' END) AND COUNT(DISTINCT ' . SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT . ') > 0')
             ->select([
                 SpyCompanyTableMap::COL_ID_COMPANY,
                 SpyCompanyTableMap::COL_NAME,
