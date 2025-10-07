@@ -107,7 +107,7 @@ class AssignedModelAssetAttachmentTable extends AbstractTable
             'data-selectable' => [
                 'moveToSelector' => '#assetsToBeUnassigned',
                 'inputSelector' => '#attachModel_sspAssetIdsToBeUnassigned',
-                'counterHolderSelector' => 'a[href="#tab-content-assets-to-be-unassigned"]',
+                'counterHolderSelector' => 'a[href="#tab-content-assets-to-be-detached"]',
                 'colId' => static::COLUMN_ID,
             ],
             'data-uploader' => [

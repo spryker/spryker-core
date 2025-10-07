@@ -100,7 +100,7 @@ class AssignedModelAttachmentTable extends AbstractTable
             'data-selectable' => [
                 'moveToSelector' => '#modelsToBeUnassigned',
                 'inputSelector' => '#fileAttachment_sspModelIdsToBeUnassigned',
-                'counterHolderSelector' => 'a[href="#tab-content-models-to-be-unassigned"]',
+                'counterHolderSelector' => 'a[href="#tab-content-models-to-be-detached"]',
                 'colId' => static::COLUMN_ID,
             ],
             'data-uploader' => [

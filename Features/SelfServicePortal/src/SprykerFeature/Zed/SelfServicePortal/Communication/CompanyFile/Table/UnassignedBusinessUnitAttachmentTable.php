@@ -67,7 +67,7 @@ class UnassignedBusinessUnitAttachmentTable extends AbstractTable
             'data-selectable' => [
                 'moveToSelector' => '#businessUnitsToBeAssigned',
                 'inputSelector' => '#fileAttachment_businessUnitIdsToBeAssigned',
-                'counterHolderSelector' => 'a[href="#tab-content-business-units-to-be-assigned"]',
+                'counterHolderSelector' => 'a[href="#tab-content-business-units-to-be-attached"]',
                 'colId' => 'spy_company_business_unit.id_company_business_unit',
             ],
             'data-uploader' => [

@@ -80,7 +80,7 @@ class AssignedModelProductListAttachmentTable extends AbstractTable
             'data-selectable' => [
                 'moveToSelector' => '#productListsToBeUnassigned',
                 'inputSelector' => '#attachModel_productListIdsToBeUnassigned',
-                'counterHolderSelector' => 'a[href="#tab-content-product-lists-to-be-unassigned"]',
+                'counterHolderSelector' => 'a[href="#tab-content-product-lists-to-be-detached"]',
                 'colId' => 'spy_product_list.id_product_list',
             ],
             'data-uploader' => [

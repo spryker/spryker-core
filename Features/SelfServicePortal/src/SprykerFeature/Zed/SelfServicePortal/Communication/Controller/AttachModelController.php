@@ -71,7 +71,7 @@ class AttachModelController extends AbstractController
     /**
      * @var string
      */
-    protected const EXAMPLE_ASSET_CSV_ATTACHMENT_FILE_CONTENT = "Asset to be attached,Asset to be detached\nASSET-REF-1,ASSET-REF-4\nASSET-REF-2,ASSET-REF-5\nASSET-REF-3,ASSET-REF-6";
+    protected const EXAMPLE_ASSET_CSV_ATTACHMENT_FILE_CONTENT = "Asset to be attached,Asset to be detached\nAST--1,AST--4\nAST--2,AST--5\nAST--3,AST--6";
 
     /**
      * @var string

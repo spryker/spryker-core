@@ -86,7 +86,7 @@ class UnassignedCompanyUserAttachmentTable extends AbstractTable
             'data-selectable' => [
                 'moveToSelector' => '#companyUsersToBeAssigned',
                 'inputSelector' => '#fileAttachment_companyUserIdsToBeAssigned',
-                'counterHolderSelector' => 'a[href="#tab-content-company-users-to-be-assigned"]',
+                'counterHolderSelector' => 'a[href="#tab-content-company-users-to-be-attached"]',
                 'colId' => 'id_company_user',
             ],
             'data-uploader' => [

@@ -69,7 +69,7 @@ class UnassignedCompanyAttachmentTable extends AbstractTable
             'data-selectable' => [
                 'moveToSelector' => '#companiesToBeAssigned',
                 'inputSelector' => '#fileAttachment_companyIdsToBeAssigned',
-                'counterHolderSelector' => 'a[href="#tab-content-companies-to-be-assigned"]',
+                'counterHolderSelector' => 'a[href="#tab-content-companies-to-be-attached"]',
                 'colId' => static::COLUMN_ID,
             ],
             'data-uploader' => [

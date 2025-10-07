@@ -95,7 +95,7 @@ class UnassignedSspAssetAttachmentTable extends AbstractTable
             'data-selectable' => [
                 'moveToSelector' => '#assetsToBeAssigned',
                 'inputSelector' => '#fileAttachment_sspAssetIdsToBeAssigned',
-                'counterHolderSelector' => 'a[href="#tab-content-assets-to-be-assigned"]',
+                'counterHolderSelector' => 'a[href="#tab-content-assets-to-be-attached"]',
                 'colId' => 'spy_ssp_asset.id_ssp_asset',
             ],
             'data-uploader' => [
