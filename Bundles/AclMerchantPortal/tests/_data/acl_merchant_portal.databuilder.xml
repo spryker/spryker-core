@@ -4,11 +4,6 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
 >
-    <transfer name="Merchant">
-        <property name="merchantReference" dataBuilderRule="unique()->regexify('MER-[A-Z0-9]{6}')"/>
-        <property name="name" dataBuilderRule="lexify('??????????')"/>
-    </transfer>
-
     <transfer name="User">
         <property name="firstName" dataBuilderRule="firstName()"/>
         <property name="lastName" dataBuilderRule="lastName()"/>

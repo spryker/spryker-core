@@ -6,7 +6,7 @@
 >
 
     <transfer name="DataImportMerchantFile" strict="true">
-        <property name="merchantReference" dataBuilderRule="unique()->regexify('MER-[A-Z0-9]{6}')"/>
+        <property name="merchantReference" dataBuilderRule="unique()->regexify('MER-[A-Z0-9]{8}')"/>
         <property name="idUser" dataBuilderRule="numberBetween(1, 100)"/>
         <property name="importerType" dataBuilderRule="randomElement(['merchant-product'])"/>
         <property name="status" dataBuilderRule="randomElement(['pending', 'processing', 'completed', 'failed'])"/>

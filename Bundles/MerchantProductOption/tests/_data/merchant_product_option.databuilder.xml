@@ -7,7 +7,7 @@
     <transfer name="MerchantProductOptionGroup">
         <property name="fkProductOptionGroup" dataBuilderRule="randomNumber(5)" type="int"/>
         <property name="approvalStatus" dataBuilderRule="=lexify('??????????')" type="string"/>
-        <property name="merchantReference" dataBuilderRule="=unique()->sentence()" type="string"/>
+        <property name="merchantReference" dataBuilderRule="=unique()->regexify('MER-[A-Z0-9]{8}')" type="string"/>
     </transfer>
 
 </transfers>
