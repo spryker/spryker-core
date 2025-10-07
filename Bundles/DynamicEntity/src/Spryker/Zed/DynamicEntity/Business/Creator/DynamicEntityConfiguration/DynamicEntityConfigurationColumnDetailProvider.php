@@ -160,9 +160,13 @@ class DynamicEntityConfigurationColumnDetailProvider implements DynamicEntityCon
                 $fieldDefinitions,
             );
             $dynamicEntityFieldDefinitionTransfer = $this->getDynamicEntityFieldDefinitionTransfer($columnXmlElement, $fieldDefinition);
-            $dynamicEntityFieldDefinitionTransfer = $this->addColumnDescriptionToFieldDefinition($columnXmlElement, $dynamicEntityFieldDefinitionTransfer);
             $dynamicEntityFieldDefinitionTransfer = $this->addEnumToFieldDefinition($columnXmlElement, $dynamicEntityFieldDefinitionTransfer);
-            $dynamicEntityFieldDefinitionTransfer = $this->addExamplesToFieldDefinition($columnXmlElement, $dynamicEntityFieldDefinitionTransfer);
+            if ($dynamicEntityFieldDefinitionTransfer->getDescription() === null) {
+                $dynamicEntityFieldDefinitionTransfer = $this->addColumnDescriptionToFieldDefinition($columnXmlElement, $dynamicEntityFieldDefinitionTransfer);
+            }
+            if ($dynamicEntityFieldDefinitionTransfer->getExamples() === null) {
+                $dynamicEntityFieldDefinitionTransfer = $this->addExamplesToFieldDefinition($columnXmlElement, $dynamicEntityFieldDefinitionTransfer);
+            }
 
             $dynamicEntityFieldDefinitionTransfers->append($dynamicEntityFieldDefinitionTransfer);
         }
@@ -218,7 +222,11 @@ class DynamicEntityConfigurationColumnDetailProvider implements DynamicEntityCon
         }
 
         $dynamicEntityFieldValidationTransfer = new DynamicEntityFieldValidationTransfer();
-        $dynamicEntityFieldValidationTransfer->setIsRequired($this->getIsColumnRequired($columnXmlElement));
+        $isRequired = $this->getIsColumnRequired($columnXmlElement);
+        if ($dynamicEntityFieldDefinitionTransfer->getValidation() && $dynamicEntityFieldDefinitionTransfer->getValidation()->getIsRequired() !== null) {
+            $isRequired = $dynamicEntityFieldDefinitionTransfer->getValidation()->getIsRequired();
+        }
+        $dynamicEntityFieldValidationTransfer->setIsRequired($isRequired);
 
         $maxLength = $this->getMaxLength($columnXmlElement);
 
