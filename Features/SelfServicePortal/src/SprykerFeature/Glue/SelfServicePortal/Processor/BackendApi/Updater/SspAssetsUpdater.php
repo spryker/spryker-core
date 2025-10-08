@@ -26,6 +26,10 @@ class SspAssetsUpdater implements SspAssetsUpdaterInterface
     {
         $sspAssetCollectionRequestTransfer = $this->sspAssetsMapper->mapGlueRequestToSspAssetCollectionRequestTransferForUpdate($glueRequestTransfer);
 
+        if (!$sspAssetCollectionRequestTransfer->getSspAssets()->count()) {
+            return $this->sspAssetsResponseBuilder->createAssetNotFoundErrorResponse($glueRequestTransfer->getLocaleOrFail());
+        }
+
         $sspAssetCollectionResponseTransfer = $this->selfServicePortalFacade->updateSspAssetCollection($sspAssetCollectionRequestTransfer);
 
         if ($sspAssetCollectionResponseTransfer->getErrors()->count() > 0) {

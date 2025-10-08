@@ -157,7 +157,7 @@ class SelfServicePortalFactory extends AbstractBackendApiFactory
 
     public function createSspAssetsMapper(): BackendSspAssetsMapperInterface
     {
-        return new BackendSspAssetsMapper();
+        return new BackendSspAssetsMapper($this->getSelfServicePortalFacade());
     }
 
     public function createSspAssetsResponseBuilder(): BackendSspAssetsResponseBuilderInterface

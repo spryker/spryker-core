@@ -19,9 +19,14 @@ use Generated\Shared\Transfer\SspAssetCriteriaTransfer;
 use Generated\Shared\Transfer\SspAssetIncludeTransfer;
 use Generated\Shared\Transfer\SspAssetsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
+use SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacadeInterface;
 
 class SspAssetsMapper implements SspAssetsMapperInterface
 {
+    public function __construct(protected SelfServicePortalFacadeInterface $selfServicePortalFacade)
+    {
+    }
+
     public function mapGlueRequestToSspAssetCriteriaTransfer(GlueRequestTransfer $glueRequestTransfer): SspAssetCriteriaTransfer
     {
         $sspAssetCriteriaTransfer = new SspAssetCriteriaTransfer();
@@ -65,13 +70,17 @@ class SspAssetsMapper implements SspAssetsMapperInterface
         /** @var \Generated\Shared\Transfer\SspAssetsBackendApiAttributesTransfer $sspAssetsBackendApiAttributesTransfer */
         $sspAssetsBackendApiAttributesTransfer = $glueRequestTransfer->getResourceOrFail()->getAttributes();
 
-        $sspAssetTransfer = (new SspAssetTransfer())
+        $sspAssetTransfer = $this->findSspAssetByReference($glueRequestTransfer->getResourceOrFail()->getIdOrFail());
+
+        if (!$sspAssetTransfer) {
+            return (new SspAssetCollectionRequestTransfer());
+        }
+
+        $sspAssetTransfer
             ->setName($sspAssetsBackendApiAttributesTransfer->getName())
             ->setSerialNumber($sspAssetsBackendApiAttributesTransfer->getSerialNumber())
             ->setNote($sspAssetsBackendApiAttributesTransfer->getNote())
             ->setExternalImageUrl($sspAssetsBackendApiAttributesTransfer->getExternalImageUrl());
-
-        $sspAssetTransfer->setReference($glueRequestTransfer->getResourceOrFail()->getId());
 
         return (new SspAssetCollectionRequestTransfer())->addSspAsset($sspAssetTransfer);
     }
@@ -121,5 +130,20 @@ class SspAssetsMapper implements SspAssetsMapperInterface
         }
 
         return $sspAssetCriteriaTransfer->setSortCollection(new ArrayObject($sortCollection));
+    }
+
+    protected function findSspAssetByReference(string $assetReference): ?SspAssetTransfer
+    {
+        $sspAssetCollectionTransfer = $this->selfServicePortalFacade->getSspAssetCollection(
+            (new SspAssetCriteriaTransfer())->setSspAssetConditions(
+                (new SspAssetConditionsTransfer())->setReferences([$assetReference]),
+            ),
+        );
+
+        if ($sspAssetCollectionTransfer->getSspAssets()->count() === 0) {
+            return null;
+        }
+
+        return $sspAssetCollectionTransfer->getSspAssets()->getIterator()->current();
     }
 }

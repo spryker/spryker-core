@@ -87,6 +87,7 @@ class SspAssetTable extends AbstractTable
         $config = $this->setHeader($config);
 
         $config->setSearchable([
+            SpySspAssetTableMap::COL_ID_SSP_ASSET,
             SpySspAssetTableMap::COL_REFERENCE,
             SpySspAssetTableMap::COL_NAME,
             SpySspAssetTableMap::COL_SERIAL_NUMBER,
@@ -94,6 +95,7 @@ class SspAssetTable extends AbstractTable
         ]);
 
         $config->setSortable([
+            SpySspAssetTableMap::COL_ID_SSP_ASSET,
             SpySspAssetTableMap::COL_REFERENCE,
             SpySspAssetTableMap::COL_NAME,
             SpySspAssetTableMap::COL_SERIAL_NUMBER,
@@ -105,7 +107,7 @@ class SspAssetTable extends AbstractTable
             static::COL_ACTIONS,
         ]);
 
-        $config->setDefaultSortField(SpySspAssetTableMap::COL_REFERENCE, TableConfiguration::SORT_DESC);
+        $config->setDefaultSortField(SpySspAssetTableMap::COL_ID_SSP_ASSET, TableConfiguration::SORT_DESC);
 
         return $config;
     }
@@ -113,6 +115,7 @@ class SspAssetTable extends AbstractTable
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $baseData = [
+            SpySspAssetTableMap::COL_ID_SSP_ASSET => 'ID',
             SpySspAssetTableMap::COL_REFERENCE => 'Reference',
             static::COL_IMAGE => 'Image',
             SpySspAssetTableMap::COL_NAME => 'Asset Name',
@@ -169,6 +172,7 @@ class SspAssetTable extends AbstractTable
         }
 
         return [
+            SpySspAssetTableMap::COL_ID_SSP_ASSET => $item[SpySspAssetTableMap::COL_ID_SSP_ASSET],
             SpySspAssetTableMap::COL_REFERENCE => $item[SpySspAssetTableMap::COL_REFERENCE],
             static::COL_IMAGE => $assetImage ? sprintf('<img src="%s" width="100px">', $assetImage) : '',
             SpySspAssetTableMap::COL_NAME => $item[SpySspAssetTableMap::COL_NAME],

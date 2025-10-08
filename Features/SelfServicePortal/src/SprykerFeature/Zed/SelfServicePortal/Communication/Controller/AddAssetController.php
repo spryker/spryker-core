@@ -8,14 +8,18 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\Controller;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\ModelSspAssetAssignmentTransfer;
 use Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
+use Generated\Shared\Transfer\SspAssetTransfer;
+use Generated\Shared\Transfer\SspModelCollectionRequestTransfer;
+use Generated\Shared\Transfer\SspModelTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Form\SspAssetCreateForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Form\SspAssetForm;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Throwable;
 
 /**
  * @method \SprykerFeature\Zed\SelfServicePortal\Communication\SelfServicePortalCommunicationFactory getFactory()
@@ -33,6 +37,11 @@ class AddAssetController extends AbstractController
      * @var string
      */
     protected const MESSAGE_SSP_ASSET_CREATE_ERROR = 'Something went wrong, please try again.';
+
+    /**
+     * @var string
+     */
+    protected const MESSAGE_SSP_MODEL_CREATE_ERROR = 'Something went wrong, please try again.';
 
     /**
      * @var string
@@ -57,14 +66,14 @@ class AddAssetController extends AbstractController
             SspAssetForm::OPTION_STATUS_OPTIONS => array_flip($this->getFactory()->getConfig()->getAssetStatuses()),
         ];
 
-        if ($request->get(SspAssetForm::FORM_NAME)) {
+        if ($request->get(SspAssetCreateForm::FORM_NAME)) {
             $formOptions = $this->getFactory()->createSspAssetFormDataProvider()->expandOptionsWithSubmittedData(
                 $formOptions,
-                $request->get(SspAssetForm::FORM_NAME),
+                $request->get(SspAssetCreateForm::FORM_NAME),
             );
         }
 
-        $form = $this->getFactory()->createSspAssetForm(null, $formOptions);
+        $form = $this->getFactory()->createSspAssetCreateForm(null, $formOptions);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -93,15 +102,39 @@ class AddAssetController extends AbstractController
             );
         }
 
-        try {
-            $sspAssetCollectionResponseTransfer = $this->getFacade()->createSspAssetCollection($sspAssetCollectionRequestTransfer);
-            $this->addSuccessMessage(static::MESSAGE_SSP_ASSET_CREATE_SUCCESS);
-        } catch (Throwable $e) {
-            $this->addErrorMessage(static::MESSAGE_SSP_ASSET_CREATE_ERROR);
+        $sspAssetCollectionResponseTransfer = $this->getFacade()->createSspAssetCollection($sspAssetCollectionRequestTransfer);
+        $this->addSuccessMessage(static::MESSAGE_SSP_ASSET_CREATE_SUCCESS);
 
-            return $this->redirectResponse(static::ROUTE_SSP_ASSET_LIST);
+        $createSspModel = $sspAssetForm->get(SspAssetCreateForm::FIELD_CREATE_MODEL)->getData();
+
+        if (!$createSspModel) {
+            return $this->redirectResponse(sprintf(static::ROUTE_SSP_ASSET_DETAIL, $sspAssetCollectionResponseTransfer->getSspAssets()->getIterator()->current()->getIdSspAsset()));
         }
 
+        $this->createSspModelForAsset($sspAssetTransfer);
+        $this->addSuccessMessage(static::MESSAGE_SSP_ASSET_CREATE_SUCCESS);
+
         return $this->redirectResponse(sprintf(static::ROUTE_SSP_ASSET_DETAIL, $sspAssetCollectionResponseTransfer->getSspAssets()->getIterator()->current()->getIdSspAsset()));
+    }
+
+    protected function createSspModelForAsset(SspAssetTransfer $sspAssetTransfer): void
+    {
+        $sspModelCollectionResponseTransfer = $this->getFacade()->createSspModelCollection(
+            (new SspModelCollectionRequestTransfer())
+                ->addSspModel((new SspModelTransfer())->setName($sspAssetTransfer->getName())),
+        );
+
+        if ($sspModelCollectionResponseTransfer->getSspModels()->count() > 0) {
+            $createdSspModel = $sspModelCollectionResponseTransfer->getSspModels()->getIterator()->current();
+
+            $this->getFacade()->updateSspModelCollection(
+                (new SspModelCollectionRequestTransfer())
+                    ->addSspAssetToBeAssigned(
+                        (new ModelSspAssetAssignmentTransfer())
+                            ->setSspModel($createdSspModel)
+                            ->setSspAsset($sspAssetTransfer),
+                    ),
+            );
+        }
     }
 }

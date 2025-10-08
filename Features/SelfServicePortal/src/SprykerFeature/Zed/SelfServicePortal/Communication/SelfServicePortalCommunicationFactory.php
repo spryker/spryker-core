@@ -56,6 +56,7 @@ use Spryker\Zed\User\Business\UserFacadeInterface;
 use SprykerFeature\Service\SelfServicePortal\SelfServicePortalServiceInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Form\DataProvider\SspAssetFilterFormDataProvider;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Form\DataProvider\SspAssetFormDataProvider;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Form\SspAssetCreateForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Form\SspAssetFilterForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Form\SspAssetForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Asset\Mapper\SspAssetFormDataToTransferMapper;
@@ -776,6 +777,17 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
     public function createSspAssetForm(?SspAssetTransfer $sspAssetTransfer, array $formOptions = []): FormInterface
     {
         return $this->getFormFactory()->create(SspAssetForm::class, $sspAssetTransfer, $formOptions);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SspAssetTransfer|null $sspAssetTransfer
+     * @param array<string, mixed> $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createSspAssetCreateForm(?SspAssetTransfer $sspAssetTransfer, array $formOptions = []): FormInterface
+    {
+        return $this->getFormFactory()->create(SspAssetCreateForm::class, $sspAssetTransfer, $formOptions);
     }
 
     public function createSspAssetFormDataProvider(): SspAssetFormDataProvider

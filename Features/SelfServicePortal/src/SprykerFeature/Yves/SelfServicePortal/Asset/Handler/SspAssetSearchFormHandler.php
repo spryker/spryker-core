@@ -95,7 +95,7 @@ class SspAssetSearchFormHandler implements SspAssetSearchFormHandlerInterface
     protected function applySorting(SspAssetCriteriaTransfer $sspAssetCriteriaTransfer, array $formData): SspAssetCriteriaTransfer
     {
         $isAscending = $this->isAscendingOrder($formData);
-        $orderByField = $this->getOrderByField($formData);
+        $orderByField = $formData[SspAssetSearchForm::FIELD_ORDER_BY] ?? SspAssetTransfer::ID_SSP_ASSET;
 
         $sortTransfer = (new SortTransfer())
             ->setField($orderByField)
@@ -119,18 +119,6 @@ class SspAssetSearchFormHandler implements SspAssetSearchFormHandlerInterface
         $orderDirection = $formData[SspAssetSearchForm::FIELD_ORDER_DIRECTION] ?? static::DEFAULT_ORDER_DIRECTION;
 
         return $orderDirection === static::ORDER_DIRECTION_ASC;
-    }
-
-    /**
-     * @param array<string, mixed> $formData
-     *
-     * @return string
-     */
-    protected function getOrderByField(array $formData): string
-    {
-        $fieldOrderBy = $formData[SspAssetSearchForm::FIELD_ORDER_BY] ?? SspAssetTransfer::ID_SSP_ASSET;
-
-        return $fieldOrderBy === SspAssetTransfer::REFERENCE ? SspAssetTransfer::ID_SSP_ASSET : $fieldOrderBy;
     }
 
     /**

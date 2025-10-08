@@ -4,8 +4,11 @@
         <div>
             {{ 'Name' | trans }}: {{ orderItem.sspAsset.name }}
         </div>
-        <div>
-            {{ 'Serial Number' | trans }}: {{ orderItem.sspAsset.serialNumber }}
+        {% if orderItem.sspAsset.serialNumber is not empty %}
+            <div>
+                {{ 'Serial Number' | trans }}: {{ orderItem.sspAsset.serialNumber }}
+            </div>
+        {% endif %}
         </div>
     </div>
 {% endif %}
