@@ -86,7 +86,6 @@
         <column name="description" required="true" type="LONGVARCHAR"/>
         <column name="fk_state_machine_item_state" type="INTEGER"/>
         <column name="type" required="true" size="255" type="VARCHAR"/>
-        <column name="fk_store" required="true" type="INTEGER"/>
 
         <unique name="spy_ssp_inquiry-reference">
             <unique-column name="reference"/>
@@ -98,10 +97,6 @@
 
         <foreign-key name="spy_ssp_inquiry-fk_company_user" foreignTable="spy_company_user">
             <reference local="fk_company_user" foreign="id_company_user"/>
-        </foreign-key>
-
-        <foreign-key name="spy_ssp_inquiry-fk_store" foreignTable="spy_store">
-            <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
 
         <foreign-key name="ssp_inquiry-fk_state_machine_item_state" foreignTable="spy_state_machine_item_state" phpName="StateMachineItemState">

@@ -31,12 +31,6 @@
                         <dt data-qa="ssp-inquiry-status">{{ 'Status' | trans }}</dt>
                         <dd><span data-qa="ssp-inquiry-status" class="label {{ sspInquiryStatusClassMap[sspInquiry.status] | default('') }}">{{ sspInquiry.status | trans }}</span></dd>
                     </dl>
-                    <dl>
-                        <dt>{{ 'Store' | trans }}</dt>
-                        <dd>
-                            <span class="label label-info">{{ sspInquiry.store.name }}</span>
-                        </dd>
-                    </dl>
                 </div>
                 <div class="col-xs-6 col-md-9 col-lg-9">
                     <dl>

@@ -105,7 +105,6 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\DashboardDataExpander\
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\DataImport\Step\CompanyUserKeyToIdCompanyUserStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\DataImport\Step\SspInquiryStateMachineWriterStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\DataImport\Step\SspInquiryWriterStep;
-use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\DataImport\Step\StoreCodeToStoreIdStep;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Expander\CommentsSspInquiryExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Expander\CompanyUserSspInquiryExpander;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Expander\FileSspInquiryExpander;
@@ -127,7 +126,6 @@ use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Hooks\PreCreate\FileSs
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Hooks\PreCreate\OrderSspInquiryPreCreateHook;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Hooks\PreCreate\SspAssetSspInquiryPreCreateHook;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Hooks\PreCreate\SspInquiryPreCreateHookInterface;
-use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Hooks\PreCreate\StoreSspInquiryPreCreateHook;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Reader\SspInquiryReader;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Reader\SspInquiryReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Business\Inquiry\Validator\SspInquiryValidator;
@@ -649,7 +647,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return [
             $this->createFileSspInquiryPreCreateHook(),
             $this->createOrderSspInquiryPreCreateHook(),
-            $this->createStoreSspInquiryPreCreateHook(),
             $this->createSspAssetSspInquiryPreCreateHook(),
         ];
     }
@@ -672,13 +669,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return new FileSspInquiryPreCreateHook(
             $this->getFileManagerFacade(),
             $this->getConfig(),
-        );
-    }
-
-    public function createStoreSspInquiryPreCreateHook(): SspInquiryPreCreateHookInterface
-    {
-        return new StoreSspInquiryPreCreateHook(
-            $this->getStoreFacade(),
         );
     }
 
@@ -739,7 +729,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         if ($dataSetStepBroker instanceof DataImportStepAwareInterface) {
             $dataSetStepBroker
                 ->addStep($this->createCompanyUserKeyToIdCompanyUserStep())
-                ->addStep($this->createStoreCodeToStoreIdStep())
                 ->addStep($this->createSspInquiryWriterStep())
                 ->addStep($this->createSspInquiryStateMachineWriterStep());
         }
@@ -818,11 +807,6 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     public function createCompanyUserKeyToIdCompanyUserStep(): DataImportStepInterface
     {
         return new CompanyUserKeyToIdCompanyUserStep($this->getCompanyUserQuery());
-    }
-
-    public function createStoreCodeToStoreIdStep(): DataImportStepInterface
-    {
-        return new StoreCodeToStoreIdStep($this->getStoreFacade());
     }
 
     public function createSspInquiryStateMachineWriterStep(): DataImportStepInterface

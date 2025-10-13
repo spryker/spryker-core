@@ -75,7 +75,6 @@ class SspInquiriesMapper implements SspInquiriesMapperInterface
 
         $sspInquiryTransfer = (new SspInquiryTransfer())
             ->fromArray($restSspInquiriesAttributesTransfer->toArray(), true)
-            ->setStore($this->storeClient->getCurrentStore())
             ->setSspAsset((new SspAssetTransfer())->setReference($restSspInquiriesAttributesTransfer->getSspAssetReference()))
             ->setCompanyUser($companyUserTransfer)
             ->setOrder((new OrderTransfer())->setOrderReference($restSspInquiriesAttributesTransfer->getOrderReference()));

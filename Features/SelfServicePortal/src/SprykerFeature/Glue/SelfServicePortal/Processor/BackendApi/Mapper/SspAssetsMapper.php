@@ -80,7 +80,10 @@ class SspAssetsMapper implements SspAssetsMapperInterface
             ->setName($sspAssetsBackendApiAttributesTransfer->getName())
             ->setSerialNumber($sspAssetsBackendApiAttributesTransfer->getSerialNumber())
             ->setNote($sspAssetsBackendApiAttributesTransfer->getNote())
-            ->setExternalImageUrl($sspAssetsBackendApiAttributesTransfer->getExternalImageUrl());
+            ->setExternalImageUrl($sspAssetsBackendApiAttributesTransfer->getExternalImageUrl())
+            ->setCompanyBusinessUnit(
+                (new CompanyBusinessUnitTransfer())->setUuid(null), // Prevent changing the owner on update, will be handled in a separate endpoint.
+            );
 
         return (new SspAssetCollectionRequestTransfer())->addSspAsset($sspAssetTransfer);
     }

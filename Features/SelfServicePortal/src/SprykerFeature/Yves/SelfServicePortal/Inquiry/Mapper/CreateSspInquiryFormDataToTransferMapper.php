@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
 use Spryker\Client\CompanyUser\CompanyUserClientInterface;
 use Spryker\Client\Customer\CustomerClientInterface;
-use Spryker\Client\Store\StoreClientInterface;
 use SprykerFeature\Yves\SelfServicePortal\Inquiry\Form\SspInquiryForm;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
@@ -24,7 +23,6 @@ class CreateSspInquiryFormDataToTransferMapper implements CreateSspInquiryFormDa
 {
     public function __construct(
         protected CompanyUserClientInterface $companyUserClient,
-        protected StoreClientInterface $storeClient,
         protected CustomerClientInterface $customerClient
     ) {
     }
@@ -50,8 +48,7 @@ class CreateSspInquiryFormDataToTransferMapper implements CreateSspInquiryFormDa
         $sspInquiryTransfer = (new SspInquiryTransfer())
             ->fromArray($formData, true)
             ->setCompanyUser($companyUserTransfer)
-            ->setFiles(new ArrayObject($fileManagerDataTransfers))
-            ->setStore($this->storeClient->getCurrentStore());
+            ->setFiles(new ArrayObject($fileManagerDataTransfers));
 
         if (isset($formData['orderReference'])) {
             $sspInquiryTransfer->setOrder((new OrderTransfer())

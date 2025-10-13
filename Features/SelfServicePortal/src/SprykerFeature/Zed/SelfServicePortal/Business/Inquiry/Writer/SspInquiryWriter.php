@@ -66,10 +66,8 @@ class SspInquiryWriter implements SspInquiryWriterInterface
         }
 
         foreach ($sspInquiryCollectionRequestTransfer->getSspInquiries() as $sspInquiryTransfer) {
-            $sequenceNumberSetting = $this->getInquirySequenceNumberSettings(
-                $sspInquiryTransfer->getStoreOrFail()->getNameOrFail(),
-            );
-             $sspInquiryTransfer->setReference($this->sequenceNumberFacade->generate($sequenceNumberSetting));
+            $sequenceNumberSetting = $this->getInquirySequenceNumberSettings();
+            $sspInquiryTransfer->setReference($this->sequenceNumberFacade->generate($sequenceNumberSetting));
 
             $validationErrors = $this->sspInquiryValidator->validateSspInquiry($sspInquiryTransfer);
 
@@ -132,17 +130,16 @@ class SspInquiryWriter implements SspInquiryWriterInterface
         return $sspInquiryTransfer;
     }
 
-    protected function getInquirySequenceNumberSettings(string $storeName): SequenceNumberSettingsTransfer
+    protected function getInquirySequenceNumberSettings(): SequenceNumberSettingsTransfer
     {
         return (new SequenceNumberSettingsTransfer())
             ->setName(static::NAME_SSP_INQUIRY_REFERENCE)
-            ->setPrefix($this->createPrefix($storeName));
+            ->setPrefix($this->createPrefix());
     }
 
-    protected function createPrefix(string $storeName): string
+    protected function createPrefix(): string
     {
         $sequenceNumberPrefixParts = [];
-        $sequenceNumberPrefixParts[] = $storeName;
         $sequenceNumberPrefixParts[] = static::SSP_INQUIRY_REFERENCE_PREFIX;
 
         return sprintf('%s--', implode('-', $sequenceNumberPrefixParts));

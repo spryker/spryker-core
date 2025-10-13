@@ -22,7 +22,6 @@ use Generated\Shared\Transfer\SspInquiryCriteriaTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
 use Generated\Shared\Transfer\StateMachineItemStateTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
 use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface;
 use Spryker\Zed\StateMachine\Business\StateMachineFacade;
@@ -61,11 +60,6 @@ class InquiryFacadeTest extends Unit
      * @var \Generated\Shared\Transfer\CompanyUserTransfer
      */
     protected CompanyUserTransfer $companyUserTransfer;
-
-    /**
-     * @var \Generated\Shared\Transfer\StoreTransfer
-     */
-    protected StoreTransfer $storeTransfer;
 
     /**
      * @var string
@@ -141,8 +135,6 @@ class InquiryFacadeTest extends Unit
             CompanyUserTransfer::CUSTOMER => $this->customerTransfer,
             CompanyUserTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
         ]);
-
-        $this->storeTransfer = $this->tester->haveStore();
     }
 
     /**
@@ -168,8 +160,7 @@ class InquiryFacadeTest extends Unit
             ->setCompanyUser($this->companyUserTransfer)
             ->setSubject($sspInquiryData['subject'])
             ->setType($sspInquiryData['type'])
-            ->setDescription($sspInquiryData['description'])
-            ->setStore($this->storeTransfer);
+            ->setDescription($sspInquiryData['description']);
 
         foreach ($sspInquiryData['files'] as $fileData) {
             $fileTransfer = new FileTransfer();
@@ -251,8 +242,7 @@ class InquiryFacadeTest extends Unit
             ->setCompanyUser($this->companyUserTransfer)
             ->setSubject($sspInquiryData['subject'])
             ->setType($sspInquiryData['type'])
-            ->setDescription($sspInquiryData['description'])
-            ->setStore($this->storeTransfer);
+            ->setDescription($sspInquiryData['description']);
 
         foreach ($sspInquiryData['files'] as $fileData) {
             $fileTransfer = new FileTransfer();
@@ -318,19 +308,16 @@ class InquiryFacadeTest extends Unit
         $this->tester->haveSspInquiry([
             SspInquiryTransfer::TYPE => 'test_general_type',
             SspInquiryTransfer::STATUS => 'test_initial_state',
-            SspInquiryTransfer::STORE => $this->storeTransfer,
             SspInquiryTransfer::CREATED_DATE => '2021-01-01 00:00:00',
         ]);
         $this->tester->haveSspInquiry([
             SspInquiryTransfer::TYPE => 'test_product_type',
             SspInquiryTransfer::STATUS => 'test_final_state',
-            SspInquiryTransfer::STORE => $this->storeTransfer,
             SspInquiryTransfer::CREATED_DATE => '2021-01-02 00:00:00',
         ]);
         $this->tester->haveSspInquiry([
             SspInquiryTransfer::TYPE => 'test_order_type',
             SspInquiryTransfer::STATUS => 'test_initial_state',
-            SspInquiryTransfer::STORE => $this->storeTransfer,
             SspInquiryTransfer::CREATED_DATE => '2021-01-03 00:00:00',
         ]);
 
@@ -376,8 +363,7 @@ class InquiryFacadeTest extends Unit
         array $expectedValidationErrorMessages
     ): void {
         // Arrange
-        $sspInquiryTransfer = (new SspInquiryTransfer())
-            ->setStore($this->storeTransfer);
+        $sspInquiryTransfer = (new SspInquiryTransfer());
 
         if (isset($sspInquiryData['companyUser'])) {
             $sspInquiryTransfer->setCompanyUser($sspInquiryData['companyUser']);

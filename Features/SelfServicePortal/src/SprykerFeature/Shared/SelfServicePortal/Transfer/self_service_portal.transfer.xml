@@ -876,7 +876,6 @@
         <property name="type" type="string"/>
         <property name="idSspInquiry" type="int"/>
         <property name="status" type="string"/>
-        <property name="store" type="Store"/>
         <property name="subject" type="string"/>
         <property name="description" type="string"/>
         <property name="internalCommentThread" type="CommentThread"/>

@@ -539,17 +539,6 @@ class SelfServicePortalRepository extends AbstractRepository implements SelfServ
              $sspInquiryQuery->filterByCreatedAt($sspInquiryConditions->getCreatedDateTo(), ModelCriteria::LESS_EQUAL);
         }
 
-        if ($sspInquiryConditions->getIdStore() !== null) {
-             $sspInquiryQuery->filterByFkStore($sspInquiryConditions->getIdStore());
-        }
-
-        if ($sspInquiryConditions->getStoreName() !== null) {
-            $sspInquiryQuery
-                ->useSpyStoreQuery()
-                    ->filterByName($sspInquiryConditions->getStoreName())
-                ->endUse();
-        }
-
         if ($sspInquiryConditions->getSspAssetIds() !== []) {
              $sspInquiryQuery
                  ->joinSpySspInquirySspAsset()

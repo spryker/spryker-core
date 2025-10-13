@@ -184,11 +184,6 @@ class SelfServicePortalHelper extends Module
     {
         $sspInquiryTransfer = (new SspInquiryBuilder($seedData))->build();
 
-        if (!$sspInquiryTransfer->getStore()->getIdStore()) {
-            $sspInquiryTransfer->getStore()->setIdStore(
-                $this->getStoreQuery()->findOneByName($sspInquiryTransfer->getStore()->getName())->getIdStore(),
-            );
-        }
         $sspInquiryEntity = (new SspInquiryMapper())->mapSspInquiryTransferToSspInquiryEntity($sspInquiryTransfer, new SpySspInquiry());
 
         if ($sspInquiryTransfer->getStatus()) {

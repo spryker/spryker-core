@@ -360,7 +360,6 @@ class SelfServicePortalFactory extends AbstractFactory
     {
         return new CreateSspInquiryFormDataToTransferMapper(
             $this->getCompanyUserClient(),
-            $this->getStoreClient(),
             $this->getCustomerClient(),
         );
     }

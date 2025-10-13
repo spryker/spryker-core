@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\SspInquiryCollectionTransfer;
 use Generated\Shared\Transfer\SspInquiryTransfer;
 use Generated\Shared\Transfer\StateMachineItemStateTransfer;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspInquiry;
 use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -26,8 +25,7 @@ class SspInquiryMapper implements SspInquiryMapperInterface
     {
          $sspInquiryEntity
             ->fromArray($sspInquiryTransfer->toArray())
-            ->setFkCompanyUser($sspInquiryTransfer->getCompanyUser() ? $sspInquiryTransfer->getCompanyUser()->getIdCompanyUser() : null)
-            ->setFkStore($sspInquiryTransfer->getStoreOrFail()->getIdStoreOrFail());
+            ->setFkCompanyUser($sspInquiryTransfer->getCompanyUser() ? $sspInquiryTransfer->getCompanyUser()->getIdCompanyUser() : null);
 
         return $sspInquiryEntity;
     }
@@ -53,8 +51,6 @@ class SspInquiryMapper implements SspInquiryMapperInterface
                 (new SspAssetTransfer())->setIdSspAsset($sspInquiryEntity->getVirtualColumn(SspAssetTransfer::ID_SSP_ASSET)),
             );
         }
-
-        $sspInquiryTransfer->setStore((new StoreTransfer())->fromArray($sspInquiryEntity->getSpyStore()->toArray(), true));
 
         $sspInquiryTransfer->setCompanyUser(
             (new CompanyUserTransfer())->setIdCompanyUser($sspInquiryEntity->getFkCompanyUser()),

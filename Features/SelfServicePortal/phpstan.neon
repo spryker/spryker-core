@@ -1,10 +1,10 @@
 parameters:
     level: 8
-    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Call to an undefined method Orm\\.+Query::groupByIdProduct\(\).#'
         - '#Call to an undefined method Orm\\.+Query::filterByFkProduct_In\(\).#'
         - '#Call to an undefined method Orm\\.+Query::useSpyProductLocalizedAttributesQuery\(\).#'
         - '#Parameter.+sspModelCollectionResponseTransfer of method#'
+        - identifier: missingType.generics
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker/Features/SelfServicePortal/src/SprykerFeature/Client/SelfServicePortal/Search/Query/SspAssetSearchQuery.php'
