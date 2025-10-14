@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ContentProductSetDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
 use Spryker\Zed\ContentProductSetDataImport\Business\Model\ContentProductSetWriterStep;
 use Spryker\Zed\ContentProductSetDataImport\Business\Model\Step\CheckContentDataStep;
@@ -25,11 +26,16 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 class ContentProductSetDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getContentProductSetDataImport()
-    {
-        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getContentProductSetDataImporterConfiguration());
+    public function getContentProductSetDataImport(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ) {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getContentProductSetDataImporterConfiguration(),
+        );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker->addStep($this->createCheckContentDataStep());

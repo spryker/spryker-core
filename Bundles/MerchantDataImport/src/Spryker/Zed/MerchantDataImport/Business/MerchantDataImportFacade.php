@@ -27,7 +27,9 @@ class MerchantDataImportFacade extends AbstractFacade implements MerchantDataImp
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->createMerchantDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->createMerchantDataImport($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 
     /**
@@ -41,6 +43,8 @@ class MerchantDataImportFacade extends AbstractFacade implements MerchantDataImp
      */
     public function importMerchantStores(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->createMerchantStoreDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->createMerchantStoreDataImport($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 }

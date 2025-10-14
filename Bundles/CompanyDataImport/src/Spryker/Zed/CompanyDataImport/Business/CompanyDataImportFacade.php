@@ -27,6 +27,6 @@ class CompanyDataImportFacade extends AbstractFacade implements CompanyDataImpor
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->createCompanyDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()->createCompanyDataImport($dataImporterConfigurationTransfer)->import($dataImporterConfigurationTransfer);
     }
 }

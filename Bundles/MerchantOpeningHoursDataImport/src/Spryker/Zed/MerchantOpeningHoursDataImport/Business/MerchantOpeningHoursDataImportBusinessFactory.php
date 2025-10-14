@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantOpeningHoursDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -22,12 +23,15 @@ use Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHours\Ste
 class MerchantOpeningHoursDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getMerchantOpeningHoursWeekdayScheduleDataImporter(): DataImporterInterface
-    {
+    public function getMerchantOpeningHoursWeekdayScheduleDataImporter(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantOpeningHoursWeekdayScheduleDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?: $this->getConfig()->getMerchantOpeningHoursWeekdayScheduleDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -42,12 +46,15 @@ class MerchantOpeningHoursDataImportBusinessFactory extends DataImportBusinessFa
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getMerchantOpeningHoursDateScheduleDataImporter(): DataImporterInterface
-    {
+    public function getMerchantOpeningHoursDateScheduleDataImporter(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantOpeningHoursDateScheduleDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?: $this->getConfig()->getMerchantOpeningHoursDateScheduleDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

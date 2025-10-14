@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\StoreContextDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Orm\Zed\StoreContext\Persistence\SpyStoreContextQuery;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
@@ -22,12 +23,15 @@ use Spryker\Zed\StoreContextDataImport\StoreContextDataImportDependencyProvider;
 class StoreContextDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getStoreContextDataImporter(): DataImporterInterface
-    {
+    public function getStoreContextDataImporter(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getStoreContextDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getStoreContextDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

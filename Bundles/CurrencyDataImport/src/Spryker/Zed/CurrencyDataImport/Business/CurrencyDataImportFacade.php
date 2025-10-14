@@ -28,6 +28,8 @@ class CurrencyDataImportFacade extends AbstractFacade implements CurrencyDataImp
     public function importCurrencyStore(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFactory()->getCurrencyStoreDataImporter()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->getCurrencyStoreDataImporter($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 }

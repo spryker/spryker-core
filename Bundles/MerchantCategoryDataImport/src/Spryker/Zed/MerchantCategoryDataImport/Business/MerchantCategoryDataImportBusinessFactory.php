@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantCategoryDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -22,12 +23,15 @@ use Spryker\Zed\MerchantCategoryDataImport\Business\Step\MerchantReferenceToIdMe
 class MerchantCategoryDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getMerchantCategoryDataImporter(): DataImporterInterface
-    {
+    public function getMerchantCategoryDataImporter(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantCategoryDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getMerchantCategoryDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

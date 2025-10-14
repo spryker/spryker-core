@@ -49,12 +49,15 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\Validator\MerchantCombin
 class MerchantProductOfferDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
-    public function getMerchantProductOfferDataImport()
-    {
+    public function getMerchantProductOfferDataImport(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ) {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantProductOfferDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getMerchantProductOfferDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -71,12 +74,15 @@ class MerchantProductOfferDataImportBusinessFactory extends DataImportBusinessFa
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
-    public function getMerchantProductOfferStoreDataImport()
-    {
+    public function getMerchantProductOfferStoreDataImport(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ) {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantProductOfferStoreDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getMerchantProductOfferStoreDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

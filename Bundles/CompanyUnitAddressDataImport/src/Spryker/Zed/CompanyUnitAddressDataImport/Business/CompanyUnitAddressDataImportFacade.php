@@ -27,6 +27,8 @@ class CompanyUnitAddressDataImportFacade extends AbstractFacade implements Compa
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->createCompanyUnitAddressDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->createCompanyUnitAddressDataImport($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 }

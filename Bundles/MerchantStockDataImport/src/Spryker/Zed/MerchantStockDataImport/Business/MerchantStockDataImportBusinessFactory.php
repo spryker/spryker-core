@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantStockDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -22,12 +23,15 @@ use Spryker\Zed\MerchantStockDataImport\Business\MerchantStock\Step\StockNameToI
 class MerchantStockDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getMerchantStockDataImporter(): DataImporterInterface
-    {
+    public function getMerchantStockDataImporter(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantStockDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getMerchantStockDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

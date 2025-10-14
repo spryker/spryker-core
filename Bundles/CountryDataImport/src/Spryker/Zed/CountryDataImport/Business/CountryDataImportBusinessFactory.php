@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CountryDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Country\Persistence\SpyCountryStoreQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
@@ -24,11 +25,16 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 class CountryDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getCountryStoreDataImporter(): DataImporterInterface
-    {
-        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCountryStoreDataImporterConfiguration());
+    public function getCountryStoreDataImporter(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getCountryStoreDataImporterConfiguration(),
+        );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker

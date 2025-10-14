@@ -27,6 +27,8 @@ class MerchantOmsDataImportFacade extends AbstractFacade implements MerchantOmsD
      */
     public function importMerchantOmsProcess(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->getMerchantOmsProcessDataImporter()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->getMerchantOmsProcessDataImporter($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfileDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -23,12 +24,15 @@ use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\Step\Merchant
 class MerchantProfileDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getMerchantProfileDataImporter(): DataImporterInterface
-    {
+    public function getMerchantProfileDataImporter(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantProfileDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getMerchantProfileDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -52,12 +56,15 @@ class MerchantProfileDataImportBusinessFactory extends DataImportBusinessFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
-    public function getMerchantProfileAddressDataImport()
-    {
+    public function getMerchantProfileAddressDataImport(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ) {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantProfileAddressDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getMerchantProfileAddressDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

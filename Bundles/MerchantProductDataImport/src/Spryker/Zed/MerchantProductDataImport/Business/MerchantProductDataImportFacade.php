@@ -28,7 +28,9 @@ class MerchantProductDataImportFacade extends AbstractFacade implements Merchant
     public function importMerchantProduct(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFactory()->getMerchantProductDataImporter()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->getMerchantProductDataImporter($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 
     /**

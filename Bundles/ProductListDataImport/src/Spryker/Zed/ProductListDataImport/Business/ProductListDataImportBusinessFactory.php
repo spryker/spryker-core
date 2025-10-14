@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\ProductListDataImport\Business\Model\ProductListToCategoryWriterStep;
@@ -24,12 +25,15 @@ use Spryker\Zed\ProductListDataImport\Business\Model\Step\ProductListKeyToIdProd
 class ProductListDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createProductListDataImport()
-    {
+    public function createProductListDataImport(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ) {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getProductListDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?: $this->getConfig()->getProductListDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -41,12 +45,15 @@ class ProductListDataImportBusinessFactory extends DataImportBusinessFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createProductListCategoryDataImport()
-    {
+    public function createProductListCategoryDataImport(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ) {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getProductListCategoryDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?: $this->getConfig()->getProductListCategoryDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -60,12 +67,15 @@ class ProductListDataImportBusinessFactory extends DataImportBusinessFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createProductListProductConcreteDataImport()
-    {
+    public function createProductListProductConcreteDataImport(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ) {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getProductListProductConcreteDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?: $this->getConfig()->getProductListProductConcreteDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

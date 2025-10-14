@@ -29,7 +29,7 @@ class ProductOfferShipmentTypeDataImportFacade extends AbstractFacade implements
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
         return $this->getFactory()
-            ->getProductOfferShipmentTypeDataImporter()
+            ->getProductOfferShipmentTypeDataImporter($dataImporterConfigurationTransfer)
             ->import($dataImporterConfigurationTransfer);
     }
 }

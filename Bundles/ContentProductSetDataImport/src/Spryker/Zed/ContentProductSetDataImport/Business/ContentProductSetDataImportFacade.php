@@ -21,12 +21,14 @@ class ContentProductSetDataImportFacade extends AbstractFacade implements Conten
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importProductSetTerm(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): DataImporterReportTransfer
+    public function importProductSetTerm(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->getContentProductSetDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->getContentProductSetDataImport($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 }

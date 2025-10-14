@@ -30,7 +30,7 @@ class ProductAlternativeDataImportFacade extends AbstractFacade implements Produ
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()
-            ->getProductAlternativeDataImport()
+            ->getProductAlternativeDataImport($dataImporterConfigurationTransfer)
             ->import($dataImporterConfigurationTransfer);
     }
 }

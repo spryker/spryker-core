@@ -30,6 +30,8 @@ class ProductOfferShoppingListDataImportFacade extends AbstractFacade implements
     public function importProductOfferShoppingListItem(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFactory()->getProductOfferShoppingListItemDataImporter()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->getProductOfferShoppingListItemDataImporter($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 }

@@ -27,6 +27,8 @@ class StoreContextDataImportFacade extends AbstractFacade implements StoreContex
      */
     public function importStoreContext(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->getStoreContextDataImporter()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->getStoreContextDataImporter($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 }

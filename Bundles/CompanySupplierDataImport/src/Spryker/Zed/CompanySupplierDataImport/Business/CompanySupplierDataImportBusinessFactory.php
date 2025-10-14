@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanySupplierDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Spryker\Zed\CompanySupplierDataImport\Business\Model\CompanySupplierProductPriceWriterStep;
 use Spryker\Zed\CompanySupplierDataImport\Business\Model\CompanySupplierWriterStep;
 use Spryker\Zed\CompanySupplierDataImport\Business\Model\CompanyTypeWriterStep;
@@ -27,9 +28,18 @@ class CompanySupplierDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createCompanyTypeDataImport(): DataImporterInterface
-    {
-        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCompanyTypeDataImporterConfiguration());
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     */
+    public function createCompanyTypeDataImport(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $dataImporterConfigurationTransfer ?: $this->getConfig()->getCompanyTypeDataImporterConfiguration(),
+        );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker->addStep($this->createCompanyKeyToIdCompanyStep());
@@ -43,9 +53,18 @@ class CompanySupplierDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createCompanySupplierDataImport(): DataImporterInterface
-    {
-        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCompanySupplierDataImporterConfiguration());
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     */
+    public function createCompanySupplierDataImport(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $dataImporterConfigurationTransfer ?: $this->getConfig()->getCompanySupplierDataImporterConfiguration(),
+        );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker->addStep($this->createCompanyKeyToIdCompanyStep());
@@ -60,9 +79,18 @@ class CompanySupplierDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createCompanySupplierProductPriceDataImport(): DataImporterInterface
-    {
-        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCompanySupplierProductPriceDataImporterConfiguration());
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     */
+    public function createCompanySupplierProductPriceDataImport(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $dataImporterConfigurationTransfer ?: $this->getConfig()->getCompanySupplierProductPriceDataImporterConfiguration(),
+        );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker->addStep($this->createCompanyKeyToIdCompanyStep());

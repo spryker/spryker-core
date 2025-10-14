@@ -75,12 +75,15 @@ use Spryker\Zed\MerchantProductDataImport\MerchantProductDataImportDependencyPro
 class MerchantProductDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getMerchantProductDataImporter(): DataImporterInterface
-    {
+    public function getMerchantProductDataImporter(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantProductDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getMerchantProductDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

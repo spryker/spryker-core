@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\BusinessOnBehalfDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CompanyUser\BusinessUnitKeyToIdCompanyBusinessUnitStep;
 use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CompanyUser\CompanyKeyToIdCompanyStep;
 use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CompanyUser\CompanyUserWriterStep;
@@ -22,11 +23,16 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 class BusinessOnBehalfDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getCompanyUserDataImport()
-    {
-        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getBusinessOnBehalfDataImporterConfiguration());
+    public function getCompanyUserDataImport(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ) {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getBusinessOnBehalfDataImporterConfiguration(),
+        );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker

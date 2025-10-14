@@ -119,9 +119,11 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
      */
     public function configure(DataImporterReaderConfigurationTransfer $dataImportReaderConfigurationTransfer)
     {
-        $this->csvReaderConfiguration->setDataImporterReaderConfigurationTransfer($dataImportReaderConfigurationTransfer);
+        if ($this->csvReaderConfiguration->getFileName() !== $dataImportReaderConfigurationTransfer->getFileName()) {
+            $this->csvReaderConfiguration->setDataImporterReaderConfigurationTransfer($dataImportReaderConfigurationTransfer);
 
-        $this->configureReader();
+            $this->configureReader();
+        }
 
         return $this;
     }

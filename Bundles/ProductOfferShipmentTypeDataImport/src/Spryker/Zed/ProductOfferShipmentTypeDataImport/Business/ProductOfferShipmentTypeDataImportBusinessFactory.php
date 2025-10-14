@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferShipmentTypeDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -21,12 +22,15 @@ use Spryker\Zed\ProductOfferShipmentTypeDataImport\Business\DataImportStep\Produ
 class ProductOfferShipmentTypeDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getProductOfferShipmentTypeDataImporter(): DataImporterInterface
-    {
+    public function getProductOfferShipmentTypeDataImporter(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getProductOfferShipmentTypeDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getProductOfferShipmentTypeDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

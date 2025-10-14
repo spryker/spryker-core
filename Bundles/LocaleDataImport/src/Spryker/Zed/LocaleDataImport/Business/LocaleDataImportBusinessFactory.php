@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\LocaleDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
@@ -25,11 +26,16 @@ use Spryker\Zed\LocaleDataImport\LocaleDataImportDependencyProvider;
 class LocaleDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getLocaleStoreDataImporter(): DataImporterInterface
-    {
-        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getLocaleStoreDataImporterConfiguration());
+    public function getLocaleStoreDataImporter(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getLocaleStoreDataImporterConfiguration(),
+        );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker
@@ -43,11 +49,16 @@ class LocaleDataImportBusinessFactory extends DataImportBusinessFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getDefaultLocaleStoreDataImporter(): DataImporterInterface
-    {
-        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getDefaultLocaleStoreDataImporterConfiguration());
+    public function getDefaultLocaleStoreDataImporter(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getDefaultLocaleStoreDataImporterConfiguration(),
+        );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker

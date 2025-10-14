@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinuedDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -20,13 +21,16 @@ use Spryker\Zed\ProductDiscontinuedDataImport\Business\ProductDiscontinuedImport
 class ProductDiscontinuedDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createProductDiscontinuedDataImport(): DataImporterInterface
-    {
+    public function createProductDiscontinuedDataImport(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getProductDiscontinuedDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getProductDiscontinuedDataImporterConfiguration(),
         );
 
         /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */

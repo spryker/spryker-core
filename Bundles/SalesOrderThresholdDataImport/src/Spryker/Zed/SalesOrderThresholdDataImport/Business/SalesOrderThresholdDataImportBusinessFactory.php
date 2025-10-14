@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesOrderThresholdDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\SalesOrderThresholdDataImport\Business\Model\DataImportStep\SalesOrderThresholdWriterStep;
 use Spryker\Zed\SalesOrderThresholdDataImport\Dependency\Facade\SalesOrderThresholdDataImportToCurrencyFacadeInterface;
@@ -22,12 +23,15 @@ use Spryker\Zed\SalesOrderThresholdDataImport\SalesOrderThresholdDataImportDepen
 class SalesOrderThresholdDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createSalesOrderThresholdDataImport()
-    {
+    public function createSalesOrderThresholdDataImport(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ) {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getSalesOrderThresholdDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getSalesOrderThresholdDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

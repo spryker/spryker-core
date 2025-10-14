@@ -27,6 +27,8 @@ class CountryDataImportFacade extends AbstractFacade implements CountryDataImpor
      */
     public function importCountryStore(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->getCountryStoreDataImporter()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->getCountryStoreDataImporter($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 }

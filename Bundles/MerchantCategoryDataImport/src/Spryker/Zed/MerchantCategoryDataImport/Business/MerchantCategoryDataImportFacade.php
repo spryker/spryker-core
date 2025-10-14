@@ -28,6 +28,8 @@ class MerchantCategoryDataImportFacade extends AbstractFacade implements Merchan
     public function importMerchantCategory(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFactory()->getMerchantCategoryDataImporter()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->getMerchantCategoryDataImporter($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 }

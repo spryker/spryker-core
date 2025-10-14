@@ -240,7 +240,7 @@ class DataImportConfig extends AbstractBundleConfig
      */
     public function isDataImportFromOtherSourceEnabled(): bool
     {
-        return false;
+        return $this->get(DataImportConstants::OTHER_SOURCE_ENABLED, false);
     }
 
     /**

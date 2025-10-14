@@ -27,6 +27,8 @@ class PriceProductMerchantRelationshipDataImportFacade extends AbstractFacade im
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->createPriceProductMerchantRelationshipDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->createPriceProductMerchantRelationshipDataImport($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 }

@@ -27,6 +27,8 @@ class ProductOfferValidityDataImportFacade extends AbstractFacade implements Pro
      */
     public function importProductOfferValidity(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->createProductOfferValidityDataImporter()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->createProductOfferValidityDataImporter($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 }

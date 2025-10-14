@@ -28,7 +28,7 @@ class StockAddressDataImportFacade extends AbstractFacade implements StockAddres
     public function importStockAddress(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()
-            ->getStockAddressDataImporter()
+            ->getStockAddressDataImporter($dataImporterConfigurationTransfer)
             ->import($dataImporterConfigurationTransfer);
     }
 }

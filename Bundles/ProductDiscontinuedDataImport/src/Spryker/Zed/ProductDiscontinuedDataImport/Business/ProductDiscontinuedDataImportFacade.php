@@ -27,6 +27,8 @@ class ProductDiscontinuedDataImportFacade extends AbstractFacade implements Prod
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->createProductDiscontinuedDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->createProductDiscontinuedDataImport($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 }

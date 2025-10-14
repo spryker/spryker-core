@@ -27,7 +27,9 @@ class MerchantProductOfferDataImportFacade extends AbstractFacade implements Mer
      */
     public function importMerchantProductOfferData(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->getMerchantProductOfferDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->getMerchantProductOfferDataImport($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 
     /**
@@ -42,7 +44,9 @@ class MerchantProductOfferDataImportFacade extends AbstractFacade implements Mer
     public function importMerchantProductOfferStoreData(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFactory()->getMerchantProductOfferStoreDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->getMerchantProductOfferStoreDataImport($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 
     /**

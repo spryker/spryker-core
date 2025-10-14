@@ -27,6 +27,8 @@ class ProductOfferStockDataImportFacade extends AbstractFacade implements Produc
      */
     public function importProductOfferStock(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->createProductOfferStockDataImporter()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->createProductOfferStockDataImporter($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 }

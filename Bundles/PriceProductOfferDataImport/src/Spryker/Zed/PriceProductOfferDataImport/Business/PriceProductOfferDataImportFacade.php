@@ -28,7 +28,7 @@ class PriceProductOfferDataImportFacade extends AbstractFacade implements PriceP
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()
-            ->createPriceProductOfferDataImport()
+            ->createPriceProductOfferDataImport($dataImporterConfigurationTransfer)
             ->import($dataImporterConfigurationTransfer);
     }
 }

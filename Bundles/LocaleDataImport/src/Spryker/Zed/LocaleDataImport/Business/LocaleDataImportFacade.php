@@ -27,7 +27,9 @@ class LocaleDataImportFacade extends AbstractFacade implements LocaleDataImportF
      */
     public function importLocaleStore(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->getLocaleStoreDataImporter()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->getLocaleStoreDataImporter($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 
     /**
@@ -41,6 +43,8 @@ class LocaleDataImportFacade extends AbstractFacade implements LocaleDataImportF
      */
     public function importDefaultLocaleStore(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->getDefaultLocaleStoreDataImporter()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()
+            ->getDefaultLocaleStoreDataImporter($dataImporterConfigurationTransfer)
+            ->import($dataImporterConfigurationTransfer);
     }
 }

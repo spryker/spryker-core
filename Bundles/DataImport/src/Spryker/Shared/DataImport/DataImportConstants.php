@@ -103,4 +103,14 @@ interface DataImportConstants
      * @var string
      */
     public const PUBLISHER_FLUSH_CHUNK_SIZE = 'DATA_IMPORT:PUBLISHER_FLUSH_CHUNK_SIZE';
+
+    /**
+     * Specification:
+     *  - Returns true if data import from other source is enabled.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const OTHER_SOURCE_ENABLED = 'DATA_IMPORT:OTHER_SOURCE_ENABLED';
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CurrencyDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Orm\Zed\Currency\Persistence\SpyCurrencyQuery;
 use Orm\Zed\Currency\Persistence\SpyCurrencyStoreQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
@@ -24,11 +25,16 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 class CurrencyDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getCurrencyStoreDataImporter(): DataImporterInterface
-    {
-        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCurrencyStoreDataImporterConfiguration());
+    public function getCurrencyStoreDataImporter(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $dataImporterConfigurationTransfer ?? $this->getConfig()->getCurrencyStoreDataImporterConfiguration(),
+        );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker
