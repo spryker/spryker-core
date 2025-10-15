@@ -36,4 +36,6 @@ interface PaginationConfigInterface
      * @return int
      */
     public function getCurrentItemsPerPage(array $requestParameters): int;
+
+    public function getMaxItemsInPagination(): int;
 }

@@ -44,7 +44,12 @@ class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
     {
         $paginationConfig = $this->getFactory()->getSearchConfig()->getPaginationConfig();
         $currentPage = $paginationConfig->getCurrentPage($requestParameters);
+
         $itemsPerPage = $paginationConfig->getCurrentItemsPerPage($requestParameters);
+        $calculatedMaxPage = (int)floor($paginationConfig->getMaxItemsInPagination() / $itemsPerPage);
+        if ($currentPage > $calculatedMaxPage) {
+            $currentPage = $calculatedMaxPage;
+        }
 
         $query->setFrom(($currentPage - 1) * $itemsPerPage);
         $query->setSize($itemsPerPage);

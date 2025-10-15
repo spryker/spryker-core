@@ -12,6 +12,11 @@ use Generated\Shared\Transfer\PaginationConfigTransfer;
 class PaginationConfig implements PaginationConfigInterface
 {
     /**
+     * @var int
+     */
+    public const MAX_ITEMS_IN_PAGINATION = 10000;
+
+    /**
      * @var \Generated\Shared\Transfer\PaginationConfigTransfer
      */
     protected $paginationConfigTransfer;
@@ -75,5 +80,14 @@ class PaginationConfig implements PaginationConfigInterface
         $itemsPerPage = $requestParameters[$itemsPerPageParameterName] ?? 0;
 
         return ($itemsPerPage && in_array((int)$itemsPerPage, (array)$this->paginationConfigTransfer->getValidItemsPerPageOptions()));
+    }
+
+    /**
+     * @return int
+     * Elastic search cannot handle deep pagination (more than 10000 items offset). To avoid this issue we limit maximum items number.
+     */
+    public function getMaxItemsInPagination(): int
+    {
+        return static::MAX_ITEMS_IN_PAGINATION;
     }
 }
