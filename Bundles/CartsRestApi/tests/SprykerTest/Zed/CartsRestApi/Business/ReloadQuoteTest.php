@@ -20,7 +20,11 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\PriceCalculatorPlugin;
 use Spryker\Zed\Cart\CartDependencyProvider;
+use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorBusinessFactory;
+use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacade;
+use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Communication\Plugin\CartItemPricePlugin;
+use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
 
 /**
  * Auto-generated group annotations
@@ -70,8 +74,10 @@ class ReloadQuoteTest extends Unit
     {
         parent::_setUp();
 
+        $cartItemPricePlugin = new CartItemPricePlugin();
+        $cartItemPricePlugin->setFacade($this->getFacadeWithMockedConfig());
         $this->tester->setDependency(CartDependencyProvider::CART_EXPANDER_PLUGINS, [
-            new CartItemPricePlugin(),
+            $cartItemPricePlugin,
         ]);
         $this->tester->setDependency(CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK, [
             new PriceCalculatorPlugin(),
@@ -255,5 +261,34 @@ class ReloadQuoteTest extends Unit
                 ],
             ],
         ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface
+     */
+    protected function getFacadeWithMockedConfig(): PriceCartConnectorFacadeInterface
+    {
+        $priceCartConnectorFacade = new PriceCartConnectorFacade();
+        $configMock = $this->createMock(PriceCartConnectorConfig::class);
+        $configMock->method('getItemFieldsForIdentifier')
+            ->willReturn([
+                ItemTransfer::SKU,
+                ItemTransfer::QUANTITY,
+                ItemTransfer::MERCHANT_REFERENCE,
+                ItemTransfer::PRODUCT_OFFER_REFERENCE,
+            ]);
+        $configMock->method('getItemFieldsForIsSameItemComparison')
+            ->willReturn([
+                ItemTransfer::SKU,
+                ItemTransfer::MERCHANT_REFERENCE,
+                ItemTransfer::PRODUCT_OFFER_REFERENCE,
+            ]);
+
+        $priceCartConnectorBusinessFactory = new PriceCartConnectorBusinessFactory();
+        $priceCartConnectorBusinessFactory->setConfig($configMock);
+
+        $priceCartConnectorFacade->setFactory($priceCartConnectorBusinessFactory);
+
+        return $priceCartConnectorFacade;
     }
 }

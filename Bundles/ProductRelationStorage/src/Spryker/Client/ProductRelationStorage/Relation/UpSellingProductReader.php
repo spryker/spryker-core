@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductRelationStorage\Relation;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientInterface;
+use Spryker\Client\ProductRelationStorage\ProductRelationStorageConfig;
 use Spryker\Client\ProductRelationStorage\Storage\ProductAbstractRelationStorageReaderInterface;
 use Spryker\Shared\ProductRelation\ProductRelationTypes;
 
@@ -30,19 +31,24 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
      */
     protected $productViewExpanderPlugins;
 
+    protected ProductRelationStorageConfig $productRelationStorageConfig;
+
     /**
      * @param \Spryker\Client\ProductRelationStorage\Storage\ProductAbstractRelationStorageReaderInterface $productAbstractRelationStorageReader
      * @param \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientInterface $productStorageClient
      * @param array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface> $productViewExpanderPlugins
+     * @param \Spryker\Client\ProductRelationStorage\ProductRelationStorageConfig $productRelationStorageConfig
      */
     public function __construct(
         ProductAbstractRelationStorageReaderInterface $productAbstractRelationStorageReader,
         ProductRelationStorageToProductStorageClientInterface $productStorageClient,
-        array $productViewExpanderPlugins
+        array $productViewExpanderPlugins,
+        ProductRelationStorageConfig $productRelationStorageConfig
     ) {
         $this->productAbstractRelationStorageReader = $productAbstractRelationStorageReader;
         $this->productStorageClient = $productStorageClient;
         $this->productViewExpanderPlugins = $productViewExpanderPlugins;
+        $this->productRelationStorageConfig = $productRelationStorageConfig;
     }
 
     /**
@@ -56,6 +62,11 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
         $quoteTransfer->requireStore();
         $storeTransfer = $quoteTransfer->getStore();
         $upSellingProductAbstractIds = $this->findUpSellingAbstractProductIds($quoteTransfer);
+
+        if (!$upSellingProductAbstractIds) {
+            return [];
+        }
+        $upSellingProductAbstractIds = $this->limitUpSellingProductAbstractIds($upSellingProductAbstractIds);
 
         $relatedProducts = [];
         $productStorageData = $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
@@ -182,5 +193,20 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
         }
 
         return $productViewTransfer;
+    }
+
+    /**
+     * @param array<int> $upSellingProductAbstractIds
+     *
+     * @return array<int>
+     */
+    protected function limitUpSellingProductAbstractIds(array $upSellingProductAbstractIds): array
+    {
+        $upsellingProductLimit = $this->productRelationStorageConfig->getUpsellingProductLimit();
+        if (count($upSellingProductAbstractIds) <= $upsellingProductLimit) {
+            return $upSellingProductAbstractIds;
+        }
+
+        return array_slice($upSellingProductAbstractIds, 0, $upsellingProductLimit);
     }
 }

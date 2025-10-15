@@ -155,7 +155,7 @@ class GetValidPricesTest extends Unit
         // Assert
         $this->assertCount(1, $resultPriceProductTransfers);
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
-        $resultPriceProductTransfer = $resultPriceProductTransfers[0];
+        $resultPriceProductTransfer = reset($resultPriceProductTransfers);
 
         $this->assertSame($priceProductTransfer->getIdProductAbstract(), $resultPriceProductTransfer->getIdProductAbstract());
         $this->assertSame(
@@ -196,7 +196,7 @@ class GetValidPricesTest extends Unit
         // Assert
         $this->assertCount(1, $resultPriceProductTransfers);
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
-        $resultPriceProductTransfer = $resultPriceProductTransfers[0];
+        $resultPriceProductTransfer = reset($resultPriceProductTransfers);
 
         $this->assertSame($priceProductTransfer->getIdProduct(), $resultPriceProductTransfer->getIdProduct());
         $this->assertSame(
@@ -243,7 +243,7 @@ class GetValidPricesTest extends Unit
         // Assert
         $this->assertCount(1, $resultPriceProductTransfers);
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
-        $resultPriceProductTransfer = $resultPriceProductTransfers[0];
+        $resultPriceProductTransfer = reset($resultPriceProductTransfers);
 
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getNetAmount(),
@@ -291,7 +291,7 @@ class GetValidPricesTest extends Unit
         // Assert
         $this->assertCount(1, $resultPriceProductTransfers);
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
-        $resultPriceProductTransfer = $resultPriceProductTransfers[0];
+        $resultPriceProductTransfer = reset($resultPriceProductTransfers);
 
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getFkCurrency(),

@@ -36,6 +36,11 @@ class Reader implements ReaderInterface
     protected static $resolvedPriceProductTransferCollection = [];
 
     /**
+     * @var array<string, array<\Generated\Shared\Transfer\PriceProductTransfer>>
+     */
+    protected static array $validPricesCache = [];
+
+    /**
      * @var string
      */
     protected const FIELD_PRICE_PAIR_ABSTRACTS = 'abstracts';
@@ -516,6 +521,12 @@ class Reader implements ReaderInterface
         if (count($priceProductFilterTransfers) === 0) {
             return [];
         }
+
+        $cacheKey = $this->generateCacheKeyForPriceProductFilters($priceProductFilterTransfers);
+        if (isset(static::$validPricesCache[$cacheKey])) {
+            return static::$validPricesCache[$cacheKey];
+        }
+
         $priceProductFilterTransfers = $this->filterPriceProductFilterTransfersWithoutExistingPriceType($priceProductFilterTransfers);
         if (!$priceProductFilterTransfers) {
             return [];
@@ -527,10 +538,32 @@ class Reader implements ReaderInterface
             $priceProductFilterTransfers,
         );
 
-        return $this->resolveProductPrices(
+        $priceProductTransfers = $this->resolveProductPrices(
             $this->mergeIndexedPriceProductTransfers($abstractPricesBySku, $concretePricesBySku),
             $priceProductFilterTransfers,
         );
+
+        static::$validPricesCache[$cacheKey] = $priceProductTransfers;
+
+        return $priceProductTransfers;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
+     *
+     * @return string
+     */
+    protected function generateCacheKeyForPriceProductFilters(array $priceProductFilterTransfers): string
+    {
+        $serializedData = [];
+        foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
+            $priceProductFilterTransfer = $this->fillPriceProductFilterIdentifier($priceProductFilterTransfer);
+            $serializedData[] = $priceProductFilterTransfer->getIdentifier();
+        }
+
+        sort($serializedData);
+
+        return md5(implode(',', $serializedData));
     }
 
     /**

@@ -244,7 +244,9 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
             $itemIdentifier = $this->itemIdentifierBuilder->buildItemIdentifier($itemTransfer) ?: $key;
             if (!array_key_exists($itemIdentifier, $priceProductFilters)) {
-                $priceProductFilters[$itemIdentifier] = $this->createPriceProductFilter($itemTransfer, $quoteTransfer);
+                $priceProductFilter = $this->createPriceProductFilter($itemTransfer, $quoteTransfer);
+                $priceProductFilter->setIdentifier($itemIdentifier);
+                $priceProductFilters[$itemIdentifier] = $priceProductFilter;
             }
         }
 

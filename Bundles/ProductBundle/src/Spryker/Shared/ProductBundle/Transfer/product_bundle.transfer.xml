@@ -269,4 +269,15 @@
         <property name="groupKey" type="string"/>
     </transfer>
 
+    <transfer name="ProductConcreteCriteria" strict="true">
+        <property name="productConcreteConditions" type="ProductConcreteConditions"/>
+    </transfer>
+
+    <transfer name="ProductConcreteConditions" strict="true">
+        <property name="skus" type="string[]" singular="sku"/>
+    </transfer>
+
+    <transfer name="ProductConcreteCollection">
+        <property name="products" type="ProductConcrete[]" singular="product"/>
+    </transfer>
 </transfers>

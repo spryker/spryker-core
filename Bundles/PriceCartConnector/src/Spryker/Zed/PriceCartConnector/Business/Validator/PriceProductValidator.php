@@ -221,7 +221,9 @@ class PriceProductValidator implements PriceProductValidatorInterface
         foreach ($cartChangeTransfer->getItems() as $key => $itemTransfer) {
             $itemIdentifier = $this->itemIdentifierBuilder->buildItemIdentifier($itemTransfer) ?: $key;
             if (!array_key_exists($itemIdentifier, $priceProductFilters)) {
-                $priceProductFilters[$itemIdentifier] = $this->priceProductFilter->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer);
+                $productFilterTransfer = $this->priceProductFilter->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer);
+                $productFilterTransfer->setIdentifier($itemIdentifier);
+                $priceProductFilters[$itemIdentifier] = $productFilterTransfer;
             }
         }
 

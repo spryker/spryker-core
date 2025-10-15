@@ -13,6 +13,9 @@ use Spryker\Client\ProductRelationStorage\Relation\RelatedProductReader;
 use Spryker\Client\ProductRelationStorage\Relation\UpSellingProductReader;
 use Spryker\Client\ProductRelationStorage\Storage\ProductAbstractRelationStorageReader;
 
+/**
+ * @method \Spryker\Client\ProductRelationStorage\ProductRelationStorageConfig getConfig()
+ */
 class ProductRelationStorageFactory extends AbstractFactory
 {
     /**
@@ -36,6 +39,7 @@ class ProductRelationStorageFactory extends AbstractFactory
             $this->createProductRelationStorageReader(),
             $this->getProductStorageClient(),
             $this->getRelatedProductExpanderPlugins(),
+            $this->getConfig(),
         );
     }
 

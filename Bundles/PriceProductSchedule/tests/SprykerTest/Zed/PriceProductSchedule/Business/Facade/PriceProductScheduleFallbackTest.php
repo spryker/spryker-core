@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use ReflectionClass;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
@@ -349,6 +350,7 @@ class PriceProductScheduleFallbackTest extends Unit
             ->setCurrencyIsoCode($priceProductTransfer->getMoneyValue()->getCurrency()->getCode())
             ->setStoreName($this->storeTransfer->getName());
 
+        $this->resetCachedEntities();
         $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
         $this->assertSame($netPrice ?? 100, $priceProductTransfer->getMoneyValue()->getNetAmount());
@@ -446,5 +448,34 @@ class PriceProductScheduleFallbackTest extends Unit
         $priceProductFacadeMock->setFactory($priceProductFactoryMock);
 
         return $priceProductFacadeMock;
+    }
+
+    /**
+     * @return void
+     */
+    protected function resetCachedEntities(): void
+    {
+        $priceProductConcreteReaderReflection = new ReflectionClass("\Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReader");
+        $property = $priceProductConcreteReaderReflection->getProperty('priceCache');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
+
+        $readerReflection = new ReflectionClass("\Spryker\Zed\PriceProduct\Business\Model\Reader");
+        $property = $readerReflection->getProperty('validPricesCache');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
+
+        $property = $readerReflection->getProperty('resolvedPriceProductTransferCollection');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
+
+        $productBundleCartExpanderReflection = new ReflectionClass("Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander");
+        $property = $productBundleCartExpanderReflection->getProperty('productConcreteCache');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
+
+        $property = $productBundleCartExpanderReflection->getProperty('productPriceCache');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
     }
 }

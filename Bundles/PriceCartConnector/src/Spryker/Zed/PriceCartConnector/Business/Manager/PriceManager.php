@@ -188,11 +188,12 @@ class PriceManager implements PriceManagerInterface
             if (array_key_exists($itemIdentifier, $priceProductFilterTransfers)) {
                 continue;
             }
-
-            $priceProductFilterTransfers[$itemIdentifier] = $this->priceProductFilter->createPriceProductFilterTransfer(
+            $priceProductFilterTransfer = $this->priceProductFilter->createPriceProductFilterTransfer(
                 $cartChangeTransfer,
                 $itemTransfer,
             );
+            $priceProductFilterTransfer->setIdentifier($itemIdentifier);
+            $priceProductFilterTransfers[$itemIdentifier] = $priceProductFilterTransfer;
         }
 
         return $priceProductFilterTransfers;

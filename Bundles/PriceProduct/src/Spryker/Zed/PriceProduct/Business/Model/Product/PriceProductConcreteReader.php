@@ -23,6 +23,11 @@ use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
 class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
 {
     /**
+     * @var array<string, array<\Generated\Shared\Transfer\PriceProductTransfer>>
+     */
+    protected static array $priceCache = [];
+
+    /**
      * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface
      */
     protected $priceProductQueryContainer;
@@ -166,13 +171,41 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      */
     public function findProductConcretePricesBySkuAndCriteria(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
+        $cacheKey = $this->generateCacheKey($sku, $priceProductCriteriaTransfer);
+
+        if (isset(static::$priceCache[$cacheKey])) {
+            return static::$priceCache[$cacheKey];
+        }
+
         $priceProductTransfers = $this->priceProductRepository
             ->findProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
         $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
 
+        static::$priceCache[$cacheKey] = $priceProductTransfers;
+
         return $priceProductTransfers;
+    }
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return string
+     */
+    protected function generateCacheKey(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): string
+    {
+        $criteriaData = [
+            $sku,
+            $priceProductCriteriaTransfer->getPriceMode(),
+            $priceProductCriteriaTransfer->getIdCurrency(),
+            $priceProductCriteriaTransfer->getIdStore(),
+            $priceProductCriteriaTransfer->getPriceType(),
+            $priceProductCriteriaTransfer->getPriceDimension()?->getName() ?: '',
+        ];
+
+        return md5(implode(',', $criteriaData));
     }
 
     /**

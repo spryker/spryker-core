@@ -9,7 +9,10 @@ namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\ProductBundle\Exception\MissingFacadeMethodException;
 
 class ProductBundleToProductFacadeBridge implements ProductBundleToProductFacadeInterface
 {
@@ -66,5 +69,22 @@ class ProductBundleToProductFacadeBridge implements ProductBundleToProductFacade
     public function deactivateProductConcrete($idProductConcrete)
     {
         $this->productFacade->deactivateProductConcrete($idProductConcrete);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+     *
+     * @throws \Spryker\Zed\ProductBundle\Exception\MissingFacadeMethodException
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function getProductConcreteCollection(ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer): ProductConcreteCollectionTransfer
+    {
+        // This check is needed for BC reasons, because the method was added in spryker/product:6.35.0.
+        if (method_exists($this->productFacade, 'getProductConcreteCollection')) {
+            return $this->productFacade->getProductConcreteCollection($productConcreteCriteriaTransfer);
+        }
+
+        throw new MissingFacadeMethodException();
     }
 }

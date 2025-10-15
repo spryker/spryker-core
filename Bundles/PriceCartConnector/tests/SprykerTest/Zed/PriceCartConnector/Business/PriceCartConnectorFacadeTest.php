@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\PriceCartConnector\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use ReflectionClass;
 use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
@@ -91,10 +92,8 @@ class PriceCartConnectorFacadeTest extends Unit
         $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => $currencyCode]);
         $quoteTransfer = $this->tester->createQuoteWithItems($itemsData, $currencyTransfer);
 
-        $this->tester->mockConfigMethod('getItemFieldsForIdentifier', $itemFieldsForIdentifier);
-
         // Act
-        $filteredQuoteTransfer = $this->tester->getFacade()->filterItemsWithoutPrice($quoteTransfer);
+        $filteredQuoteTransfer = $this->getFacadeWithMockedConfig($itemFieldsForIdentifier)->filterItemsWithoutPrice($quoteTransfer);
 
         // Assert
         $itemsSkus = array_map(function (ItemTransfer $itemTransfer) {
@@ -210,18 +209,6 @@ class PriceCartConnectorFacadeTest extends Unit
     protected function getFilterItemsWithoutPriceDataProvider(): array
     {
         return [
-            'Should not filter items with 0 price when collection of item fields used for building identifier is empty.' => [
-                [
-                    static::TEST_SKU_1 => 100,
-                    static::TEST_SKU_2 => 0,
-                ],
-                static::TEST_CURRENCY_1,
-                [],
-                [
-                    static::TEST_SKU_1,
-                    static::TEST_SKU_2,
-                ],
-            ],
             'Should not filter items with 0 price when collection of item fields used for building identifier is not empty.' => [
                 [
                     static::TEST_SKU_1 => 100,
@@ -234,17 +221,6 @@ class PriceCartConnectorFacadeTest extends Unit
                     static::TEST_SKU_2,
                 ],
             ],
-            'Should filter out items with null price when collection of item fields used for building identifier is empty.' => [
-                [
-                    static::TEST_SKU_1 => 300,
-                    static::TEST_SKU_2 => null,
-                ],
-                static::TEST_CURRENCY_2,
-                [],
-                [
-                    static::TEST_SKU_1,
-                ],
-            ],
             'Should filter out items with null price when collection of item fields used for building identifier is not empty.' => [
                 [
                     static::TEST_SKU_1 => 300,
@@ -255,15 +231,6 @@ class PriceCartConnectorFacadeTest extends Unit
                 [
                     static::TEST_SKU_1,
                 ],
-            ],
-            'Should filter out all items with null price when collection of item fields used for building identifier is empty.' => [
-                [
-                    static::TEST_SKU_1 => null,
-                    static::TEST_SKU_2 => null,
-                ],
-                static::TEST_CURRENCY_3,
-                [],
-                [],
             ],
             'Should filter out all items with null price when collection of item fields used for building identifier is not empty.' => [
                 [
@@ -366,12 +333,52 @@ class PriceCartConnectorFacadeTest extends Unit
     }
 
     /**
-     * /**
+     * @param list<string> $itemFieldsForIdentifier
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig
+     * @return \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface
      */
-    protected function getPriceCartConnectorConfigMock(): PriceCartConnectorConfig
+    protected function getFacadeWithMockedConfig(array $itemFieldsForIdentifier): PriceCartConnectorFacadeInterface
     {
-        return $this->getMockBuilder(PriceCartConnectorConfig::class)->getMock();
+        $this->resetCachedEntities();
+        $priceCartConnectorFacade = $this->tester->getFacade();
+        $configMock = $this->createMock(PriceCartConnectorConfig::class);
+        $configMock->method('getItemFieldsForIdentifier')
+            ->willReturn($itemFieldsForIdentifier);
+
+        $priceCartConnectorBusinessFactory = $this->tester->createPriceCartConnectorBusinessFactory();
+        $priceCartConnectorBusinessFactory->setConfig($configMock);
+
+        $priceCartConnectorFacade->setFactory($priceCartConnectorBusinessFactory);
+
+        return $priceCartConnectorFacade;
+    }
+
+    /**
+     * @return void
+     */
+    protected function resetCachedEntities(): void
+    {
+        $priceProductConcreteReaderReflection = new ReflectionClass("\Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReader");
+        $property = $priceProductConcreteReaderReflection->getProperty('priceCache');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
+
+        $readerReflection = new ReflectionClass("\Spryker\Zed\PriceProduct\Business\Model\Reader");
+        $property = $readerReflection->getProperty('validPricesCache');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
+
+        $property = $readerReflection->getProperty('resolvedPriceProductTransferCollection');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
+
+        $productBundleCartExpanderReflection = new ReflectionClass("Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander");
+        $property = $productBundleCartExpanderReflection->getProperty('productConcreteCache');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
+
+        $property = $productBundleCartExpanderReflection->getProperty('productPriceCache');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
     }
 }

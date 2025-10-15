@@ -138,7 +138,8 @@ class ProductConcreteOfferExpander implements ProductConcreteOfferExpanderInterf
         }
 
         return (new MerchantCriteriaTransfer())
-            ->setMerchantReferences(array_unique(array_filter($merchantReferences)));
+            ->setMerchantReferences(array_unique(array_filter($merchantReferences)))
+            ->setWithExpanders(false);
     }
 
     /**

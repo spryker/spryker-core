@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductBundleToProductFacadeInterface
@@ -45,4 +47,13 @@ interface ProductBundleToProductFacadeInterface
      * @return void
      */
     public function deactivateProductConcrete($idProductConcrete);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+     *
+     * @throws \Spryker\Zed\ProductBundle\Exception\MissingFacadeMethodException
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function getProductConcreteCollection(ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer): ProductConcreteCollectionTransfer;
 }

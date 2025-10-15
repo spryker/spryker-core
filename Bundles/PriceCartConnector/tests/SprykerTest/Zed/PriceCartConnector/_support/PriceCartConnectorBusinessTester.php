@@ -317,7 +317,7 @@ class PriceCartConnectorBusinessTester extends Actor
     /**
      * @return \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorBusinessFactory
      */
-    protected function createPriceCartConnectorBusinessFactory(): PriceCartConnectorBusinessFactory
+    public function createPriceCartConnectorBusinessFactory(): PriceCartConnectorBusinessFactory
     {
         return new PriceCartConnectorBusinessFactory();
     }

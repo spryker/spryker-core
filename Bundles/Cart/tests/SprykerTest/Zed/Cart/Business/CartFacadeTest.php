@@ -28,6 +28,7 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use ReflectionClass;
 use Spryker\Client\Store\StoreDependencyProvider as ClientStoreDependencyProvider;
 use Spryker\Client\StoreStorage\Plugin\Store\StoreStorageStoreExpanderPlugin;
 use Spryker\Service\PriceProduct\PriceProductDependencyProvider as ServicePriceProductDependencyProvider;
@@ -111,7 +112,7 @@ class CartFacadeTest extends Unit
     public function setUp(): void
     {
         parent::setUp();
-
+        $this->resetCachedEntities();
         $this->tester->setDependency(ClientStoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
             new StoreStorageStoreExpanderPlugin(),
         ]);
@@ -363,6 +364,7 @@ class CartFacadeTest extends Unit
         $quoteTransfer = $this->getCartFacade()->add($cartChangeTransfer);
         $initialGrossPrice = $quoteTransfer->getItems()->offsetGet(0)->getUnitGrossPrice();
 
+        $this->resetCachedEntities();
         $newCartChangeTransfer->setQuote($quoteTransfer);
         $quoteResponseTransfer = $this->getCartFacade()->addToCart($newCartChangeTransfer);
 
@@ -434,6 +436,8 @@ class CartFacadeTest extends Unit
         //Act
         $quoteTransfer = $this->getCartFacade()->add($cartChangeTransfer);
         $initialGrossPrice = $quoteTransfer->getItems()->offsetGet(0)->getUnitGrossPrice();
+
+        $this->resetCachedEntities();
 
         $newCartChangeTransfer->setQuote($quoteTransfer);
         $quoteResponseTransfer = $this->getCartFacade()->removeFromCart($newCartChangeTransfer);
@@ -958,5 +962,34 @@ class CartFacadeTest extends Unit
         $cartPreCheckPluginMock->expects($this->once())->method('check');
 
         return $cartPreCheckPluginMock;
+    }
+
+    /**
+     * @return void
+     */
+    protected function resetCachedEntities(): void
+    {
+        $priceProductConcreteReaderReflection = new ReflectionClass("\Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReader");
+        $property = $priceProductConcreteReaderReflection->getProperty('priceCache');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
+
+        $readerReflection = new ReflectionClass("\Spryker\Zed\PriceProduct\Business\Model\Reader");
+        $property = $readerReflection->getProperty('validPricesCache');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
+
+        $property = $readerReflection->getProperty('resolvedPriceProductTransferCollection');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
+
+        $productBundleCartExpanderReflection = new ReflectionClass("Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander");
+        $property = $productBundleCartExpanderReflection->getProperty('productConcreteCache');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
+
+        $property = $productBundleCartExpanderReflection->getProperty('productPriceCache');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
     }
 }

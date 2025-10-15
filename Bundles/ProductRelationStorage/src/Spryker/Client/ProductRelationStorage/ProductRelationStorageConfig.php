@@ -23,4 +23,17 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
     {
         return false;
     }
+
+    /**
+     * Specification:
+     * - Returns the maximum number of upselling products to be returned.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getUpsellingProductLimit(): int
+    {
+        return 25;
+    }
 }

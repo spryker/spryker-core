@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\ProductConcreteConditionsTransfer;
+use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
@@ -22,6 +24,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterfac
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
+use Spryker\Zed\ProductBundle\Exception\MissingFacadeMethodException;
 use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
 class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
@@ -119,6 +122,14 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
         $productConcreteSkus = $this->getProductConcreteSkusFromCartChangeTransfer($cartChangeTransfer);
         $productForBundleTransfers = $this->productBundleReader->getProductForBundleTransfersByProductConcreteSkus($productConcreteSkus);
+
+        $productConcreteSkus = [];
+        foreach ($productForBundleTransfers as $productForBundleTransfersBySku) {
+            foreach ($productForBundleTransfersBySku as $productForBundleTransfer) {
+                $productConcreteSkus[] = $productForBundleTransfer->getSku();
+            }
+        }
+        $this->preloadProductConcreteTransfers($productConcreteSkus);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getRelatedBundleItemIdentifier()) {
@@ -248,15 +259,23 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      */
     protected function createBundledItemsTransferCollection(array $productForBundleTransfers, $bundleItemIdentifier, QuoteTransfer $quoteTransfer)
     {
+        $productConcreteSkus = [];
+        foreach ($productForBundleTransfers as $productForBundleTransfer) {
+            $productConcreteSkus[] = $productForBundleTransfer->getSku();
+        }
+
+        $this->preloadProductConcreteTransfers($productConcreteSkus);
+
         $bundledItems = [];
         foreach ($productForBundleTransfers as $productForBundleTransfer) {
             $quantity = $productForBundleTransfer->getQuantity();
+            $bundledItemTransfer = $this->createBundledItemTransfer(
+                $productForBundleTransfer,
+                $bundleItemIdentifier,
+                $quoteTransfer,
+            );
             for ($i = 0; $i < $quantity; $i++) {
-                $bundledItems[] = $this->createBundledItemTransfer(
-                    $productForBundleTransfer,
-                    $bundleItemIdentifier,
-                    $quoteTransfer,
-                );
+                $bundledItems[] = clone $bundledItemTransfer;
             }
         }
 
@@ -559,5 +578,44 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         }
 
         return $bundledItems;
+    }
+
+    /**
+     * @param array<string> $productConcreteSkus
+     *
+     * @return void
+     */
+    protected function preloadProductConcreteTransfers(array $productConcreteSkus): void
+    {
+        if (!$productConcreteSkus) {
+            return;
+        }
+
+        $skusToLoad = array_filter($productConcreteSkus, function ($sku) {
+            return !isset(static::$productConcreteCache[$sku]);
+        });
+
+        if (!$skusToLoad) {
+            return;
+        }
+
+        $productConcreteCriteriaTransfer = (new ProductConcreteCriteriaTransfer())->setProductConcreteConditions(
+            (new ProductConcreteConditionsTransfer())->setSkus($skusToLoad),
+        );
+
+        // This check is needed for BC reasons, because the method was added in spryker/product:6.35.0.
+        try {
+            $productConcreteCollectionTransfers = $this->productFacade->getProductConcreteCollection($productConcreteCriteriaTransfer);
+            $productConcreteTransfers = $productConcreteCollectionTransfers->getProducts();
+        } catch (MissingFacadeMethodException $e) {
+            return;
+        }
+
+        if (!$productConcreteTransfers) { //@phpstan-ignore-line It can be null (at least in tests), but PHPStan relies on the transfer annotations
+            return;
+        }
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            static::$productConcreteCache[$productConcreteTransfer->getSku()] = $productConcreteTransfer;
+        }
     }
 }

@@ -221,8 +221,7 @@ class Operation implements OperationInterface
         $cartChangeTransfer->requireQuote();
         $cartChangeTransfer->setOperation(CartConfig::OPERATION_ADD);
 
-        $originalQuoteTransfer = (new QuoteTransfer())
-            ->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
+        $originalQuoteTransfer = clone $cartChangeTransfer->getQuote();
 
         $quoteResponseTransfer = (new QuoteResponseTransfer())
             ->setIsSuccessful(false)
@@ -279,8 +278,7 @@ class Operation implements OperationInterface
         $cartChangeTransfer->requireQuote();
         $cartChangeTransfer->setOperation(CartConfig::OPERATION_REMOVE);
 
-        $originalQuoteTransfer = (new QuoteTransfer())
-            ->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
+        $originalQuoteTransfer = clone $cartChangeTransfer->getQuote();
 
         $quoteResponseTransfer = (new QuoteResponseTransfer())
             ->setQuoteTransfer($originalQuoteTransfer)
@@ -323,8 +321,7 @@ class Operation implements OperationInterface
      */
     public function reloadItemsInQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $originalQuoteTransfer = (new QuoteTransfer())
-            ->fromArray($quoteTransfer->modifiedToArray(), true);
+        $originalQuoteTransfer = clone $quoteTransfer;
 
         $quoteResponseTransfer = (new QuoteResponseTransfer())
             ->setIsSuccessful(false)

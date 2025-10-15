@@ -69,6 +69,7 @@
     <transfer name="MerchantCriteria">
         <property name="merchantReference" type="string"/>
         <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+        <property name="withExpanders" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="MerchantCollection">

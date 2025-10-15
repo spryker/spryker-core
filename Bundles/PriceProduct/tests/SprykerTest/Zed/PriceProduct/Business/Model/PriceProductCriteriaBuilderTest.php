@@ -51,7 +51,7 @@ class PriceProductCriteriaBuilderTest extends Unit
         $storeTransfer = $this->tester->haveStore();
 
         $expectedCurrencyTransfer = $this->tester->getLocator()->currency()->facade()
-            ->getStoreWithCurrenciesByIdStore($storeTransfer->getIdStore());
+            ->findCurrencyByIsoCode($storeTransfer->getDefaultCurrencyIsoCode());
         $priceProductFilterTransfer = $this->tester->havePriceProductFilterTransfer()
             ->setStoreName($storeTransfer->getName());
 
@@ -67,8 +67,7 @@ class PriceProductCriteriaBuilderTest extends Unit
 
         //Assert
 
-        $currencyId = $expectedCurrencyTransfer->getCurrencies()[$storeTransfer->getDefaultCurrencyIsoCode()]
-            ->getIdCurrency();
+        $currencyId = $expectedCurrencyTransfer->getIdCurrency();
         $this->assertSame($priceProductCriteriaTransfer->getIdCurrency(), $currencyId);
     }
 

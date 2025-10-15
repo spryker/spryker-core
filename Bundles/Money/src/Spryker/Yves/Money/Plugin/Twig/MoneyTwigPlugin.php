@@ -9,6 +9,7 @@ namespace Spryker\Yves\Money\Plugin\Twig;
 
 use Generated\Shared\Transfer\MoneyTransfer;
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Money\Builder\MoneyBuilderInterface;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -21,6 +22,13 @@ use Twig\TwigFilter;
  */
 class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    protected static ?MoneyBuilderInterface $moneyBuilder = null;
+
+    /**
+     * @var array<string, string>
+     */
+    protected static array $moneyFilterCache = [];
+
     /**
      * @var string
      */
@@ -73,9 +81,15 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     {
         $moneyFactory = $this->getFactory();
 
-        $filter = new TwigFilter(static::FILTER_NAME_MONEY, function ($money, bool $withSymbol = true, ?string $isoCode = null) use ($moneyFactory) {
+        return new TwigFilter(static::FILTER_NAME_MONEY, function ($money, bool $withSymbol = true, ?string $isoCode = null) use ($moneyFactory) {
             if ($money === null) {
                 return $money;
+            }
+
+            $cacheKey = $this->generateMoneyFilterCacheKey($money, $withSymbol, $isoCode);
+
+            if (isset(static::$moneyFilterCache[$cacheKey])) {
+                return static::$moneyFilterCache[$cacheKey];
             }
 
             if (!$money instanceof MoneyTransfer) {
@@ -87,10 +101,30 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
                 $formatterType = MoneyFormatterCollection::FORMATTER_WITH_SYMBOL;
             }
 
-            return $moneyFactory->createMoneyFormatter()->format($money, $formatterType);
-        });
+            $formattedMoney = $moneyFactory->createMoneyFormatter()->format($money, $formatterType);
 
-        return $filter;
+            static::$moneyFilterCache[$cacheKey] = $formattedMoney;
+
+            return $formattedMoney;
+        });
+    }
+
+    /**
+     * @param mixed $money
+     * @param bool $withSymbol
+     * @param string|null $isoCode
+     *
+     * @return string
+     */
+    protected function generateMoneyFilterCacheKey(mixed $money, bool $withSymbol, ?string $isoCode): string
+    {
+        $cacheKeyValues = [
+            $this->getMoneyValue($money),
+            $withSymbol ? 'true' : 'false',
+            $isoCode ?? 'null',
+        ];
+
+        return md5(implode('-', $cacheKeyValues));
     }
 
     /**
@@ -121,7 +155,7 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      */
     protected function getMoneyTransfer($money, ?string $isoCode = null): MoneyTransfer
     {
-        $moneyBuilder = $this->getFactory()->createMoneyBuilder();
+        $moneyBuilder = $this->getMoneyBuilder();
 
         if (is_int($money)) {
             return $moneyBuilder->fromInteger($money, $isoCode);
@@ -136,5 +170,31 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         }
 
         throw new WrongMoneyValueTypeException(sprintf(static::WRONG_MONEY_TYPE_ERROR_MESSAGE, static::class, gettype($money)));
+    }
+
+    /**
+     * @return \Spryker\Shared\Money\Builder\MoneyBuilderInterface
+     */
+    protected function getMoneyBuilder(): MoneyBuilderInterface
+    {
+        if (static::$moneyBuilder === null) {
+            static::$moneyBuilder = $this->getFactory()->createMoneyBuilder();
+        }
+
+        return static::$moneyBuilder;
+    }
+
+    /**
+     * @param mixed $money
+     *
+     * @return string
+     */
+    protected function getMoneyValue(mixed $money): string
+    {
+        if ($money instanceof MoneyTransfer) {
+            return sprintf('%d-%s', $money->getAmount(), $money->getCurrency()?->getCode() ?: 'null');
+        }
+
+        return (string)$money;
     }
 }
