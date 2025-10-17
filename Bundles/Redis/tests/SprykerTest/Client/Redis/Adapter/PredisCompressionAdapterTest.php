@@ -8,8 +8,8 @@
 namespace SprykerTest\Client\Redis\Adapter;
 
 use Codeception\Test\Unit;
-use Spryker\Client\Redis\Adapter\PredisCompressionAdapter;
 use Spryker\Client\Redis\Adapter\RedisAdapterInterface;
+use Spryker\Client\Redis\Adapter\RedisCompressionAdapter;
 use Spryker\Client\Redis\Compressor\Strategy\ZlibCompressorStrategy;
 use SprykerTest\Client\Redis\RedisClientTester;
 
@@ -38,7 +38,7 @@ class PredisCompressionAdapterTest extends Unit
     /**
      * @var \Spryker\Client\Redis\Adapter\RedisAdapterInterface
      */
-    protected $pRedisCompressionAdapter;
+    protected $redisCompressionAdapter;
 
     /**
      * @dataProvider getKeyValueReadDataProvider
@@ -60,7 +60,7 @@ class PredisCompressionAdapterTest extends Unit
             ->willReturn($redisValue);
 
         // Act
-        $result = $this->pRedisCompressionAdapter->get(RedisClientTester::KEY);
+        $result = $this->redisCompressionAdapter->get(RedisClientTester::KEY);
 
         // Assert
         $this->assertEquals($expectedValue, $result);
@@ -86,7 +86,7 @@ class PredisCompressionAdapterTest extends Unit
             ->willReturn(true);
 
         // Act
-        $this->pRedisCompressionAdapter->setex(RedisClientTester::KEY, 1, $originalValue);
+        $this->redisCompressionAdapter->setex(RedisClientTester::KEY, 1, $originalValue);
     }
 
     /**
@@ -109,7 +109,7 @@ class PredisCompressionAdapterTest extends Unit
             ->willReturn(true);
 
         // Act
-        $this->pRedisCompressionAdapter->set(RedisClientTester::KEY, $originalValue);
+        $this->redisCompressionAdapter->set(RedisClientTester::KEY, $originalValue);
     }
 
     /**
@@ -128,7 +128,7 @@ class PredisCompressionAdapterTest extends Unit
             ->willReturn(1);
 
         // Act
-        $this->pRedisCompressionAdapter->del($keys);
+        $this->redisCompressionAdapter->del($keys);
     }
 
     /**
@@ -149,7 +149,7 @@ class PredisCompressionAdapterTest extends Unit
             ->willReturn(true);
 
         // Act
-        $this->pRedisCompressionAdapter->eval($script, $numKeys, $keysOrArgs);
+        $this->redisCompressionAdapter->eval($script, $numKeys, $keysOrArgs);
     }
 
     /**
@@ -171,7 +171,7 @@ class PredisCompressionAdapterTest extends Unit
         $this->redisAdapterMock->expects($this->once())->method('mget')->willReturn([RedisClientTester::KEY => $redisValue]);
 
         // Act
-        $result = $this->pRedisCompressionAdapter->mget($keys);
+        $result = $this->redisCompressionAdapter->mget($keys);
 
         // Assert
         $this->assertEquals([RedisClientTester::KEY => $expectedValue], $result);
@@ -198,7 +198,7 @@ class PredisCompressionAdapterTest extends Unit
             ->willReturn(true);
 
         // Act
-        $this->pRedisCompressionAdapter->mset($dictionary);
+        $this->redisCompressionAdapter->mset($dictionary);
     }
 
     /**
@@ -217,7 +217,7 @@ class PredisCompressionAdapterTest extends Unit
             ->willReturn([]);
 
         // Act
-        $this->pRedisCompressionAdapter->info($section);
+        $this->redisCompressionAdapter->info($section);
     }
 
     /**
@@ -235,7 +235,7 @@ class PredisCompressionAdapterTest extends Unit
             ->willReturn([]);
 
         // Act
-        $this->pRedisCompressionAdapter->keys(RedisClientTester::KEY);
+        $this->redisCompressionAdapter->keys(RedisClientTester::KEY);
     }
 
     /**
@@ -255,7 +255,7 @@ class PredisCompressionAdapterTest extends Unit
             ->willReturn([]);
 
         // Act
-        $this->pRedisCompressionAdapter->scan($cursor, $options);
+        $this->redisCompressionAdapter->scan($cursor, $options);
     }
 
     /**
@@ -270,7 +270,7 @@ class PredisCompressionAdapterTest extends Unit
         $this->redisAdapterMock->expects($this->once())->method('dbSize')->willReturn(1);
 
         // Act
-        $this->pRedisCompressionAdapter->dbSize();
+        $this->redisCompressionAdapter->dbSize();
     }
 
     /**
@@ -285,7 +285,7 @@ class PredisCompressionAdapterTest extends Unit
         $this->redisAdapterMock->expects($this->once())->method('flushDb');
 
         // Act
-        $this->pRedisCompressionAdapter->flushDb();
+        $this->redisCompressionAdapter->flushDb();
     }
 
     /**
@@ -300,7 +300,7 @@ class PredisCompressionAdapterTest extends Unit
         $this->redisAdapterMock->expects($this->once())->method('incr');
 
         // Act
-        $this->pRedisCompressionAdapter->incr(RedisClientTester::KEY);
+        $this->redisCompressionAdapter->incr(RedisClientTester::KEY);
     }
 
     /**
@@ -321,7 +321,7 @@ class PredisCompressionAdapterTest extends Unit
         /** @var \Spryker\Client\Redis\RedisFactory $factory */
         $factory = $this->tester->getFactory();
         $factory->setConfig($this->tester->getModuleConfig());
-        $this->pRedisCompressionAdapter = new PredisCompressionAdapter(
+        $this->redisCompressionAdapter = new RedisCompressionAdapter(
             $this->redisAdapterMock,
             $factory->createCompressor(),
         );

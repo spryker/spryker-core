@@ -9,7 +9,7 @@ namespace Spryker\Client\Redis\Adapter;
 
 use Spryker\Client\Redis\Compressor\CompressorInterface;
 
-class PredisCompressionAdapter implements RedisAdapterInterface
+class RedisCompressionAdapter implements RedisAdapterInterface
 {
     /**
      * @param \Spryker\Client\Redis\Adapter\RedisAdapterInterface $redisAdapter

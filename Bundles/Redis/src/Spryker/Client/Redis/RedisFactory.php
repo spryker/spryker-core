@@ -8,6 +8,7 @@
 namespace Spryker\Client\Redis;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Redis\Adapter\Factory\PhpredisAdapterFactory;
 use Spryker\Client\Redis\Adapter\Factory\PredisAdapterFactory;
 use Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface;
 use Spryker\Client\Redis\Adapter\RedisAdapterProvider;
@@ -37,7 +38,31 @@ class RedisFactory extends AbstractFactory
      */
     public function createRedisAdapterFactory(): RedisAdapterFactoryInterface
     {
+        if ($this->getConfig()->usePhpredis()) {
+            return $this->createPhpredisAdapterFactory();
+        }
+
+        return $this->createPredisAdapterFactory();
+    }
+
+    /**
+     * @return \Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface
+     */
+    public function createPredisAdapterFactory(): RedisAdapterFactoryInterface
+    {
         return new PredisAdapterFactory(
+            $this->getConfig(),
+            $this->getUtilEncodingService(),
+            $this->createCompressor(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface
+     */
+    public function createPhpredisAdapterFactory(): RedisAdapterFactoryInterface
+    {
+        return new PhpredisAdapterFactory(
             $this->getConfig(),
             $this->getUtilEncodingService(),
             $this->createCompressor(),

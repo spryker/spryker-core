@@ -71,4 +71,17 @@ class RedisConfig extends AbstractBundleConfig
     {
         return $this->get(RedisConstants::REDIS_COMPRESSION_ENABLED, false);
     }
+
+    /**
+     * Specification:
+     * - Defines if phpredis (PHP extension) should be used instead of predis (PHP library).
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function usePhpredis(): bool
+    {
+        return false;
+    }
 }
