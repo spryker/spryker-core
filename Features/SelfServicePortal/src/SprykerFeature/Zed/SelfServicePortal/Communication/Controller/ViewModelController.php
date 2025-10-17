@@ -72,14 +72,14 @@ class ViewModelController extends AbstractController
         ];
     }
 
-    public function attachedAssetTableAction(Request $request): JsonResponse
+    public function attachedSspAssetTableAction(Request $request): JsonResponse
     {
         $idSspModel = $request->query->getInt(static::PARAM_ID_SSP_MODEL);
 
-        $attachedAssetTableDataProvider = $this->getFactory()->createAttachedAssetTableDataProvider();
+        $attachedSspAssetTableDataProvider = $this->getFactory()->createAttachedSspAssetTableDataProvider();
 
         return $this->jsonResponse(
-            $attachedAssetTableDataProvider->getAttachedAssetTableData($idSspModel),
+            $attachedSspAssetTableDataProvider->getAttachedSspAssetTableData($idSspModel),
         );
     }
 

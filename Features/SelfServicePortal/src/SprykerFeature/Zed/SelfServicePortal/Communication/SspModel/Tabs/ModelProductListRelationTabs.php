@@ -16,7 +16,7 @@ class ModelProductListRelationTabs extends AbstractTabs
     protected function build(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
         $this
-            ->addAvailableProductListsTab($tabsViewTransfer)
+            ->addUnattachedProductListsTab($tabsViewTransfer)
             ->addProductListsToBeAttachedTab($tabsViewTransfer);
 
         $tabsViewTransfer->setIsNavigable(false);
@@ -29,13 +29,13 @@ class ModelProductListRelationTabs extends AbstractTabs
      *
      * @return $this
      */
-    protected function addAvailableProductListsTab(TabsViewTransfer $tabsViewTransfer)
+    protected function addUnattachedProductListsTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('available-product-lists')
+            ->setName('unattached-product-lists')
             ->setTitle('Available Product Lists')
-            ->setTemplate('@SelfServicePortal/AttachModel/_partials/product-list/available-product-lists-tab.twig');
+            ->setTemplate('@SelfServicePortal/AttachModel/_partials/product-list/unattached-product-lists-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

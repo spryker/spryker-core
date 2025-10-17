@@ -17,17 +17,17 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Reader\RelationCsvReaderInterface;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
-class UnassignedModelAssetAttachmentTable extends AbstractTable
+class UnattachedModelAssetAttachmentTable extends AbstractTable
 {
     /**
      * @var string
      */
-    protected const DEFAULT_URL = 'available-ssp-asset-table';
+    protected const DEFAULT_URL = 'unattached-ssp-asset-table';
 
     /**
      * @var string
      */
-    protected const TABLE_IDENTIFIER = 'available-model-asset-table';
+    protected const TABLE_IDENTIFIER = 'unattached-ssp-model-asset-table';
 
     /**
      * @var string
@@ -101,20 +101,20 @@ class UnassignedModelAssetAttachmentTable extends AbstractTable
 
         $config->setTableAttributes([
             'data-selectable' => [
-                'moveToSelector' => '#assetsToBeAssigned',
-                'inputSelector' => '#attachModel_sspAssetIdsToBeAssigned',
+                'moveToSelector' => '#assetsToBeAttached',
+                'inputSelector' => '#attachModel_sspAssetIdsToBeAttached',
                 'counterHolderSelector' => 'a[href="#tab-content-assets-to-be-attached"]',
                 'colId' => 'spy_ssp_asset.id_ssp_asset',
             ],
             'data-uploader' => [
                 'url' => '/self-service-portal/attach-model/get-relations-from-csv?id-ssp-model=' . $this->idSspModel,
-                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED,
+                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED,
             ],
         ]);
 
         $config->addRawColumn(static::COLUMN_SELECTED);
         $config->addRawColumn(static::COLUMN_STATUS);
-        $config->setUrl(Url::generate('/available-ssp-asset-table', [
+        $config->setUrl(Url::generate('/unattached-ssp-asset-table', [
             static::REQUEST_PARAM_ID_SSP_MODEL => $this->idSspModel,
         ])->build());
 

@@ -16,7 +16,7 @@ class ModelAssetRelationTabs extends AbstractTabs
     protected function build(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
         $this
-            ->addAvailableAssetsTab($tabsViewTransfer)
+            ->addUnattachedAssetsTab($tabsViewTransfer)
             ->addAssetsToBeAttachedTab($tabsViewTransfer);
 
         $tabsViewTransfer->setIsNavigable(false);
@@ -29,13 +29,13 @@ class ModelAssetRelationTabs extends AbstractTabs
      *
      * @return $this
      */
-    protected function addAvailableAssetsTab(TabsViewTransfer $tabsViewTransfer)
+    protected function addUnattachedAssetsTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('available-assets')
+            ->setName('unattached-assets')
             ->setTitle('Available Assets')
-            ->setTemplate('@SelfServicePortal/AttachModel/_partials/asset/available-assets-tab.twig');
+            ->setTemplate('@SelfServicePortal/AttachModel/_partials/asset/unattached-assets-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

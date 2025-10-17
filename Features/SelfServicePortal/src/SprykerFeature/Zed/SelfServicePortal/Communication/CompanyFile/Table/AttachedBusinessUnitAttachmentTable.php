@@ -16,12 +16,12 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Controller\FileAbstractController;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Reader\RelationCsvReaderInterface;
 
-class AssignedBusinessUnitAttachmentTable extends AbstractTable
+class AttachedBusinessUnitAttachmentTable extends AbstractTable
 {
     /**
      * @var string
      */
-    protected const TABLE_IDENTIFIER = 'assigned-business-unit-table';
+    protected const TABLE_IDENTIFIER = 'attached-business-unit-table';
 
     protected const COLUMN_ID_BUSINESS_UNIT = SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT;
 
@@ -65,17 +65,17 @@ class AssignedBusinessUnitAttachmentTable extends AbstractTable
         $config->addRawColumn(static::COLUMN_SELECTED);
         $config->setTableAttributes([
             'data-selectable' => [
-                'moveToSelector' => '#businessUnitsToBeUnassigned',
-                'inputSelector' => '#fileAttachment_businessUnitIdsToBeUnassigned',
-                'counterHolderSelector' => 'a[href="#tab-content-business-units-to-be-detached"]',
+                'moveToSelector' => '#businessUnitsToBeUnattached',
+                'inputSelector' => '#fileAttachment_businessUnitIdsToBeUnattached',
+                'counterHolderSelector' => 'a[href="#tab-content-business-units-to-be-unattached"]',
                 'colId' => static::COLUMN_ID_BUSINESS_UNIT,
             ],
             'data-uploader' => [
                 'url' => sprintf('/self-service-portal/attach-file/get-business-unit-attachments-from-csv?id-file=%d', $this->idFile),
-                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED,
+                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED,
             ],
         ]);
-        $config->setUrl(Url::generate('/assigned-business-unit-table', [
+        $config->setUrl(Url::generate('/attached-business-unit-table', [
             FileAbstractController::REQUEST_PARAM_ID_FILE => $this->idFile,
         ])->build());
 

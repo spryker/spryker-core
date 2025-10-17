@@ -35,12 +35,12 @@ class ListAssignedBusinessUnitAssetController extends AbstractGatewayController
 
     public function tableAction(Request $request): JsonResponse
     {
-        $assignedBusinessUnitTable = $this
+        $attachedBusinessUnitTable = $this
             ->getFactory()
             ->createAssignedBusinessUnitTable((new SspAssetTransfer())->setIdSspAsset($request->query->getInt('id-ssp-asset')));
 
         return $this->jsonResponse(
-            $assignedBusinessUnitTable->fetchData(),
+            $attachedBusinessUnitTable->fetchData(),
         );
     }
 }

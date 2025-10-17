@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SspModelCriteriaTransfer;
 use SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacadeInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SelfServicePortalCommunicationFactory;
 
-class AttachedAssetTableDataProvider implements AttachedAssetTableDataProviderInterface
+class AttachedSspAssetTableDataProvider implements AttachedSspAssetTableDataProviderInterface
 {
     public function __construct(
         protected SelfServicePortalFacadeInterface $selfServicePortalFacade,
@@ -25,7 +25,7 @@ class AttachedAssetTableDataProvider implements AttachedAssetTableDataProviderIn
      *
      * @return array<string, mixed>
      */
-    public function getAttachedAssetTableData(int $idSspModel): array
+    public function getAttachedSspAssetTableData(int $idSspModel): array
     {
         $sspModelCriteriaTransfer = (new SspModelCriteriaTransfer())
             ->setSspModelConditions(

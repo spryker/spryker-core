@@ -93,14 +93,14 @@ class SspModelToProductListWritePublisherPluginTest extends Unit
             SspModelTransfer::NAME => static::SSP_MODEL_NAME_1,
         ]);
 
-        $assignmentEntity = $this->tester->haveSspModelToProductListAssignment(
+        $attachmentEntity = $this->tester->haveSspModelToProductListAttachment(
             $sspModelTransfer->getIdSspModelOrFail(),
             $productListTransfer->getIdProductListOrFail(),
         );
 
         $eventEntityTransfers = [
             (new EventEntityTransfer())
-                ->setId($assignmentEntity->getIdSspModelToProductList())
+                ->setId($attachmentEntity->getIdSspModelToProductList())
                 ->setEvent(SelfServicePortalConfig::ENTITY_SPY_SSP_MODEL_TO_PRODUCT_LIST_CREATE)
                 ->setForeignKeys([
                     'spy_ssp_model_to_product_list.fk_ssp_model' => $sspModelTransfer->getIdSspModelOrFail(),
@@ -128,7 +128,7 @@ class SspModelToProductListWritePublisherPluginTest extends Unit
             SspModelTransfer::NAME => static::SSP_MODEL_NAME_1,
         ]);
 
-        $assignmentEntity = $this->tester->haveSspModelToProductListAssignment(
+        $attachmentEntity = $this->tester->haveSspModelToProductListAttachment(
             $sspModelTransfer->getIdSspModelOrFail(),
             $productListTransfer->getIdProductListOrFail(),
         );
@@ -137,7 +137,7 @@ class SspModelToProductListWritePublisherPluginTest extends Unit
 
         $eventEntityTransfers = [
             (new EventEntityTransfer())
-                ->setId($assignmentEntity->getIdSspModelToProductList())
+                ->setId($attachmentEntity->getIdSspModelToProductList())
                 ->setEvent(SelfServicePortalConfig::ENTITY_SPY_SSP_MODEL_TO_PRODUCT_LIST_UPDATE)
                 ->setForeignKeys([
                     'spy_ssp_model_to_product_list.fk_ssp_model' => $sspModelTransfer->getIdSspModelOrFail(),
@@ -181,7 +181,7 @@ class SspModelToProductListWritePublisherPluginTest extends Unit
         $this->assertNull($storageData);
     }
 
-    public function testHandlesBulkWithMultipleProductListAssignments(): void
+    public function testHandlesBulkWithMultipleProductListAttachments(): void
     {
         // Arrange
         $productListTransfer1 = $this->tester->haveProductList([
@@ -196,25 +196,25 @@ class SspModelToProductListWritePublisherPluginTest extends Unit
             SspModelTransfer::NAME => static::SSP_MODEL_NAME_1,
         ]);
 
-        $assignmentEntity1 = $this->tester->haveSspModelToProductListAssignment(
+        $attachmentEntity1 = $this->tester->haveSspModelToProductListAttachment(
             $sspModelTransfer->getIdSspModelOrFail(),
             $productListTransfer1->getIdProductListOrFail(),
         );
 
-        $assignmentEntity2 = $this->tester->haveSspModelToProductListAssignment(
+        $attachmentEntity2 = $this->tester->haveSspModelToProductListAttachment(
             $sspModelTransfer->getIdSspModelOrFail(),
             $productListTransfer2->getIdProductListOrFail(),
         );
 
         $eventEntityTransfers = [
             (new EventEntityTransfer())
-                ->setId($assignmentEntity1->getIdSspModelToProductList())
+                ->setId($attachmentEntity1->getIdSspModelToProductList())
                 ->setEvent(SelfServicePortalConfig::ENTITY_SPY_SSP_MODEL_TO_PRODUCT_LIST_CREATE)
                 ->setForeignKeys([
                     'spy_ssp_model_to_product_list.fk_ssp_model' => $sspModelTransfer->getIdSspModelOrFail(),
                 ]),
             (new EventEntityTransfer())
-                ->setId($assignmentEntity2->getIdSspModelToProductList())
+                ->setId($attachmentEntity2->getIdSspModelToProductList())
                 ->setEvent(SelfServicePortalConfig::ENTITY_SPY_SSP_MODEL_TO_PRODUCT_LIST_CREATE)
                 ->setForeignKeys([
                     'spy_ssp_model_to_product_list.fk_ssp_model' => $sspModelTransfer->getIdSspModelOrFail(),
@@ -260,19 +260,19 @@ class SspModelToProductListWritePublisherPluginTest extends Unit
 
         $this->tester->haveSspModelStorage($sspModelTransfer->getIdSspModelOrFail(), [999]);
 
-        $assignmentEntity1 = $this->tester->haveSspModelToProductListAssignment(
+        $attachmentEntity1 = $this->tester->haveSspModelToProductListAttachment(
             $sspModelTransfer->getIdSspModelOrFail(),
             $productListTransfer1->getIdProductListOrFail(),
         );
 
-        $assignmentEntity2 = $this->tester->haveSspModelToProductListAssignment(
+        $attachmentEntity2 = $this->tester->haveSspModelToProductListAttachment(
             $sspModelTransfer->getIdSspModelOrFail(),
             $productListTransfer2->getIdProductListOrFail(),
         );
 
         $eventEntityTransfers = [
             (new EventEntityTransfer())
-                ->setId($assignmentEntity1->getIdSspModelToProductList())
+                ->setId($attachmentEntity1->getIdSspModelToProductList())
                 ->setEvent(SelfServicePortalConfig::ENTITY_SPY_SSP_MODEL_TO_PRODUCT_LIST_UPDATE)
                 ->setForeignKeys([
                     'spy_ssp_model_to_product_list.fk_ssp_model' => $sspModelTransfer->getIdSspModelOrFail(),

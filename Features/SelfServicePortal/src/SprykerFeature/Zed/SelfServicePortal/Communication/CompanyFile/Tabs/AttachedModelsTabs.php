@@ -17,7 +17,7 @@ class AttachedModelsTabs extends AbstractTabs
     {
         $this
             ->addAttachedModelsTab($tabsViewTransfer)
-            ->addModelsToBeDetachedTab($tabsViewTransfer);
+            ->addModelsToBeUnattachedTab($tabsViewTransfer);
 
         $tabsViewTransfer->setIsNavigable(false);
 
@@ -35,20 +35,20 @@ class AttachedModelsTabs extends AbstractTabs
         $tabItemTransfer
             ->setName('attached-models')
             ->setTitle('Attached Models')
-            ->setTemplate('@SelfServicePortal/AttachFile/_partials/model/attached-models-content.twig');
+            ->setTemplate('@SelfServicePortal/AttachFile/_partials/model/attached-ssp-models-content.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
         return $this;
     }
 
-    protected function addModelsToBeDetachedTab(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
+    protected function addModelsToBeUnattachedTab(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('models-to-be-detached')
+            ->setName('models-to-be-unattached')
             ->setTitle('Models to be detached')
-            ->setTemplate('@SelfServicePortal/AttachFile/_partials/model/models-to-be-detached-tab.twig');
+            ->setTemplate('@SelfServicePortal/AttachFile/_partials/model/models-to-be-unattached-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

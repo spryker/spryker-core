@@ -15,17 +15,17 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Controller\FileAbstractController;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Reader\RelationCsvReaderInterface;
 
-class AssignedSspAssetAttachmentTable extends AbstractTable
+class AttachedSspAssetAttachmentTable extends AbstractTable
 {
     /**
      * @var string
      */
-    protected const DEFAULT_URL = 'assigned-ssp-asset-table';
+    protected const DEFAULT_URL = 'attached-ssp-asset-table';
 
     /**
      * @var string
      */
-    protected const TABLE_IDENTIFIER = 'assigned-ssp-asset-table';
+    protected const TABLE_IDENTIFIER = 'attached-ssp-asset-table';
 
     protected const COLUMN_ID = SpySspAssetTableMap::COL_ID_SSP_ASSET;
 
@@ -73,20 +73,20 @@ class AssignedSspAssetAttachmentTable extends AbstractTable
         ]);
 
         $config->addRawColumn(static::COLUMN_SELECTED);
-        $config->setUrl(Url::generate('/assigned-ssp-asset-table', [
+        $config->setUrl(Url::generate('/attached-ssp-asset-table', [
             FileAbstractController::REQUEST_PARAM_ID_FILE => $this->idFile,
         ])->build());
 
         $config->setTableAttributes([
             'data-selectable' => [
-                'moveToSelector' => '#assetsToBeUnassigned',
-                'inputSelector' => '#fileAttachment_sspAssetIdsToBeUnassigned',
-                'counterHolderSelector' => 'a[href="#tab-content-assets-to-be-detached"]',
+                'moveToSelector' => '#assetsToBeUnattached',
+                'inputSelector' => '#fileAttachment_sspAssetIdsToBeUnattached',
+                'counterHolderSelector' => 'a[href="#tab-content-assets-to-be-unattached"]',
                 'colId' => static::COLUMN_ID,
             ],
             'data-uploader' => [
                 'url' => sprintf('/self-service-portal/attach-file/get-asset-attachments-from-csv?id-file=%d', $this->idFile),
-                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED,
+                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED,
             ],
         ]);
 

@@ -16,8 +16,8 @@ class AttachedModelProductListsTabs extends AbstractTabs
     protected function build(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
         $this
-            ->addAssignedProductListsTab($tabsViewTransfer)
-            ->addProductListsToBeDetachedTab($tabsViewTransfer);
+            ->addAttachedProductListsTab($tabsViewTransfer)
+            ->addProductListsToBeUnattachedTab($tabsViewTransfer);
 
         $tabsViewTransfer->setIsNavigable(false);
 
@@ -29,13 +29,13 @@ class AttachedModelProductListsTabs extends AbstractTabs
      *
      * @return $this
      */
-    protected function addAssignedProductListsTab(TabsViewTransfer $tabsViewTransfer)
+    protected function addAttachedProductListsTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('assigned-product-lists')
+            ->setName('attached-product-lists')
             ->setTitle('Assigned Product Lists')
-            ->setTemplate('@SelfServicePortal/AttachModel/_partials/product-list/assigned-product-lists-tab.twig');
+            ->setTemplate('@SelfServicePortal/AttachModel/_partials/product-list/attached-product-lists-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
@@ -47,13 +47,13 @@ class AttachedModelProductListsTabs extends AbstractTabs
      *
      * @return $this
      */
-    protected function addProductListsToBeDetachedTab(TabsViewTransfer $tabsViewTransfer)
+    protected function addProductListsToBeUnattachedTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('product-lists-to-be-detached')
+            ->setName('product-lists-to-be-unattached')
             ->setTitle('Product Lists to be Detached')
-            ->setTemplate('@SelfServicePortal/AttachModel/_partials/product-list/product-lists-to-be-detached-tab.twig');
+            ->setTemplate('@SelfServicePortal/AttachModel/_partials/product-list/product-lists-to-be-unattached-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

@@ -17,12 +17,12 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Controller\FileAbstractController;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Reader\RelationCsvReaderInterface;
 
-class UnassignedBusinessUnitAttachmentTable extends AbstractTable
+class UnattachedBusinessUnitAttachmentTable extends AbstractTable
 {
     /**
      * @var string
      */
-    protected const TABLE_IDENTIFIER = 'available-business-unit-table';
+    protected const TABLE_IDENTIFIER = 'unattached-business-unit-table';
 
     protected const COLUMN_ID_BUSINESS_UNIT = SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT;
 
@@ -65,18 +65,18 @@ class UnassignedBusinessUnitAttachmentTable extends AbstractTable
 
         $config->setTableAttributes([
             'data-selectable' => [
-                'moveToSelector' => '#businessUnitsToBeAssigned',
-                'inputSelector' => '#fileAttachment_businessUnitIdsToBeAssigned',
+                'moveToSelector' => '#businessUnitsToBeAttached',
+                'inputSelector' => '#fileAttachment_businessUnitIdsToBeAttached',
                 'counterHolderSelector' => 'a[href="#tab-content-business-units-to-be-attached"]',
                 'colId' => 'spy_company_business_unit.id_company_business_unit',
             ],
             'data-uploader' => [
                 'url' => sprintf('/self-service-portal/attach-file/get-business-unit-attachments-from-csv?id-file=%d', $this->idFile),
-                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED,
+                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED,
             ],
         ]);
         $config->addRawColumn(static::COLUMN_SELECTED);
-        $config->setUrl(Url::generate('/available-business-unit-table', [
+        $config->setUrl(Url::generate('/unattached-business-unit-table', [
             FileAbstractController::REQUEST_PARAM_ID_FILE => $this->idFile,
         ])->build());
 

@@ -84,28 +84,28 @@ class SspModelWriter implements SspModelWriterInterface
 
     protected function updateAssetsRelations(SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): void
     {
-        foreach ($sspModelCollectionRequestTransfer->getProductListsToBeAssigned() as $modelProductListAssignmentTransfer) {
-            $this->entityManager->createSspModelToProductListAssignment($modelProductListAssignmentTransfer);
+        foreach ($sspModelCollectionRequestTransfer->getProductListsToBeAttached() as $modelProductListAttachmentTransfer) {
+            $this->entityManager->createSspModelToProductListAttachment($modelProductListAttachmentTransfer);
         }
 
-        foreach ($sspModelCollectionRequestTransfer->getProductListsToBeUnassigned() as $modelProductListAssignmentTransfer) {
-            $this->entityManager->deleteSspModelToProductListAssignment($modelProductListAssignmentTransfer);
+        foreach ($sspModelCollectionRequestTransfer->getProductListsToBeUnattached() as $modelProductListAttachmentTransfer) {
+            $this->entityManager->deleteSspModelToProductListAttachment($modelProductListAttachmentTransfer);
         }
     }
 
     protected function updateProductListsRelations(SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): void
     {
-        foreach ($sspModelCollectionRequestTransfer->getSspAssetsToBeAssigned() as $sspAssetToBeAssigned) {
+        foreach ($sspModelCollectionRequestTransfer->getSspAssetsToBeAttached() as $sspAssetToBeAttached) {
             $this->entityManager->createSspAssetToSspModelRelation(
-                $sspAssetToBeAssigned->getSspAssetOrFail()->getIdSspAssetOrFail(),
-                $sspAssetToBeAssigned->getSspModelOrFail()->getIdSspModelOrFail(),
+                $sspAssetToBeAttached->getSspAssetOrFail()->getIdSspAssetOrFail(),
+                $sspAssetToBeAttached->getSspModelOrFail()->getIdSspModelOrFail(),
             );
         }
 
-        foreach ($sspModelCollectionRequestTransfer->getSspAssetsToBeUnassigned() as $sspAssetToBeUnassigned) {
+        foreach ($sspModelCollectionRequestTransfer->getSspAssetsToBeUnattached() as $sspAssetToBeUnattached) {
             $this->entityManager->deleteSspAssetToSspModelRelation(
-                $sspAssetToBeUnassigned->getSspAssetOrFail()->getIdSspAssetOrFail(),
-                $sspAssetToBeUnassigned->getSspModelOrFail()->getIdSspModelOrFail(),
+                $sspAssetToBeUnattached->getSspAssetOrFail()->getIdSspAssetOrFail(),
+                $sspAssetToBeUnattached->getSspModelOrFail()->getIdSspModelOrFail(),
             );
         }
     }

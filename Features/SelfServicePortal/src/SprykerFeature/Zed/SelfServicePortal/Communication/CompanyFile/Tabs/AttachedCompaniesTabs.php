@@ -21,12 +21,12 @@ class AttachedCompaniesTabs extends AbstractTabs
     /**
      * @var string
      */
-    protected const TAB_COMPANIES_TO_BE_DETACHED = 'companies-to-be-detached';
+    protected const TAB_COMPANIES_TO_BE_UNATTACHED = 'companies-to-be-unattached';
 
     protected function build(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
         $this->addAttachedCompaniesTab($tabsViewTransfer)
-            ->addCompaniesToBeDetachedTab($tabsViewTransfer);
+            ->addCompaniesToBeUnattachedTab($tabsViewTransfer);
 
         $tabsViewTransfer->setIsNavigable(false);
 
@@ -56,13 +56,13 @@ class AttachedCompaniesTabs extends AbstractTabs
      *
      * @return $this
      */
-    protected function addCompaniesToBeDetachedTab(TabsViewTransfer $tabsViewTransfer)
+    protected function addCompaniesToBeUnattachedTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName(static::TAB_COMPANIES_TO_BE_DETACHED)
+            ->setName(static::TAB_COMPANIES_TO_BE_UNATTACHED)
             ->setTitle('Companies to be detached')
-            ->setTemplate('@SelfServicePortal/AttachFile/_partials/company/companies-to-be-detached-tab.twig');
+            ->setTemplate('@SelfServicePortal/AttachFile/_partials/company/companies-to-be-unattached-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

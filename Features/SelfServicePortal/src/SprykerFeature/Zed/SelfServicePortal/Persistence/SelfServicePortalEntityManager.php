@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\FileAttachmentTransfer;
 use Generated\Shared\Transfer\FileCollectionTransfer;
-use Generated\Shared\Transfer\ModelProductListAssignmentTransfer;
+use Generated\Shared\Transfer\ModelProductListAttachmentTransfer;
 use Generated\Shared\Transfer\ProductClassCriteriaTransfer;
 use Generated\Shared\Transfer\ProductClassTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -510,12 +510,12 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         $sspAssetStorageEntity->save();
     }
 
-    public function createSspModelToProductListAssignment(ModelProductListAssignmentTransfer $modelProductListAssignmentTransfer): void
+    public function createSspModelToProductListAttachment(ModelProductListAttachmentTransfer $modelProductListAttachmentTransfer): void
     {
         $sspModelToProductListEntity = $this->getFactory()
             ->createSspModelToProductListQuery()
-            ->filterByFkSspModel($modelProductListAssignmentTransfer->getSspModelOrFail()->getIdSspModel())
-            ->filterByFkProductList($modelProductListAssignmentTransfer->getProductListOrFail()->getIdProductList())
+            ->filterByFkSspModel($modelProductListAttachmentTransfer->getSspModelOrFail()->getIdSspModel())
+            ->filterByFkProductList($modelProductListAttachmentTransfer->getProductListOrFail()->getIdProductList())
             ->findOneOrCreate();
 
         if ($sspModelToProductListEntity->isNew()) {
@@ -552,12 +552,12 @@ class SelfServicePortalEntityManager extends AbstractEntityManager implements Se
         return $sspAssetSearchTransfer;
     }
 
-    public function deleteSspModelToProductListAssignment(ModelProductListAssignmentTransfer $modelProductListAssignmentTransfer): void
+    public function deleteSspModelToProductListAttachment(ModelProductListAttachmentTransfer $modelProductListAttachmentTransfer): void
     {
         $this->getFactory()
             ->createSspModelToProductListQuery()
-            ->filterByFkSspModel($modelProductListAssignmentTransfer->getSspModelOrFail()->getIdSspModel())
-            ->filterByFkProductList($modelProductListAssignmentTransfer->getProductListOrFail()->getIdProductList())
+            ->filterByFkSspModel($modelProductListAttachmentTransfer->getSspModelOrFail()->getIdSspModel())
+            ->filterByFkProductList($modelProductListAttachmentTransfer->getProductListOrFail()->getIdProductList())
             ->delete();
     }
 

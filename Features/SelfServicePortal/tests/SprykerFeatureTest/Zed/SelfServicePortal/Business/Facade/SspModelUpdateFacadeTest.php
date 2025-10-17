@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace SprykerFeatureTest\Zed\SelfServicePortal\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ModelSspAssetAssignmentTransfer;
+use Generated\Shared\Transfer\ModelSspAssetAttachmentTransfer;
 use Generated\Shared\Transfer\SspModelCollectionRequestTransfer;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspAssetToSspModelQuery;
 use SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacade;
@@ -58,17 +58,17 @@ class SspModelUpdateFacadeTest extends Unit
 
         $sspModelCollectionRequestTransfer = (new SspModelCollectionRequestTransfer());
 
-        $sspModelCollectionRequestTransfer->addSspAssetToBeAssigned((new ModelSspAssetAssignmentTransfer())
+        $sspModelCollectionRequestTransfer->addSspAssetToBeAttached((new ModelSspAssetAttachmentTransfer())
                 ->setSspAsset($sspAssetTransfer1)
                 ->setSspModel($sspModelTransfer1))
-            ->addSspAssetToBeAssigned((new ModelSspAssetAssignmentTransfer())
+            ->addSspAssetToBeAttached((new ModelSspAssetAttachmentTransfer())
                 ->setSspAsset($sspAssetTransfer2)
                 ->setSspModel($sspModelTransfer1));
 
-        $sspModelCollectionRequestTransfer->addSspAssetToBeAssigned((new ModelSspAssetAssignmentTransfer())
+        $sspModelCollectionRequestTransfer->addSspAssetToBeAttached((new ModelSspAssetAttachmentTransfer())
             ->setSspAsset($sspAssetTransfer3)
             ->setSspModel($sspModelTransfer2));
-        $sspModelCollectionRequestTransfer->addSspAssetToBeUnassigned((new ModelSspAssetAssignmentTransfer())
+        $sspModelCollectionRequestTransfer->addSspAssetToBeUnattached((new ModelSspAssetAttachmentTransfer())
             ->setSspAsset($sspAssetTransfer1)
             ->setSspModel($sspModelTransfer2));
 

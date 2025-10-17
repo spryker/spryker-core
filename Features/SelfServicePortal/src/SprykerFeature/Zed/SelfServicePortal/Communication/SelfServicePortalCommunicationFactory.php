@@ -98,18 +98,18 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\ReferenceGene
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\ReferenceGenerator\FileReferenceGeneratorInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Saver\FileSaver;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Saver\FileSaverInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AssignedBusinessUnitAttachmentTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AssignedCompanyAttachmentTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AssignedCompanyUserAttachmentTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AssignedModelAttachmentTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AssignedSspAssetAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AttachedBusinessUnitAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AttachedCompanyAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AttachedCompanyUserAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AttachedSspAssetAttachmentTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AttachedSspAssetFileTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\AttachedSspModelAttachmentTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\FileTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\UnassignedBusinessUnitAttachmentTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\UnassignedCompanyAttachmentTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\UnassignedCompanyUserAttachmentTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\UnassignedModelAttachmentTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\UnassignedSspAssetAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\UnattachedBusinessUnitAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\UnattachedCompanyAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\UnattachedCompanyUserAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\UnattachedModelAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\UnattachedSspAssetAttachmentTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table\ViewFileDetailTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\AssetAttachmentTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Tabs\AttachedAssetsTabs;
@@ -174,16 +174,16 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form\DeleteSspMo
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form\SspModelForm;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Mapper\SspModelFormDataToTransferMapper;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Mapper\SspModelFormDataToTransferMapperInterface;
-use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Provider\AttachedAssetTableDataProvider;
-use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Provider\AttachedAssetTableDataProviderInterface;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Provider\AttachedSspAssetTableDataProvider;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Provider\AttachedSspAssetTableDataProviderInterface;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Provider\ModelImageUrlProvider;
-use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\AssignedModelAssetAttachmentTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\AssignedModelProductListAttachmentTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\AttachedAssetsTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\AttachedProductListsTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\AttachedSspModelAssetAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\AttachedSspModelProductListAttachmentTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\SspModelTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\UnassignedModelAssetAttachmentTable;
-use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\UnassignedModelProductListAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\UnattachedModelAssetAttachmentTable;
+use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Table\UnattachedModelProductListAttachmentTable;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Tabs\AttachedModelAssetsTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Tabs\AttachedModelProductListsTabs;
 use SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Tabs\ModelAssetRelationTabs;
@@ -442,53 +442,53 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return new AttachedCompanyUsersTabs();
     }
 
-    public function createUnassignedCompanyUserAttachmentTable(int $idFile): UnassignedCompanyUserAttachmentTable
+    public function createUnattachedCompanyUserAttachmentTable(int $idFile): UnattachedCompanyUserAttachmentTable
     {
-        return new UnassignedCompanyUserAttachmentTable(
+        return new UnattachedCompanyUserAttachmentTable(
             $idFile,
             $this->getCompanyUserQuery(),
         );
     }
 
-    public function createAssignedCompanyUserAttachmentTable(int $idFile): AssignedCompanyUserAttachmentTable
+    public function createAttachedCompanyUserAttachmentTable(int $idFile): AttachedCompanyUserAttachmentTable
     {
-        return new AssignedCompanyUserAttachmentTable(
+        return new AttachedCompanyUserAttachmentTable(
             $idFile,
             $this->getCompanyUserQuery(),
         );
     }
 
-    public function createUnassignedSspAssetAttachmentTable(
+    public function createUnattachedSspAssetAttachmentTable(
         int $idFile
-    ): UnassignedSspAssetAttachmentTable {
-        return new UnassignedSspAssetAttachmentTable(
+    ): UnattachedSspAssetAttachmentTable {
+        return new UnattachedSspAssetAttachmentTable(
             $this->getSspAssetQuery(),
             $idFile,
         );
     }
 
-    public function createAssignedSspAssetAttachmentTable(
+    public function createAttachedSspAssetAttachmentTable(
         int $idFile
-    ): AssignedSspAssetAttachmentTable {
-        return new AssignedSspAssetAttachmentTable(
+    ): AttachedSspAssetAttachmentTable {
+        return new AttachedSspAssetAttachmentTable(
             $this->getSspAssetQuery(),
             $idFile,
         );
     }
 
-    public function createUnassignedModelAttachmentTable(
+    public function createUnattachedModelAttachmentTable(
         int $idFile
-    ): UnassignedModelAttachmentTable {
-        return new UnassignedModelAttachmentTable(
+    ): UnattachedModelAttachmentTable {
+        return new UnattachedModelAttachmentTable(
             $this->getRepository()->getSspModelQuery(),
             $idFile,
         );
     }
 
-    public function createAssignedModelAttachmentTable(
+    public function createAttachedSspModelAttachmentTable(
         int $idFile
-    ): AssignedModelAttachmentTable {
-        return new AssignedModelAttachmentTable(
+    ): AttachedSspModelAttachmentTable {
+        return new AttachedSspModelAttachmentTable(
             $this->getRepository()->getSspModelQuery(),
             $idFile,
         );
@@ -638,14 +638,14 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return new FileAttachmentMapper();
     }
 
-    public function createUnassignedBusinessUnitAttachmentTable(int $idFile): UnassignedBusinessUnitAttachmentTable
+    public function createUnattachedBusinessUnitAttachmentTable(int $idFile): UnattachedBusinessUnitAttachmentTable
     {
-        return new UnassignedBusinessUnitAttachmentTable($this->getCompanyBusinessUnitQuery(), $idFile);
+        return new UnattachedBusinessUnitAttachmentTable($this->getCompanyBusinessUnitQuery(), $idFile);
     }
 
-    public function createAssignedBusinessUnitAttachmentTable(int $idFile): AssignedBusinessUnitAttachmentTable
+    public function createAttachedBusinessUnitAttachmentTable(int $idFile): AttachedBusinessUnitAttachmentTable
     {
-        return new AssignedBusinessUnitAttachmentTable($this->getCompanyBusinessUnitQuery(), $idFile);
+        return new AttachedBusinessUnitAttachmentTable($this->getCompanyBusinessUnitQuery(), $idFile);
     }
 
     public function createTriggerEventFormDataProvider(): TriggerEventFormDataProviderInterface
@@ -970,9 +970,9 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    public function createAttachedAssetTableDataProvider(): AttachedAssetTableDataProviderInterface
+    public function createAttachedSspAssetTableDataProvider(): AttachedSspAssetTableDataProviderInterface
     {
-        return new AttachedAssetTableDataProvider(
+        return new AttachedSspAssetTableDataProvider(
             $this->getFacade(),
             $this,
         );
@@ -1036,17 +1036,17 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return new CompanyAttachmentScopeStrategy($this->createFormDataNormalizer());
     }
 
-    public function createUnassignedCompanyAttachmentTable(int $idFile): UnassignedCompanyAttachmentTable
+    public function createUnattachedCompanyAttachmentTable(int $idFile): UnattachedCompanyAttachmentTable
     {
-        return new UnassignedCompanyAttachmentTable(
+        return new UnattachedCompanyAttachmentTable(
             $idFile,
             $this->getCompanyQuery(),
         );
     }
 
-    public function createAssignedCompanyAttachmentTable(int $idFile): AssignedCompanyAttachmentTable
+    public function createAttachedCompanyAttachmentTable(int $idFile): AttachedCompanyAttachmentTable
     {
-        return new AssignedCompanyAttachmentTable(
+        return new AttachedCompanyAttachmentTable(
             $idFile,
             $this->getCompanyQuery(),
         );
@@ -1283,35 +1283,35 @@ class SelfServicePortalCommunicationFactory extends AbstractCommunicationFactory
         return new AttachedModelProductListsTabs();
     }
 
-    public function createUnassignedModelAssetAttachmentTable(int $idSspModel): UnassignedModelAssetAttachmentTable
+    public function createUnattachedModelAssetAttachmentTable(int $idSspModel): UnattachedModelAssetAttachmentTable
     {
-        return new UnassignedModelAssetAttachmentTable(
+        return new UnattachedModelAssetAttachmentTable(
             $this->getSspAssetQuery(),
             $idSspModel,
             $this->getConfig(),
         );
     }
 
-    public function createAssignedModelAssetAttachmentTable(int $idSspModel): AssignedModelAssetAttachmentTable
+    public function createAttachedSspModelAssetAttachmentTable(int $idSspModel): AttachedSspModelAssetAttachmentTable
     {
-        return new AssignedModelAssetAttachmentTable(
+        return new AttachedSspModelAssetAttachmentTable(
             $this->getSspAssetQuery(),
             $idSspModel,
             $this->getConfig(),
         );
     }
 
-    public function createUnassignedModelProductListAttachmentTable(int $idSspModel): UnassignedModelProductListAttachmentTable
+    public function createUnattachedModelProductListAttachmentTable(int $idSspModel): UnattachedModelProductListAttachmentTable
     {
-        return new UnassignedModelProductListAttachmentTable(
+        return new UnattachedModelProductListAttachmentTable(
             $this->getProductListPropelQuery(),
             $idSspModel,
         );
     }
 
-    public function createAssignedModelProductListAttachmentTable(int $idSspModel): AssignedModelProductListAttachmentTable
+    public function createAttachedSspModelProductListAttachmentTable(int $idSspModel): AttachedSspModelProductListAttachmentTable
     {
-        return new AssignedModelProductListAttachmentTable(
+        return new AttachedSspModelProductListAttachmentTable(
             $this->getProductListPropelQuery(),
             $idSspModel,
         );

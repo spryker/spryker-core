@@ -20,27 +20,27 @@ class DownloadFileAttachmentController extends FileAbstractController
     /**
      * @var string
      */
-    protected const FILENAME_EXAMPLE_ASSET_ASSIGNMENTS = 'asset_file_assignments_example.csv';
+    protected const FILENAME_EXAMPLE_ASSET_ATTACHMENTS = 'asset_file_attachment_example.csv';
 
     /**
      * @var string
      */
-    protected const FILENAME_EXAMPLE_BUSINESS_UNIT_ASSIGNMENTS = 'business_unit_file_assignments_example.csv';
+    protected const FILENAME_EXAMPLE_BUSINESS_UNIT_ATTACHMENTS = 'business_unit_file_attachment_example.csv';
 
     /**
      * @var string
      */
-    protected const FILENAME_COMPANY_USER_ASSIGNMENT_EXAMPLE = 'company_user_file_assignment_example.csv';
+    protected const FILENAME_EXAMPLE_COMPANY_USER_ATTACHMENTS = 'company_user_file_attachment_example.csv';
 
     /**
      * @var string
      */
-    protected const FILENAME_COMPANY_ASSIGNMENT_EXAMPLE = 'company_file_assignment_example.csv';
+    protected const FILENAME_EXAMPLE_COMPANY_ATTACHMENTS = 'company_file_attachment_example.csv';
 
     /**
      * @var string
      */
-    protected const FILENAME_MODEL_ASSIGNMENT_EXAMPLE = 'model_file_assignment_example.csv';
+    protected const FILENAME_EXAMPLE_MODEL_ATTACHMENTS = 'model_file_attachment_example.csv';
 
     /**
      * @var string
@@ -89,27 +89,27 @@ class DownloadFileAttachmentController extends FileAbstractController
 
     public function downloadExampleAction(Request $request): StreamedResponse
     {
-        return $this->createCsvDownloadResponse(static::EXAMPLE_ASSET_CSV_ATTACHMENT_FILE_CONTENT, static::FILENAME_EXAMPLE_ASSET_ASSIGNMENTS);
+        return $this->createCsvDownloadResponse(static::EXAMPLE_ASSET_CSV_ATTACHMENT_FILE_CONTENT, static::FILENAME_EXAMPLE_ASSET_ATTACHMENTS);
     }
 
     public function downloadBusinessUnitExampleAction(Request $request): StreamedResponse
     {
-        return $this->createCsvDownloadResponse(static::EXAMPLE_BUSINESS_UNIT_CSV_ATTACHMENT_FILE_CONTENT, static::FILENAME_EXAMPLE_BUSINESS_UNIT_ASSIGNMENTS);
+        return $this->createCsvDownloadResponse(static::EXAMPLE_BUSINESS_UNIT_CSV_ATTACHMENT_FILE_CONTENT, static::FILENAME_EXAMPLE_BUSINESS_UNIT_ATTACHMENTS);
     }
 
     public function downloadCompanyUserExampleAction(Request $request): StreamedResponse
     {
-        return $this->createCsvDownloadResponse(static::EXAMPLE_COMPANY_USER_CSV_ATTACHMENT_FILE_CONTENT, static::FILENAME_COMPANY_USER_ASSIGNMENT_EXAMPLE);
+        return $this->createCsvDownloadResponse(static::EXAMPLE_COMPANY_USER_CSV_ATTACHMENT_FILE_CONTENT, static::FILENAME_EXAMPLE_COMPANY_USER_ATTACHMENTS);
     }
 
     public function downloadCompanyExampleAction(Request $request): StreamedResponse
     {
-        return $this->createCsvDownloadResponse(static::EXAMPLE_COMPANY_CSV_ATTACHMENT_FILE_CONTENT, static::FILENAME_COMPANY_ASSIGNMENT_EXAMPLE);
+        return $this->createCsvDownloadResponse(static::EXAMPLE_COMPANY_CSV_ATTACHMENT_FILE_CONTENT, static::FILENAME_EXAMPLE_COMPANY_ATTACHMENTS);
     }
 
     public function downloadModelExampleAction(Request $request): StreamedResponse
     {
-        return $this->createCsvDownloadResponse(static::EXAMPLE_MODEL_CSV_ATTACHMENT_FILE_CONTENT, static::FILENAME_MODEL_ASSIGNMENT_EXAMPLE);
+        return $this->createCsvDownloadResponse(static::EXAMPLE_MODEL_CSV_ATTACHMENT_FILE_CONTENT, static::FILENAME_EXAMPLE_MODEL_ATTACHMENTS);
     }
 
     protected function createCsvDownloadResponse(string $content, string $filename): StreamedResponse

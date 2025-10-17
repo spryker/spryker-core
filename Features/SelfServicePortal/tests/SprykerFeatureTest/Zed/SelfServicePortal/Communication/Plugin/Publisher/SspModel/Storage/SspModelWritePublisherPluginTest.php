@@ -123,15 +123,15 @@ class SspModelWritePublisherPluginTest extends Unit
             SspModelTransfer::NAME => static::SSP_MODEL_NAME_2,
         ]);
 
-        $this->tester->haveSspModelToProductListAssignment(
+        $this->tester->haveSspModelToProductListAttachment(
             $sspModelTransfer1->getIdSspModelOrFail(),
             $productListTransfer1->getIdProductListOrFail(),
         );
-        $this->tester->haveSspModelToProductListAssignment(
+        $this->tester->haveSspModelToProductListAttachment(
             $sspModelTransfer1->getIdSspModelOrFail(),
             $productListTransfer2->getIdProductListOrFail(),
         );
-        $this->tester->haveSspModelToProductListAssignment(
+        $this->tester->haveSspModelToProductListAttachment(
             $sspModelTransfer2->getIdSspModelOrFail(),
             $productListTransfer1->getIdProductListOrFail(),
         );
@@ -154,7 +154,7 @@ class SspModelWritePublisherPluginTest extends Unit
         $this->assertSame([$productListTransfer1->getIdProductList()], $storageData2[static::STORAGE_FIELD_WHITELIST_IDS]);
     }
 
-    public function testHandlesBulkPublishesStorageDataCorrectlyWithMultipleProductListAssignments(): void
+    public function testHandlesBulkPublishesStorageDataCorrectlyWithMultipleProductListAttachments(): void
     {
         $productListTransfer1 = $this->tester->haveProductList([
             ProductListTransfer::TITLE => static::PRODUCT_LIST_TITLE_1,
@@ -170,15 +170,15 @@ class SspModelWritePublisherPluginTest extends Unit
             SspModelTransfer::NAME => static::SSP_MODEL_NAME_1,
         ]);
 
-        $this->tester->haveSspModelToProductListAssignment(
+        $this->tester->haveSspModelToProductListAttachment(
             $sspModelTransfer->getIdSspModelOrFail(),
             $productListTransfer1->getIdProductListOrFail(),
         );
-        $this->tester->haveSspModelToProductListAssignment(
+        $this->tester->haveSspModelToProductListAttachment(
             $sspModelTransfer->getIdSspModelOrFail(),
             $productListTransfer2->getIdProductListOrFail(),
         );
-        $this->tester->haveSspModelToProductListAssignment(
+        $this->tester->haveSspModelToProductListAttachment(
             $sspModelTransfer->getIdSspModelOrFail(),
             $productListTransfer3->getIdProductListOrFail(),
         );
@@ -214,11 +214,11 @@ class SspModelWritePublisherPluginTest extends Unit
 
         $this->tester->haveSspModelStorage($sspModelTransfer->getIdSspModelOrFail(), [999]);
 
-        $this->tester->haveSspModelToProductListAssignment(
+        $this->tester->haveSspModelToProductListAttachment(
             $sspModelTransfer->getIdSspModelOrFail(),
             $productListTransfer1->getIdProductListOrFail(),
         );
-        $this->tester->haveSspModelToProductListAssignment(
+        $this->tester->haveSspModelToProductListAttachment(
             $sspModelTransfer->getIdSspModelOrFail(),
             $productListTransfer2->getIdProductListOrFail(),
         );

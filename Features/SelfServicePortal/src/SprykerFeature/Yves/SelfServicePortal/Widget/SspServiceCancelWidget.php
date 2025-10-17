@@ -84,7 +84,7 @@ class SspServiceCancelWidget extends AbstractWidget
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\ProductClassTransfer> $productClasses
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductClassTransfer> $productClasses
      * @param string $className
      *
      * @return bool

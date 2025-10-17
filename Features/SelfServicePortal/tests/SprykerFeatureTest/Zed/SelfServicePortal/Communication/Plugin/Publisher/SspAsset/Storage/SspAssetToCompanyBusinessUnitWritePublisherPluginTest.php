@@ -341,7 +341,7 @@ class SspAssetToCompanyBusinessUnitWritePublisherPluginTest extends Unit
 
         $this->tester->haveSspAssetStorage($sspAssetTransfer->getIdSspAssetOrFail(), [999]);
 
-        $this->tester->haveSspAssetToModelAssignment(
+        $this->tester->haveSspAssetToModelAttachment(
             $sspAssetTransfer->getIdSspAssetOrFail(),
             $sspModelTransfer->getIdSspModelOrFail(),
         );

@@ -4,15 +4,15 @@
 } %}
 
 {{ tabs(companyTabsViewTransfer, {
-    'availableCompanyTable': availableCompanyTable,
-    'availableCompanyTableId': 'available-company-table',
+    'unattachedCompanyTable': unattachedCompanyTable,
+    'unattachedCompanyTableId': 'unattached-company-table',
     'companiesToBeAttachedTableId': 'companies-to-be-attached-table',
     'idFile': idFile,
 }) }}
 
 {{ tabs(attachedCompaniesTabsViewTransfer, {
-    'assignedCompanyTable': assignedCompanyTable,
+    'attachedCompanyTable': attachedCompanyTable,
     'attachedCompaniesTableId': 'attached-companies-table',
-    'companiesToBeDetachedTableId': 'companies-to-be-detached-table',
+    'companiesToBeUnattachedTableId': 'companies-to-be-unattached-table',
     'idFile': idFile,
 }) }}

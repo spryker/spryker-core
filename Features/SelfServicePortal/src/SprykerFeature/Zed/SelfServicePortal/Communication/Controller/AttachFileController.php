@@ -115,16 +115,16 @@ class AttachFileController extends FileAbstractController
             'modelAttachmentTabsViewTransfer' => $this->getFactory()->createModelAttachmentTabs()->createView(),
             'attachedModelsTabsViewTransfer' => $this->getFactory()->createAttachedModelsTabs()->createView(),
             'idFile' => $idFile,
-            'availableAssetTable' => $this->getFactory()->createUnassignedSspAssetAttachmentTable($idFile)->render(),
-            'assignedAssetTable' => $this->getFactory()->createAssignedSspAssetAttachmentTable($idFile)->render(),
-            'availableBusinessUnitTable' => $this->getFactory()->createUnassignedBusinessUnitAttachmentTable($idFile)->render(),
-            'assignedBusinessUnitTable' => $this->getFactory()->createAssignedBusinessUnitAttachmentTable($idFile)->render(),
-            'availableCompanyUserTable' => $this->getFactory()->createUnassignedCompanyUserAttachmentTable($idFile)->render(),
-            'assignedCompanyUserTable' => $this->getFactory()->createAssignedCompanyUserAttachmentTable($idFile)->render(),
-            'availableCompanyTable' => $this->getFactory()->createUnassignedCompanyAttachmentTable($idFile)->render(),
-            'assignedCompanyTable' => $this->getFactory()->createAssignedCompanyAttachmentTable($idFile)->render(),
-            'availableModelTable' => $this->getFactory()->createUnassignedModelAttachmentTable($idFile)->render(),
-            'assignedModelTable' => $this->getFactory()->createAssignedModelAttachmentTable($idFile)->render(),
+            'unattachedSspAssetTable' => $this->getFactory()->createUnattachedSspAssetAttachmentTable($idFile)->render(),
+            'attachedSspAssetTable' => $this->getFactory()->createAttachedSspAssetAttachmentTable($idFile)->render(),
+            'unattachedBusinessUnitTable' => $this->getFactory()->createUnattachedBusinessUnitAttachmentTable($idFile)->render(),
+            'attachedBusinessUnitTable' => $this->getFactory()->createAttachedBusinessUnitAttachmentTable($idFile)->render(),
+            'unattachedCompanyUserTable' => $this->getFactory()->createUnattachedCompanyUserAttachmentTable($idFile)->render(),
+            'attachedCompanyUserTable' => $this->getFactory()->createAttachedCompanyUserAttachmentTable($idFile)->render(),
+            'unattachedCompanyTable' => $this->getFactory()->createUnattachedCompanyAttachmentTable($idFile)->render(),
+            'attachedCompanyTable' => $this->getFactory()->createAttachedCompanyAttachmentTable($idFile)->render(),
+            'unattachedSspModelTable' => $this->getFactory()->createUnattachedModelAttachmentTable($idFile)->render(),
+            'attachedSspModelTable' => $this->getFactory()->createAttachedSspModelAttachmentTable($idFile)->render(),
         ]);
     }
 
@@ -201,8 +201,8 @@ class AttachFileController extends FileAbstractController
 
         return $this->jsonResponse([
             'data' => [
-                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED => $this->getFactory()->createUnassignedSspAssetAttachmentTable($idFile)->fetchAssetsByReferences($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED]),
-                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED => $this->getFactory()->createAssignedSspAssetAttachmentTable($idFile)->fetchAssetsByReferences($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED]),
+                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED => $this->getFactory()->createUnattachedSspAssetAttachmentTable($idFile)->fetchAssetsByReferences($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED]),
+                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED => $this->getFactory()->createAttachedSspAssetAttachmentTable($idFile)->fetchAssetsByReferences($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED]),
             ],
         ]);
     }
@@ -224,8 +224,8 @@ class AttachFileController extends FileAbstractController
 
         return $this->jsonResponse([
             'data' => [
-                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED => $this->getFactory()->createUnassignedBusinessUnitAttachmentTable($idFile)->fetchBusinessUnitsByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED]),
-                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED => $this->getFactory()->createAssignedBusinessUnitAttachmentTable($idFile)->fetchBusinessUnitsByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED]),
+                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED => $this->getFactory()->createUnattachedBusinessUnitAttachmentTable($idFile)->fetchBusinessUnitsByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED]),
+                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED => $this->getFactory()->createAttachedBusinessUnitAttachmentTable($idFile)->fetchBusinessUnitsByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED]),
             ],
         ]);
     }
@@ -247,8 +247,8 @@ class AttachFileController extends FileAbstractController
 
         return $this->jsonResponse([
             'data' => [
-                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED => $this->getFactory()->createUnassignedCompanyUserAttachmentTable($idFile)->fetchCompanyUsersByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED]),
-                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED => $this->getFactory()->createAssignedCompanyUserAttachmentTable($idFile)->fetchCompanyUsersByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED]),
+                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED => $this->getFactory()->createUnattachedCompanyUserAttachmentTable($idFile)->fetchCompanyUsersByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED]),
+                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED => $this->getFactory()->createAttachedCompanyUserAttachmentTable($idFile)->fetchCompanyUsersByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED]),
             ],
         ]);
     }
@@ -270,12 +270,12 @@ class AttachFileController extends FileAbstractController
 
         return $this->jsonResponse([
             'data' => [
-                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED => $this->getFactory()
-                    ->createUnassignedCompanyAttachmentTable($idFile)
-                    ->fetchCompaniesByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED]),
-                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED => $this->getFactory()
-                    ->createAssignedCompanyAttachmentTable($idFile)
-                    ->fetchCompaniesByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED]),
+                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED => $this->getFactory()
+                    ->createUnattachedCompanyAttachmentTable($idFile)
+                    ->fetchCompaniesByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED]),
+                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED => $this->getFactory()
+                    ->createAttachedCompanyAttachmentTable($idFile)
+                    ->fetchCompaniesByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED]),
             ],
         ]);
     }
@@ -297,84 +297,84 @@ class AttachFileController extends FileAbstractController
 
         return $this->jsonResponse([
             'data' => [
-                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED => $this->getFactory()
-                    ->createUnassignedModelAttachmentTable($idFile)
-                    ->fetchModelsByReferences($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED]),
-                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED => $this->getFactory()
-                    ->createAssignedModelAttachmentTable($idFile)
-                    ->fetchModelsByReferences($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED]),
+                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED => $this->getFactory()
+                    ->createUnattachedModelAttachmentTable($idFile)
+                    ->fetchModelsByReferences($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED]),
+                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED => $this->getFactory()
+                    ->createAttachedSspModelAttachmentTable($idFile)
+                    ->fetchModelsByReferences($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED]),
             ],
         ]);
     }
 
-    public function availableSspAssetTableAction(Request $request): JsonResponse
+    public function unattachedSspAssetTableAction(Request $request): JsonResponse
     {
         $idFile = $this->castId($request->get(static::REQUEST_PARAM_ID_FILE));
 
-        return $this->jsonResponse($this->getFactory()->createUnassignedSspAssetAttachmentTable($idFile)->fetchData());
+        return $this->jsonResponse($this->getFactory()->createUnattachedSspAssetAttachmentTable($idFile)->fetchData());
     }
 
-    public function assignedSspAssetTableAction(Request $request): JsonResponse
+    public function attachedSspAssetTableAction(Request $request): JsonResponse
     {
         $idFile = $this->castId($request->get(static::REQUEST_PARAM_ID_FILE));
 
-        return $this->jsonResponse($this->getFactory()->createAssignedSspAssetAttachmentTable($idFile)->fetchData());
+        return $this->jsonResponse($this->getFactory()->createAttachedSspAssetAttachmentTable($idFile)->fetchData());
     }
 
-    public function availableBusinessUnitTableAction(Request $request): JsonResponse
+    public function unattachedBusinessUnitTableAction(Request $request): JsonResponse
     {
         $idFile = $this->castId($request->get(static::REQUEST_PARAM_ID_FILE));
 
-        return $this->jsonResponse($this->getFactory()->createUnassignedBusinessUnitAttachmentTable($idFile)->fetchData());
+        return $this->jsonResponse($this->getFactory()->createUnattachedBusinessUnitAttachmentTable($idFile)->fetchData());
     }
 
-    public function assignedBusinessUnitTableAction(Request $request): JsonResponse
+    public function attachedBusinessUnitTableAction(Request $request): JsonResponse
     {
         $idFile = $this->castId($request->get(static::REQUEST_PARAM_ID_FILE));
 
-        return $this->jsonResponse($this->getFactory()->createAssignedBusinessUnitAttachmentTable($idFile)->fetchData());
+        return $this->jsonResponse($this->getFactory()->createAttachedBusinessUnitAttachmentTable($idFile)->fetchData());
     }
 
-    public function availableCompanyUserTableAction(Request $request): JsonResponse
+    public function unattachedCompanyUserTableAction(Request $request): JsonResponse
     {
         $idFile = $this->castId($request->get(static::REQUEST_PARAM_ID_FILE));
 
-        return $this->jsonResponse($this->getFactory()->createUnassignedCompanyUserAttachmentTable($idFile)->fetchData());
+        return $this->jsonResponse($this->getFactory()->createUnattachedCompanyUserAttachmentTable($idFile)->fetchData());
     }
 
-    public function assignedCompanyUserTableAction(Request $request): JsonResponse
+    public function attachedCompanyUserTableAction(Request $request): JsonResponse
     {
         $idFile = $this->castId($request->get(static::REQUEST_PARAM_ID_FILE));
 
-        return $this->jsonResponse($this->getFactory()->createAssignedCompanyUserAttachmentTable($idFile)->fetchData());
+        return $this->jsonResponse($this->getFactory()->createAttachedCompanyUserAttachmentTable($idFile)->fetchData());
     }
 
-    public function availableCompanyTableAction(Request $request): JsonResponse
+    public function unattachedCompanyTableAction(Request $request): JsonResponse
     {
         $idFile = $this->castId($request->get(static::REQUEST_PARAM_ID_FILE));
 
-        return $this->jsonResponse($this->getFactory()->createUnassignedCompanyAttachmentTable($idFile)->fetchData());
+        return $this->jsonResponse($this->getFactory()->createUnattachedCompanyAttachmentTable($idFile)->fetchData());
     }
 
-    public function assignedCompanyTableAction(Request $request): JsonResponse
+    public function attachedCompanyTableAction(Request $request): JsonResponse
     {
         $idFile = $this->castId($request->get(static::REQUEST_PARAM_ID_FILE));
 
-        return $this->jsonResponse($this->getFactory()->createAssignedCompanyAttachmentTable($idFile)->fetchData());
+        return $this->jsonResponse($this->getFactory()->createAttachedCompanyAttachmentTable($idFile)->fetchData());
     }
 
-    public function availableModelTableAction(Request $request): JsonResponse
+    public function unattachedSspModelTableAction(Request $request): JsonResponse
     {
         $idFile = $this->castId($request->get(static::REQUEST_PARAM_ID_FILE));
 
-        return $this->jsonResponse($this->getFactory()->createUnassignedModelAttachmentTable($idFile)->fetchData());
+        return $this->jsonResponse($this->getFactory()->createUnattachedModelAttachmentTable($idFile)->fetchData());
     }
 
-    public function assignedModelTableAction(Request $request): JsonResponse
+    public function attachedSspModelTableAction(Request $request): JsonResponse
     {
         $idFile = $this->castId($request->get(static::REQUEST_PARAM_ID_FILE));
 
-        return $this->jsonResponse($this->getFactory()->createAssignedModelAttachmentTable($idFile)->fetchData());
+        return $this->jsonResponse($this->getFactory()->createAttachedSspModelAttachmentTable($idFile)->fetchData());
     }
 
     protected function getFileAttachmentTransfer(int $idFile): FileAttachmentTransfer

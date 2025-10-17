@@ -14,17 +14,17 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Reader\RelationCsvReaderInterface;
 
-class AssignedModelProductListAttachmentTable extends AbstractTable
+class AttachedSspModelProductListAttachmentTable extends AbstractTable
 {
     /**
      * @var string
      */
-    protected const DEFAULT_URL = 'assigned-product-list-table';
+    protected const DEFAULT_URL = 'attached-product-list-table';
 
     /**
      * @var string
      */
-    protected const TABLE_IDENTIFIER = 'assigned-model-product-list-table';
+    protected const TABLE_IDENTIFIER = 'attached-model-product-list-table';
 
     /**
      * @var string
@@ -72,20 +72,20 @@ class AssignedModelProductListAttachmentTable extends AbstractTable
         ]);
 
         $config->addRawColumn(static::COLUMN_SELECTED);
-        $config->setUrl(Url::generate('/assigned-product-list-table', [
+        $config->setUrl(Url::generate('/attached-product-list-table', [
             static::REQUEST_PARAM_ID_SSP_MODEL => $this->idSspModel,
         ])->build());
 
         $config->setTableAttributes([
             'data-selectable' => [
-                'moveToSelector' => '#productListsToBeUnassigned',
-                'inputSelector' => '#attachModel_productListIdsToBeUnassigned',
-                'counterHolderSelector' => 'a[href="#tab-content-product-lists-to-be-detached"]',
+                'moveToSelector' => '#productListsToBeUnattached',
+                'inputSelector' => '#attachModel_productListIdsToBeUnattached',
+                'counterHolderSelector' => 'a[href="#tab-content-product-lists-to-be-unattached"]',
                 'colId' => 'spy_product_list.id_product_list',
             ],
             'data-uploader' => [
                 'url' => '/self-service-portal/attach-model/get-product-list-relations-from-csv?id-ssp-model=' . $this->idSspModel,
-                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED,
+                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED,
             ],
         ]);
 

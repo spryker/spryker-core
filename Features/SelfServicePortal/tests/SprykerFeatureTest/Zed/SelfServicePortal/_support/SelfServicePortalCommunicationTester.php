@@ -545,24 +545,24 @@ class SelfServicePortalCommunicationTester extends Actor
         return is_string($data) ? json_decode($data, true) : (is_array($data) ? $data : null);
     }
 
-    public function haveSspModelToProductListAssignment(int $idSspModel, int $idProductList): SpySspModelToProductList
+    public function haveSspModelToProductListAttachment(int $idSspModel, int $idProductList): SpySspModelToProductList
     {
-        $assignmentEntity = new SpySspModelToProductList();
-        $assignmentEntity->setFkSspModel($idSspModel);
-        $assignmentEntity->setFkProductList($idProductList);
-        $assignmentEntity->save();
+        $attachmentEntity = new SpySspModelToProductList();
+        $attachmentEntity->setFkSspModel($idSspModel);
+        $attachmentEntity->setFkProductList($idProductList);
+        $attachmentEntity->save();
 
-        return $assignmentEntity;
+        return $attachmentEntity;
     }
 
-    public function haveSspAssetToModelAssignment(int $idSspAsset, int $idSspModel): SpySspAssetToSspModel
+    public function haveSspAssetToModelAttachment(int $idSspAsset, int $idSspModel): SpySspAssetToSspModel
     {
-        $assignmentEntity = new SpySspAssetToSspModel();
-        $assignmentEntity->setFkSspAsset($idSspAsset);
-        $assignmentEntity->setFkSspModel($idSspModel);
-        $assignmentEntity->save();
+        $attachmentEntity = new SpySspAssetToSspModel();
+        $attachmentEntity->setFkSspAsset($idSspAsset);
+        $attachmentEntity->setFkSspModel($idSspModel);
+        $attachmentEntity->save();
 
-        return $assignmentEntity;
+        return $attachmentEntity;
     }
 
     public function haveSspAssetToCompanyBusinessUnitAssignment(int $idSspAsset, int $idCompanyBusinessUnit): SpySspAssetToCompanyBusinessUnit

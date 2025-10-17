@@ -8,7 +8,7 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\Controller;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\ModelSspAssetAssignmentTransfer;
+use Generated\Shared\Transfer\ModelSspAssetAttachmentTransfer;
 use Generated\Shared\Transfer\SspAssetBusinessUnitAssignmentTransfer;
 use Generated\Shared\Transfer\SspAssetCollectionRequestTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
@@ -129,8 +129,8 @@ class AddAssetController extends AbstractController
 
             $this->getFacade()->updateSspModelCollection(
                 (new SspModelCollectionRequestTransfer())
-                    ->addSspAssetToBeAssigned(
-                        (new ModelSspAssetAssignmentTransfer())
+                    ->addSspAssetToBeAttached(
+                        (new ModelSspAssetAttachmentTransfer())
                             ->setSspModel($createdSspModel)
                             ->setSspAsset($sspAssetTransfer),
                     ),

@@ -8,26 +8,24 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\CompanyFile\Table;
 
 use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspModelTableMap;
-use Orm\Zed\SelfServicePortal\Persistence\Map\SpySspModelToFileTableMap;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Controller\FileAbstractController;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Reader\RelationCsvReaderInterface;
 
-class UnassignedModelAttachmentTable extends AbstractTable
+class AttachedSspModelAttachmentTable extends AbstractTable
 {
     /**
      * @var string
      */
-    protected const DEFAULT_URL = 'available-model-table';
+    protected const DEFAULT_URL = 'attached-model-table';
 
     /**
      * @var string
      */
-    protected const TABLE_IDENTIFIER = 'available-model-attachment-table';
+    protected const TABLE_IDENTIFIER = 'attached-model-attachment-table';
 
     /**
      * @var string
@@ -100,18 +98,18 @@ class UnassignedModelAttachmentTable extends AbstractTable
 
         $config->setTableAttributes([
             'data-selectable' => [
-                'moveToSelector' => '#modelsToBeAssigned',
-                'inputSelector' => '#fileAttachment_sspModelIdsToBeAssigned',
-                'counterHolderSelector' => 'a[href="#tab-content-models-to-be-attached"]',
+                'moveToSelector' => '#modelsToBeUnattached',
+                'inputSelector' => '#fileAttachment_sspModelIdsToBeUnattached',
+                'counterHolderSelector' => 'a[href="#tab-content-models-to-be-unattached"]',
                 'colId' => static::COLUMN_ID,
             ],
             'data-uploader' => [
                 'url' => sprintf('/self-service-portal/attach-file/get-model-attachments-from-csv?id-file=%d', $this->idFile),
-                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED,
+                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED,
             ],
         ]);
 
-        $config->setUrl(Url::generate('/available-model-table', [
+        $config->setUrl(Url::generate('/attached-ssp-model-table', [
             FileAbstractController::REQUEST_PARAM_ID_FILE => $this->idFile,
         ])->build());
 
@@ -122,10 +120,8 @@ class UnassignedModelAttachmentTable extends AbstractTable
     {
         /** @var \Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery $query */
         $query = $this->sspModelQuery
-            ->useSpySspModelToFileQuery(SpySspModelToFileTableMap::TABLE_NAME, Criteria::LEFT_JOIN)
-                ->filterByFkFile(null, Criteria::ISNULL)
-                ->_or()
-                ->filterByFkFile($this->idFile, Criteria::NOT_EQUAL)
+            ->useSpySspModelToFileQuery()
+                ->filterByFkFile($this->idFile)
             ->endUse()
             ->select([
                 SpySspModelTableMap::COL_ID_SSP_MODEL,
@@ -172,7 +168,7 @@ class UnassignedModelAttachmentTable extends AbstractTable
     }
 
     /**
-     * @param array<string> $modelReferences
+     * @param array<mixed> $modelReferences
      *
      * @return array<array<mixed>>
      */

@@ -40,22 +40,22 @@ class AttachModelForm extends AbstractType
     /**
      * @var string
      */
-    protected const FIELD_ASSET_IDS_TO_BE_ASSIGNED = 'sspAssetIdsToBeAssigned';
+    protected const FIELD_ASSET_IDS_TO_BE_ATTACHED = 'sspAssetIdsToBeAttached';
 
     /**
      * @var string
      */
-    protected const FIELD_ASSET_IDS_TO_BE_UNASSIGNED = 'sspAssetIdsToBeUnassigned';
+    protected const FIELD_ASSET_IDS_TO_BE_UNATTACHED = 'sspAssetIdsToBeUnattached';
 
     /**
      * @var string
      */
-    protected const FIELD_PRODUCT_LIST_IDS_TO_BE_ASSIGNED = 'productListIdsToBeAssigned';
+    protected const FIELD_PRODUCT_LIST_IDS_TO_BE_ATTACHED = 'productListIdsToBeAttached';
 
     /**
      * @var string
      */
-    protected const FIELD_PRODUCT_LIST_IDS_TO_BE_UNASSIGNED = 'productListIdsToBeUnassigned';
+    protected const FIELD_PRODUCT_LIST_IDS_TO_BE_UNATTACHED = 'productListIdsToBeUnattached';
 
     /**
      * @var string
@@ -113,13 +113,13 @@ class AttachModelForm extends AbstractType
      */
     protected function addHiddenSelectionFields(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ASSET_IDS_TO_BE_ASSIGNED, HiddenType::class);
+        $builder->add(static::FIELD_ASSET_IDS_TO_BE_ATTACHED, HiddenType::class);
 
-        $builder->add(static::FIELD_ASSET_IDS_TO_BE_UNASSIGNED, HiddenType::class);
+        $builder->add(static::FIELD_ASSET_IDS_TO_BE_UNATTACHED, HiddenType::class);
 
-        $builder->add(static::FIELD_PRODUCT_LIST_IDS_TO_BE_ASSIGNED, HiddenType::class);
+        $builder->add(static::FIELD_PRODUCT_LIST_IDS_TO_BE_ATTACHED, HiddenType::class);
 
-        $builder->add(static::FIELD_PRODUCT_LIST_IDS_TO_BE_UNASSIGNED, HiddenType::class);
+        $builder->add(static::FIELD_PRODUCT_LIST_IDS_TO_BE_UNATTACHED, HiddenType::class);
 
         return $this;
     }

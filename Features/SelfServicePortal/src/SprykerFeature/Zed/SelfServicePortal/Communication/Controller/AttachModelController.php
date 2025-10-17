@@ -107,10 +107,10 @@ class AttachModelController extends AbstractController
             'urlDownloadAssetExample' => Url::generate(static::URL_PATH_DOWNLOAD_ASSET_EXAMPLE)->build(),
             'urlDownloadProductListExample' => Url::generate(static::URL_PATH_DOWNLOAD_PRODUCT_LIST_EXAMPLE)->build(),
             'idSspModel' => $idSspModel,
-            'availableAssetTable' => $this->getFactory()->createUnassignedModelAssetAttachmentTable($idSspModel)->render(),
-            'assignedAssetTable' => $this->getFactory()->createAssignedModelAssetAttachmentTable($idSspModel)->render(),
-            'availableProductListTable' => $this->getFactory()->createUnassignedModelProductListAttachmentTable($idSspModel)->render(),
-            'assignedProductListTable' => $this->getFactory()->createAssignedModelProductListAttachmentTable($idSspModel)->render(),
+            'unattachedSspAssetTable' => $this->getFactory()->createUnattachedModelAssetAttachmentTable($idSspModel)->render(),
+            'attachedSspAssetTable' => $this->getFactory()->createAttachedSspModelAssetAttachmentTable($idSspModel)->render(),
+            'unattachedProductListTable' => $this->getFactory()->createUnattachedModelProductListAttachmentTable($idSspModel)->render(),
+            'attachedProductListTable' => $this->getFactory()->createAttachedSspModelProductListAttachmentTable($idSspModel)->render(),
         ]);
     }
 
@@ -138,32 +138,32 @@ class AttachModelController extends AbstractController
         return $this->redirectToIndex($idSspModel, $hash);
     }
 
-    public function availableSspAssetTableAction(Request $request): JsonResponse
+    public function unattachedSspAssetTableAction(Request $request): JsonResponse
     {
         $idSspModel = $this->castId($request->get(static::REQUEST_PARAM_ID_SSP_MODEL));
 
-        return $this->jsonResponse($this->getFactory()->createUnassignedModelAssetAttachmentTable($idSspModel)->fetchData());
+        return $this->jsonResponse($this->getFactory()->createUnattachedModelAssetAttachmentTable($idSspModel)->fetchData());
     }
 
-    public function assignedSspAssetTableAction(Request $request): JsonResponse
+    public function attachedSspAssetTableAction(Request $request): JsonResponse
     {
         $idSspModel = $this->castId($request->get(static::REQUEST_PARAM_ID_SSP_MODEL));
 
-        return $this->jsonResponse($this->getFactory()->createAssignedModelAssetAttachmentTable($idSspModel)->fetchData());
+        return $this->jsonResponse($this->getFactory()->createAttachedSspModelAssetAttachmentTable($idSspModel)->fetchData());
     }
 
-    public function availableProductListTableAction(Request $request): JsonResponse
+    public function unattachedProductListTableAction(Request $request): JsonResponse
     {
         $idSspModel = $this->castId($request->get(static::REQUEST_PARAM_ID_SSP_MODEL));
 
-        return $this->jsonResponse($this->getFactory()->createUnassignedModelProductListAttachmentTable($idSspModel)->fetchData());
+        return $this->jsonResponse($this->getFactory()->createUnattachedModelProductListAttachmentTable($idSspModel)->fetchData());
     }
 
-    public function assignedProductListTableAction(Request $request): JsonResponse
+    public function attachedProductListTableAction(Request $request): JsonResponse
     {
         $idSspModel = $this->castId($request->get(static::REQUEST_PARAM_ID_SSP_MODEL));
 
-        return $this->jsonResponse($this->getFactory()->createAssignedModelProductListAttachmentTable($idSspModel)->fetchData());
+        return $this->jsonResponse($this->getFactory()->createAttachedSspModelProductListAttachmentTable($idSspModel)->fetchData());
     }
 
     public function downloadAssetExampleAction(Request $request): StreamedResponse
@@ -193,10 +193,10 @@ class AttachModelController extends AbstractController
 
         return $this->jsonResponse([
             'data' => [
-                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED => $this->getFactory()->createUnassignedModelAssetAttachmentTable($idSspModel)
-                    ->fetchAssetsByReferences($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED]),
-                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED => $this->getFactory()->createAssignedModelAssetAttachmentTable($idSspModel)
-                    ->fetchAssetsByReferences($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED]),
+                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED => $this->getFactory()->createUnattachedModelAssetAttachmentTable($idSspModel)
+                    ->fetchAssetsByReferences($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED]),
+                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED => $this->getFactory()->createAttachedSspModelAssetAttachmentTable($idSspModel)
+                    ->fetchAssetsByReferences($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED]),
             ],
         ]);
     }
@@ -218,8 +218,8 @@ class AttachModelController extends AbstractController
 
         return $this->jsonResponse([
             'data' => [
-                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED => $this->getFactory()->createUnassignedModelProductListAttachmentTable($idSspModel)->fetchProductListsByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED]),
-                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED => $this->getFactory()->createAssignedModelProductListAttachmentTable($idSspModel)->fetchProductListsByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED]),
+                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED => $this->getFactory()->createUnattachedModelProductListAttachmentTable($idSspModel)->fetchProductListsByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED]),
+                RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED => $this->getFactory()->createAttachedSspModelProductListAttachmentTable($idSspModel)->fetchProductListsByIds($parsedCsvData[RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED]),
             ],
         ]);
     }
@@ -270,11 +270,11 @@ class AttachModelController extends AbstractController
 
     protected function hasProductListAttachments(SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): bool
     {
-        if (count($sspModelCollectionRequestTransfer->getProductListsToBeAssigned())) {
+        if (count($sspModelCollectionRequestTransfer->getProductListsToBeAttached())) {
             return true;
         }
 
-        if (count($sspModelCollectionRequestTransfer->getProductListsToBeUnassigned())) {
+        if (count($sspModelCollectionRequestTransfer->getProductListsToBeUnattached())) {
             return true;
         }
 

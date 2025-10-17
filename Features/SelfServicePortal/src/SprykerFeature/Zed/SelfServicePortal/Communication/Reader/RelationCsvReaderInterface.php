@@ -14,12 +14,12 @@ interface RelationCsvReaderInterface
     /**
      * @var string
      */
-    public const KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED = 'toBeAssigned';
+    public const KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED = 'toBeAttached';
 
     /**
      * @var string
      */
-    public const KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED = 'toBeUnassigned';
+    public const KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED = 'toBeUnattached';
 
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile

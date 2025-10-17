@@ -161,7 +161,7 @@ class SspAssetWritePublisherPluginTest extends Unit
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
         ]);
 
-        $this->tester->haveSspAssetToModelAssignment(
+        $this->tester->haveSspAssetToModelAttachment(
             $sspAssetTransfer1->getIdSspAssetOrFail(),
             $sspModelTransfer->getIdSspModelOrFail(),
         );
@@ -193,10 +193,10 @@ class SspAssetWritePublisherPluginTest extends Unit
         $this->assertSame($sspAssetTransfer2->getIdSspAsset(), $storageData2[static::STORAGE_FIELD_ID_ASSET]);
         $this->assertSame(static::SSP_ASSET_NAME_2, $storageData2[static::STORAGE_FIELD_NAME]);
         $this->assertSame(static::SSP_ASSET_SERIAL_NUMBER_2, $storageData2[static::STORAGE_FIELD_SERIAL_NUMBER]);
-        $this->assertSame([], $storageData2[static::STORAGE_FIELD_MODEL_IDS]); // No model assignments
+        $this->assertSame([], $storageData2[static::STORAGE_FIELD_MODEL_IDS]); // No model attachments
     }
 
-    public function testHandlesBulkWithMultipleModelAssignments(): void
+    public function testHandlesBulkWithMultipleModelAttachments(): void
     {
         $companyTransfer = $this->tester->haveCompany([
             CompanyTransfer::NAME => static::COMPANY_NAME_1,
@@ -225,15 +225,15 @@ class SspAssetWritePublisherPluginTest extends Unit
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
         ]);
 
-        $this->tester->haveSspAssetToModelAssignment(
+        $this->tester->haveSspAssetToModelAttachment(
             $sspAssetTransfer->getIdSspAssetOrFail(),
             $sspModelTransfer1->getIdSspModelOrFail(),
         );
-        $this->tester->haveSspAssetToModelAssignment(
+        $this->tester->haveSspAssetToModelAttachment(
             $sspAssetTransfer->getIdSspAssetOrFail(),
             $sspModelTransfer2->getIdSspModelOrFail(),
         );
-        $this->tester->haveSspAssetToModelAssignment(
+        $this->tester->haveSspAssetToModelAttachment(
             $sspAssetTransfer->getIdSspAssetOrFail(),
             $sspModelTransfer3->getIdSspModelOrFail(),
         );
@@ -288,11 +288,11 @@ class SspAssetWritePublisherPluginTest extends Unit
 
         $this->tester->haveSspAssetStorage($sspAssetTransfer->getIdSspAssetOrFail(), [999]);
 
-        $this->tester->haveSspAssetToModelAssignment(
+        $this->tester->haveSspAssetToModelAttachment(
             $sspAssetTransfer->getIdSspAssetOrFail(),
             $sspModelTransfer1->getIdSspModelOrFail(),
         );
-        $this->tester->haveSspAssetToModelAssignment(
+        $this->tester->haveSspAssetToModelAttachment(
             $sspAssetTransfer->getIdSspAssetOrFail(),
             $sspModelTransfer2->getIdSspModelOrFail(),
         );

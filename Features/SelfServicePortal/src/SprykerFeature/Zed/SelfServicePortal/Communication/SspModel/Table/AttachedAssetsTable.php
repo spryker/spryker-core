@@ -49,7 +49,7 @@ class AttachedAssetsTable extends AbstractTable
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $url = Url::generate(
-            'attached-asset-table',
+            'attached-ssp-asset-table',
             ['id-ssp-model' => $this->sspModelTransfer->getIdSspModel()],
         );
         $config->setUrl($url->build());

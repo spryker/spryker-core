@@ -15,15 +15,15 @@ class AttachedAssetsTabs extends AbstractTabs
 {
     protected function build(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
-        $this->addAssignedTab($tabsViewTransfer)
-            ->addToBeDetachedTab($tabsViewTransfer);
+        $this->addAttachedTab($tabsViewTransfer)
+            ->addToBeUnattachedTab($tabsViewTransfer);
 
         $tabsViewTransfer->setIsNavigable(false);
 
         return $tabsViewTransfer;
     }
 
-    protected function addAssignedTab(TabsViewTransfer $tabsViewTransfer): self
+    protected function addAttachedTab(TabsViewTransfer $tabsViewTransfer): self
     {
         $tabItemTransfer = (new TabItemTransfer())
             ->setName('attached-assets')
@@ -35,12 +35,12 @@ class AttachedAssetsTabs extends AbstractTabs
         return $this;
     }
 
-    protected function addToBeDetachedTab(TabsViewTransfer $tabsViewTransfer): self
+    protected function addToBeUnattachedTab(TabsViewTransfer $tabsViewTransfer): self
     {
         $tabItemTransfer = (new TabItemTransfer())
-            ->setName('assets-to-be-detached')
+            ->setName('assets-to-be-unattached')
             ->setTitle('Assets to be detached')
-            ->setTemplate('@SelfServicePortal/AttachFile/_partials/asset/assets-to-be-detached-tab.twig');
+            ->setTemplate('@SelfServicePortal/AttachFile/_partials/asset/assets-to-be-unattached-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

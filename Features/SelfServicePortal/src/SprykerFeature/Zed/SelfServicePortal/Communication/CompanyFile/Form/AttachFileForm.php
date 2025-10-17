@@ -60,42 +60,42 @@ class AttachFileForm extends AbstractType
     /**
      * @var string
      */
-    public const FIELD_COMPANY_USER_IDS_TO_BE_ASSIGNED = 'companyUserIdsToBeAssigned';
+    public const FIELD_COMPANY_USER_IDS_TO_BE_ATTACHED = 'companyUserIdsToBeAttached';
 
     /**
      * @var string
      */
-    public const FIELD_COMPANY_USER_IDS_TO_BE_UNASSIGNED = 'companyUserIdsToBeUnassigned';
+    public const FIELD_COMPANY_USER_IDS_TO_BE_UNATTACHED = 'companyUserIdsToBeUnattached';
 
     /**
      * @var string
      */
-    public const FIELD_COMPANY_IDS_TO_BE_ASSIGNED = 'companyIdsToBeAssigned';
+    public const FIELD_COMPANY_IDS_TO_BE_ATTACHED = 'companyIdsToBeAttached';
 
     /**
      * @var string
      */
-    public const FIELD_COMPANY_IDS_TO_BE_UNASSIGNED = 'companyIdsToBeUnassigned';
+    public const FIELD_COMPANY_IDS_TO_BE_UNATTACHED = 'companyIdsToBeUnattached';
 
     /**
      * @var string
      */
-    public const FIELD_BUSINESS_UNIT_IDS_TO_BE_ASSIGNED = 'businessUnitIdsToBeAssigned';
+    public const FIELD_BUSINESS_UNIT_IDS_TO_BE_ATTACHED = 'businessUnitIdsToBeAttached';
 
     /**
      * @var string
      */
-    public const FIELD_BUSINESS_UNIT_IDS_TO_BE_UNASSIGNED = 'businessUnitIdsToBeUnassigned';
+    public const FIELD_BUSINESS_UNIT_IDS_TO_BE_UNATTACHED = 'businessUnitIdsToBeUnattached';
 
     /**
      * @var string
      */
-    public const FIELD_ASSET_IDS_TO_BE_ASSIGNED = 'sspAssetIdsToBeAssigned';
+    public const FIELD_ASSET_IDS_TO_BE_ATTACHED = 'sspAssetIdsToBeAttached';
 
     /**
      * @var string
      */
-    public const FIELD_ASSET_IDS_TO_BE_UNASSIGNED = 'sspAssetIdsToBeUnassigned';
+    public const FIELD_ASSET_IDS_TO_BE_UNATTACHED = 'sspAssetIdsToBeUnattached';
 
     /**
      * @var string
@@ -105,12 +105,12 @@ class AttachFileForm extends AbstractType
     /**
      * @var string
      */
-    public const FIELD_MODEL_IDS_TO_BE_ASSIGNED = 'sspModelIdsToBeAssigned';
+    public const FIELD_MODEL_IDS_TO_BE_ATTACHED = 'sspModelIdsToBeAttached';
 
     /**
      * @var string
      */
-    public const FIELD_MODEL_IDS_TO_BE_UNASSIGNED = 'sspModelIdsToBeUnassigned';
+    public const FIELD_MODEL_IDS_TO_BE_UNATTACHED = 'sspModelIdsToBeUnattached';
 
     /**
      * @var string
@@ -232,43 +232,43 @@ class AttachFileForm extends AbstractType
      */
     protected function addHiddenSelectionFields(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_COMPANY_USER_IDS_TO_BE_ASSIGNED, HiddenType::class, [
+        $builder->add(static::FIELD_COMPANY_USER_IDS_TO_BE_ATTACHED, HiddenType::class, [
             'mapped' => false,
         ]);
 
-        $builder->add(static::FIELD_COMPANY_USER_IDS_TO_BE_UNASSIGNED, HiddenType::class, [
+        $builder->add(static::FIELD_COMPANY_USER_IDS_TO_BE_UNATTACHED, HiddenType::class, [
             'mapped' => false,
         ]);
 
-        $builder->add(static::FIELD_COMPANY_IDS_TO_BE_ASSIGNED, HiddenType::class, [
+        $builder->add(static::FIELD_COMPANY_IDS_TO_BE_ATTACHED, HiddenType::class, [
             'mapped' => false,
         ]);
 
-        $builder->add(static::FIELD_COMPANY_IDS_TO_BE_UNASSIGNED, HiddenType::class, [
+        $builder->add(static::FIELD_COMPANY_IDS_TO_BE_UNATTACHED, HiddenType::class, [
             'mapped' => false,
         ]);
 
-        $builder->add(static::FIELD_BUSINESS_UNIT_IDS_TO_BE_ASSIGNED, HiddenType::class, [
+        $builder->add(static::FIELD_BUSINESS_UNIT_IDS_TO_BE_ATTACHED, HiddenType::class, [
             'mapped' => false,
         ]);
 
-        $builder->add(static::FIELD_BUSINESS_UNIT_IDS_TO_BE_UNASSIGNED, HiddenType::class, [
+        $builder->add(static::FIELD_BUSINESS_UNIT_IDS_TO_BE_UNATTACHED, HiddenType::class, [
             'mapped' => false,
         ]);
 
-        $builder->add(static::FIELD_ASSET_IDS_TO_BE_ASSIGNED, HiddenType::class, [
+        $builder->add(static::FIELD_ASSET_IDS_TO_BE_ATTACHED, HiddenType::class, [
             'mapped' => false,
         ]);
 
-        $builder->add(static::FIELD_ASSET_IDS_TO_BE_UNASSIGNED, HiddenType::class, [
+        $builder->add(static::FIELD_ASSET_IDS_TO_BE_UNATTACHED, HiddenType::class, [
             'mapped' => false,
         ]);
 
-        $builder->add(static::FIELD_MODEL_IDS_TO_BE_ASSIGNED, HiddenType::class, [
+        $builder->add(static::FIELD_MODEL_IDS_TO_BE_ATTACHED, HiddenType::class, [
             'mapped' => false,
         ]);
 
-        $builder->add(static::FIELD_MODEL_IDS_TO_BE_UNASSIGNED, HiddenType::class, [
+        $builder->add(static::FIELD_MODEL_IDS_TO_BE_UNATTACHED, HiddenType::class, [
             'mapped' => false,
         ]);
 

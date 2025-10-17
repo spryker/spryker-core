@@ -26,8 +26,8 @@ class RelationCsvReader implements RelationCsvReaderInterface
     {
         $csvData = $this->utilCsvService->readUploadedFile($uploadedFile);
 
-        $entityIdentifiersToBeAssigned = [];
-        $entityIdentifiersToBeUnassign = [];
+        $entityIdentifiersToBeAttached = [];
+        $entityIdentifiersToBeUnattached = [];
 
         foreach ($csvData as $index => $row) {
             if (!$index) {
@@ -35,17 +35,17 @@ class RelationCsvReader implements RelationCsvReaderInterface
             }
 
             if (isset($row[0]) && trim($row[0])) {
-                $entityIdentifiersToBeAssigned[] = trim($row[0]);
+                $entityIdentifiersToBeAttached[] = trim($row[0]);
             }
 
             if (isset($row[1]) && trim($row[1])) {
-                $entityIdentifiersToBeUnassign[] = trim($row[1]);
+                $entityIdentifiersToBeUnattached[] = trim($row[1]);
             }
         }
 
         return [
-            static::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED => $entityIdentifiersToBeAssigned,
-            static::KEY_ENTITY_IDENTIFIERS_TO_BE_UNASSIGNED => $entityIdentifiersToBeUnassign,
+            static::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED => $entityIdentifiersToBeAttached,
+            static::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED => $entityIdentifiersToBeUnattached,
         ];
     }
 }

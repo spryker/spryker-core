@@ -17,12 +17,12 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Controller\FileAbstractController;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Reader\RelationCsvReaderInterface;
 
-class UnassignedCompanyAttachmentTable extends AbstractTable
+class AttachedCompanyAttachmentTable extends AbstractTable
 {
     /**
      * @var string
      */
-    protected const TABLE_IDENTIFIER = 'available-company-table';
+    protected const TABLE_IDENTIFIER = 'attached-company-table';
 
     /**
      * @var string
@@ -63,22 +63,22 @@ class UnassignedCompanyAttachmentTable extends AbstractTable
             SpyCompanyTableMap::COL_ID_COMPANY,
             SpyCompanyTableMap::COL_NAME,
         ]);
-        $config->addRawColumn(static::COLUMN_SELECTED);
 
+        $config->addRawColumn(static::COLUMN_SELECTED);
         $config->setTableAttributes([
             'data-selectable' => [
-                'moveToSelector' => '#companiesToBeAssigned',
-                'inputSelector' => '#fileAttachment_companyIdsToBeAssigned',
-                'counterHolderSelector' => 'a[href="#tab-content-companies-to-be-attached"]',
+                'moveToSelector' => '#companiesToBeUnattached',
+                'inputSelector' => '#fileAttachment_companyIdsToBeUnattached',
+                'counterHolderSelector' => 'a[href="#tab-content-companies-to-be-unattached"]',
                 'colId' => static::COLUMN_ID,
             ],
             'data-uploader' => [
                 'url' => sprintf('/self-service-portal/attach-file/get-company-attachments-from-csv?id-file=%d', $this->idFile),
-                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED,
+                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_UNATTACHED,
             ],
         ]);
         $config->setFooter([]);
-        $config->setUrl(Url::generate('/available-company-table', [
+        $config->setUrl(Url::generate('/attached-company-table', [
             FileAbstractController::REQUEST_PARAM_ID_FILE => $this->idFile,
         ])->build());
 
@@ -107,9 +107,8 @@ class UnassignedCompanyAttachmentTable extends AbstractTable
         return $this->companyQuery
             ->join('CompanyBusinessUnit')
             ->leftJoin('CompanyBusinessUnit.SpyCompanyBusinessUnitFile')
-            ->where(SpyCompanyBusinessUnitFileTableMap::COL_FK_FILE . ' IS NULL OR ' . SpyCompanyBusinessUnitFileTableMap::COL_FK_FILE . ' = ?', $this->idFile)
             ->groupByIdCompany()
-            ->having('COUNT(DISTINCT ' . SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT . ') > COUNT(DISTINCT ' . SpyCompanyBusinessUnitFileTableMap::COL_FK_COMPANY_BUSINESS_UNIT . ') OR COUNT(DISTINCT ' . SpyCompanyBusinessUnitFileTableMap::COL_FK_COMPANY_BUSINESS_UNIT . ') = 0')
+            ->having('COUNT(DISTINCT ' . SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT . ') = COUNT(DISTINCT CASE WHEN ' . SpyCompanyBusinessUnitFileTableMap::COL_FK_FILE . ' = ' . $this->idFile . ' THEN ' . SpyCompanyBusinessUnitFileTableMap::COL_FK_COMPANY_BUSINESS_UNIT . ' END) AND COUNT(DISTINCT ' . SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT . ') > 0')
             ->select([
                 SpyCompanyTableMap::COL_ID_COMPANY,
                 SpyCompanyTableMap::COL_NAME,

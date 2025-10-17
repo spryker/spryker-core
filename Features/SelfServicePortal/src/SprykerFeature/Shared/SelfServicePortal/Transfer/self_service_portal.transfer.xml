@@ -1107,10 +1107,10 @@
 
     <transfer name="SspModelCollectionRequest" strict="true">
         <property name="sspModels" type="SspModel[]" singular="sspModel"/>
-        <property name="sspAssetsToBeAssigned" type="ModelSspAssetAssignment[]" singular="sspAssetToBeAssigned"/>
-        <property name="sspAssetsToBeUnassigned" type="ModelSspAssetAssignment[]" singular="sspAssetToBeUnassigned"/>
-        <property name="productListsToBeAssigned" type="ModelProductListAssignment[]" singular="productListToBeAssigned"/>
-        <property name="productListsToBeUnassigned" type="ModelProductListAssignment[]" singular="productListToBeUnassigned"/>
+        <property name="sspAssetsToBeAttached" type="ModelSspAssetAttachment[]" singular="sspAssetToBeAttached"/>
+        <property name="sspAssetsToBeUnattached" type="ModelSspAssetAttachment[]" singular="sspAssetToBeUnattached"/>
+        <property name="productListsToBeAttached" type="ModelProductListAttachment[]" singular="productListToBeAttached"/>
+        <property name="productListsToBeUnattached" type="ModelProductListAttachment[]" singular="productListToBeUnattached"/>
     </transfer>
 
     <transfer name="SspModelCollectionResponse" strict="true">
@@ -1147,12 +1147,12 @@
         <property name="companyBusinessUnit" type="CompanyBusinessUnitStorage"/>
     </transfer>
 
-    <transfer name="ModelProductListAssignment" strict="true">
+    <transfer name="ModelProductListAttachment" strict="true">
         <property name="productList" type="ProductList"/>
         <property name="sspModel" type="SspModel"/>
     </transfer>
 
-    <transfer name="ModelSspAssetAssignment" strict="true">
+    <transfer name="ModelSspAssetAttachment" strict="true">
         <property name="sspAsset" type="SspAsset"/>
         <property name="sspModel" type="SspModel"/>
     </transfer>
@@ -1234,43 +1234,6 @@
         <property name="name" type="string"/>
         <property name="fieldName" type="string"/>
     </transfer>
-
-    <transfer name="SspAssetAssignmentFileParserRequest">
-        <property name="content" type="string"/>
-    </transfer>
-
-    <transfer name="SspAssetAssignmentFileParserResponse">
-        <property name="referencesToAssign" type="string[]" singular="referencesToAssign"/>
-        <property name="referencesToDeassign" type="string[]" singular="referencesToDeassign"/>
-    </transfer>
-
-    <transfer name="BusinessUnitAssignmentFileParserRequest">
-        <property name="content" type="string"/>
-    </transfer>
-
-    <transfer name="BusinessUnitAssignmentFileParserResponse">
-        <property name="referencesToAssign" type="string[]" singular="referencesToAssign"/>
-        <property name="referencesToDeassign" type="string[]" singular="referencesToDeassign"/>
-    </transfer>
-
-    <transfer name="CompanyUserAssignmentFileParserRequest">
-        <property name="fileContent" type="string"/>
-    </transfer>
-
-    <transfer name="CompanyUserAssignmentFileParserResponse">
-        <property name="referencesToAssign" type="int[]" singular="referencesToAssign"/>
-        <property name="referencesToDeassign" type="int[]" singular="referencesToDeassign"/>
-    </transfer>
-
-    <transfer name="CompanyAssignmentFileParserRequest">
-        <property name="fileContent" type="string"/>
-    </transfer>
-
-    <transfer name="CompanyAssignmentFileParserResponse">
-        <property name="referencesToAssign" type="int[]" singular="referencesToAssign"/>
-        <property name="referencesToDeassign" type="int[]" singular="referencesToDeassign"/>
-    </transfer>
-
 
     <transfer name="RestSspAssetsAttributes" strict="true">
         <property name="reference" type="string"/>

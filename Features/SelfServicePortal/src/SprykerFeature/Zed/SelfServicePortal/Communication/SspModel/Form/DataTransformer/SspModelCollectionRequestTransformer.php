@@ -8,8 +8,8 @@
 namespace SprykerFeature\Zed\SelfServicePortal\Communication\SspModel\Form\DataTransformer;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ModelProductListAssignmentTransfer;
-use Generated\Shared\Transfer\ModelSspAssetAssignmentTransfer;
+use Generated\Shared\Transfer\ModelProductListAttachmentTransfer;
+use Generated\Shared\Transfer\ModelSspAssetAttachmentTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\SspAssetTransfer;
 use Generated\Shared\Transfer\SspModelCollectionRequestTransfer;
@@ -21,22 +21,22 @@ class SspModelCollectionRequestTransformer implements DataTransformerInterface
     /**
      * @var string
      */
-    protected const FORM_FIELD_SSP_ASSET_IDS_TO_BE_ASSIGNED = 'sspAssetIdsToBeAssigned';
+    protected const FORM_FIELD_SSP_ASSET_IDS_TO_BE_ATTACHED = 'sspAssetIdsToBeAttached';
 
     /**
      * @var string
      */
-    protected const FORM_FIELD_SSP_ASSET_IDS_TO_BE_UNASSIGNED = 'sspAssetIdsToBeUnassigned';
+    protected const FORM_FIELD_SSP_ASSET_IDS_TO_BE_UNATTACHED = 'sspAssetIdsToBeUnattached';
 
     /**
      * @var string
      */
-    protected const FORM_FIELD_PRODUCT_LIST_IDS_TO_BE_ASSIGNED = 'productListIdsToBeAssigned';
+    protected const FORM_FIELD_PRODUCT_LIST_IDS_TO_BE_ATTACHED = 'productListIdsToBeAttached';
 
     /**
      * @var string
      */
-    protected const FORM_FIELD_PRODUCT_LIST_IDS_TO_BE_UNASSIGNED = 'productListIdsToBeUnassigned';
+    protected const FORM_FIELD_PRODUCT_LIST_IDS_TO_BE_UNATTACHED = 'productListIdsToBeUnttached';
 
     public function __construct(protected SspModelTransfer $sspModelTransfer)
     {
@@ -54,10 +54,10 @@ class SspModelCollectionRequestTransformer implements DataTransformerInterface
         }
 
         return [
-            static::FORM_FIELD_SSP_ASSET_IDS_TO_BE_ASSIGNED => $this->extractAssetIds($value->getSspAssetsToBeAssigned()),
-            static::FORM_FIELD_SSP_ASSET_IDS_TO_BE_UNASSIGNED => $this->extractAssetIds($value->getSspAssetsToBeUnassigned()),
-            static::FORM_FIELD_PRODUCT_LIST_IDS_TO_BE_ASSIGNED => $this->extractProductListIds($value->getProductListsToBeAssigned()),
-            static::FORM_FIELD_PRODUCT_LIST_IDS_TO_BE_UNASSIGNED => $this->extractProductListIds($value->getProductListsToBeUnassigned()),
+            static::FORM_FIELD_SSP_ASSET_IDS_TO_BE_ATTACHED => $this->extractAssetIds($value->getSspAssetsToBeAttached()),
+            static::FORM_FIELD_SSP_ASSET_IDS_TO_BE_UNATTACHED => $this->extractAssetIds($value->getSspAssetsToBeUnattached()),
+            static::FORM_FIELD_PRODUCT_LIST_IDS_TO_BE_ATTACHED => $this->extractProductListIds($value->getProductListsToBeAttached()),
+            static::FORM_FIELD_PRODUCT_LIST_IDS_TO_BE_UNATTACHED => $this->extractProductListIds($value->getProductListsToBeUnattached()),
         ];
     }
 
@@ -74,8 +74,8 @@ class SspModelCollectionRequestTransformer implements DataTransformerInterface
 
         $sspModelCollectionRequestTransfer = new SspModelCollectionRequestTransfer();
 
-        $this->processAssetAssignments($value, $sspModelCollectionRequestTransfer);
-        $this->processProductListAssignments($value, $sspModelCollectionRequestTransfer);
+        $this->processAssetAttachments($value, $sspModelCollectionRequestTransfer);
+        $this->processProductListAttachments($value, $sspModelCollectionRequestTransfer);
 
         return $sspModelCollectionRequestTransfer;
     }
@@ -86,13 +86,13 @@ class SspModelCollectionRequestTransformer implements DataTransformerInterface
      *
      * @return void
      */
-    protected function processAssetAssignments(array $formData, SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): void
+    protected function processAssetAttachments(array $formData, SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): void
     {
-        $assetsToAssign = $this->parseIds($formData[static::FORM_FIELD_SSP_ASSET_IDS_TO_BE_ASSIGNED] ?? '');
-        $assetsToUnassign = $this->parseIds($formData[static::FORM_FIELD_SSP_ASSET_IDS_TO_BE_UNASSIGNED] ?? '');
+        $assetsToAttach = $this->parseIds($formData[static::FORM_FIELD_SSP_ASSET_IDS_TO_BE_ATTACHED] ?? '');
+        $assetsToUnattach = $this->parseIds($formData[static::FORM_FIELD_SSP_ASSET_IDS_TO_BE_UNATTACHED] ?? '');
 
-        $this->addAssetAssignments($assetsToAssign, $sspModelCollectionRequestTransfer, true);
-        $this->addAssetAssignments($assetsToUnassign, $sspModelCollectionRequestTransfer, false);
+        $this->addAssetAttachments($assetsToAttach, $sspModelCollectionRequestTransfer, true);
+        $this->addAssetAttachments($assetsToUnattach, $sspModelCollectionRequestTransfer, false);
     }
 
     /**
@@ -101,13 +101,13 @@ class SspModelCollectionRequestTransformer implements DataTransformerInterface
      *
      * @return void
      */
-    protected function processProductListAssignments(array $formData, SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): void
+    protected function processProductListAttachments(array $formData, SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer): void
     {
-        $productListsToAssign = $this->parseIds($formData[static::FORM_FIELD_PRODUCT_LIST_IDS_TO_BE_ASSIGNED] ?? '');
-        $productListsToUnassign = $this->parseIds($formData[static::FORM_FIELD_PRODUCT_LIST_IDS_TO_BE_UNASSIGNED] ?? '');
+        $productListsToAttach = $this->parseIds($formData[static::FORM_FIELD_PRODUCT_LIST_IDS_TO_BE_ATTACHED] ?? '');
+        $productListsToUnattach = $this->parseIds($formData[static::FORM_FIELD_PRODUCT_LIST_IDS_TO_BE_UNATTACHED] ?? '');
 
-        $this->addProductListAssignments($productListsToAssign, $sspModelCollectionRequestTransfer, true);
-        $this->addProductListAssignments($productListsToUnassign, $sspModelCollectionRequestTransfer, false);
+        $this->addProductListAttachments($productListsToAttach, $sspModelCollectionRequestTransfer, true);
+        $this->addProductListAttachments($productListsToUnattach, $sspModelCollectionRequestTransfer, false);
     }
 
     /**
@@ -132,87 +132,87 @@ class SspModelCollectionRequestTransformer implements DataTransformerInterface
     /**
      * @param array<int> $assetIds
      * @param \Generated\Shared\Transfer\SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer
-     * @param bool $isAssignment
+     * @param bool $isAttachment
      *
      * @return void
      */
-    protected function addAssetAssignments(array $assetIds, SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer, bool $isAssignment): void
+    protected function addAssetAttachments(array $assetIds, SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer, bool $isAttachment): void
     {
         foreach ($assetIds as $assetId) {
-            $modelSspAssetAssignmentTransfer = new ModelSspAssetAssignmentTransfer();
+            $modelSspAssetAttachmentTransfer = new ModelSspAssetAttachmentTransfer();
             $sspAssetTransfer = new SspAssetTransfer();
             $sspAssetTransfer->setIdSspAsset($assetId);
 
-            $modelSspAssetAssignmentTransfer
+            $modelSspAssetAttachmentTransfer
                 ->setSspAsset($sspAssetTransfer)
                 ->setSspModel($this->sspModelTransfer);
 
-            if ($isAssignment) {
-                $sspModelCollectionRequestTransfer->addSspAssetToBeAssigned($modelSspAssetAssignmentTransfer);
+            if ($isAttachment) {
+                $sspModelCollectionRequestTransfer->addSspAssetToBeAttached($modelSspAssetAttachmentTransfer);
 
                 continue;
             }
 
-            $sspModelCollectionRequestTransfer->addSspAssetToBeUnassigned($modelSspAssetAssignmentTransfer);
+            $sspModelCollectionRequestTransfer->addSspAssetToBeUnattached($modelSspAssetAttachmentTransfer);
         }
     }
 
     /**
      * @param array<int> $productListIds
      * @param \Generated\Shared\Transfer\SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer
-     * @param bool $isAssignment
+     * @param bool $isAttachment
      *
      * @return void
      */
-    protected function addProductListAssignments(
+    protected function addProductListAttachments(
         array $productListIds,
         SspModelCollectionRequestTransfer $sspModelCollectionRequestTransfer,
-        bool $isAssignment
+        bool $isAttachment
     ): void {
         foreach ($productListIds as $productListId) {
-            $modelProductListAssignmentTransfer = new ModelProductListAssignmentTransfer();
+            $modelProductListAttachmentTransfer = new ModelProductListAttachmentTransfer();
             $productListTransfer = new ProductListTransfer();
             $productListTransfer->setIdProductList($productListId);
 
-            $modelProductListAssignmentTransfer
+            $modelProductListAttachmentTransfer
                 ->setProductList($productListTransfer)
                 ->setSspModel($this->sspModelTransfer);
 
-            if ($isAssignment) {
-                $sspModelCollectionRequestTransfer->addProductListToBeAssigned($modelProductListAssignmentTransfer);
+            if ($isAttachment) {
+                $sspModelCollectionRequestTransfer->addProductListToBeAttached($modelProductListAttachmentTransfer);
 
                 continue;
             }
 
-            $sspModelCollectionRequestTransfer->addProductListToBeUnassigned($modelProductListAssignmentTransfer);
+            $sspModelCollectionRequestTransfer->addProductListToBeUnattached($modelProductListAttachmentTransfer);
         }
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\ModelSspAssetAssignmentTransfer> $modelSspAssetAssignmentTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ModelSspAssetAttachmentTransfer> $modelSspAssetAttachmentTransfers
      *
      * @return string
      */
-    protected function extractAssetIds(ArrayObject $modelSspAssetAssignmentTransfers): string
+    protected function extractAssetIds(ArrayObject $modelSspAssetAttachmentTransfers): string
     {
         $ids = [];
-        foreach ($modelSspAssetAssignmentTransfers as $modelSspAssetAssignmentTransfer) {
-            $ids[] = $modelSspAssetAssignmentTransfer->getSspAssetOrFail()->getIdSspAsset();
+        foreach ($modelSspAssetAttachmentTransfers as $modelSspAssetAttachmentTransfer) {
+            $ids[] = $modelSspAssetAttachmentTransfer->getSspAssetOrFail()->getIdSspAsset();
         }
 
         return implode(',', $ids);
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\ModelProductListAssignmentTransfer> $modelProductListAssignmentTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ModelProductListAttachmentTransfer> $modelProductListAttachmentTransfers
      *
      * @return string
      */
-    protected function extractProductListIds(ArrayObject $modelProductListAssignmentTransfers): string
+    protected function extractProductListIds(ArrayObject $modelProductListAttachmentTransfers): string
     {
         $ids = [];
-        foreach ($modelProductListAssignmentTransfers as $modelProductListAssignmentTransfer) {
-            $ids[] = $modelProductListAssignmentTransfer->getProductListOrFail()->getIdProductList();
+        foreach ($modelProductListAttachmentTransfers as $modelProductListAttachmentTransfer) {
+            $ids[] = $modelProductListAttachmentTransfer->getProductListOrFail()->getIdProductList();
         }
 
         return implode(',', $ids);

@@ -174,7 +174,7 @@ class SalesOrderItemSspAssetSaver implements SalesOrderItemSspAssetSaverInterfac
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\SspAssetTransfer> $sspAssets
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\SspAssetTransfer> $sspAssets
      *
      * @return array<string, \Generated\Shared\Transfer\SspAssetTransfer>
      */

@@ -99,6 +99,28 @@ class UpdateModelController extends AbstractController
         ];
     }
 
+    public function attachedSspAssetTableAction(Request $request): JsonResponse
+    {
+        $idSspModel = $request->query->getInt(static::PARAM_ID_SSP_MODEL);
+
+        $attachedSspAssetTableDataProvider = $this->getFactory()->createAttachedSspAssetTableDataProvider();
+
+        return $this->jsonResponse(
+            $attachedSspAssetTableDataProvider->getAttachedSspAssetTableData($idSspModel),
+        );
+    }
+
+    public function attachedProductListsTableAction(Request $request): JsonResponse
+    {
+        $idSspModel = $request->query->getInt(static::PARAM_ID_SSP_MODEL);
+
+        $attachedProductListsTable = $this->getFactory()->createAttachedProductListsTable($idSspModel);
+
+        return $this->jsonResponse(
+            $attachedProductListsTable->fetchData(),
+        );
+    }
+
     protected function getSspModel(int $idSspModel): ?SspModelTransfer
     {
         $sspModelCollectionTransfer = $this->getFacade()->getSspModelCollection(
@@ -152,27 +174,5 @@ class UpdateModelController extends AbstractController
         $this->addSuccessMessage(static::MESSAGE_SSP_MODEL_UPDATE_SUCCESS);
 
         return $this->redirectResponse(sprintf(static::ROUTE_SSP_MODEL_VIEW, $sspModelCollectionResponseTransfer->getSspModels()->getIterator()->current()->getIdSspModel()));
-    }
-
-    public function attachedAssetTableAction(Request $request): JsonResponse
-    {
-        $idSspModel = $request->query->getInt(static::PARAM_ID_SSP_MODEL);
-
-        $attachedAssetTableDataProvider = $this->getFactory()->createAttachedAssetTableDataProvider();
-
-        return $this->jsonResponse(
-            $attachedAssetTableDataProvider->getAttachedAssetTableData($idSspModel),
-        );
-    }
-
-    public function attachedProductListsTableAction(Request $request): JsonResponse
-    {
-        $idSspModel = $request->query->getInt(static::PARAM_ID_SSP_MODEL);
-
-        $attachedProductListsTable = $this->getFactory()->createAttachedProductListsTable($idSspModel);
-
-        return $this->jsonResponse(
-            $attachedProductListsTable->fetchData(),
-        );
     }
 }

@@ -17,7 +17,7 @@ class AttachedBusinessUnitsTabs extends AbstractTabs
     {
         $this
             ->addAttachedBusinessUnitsTab($tabsViewTransfer)
-            ->addBusinessUnitsToBeDetachedTab($tabsViewTransfer);
+            ->addBusinessUnitsToBeUnattachedTab($tabsViewTransfer);
 
         $tabsViewTransfer->setIsNavigable(false);
 
@@ -42,13 +42,13 @@ class AttachedBusinessUnitsTabs extends AbstractTabs
         return $this;
     }
 
-    protected function addBusinessUnitsToBeDetachedTab(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
+    protected function addBusinessUnitsToBeUnattachedTab(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('business-units-to-be-detached')
+            ->setName('business-units-to-be-unattached')
             ->setTitle('Business Units to be detached')
-            ->setTemplate('@SelfServicePortal/AttachFile/_partials/business-units/business-units-to-be-detached-tab.twig');
+            ->setTemplate('@SelfServicePortal/AttachFile/_partials/business-units/business-units-to-be-unattached-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

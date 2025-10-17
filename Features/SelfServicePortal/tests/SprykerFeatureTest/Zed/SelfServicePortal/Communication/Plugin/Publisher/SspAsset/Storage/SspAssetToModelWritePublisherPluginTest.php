@@ -141,14 +141,14 @@ class SspAssetToModelWritePublisherPluginTest extends Unit
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
         ]);
 
-        $assignmentEntity = $this->tester->haveSspAssetToModelAssignment(
+        $attachmentEntity = $this->tester->haveSspAssetToModelAttachment(
             $sspAssetTransfer->getIdSspAssetOrFail(),
             $sspModelTransfer->getIdSspModelOrFail(),
         );
 
         $eventEntityTransfers = [
             (new EventEntityTransfer())
-                ->setId($assignmentEntity->getIdSspAssetToSspModel())
+                ->setId($attachmentEntity->getIdSspAssetToSspModel())
                 ->setEvent(SelfServicePortalConfig::ENTITY_SPY_SSP_ASSET_TO_MODEL_CREATE)
                 ->setForeignKeys([
                     'spy_ssp_asset_to_ssp_model.fk_ssp_asset' => $sspAssetTransfer->getIdSspAssetOrFail(),
@@ -189,7 +189,7 @@ class SspAssetToModelWritePublisherPluginTest extends Unit
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
         ]);
 
-        $assignmentEntity = $this->tester->haveSspAssetToModelAssignment(
+        $attachmentEntity = $this->tester->haveSspAssetToModelAttachment(
             $sspAssetTransfer->getIdSspAssetOrFail(),
             $sspModelTransfer->getIdSspModelOrFail(),
         );
@@ -198,7 +198,7 @@ class SspAssetToModelWritePublisherPluginTest extends Unit
 
         $eventEntityTransfers = [
             (new EventEntityTransfer())
-                ->setId($assignmentEntity->getIdSspAssetToSspModel())
+                ->setId($attachmentEntity->getIdSspAssetToSspModel())
                 ->setEvent(SelfServicePortalConfig::ENTITY_SPY_SSP_ASSET_TO_MODEL_UPDATE)
                 ->setForeignKeys([
                     'spy_ssp_asset_to_ssp_model.fk_ssp_asset' => $sspAssetTransfer->getIdSspAssetOrFail(),
@@ -254,7 +254,7 @@ class SspAssetToModelWritePublisherPluginTest extends Unit
         $this->assertNull($storageData);
     }
 
-    public function testHandlesBulkWithMultipleModelAssignments(): void
+    public function testHandlesBulkWithMultipleModelAttachments(): void
     {
         // Arrange
         $companyTransfer = $this->tester->haveCompany([
@@ -280,25 +280,25 @@ class SspAssetToModelWritePublisherPluginTest extends Unit
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
         ]);
 
-        $assignmentEntity1 = $this->tester->haveSspAssetToModelAssignment(
+        $attachmentEntity1 = $this->tester->haveSspAssetToModelAttachment(
             $sspAssetTransfer->getIdSspAssetOrFail(),
             $sspModelTransfer1->getIdSspModelOrFail(),
         );
 
-        $assignmentEntity2 = $this->tester->haveSspAssetToModelAssignment(
+        $attachmentEntity2 = $this->tester->haveSspAssetToModelAttachment(
             $sspAssetTransfer->getIdSspAssetOrFail(),
             $sspModelTransfer2->getIdSspModelOrFail(),
         );
 
         $eventEntityTransfers = [
             (new EventEntityTransfer())
-                ->setId($assignmentEntity1->getIdSspAssetToSspModel())
+                ->setId($attachmentEntity1->getIdSspAssetToSspModel())
                 ->setEvent(SelfServicePortalConfig::ENTITY_SPY_SSP_ASSET_TO_MODEL_CREATE)
                 ->setForeignKeys([
                     'spy_ssp_asset_to_ssp_model.fk_ssp_asset' => $sspAssetTransfer->getIdSspAssetOrFail(),
                 ]),
             (new EventEntityTransfer())
-                ->setId($assignmentEntity2->getIdSspAssetToSspModel())
+                ->setId($attachmentEntity2->getIdSspAssetToSspModel())
                 ->setEvent(SelfServicePortalConfig::ENTITY_SPY_SSP_ASSET_TO_MODEL_CREATE)
                 ->setForeignKeys([
                     'spy_ssp_asset_to_ssp_model.fk_ssp_asset' => $sspAssetTransfer->getIdSspAssetOrFail(),
@@ -356,14 +356,14 @@ class SspAssetToModelWritePublisherPluginTest extends Unit
             $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
         );
 
-        $assignmentEntity = $this->tester->haveSspAssetToModelAssignment(
+        $attachmentEntity = $this->tester->haveSspAssetToModelAttachment(
             $sspAssetTransfer->getIdSspAssetOrFail(),
             $sspModelTransfer->getIdSspModelOrFail(),
         );
 
         $eventEntityTransfers = [
             (new EventEntityTransfer())
-                ->setId($assignmentEntity->getIdSspAssetToSspModel())
+                ->setId($attachmentEntity->getIdSspAssetToSspModel())
                 ->setEvent(SelfServicePortalConfig::ENTITY_SPY_SSP_ASSET_TO_MODEL_UPDATE)
                 ->setForeignKeys([
                     'spy_ssp_asset_to_ssp_model.fk_ssp_asset' => $sspAssetTransfer->getIdSspAssetOrFail(),

@@ -18,12 +18,12 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Controller\FileAbstractController;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Reader\RelationCsvReaderInterface;
 
-class UnassignedCompanyUserAttachmentTable extends AbstractTable
+class UnattachedCompanyUserAttachmentTable extends AbstractTable
 {
     /**
      * @var string
      */
-    protected const TABLE_IDENTIFIER = 'available-company-user-table';
+    protected const TABLE_IDENTIFIER = 'unattached-company-user-table';
 
     /**
      * @var string
@@ -84,19 +84,19 @@ class UnassignedCompanyUserAttachmentTable extends AbstractTable
         $config->addRawColumn(static::COLUMN_SELECTED);
         $config->setTableAttributes([
             'data-selectable' => [
-                'moveToSelector' => '#companyUsersToBeAssigned',
-                'inputSelector' => '#fileAttachment_companyUserIdsToBeAssigned',
+                'moveToSelector' => '#companyUsersToBeAttached',
+                'inputSelector' => '#fileAttachment_companyUserIdsToBeAttached',
                 'counterHolderSelector' => 'a[href="#tab-content-company-users-to-be-attached"]',
                 'colId' => 'id_company_user',
             ],
             'data-uploader' => [
                 'url' => sprintf('/self-service-portal/attach-file/get-company-user-attachments-from-csv?id-file=%d', $this->idFile),
-                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED,
+                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED,
             ],
         ]);
         $config->setFooter([]);
 
-        $config->setUrl(Url::generate('/available-company-user-table', [
+        $config->setUrl(Url::generate('/unattached-company-user-table', [
             FileAbstractController::REQUEST_PARAM_ID_FILE => $this->idFile,
         ])->build());
 

@@ -16,17 +16,17 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Reader\RelationCsvReaderInterface;
 
-class UnassignedModelProductListAttachmentTable extends AbstractTable
+class UnattachedModelProductListAttachmentTable extends AbstractTable
 {
     /**
      * @var string
      */
-    protected const DEFAULT_URL = 'available-product-list-table';
+    protected const DEFAULT_URL = 'unattached-product-list-table';
 
     /**
      * @var string
      */
-    protected const TABLE_IDENTIFIER = 'available-model-product-list-table';
+    protected const TABLE_IDENTIFIER = 'unattached-ssp-model-product-list-table';
 
     /**
      * @var string
@@ -75,19 +75,19 @@ class UnassignedModelProductListAttachmentTable extends AbstractTable
 
         $config->setTableAttributes([
             'data-selectable' => [
-                'moveToSelector' => '#productListsToBeAssigned',
-                'inputSelector' => '#attachModel_productListIdsToBeAssigned',
+                'moveToSelector' => '#productListsToBeAttached',
+                'inputSelector' => '#attachModel_productListIdsToBeAttached',
                 'counterHolderSelector' => 'a[href="#tab-content-product-lists-to-be-attached"]',
                 'colId' => 'spy_product_list.id_product_list',
             ],
             'data-uploader' => [
                 'url' => '/self-service-portal/attach-model/get-product-list-relations-from-csv?id-ssp-model=' . $this->idSspModel,
-                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ASSIGNED,
+                'path' => RelationCsvReaderInterface::KEY_ENTITY_IDENTIFIERS_TO_BE_ATTACHED,
             ],
         ]);
 
         $config->addRawColumn(static::COLUMN_SELECTED);
-        $config->setUrl(Url::generate('/available-product-list-table', [
+        $config->setUrl(Url::generate('/unattached-product-list-table', [
             static::REQUEST_PARAM_ID_SSP_MODEL => $this->idSspModel,
         ])->build());
 

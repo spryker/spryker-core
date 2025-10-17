@@ -42,8 +42,8 @@ class AttachmentProcessor implements AttachmentProcessorInterface
     public function processAssetForm(array $formData, int $idFile, FileAttachmentTransfer $fileAttachmentTransfer): RedirectResponse
     {
         $businessFormData = [
-            AttachFileForm::FIELD_ASSET_IDS_TO_BE_ASSIGNED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_ASSET_IDS_TO_BE_ASSIGNED] ?? null),
-            AttachFileForm::FIELD_ASSET_IDS_TO_BE_UNASSIGNED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_ASSET_IDS_TO_BE_UNASSIGNED] ?? null),
+            AttachFileForm::FIELD_ASSET_IDS_TO_BE_ATTACHED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_ASSET_IDS_TO_BE_ATTACHED] ?? null),
+            AttachFileForm::FIELD_ASSET_IDS_TO_BE_UNATTACHED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_ASSET_IDS_TO_BE_UNATTACHED] ?? null),
         ];
 
         return $this->processAttachment($businessFormData, $idFile, $fileAttachmentTransfer);
@@ -59,8 +59,8 @@ class AttachmentProcessor implements AttachmentProcessorInterface
     public function processBusinessUnitForm(array $formData, int $idFile, FileAttachmentTransfer $fileAttachmentTransfer): RedirectResponse
     {
         $businessFormData = [
-            AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_ASSIGNED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_ASSIGNED] ?? null),
-            AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_UNASSIGNED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_UNASSIGNED] ?? null),
+            AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_ATTACHED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_ATTACHED] ?? null),
+            AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_UNATTACHED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_UNATTACHED] ?? null),
         ];
 
         return $this->processAttachment($businessFormData, $idFile, $fileAttachmentTransfer);
@@ -76,8 +76,8 @@ class AttachmentProcessor implements AttachmentProcessorInterface
     public function processCompanyUserForm(array $formData, int $idFile, FileAttachmentTransfer $fileAttachmentTransfer): RedirectResponse
     {
         $businessFormData = [
-            AttachFileForm::FIELD_COMPANY_USER_IDS_TO_BE_ASSIGNED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_COMPANY_USER_IDS_TO_BE_ASSIGNED] ?? null),
-            AttachFileForm::FIELD_COMPANY_USER_IDS_TO_BE_UNASSIGNED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_COMPANY_USER_IDS_TO_BE_UNASSIGNED] ?? null),
+            AttachFileForm::FIELD_COMPANY_USER_IDS_TO_BE_ATTACHED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_COMPANY_USER_IDS_TO_BE_ATTACHED] ?? null),
+            AttachFileForm::FIELD_COMPANY_USER_IDS_TO_BE_UNATTACHED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_COMPANY_USER_IDS_TO_BE_UNATTACHED] ?? null),
         ];
 
         return $this->processAttachment($businessFormData, $idFile, $fileAttachmentTransfer);
@@ -92,29 +92,29 @@ class AttachmentProcessor implements AttachmentProcessorInterface
      */
     public function processCompanyForm(array $formData, int $idFile, FileAttachmentTransfer $fileAttachmentTransfer): RedirectResponse
     {
-        $companyIdsToAssign = $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_COMPANY_IDS_TO_BE_ASSIGNED] ?? null);
-        $companyIdsToDeassign = $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_COMPANY_IDS_TO_BE_UNASSIGNED] ?? null);
+        $companyIdsToAttach = $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_COMPANY_IDS_TO_BE_ATTACHED] ?? null);
+        $companyIdsToUnattach = $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_COMPANY_IDS_TO_BE_UNATTACHED] ?? null);
 
-        $businessUnitIdsToAssign = [];
-        $businessUnitIdsToDeassign = [];
+        $businessUnitIdsToAttach = [];
+        $businessUnitIdsToUnattach = [];
 
-        if ($companyIdsToAssign) {
-            foreach ($companyIdsToAssign as $companyId) {
+        if ($companyIdsToAttach) {
+            foreach ($companyIdsToAttach as $companyId) {
                 $businessUnitsForCompany = $this->repository->getBusinessUnitIdsForCompanies([(int)$companyId]);
-                $businessUnitIdsToAssign = array_merge($businessUnitIdsToAssign, $businessUnitsForCompany);
+                $businessUnitIdsToAttach = array_merge($businessUnitIdsToAttach, $businessUnitsForCompany);
             }
         }
 
-        if ($companyIdsToDeassign) {
-            foreach ($companyIdsToDeassign as $companyId) {
+        if ($companyIdsToUnattach) {
+            foreach ($companyIdsToUnattach as $companyId) {
                 $businessUnitsForCompany = $this->repository->getBusinessUnitIdsForCompanies([(int)$companyId]);
-                $businessUnitIdsToDeassign = array_merge($businessUnitIdsToDeassign, $businessUnitsForCompany);
+                $businessUnitIdsToUnattach = array_merge($businessUnitIdsToUnattach, $businessUnitsForCompany);
             }
         }
 
         $businessUnitFormData = [
-            AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_ASSIGNED => array_values(array_unique($businessUnitIdsToAssign)),
-            AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_UNASSIGNED => array_values(array_unique($businessUnitIdsToDeassign)),
+            AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_ATTACHED => array_values(array_unique($businessUnitIdsToAttach)),
+            AttachFileForm::FIELD_BUSINESS_UNIT_IDS_TO_BE_UNATTACHED => array_values(array_unique($businessUnitIdsToUnattach)),
         ];
 
         return $this->processAttachment($businessUnitFormData, $idFile, $fileAttachmentTransfer);
@@ -130,8 +130,8 @@ class AttachmentProcessor implements AttachmentProcessorInterface
     public function processModelForm(array $formData, int $idFile, FileAttachmentTransfer $fileAttachmentTransfer): RedirectResponse
     {
         $modelFormData = [
-            AttachFileForm::FIELD_MODEL_IDS_TO_BE_ASSIGNED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_MODEL_IDS_TO_BE_ASSIGNED] ?? null),
-            AttachFileForm::FIELD_MODEL_IDS_TO_BE_UNASSIGNED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_MODEL_IDS_TO_BE_UNASSIGNED] ?? null),
+            AttachFileForm::FIELD_MODEL_IDS_TO_BE_ATTACHED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_MODEL_IDS_TO_BE_ATTACHED] ?? null),
+            AttachFileForm::FIELD_MODEL_IDS_TO_BE_UNATTACHED => $this->formDataNormalizer->normalizeFormFieldArray($formData[AttachFileForm::FIELD_MODEL_IDS_TO_BE_UNATTACHED] ?? null),
         ];
 
         return $this->processAttachment($modelFormData, $idFile, $fileAttachmentTransfer);
