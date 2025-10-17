@@ -14,21 +14,21 @@ use Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CustomerDiscountConnector\Communication\Plugin\Discount\CustomerMaximumOrderAmountDecisionRulePlugin} instead.
- *
  * @method \Spryker\Zed\CustomerDiscountConnector\Business\CustomerDiscountConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerDiscountConnector\Communication\CustomerDiscountConnectorCommunicationFactory getFactory()
  * @method \Spryker\Zed\CustomerDiscountConnector\CustomerDiscountConnectorConfig getConfig()
  * @method \Spryker\Zed\CustomerDiscountConnector\Business\CustomerDiscountConnectorBusinessFactory getBusinessFactory()
  */
-class CustomerOrderAmountDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
+class CustomerMaximumOrderAmountDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
     /**
      * @var string
      */
-    protected const FIELD_NAME_MAX_USES_PER_CUSTOMER = 'max-uses-per-customer';
+    protected const FIELD_NAME_MAX_USES_PER_CUSTOMER = 'maximum-uses-per-customer';
 
     /**
+     * @uses \Spryker\Zed\RuleEngine\RuleEngineConfig::DATA_TYPE_NUMBER
+     *
      * @var string
      */
     protected const TYPE_NUMBER = 'number';
