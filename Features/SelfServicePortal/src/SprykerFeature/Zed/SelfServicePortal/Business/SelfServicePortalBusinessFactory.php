@@ -7,6 +7,8 @@
 
 namespace SprykerFeature\Zed\SelfServicePortal\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\SelfServicePortal\Persistence\SpyProductClassQuery;
@@ -344,11 +346,12 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return new FileAttachmentCriteriaPermissionExpander();
     }
 
-    public function getProductShipmentTypeDataImporter(): DataImporterInterface
+    public function getProductShipmentTypeDataImporter(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterInterface
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
-        $dataImporter = $this->getCsvDataImporterFromConfig(
+        $dataImporter = $this->getDataImporter(
             $this->getConfig()->getProductShipmentTypeDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer,
         );
 
         /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker $dataSetStepBroker */
@@ -426,12 +429,12 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    public function getProductClassDataImporter(): DataImporterInterface
+    public function getProductClassDataImporter(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterInterface
     {
         $config = $this->getConfig()->getProductClassDataImporterConfiguration();
 
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
-        $dataImporter = $this->getCsvDataImporterFromConfig($config);
+        $dataImporter = $this->getDataImporter($config, $dataImporterConfigurationTransfer);
 
         /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker $dataSetStepBroker */
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -442,12 +445,12 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return $dataImporter;
     }
 
-    public function getProductToProductClassDataImporter(): DataImporterInterface
+    public function getProductToProductClassDataImporter(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterInterface
     {
         $config = $this->getConfig()->getProductToProductClassDataImporterConfiguration();
 
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
-        $dataImporter = $this->getCsvDataImporterFromConfig($config);
+        $dataImporter = $this->getDataImporter($config, $dataImporterConfigurationTransfer);
 
         /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker $dataSetStepBroker */
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -718,11 +721,12 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    public function getSspInquiryDataImporter(): DataImporterInterface
+    public function getSspInquiryDataImporter(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterInterface
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
-        $dataImporter = $this->getCsvDataImporterFromConfig(
+        $dataImporter = $this->getDataImporter(
             $this->getConfig()->getSspInquiryDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer,
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -746,11 +750,12 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    public function getSspAssetDataImporter(): DataImporterInterface
+    public function getSspAssetDataImporter(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterInterface
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
-        $dataImporter = $this->getCsvDataImporterFromConfig(
+        $dataImporter = $this->getDataImporter(
             $this->getConfig()->getSspAssetDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer,
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -1172,11 +1177,12 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(SelfServicePortalDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
 
-    public function getSspModelDataImporter(): DataImporterInterface
+    public function getSspModelDataImporter(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterInterface
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
-        $dataImporter = $this->getCsvDataImporterFromConfig(
+        $dataImporter = $this->getDataImporter(
             $this->getConfig()->getSspModelDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer,
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -1198,11 +1204,12 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    public function getSspAssetModelDataImporter(): DataImporterInterface
+    public function getSspAssetModelDataImporter(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterInterface
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
-        $dataImporter = $this->getCsvDataImporterFromConfig(
+        $dataImporter = $this->getDataImporter(
             $this->getConfig()->getSspModelAssetDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer,
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -1222,11 +1229,12 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    public function getSspModelProductListDataImporter(): DataImporterInterface
+    public function getSspModelProductListDataImporter(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterInterface
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
-        $dataImporter = $this->getCsvDataImporterFromConfig(
+        $dataImporter = $this->getDataImporter(
             $this->getConfig()->getSspModelProductListDataImporterConfiguration(),
+            $dataImporterConfigurationTransfer,
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -1313,6 +1321,19 @@ class SelfServicePortalBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyBusinessUnitValidator(
             $this->getCompanyBusinessUnitFacade(),
+        );
+    }
+
+    public function getDataImporter(
+        DataImporterDataSourceConfigurationTransfer $dataImporterDataSourceConfigurationTransfer,
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterInterface {
+        if ($dataImporterConfigurationTransfer) {
+            return $this->getDataImportFactory()->getCsvDataImporterFromConfig($dataImporterConfigurationTransfer);
+        }
+
+        return $this->getCsvDataImporterFromConfig(
+            $dataImporterDataSourceConfigurationTransfer,
         );
     }
 }

@@ -33,7 +33,7 @@ class SspModelAssetDataImportPlugin extends AbstractPlugin implements DataImport
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getBusinessFactory()->getSspAssetModelDataImporter()->import($dataImporterConfigurationTransfer);
+        return $this->getBusinessFactory()->getSspAssetModelDataImporter($dataImporterConfigurationTransfer)->import($dataImporterConfigurationTransfer);
     }
 
     /**

@@ -35,7 +35,7 @@ class ProductClassDataImportPlugin extends AbstractPlugin implements DataImportP
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getBusinessFactory()->getProductClassDataImporter()->import($dataImporterConfigurationTransfer);
+        return $this->getBusinessFactory()->getProductClassDataImporter($dataImporterConfigurationTransfer)->import($dataImporterConfigurationTransfer);
     }
 
     /**

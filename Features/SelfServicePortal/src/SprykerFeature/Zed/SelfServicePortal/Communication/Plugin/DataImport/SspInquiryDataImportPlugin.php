@@ -33,7 +33,7 @@ class SspInquiryDataImportPlugin extends AbstractPlugin implements DataImportPlu
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getBusinessFactory()->getSspInquiryDataImporter()->import($dataImporterConfigurationTransfer);
+        return $this->getBusinessFactory()->getSspInquiryDataImporter($dataImporterConfigurationTransfer)->import($dataImporterConfigurationTransfer);
     }
 
     /**

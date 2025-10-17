@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\SelfServicePortal\Business\SspModel\DataImport\Step
 
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\SelfServicePortal\Persistence\SpySspModelQuery;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\Event\Business\EventFacadeInterface;
@@ -31,6 +32,14 @@ class SspModelWriterStep implements DataImportStepInterface
         $this->sequenceNumberFacade->generate(
             $this->config->getModelSequenceNumberSettings(),
         );
+
+        if (!$dataSet[SspModelDataSetInterface::COLUMN_REFERENCE]) {
+            throw new DataImportException('Reference is required.');
+        }
+
+        if (!$dataSet[SspModelDataSetInterface::COLUMN_NAME]) {
+            throw new DataImportException('Name is required.');
+        }
 
         $sspModelEntity = SpySspModelQuery::create()
             ->filterByReference($dataSet[SspModelDataSetInterface::COLUMN_REFERENCE])

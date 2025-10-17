@@ -9,7 +9,6 @@ namespace SprykerFeature\Glue\SelfServicePortal;
 
 use Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Backend\Container;
-use SprykerFeature\Zed\SelfServicePortal\Business\SelfServicePortalFacade;
 
 /**
  * @method \SprykerFeature\Glue\SelfServicePortal\SelfServicePortalConfig getConfig()
@@ -77,7 +76,7 @@ class SelfServicePortalDependencyProvider extends AbstractBundleDependencyProvid
     protected function addSelfServicePortalFacade(Container $container): Container
     {
         $container->set(static::FACADE_SELF_SERVICE_PORTAL, function (Container $container) {
-            return new SelfServicePortalFacade();
+            return $container->getLocator()->selfServicePortal()->facade();
         });
 
         return $container;
