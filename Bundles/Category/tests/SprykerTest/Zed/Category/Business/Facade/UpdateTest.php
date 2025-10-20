@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Category\Business\Facade;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CategoryConditionsTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -102,6 +103,40 @@ class UpdateTest extends Unit
         // Assert
         $childCategoryStoreRelationStoreIds = $this->tester->getCategoryRelationStoreIds($childCategoryTransfer->getIdCategory());
         $this->assertCount(0, $childCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldUpdateParentCategoryForRootCategory(): void
+    {
+        // Arrange
+        $deStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE], false);
+
+        $categoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => [],
+        ]);
+        $this->tester->haveCategoryStoreRelation($categoryTransfer->getIdCategory(), $deStoreTransfer->getIdStore());
+
+        $parentCategoryTransfer = $this->tester->haveCategory();
+        $this->tester->haveCategoryStoreRelation($parentCategoryTransfer->getIdCategory(), $deStoreTransfer->getIdStore());
+
+        $categoryTransfer->setParentCategoryNode($parentCategoryTransfer->getCategoryNodeOrFail());
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setCategoryConditions(
+                (new CategoryConditionsTransfer())->addIdCategory($categoryTransfer->getIdCategoryOrFail()),
+            );
+
+        // Act
+        $this->tester->getFacade()->update($categoryTransfer);
+        $categoryTransfer = $this->tester->getFacade()->findCategory($categoryCriteriaTransfer);
+
+        // Assert
+        $this->assertNotNull($categoryTransfer->getParentCategoryNode());
+        $this->assertSame(
+            $parentCategoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail(),
+            $categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNodeOrFail(),
+        );
     }
 
     /**

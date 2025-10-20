@@ -17,6 +17,8 @@ use Spryker\Client\ProductConfigurationShoppingList\Dependency\Client\ProductCon
 use Spryker\Client\ProductConfigurationShoppingList\Dependency\Service\ProductConfigurationShoppingListToUtilEncodingServiceInterface;
 use Spryker\Client\ProductConfigurationShoppingList\Expander\ProductConfigurationExpander;
 use Spryker\Client\ProductConfigurationShoppingList\Expander\ProductConfigurationExpanderInterface;
+use Spryker\Client\ProductConfigurationShoppingList\Expander\ProductViewExpander;
+use Spryker\Client\ProductConfigurationShoppingList\Expander\ProductViewExpanderInterface;
 use Spryker\Client\ProductConfigurationShoppingList\Processor\ProductConfiguratorResponseProcessor;
 use Spryker\Client\ProductConfigurationShoppingList\Processor\ProductConfiguratorResponseProcessorInterface;
 use Spryker\Client\ProductConfigurationShoppingList\Replicator\ProductConfigurationReplicator;
@@ -50,6 +52,14 @@ class ProductConfigurationShoppingListFactory extends AbstractFactory
             $this->getProductConfigurationStorageClient(),
             $this->getUtilEncodingService(),
         );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationShoppingList\Expander\ProductViewExpanderInterface
+     */
+    public function createProductViewExpander(): ProductViewExpanderInterface
+    {
+        return new ProductViewExpander();
     }
 
     /**

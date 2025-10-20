@@ -147,9 +147,12 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
             $currentCategoryNodeTransfer,
             $categoryTransfer,
         );
+        $idParentCategoryNode = $categoryTransfer->getParentCategoryNode()
+            ? $categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNode()
+            : null;
 
-        if ($idFormerParentCategoryNode) {
-            $nodeTransfer->setFkParentCategoryNode($categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNodeOrFail());
+        if ($idParentCategoryNode !== $idFormerParentCategoryNode) {
+            $nodeTransfer->setFkParentCategoryNode($idParentCategoryNode);
         }
 
         $nodeTransfer = $this->categoryEntityManager->updateCategoryNode($nodeTransfer);

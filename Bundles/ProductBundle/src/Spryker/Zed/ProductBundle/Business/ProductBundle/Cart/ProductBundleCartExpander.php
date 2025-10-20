@@ -316,8 +316,8 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             $this->requirePriceByMode($itemTransfer, $priceMode);
 
             $unitPrice = $this->getPriceByPriceMode($itemTransfer, $priceMode);
-            if ($unitPrice <= 0) {
-                throw new OutOfBoundsException('Invalid price given, natural integer expected.');
+            if ($unitPrice < 0) {
+                throw new OutOfBoundsException('Invalid price given, non-negative integer expected.');
             }
 
             $priceBeforeRound = ($unitPrice * $priceRatio) + $roundingError;
@@ -480,13 +480,17 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $unitPrice
+     * @param int|null $unitPrice
      * @param string $priceMode
      *
      * @return void
      */
     protected function setPrice(ItemTransfer $itemTransfer, $unitPrice, $priceMode)
     {
+        if ($unitPrice === null) {
+            $unitPrice = 0;
+        }
+
         if ($priceMode === $this->priceReader->getNetPriceModeIdentifier()) {
             $itemTransfer->setUnitNetPrice($unitPrice);
             $itemTransfer->setUnitGrossPrice(0);

@@ -153,6 +153,7 @@ class ProductBundleBusinessTester extends Actor
         foreach ($productsToAssign as $productConcreteTransferToAssign) {
             $bundledProductTransfer = new ProductForBundleTransfer();
             $bundledProductTransfer->setQuantity(1);
+            $bundledProductTransfer->setSku($productConcreteTransferToAssign->getSku());
             $bundledProductTransfer->setIdProductConcrete($productConcreteTransferToAssign->getIdProductConcrete());
             $productBundleTransfer->addBundledProduct($bundledProductTransfer);
         }
@@ -199,7 +200,7 @@ class ProductBundleBusinessTester extends Actor
         if ($currencyTransfer === null) {
             $currencyTransfer = $this->haveCurrencyTransfer([CurrencyTransfer::CODE => static::FAKE_CURRENCY_CODE]);
         }
-        $this->havePriceProduct([
+        $priceProductTransfer = $this->havePriceProduct([
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
             PriceProductTransfer::MONEY_VALUE => [
                 MoneyValueTransfer::NET_AMOUNT => $price,
@@ -207,6 +208,7 @@ class ProductBundleBusinessTester extends Actor
                 MoneyValueTransfer::CURRENCY => $currencyTransfer,
             ],
         ]);
+        $productConcreteTransfer->addProductAbstractPrice($priceProductTransfer);
 
         return $productConcreteTransfer;
     }

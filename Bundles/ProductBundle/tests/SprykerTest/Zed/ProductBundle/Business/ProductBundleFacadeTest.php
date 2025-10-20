@@ -914,6 +914,51 @@ class ProductBundleFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testExpandBundleItemsShouldCreateBundleItemsAndCalculateSplitPriceWhenZeroPrice(): void
+    {
+        // Arrange
+        $bundlePrice = ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2;
+
+        $productConcreteTransfer = $this->tester->createProductBundle($bundlePrice);
+
+        $cartChangeTransfer = new CartChangeTransfer();
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+        $quoteTransfer = $this->tester->createBaseQuoteTransfer();
+        $quoteTransfer->setCurrency($currencyTransfer);
+        $cartChangeTransfer->setQuote($quoteTransfer);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(static::ID_STORE);
+        $itemTransfer->setUnitGrossPrice(0);
+        $itemTransfer->setId($productConcreteTransfer->getIdProductConcrete());
+        $itemTransfer->setSku($productConcreteTransfer->getSku());
+
+        $cartChangeTransfer->addItem($itemTransfer);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(static::ID_STORE);
+        $itemTransfer->setUnitGrossPrice($productConcreteTransfer->getProductAbstractPrices()[0]->getMoneyValue()->getGrossAmount());
+        $bundledProduct = $productConcreteTransfer->getProductBundle()->getBundledProducts()[1];
+        $itemTransfer->setId($bundledProduct->getIdProductConcrete());
+        $itemTransfer->setSku($bundledProduct->getSku());
+
+        $cartChangeTransfer->addItem($itemTransfer);
+
+        // Act
+        $cartChangeTransfer = $this->getProductBundleFacade()
+            ->expandBundleItems($cartChangeTransfer);
+
+        // Assert
+        $this->assertCount(3, $cartChangeTransfer->getItems());
+
+        $itemTransfer = $cartChangeTransfer->getItems()[0];
+        $this->assertSame(0, $itemTransfer->getUnitGrossPrice());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface
      */
     protected function getProductBundleFacade()

@@ -358,8 +358,8 @@ class BundleItemUnfolder implements BundleItemUnfolderInterface
 
         foreach ($bundledItemTransfers as $itemTransfer) {
             $unitPrice = $this->getPriceByPriceMode($itemTransfer, $priceMode);
-            if ($unitPrice <= 0) {
-                throw new OutOfBoundsException('Invalid price given, natural integer expected.');
+            if ($unitPrice < 0) {
+                throw new OutOfBoundsException('Invalid price given, non-negative integer expected.');
             }
 
             $priceBeforeRound = ($unitPrice * $priceRatio) + $roundingError;
