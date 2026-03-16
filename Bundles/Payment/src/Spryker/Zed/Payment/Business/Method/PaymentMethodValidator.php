@@ -82,6 +82,9 @@ class PaymentMethodValidator implements PaymentMethodValidatorInterface
         }
 
         foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
+          if(empty($this->paymentService->getPaymentMethodKey($paymentTransfer)){
+                 continue;
+            }
             $paymentMethodsKeys[] = $this->paymentService->getPaymentMethodKey($paymentTransfer);
         }
 
